@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.FXTab?>
+<?import cn.oyzh.fx.plus.controls.FXToggleGroup?>
+<?import cn.oyzh.fx.plus.controls.SubmitButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="280">
+    <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
+        <FXTab text="ZK设置">
+            <FlexVBox flexWidth="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="节点加载" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <fx:define>
+                        <FXToggleGroup fx:id="loadMode"/>
+                    </fx:define>
+                    <FXRadioButton toggleGroup="$loadMode" tipText="修改后，重新打开连接生效" text="加载一级节点"
+                                   realHeight="25" selected="true"
+                                   fx:id="loadMode0" userData="0">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FXRadioButton>
+                    <FXRadioButton toggleGroup="$loadMode" tipText="修改后，重新打开连接生效" text="加载所有节点"
+                                   realHeight="25" fx:id="loadMode1"
+                                   userData="1">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FXRadioButton>
+                    <FXRadioButton toggleGroup="$loadMode" tipText="修改后，重新打开连接生效" text="仅加载根节点"
+                                   realHeight="25" fx:id="loadMode2"
+                                   userData="2">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FXRadioButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="节点认证" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexCheckBox text="自动认证节点" realHeight="25" selected="true" fx:id="authMode">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+
+        <FXTab text="页面设置">
+            <FlexVBox flexWidth="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="窗口关闭" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <fx:define>
+                        <FXToggleGroup fx:id="exitMode"/>
+                    </fx:define>
+                    <FXRadioButton toggleGroup="$exitMode" text="最小化到托盘" realHeight="25" selected="true"
+                                   fx:id="exitMode0" userData="0">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FXRadioButton>
+                    <FXRadioButton toggleGroup="$exitMode" text="询问是否退出" realHeight="25" fx:id="exitMode1"
+                                   userData="1">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FXRadioButton>
+                    <FXRadioButton toggleGroup="$exitMode" text="直接退出程序" realHeight="25" fx:id="exitMode2"
+                                   userData="2">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FXRadioButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="页面记忆" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexCheckBox text="记住页面大小" realHeight="25" fx:id="pageSize">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="记住页面位置" realHeight="25" fx:id="pageLocation">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="记住页面拉伸" selected="true" realHeight="25" fx:id="pageResize">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <!-- <FXTab text="页面布局"> -->
+        <!--     <FlexVBox flexWidth="100%"> -->
+        <!--         <FlexHBox flexWidth="100%" realHeight="50"> -->
+        <!--             <FXLabel text="显示模块" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="20" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </FXLabel> -->
+        <!--             <fx:define> -->
+        <!--                 <FXToggleGroup fx:id="layout"/> -->
+        <!--             </fx:define> -->
+        <!--             <FXRadioButton toggleGroup="$layout" text="显示全部模块" realHeight="25" selected="true" -->
+        <!--                            fx:id="layout1" userData="0"> -->
+        <!--                 <graphic> -->
+        <!--                     <SVGGlyph url="/font/a-Layout1.svg"/> -->
+        <!--                 </graphic> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="12"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </FXRadioButton> -->
+        <!--             <FXRadioButton toggleGroup="$layout" text="隐藏消息模块" realHeight="25" fx:id="layout2" -->
+        <!--                            userData="1"> -->
+        <!--                 <graphic> -->
+        <!--                     <SVGGlyph url="/font/a-Layout4.svg"/> -->
+        <!--                 </graphic> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="12"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </FXRadioButton> -->
+        <!--             <VBox.margin> -->
+        <!--                 <Insets top="10"/> -->
+        <!--             </VBox.margin> -->
+        <!--         </FlexHBox> -->
+        <!--     </FlexVBox> -->
+        <!-- </FXTab> -->
+    </FlexTabPane>
+
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <SubmitButton onAction="#saveSetting" text="保存">
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

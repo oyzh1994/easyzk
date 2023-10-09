@@ -1,0 +1,24 @@
+{
+  "output": "D:\\Package\\EasyZK\\win_amd64_jre",
+  "addModules": [
+    "java.xml",
+    "java.sql",
+    "java.base",
+    "java.naming",
+    "java.logging",
+    "java.desktop",
+    "java.scripting",
+    "jdk.unsupported",
+    "java.security.jgss"
+  ],
+  "excludeFiles": [
+    "**.md",
+    "**LICENSE",
+    "**javaw.exe",
+    "**README.txt",
+    "**jrunscript.exe",
+    "**splashscreen.dll",
+    "**ASSEMBLY_EXCEPTION",
+    "**ADDITIONAL_LICENSE_INFO"
+  ]
+}

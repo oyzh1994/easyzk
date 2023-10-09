@@ -1,0 +1,74 @@
+package cn.oyzh.easyzk.domain;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+import java.util.Objects;
+
+
+/**
+ * zk过滤配置
+ *
+ * @author oyzh
+ * @since 2022/12/20
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ZKFilter {
+
+    /**
+     * 关键词
+     */
+    private String kw;
+
+    /**
+     * 模糊匹配
+     * true 模糊匹配
+     * false 完全匹配
+     */
+    private boolean partMatch;
+
+    /**
+     * 是否启用
+     */
+    private boolean enable;
+
+    /**
+     * 复制对象
+     *
+     * @param filter 过滤信息
+     * @return 当前对象
+     */
+    public ZKFilter copy(@NonNull ZKFilter filter) {
+        this.kw = filter.kw;
+        this.enable = filter.enable;
+        this.partMatch = filter.partMatch;
+        return this;
+    }
+
+    /**
+     * 比较信息
+     *
+     * @param filter 过滤信息
+     * @return 结果
+     */
+    public boolean compare(ZKFilter filter) {
+        if (Objects.equals(this, filter)) {
+            return true;
+        }
+        return Objects.equals(filter.kw, this.kw);
+    }
+
+    /**
+     * 比较信息
+     *
+     * @param kw 关键字
+     * @return 结果
+     */
+    public boolean compare(String kw) {
+        return Objects.equals(kw, this.kw);
+    }
+}

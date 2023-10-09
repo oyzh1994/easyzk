@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.CharsetComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexText?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.IconButton?>
+<?import cn.oyzh.fx.plus.controls.MsgTextArea?>
+<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeImportController" realWidth="850" realHeight="630">
+    <FlexHBox realHeight="50" flexWidth="100%">
+        <FXLabel text="文件信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <IconButton fx:id="chooseFile" tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
+                    text="选择"
+                    styleClass="btn,btn-success" iconSizePercent="0.75">
+            <graphic>
+                <SVGGlyph url="/font/file.svg"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </IconButton>
+    </FlexHBox>
+    <FlexText fx:id="scriptInfo" visible="false" managed="false" fontSize="11">
+        <VBox.margin>
+            <Insets left="95"/>
+        </VBox.margin>
+    </FlexText>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="导入选项" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexCheckBox fx:id="ignoreExist" text="节点已存在时跳过" selected="true">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FXLabel text="字符集:">
+            <HBox.margin>
+                <Insets left="10" top="20"/>
+            </HBox.margin>
+        </FXLabel>
+        <CharsetComboBox prefWidth="120" fx:id="charset" promptText="导入字符集"
+                         tipText="默认是源信息的字符集">
+            <HBox.margin>
+                <Insets left="5" top="12"/>
+            </HBox.margin>
+        </CharsetComboBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="360">
+        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexVBox flexWidth="100% - 140" flexHeight="100%">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+            <MsgTextArea editable="false" maxLine="300" fx:id="importMsg" flexWidth="100%" flexHeight="100% - 20"/>
+            <FXLabel fx:id="importStatus"/>
+        </FlexVBox>
+    </FlexHBox>
+    <FlexHBox prefHeight="50" flexWidth="100%">
+        <IconButton tipText="开始执行导入" onAction="#doImport" styleClass="btn,btn-primary"
+                    text="导入" fx:id="importBtn" disable="true" iconSizePercent="0.75">
+            <graphic>
+                <SVGGlyph url="/font/Import.svg" color="white"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </IconButton>
+        <IconButton disable="true" text="结束" fx:id="stopImportBtn" tipText="结束导入" onAction="#stopImport"
+                    styleClass="btn,btn-default"
+                    realHeight="30" iconSizePercent="0.9">
+            <graphic>
+                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </IconButton>
+        <CancelButton text="关闭" iconSizePercent="0.6">
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+    <FlexVBox flexWidth="100%" fontSize="12">
+        <FXLabel text="温馨提示:" textFill="#666">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </FXLabel>
+        <FlexText fill="#666" text="1. 节点不存在时将创建节点">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </FlexText>
+        <FlexText fill="#666" text="2. 节点存在时将更新节点数据（'节点已存在时跳过'选项勾选时除外）">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </FlexText>
+        <VBox.margin>
+            <Insets left="95"/>
+        </VBox.margin>
+    </FlexVBox>
+</FlexVBox>

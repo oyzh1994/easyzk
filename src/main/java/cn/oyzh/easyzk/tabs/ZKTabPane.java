@@ -1,0 +1,230 @@
+package cn.oyzh.easyzk.tabs;
+
+import cn.oyzh.fx.common.thread.ExecutorUtil;
+import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.plus.controls.FlexTabPane;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.msg.TreeGraphicChangedMsg;
+import cn.oyzh.easyzk.msg.TreeGraphicColorChangedMsg;
+import cn.oyzh.easyzk.msg.ZKCloseTerminalMsg;
+import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;
+import cn.oyzh.easyzk.msg.ZKOpenTerminalMsg;
+import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
+import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
+import javafx.collections.ListChangeListener;
+import javafx.scene.CacheHint;
+import javafx.scene.control.Tab;
+
+/**
+ * zk切换面板
+ *
+ * @author oyzh
+ * @since 2023/05/21
+ */
+public class ZKTabPane extends FlexTabPane {
+
+    {
+        this.setCache(true);
+        this.setCacheHint(CacheHint.QUALITY);
+        this.initHomeTab();
+        this.getTabs().addListener((ListChangeListener<? super Tab>) (c) -> {
+            TaskManager.startDelayTask("zk:tab:init", () -> {
+                if (this.tabsEmpty()) {
+                    this.initHomeTab();
+                } else if (this.tabsSize() > 1) {
+                    this.closeHomeTab();
+                }
+            }, 100);
+        });
+    }
+
+    /**
+     * 获取主页tab
+     *
+     * @return 主页tab
+     */
+    public ZKHomeTab getHomeTab() {
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKHomeTab homeTab) {
+                return homeTab;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 初始化主页tab
+     */
+    public void initHomeTab() {
+        if (this.getHomeTab() == null) {
+            super.addTab(new ZKHomeTab());
+        }
+    }
+
+    /**
+     * 关闭主页tab
+     */
+    public void closeHomeTab() {
+        ZKHomeTab homeTab = this.getHomeTab();
+        if (homeTab != null) {
+            super.removeTab(homeTab);
+        }
+    }
+
+    /**
+     * 获取终端tab
+     *
+     * @return 终端tab
+     */
+    public ZKTerminalTab getTerminalTab(ZKInfo info) {
+        if (info != null) {
+            for (Tab tab : this.getTabs()) {
+                if (tab instanceof ZKTerminalTab terminalTab && terminalTab.info() == info) {
+                    return terminalTab;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 初始化终端tab
+     *
+     * @param info zk信息
+     */
+    public void initTerminalTab(ZKInfo info) {
+        ZKTerminalTab terminalTab = this.getTerminalTab(info);
+        if (terminalTab == null) {
+            terminalTab = new ZKTerminalTab();
+            terminalTab.init(info);
+            super.addTab(terminalTab);
+        } else {
+            terminalTab.flushGraphic();
+        }
+        if (!terminalTab.isSelected()) {
+            this.select(terminalTab);
+        }
+    }
+
+    /**
+     * zk终端打开事件
+     *
+     * @param event 事件
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_OPEN_TERMINAL, async = true, verbose = true)
+    private void openTerminal(Event<ZKOpenTerminalMsg> event) {
+        this.initTerminalTab(event.data().info());
+    }
+
+    /**
+     * zk终端关闭事件
+     *
+     * @param event 事件
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_CLOSE_TERMINAL, async = true, verbose = true)
+    private void closeTerminal(Event<ZKCloseTerminalMsg> event) {
+        try {
+            // 寻找节点
+            ZKTerminalTab terminalTab = this.getTerminalTab(event.data().info());
+            // 移除节点
+            if (terminalTab != null) {
+                terminalTab.closeTab();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 图标更换事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = ZKEventTypes.TREE_GRAPHIC_CHANGED, async = true, verbose = true)
+    public void graphicChanged(TreeGraphicChangedMsg msg) {
+        ZKNodeTab nodeTab = this.getNodeTab();
+        if (nodeTab != null && nodeTab.treeItem() == msg.item()) {
+            nodeTab.flushGraphic();
+        }
+    }
+
+    /**
+     * 图标颜色更换事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = ZKEventTypes.TREE_GRAPHIC_COLOR_CHANGED, async = true, verbose = true)
+    public void graphicColorChanged(TreeGraphicColorChangedMsg msg) {
+        ZKNodeTab nodeTab = this.getNodeTab();
+        if (nodeTab != null && nodeTab.treeItem() == msg.item()) {
+            nodeTab.flushGraphicColor();
+        }
+    }
+
+    /**
+     * 获取节点tab
+     *
+     * @return 节点tab
+     */
+    public ZKNodeTab getNodeTab() {
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKNodeTab nodeTab) {
+                return nodeTab;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 初始化节点tab
+     *
+     * @param item 节点
+     */
+    public void initNodeTab(ZKNodeTreeItem item) {
+        if (item != null) {
+            ZKNodeTab nodeTab = this.getNodeTab();
+            if (nodeTab == null) {
+                nodeTab = new ZKNodeTab();
+                nodeTab.init(item);
+                super.addTab(nodeTab);
+            } else {
+                nodeTab.init(item);
+            }
+            if (!nodeTab.isSelected()) {
+                this.select(nodeTab);
+            }
+            // 检查节点状态
+            ZKNodeTab finalNodeTab = nodeTab;
+            ExecutorUtil.start(() -> FXUtil.runLater(finalNodeTab::checkStatus), 5);
+        }
+    }
+
+    /**
+     * 连接关闭事件
+     *
+     * @param event 事件
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_CONNECTION_CLOSED, async = true, verbose = true)
+    public void connectionClosed(Event<ZKConnectionClosedMsg> event) {
+        ZKConnectionClosedMsg msg = event.data();
+        ZKNodeTab nodeTab = this.getNodeTab();
+        if (nodeTab != null && nodeTab.info() == msg.info()) {
+            nodeTab.closeTab();
+        }
+    }
+
+    /**
+     * 重新载入
+     */
+    public void reload() {
+        if (this.getSelectedItem() instanceof ZKNodeTab itemTab) {
+            itemTab.reload();
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "vendor": "oyzh",
+  "version": "v1.5.8",
+  "platform": "macos_amd64",
+  "jarPath": "D:\\Workspaces\\OYZH\\Web\\easypanel\\easyzk\\target\\easyzk-1.0.jar",
+  "jrePath": "D:\\Package\\EasyZK\\macos_amd64_jre",
+  "destPath": "D:\\Package\\EasyZK\\EasyZK.app",
+  "mainClass": "org.springframework.boot.loader.JarLauncher",
+  "appName": "EasyZK",
+  "executable": "EasyZK",
+  "identifier": "cn.oyzh.EasyZK",
+  "compressType": "zip",
+  "appIcon": "D:\\Workspaces\\OYZH\\Web\\easypanel\\easyzk\\resource\\zookeeper.icns"
+}

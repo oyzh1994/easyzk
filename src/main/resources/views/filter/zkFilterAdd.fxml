@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.filter.ZKFilterAddController" realWidth="750" realHeight="240">
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="关 键 字" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ClearableTextField fx:id="kw" realHeight="30" flexWidth="100% - 140" require="true" tipText="输入过滤关键字" >
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ClearableTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="匹配方式" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ToggleSwitch fx:id="partMatch" selectedText="模糊匹配" unselectedText="完全匹配" realHeight="20"
+                        prefWidth="105" selected="true">
+            <HBox.margin>
+                <Insets left="15" top="16"/>
+            </HBox.margin>
+        </ToggleSwitch>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="启用配置" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ToggleSwitch fx:id="enable" selectedText="启用配置" unselectedText="禁用配置" realHeight="20"
+                        prefWidth="105" selected="true">
+            <HBox.margin>
+                <Insets left="15" top="16"/>
+            </HBox.margin>
+        </ToggleSwitch>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <SubmitButton onAction="#addZKFilter">
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

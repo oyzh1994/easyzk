@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.CharsetComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.FlexText?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXButton?>
+<?import cn.oyzh.fx.plus.controls.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.FXTab?>
+<?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.controls.ToggleSwitch?>
+<?import cn.oyzh.fx.plus.ext.NumberTextField?>
+<?import cn.oyzh.fx.plus.rich.FlexVirtualizedScrollPane?>
+<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import cn.oyzh.easyzk.fx.ZKACLVBox?>
+<?import cn.oyzh.easyzk.fx.ZKFormatComboBox?>
+<?import cn.oyzh.easyzk.fx.ZKRichDataTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<FlexTabPane styleClass="panel,panel-primary" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
+             flexHeight="100%"
+             rotateGraphic="true"
+             xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabContentController">
+    <FXTab text="数据">
+        <graphic>
+            <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
+        </graphic>
+        <FlexVBox flexHeight="100%" flexWidth="100%">
+            <FlexFlowPane realHeight="32" flexWidth="100%">
+                <SVGGlyph fx:id="saveNodeData" disable="true" tipText="保存(Ctrl+S)" size="16"
+                          onMousePrimaryClicked="#saveNodeData"
+                          url="/font/save.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph disable="true" fx:id="dataUndo" tipText="撤销(Ctrl+Z)" size="16"
+                          onMousePrimaryClicked="#dataUndo"
+                          url="/font/data_revoke.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph disable="true" fx:id="dataRedo" tipText="重做(Ctrl+Y)" size="16"
+                          onMousePrimaryClicked="#dataRedo"
+                          url="/font/data_redo.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
+                          tipText="粘贴(Ctrl+V)">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData" tipText="清空数据">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph disable="true" tipText="节点转二维码" fx:id="node2QRCode" size="16"
+                          onMousePrimaryClicked="#node2QRCode"
+                          url="/font/qrcode.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="添加子节点" size="16" fx:id="addNode"
+                          onMousePrimaryClicked="#addNode" url="/font/add.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="删除节点" size="16"
+                          onMousePrimaryClicked="#deleteNode" url="/font/delete.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="认证节点" size="15" onMousePrimaryClicked="#authNode" url="/font/unlock.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph fx:id="collect" tipText="收藏节点" size="15"
+                          onMousePrimaryClicked="#collect"
+                          url="/font/star-l.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph visible="false" managed="false" fx:id="unCollect" tipText="取消收藏节点" size="15"
+                          onMousePrimaryClicked="#unCollect"
+                          url="/font/star.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="刷新节点(F5)" size="15" onMousePrimaryClicked="#reloadData"
+                          url="/font/reload.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <FXLabel text="显示方式:" fontSize="11">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXLabel>
+                <ZKFormatComboBox fx:id="format" initIndex="0" fontSize="11" prefWidth="120" style="-fx-padding: 0;">
+                    <FlowPane.margin>
+                        <Insets left="2"/>
+                    </FlowPane.margin>
+                </ZKFormatComboBox>
+                <FXLabel text="字符集:" fontSize="11">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXLabel>
+                <CharsetComboBox fx:id="charset" fontSize="11" prefWidth="95" style="-fx-padding: 0;">
+                    <FlowPane.margin>
+                        <Insets left="2"/>
+                    </FlowPane.margin>
+                </CharsetComboBox>
+                <FXLabel fx:id="nodePath" maxWidth="380" realHeight="15">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXLabel>
+                <SVGGlyph tipText="复制节点路径及数据" size="16"
+                          onMousePrimaryClicked="#copyNode" url="/font/copy.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="复制节点路径" size="16"
+                          onMousePrimaryClicked="#copyNodePath" url="/font/copy-path.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <padding>
+                    <Insets top="9"/>
+                </padding>
+            </FlexFlowPane>
+            <FlexVirtualizedScrollPane flexWidth="100%" flexHeight="100%">
+                <content>
+                    <ZKRichDataTextArea flexHeight="100% - 32" flexWidth="100% - 2"
+                                        fontSize="12" fx:id="nodeData"
+                                        onKeyPressed="#onNodeDataKeyPressed"
+                                        text="数据加载中..."/>
+                </content>
+            </FlexVirtualizedScrollPane>
+
+            <!-- <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 32" -->
+            <!--                 flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" -->
+            <!--                 text="数据加载中..."/> -->
+        </FlexVBox>
+    </FXTab>
+    <FXTab text="状态">
+        <graphic>
+            <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
+        </graphic>
+        <FlexVBox flexHeight="100%" flexWidth="100%">
+            <FlexFlowPane realHeight="32" flexWidth="100%">
+                <ToggleSwitch realHeight="16" realWidth="84" fx:id="statViewSwitch" unselectedText="专业视图"
+                              selectedText="友好视图"
+                              selected="true">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </ToggleSwitch>
+                <SVGGlyph tipText="复制节点状态" size="16" onMousePrimaryClicked="#copyStat"
+                          url="/font/file-copy.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="刷新节点状态" size="15" onMousePrimaryClicked="#reloadStat"
+                          url="/font/reload.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <padding>
+                    <Insets top="9"/>
+                </padding>
+            </FlexFlowPane>
+            <FlexVBox fx:id="statPane" flexHeight="100% - 32" flexWidth="100%" fontSize="11">
+                <VBox.margin>
+                    <Insets left="5" top="5"/>
+                </VBox.margin>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+            </FlexVBox>
+        </FlexVBox>
+    </FXTab>
+    <FXTab text="权限">
+        <graphic>
+            <SVGGlyph initCursor="DEFAULT" url="/font/lock.svg" size="13"/>
+        </graphic>
+        <FlexVBox flexHeight="100%" flexWidth="100%">
+            <FlexFlowPane realHeight="32" flexWidth="100%">
+                <ToggleSwitch realHeight="16" realWidth="84" fx:id="aclViewSwitch" unselectedText="专业视图"
+                              selectedText="友好视图"
+                              selected="true">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </ToggleSwitch>
+                <SVGGlyph tipText="添加节点权限" size="16" onMousePrimaryClicked="#toAddACL"
+                          url="/font/add.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="刷新节点权限" size="15" onMousePrimaryClicked="#reloadACL"
+                          url="/font/reload.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <PagePane fx:id="aclPage" iconSize="14"
+                          realWidth="100" onPrevClicked="#prevPage" onNextClicked="#nextPage">
+                    <FlowPane.margin>
+                        <Insets left="5" top="2"/>
+                    </FlowPane.margin>
+                </PagePane>
+                <padding>
+                    <Insets top="9"/>
+                </padding>
+            </FlexFlowPane>
+            <FlexVBox fx:id="aclBox" flexHeight="100% - 32" fontSize="11">
+                <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
+                    <VBox.margin>
+                        <Insets top="5" left="5"/>
+                    </VBox.margin>
+                    <FlexFlowPane flexWidth="100%" realHeight="24">
+                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                                  onMousePrimaryClicked="#copyACL">
+                            <FlowPane.margin>
+                                <Insets top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                                  onMousePrimaryClicked="#updateACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                                  onMousePrimaryClicked="#deleteACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <FlexText fill="forestgreen" styleClass="acl-status">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </FlexText>
+                    </FlexFlowPane>
+                    <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
+                </ZKACLVBox>
+                <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
+                    <VBox.margin>
+                        <Insets top="5" left="5"/>
+                    </VBox.margin>
+                    <FlexFlowPane flexWidth="100%" realHeight="24">
+                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                                  onMousePrimaryClicked="#copyACL">
+                            <FlowPane.margin>
+                                <Insets top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                                  onMousePrimaryClicked="#updateACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                                  onMousePrimaryClicked="#deleteACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <FlexText fill="forestgreen" styleClass="acl-status">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </FlexText>
+                    </FlexFlowPane>
+                    <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
+                </ZKACLVBox>
+                <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
+                    <VBox.margin>
+                        <Insets top="5" left="5"/>
+                    </VBox.margin>
+                    <FlexFlowPane flexWidth="100%" realHeight="24">
+                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                                  onMousePrimaryClicked="#copyACL">
+                            <FlowPane.margin>
+                                <Insets top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                                  onMousePrimaryClicked="#updateACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                                  onMousePrimaryClicked="#deleteACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <FlexText fill="forestgreen" styleClass="acl-status">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </FlexText>
+                    </FlexFlowPane>
+                    <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
+                </ZKACLVBox>
+                <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
+                    <VBox.margin>
+                        <Insets top="5" left="5"/>
+                    </VBox.margin>
+                    <FlexFlowPane flexWidth="100%" realHeight="24">
+                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                                  onMousePrimaryClicked="#copyACL">
+                            <FlowPane.margin>
+                                <Insets top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                                  onMousePrimaryClicked="#updateACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                                  onMousePrimaryClicked="#deleteACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <FlexText fill="forestgreen" styleClass="acl-status">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </FlexText>
+                    </FlexFlowPane>
+                    <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
+                </ZKACLVBox>
+                <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
+                    <VBox.margin>
+                        <Insets top="5" left="5"/>
+                    </VBox.margin>
+                    <FlexFlowPane flexWidth="100%" realHeight="24">
+                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                                  onMousePrimaryClicked="#copyACL">
+                            <FlowPane.margin>
+                                <Insets top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                                  onMousePrimaryClicked="#updateACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                                  onMousePrimaryClicked="#deleteACL">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </SVGGlyph>
+                        <FlexText fill="forestgreen" styleClass="acl-status">
+                            <FlowPane.margin>
+                                <Insets left="5" top="5"/>
+                            </FlowPane.margin>
+                        </FlexText>
+                    </FlexFlowPane>
+                    <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
+                    <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
+                </ZKACLVBox>
+            </FlexVBox>
+        </FlexVBox>
+    </FXTab>
+    <FXTab text="配额">
+        <graphic>
+            <SVGGlyph initCursor="DEFAULT" url="/font/quota.svg" size="13"/>
+        </graphic>
+        <FlexVBox flexHeight="100%" flexWidth="100%">
+            <FlexFlowPane realHeight="32" flexWidth="100%">
+                <SVGGlyph tipText="刷新节点配额" size="15" onMousePrimaryClicked="#reloadQuota"
+                          url="/font/reload.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <padding>
+                    <Insets top="9"/>
+                </padding>
+            </FlexFlowPane>
+            <FlexVBox flexHeight="100% - 32" fontSize="11">
+                <FlexHBox flexWidth="100%" realHeight="24">
+                    <VBox.margin>
+                        <Insets top="5" left="5"/>
+                    </VBox.margin>
+                    <FXLabel realWidth="135" text="子节点数量" maxHeight="24" styleClass="item-label,label-primary">
+                        <HBox.margin>
+                            <Insets right="5"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <NumberTextField fx:id="quotaNum" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
+                                     tipText="设置节点配额子节点数量，-1代表无限制">
+                        <HBox.margin>
+                            <Insets right="5"/>
+                        </HBox.margin>
+                    </NumberTextField>
+                    <FXButton text="保存" onAction="#saveQuota">
+                        <HBox.margin>
+                            <Insets right="5"/>
+                        </HBox.margin>
+                    </FXButton>
+                    <FXButton text="清除" onAction="#clearQuotaNum"/>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="24">
+                    <VBox.margin>
+                        <Insets top="5" left="5"/>
+                    </VBox.margin>
+                    <FXLabel realWidth="135" text="总数据大小" maxHeight="24" styleClass="item-label,label-primary">
+                        <HBox.margin>
+                            <Insets right="5"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <NumberTextField fx:id="quotaBytes" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
+                                     tipText="设置节点配额总数据大小，单位字节，-1代表无限制">
+                        <HBox.margin>
+                            <Insets right="5"/>
+                        </HBox.margin>
+                    </NumberTextField>
+                    <FXButton text="保存" onAction="#saveQuota">
+                        <HBox.margin>
+                            <Insets right="5"/>
+                        </HBox.margin>
+                    </FXButton>
+                    <FXButton text="清除" onAction="#clearQuotaBytes"/>
+                </FlexHBox>
+            </FlexVBox>
+        </FlexVBox>
+    </FXTab>
+</FlexTabPane>

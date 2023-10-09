@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.FlexTableView?>
+<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.filter.ZKFilterMainController" realWidth="750" realHeight="450">
+    <FlexHBox realHeight="50" flexWidth="100%">
+        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" tipText="搜索关键字" >
+            <HBox.margin>
+                <Insets left="5" top="-4"/>
+            </HBox.margin>
+        </ClearableTextField>
+        <PagePane fx:id="pagePane" onNextClicked="#nextPage" onPrevClicked="#prevPage" iconSize="14" realWidth="100">
+            <HBox.margin>
+                <Insets left="5"/>
+            </HBox.margin>
+        </PagePane>
+        <SVGGlyph size="14" onMousePrimaryClicked="#toAdd" tipText="添加过滤信息" url="/font/add-fill.svg">
+            <HBox.margin>
+                <Insets left="5"/>
+            </HBox.margin>
+        </SVGGlyph>
+        <padding>
+            <Insets top="18"/>
+        </padding>
+    </FlexHBox>
+    <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable"
+                   styleClass="fx-table-left">
+        <columns>
+            <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
+            <FlexTableColumn flexWidth="40%" fx:id="kw" text="关键字"/>
+            <FlexTableColumn flexWidth="20%" fx:id="partMatch" text="匹配方式"/>
+            <FlexTableColumn flexWidth="20%" fx:id="enable" text="状态" sortable="false"/>
+            <FlexTableColumn flexWidth="10% - 6" fx:id="action" text="操作" sortable="false"/>
+        </columns>
+    </FlexTableView>
+</FlexVBox>
+

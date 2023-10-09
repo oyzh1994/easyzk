@@ -1,0 +1,13 @@
+{
+  "vendor": "oyzh",
+  "version": "v1.5.8",
+  "platform": "linux_amd64",
+  "jarPath": "D:\\Workspaces\\OYZH\\Web\\easypanel\\easyzk\\target\\easyzk-1.0.jar",
+  "jrePath": "D:\\Package\\EasyZK\\linux_amd64_jre",
+  "destPath": "D:\\Package\\EasyZK\\EasyZK_linux",
+  "mainClass": "org.springframework.boot.loader.JarLauncher",
+  "appName": "EasyZK",
+  "executable": "EasyZK",
+  "compressType": "tar.gz",
+  "appIcon": "D:\\Workspaces\\OYZH\\Web\\easypanel\\easyzk\\resource\\zookeeper_512x512.png"
+}

@@ -1,0 +1,371 @@
+package cn.oyzh.easyzk.controller.node;
+
+import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.plus.controller.FXController;
+import cn.oyzh.fx.plus.controls.FXLabel;
+import cn.oyzh.fx.plus.controls.FlexComboBox;
+import cn.oyzh.fx.plus.controls.FlexHBox;
+import cn.oyzh.fx.plus.controls.FlexTextArea;
+import cn.oyzh.fx.plus.controls.FlexVBox;
+import cn.oyzh.fx.plus.ext.ClearableTextField;
+import cn.oyzh.fx.plus.handler.TabSwitchHandler;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXTipUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.view.FXWindow;
+import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.ZKStyle;
+import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.parser.ZKExceptionParser;
+import cn.oyzh.easyzk.util.ZKACLUtil;
+import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.easyzk.zk.ZKClient;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
+import javafx.beans.value.ChangeListener;
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.WindowEvent;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Id;
+
+import java.util.List;
+
+
+/**
+ * zk子节点添加业务
+ *
+ * @author oyzh
+ * @since 2020/10/09
+ */
+@Slf4j
+@FXWindow(
+        title = "zk子节点添加",
+        iconUrls = ZKConst.ICON_PATH,
+        modality = Modality.WINDOW_MODAL,
+        cssUrls = ZKStyle.COMMON,
+        value = ZKConst.FXML_BASE_PATH + "node/zkNodeAdd.fxml"
+)
+public class ZKNodeAddController extends FXController {
+
+    /**
+     * 节点路径
+     */
+    @FXML
+    private ClearableTextField nodePath;
+
+    /**
+     * 节点数据
+     */
+    @FXML
+    private FlexTextArea nodeData;
+
+    /**
+     * 节点路径预览组件
+     */
+    @FXML
+    private HBox nodePathPreviewBox;
+
+    /**
+     * 节点路径预览
+     */
+    @FXML
+    private TextField nodePathPreview;
+
+    /**
+     * 父节点值组件
+     */
+    @FXML
+    private HBox parentNodeBox;
+
+    /**
+     * 父节点值
+     */
+    @FXML
+    private TextField parentNode;
+
+    /**
+     * 创建模式下拉选择框
+     */
+    @FXML
+    private FlexComboBox<String> createMode;
+
+    /**
+     * zk客户端
+     */
+    private ZKClient zkClient;
+
+    /**
+     * 节点路径数据
+     */
+    private String nodePathText;
+
+    /**
+     * 权限类型
+     */
+    @FXML
+    private FlexComboBox<String> aclType;
+
+    /**
+     * 权限组件
+     */
+    @FXML
+    private FlexHBox perms;
+
+    /**
+     * ip权限
+     */
+    @FXML
+    private FlexHBox ipACL;
+
+    /**
+     * 摘要权限
+     */
+    @FXML
+    private FlexVBox digestACL;
+
+    /**
+     * 摘要权限内容
+     */
+    @FXML
+    private FXLabel digestText;
+
+    /**
+     * ip权限内容
+     */
+    @FXML
+    private ClearableTextField ipContent;
+
+    /**
+     * 摘要权限用户名
+     */
+    @FXML
+    private ClearableTextField digestUser;
+
+    /**
+     * 摘要权限密码
+     */
+    @FXML
+    private ClearableTextField digestPassword;
+
+    /**
+     * 添加zk节点
+     */
+    @FXML
+    private void addZKNode() {
+        if (!this.nodePath.validate()) {
+            return;
+        }
+        // 获取权限
+        ACL acl = this.getACL();
+        if (acl == null) {
+            return;
+        }
+        // 获取节点值
+        String nodeData = this.nodeData.getText();
+        try {
+            // 获取创建模式
+            CreateMode createMode = CreateMode.fromFlag(this.createMode.getSelectedIndex());
+            // 新增节点
+            String node = this.zkClient.create(this.nodePathText, nodeData.getBytes(), List.of(acl), null, createMode, true);
+            if (node == null) {
+                FXToastUtil.warn("新增子节点失败！");
+            } else {
+                FXToastUtil.ok("新增子节点成功！");
+                this.closeView();
+            }
+        } catch (Exception e) {
+            FXAlertUtil.warn(e, ZKExceptionParser.INSTANCE);
+        }
+    }
+
+    /**
+     * 粘贴数据
+     */
+    @FXML
+    private void pasteData() {
+        this.nodeData.paste();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 清空数据
+     */
+    @FXML
+    private void clearData() {
+        this.nodeData.clear();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 解析为json
+     */
+    @FXML
+    private void parseToJson() {
+        String text = this.nodeData.getTextTrim();
+        try {
+            if ("json".equals(this.nodeData.getUserData())) {
+                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
+                String jsonStr = JSONObject.toJSONString(json);
+                this.nodeData.setText(jsonStr);
+                this.nodeData.setUserData("text");
+            } else if (text.contains("{") || text.contains("[") || "text".equals(this.nodeData.getUserData())) {
+                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
+                String jsonStr = JSONObject.toJSONString(json, true);
+                this.nodeData.setText(jsonStr);
+                this.nodeData.setUserData("json");
+            }
+        } catch (Exception ignore) {
+        }
+    }
+
+    /**
+     * 获取权限
+     *
+     * @return 权限
+     */
+    private ACL getACL() {
+        StringBuilder builder = new StringBuilder();
+        CheckBox a = (CheckBox) this.perms.getChildren().get(0);
+        CheckBox w = (CheckBox) this.perms.getChildren().get(1);
+        CheckBox r = (CheckBox) this.perms.getChildren().get(2);
+        CheckBox d = (CheckBox) this.perms.getChildren().get(3);
+        CheckBox c = (CheckBox) this.perms.getChildren().get(4);
+        if (a.isSelected()) {
+            builder.append("a");
+        }
+        if (w.isSelected()) {
+            builder.append("w");
+        }
+        if (r.isSelected()) {
+            builder.append("r");
+        }
+        if (d.isSelected()) {
+            builder.append("d");
+        }
+        if (c.isSelected()) {
+            builder.append("c");
+        }
+
+        if (builder.isEmpty()) {
+            FXAlertUtil.warn("请最少选择一项权限！");
+            return null;
+        }
+
+        // 获取权限
+        int perms = ZKACLUtil.toPermInt(builder.toString());
+
+        // 开放权限
+        if (this.aclType.getSelectedIndex() == 0) {
+            return new ACL(perms, new Id("world", "anyone"));
+        }
+
+        // 摘要权限
+        if (this.aclType.getSelectedIndex() == 1) {
+            // 获取内容
+            String user = this.digestUser.getText().trim();
+            if (StrUtil.isBlank(user)) {
+                FXTipUtil.tip("用户名不能为空！", this.digestUser);
+                return null;
+            }
+            String password = this.digestPassword.getText().trim();
+            if (StrUtil.isBlank(password)) {
+                FXTipUtil.tip("密码不能为空！", this.digestPassword);
+                return null;
+            }
+            String digest = ZKAuthUtil.digest(user, password);
+            return new ACL(perms, new Id("digest", digest));
+        }
+
+        // ip权限
+        if (this.aclType.getSelectedIndex() == 2) {
+            // 获取内容
+            String ip = this.ipContent.getTextTrim();
+            try {
+                ZKACLUtil.checkIP(ip);
+            } catch (Exception ex) {
+                FXTipUtil.tip(ex.getMessage(), this.digestPassword);
+                return null;
+            }
+            return new ACL(perms, new Id("ip", ip));
+        }
+        return null;
+    }
+
+
+    @Override
+    protected void bindListeners() {
+        // 节点路径变化处理
+        this.nodePath.addTextChangedListener((observableValue, s, t1) -> {
+            if (StrUtil.isNotBlank(t1)) {
+                this.nodePathText = ZKNodeUtil.concatPath(this.parentNode.getText(), t1).trim();
+                this.nodePathPreviewBox.setVisible(true);
+            } else {
+                this.nodePathText = "";
+                this.nodePathPreviewBox.setVisible(false);
+            }
+            this.nodePathPreview.setText(this.nodePathText);
+        });
+
+        // 权限变化处理
+        this.aclType.selectedIndexChanged((observable, oldValue, newValue) -> {
+            if (newValue.intValue() == 0) {
+                this.ipACL.hideNode();
+                this.digestACL.hideNode();
+            } else if (newValue.intValue() == 1) {
+                this.ipACL.hideNode();
+                this.digestACL.showNode();
+            } else if (newValue.intValue() == 2) {
+                this.ipACL.showNode();
+                this.digestACL.hideNode();
+            }
+        });
+
+        // 文本监听器
+        ChangeListener<String> info1listener = (observableValue, s, t1) -> {
+            String user = this.digestUser.getText().trim();
+            String password = this.digestPassword.getTextTrim();
+            if (StrUtil.isNotBlank(user) && StrUtil.isNotBlank(password)) {
+                String digest = ZKAuthUtil.digest(user, password);
+                this.digestText.setText(digest);
+            } else {
+                this.digestText.setText("");
+            }
+        };
+
+        // 认证信息更新时，动态显示摘要信息
+        this.digestUser.addTextChangedListener(info1listener);
+        this.digestPassword.addTextChangedListener(info1listener);
+    }
+
+    @Override
+    public void onViewShown(WindowEvent event) {
+        this.parentNodeBox.managedProperty().bind(this.parentNode.visibleProperty());
+        ZKNodeTreeItem zkItem = this.getViewProp("zkItem");
+        this.zkClient = this.getViewProp("zkClient");
+        if (zkItem != null) {
+            this.parentNode.setVisible(true);
+            this.parentNode.setText(zkItem.nodePath());
+        } else {
+            this.parentNode.setVisible(false);
+        }
+        this.nodePath.requestFocus();
+        this.nodePathPreviewBox.managedProperty().bind(this.nodePathPreviewBox.visibleProperty());
+        TabSwitchHandler.init(this.view);
+        this.view.hideOnEscape();
+        super.onViewShown(event);
+    }
+
+    @Override
+    public void onViewHidden(WindowEvent event) {
+        TabSwitchHandler.destroy(this.view);
+        super.onViewHidden(event);
+    }
+}

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="550">
+    <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
+        <FXTab text="节点数据">
+            <FlexVBox flexWidth="100%">
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="parentNodeBox">
+                    <FXLabel text="上级节点" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ReadOnlyTextField fx:id="parentNode" realHeight="30" flexWidth="100% - 140">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ReadOnlyTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="节点类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexComboBox initIndex="0" fx:id="createMode" realHeight="30.0" flexWidth="100% - 140">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="持久节点(PERSISTENT)"/>
+                                <String fx:value="临时节点(EPHEMERAL)"/>
+                                <String fx:value="持久顺序节点(PERSISTENT_SEQUENTIAL)"/>
+                                <String fx:value="临时顺序节点(EPHEMERAL_SEQUENTIAL)"/>
+                                <String fx:value="容器节点(CONTAINER)"/>
+                            </FXCollections>
+                        </items>
+                    </FlexComboBox>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="nodePath" realHeight="30.0" flexWidth="100% - 140"
+                                        tipText="请输入节点路径" require="true" >
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathPreviewBox" visible="false" managed="false">
+                    <FXLabel text="路径预览" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ReadOnlyTextField fx:id="nodePathPreview" flexWidth="100% - 140" style="-fx-text-fill: #808080"
+                                       realHeight="30.0">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ReadOnlyTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" flexHeight="100% - 195">
+                    <FXLabel text="节点数据" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexTextArea fx:id="nodeData" flexHeight="100% - 25" tipText="请输入节点数据(可选)"
+                                  flexWidth="100% - 140">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexTextArea>
+                    <FlexVBox>
+                        <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
+                                  tipText="粘贴数据">
+                            <VBox.margin>
+                                <Insets left="5" top="10"/>
+                            </VBox.margin>
+                        </SVGGlyph>
+                        <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
+                                  tipText="清空数据">
+                            <VBox.margin>
+                                <Insets left="5" top="10"/>
+                            </VBox.margin>
+                        </SVGGlyph>
+                        <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                            <VBox.margin>
+                                <Insets left="5" top="10"/>
+                            </VBox.margin>
+                        </SVGGlyph>
+                    </FlexVBox>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="节点权限">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexComboBox fx:id="aclType" realHeight="30" flexWidth="100% - 140" initIndex="0" require="true">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="开放认证(WORLD)"/>
+                                <String fx:value="摘要认证(DIGEST)"/>
+                                <String fx:value="IP认证(IP)"/>
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexComboBox>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="权限范围" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexHBox realHeight="30" flexWidth="100% - 140" fx:id="perms">
+                        <padding>
+                            <Insets left="10" top="20"/>
+                        </padding>
+                        <FlexCheckBox text="特权" selected="true" realWidth="60"/>
+                        <FlexCheckBox text="写入" selected="true" realWidth="60">
+                            <HBox.margin>
+                                <Insets left="5"/>
+                            </HBox.margin>
+                        </FlexCheckBox>
+                        <FlexCheckBox text="读取" selected="true" realWidth="60">
+                            <HBox.margin>
+                                <Insets left="5"/>
+                            </HBox.margin>
+                        </FlexCheckBox>
+                        <FlexCheckBox text="删除子节点" selected="true" realWidth="90">
+                            <HBox.margin>
+                                <Insets left="5"/>
+                            </HBox.margin>
+                        </FlexCheckBox>
+                        <FlexCheckBox text="创建子节点" selected="true" realWidth="90">
+                            <HBox.margin>
+                                <Insets left="5"/>
+                            </HBox.margin>
+                        </FlexCheckBox>
+                    </FlexHBox>
+                </FlexHBox>
+                <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digestACL">
+                    <FlexHBox realHeight="50" flexWidth="100%">
+                        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                            <HBox.margin>
+                                <Insets left="20" top="10"/>
+                            </HBox.margin>
+                        </FXLabel>
+                        <ClearableTextField tipText="用户名" fx:id="digestUser" realHeight="30" flexWidth="50% - 115"
+                                       >
+                            <HBox.margin>
+                                <Insets left="10" top="10"/>
+                            </HBox.margin>
+                        </ClearableTextField>
+                        <ClearableTextField tipText="密码(明文)" fx:id="digestPassword" realHeight="30"
+                                            flexWidth="50% - 115" >
+                            <HBox.margin>
+                                <Insets left="5" top="10"/>
+                            </HBox.margin>
+                        </ClearableTextField>
+                    </FlexHBox>
+                    <FlexHBox flexWidth="100%" realHeight="15">
+                        <VBox.margin>
+                            <Insets left="95"/>
+                        </VBox.margin>
+                        <FXLabel fx:id="digestText"/>
+                    </FlexHBox>
+                </FlexVBox>
+                <FlexHBox flexWidth="100%" realHeight="50" managed="false" visible="false" fx:id="ipACL">
+                    <FXLabel text="IP地址" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="ipContent" realHeight="30" flexWidth="100% - 335" tipText="请输入ip地址"
+                                   >
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+    </FlexTabPane>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <SubmitButton onAction="#addZKNode">
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

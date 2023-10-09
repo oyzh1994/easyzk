@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthController" realWidth="600" realHeight="240">
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ReadOnlyTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 140">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ReadOnlyTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="认证方式" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexComboBox initIndex="0" fx:id="authType" tipText="认证方式" realHeight="30" flexWidth="100% - 140">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="用户密码明文"/>
+                    <String fx:value="已有认证信息"/>
+                </FXCollections>
+            </items>
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </FlexComboBox>
+    </FlexHBox>
+    <FlexVBox fx:id="authType1" flexWidth="100%" realHeight="50">
+        <FlexHBox flexWidth="100%" flexHeight="100%">
+            <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                <HBox.margin>
+                    <Insets left="20" top="10"/>
+                </HBox.margin>
+            </FXLabel>
+            <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 115" tipText="认证用户名" >
+                <HBox.margin>
+                    <Insets left="10" top="10"/>
+                </HBox.margin>
+            </ClearableTextField>
+            <ClearableTextField fx:id="password" realHeight="30" flexWidth="50% - 115" tipText="认证密码(明文)" >
+                <HBox.margin>
+                    <Insets left="10" top="10"/>
+                </HBox.margin>
+            </ClearableTextField>
+            <FlexCheckBox text="保存信息" fx:id="saveInfo1" tipText="保存认证信息" selected="true">
+                <HBox.margin>
+                    <Insets left="10" top="18"/>
+                </HBox.margin>
+            </FlexCheckBox>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox flexWidth="100%" realHeight="50" fx:id="authType2" visible="false" managed="false">
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                <HBox.margin>
+                    <Insets left="20" top="10"/>
+                </HBox.margin>
+            </FXLabel>
+            <FlexComboBox tipText="请选择认证信息" fx:id="authList" realHeight="30" flexWidth="100% - 140">
+                <HBox.margin>
+                    <Insets left="10" top="10"/>
+                </HBox.margin>
+            </FlexComboBox>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <SubmitButton onAction="#auth" text="认证">
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

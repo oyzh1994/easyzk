@@ -1,0 +1,459 @@
+package cn.oyzh.easyzk.controller;
+
+import cn.oyzh.fx.common.Const;
+import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.plus.controller.FXController;
+import cn.oyzh.fx.plus.controls.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.FlexTabPane;
+import cn.oyzh.fx.plus.controls.MsgTextArea;
+import cn.oyzh.fx.plus.drag.DragUtil;
+import cn.oyzh.fx.plus.drag.DrapFileHandler;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventGroup;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.keyboard.KeyboardListener;
+import cn.oyzh.fx.plus.node.ResizeEnhance;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
+import cn.oyzh.easyzk.domain.PageInfo;
+import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.easyzk.event.ZKEventGroups;
+import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.fx.ZKConnectTreeItem;
+import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.fx.ZKTreeCell;
+import cn.oyzh.easyzk.fx.ZKTreeItemFilter;
+import cn.oyzh.easyzk.fx.ZKTreeView;
+import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
+import cn.oyzh.easyzk.msg.ZKMsg;
+import cn.oyzh.easyzk.msg.ZKMsgFormat;
+import cn.oyzh.easyzk.store.PageInfoStore;
+import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.tabs.ZKTabPane;
+import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
+import javafx.stage.WindowEvent;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+
+/**
+ * zk节点主页
+ *
+ * @author oyzh
+ * @since 2020/9/16
+ */
+@Lazy
+@Slf4j
+@Component
+public class ZKMainController extends FXController {
+
+    /**
+     * 配置对象
+     */
+    private final ZKSetting setting = ZKSettingStore.SETTING;
+
+    /**
+     * 当前激活的zk信息
+     */
+    private ZKInfo zkInfo;
+
+    /**
+     * 左侧zk树
+     */
+    @FXML
+    public ZKTreeView tree;
+
+    /**
+     * 左侧组件
+     */
+    @FXML
+    private FlexTabPane zkMainLeft;
+
+    /**
+     * 大小调整增强
+     */
+    private ResizeEnhance resizeEnhance;
+
+    /**
+     * 倒序排序
+     */
+    private boolean ascSort;
+
+    /**
+     * 节点排序(正序)
+     */
+    @FXML
+    private SVGGlyph sortAsc;
+
+    /**
+     * 节点排序(倒序)
+     */
+    @FXML
+    private SVGGlyph sortDesc;
+
+    /**
+     * 仅看临时节点
+     */
+    @FXML
+    private FlexCheckBox onlyCollect;
+
+    /**
+     * 过滤子节点
+     */
+    @FXML
+    private FlexCheckBox filterSubNode;
+
+    /**
+     * 过滤临时节点
+     */
+    @FXML
+    private FlexCheckBox filterEphemeral;
+
+    /**
+     * zk切换面板
+     */
+    @FXML
+    public ZKTabPane tabPane;
+
+    /**
+     * 消息文本框
+     */
+    @FXML
+    private MsgTextArea msgArea;
+
+    /**
+     * zk搜索Controller
+     */
+    @FXML
+    private ZKSearchController searchController;
+
+    /**
+     * 页面信息
+     */
+    private final PageInfo pageInfo = PageInfoStore.PAGE_INFO;
+
+    /**
+     * 页面信息储存
+     */
+    private final PageInfoStore pageInfoStore = PageInfoStore.INSTANCE;
+
+    /**
+     * zk树节点过滤器
+     */
+    private final ZKTreeItemFilter treeItemFilter = new ZKTreeItemFilter();
+
+    /**
+     * 对子节点排序
+     */
+    @FXML
+    private void sortNodes() {
+        // 设置排序方式
+        this.ascSort = !this.ascSort;
+        this.sortAsc.setVisible(!this.ascSort);
+        this.sortDesc.setVisible(this.ascSort);
+        this.tree.sortItem(this.ascSort);
+    }
+
+    /**
+     * 打开终端
+     */
+    @FXML
+    private void openTerminal() {
+        ZKEventUtil.openTerminal();
+    }
+
+    /**
+     * 执行过滤
+     */
+    private void filter() {
+        TaskManager.startDelayTask("zk:tree:filter", () -> {
+            this.tree.disable();
+            if (this.onlyCollect.isSelected()) {
+                this.treeItemFilter.setOnlyCollect(true);
+                this.treeItemFilter.setExcludeSub(false);
+                this.treeItemFilter.setExcludeEphemeral(false);
+            } else {
+                this.treeItemFilter.setOnlyCollect(false);
+                this.treeItemFilter.setExcludeSub(this.filterSubNode.isSelected());
+                this.treeItemFilter.setExcludeEphemeral(this.filterEphemeral.isSelected());
+            }
+            this.tree.filterItem();
+            this.tree.enable();
+        }, 100);
+    }
+
+    /**
+     * zk信息修改事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_INFO_UPDATED, async = true)
+    private void onZKInfoUpdate(ZKInfoUpdatedMsg msg) {
+        if (this.zkInfo == msg.info()) {
+            this.flushViewTitle(msg.info());
+        }
+    }
+
+    /**
+     * 刷新窗口标题
+     *
+     * @param info zk信息
+     */
+    private void flushViewTitle(ZKInfo info) {
+        if (info != null) {
+            this.view.appendTitle(" (" + info.getName() + ")");
+        } else {
+            this.view.restoreTitle();
+        }
+        this.zkInfo = info;
+    }
+
+    @Override
+    public void onViewShown(WindowEvent event) {
+        super.onViewShown(event);
+        // 注册事件处理
+        EventUtil.register(this);
+        EventUtil.register(this.tree);
+        EventUtil.register(this.tabPane);
+        // 初始化过滤
+        this.tree.itemFilter(this.treeItemFilter);
+        this.treeItemFilter.initFilters();
+        this.filter();
+
+        // 设置上次保存的页面拉伸
+        if (this.setting.isRememberPageResize()) {
+            this.resizeMainLeft(this.pageInfo.getMainLeftWidth());
+        }
+    }
+
+    @Override
+    public void onViewHidden(WindowEvent event) {
+        super.onViewHidden(event);
+        // 取消注册事件处理
+        EventUtil.unregister(this);
+        EventUtil.unregister(this.tree);
+        EventUtil.unregister(this.tabPane);
+        // 关闭连接
+        this.tree.closeConnects();
+        // 保存页面拉伸
+        this.savePageResize();
+        // 取消F5按键监听
+        KeyboardListener.unListenKeyReleased(this.tree, KeyCode.F5);
+        KeyboardListener.unListenKeyReleased(this.tabPane, KeyCode.F5);
+    }
+
+    /**
+     * 左侧组件重新布局
+     *
+     * @param newWidth 新宽度
+     */
+    private void resizeMainLeft(Double newWidth) {
+        if (newWidth != null && !Double.isNaN(newWidth)) {
+            // 设置组件宽
+            this.zkMainLeft.setWidthAll(newWidth);
+            this.tabPane.setLayoutX(newWidth);
+            this.tabPane.setFlexWidth("100% - " + newWidth);
+            this.zkMainLeft.parentAutosize();
+        }
+    }
+
+    @Override
+    public void onSystemExit() {
+        // 保存页面拉伸
+        this.savePageResize();
+    }
+
+    /**
+     * 保存页面拉伸
+     */
+    private void savePageResize() {
+        if (this.setting.isRememberPageResize()) {
+            this.pageInfo.setMainLeftWidth(this.zkMainLeft.getMinWidth());
+            this.pageInfoStore.update(this.pageInfo);
+        }
+    }
+
+    @Override
+    protected void bindListeners() {
+        // 左侧栏业务
+        this.onlyCollect.selectedChanged((obs, o, n) -> {
+            if (n) {
+                this.filterSubNode.disable();
+                this.filterEphemeral.disable();
+            } else {
+                this.filterSubNode.enable();
+                this.filterEphemeral.enable();
+            }
+            this.filter();
+        });
+        this.filterSubNode.selectedChanged((obs, o, n) -> this.filter());
+        this.filterEphemeral.selectedChanged((obs, o, n) -> this.filter());
+        this.sortAsc.managedProperty().bind(this.sortAsc.visibleProperty());
+        this.sortDesc.managedProperty().bind(this.sortDesc.visibleProperty());
+        this.tabPane.selectedTabChanged((abs, o, n) -> {
+            if (o != null) {
+                o.getStyleClass().remove("tab-active");
+            }
+            if (n != null) {
+                n.getStyleClass().add("tab-active");
+            }
+        });
+
+        // zk树选中节点变化事件
+        this.tree.selectItemChanged(item -> {
+            if (item instanceof ZKNodeTreeItem treeItem) {
+                this.tabPane.initNodeTab(treeItem);
+                this.flushViewTitle(treeItem.info());
+            } else if (item instanceof ZKConnectTreeItem treeItem) {
+                this.flushViewTitle(treeItem.info());
+            } else {
+                this.flushViewTitle(null);
+            }
+        });
+
+
+        DragUtil.initDragFile(new DrapFileHandler() {
+            @Override
+            public boolean checkDragboard(Dragboard dragboard) {
+                if (dragboard != null && Objects.equals(dragboard.getString(), ZKTreeCell.DRAG_CONTENT)) {
+                    return false;
+                }
+                return super.checkDragboard(dragboard);
+            }
+
+            @Override
+            public void onDragOver(DragEvent event) {
+                view.disable();
+                view.appendTitle("===松开鼠标以释放文件===");
+                super.onDragOver(event);
+            }
+
+            @Override
+            public void onDragExited(DragEvent event) {
+                view.enable();
+                view.restoreTitle();
+                super.onDragExited(event);
+            }
+
+            @Override
+            public void onDragDropped(DragEvent event, List<File> files) {
+                tree.root().dragFile(files);
+                super.onDragDropped(event, files);
+            }
+        }, this.view.getScene());
+
+        // 拖动改变zk树大小处理
+        this.resizeEnhance = new ResizeEnhance(this.zkMainLeft, Cursor.DEFAULT);
+        this.resizeEnhance.minWidth(390d);
+        this.resizeEnhance.maxWidth(800d);
+        this.resizeEnhance.triggerThreshold(8d);
+        this.resizeEnhance.mouseDragged(event -> {
+            double sceneX = event.getSceneX();
+            if (this.resizeEnhance.resizeWidthAble(sceneX)) {
+                // 左侧组件重新布局
+                this.resizeMainLeft(sceneX);
+            }
+        });
+        // 初始化拉伸事件
+        this.tree.setOnMouseMoved(this.resizeEnhance.mouseMoved());
+        this.resizeEnhance.initResizeEvent();
+        // 监听F5按键
+        KeyboardListener.listenKeyReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
+        KeyboardListener.listenKeyReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
+    }
+
+    /**
+     * 定位节点
+     */
+    @FXML
+    private void positionNode() {
+        this.tree.scrollTo(this.tree.getSelectedItem());
+    }
+
+    /**
+     * 树节点过滤
+     */
+    @EventReceiver(value = ZKEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
+    private void onTreeChildFilter() {
+        this.treeItemFilter.initFilters();
+        this.filter();
+    }
+
+    /**
+     * 展开左侧
+     */
+    @EventReceiver(value = ZKEventTypes.LEFT_EXTEND, async = true, verbose = true)
+    private void leftExtend() {
+        this.zkMainLeft.showNode();
+        double w = this.zkMainLeft.getMinWidth();
+        this.tabPane.setLayoutX(w);
+        this.tabPane.setFlexWidth("100% - " + w);
+        this.zkMainLeft.parentAutosize();
+        log.info("LEFT_EXTEND.");
+    }
+
+    /**
+     * 收缩左侧
+     */
+    @EventReceiver(value = ZKEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
+    private void leftCollapse() {
+        this.zkMainLeft.hideNode();
+        this.tabPane.setLayoutX(0);
+        this.tabPane.setFlexWidth("100%");
+        this.zkMainLeft.parentAutosize();
+        log.info("LEFT_COLLAPSE.");
+    }
+
+    @Override
+    public List<FXController> getSubControllers() {
+        return Collections.singletonList(this.searchController);
+    }
+
+    /**
+     * 当前活跃的zk树节点
+     *
+     * @return zk树节点
+     */
+    public ZKNodeTreeItem activeItem() {
+        if (this.tabPane.getSelectedItem() instanceof ZKNodeTab itemTab) {
+            return itemTab.treeItem();
+        }
+        return null;
+    }
+
+    /**
+     * 清空节点消息
+     */
+    @FXML
+    private void clearMsg() {
+        this.msgArea.clear();
+    }
+
+    /**
+     * 处理zk消息
+     */
+    @EventGroup(value = ZKEventGroups.NODE_ACTION, async = true, verbose = true)
+    @EventGroup(value = ZKEventGroups.INFO_ACTION, async = true, verbose = true)
+    @EventGroup(value = ZKEventGroups.CONNECTION_ACTION, async = true, verbose = true)
+    private void onZKMsg(Event<ZKMsg> event) {
+        if (event.data() instanceof ZKMsgFormat format) {
+            String formatMsg = format.formatMsg();
+            if (formatMsg != null) {
+                this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+### compile ###
+target/
+
+### IntelliJ IDEA ###
+.idea/
+
+### logs ###
+logs/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store

@@ -1,0 +1,1057 @@
+package cn.oyzh.easyzk.zk;
+
+import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.dto.ZKServerNode;
+import cn.oyzh.easyzk.enums.ZKConnState;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.exception.ZKNoAdminPermException;
+import cn.oyzh.easyzk.exception.ZKNoChildPermException;
+import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
+import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
+import cn.oyzh.easyzk.exception.ZKNoReadPermException;
+import cn.oyzh.easyzk.exception.ZKNoWritePermException;
+import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.util.ZKAuthUtil;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.curator.RetryPolicy;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.api.BackgroundCallback;
+import org.apache.curator.framework.api.CreateBuilder;
+import org.apache.curator.framework.api.DeleteBuilder;
+import org.apache.curator.framework.imps.CuratorFrameworkState;
+import org.apache.curator.framework.recipes.cache.TreeCache;
+import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+import org.apache.curator.framework.recipes.cache.TreeCacheListener;
+import org.apache.curator.framework.state.ConnectionState;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.Quotas;
+import org.apache.zookeeper.StatsTrack;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.cli.DelQuotaCommand;
+import org.apache.zookeeper.cli.SetQuotaCommand;
+import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Stat;
+import org.apache.zookeeper.server.quorum.QuorumPeer;
+import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+
+/**
+ * zk客户端封装
+ *
+ * @author oyzh
+ * @since 2020/6/8
+ */
+@Slf4j
+@Accessors(fluent = true, chain = true)
+public class ZKClient {
+
+    /**
+     * 最后的创建节点
+     */
+    private String lastCreate;
+
+    /**
+     * 最后的修改节点
+     */
+    private String lastUpdate;
+
+    /**
+     * 最后的删除节点
+     */
+    private String lastDelete;
+
+    /**
+     * zk信息
+     */
+    @Getter
+    private final ZKInfo zkInfo;
+
+    /**
+     * 树监听对象
+     */
+    private TreeCache treeCache;
+
+    /**
+     * 是否已初始化
+     */
+    private volatile boolean initialized;
+
+    /**
+     * 重试策略
+     */
+    @Getter
+    @Setter
+    private RetryPolicy retryPolicy;
+
+    /**
+     * zk客户端
+     */
+    private CuratorFramework framework;
+
+    /**
+     * zk消息监听器
+     */
+    private volatile ZKTreeListener cacheListener;
+
+    /**
+     * 初始化状态监听器
+     */
+    private final TreeCacheListener initializedListener = (c, e) -> {
+        if (e.getType() == TreeCacheEvent.Type.INITIALIZED) {
+            // 设置状态
+            this.initialized = true;
+            // 移除自身监听器
+            this.treeCache.getListenable().removeListener(this.initializedListener);
+            // 关闭节点监听器
+            if (!this.isEnableListen()) {
+                this.closeTreeCache();
+            }
+        }
+    };
+
+    /**
+     * 连接状态
+     */
+    private final ReadOnlyObjectWrapper<ZKConnState> state = new ReadOnlyObjectWrapper<>();
+
+    /**
+     * 获取连接状态
+     *
+     * @return 连接状态
+     */
+    public ZKConnState state() {
+        return this.stateProperty().get();
+    }
+
+    /**
+     * 连接状态属性
+     *
+     * @return 连接状态属性
+     */
+    public ReadOnlyObjectProperty<ZKConnState> stateProperty() {
+        return this.state.getReadOnlyProperty();
+    }
+
+    public ZKClient(@NonNull ZKInfo zkInfo) {
+        this.zkInfo = zkInfo;
+        this.stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || !newValue.isConnected()) {
+                this.closeTreeCache();
+            } else {
+                ThreadUtil.startVirtual(this::startTreeCache);
+            }
+            if (newValue != null) {
+                switch (newValue) {
+                    case LOST -> ZKEventUtil.connectionLost(this);
+                    case CLOSED -> ZKEventUtil.connectionClosed(this);
+                    case CONNECTED -> ZKEventUtil.connectionConnected(this);
+                }
+            }
+        });
+    }
+
+    /**
+     * 开启zk树监听
+     */
+    private void startTreeCache() {
+        try {
+            // 关闭旧的zk树监听
+            this.closeTreeCache();
+            // 创建zk树监听
+            if (this.cacheListener != null) {
+                this.treeCache = ZKClientUtil.buildTreeCache(this.framework, this.cacheListener.path());
+                this.treeCache.getListenable().addListener(this.cacheListener);
+                this.treeCache.getListenable().addListener(this.initializedListener);
+                this.treeCache.start();
+            } else if (!this.isEnableListen()) {// 未开启监听则只创建连接状态初始化监听器
+                this.treeCache = ZKClientUtil.buildTreeCache(this.framework, "/");
+                this.treeCache.getListenable().addListener(this.initializedListener);
+                this.treeCache.start();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 关闭zk树监听
+     */
+    private void closeTreeCache() {
+        try {
+            if (this.treeCache != null) {
+                this.treeCache.close();
+                this.treeCache = null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 是否开启了节点监听
+     *
+     * @return 结果
+     */
+    public boolean isEnableListen() {
+        return this.zkInfo.getListen();
+    }
+
+    /**
+     * 连接zk以监听模式
+     */
+    public void startWithListener() {
+        if (this.isEnableListen()) {
+            this.cacheListener = new ZKTreeListener(this);
+        } else {
+            this.cacheListener = null;
+        }
+        this.start();
+    }
+
+    /**
+     * 连接zk
+     */
+    public void start() {
+        if (this.isConnected() || this.isConnecting()) {
+            return;
+        }
+        try {
+            // 创建客户端
+            this.framework = ZKClientUtil.buildClient(this.zkInfo, this.retryPolicy);
+            // 开始连接时间
+            final AtomicLong starTime = new AtomicLong();
+            // 设置连接监听事件
+            this.framework.getConnectionStateListenable().addListener((c, s) -> {
+                this.state.set(ZKConnState.valueOf(s));
+                // 连接成功
+                if (s == ConnectionState.CONNECTED) {
+                    long endTime = System.currentTimeMillis();
+                    log.info("zkClient connected used:{}ms.", (endTime - starTime.get()));
+                }
+                log.info("ConnectionState changed:{}", s);
+            });
+            // 开始连接时间
+            starTime.set(System.currentTimeMillis());
+            // 更新连接状态
+            this.state.set(ZKConnState.CONNECTING);
+            // 开始连接
+            this.framework.start();
+            // 连接成功前阻塞线程
+            if (this.framework.blockUntilConnected(this.zkInfo.getConnectTimeOut(), TimeUnit.SECONDS)) {
+                // 更新连接状态
+                this.state.set(ZKConnState.CONNECTED);
+                // 设置认证信息为已认证
+                if (ZKSettingStore.SETTING.isAutoAuth()) {
+                    ZKAuthUtil.setAuthed(this, ZKAuthUtil.loadEnableAuths());
+                }
+            } else {// 连接未成功则关闭
+                this._close();
+                if (this.state.get() == ZKConnState.FAILED) {
+                    this.state.set(null);
+                } else {
+                    this.state.set(ZKConnState.FAILED);
+                }
+            }
+        } catch (Exception e) {
+            log.warn("zkClient start error", e);
+        }
+    }
+
+    /**
+     * 关闭zk
+     */
+    public void close() {
+        this._close();
+        this.state.set(ZKConnState.CLOSED);
+    }
+
+    /**
+     * 关闭zk实际业务
+     */
+    private void _close() {
+        try {
+            if (this.framework != null) {
+                this.framework.close();
+                this.framework = null;
+            }
+            this.closeTreeCache();
+            this.initialized = false;
+            ZKAuthUtil.removeAuthed(this);
+            log.info("zkClient closed.");
+        } catch (Exception e) {
+            log.warn("zkClient close error.", e);
+        }
+    }
+
+    /**
+     * 关闭zk，手动模式
+     */
+    public void closeManual() {
+        this.close();
+        // ZKNodeMsg treeMsg = new ZKNodeMsg(this, ZKEventTypes.ZK_CONNECTION_CLOSED);
+        // EventUtil.fire(ZKEventTypes.ZK_CONNECTION_CLOSED, treeMsg);
+    }
+
+    /**
+     * 是否最后创建的节点
+     *
+     * @param path 节点路径
+     * @return 结果
+     */
+    public boolean isLastCreate(String path) {
+        return Objects.equals(this.lastCreate, path);
+    }
+
+    /**
+     * 清除最后创建的节点
+     */
+    public void clearLastCreate() {
+        this.lastCreate = null;
+    }
+
+    /**
+     * 是否最后修改的节点
+     *
+     * @param path 节点路径
+     * @return 结果
+     */
+    public boolean isLastUpdate(String path) {
+        return Objects.equals(this.lastUpdate, path);
+    }
+
+    /**
+     * 清除最后修改的节点
+     */
+    public void clearLastUpdate() {
+        this.lastUpdate = null;
+    }
+
+    /**
+     * 是否最后删除的节点
+     *
+     * @param path 节点路径
+     * @return 结果
+     */
+    public boolean isLastDelete(String path) {
+        return Objects.equals(this.lastDelete, path);
+    }
+
+    /**
+     * 清除最后删除的节点
+     */
+    public void clearLastDelete() {
+        this.lastDelete = null;
+    }
+
+    /**
+     * zk是否已连接
+     *
+     * @return 结果
+     */
+    public boolean isClosed() {
+        return this.state() == ZKConnState.CLOSED;
+    }
+
+    /**
+     * zk是否已连接
+     *
+     * @return 结果
+     */
+    public boolean isConnected() {
+        ZKConnState state = this.state.get();
+        return state != null && state.isConnected();
+    }
+
+    /**
+     * zk是否连接中
+     *
+     * @return 结果
+     */
+    public boolean isConnecting() {
+        if (this.framework == null || this.isConnected()) {
+            return false;
+        }
+        if (this.framework.getState() == CuratorFrameworkState.LATENT) {
+            return true;
+        }
+        return this.state() == ZKConnState.CONNECTING;
+    }
+
+    /**
+     * 设置权限
+     *
+     * @param path    路径
+     * @param aclList 权限列表
+     * @return Stat 节点状态
+     * @throws Exception 异常
+     */
+    public Stat setACL(@NonNull String path, @NonNull List<ACL> aclList) throws Exception {
+        return this.setACL(path, aclList, null);
+    }
+
+    /**
+     * 设置权限
+     *
+     * @param path    路径
+     * @param aclList 权限列表
+     * @param version 数据版本
+     * @return Stat 节点状态
+     * @throws Exception 异常
+     */
+    public Stat setACL(@NonNull String path, @NonNull List<ACL> aclList, Integer version) throws Exception {
+        try {
+            return this.framework.setACL().withVersion(version == null ? -1 : version).withACL(aclList).forPath(path);
+        } catch (Exception ex) {
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoAdminPermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 设置权限
+     *
+     * @param paths   路径列表
+     * @param aclList 权限列表
+     * @throws Exception 异常
+     */
+    public void setACL(@NonNull List<String> paths, @NonNull List<ACL> aclList) throws Exception {
+        String path = null;
+        try {
+            for (String s : paths) {
+                path = s;
+                this.framework.setACL().withVersion(-1).withACL(aclList).forPath(path);
+            }
+        } catch (Exception ex) {
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoAdminPermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 设置权限
+     *
+     * @param path 路径
+     * @param acl  权限
+     * @return Stat
+     * @throws Exception 异常
+     */
+    public Stat addACL(@NonNull String path, @NonNull ACL acl) throws Exception {
+        List<ACL> aclList = this.getACL(path);
+        aclList.add(acl);
+        return this.setACL(path, aclList);
+    }
+
+    /**
+     * 设置权限
+     *
+     * @param path 路径
+     * @param list 权限列表
+     * @return Stat
+     * @throws Exception 异常
+     */
+    public Stat addACL(@NonNull String path, @NonNull List<? extends ACL> list) throws Exception {
+        List<ACL> aclList = this.getACL(path);
+        aclList.addAll(list);
+        return this.setACL(path, aclList);
+    }
+
+    /**
+     * 设置权限
+     *
+     * @param path 路径
+     * @param acl  权限列表
+     * @return Stat
+     * @throws Exception 异常
+     */
+    public Stat deleteACL(@NonNull String path, @NonNull ACL acl) throws Exception {
+        List<ACL> aclList = this.getACL(path);
+        aclList.remove(acl);
+        return this.setACL(path, aclList);
+    }
+
+    /**
+     * 添加认证信息
+     *
+     * @param user     用户名
+     * @param password 密码
+     * @throws Exception 异常
+     */
+    public void addAuth(@NonNull String user, @NonNull String password) throws Exception {
+        ZooKeeper zooKeeper = this.framework.getZookeeperClient().getZooKeeper();
+        String data = user + ":" + password;
+        zooKeeper.addAuthInfo("digest", data.getBytes());
+        ZKAuthUtil.setAuthed(this, user, password);
+    }
+
+    /**
+     * 检查节点是否存在
+     *
+     * @param path 节点路径
+     * @return 结果
+     */
+    public boolean exists(@NonNull String path) {
+        try {
+            return this.checkExists(path) != null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 创建节点及父节点
+     *
+     * @param path 节点路径
+     * @param data 节点值
+     */
+    public String createIncludeParents(@NonNull String path, byte[] data) throws Exception {
+        return this.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, null, CreateMode.PERSISTENT, true);
+    }
+
+    /**
+     * 创建节点及父节点
+     *
+     * @param path       节点路径
+     * @param data       节点值
+     * @param createMode 节点模式
+     */
+    public String createIncludeParents(@NonNull String path, byte[] data, @NonNull CreateMode createMode) throws Exception {
+        return this.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, null, createMode, true);
+    }
+
+    /**
+     * 创建节点
+     *
+     * @param path       节点路径
+     * @param data       节点值
+     * @param createMode 创建模式
+     */
+    public String create(@NonNull String path, byte[] data, @NonNull CreateMode createMode) throws Exception {
+        return this.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, null, createMode, false);
+    }
+
+    /**
+     * 创建节点
+     *
+     * @param path       节点路径
+     * @param data       节点值
+     * @param aclList    权限集合
+     * @param ttl        生存时间
+     * @param createMode 创建模式
+     * @param cParents   在需要的时候是否创建父节点
+     */
+    public String create(@NonNull String path, byte[] data, @NonNull List<ACL> aclList, Long ttl, @NonNull CreateMode createMode, boolean cParents) throws Exception {
+        String old = this.lastCreate;
+        try {
+            this.lastCreate = path;
+            CreateBuilder builder = this.framework.create();
+            if (cParents) {
+                builder.creatingParentsIfNeeded();
+            }
+            if (ttl != null) {
+                builder.withTtl(ttl);
+            }
+            builder.withMode(createMode).withACL(aclList);
+            String nodePath;
+            if (data == null) {
+                nodePath = builder.forPath(path);
+            } else {
+                nodePath = builder.forPath(path, data);
+            }
+            if (nodePath != null) {
+                ZKEventUtil.nodeAdd(this, path);
+            }
+            return nodePath;
+        } catch (Exception ex) {
+            this.lastCreate = old;
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoCreatePermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 创建节点
+     *
+     * @param path       节点路径
+     * @param data       节点值
+     * @param aclList    权限集合
+     * @param createMode 创建模式
+     */
+    public String create(@NonNull String path, String data, @NonNull List<ACL> aclList, @NonNull CreateMode createMode) throws Exception {
+        return this.create(path, data, aclList, null, createMode, false);
+    }
+
+    /**
+     * 创建节点
+     *
+     * @param path       节点路径
+     * @param data       节点值
+     * @param aclList    权限集合
+     * @param createMode 创建模式
+     * @param cParents   在需要的时候是否创建父节点
+     */
+    public String create(@NonNull String path, String data, @NonNull List<ACL> aclList, @NonNull CreateMode createMode, boolean cParents) throws Exception {
+        return this.create(path, data, aclList, null, createMode, cParents);
+    }
+
+    /**
+     * 创建节点
+     *
+     * @param path       节点路径
+     * @param data       节点值
+     * @param aclList    权限集合
+     * @param ttl        生存时间
+     * @param createMode 创建模式
+     * @param cParents   在需要的时候是否创建父节点
+     */
+    public String create(@NonNull String path, String data, @NonNull List<ACL> aclList, Long ttl, @NonNull CreateMode createMode, boolean cParents) throws Exception {
+        byte[] bytes = null;
+        if (data != null) {
+            bytes = data.getBytes();
+            // bytes = data.getBytes(TextUtil.getCharset(this.getCharset()));
+        }
+        return this.create(path, bytes, aclList, ttl, createMode, cParents);
+    }
+
+    // /**
+    //  * 循环获取所有节点
+    //  *
+    //  * @param path 路径
+    //  * @return 节点列表
+    //  */
+    // public List<String> loop(@NonNull String path) throws Exception {
+    //     List<String> paths = new ArrayList<>();
+    //     this._loop(path, paths);
+    //     paths = paths.parallelStream().sorted().collect(Collectors.toList());
+    //     return paths;
+    // }
+    //
+    // /**
+    //  * 循环获取所有节点
+    //  *
+    //  * @param path  路径
+    //  * @param paths 节点列表
+    //  */
+    // private void _loop(@NonNull String path, List<String> paths) throws Exception {
+    //     paths.add(path);
+    //     List<String> list = this.getChildren(path);
+    //     for (String child : list) {
+    //         this._loop(ZKNodeUtil.concatPath(path, child), paths);
+    //     }
+    // }
+
+    /**
+     * 获取子节点
+     *
+     * @param path 路径
+     * @return 子节点列表
+     */
+    public List<String> getChildren(@NonNull String path) throws Exception {
+        try {
+            return this.framework.getChildren().forPath(path);
+        } catch (Exception ex) {
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoChildPermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 获取子节点(异步)
+     *
+     * @param path     路径
+     * @param callback 回调函数
+     */
+    public void getChildren(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
+        try {
+            this.framework.getChildren().inBackground(callback).forPath(path);
+        } catch (IllegalStateException ignore) {
+        } catch (Exception ex) {
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoChildPermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 获取节点数据
+     *
+     * @param path 路径
+     * @return 节点数据
+     */
+    public byte[] getData(@NonNull String path) throws Exception {
+        try {
+            return this.framework.getData().forPath(path);
+        } catch (Exception ex) {
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoReadPermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 获取节点数据(异步)
+     *
+     * @param path     路径
+     * @param callback 回调函数
+     */
+    public void getData(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
+        try {
+            this.framework.getData().inBackground(callback).forPath(path);
+        } catch (IllegalStateException ignore) {
+        } catch (Exception ex) {
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoReadPermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 获取节点数据，字符串形式
+     *
+     * @param path 路径
+     * @return 节点数据
+     */
+    public String getDataString(@NonNull String path) throws Exception {
+        byte[] bytes = this.getData(path);
+        if (bytes != null) {
+            return new String(bytes);
+        }
+        return null;
+    }
+
+    /**
+     * 获取节点权限
+     *
+     * @param path 路径
+     * @return 权限数据
+     */
+    public List<ACL> getACL(@NonNull String path) throws Exception {
+        try {
+            return this.framework.getACL().forPath(path);
+        } catch (Exception ex) {
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoAdminPermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 获取节点权限(异步)
+     *
+     * @param path     路径
+     * @param callback 回调函数
+     */
+    public void getACL(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
+        try {
+            this.framework.getACL().inBackground(callback).forPath(path);
+        } catch (IllegalStateException ignore) {
+        } catch (Exception ex) {
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoAdminPermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 设置节点数据
+     *
+     * @param path    路径
+     * @param data    数据
+     * @param version 版本
+     * @return Stat 状态
+     */
+    public Stat setData(@NonNull String path, String data, Integer version) throws Exception {
+        byte[] bytes = Objects.requireNonNullElse(data, "").getBytes();
+        return this.setData(path, bytes, version);
+    }
+
+    /**
+     * 设置节点数据
+     *
+     * @param path 路径
+     * @param data 数据
+     * @return Stat 状态
+     */
+    public Stat setData(@NonNull String path, byte @NonNull [] data) throws Exception {
+        return this.setData(path, data, null);
+    }
+
+    /**
+     * 设置节点数据
+     *
+     * @param path    路径
+     * @param data    数据
+     * @param version 版本
+     * @return Stat 状态
+     */
+    public Stat setData(@NonNull String path, byte @NonNull [] data, Integer version) throws Exception {
+        String old = this.lastUpdate;
+        try {
+            this.lastUpdate = path;
+            Stat stat = this.framework.setData().withVersion(version == null ? -1 : version).forPath(path, data);
+            if (stat != null) {
+                ZKEventUtil.nodeUpdate(this, path);
+            }
+            return stat;
+        } catch (Exception ex) {
+            this.lastUpdate = old;
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoWritePermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 同步节点数据
+     *
+     * @param path 路径
+     */
+    public void sync(@NonNull String path) throws Exception {
+        this.framework.sync().forPath(path);
+    }
+
+    /**
+     * 设置节点数据
+     *
+     * @param node zk节点
+     * @param data 数据
+     * @return 结果
+     */
+    public boolean setData(@NonNull ZKNode node, String data) throws Exception {
+        byte[] bytes = data == null ? "".getBytes() : data.getBytes();
+        Stat stat = this.setData(node.nodePath(), bytes, null);
+        if (stat != null) {
+            node.stat(stat);
+            node.nodeData(bytes);
+        }
+        return stat != null;
+    }
+
+    /**
+     * 删除节点
+     *
+     * @param path 路径
+     */
+    public void delete(@NonNull String path) throws Exception {
+        this.delete(path, null, false);
+    }
+
+    /**
+     * 删除节点
+     *
+     * @param path        路径
+     * @param version     版本
+     * @param delChildren 删除子节点
+     */
+    public void delete(@NonNull String path, Integer version, boolean delChildren) throws Exception {
+        String old = this.lastDelete;
+        try {
+            this.lastDelete = path;
+            DeleteBuilder builder = this.framework.delete();
+            builder.guaranteed().withVersion(version == null ? -1 : version);
+            if (delChildren) {
+                builder.deletingChildrenIfNeeded();
+            }
+            builder.forPath(path);
+            ZKEventUtil.nodeDelete(this, path, delChildren);
+        } catch (Exception ex) {
+            this.lastDelete = old;
+            if (ex instanceof KeeperException.NoAuthException) {
+                log.error("path:{} NoAuth!", path);
+                throw new ZKNoDeletePermException(path);
+            }
+            throw ex;
+        }
+    }
+
+    /**
+     * 获取状态
+     *
+     * @param path 路径
+     * @return 状态
+     */
+    public Stat checkExists(@NonNull String path) throws Exception {
+        return this.framework.checkExists().forPath(path);
+    }
+
+    /**
+     * 获取状态(异步)
+     *
+     * @param path     路径
+     * @param callback 回调函数
+     */
+    public void checkExists(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
+        try {
+            this.framework.checkExists().inBackground(callback).forPath(path);
+        } catch (IllegalStateException ignore) {
+        }
+    }
+
+    /**
+     * 创建配额
+     *
+     * @param path  路径
+     * @param bytes 限制数据大小
+     * @param num   限制子节点数量
+     */
+    public boolean createQuota(@NonNull String path, long bytes, int num) throws Exception {
+        // StatsTrack track = new StatsTrack();
+        // track.setBytes(bytes);
+        // track.setCount(num);
+        // return SetQuotaCommand.createQuota(this.getZooKeeper(), path, track);
+        return SetQuotaCommand.createQuota(this.getZooKeeper(), path, bytes, num);
+    }
+
+    /**
+     * 删除配额
+     *
+     * @param path  路径
+     * @param bytes 删除数据大小配额
+     * @param num   删除子节点数量配额
+     */
+    public boolean delQuota(@NonNull String path, boolean bytes, boolean num) throws Exception {
+        // StatsTrack track = new StatsTrack();
+        // if (bytes) {
+        //     track.setBytes(-1);
+        // }
+        // if (num) {
+        //     track.setCount(-1);
+        // }
+        // return DelQuotaCommand.delQuota(this.getZooKeeper(), path, track);
+        return DelQuotaCommand.delQuota(this.getZooKeeper(), path, bytes, num);
+    }
+
+    /**
+     * 列举配额
+     *
+     * @param path 路径
+     */
+    public StatsTrack listQuota(@NonNull String path) throws Exception {
+        String absolutePath = Quotas.quotaZookeeper + path + "/" + Quotas.limitNode;
+        byte[] data = this.getData(absolutePath);
+        return new StatsTrack(new String(data));
+    }
+
+    /**
+     * 获取当前配置
+     *
+     * @return 配置
+     */
+    public QuorumVerifier getCurrentConfig() {
+        return this.framework.getCurrentConfig();
+    }
+
+    /**
+     * 获取集群服务列表
+     *
+     * @return 集群服务列表
+     */
+    public List<ZKServerNode> getServers() {
+        List<ZKServerNode> servers = new ArrayList<>();
+        try {
+            QuorumVerifier verifier = this.getCurrentConfig();
+            // 老版本实现
+            if (this.zkInfo.compatibility34() || verifier == null) {
+                if (this.exists("/zookeeper/config")) {
+                    String data = this.getDataString("/zookeeper/config");
+                    if (data != null) {
+                        for (String str : data.lines().toList()) {
+                            if (str.startsWith("server.")) {
+                                servers.add(new ZKServerNode(str));
+                            }
+                        }
+                    }
+                }
+            } else {// 新版本实现
+                Collection<QuorumPeer.QuorumServer> quorumServers = verifier.getVotingMembers().values();
+                for (QuorumPeer.QuorumServer quorumServer : quorumServers) {
+                    ZKServerNode serverNode = new ZKServerNode(quorumServer);
+                    serverNode.setWeight(verifier.getWeight(quorumServer.id));
+                    servers.add(serverNode);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return servers;
+    }
+
+    /**
+     * 是否已初始化完成
+     *
+     * @return 结果
+     */
+    public boolean initialized() {
+        return this.initialized && this.isConnected();
+    }
+
+    /**
+     * 获取连接名称
+     *
+     * @return 连接名称
+     */
+    public String infoName() {
+        return this.zkInfo.getName();
+    }
+
+    /**
+     * 获取zookeeper对象
+     *
+     * @return ZooKeeper
+     * @throws Exception 异常
+     */
+    public ZooKeeper getZooKeeper() throws Exception {
+        return this.framework.getZookeeperClient().getZooKeeper();
+    }
+
+    /**
+     * 添加状态监听器
+     *
+     * @param stateListener 状态监听器
+     */
+    public void addStateListener(ChangeListener<ZKConnState> stateListener) {
+        if (stateListener != null) {
+            this.state.addListener(stateListener);
+        }
+    }
+}

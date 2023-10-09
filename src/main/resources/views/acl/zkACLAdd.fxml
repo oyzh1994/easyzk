@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLAddController" realWidth="600" realHeight="420">
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="节点路径" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ReadOnlyTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 140">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ReadOnlyTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexComboBox fx:id="aclType" realHeight="30" flexWidth="100% - 140" initIndex="0" require="true">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="开放认证(WORLD)"/>
+                    <String fx:value="摘要认证(DIGEST)-用户密码明文"/>
+                    <String fx:value="摘要认证(DIGEST)-用户密码摘要"/>
+                    <String fx:value="摘要认证(DIGEST)-已有认证信息"/>
+                    <String fx:value="IP认证(IP)-单IP"/>
+                    <String fx:value="IP认证(IP)-多IP"/>
+                </FXCollections>
+            </items>
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </FlexComboBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50" fx:id="permsBox">
+        <FXLabel text="权限范围" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexHBox realHeight="30" flexWidth="100% - 140" fx:id="perms">
+            <padding>
+                <Insets left="10" top="20"/>
+            </padding>
+            <FlexCheckBox text="特权" selected="true" realWidth="60"/>
+            <FlexCheckBox text="写入" selected="true" realWidth="60">
+                <HBox.margin>
+                    <Insets left="5"/>
+                </HBox.margin>
+            </FlexCheckBox>
+            <FlexCheckBox text="读取" selected="true" realWidth="60">
+                <HBox.margin>
+                    <Insets left="5"/>
+                </HBox.margin>
+            </FlexCheckBox>
+            <FlexCheckBox text="删除子节点" selected="true" realWidth="90">
+                <HBox.margin>
+                    <Insets left="5"/>
+                </HBox.margin>
+            </FlexCheckBox>
+            <FlexCheckBox text="创建子节点" selected="true" realWidth="90">
+                <HBox.margin>
+                    <Insets left="5"/>
+                </HBox.margin>
+            </FlexCheckBox>
+        </FlexHBox>
+    </FlexHBox>
+    <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digest1ACL">
+        <FlexHBox realHeight="50" flexWidth="100%">
+            <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                <HBox.margin>
+                    <Insets left="20" top="10"/>
+                </HBox.margin>
+            </FXLabel>
+            <ClearableTextField tipText="用户名" fx:id="digestInfo1User" realHeight="30" flexWidth="50% - 115" >
+                <HBox.margin>
+                    <Insets left="10" top="10"/>
+                </HBox.margin>
+            </ClearableTextField>
+            <ClearableTextField tipText="密码(明文)" fx:id="digestInfo1Password" realHeight="30" flexWidth="50% - 115" >
+                <HBox.margin>
+                    <Insets left="5" top="10"/>
+                </HBox.margin>
+            </ClearableTextField>
+            <FlexCheckBox text="保存信息" realWidth="80" fx:id="digestSaveInfo" tipText="保存认证信息" selected="true">
+                <HBox.margin>
+                    <Insets left="10" top="15"/>
+                </HBox.margin>
+            </FlexCheckBox>
+        </FlexHBox>
+        <FlexHBox flexWidth="100%" realHeight="15">
+            <VBox.margin>
+                <Insets left="95"/>
+            </VBox.margin>
+            <FXLabel fx:id="digestText"/>
+            <SVGGlyph fx:id="copyDigestText" tipText="复制摘要信息" size="16" visible="false"
+                      onMousePrimaryClicked="#copyDigestText" url="/font/file-copy.svg">
+                <HBox.margin>
+                    <Insets left="15"/>
+                </HBox.margin>
+            </SVGGlyph>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexHBox flexWidth="100%" managed="false" realHeight="50" visible="false" fx:id="digest2ACL">
+        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ClearableTextField tipText="格式user:digest" fx:id="digestInfo2" realHeight="30" flexWidth="100% - 140" >
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ClearableTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" managed="false" realHeight="50" visible="false" fx:id="digest3ACL">
+        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexComboBox tipText="请选择认证信息" fx:id="digestInfo3" realHeight="30" flexWidth="100% - 140">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </FlexComboBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50" managed="false" visible="false" fx:id="ip1ACL">
+        <FXLabel text="IP地址" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ClearableTextField fx:id="ipContent1" realHeight="30" flexWidth="100% - 335" tipText="请输入ip地址" >
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ClearableTextField>
+        <FlexButton realHeight="30" realWidth="65" text="网段模式" onMousePrimaryClicked="#segmentModel"
+                    styleClass="lbl,lbl-success">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </FlexButton>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" managed="false" realHeight="260" visible="false" fx:id="ip2ACL">
+        <FXLabel text="IP内容" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexTextArea tipText="请输入内容，格式ip/网段:权限，多个ip/网段以英文分号分隔，例如192.168.2.19:crdwa;192.169.3.0/16:crdwa"
+                      fx:id="ipContent2" realHeight="240" flexWidth="100% - 140">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </FlexTextArea>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <SubmitButton onAction="#addACL">
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

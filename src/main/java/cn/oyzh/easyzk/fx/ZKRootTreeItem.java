@@ -1,0 +1,443 @@
+package cn.oyzh.easyzk.fx;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileNameUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXDialogUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
+import cn.oyzh.fx.plus.util.FXFileChooser;
+import cn.oyzh.fx.plus.view.FXViewUtil;
+import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
+import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.dto.ZKInfoExport;
+import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.msg.ZKInfoAddedMsg;
+import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
+import cn.oyzh.easyzk.store.ZKGroupStore;
+import cn.oyzh.easyzk.store.ZKInfoStore;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.scene.control.MenuItem;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+/**
+ * zk树根节点
+ *
+ * @author oyzh
+ * @since 2023/1/29
+ */
+@Slf4j
+public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
+
+    /**
+     * zk信息储存
+     */
+    private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
+
+    /**
+     * zk分组储存
+     */
+    private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
+
+//    /**
+//     * zk设置
+//     */
+//    private final ZKSetting setting = ZKSettingStore.SETTING;
+
+    public ZKRootTreeItem(@NonNull ZKTreeView treeView) {
+        this.treeView(treeView);
+        this.itemValue(new ZKRootTreeItemValue(this));
+        // this.itemValue("ZK连接列表");
+        // 注册事件处理
+        EventUtil.register(this);
+        // 初始化子节点
+        this.initChildes();
+        // 监听节点变化
+        this.getChildren().addListener((ListChangeListener<? super BaseTreeItem>) c -> {
+            ZKEventUtil.treeChildChanged();
+            this.treeView().flushLocal();
+        });
+    }
+
+    /**
+     * 初始化子节点
+     */
+    private void initChildes() {
+        List<ZKGroup> groups = this.groupStore.load();
+        this.addGroups(groups);
+        List<ZKInfo> zkInfos = this.infoStore.load();
+        this.addConnects(zkInfos);
+    }
+
+    @Override
+    public List<MenuItem> getMenuItems() {
+        List<MenuItem> items = new ArrayList<>();
+        MenuItem addConnect = FXMenuItem.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加zk连接", this::addConnect);
+        MenuItem exportConnect = FXMenuItem.newItem("导出连接", new SVGGlyph("/font/export.svg", "12"), "导出zk连接", this::exportConnect);
+        MenuItem importConnect = FXMenuItem.newItem("导入连接", new SVGGlyph("/font/Import.svg", "12"), "选择文件，导入zk连接，也可拖拽文件到窗口进行导入", this::importConnect);
+        MenuItem addGroup = FXMenuItem.newItem("添加分组", new SVGGlyph("/font/addGroup.svg", "12"), "添加分组", this::addGroup);
+
+        exportConnect.setDisable(this.isChildEmpty());
+
+        items.add(addConnect);
+        items.add(exportConnect);
+        items.add(importConnect);
+        items.add(addGroup);
+        return items;
+    }
+
+    /**
+     * 导出连接
+     */
+    private void exportConnect() {
+        List<ZKInfo> zkInfos = this.infoStore.load();
+        if (zkInfos.isEmpty()) {
+            FXAlertUtil.warn("zk连接列表为空！");
+            return;
+        }
+        ZKInfoExport export = ZKInfoExport.fromConnects(zkInfos);
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
+        File file = FXFileChooser.save("保存zk连接列表", "zk连接列表.json", new FileChooser.ExtensionFilter[]{extensionFilter});
+        try {
+            FileUtil.writeUtf8String(export.toJSONString(), file);
+            FXToastUtil.ok("保存zk连接列表成功！");
+        } catch (Exception ex) {
+            FXAlertUtil.warn("保存zk连接列表失败！");
+        }
+    }
+
+    /**
+     * 拖拽文件
+     *
+     * @param files 文件
+     */
+    public void dragFile(List<File> files) {
+        if (CollUtil.isEmpty(files)) {
+            return;
+        }
+        if (files.size() != 1) {
+            FXAlertUtil.warn("仅支持单个文件！");
+            return;
+        }
+        File file = files.get(0);
+        // 解析文件
+        this.parseConnect(file);
+    }
+
+    /**
+     * 导入连接
+     */
+    private void importConnect() {
+        FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files", "*.json");
+        FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
+        File file = FXFileChooser.choose("选择zk连接列表", new FileChooser.ExtensionFilter[]{filter1, filter2});
+        // 解析文件
+        this.parseConnect(file);
+    }
+
+    /**
+     * 解析连接文件
+     *
+     * @param file 文件
+     */
+    private void parseConnect(File file) {
+        if (file == null) {
+            return;
+        }
+        if (!file.exists()) {
+            FXAlertUtil.warn("文件不存在！");
+            return;
+        }
+        if (file.isDirectory()) {
+            FXAlertUtil.warn("不支持文件夹！");
+            return;
+        }
+        if (!FileNameUtil.isType(file.getName(), "json")) {
+            FXAlertUtil.warn("仅支持json文件！");
+            return;
+        }
+        if (file.length() == 0) {
+            FXAlertUtil.warn("文件内容为空！");
+            return;
+        }
+        try {
+            String text = FileUtil.readUtf8String(file);
+            ZKInfoExport export = ZKInfoExport.fromJSON(text);
+            List<ZKInfo> zkInfos = export.getConnects();
+            if (CollUtil.isNotEmpty(zkInfos)) {
+                for (ZKInfo zkInfo : zkInfos) {
+                    if (this.infoStore.exist(zkInfo)) {
+                        FXAlertUtil.warn("连接[" + zkInfo.getName() + "]已存在");
+                    } else if (this.infoStore.add(zkInfo)) {
+                        this.addConnect(zkInfo);
+                    } else {
+                        FXAlertUtil.warn("连接[" + zkInfo.getName() + "]导入失败");
+                    }
+                }
+                FXToastUtil.ok("导入zk连接列表成功！");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            FXAlertUtil.warn("解析zk连接列表失败！");
+        }
+    }
+
+    /**
+     * 添加连接
+     */
+    private void addConnect() {
+        FXViewUtil.showView(ZKInfoAddController.class, this.window());
+    }
+
+    /**
+     * 添加分组
+     */
+    @EventReceiver(ZKEventTypes.ZK_ADD_GROUP)
+    private void addGroup() {
+        String groupName = FXDialogUtil.prompt("请输入分组名称");
+
+        // 名称为null，则忽略
+        if (groupName == null) {
+            return;
+        }
+
+        // 不能为空
+        if (StrUtil.isBlank(groupName)) {
+            FXAlertUtil.warn("名称不能为空！");
+            return;
+        }
+
+        ZKGroup group = new ZKGroup();
+        group.setName(groupName);
+        if (this.groupStore.exist(group)) {
+            FXAlertUtil.warn("此分组已存在！");
+            return;
+        }
+        group = this.groupStore.add(groupName);
+        if (group != null) {
+            this.addChild(new ZKGroupTreeItem(group, this.treeView()));
+        } else {
+            FXAlertUtil.warn("添加分组失败！");
+        }
+    }
+
+    /**
+     * 获取窗口对象
+     *
+     * @return 窗口对象
+     */
+    public Window window() {
+        return this.treeView().window();
+    }
+
+    @Override
+    public ObservableList<BaseTreeItem> getChildren() {
+        return super.getChildren();
+    }
+
+    /**
+     * 添加多个分组
+     *
+     * @param zkGroups zk分组列表
+     */
+    private void addGroups(List<ZKGroup> zkGroups) {
+        if (CollUtil.isNotEmpty(zkGroups)) {
+            List<ZKGroupTreeItem> list = new ArrayList<>();
+            for (ZKGroup group : zkGroups) {
+                ZKGroupTreeItem groupTreeItem = new ZKGroupTreeItem(group, this.treeView());
+                list.add(groupTreeItem);
+//                if (this.setting.isGroupExpand()) {
+//                    groupTreeItem.setExpanded(true);
+//                }
+            }
+            this.getChildren().addAll(list);
+            this.sort(this.treeView().sortOrder());
+        }
+    }
+
+    /**
+     * 获取分组节点
+     *
+     * @param groupId 分组id
+     */
+    private ZKGroupTreeItem getGroupItem(String groupId) {
+        if (StrUtil.isNotBlank(groupId)) {
+            List<ZKGroupTreeItem> items = this.getGroupItems();
+            Optional<ZKGroupTreeItem> groupTreeItem = items.parallelStream().filter(g -> Objects.equals(g.value().getGid(), groupId)).findAny();
+            return groupTreeItem.orElse(null);
+        }
+        return null;
+    }
+
+    /**
+     * 获取分组节点
+     *
+     * @return 分组节点
+     */
+    private List<ZKGroupTreeItem> getGroupItems() {
+        List<ZKGroupTreeItem> items = new ArrayList<>(this.getChildren().size());
+        for (BaseTreeItem item : this.getChildren()) {
+            if (item instanceof ZKGroupTreeItem groupTreeItem) {
+                items.add(groupTreeItem);
+            }
+        }
+        return items;
+    }
+
+    @Override
+    public void sort(Boolean sortOrder) {
+        if (sortOrder != null) {
+            super.sort(sortOrder);
+            for (ZKGroupTreeItem groupItem : this.getGroupItems()) {
+                groupItem.sort(sortOrder);
+            }
+        }
+    }
+
+    @Override
+    public void filter(@NonNull ZKTreeItemFilter filter) {
+        List<ZKConnectTreeItem> connectedItems = this.getConnectedItems();
+        if (CollUtil.isNotEmpty(connectedItems)) {
+            List<Runnable> tasks = new ArrayList<>(connectedItems.size());
+            for (ZKConnectTreeItem connectedItem : connectedItems) {
+                tasks.add(() -> connectedItem.filter(filter));
+            }
+            // 提交任务
+            ThreadUtil.submitVirtual(tasks);
+        }
+    }
+
+    /**
+     * 连接新增事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(ZKEventTypes.ZK_INFO_ADDED)
+    private void onInfoAdded(ZKInfoAddedMsg msg) {
+        this.addConnect(msg.info());
+    }
+
+    /**
+     * 连接变更事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_INFO_UPDATED, async = true, verbose = true)
+    private void onInfoUpdated(ZKInfoUpdatedMsg msg) {
+        ZKInfo info = msg.info();
+        ObservableList<BaseTreeItem> items = this.getChildren();
+        f1:
+        for (BaseTreeItem item : items) {
+            if (item instanceof ZKConnectTreeItem connectTreeItem) {
+                if (connectTreeItem.value() == info) {
+                    connectTreeItem.value(info);
+                    break;
+                }
+            } else if (item instanceof ZKGroupTreeItem groupTreeItem) {
+                for (ZKConnectTreeItem connectTreeItem : groupTreeItem.getChildren()) {
+                    if (connectTreeItem.value() == info) {
+                        connectTreeItem.value(info);
+                        break f1;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void addConnect(@NonNull ZKInfo zkInfo) {
+        ZKGroupTreeItem groupTreeItem = this.getGroupItem(zkInfo.getGroupId());
+        if (groupTreeItem == null) {
+            super.addChild(new ZKConnectTreeItem(zkInfo, this.treeView()));
+        } else {
+            groupTreeItem.addConnect(zkInfo);
+        }
+    }
+
+    @Override
+    public void addConnectItem(@NonNull ZKConnectTreeItem item) {
+        if (this.getChildren().contains(item)) {
+            return;
+        }
+        if (item.value().getGroupId() != null) {
+            item.value().setGroupId(null);
+            this.infoStore.update(item.value());
+        }
+        super.addChild(item);
+        if (!this.isExpanded()) {
+            this.extend();
+        }
+    }
+
+    @Override
+    public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
+        if (CollUtil.isNotEmpty(items)) {
+            this.getChildren().addAll(items);
+            this.sort(this.treeView().sortOrder());
+        }
+    }
+
+    @Override
+    public boolean delConnectItem(@NonNull ZKConnectTreeItem item) {
+        // 删除连接
+        if (this.infoStore.delete(item.value())) {
+            this.removeChild(item);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<ZKConnectTreeItem> getConnectItems() {
+        List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildren().size());
+        for (BaseTreeItem child : this.getChildren()) {
+            if (child instanceof ZKConnectTreeItem connectTreeItem) {
+                items.add(connectTreeItem);
+            } else if (child instanceof ZKGroupTreeItem groupTreeItem) {
+                items.addAll(groupTreeItem.getConnectItems());
+            }
+        }
+        return items;
+    }
+
+    @Override
+    public List<ZKConnectTreeItem> getConnectedItems() {
+        List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildren().size());
+        for (BaseTreeItem item : this.getChildren()) {
+            if (item instanceof ZKConnectTreeItem connectTreeItem) {
+                if (connectTreeItem.isConnect()) {
+                    items.add(connectTreeItem);
+                }
+            } else if (item instanceof ZKGroupTreeItem groupTreeItem) {
+                items.addAll(groupTreeItem.getConnectedItems());
+            }
+        }
+        return items;
+    }
+
+    /**
+     * 添加连接
+     */
+    @EventReceiver(ZKEventTypes.ZK_ADD_CONNECT)
+    private void onAddConnect() {
+        FXViewUtil.showView(ZKInfoAddController.class, this.window());
+    }
+}

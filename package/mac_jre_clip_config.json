@@ -1,0 +1,19 @@
+{
+  "src": "D:\\Package\\EasyZK\\macos_amd64_jre",
+  "dest": "D:\\Package\\EasyZK\\macos_amd64_jre_clip",
+  "excludeFiles": [
+    "javaw",
+    "jrunscript",
+    "splashscreen",
+    "libjawt.dylib",
+    "liblcms.dylib",
+    "libprefs.dylib",
+    "libj2gss.dylib",
+    "libjsound.dylib",
+    "libjavajpeg.dylib",
+    "libmlib_image.dylib",
+    "libsplashscreen.dylib",
+    "classlist",
+    "sound.properties"
+  ]
+}

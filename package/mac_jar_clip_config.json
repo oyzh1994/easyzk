@@ -1,0 +1,14 @@
+{
+  "src": "D:\\Workspaces\\OYZH\\Web\\easypanel\\easyzk\\target\\easyzk-1.0.jar",
+  "dest": "D:\\Package\\EasyZK\\easyzk_mac.jar",
+  "retainTemp": false,
+  "delEmptyJar": true,
+  "excludeJars": [
+    "javafx-fxml-20.0.1-win.jar",
+    "javafx-fxml-20.0.1-linux.jar",
+    "javafx-controls-20.0.1-win.jar",
+    "javafx-controls-20.0.1-linux.jar",
+    "javafx-graphics-20.0.1-win.jar",
+    "javafx-graphics-20.0.1-linux.jar"
+  ]
+}

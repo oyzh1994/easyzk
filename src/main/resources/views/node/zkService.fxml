@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.node.ZKServiceController" realHeight="600" realWidth="900">
+    <FXSeparator flexWidth="100% - 24" text="服务信息">
+        <VBox.margin>
+            <Insets left="12" top="5" bottom="5"/>
+        </VBox.margin>
+    </FXSeparator>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="节点名称" realHeight="30" realWidth="85" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ReadOnlyTextField fx:id="zkInfoName" realHeight="30" flexWidth="100% - 160">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ReadOnlyTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="sdk版本" realHeight="30" realWidth="85" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ReadOnlyTextField fx:id="sdkVersion" realHeight="30" flexWidth="100% - 160">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ReadOnlyTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="80">
+        <FXLabel text="连接地址" realHeight="30" realWidth="85" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ReadOnlyTextArea fx:id="zkInfoHost" realHeight="80" flexWidth="100% - 160">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ReadOnlyTextArea>
+    </FlexHBox>
+    <FXSeparator flexWidth="100% - 24" text="集群信息">
+        <VBox.margin>
+            <Insets left="12" top="5" bottom="5"/>
+        </VBox.margin>
+    </FXSeparator>
+    <!--<Splitter titleText="集群信息" flexWidth="100% - 24">-->
+    <!--    <VBox.margin>-->
+    <!--        <Insets left="12" top="5" bottom="5"/>-->
+    <!--    </VBox.margin>-->
+    <!--</Splitter>-->
+    <PagePane onNextClicked="#nextPage" onPrevClicked="#prevPage" fx:id="pagePane" iconSize="14" realWidth="100">
+        <VBox.margin>
+            <Insets left="12" bottom="5"/>
+        </VBox.margin>
+    </PagePane>
+    <FlexTableView flexWidth="100% - 28" fx:id="listTable" styleClass="fx-table-left">
+        <VBox.margin>
+            <Insets left="12" top="5"/>
+        </VBox.margin>
+        <columns>
+            <FlexTableColumn flexWidth="8%" fx:id="id" text="ID"/>
+            <FlexTableColumn flexWidth="8%" fx:id="weight" text="权重"/>
+            <FlexTableColumn flexWidth="16%" fx:id="type" text="类型"/>
+            <FlexTableColumn flexWidth="20%" fx:id="clientAddr" text="连接地址" sortable="false"/>
+            <FlexTableColumn flexWidth="22%" fx:id="addr" text="交互地址" sortable="false"/>
+            <FlexTableColumn flexWidth="22% - 6" fx:id="electionAddr" text="选举地址" sortable="false"/>
+        </columns>
+    </FlexTableView>
+</FlexVBox>

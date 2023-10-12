@@ -2,7 +2,19 @@ package cn.oyzh.easyzk.controller.acl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.ZKStyle;
+import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.exception.ZKException;
+import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.parser.ZKExceptionParser;
+import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.util.ZKACLUtil;
+import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.SimpleStringConverter;
+import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.FlexComboBox;
 import cn.oyzh.fx.plus.controls.FlexHBox;
@@ -12,22 +24,16 @@ import cn.oyzh.fx.plus.information.FXAlertUtil;
 import cn.oyzh.fx.plus.information.FXTipUtil;
 import cn.oyzh.fx.plus.information.FXToastUtil;
 import cn.oyzh.fx.plus.node.NodeGroupManage;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
-import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
-import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.easyzk.exception.ZKException;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
-import cn.oyzh.easyzk.store.ZKAuthStore;
-import cn.oyzh.easyzk.util.ZKACLUtil;
-import cn.oyzh.easyzk.util.ZKAuthUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -48,14 +54,37 @@ import java.util.List;
  * @since 2022/12/19
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk节点权限新增",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLAdd.fxml"
 )
-public class ZKACLAddController extends ZKACLBaseController {
+public class ZKACLAddController extends Controller {
+
+
+    /**
+     * zk树节点
+     */
+    private ZKNodeTreeItem zkItem;
+
+    /**
+     * zk客户端
+     */
+    private ZKClient zkClient;
+
+    /**
+     * 权限
+     */
+    @FXML
+    private Pane perms;
+
+    /**
+     * 节点路径
+     */
+    @FXML
+    private TextField nodePath;
 
     /**
      * 权限组件
@@ -244,7 +273,7 @@ public class ZKACLAddController extends ZKACLBaseController {
             FXAlertUtil.warn("认证信息处理异常！");
             return;
         }
-        if (this.zkNode.existDigestACL(digest)) {
+        if (this.zkItem.existDigestACL(digest)) {
             FXAlertUtil.warn("此摘要认证信息(Digest)已存在！");
             return;
         }
@@ -284,7 +313,7 @@ public class ZKACLAddController extends ZKACLBaseController {
             FXTipUtil.tip("密码摘要格式异常！", this.digestInfo2);
             return;
         }
-        if (this.zkNode.existDigestACL(digest)) {
+        if (this.zkItem.existDigestACL(digest)) {
             FXAlertUtil.warn("此摘要认证信息(Digest)已存在！");
             return;
         }
@@ -307,7 +336,7 @@ public class ZKACLAddController extends ZKACLBaseController {
             return;
         }
         String digest = zkAuth.digest();
-        if (this.zkNode.existDigestACL(digest)) {
+        if (this.zkItem.existDigestACL(digest)) {
             FXAlertUtil.warn("此摘要认证信息(Digest)已存在！");
             return;
         }
@@ -323,7 +352,7 @@ public class ZKACLAddController extends ZKACLBaseController {
      * world添加zk权限
      */
     private void addWorldACL() {
-        if (this.zkNode.hasWorldACL()) {
+        if (this.zkItem.hasWorldACL()) {
             FXAlertUtil.warn("World(开放认证)权限已存在！");
             return;
         }
@@ -345,7 +374,7 @@ public class ZKACLAddController extends ZKACLBaseController {
         ZKACL acl = new ZKACL();
         acl.setId(new Id("ip", ip));
         acl.setPerms(perms);
-        if (this.zkNode.existIPACL(acl.idVal())) {
+        if (this.zkItem.existIPACL(acl.idVal())) {
             FXToastUtil.warn("IP" + ip + "已存在！");
         } else {
             this.addACL(acl);
@@ -372,7 +401,7 @@ public class ZKACLAddController extends ZKACLBaseController {
             ZKACL acl = new ZKACL();
             acl.setId(new Id("ip", ip));
             acl.setPerms(perms);
-            if (this.zkNode.existIPACL(acl.idVal())) {
+            if (this.zkItem.existIPACL(acl.idVal())) {
                 FXToastUtil.warn("IP" + ip + "已存在！");
                 return;
             }
@@ -403,7 +432,7 @@ public class ZKACLAddController extends ZKACLBaseController {
             if (stat != null) {
                 this.zkItem.refreshACL();
                 FXToastUtil.ok("添加权限成功！");
-                this.closeView();
+                this.closeStage();
                 return true;
             }
             FXAlertUtil.warn("添加权限失败！");
@@ -414,8 +443,11 @@ public class ZKACLAddController extends ZKACLBaseController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        super.onViewShown(event);
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        // 获取初始化对象
+        this.zkItem = this.getStageProp("zkItem");
+        this.zkClient = this.getStageProp("zkClient");
         // 初始化摘要数据
         this.initDigestData();
 
@@ -451,7 +483,7 @@ public class ZKACLAddController extends ZKACLBaseController {
         });
 
         // 如果已有world权限，则默认选中摘要权限
-        if (this.zkNode.hasWorldACL()) {
+        if (this.zkItem.hasWorldACL()) {
             this.aclType.select(1);
         }
 
@@ -472,8 +504,8 @@ public class ZKACLAddController extends ZKACLBaseController {
         // 认证信息更新时，动态显示摘要信息
         this.digestInfo1User.addTextChangedListener(info1listener);
         this.digestInfo1Password.addTextChangedListener(info1listener);
-
-        this.view.hideOnEscape();
+        this.nodePath.setText(this.zkItem.decodeNodePath());
+        this.stage.hideOnEscape();
     }
 
     /**
@@ -495,5 +527,35 @@ public class ZKACLAddController extends ZKACLBaseController {
             });
             this.digestInfo3.selectFirst();
         }
+    }
+
+    /**
+     * 获取权限
+     *
+     * @return 权限内容
+     */
+    private String getPerms() {
+        CheckBox a = (CheckBox) this.perms.getChildren().get(0);
+        CheckBox w = (CheckBox) this.perms.getChildren().get(1);
+        CheckBox r = (CheckBox) this.perms.getChildren().get(2);
+        CheckBox d = (CheckBox) this.perms.getChildren().get(3);
+        CheckBox c = (CheckBox) this.perms.getChildren().get(4);
+        StringBuilder builder = new StringBuilder();
+        if (a.isSelected()) {
+            builder.append("a");
+        }
+        if (w.isSelected()) {
+            builder.append("w");
+        }
+        if (r.isSelected()) {
+            builder.append("r");
+        }
+        if (d.isSelected()) {
+            builder.append("d");
+        }
+        if (c.isSelected()) {
+            builder.append("c");
+        }
+        return builder.toString();
     }
 }

@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.util;
 
 import cn.hutool.core.util.NumberUtil;
+import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.util.RegexUtil;
-import cn.oyzh.easyzk.exception.ZKException;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.ZooDefs;

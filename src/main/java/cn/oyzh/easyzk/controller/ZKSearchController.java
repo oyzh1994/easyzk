@@ -2,8 +2,16 @@ package cn.oyzh.easyzk.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.easyzk.dto.ZKSearchParam;
+import cn.oyzh.easyzk.dto.ZKSearchResult;
+import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
+import cn.oyzh.easyzk.fx.ZKTreeView;
+import cn.oyzh.easyzk.handler.ZKMainSearchHandler;
+import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controller.FXController;
+import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexText;
@@ -13,16 +21,8 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
 import cn.oyzh.fx.plus.information.FXAlertUtil;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
-import cn.oyzh.fx.plus.keyboard.KeyboardListener;
+import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.easyzk.dto.ZKSearchParam;
-import cn.oyzh.easyzk.dto.ZKSearchResult;
-import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
-import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
-import cn.oyzh.easyzk.fx.ZKTreeView;
-import cn.oyzh.easyzk.handler.ZKMainSearchHandler;
-import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -42,7 +42,7 @@ import java.util.Objects;
  */
 @Lazy
 @Component
-public class ZKSearchController extends FXController {
+public class ZKSearchController extends SubController {
 
     /**
      * 搜索-搜索词
@@ -483,7 +483,7 @@ public class ZKSearchController extends FXController {
         });
 
         // 搜索触发事件
-        KeyboardListener.listenKey(this.view, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(e -> {
+        KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(e -> {
             this.searchKW.requestFocus();
             this.searchKW.selectEnd();
         }));
@@ -503,8 +503,8 @@ public class ZKSearchController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        super.onViewShown(event);
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
         // 注册事件处理
         EventUtil.register(this);
         this.treeView = this.parent().tree;
@@ -513,8 +513,8 @@ public class ZKSearchController extends FXController {
     }
 
     @Override
-    public void onViewHidden(WindowEvent event) {
-        super.onViewHidden(event);
+    public void onStageHidden(WindowEvent event) {
+        super.onStageHidden(event);
         // 取消注册事件处理
         EventUtil.unregister(this);
     }

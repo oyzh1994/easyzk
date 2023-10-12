@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.dto;
 
-import cn.oyzh.fx.common.Index;
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.fx.common.Index;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;

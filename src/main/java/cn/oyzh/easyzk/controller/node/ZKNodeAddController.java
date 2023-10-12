@@ -1,18 +1,6 @@
 package cn.oyzh.easyzk.controller.node;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FXLabel;
-import cn.oyzh.fx.plus.controls.FlexComboBox;
-import cn.oyzh.fx.plus.controls.FlexHBox;
-import cn.oyzh.fx.plus.controls.FlexTextArea;
-import cn.oyzh.fx.plus.controls.FlexVBox;
-import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.handler.TabSwitchHandler;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
@@ -21,6 +9,17 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.FXLabel;
+import cn.oyzh.fx.plus.controls.FlexComboBox;
+import cn.oyzh.fx.plus.controls.FlexHBox;
+import cn.oyzh.fx.plus.controls.FlexTextArea;
+import cn.oyzh.fx.plus.controls.FlexVBox;
+import cn.oyzh.fx.plus.ext.ClearableTextField;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXTipUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
@@ -46,14 +45,14 @@ import java.util.List;
  * @since 2020/10/09
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk子节点添加",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeAdd.fxml"
 )
-public class ZKNodeAddController extends FXController {
+public class ZKNodeAddController extends Controller {
 
     /**
      * 节点路径
@@ -179,7 +178,7 @@ public class ZKNodeAddController extends FXController {
                 FXToastUtil.warn("新增子节点失败！");
             } else {
                 FXToastUtil.ok("新增子节点成功！");
-                this.closeView();
+                this.closeStage();
             }
         } catch (Exception e) {
             FXAlertUtil.warn(e, ZKExceptionParser.INSTANCE);
@@ -346,10 +345,10 @@ public class ZKNodeAddController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
+    public void onStageShown(WindowEvent event) {
         this.parentNodeBox.managedProperty().bind(this.parentNode.visibleProperty());
-        ZKNodeTreeItem zkItem = this.getViewProp("zkItem");
-        this.zkClient = this.getViewProp("zkClient");
+        ZKNodeTreeItem zkItem = this.getStageProp("zkItem");
+        this.zkClient = this.getStageProp("zkClient");
         if (zkItem != null) {
             this.parentNode.setVisible(true);
             this.parentNode.setText(zkItem.nodePath());
@@ -358,14 +357,8 @@ public class ZKNodeAddController extends FXController {
         }
         this.nodePath.requestFocus();
         this.nodePathPreviewBox.managedProperty().bind(this.nodePathPreviewBox.visibleProperty());
-        TabSwitchHandler.init(this.view);
-        this.view.hideOnEscape();
-        super.onViewShown(event);
-    }
-
-    @Override
-    public void onViewHidden(WindowEvent event) {
-        TabSwitchHandler.destroy(this.view);
-        super.onViewHidden(event);
+        this.stage.switchOnTab();
+        this.stage.hideOnEscape();
+        super.onStageShown(event);
     }
 }

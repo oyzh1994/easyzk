@@ -1,16 +1,16 @@
 package cn.oyzh.easyzk.controller;
 
 
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FXToggleGroup;
-import cn.oyzh.fx.plus.controls.FlexCheckBox;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.FXToggleGroup;
+import cn.oyzh.fx.plus.controls.FlexCheckBox;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Modality;
@@ -24,14 +24,14 @@ import java.util.Objects;
  * @author oyzh
  * @since 2022/08/26
  */
-@FXWindow(
+@StageAttribute(
         title = "应用设置",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "setting.fxml"
 )
-public class SettingController extends FXController {
+public class SettingController extends Controller {
 
     /**
      * 退出方式
@@ -140,8 +140,8 @@ public class SettingController extends FXController {
     private final ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
 
     @Override
-    public void onViewShowing(WindowEvent event) {
-        super.onViewShowing(event);
+    public void onStageShowing(WindowEvent event) {
+        super.onStageShowing(event);
         // 应用退出处理
         if (this.setting.getExitMode() != null) {
             switch (this.setting.getExitMode()) {
@@ -226,14 +226,14 @@ public class SettingController extends FXController {
                 ZKAuthUtil.clearAuthed();
             }
             FXToastUtil.ok("保存配置成功" + tips);
-            this.closeView();
+            this.closeStage();
         } else {
             FXToastUtil.warn("保存配置失败！");
         }
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        this.view.hideOnEscape();
+    public void onStageShown(WindowEvent event) {
+        this.stage.hideOnEscape();
     }
 }

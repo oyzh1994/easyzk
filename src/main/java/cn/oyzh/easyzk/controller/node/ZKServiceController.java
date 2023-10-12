@@ -1,14 +1,14 @@
 package cn.oyzh.easyzk.controller.node;
 
-import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.PagePane;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.PagePane;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,7 +31,7 @@ import java.util.List;
  * @since 2022/08/25
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk服务信息",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
@@ -39,7 +39,7 @@ import java.util.List;
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkService.fxml"
 )
-public class ZKServiceController extends FXController {
+public class ZKServiceController extends Controller {
 
     /**
      * sdk版本
@@ -131,7 +131,7 @@ public class ZKServiceController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
+    public void onStageShown(WindowEvent event) {
         this.id.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.addr.setCellValueFactory(new PropertyValueFactory<>("addr"));
         this.type.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -139,17 +139,17 @@ public class ZKServiceController extends FXController {
         this.clientAddr.setCellValueFactory(new PropertyValueFactory<>("clientAddr"));
         this.electionAddr.setCellValueFactory(new PropertyValueFactory<>("electionAddr"));
 
-        ZKInfo zkInfo = this.getViewProp("zkInfo");
+        ZKInfo zkInfo = this.getStageProp("zkInfo");
         this.zkInfoName.setText(zkInfo.getName());
         this.zkInfoHost.setText(zkInfo.getHost());
         this.sdkVersion.setText(Version.getFullVersion());
 
-        ZKClient zkClient = this.getViewProp("zkClient");
+        ZKClient zkClient = this.getStageProp("zkClient");
         List<ZKServerNode> servers = zkClient.getServers();
         this.pageData = new Paging<>(servers, 10);
         this.pagePane.setPaging(this.pageData);
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(this.pageData.first());
-        this.view.hideOnEscape();
+        this.stage.hideOnEscape();
     }
 }

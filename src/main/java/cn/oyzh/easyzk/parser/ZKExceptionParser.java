@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.parser;
 
-import cn.oyzh.fx.common.Parser;
 import cn.oyzh.easyzk.exception.ZKConnectSateException;
 import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.easyzk.exception.ZKNoAdminPermException;
@@ -9,6 +8,7 @@ import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
 import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
+import cn.oyzh.fx.common.Parser;
 import lombok.NonNull;
 import org.apache.zookeeper.KeeperException;
 

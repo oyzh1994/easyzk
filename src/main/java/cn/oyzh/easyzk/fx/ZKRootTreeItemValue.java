@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.fx;
 
+import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.plus.controls.FlexImageView;
 import cn.oyzh.fx.plus.util.IconUtil;
-import cn.oyzh.easyzk.ZKConst;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;

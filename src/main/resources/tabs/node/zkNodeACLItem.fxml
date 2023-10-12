@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.plus.controls.FlexLabel?>
 <FlexHBox flexWidth="100%" realHeight="24">
-    <FXLabel realWidth="135" maxHeight="20" styleClass="item-label,label-primary">
+    <FXLabel realWidth="135" maxHeight="20" styleClass="item-label,lbl,lbl-success">
         <HBox.margin>
             <Insets right="5"/>
         </HBox.margin>
     </FXLabel>
-    <FlexLabel realHeight="20" flexWidth="100% - 180" styleClass="item-label,label-primary"/>
+    <FlexLabel realHeight="20" flexWidth="100% - 180" styleClass="item-label,lbl,lbl-success"/>
 </FlexHBox>

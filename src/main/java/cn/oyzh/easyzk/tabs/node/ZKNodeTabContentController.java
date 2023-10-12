@@ -1,6 +1,16 @@
 package cn.oyzh.easyzk.tabs.node;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
+import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
+import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
+import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.fx.ZKACLVBox;
+import cn.oyzh.easyzk.fx.ZKFormatComboBox;
+import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.fx.ZKRichDataTextArea;
+import cn.oyzh.easyzk.parser.ZKExceptionParser;
+import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
@@ -18,20 +28,10 @@ import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.ext.NumberTextField;
 import cn.oyzh.fx.plus.information.FXAlertUtil;
 import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.view.FXView;
-import cn.oyzh.fx.plus.view.FXViewUtil;
-import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
-import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
-import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
-import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.easyzk.fx.ZKACLVBox;
-import cn.oyzh.easyzk.fx.ZKFormatComboBox;
-import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
-import cn.oyzh.easyzk.fx.ZKRichDataTextArea;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
-import cn.oyzh.easyzk.util.ZKAuthUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -374,10 +374,10 @@ public class ZKNodeTabContentController implements Initializable {
      */
     @FXML
     private void toAddACL() {
-        FXView fxView = FXViewUtil.parseView(ZKACLAddController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(ZKACLAddController.class, this.window());
         fxView.setProp("zkItem", this.treeItem);
         fxView.setProp("zkClient", this.treeItem.zkClient());
-        fxView.show();
+        fxView.showExt();
     }
 
     /**
@@ -435,11 +435,11 @@ public class ZKNodeTabContentController implements Initializable {
             SVGGlyph glyph = (SVGGlyph) event.getTarget();
             ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
             ZKACL acl = aclVBox.acl();
-            FXView fxView = FXViewUtil.parseView(ZKACLUpdateController.class, this.window());
+            StageWrapper fxView = StageUtil.parseStage(ZKACLUpdateController.class, this.window());
             fxView.setProp("acl", acl);
             fxView.setProp("zkItem", this.treeItem);
             fxView.setProp("zkClient", this.treeItem.zkClient());
-            fxView.show();
+            fxView.showExt();
         } catch (Exception ex) {
             ex.printStackTrace();
             FXAlertUtil.warn("操作出现异常");
@@ -735,10 +735,10 @@ public class ZKNodeTabContentController implements Initializable {
     @FXML
     private void node2QRCode() {
         try {
-            FXView fxView = FXViewUtil.parseView(ZKNodeQRCodeController.class, this.window());
+            StageWrapper fxView = StageUtil.parseStage(ZKNodeQRCodeController.class, this.window());
             fxView.setProp("zkNode", this.treeItem.value());
             fxView.setProp("nodeData", this.nodeData.getTextTrim());
-            fxView.show();
+            fxView.showExt();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

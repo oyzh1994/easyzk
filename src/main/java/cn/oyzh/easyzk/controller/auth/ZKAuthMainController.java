@@ -1,18 +1,6 @@
 package cn.oyzh.easyzk.controller.auth;
 
 import cn.hutool.core.map.MapUtil;
-import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FXTableCell;
-import cn.oyzh.fx.plus.controls.PagePane;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
-import cn.oyzh.fx.plus.event.EventReceiver;
-import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.view.FXViewUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKAuth;
@@ -20,6 +8,18 @@ import cn.oyzh.easyzk.dto.ZKAuthVO;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.FXTableCell;
+import cn.oyzh.fx.plus.controls.PagePane;
+import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.ext.ClearableTextField;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
@@ -38,14 +38,14 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2020/9/14
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk认证信息列表",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuthMain.fxml"
 )
-public class ZKAuthMainController extends FXController {
+public class ZKAuthMainController extends Controller {
 
     /**
      * 搜索词汇
@@ -207,11 +207,11 @@ public class ZKAuthMainController extends FXController {
      */
     @FXML
     private void toAdd() {
-        FXViewUtil.showView(ZKAuthAddController.class, this.view);
+        StageUtil.showStage(ZKAuthAddController.class, this.stage);
     }
 
     @Override
-    public void onViewShown(@NonNull WindowEvent event) {
+    public void onStageShown(@NonNull WindowEvent event) {
         // 注册事件处理
         EventUtil.register(this);
         this.user.setCellValueFactory(new PropertyValueFactory<>("user"));
@@ -222,11 +222,11 @@ public class ZKAuthMainController extends FXController {
         this.initTable();
         // 显示首页
         this.firstPage();
-        this.view.hideOnEscape();
+        this.stage.hideOnEscape();
     }
 
     @Override
-    public void onViewHidden(WindowEvent event) {
+    public void onStageHidden(WindowEvent event) {
         // 取消注册事件处理
         EventUtil.unregister(this);
     }

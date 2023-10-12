@@ -1,14 +1,14 @@
 package cn.oyzh.easyzk.controller.node;
 
-import cn.oyzh.fx.common.Const;
-import cn.oyzh.fx.common.util.QRCodeUtil;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FlexImageView;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.util.ResourceUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.common.Const;
+import cn.oyzh.fx.common.util.QRCodeUtil;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.FlexImageView;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.util.ResourceUtil;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
@@ -29,7 +29,7 @@ import java.io.ByteArrayOutputStream;
  * @since 2022/08/23
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         resizeable = false,
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
@@ -37,7 +37,7 @@ import java.io.ByteArrayOutputStream;
         title = "可使用微信、QQ或其他工具扫描二维码获取节点信息",
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeQRCode.fxml"
 )
-public class ZKNodeQRCodeController extends FXController {
+public class ZKNodeQRCodeController extends Controller {
 
     /**
      * 二维码图片
@@ -46,8 +46,8 @@ public class ZKNodeQRCodeController extends FXController {
     private FlexImageView qrcode;
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        this.view.hideOnEscape();
+    public void onStageShown(WindowEvent event) {
+        this.stage.hideOnEscape();
         this.initQRCode();
     }
 
@@ -61,8 +61,8 @@ public class ZKNodeQRCodeController extends FXController {
             var iconUrl = ResourceUtil.getResource(ZKConst.ICON_PATH);
             var icon = ImageIO.read(iconUrl);
             log.info("read icon finish.");
-            ZKNode zkNode = this.getViewProp("zkNode");
-            String nodeData = this.getViewProp("nodeData");
+            ZKNode zkNode = this.getStageProp("zkNode");
+            String nodeData = this.getStageProp("nodeData");
             StringBuilder builder = new StringBuilder();
             builder.append("节点路径: ").append(zkNode.decodeNodePath()).append("\n")
                     .append("节点数据: ").append(nodeData).append("\n")
@@ -83,7 +83,7 @@ public class ZKNodeQRCodeController extends FXController {
             baos.close();
             bais.close();
         } catch (Exception ex) {
-            this.closeView();
+            this.closeStage();
             ex.printStackTrace();
             log.warn("initQRCode error, ex:{}", ex.getMessage());
             if (ex.getMessage().contains("Data too big")) {

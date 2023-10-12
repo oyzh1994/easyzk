@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.tabs.terminal;
 
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.view.FXMLLoaderExt;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.tabs.ZKBaseTab;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
 import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -26,12 +26,6 @@ public class ZKTerminalTab extends ZKBaseTab {
     {
         this.setClosable(true);
         this.loadContent();
-        // // 滚动到末尾
-        // this.selectedProperty().addListener((observable, oldValue, newValue) -> {
-        //     if (newValue) {
-        //         this.contentController.scrollToEnd();
-        //     }
-        // });
         // 关闭连接
         this.setOnCloseRequest(event -> ZKConnectUtil.close(this.contentController.client(), true));
     }

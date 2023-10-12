@@ -1,13 +1,5 @@
 package cn.oyzh.easyzk.fx;
 
-import cn.oyzh.fx.common.thread.Task;
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.FlexTreeView;
-import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventGroup;
-import cn.oyzh.fx.plus.event.EventReceiver;
-import cn.oyzh.fx.plus.keyboard.KeyboardListener;
-import cn.oyzh.fx.plus.util.MouseUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
@@ -21,6 +13,14 @@ import cn.oyzh.easyzk.msg.ZKNodeDeletedMsg;
 import cn.oyzh.easyzk.msg.ZKNodeUpdatedMsg;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.fx.common.thread.Task;
+import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.controls.FlexTreeView;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventGroup;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.keyboard.KeyListener;
+import cn.oyzh.fx.plus.util.MouseUtil;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -149,21 +149,21 @@ public class ZKTreeView extends FlexTreeView {
             }
         });
         // f2按键处理
-        KeyboardListener.listenKeyReleased(this, KeyCode.F2, event -> {
+        KeyListener.listenReleased(this, KeyCode.F2, event -> {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof BaseTreeItem treeItem) {
                 treeItem.rename();
             }
         });
         // 删除按键处理
-        KeyboardListener.listenKeyReleased(this, KeyCode.DELETE, event -> {
+        KeyListener.listenReleased(this, KeyCode.DELETE, event -> {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof BaseTreeItem treeItem) {
                 treeItem.delete();
             }
         });
         // 暂停按键处理
-        KeyboardListener.listenKeyReleased(this, KeyCode.PAUSE, event -> {
+        KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof ZKConnectTreeItem treeItem) {
                 treeItem.closeConnect();

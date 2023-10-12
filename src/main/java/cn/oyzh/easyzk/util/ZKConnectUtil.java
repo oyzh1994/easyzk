@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.util;
 
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.view.FXView;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +27,7 @@ public class ZKConnectUtil {
      * @param host    地址
      * @param timeout 超时事件
      */
-    public static void testConnect(FXView view, String host, int timeout) {
+    public static void testConnect(StageWrapper view, String host, int timeout) {
         try {
             ThreadUtil.startVirtual(() -> {
                 view.disable();

@@ -3,21 +3,6 @@ package cn.oyzh.easyzk.controller.node;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.common.util.Counter;
-import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FXLabel;
-import cn.oyzh.fx.plus.controls.FlexButton;
-import cn.oyzh.fx.plus.controls.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.FlexComboBox;
-import cn.oyzh.fx.plus.controls.FlexFlowPane;
-import cn.oyzh.fx.plus.controls.MsgTextArea;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.util.FXFileChooser;
-import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKFilter;
@@ -28,6 +13,21 @@ import cn.oyzh.easyzk.util.ZKExportUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.common.util.Counter;
+import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.FXLabel;
+import cn.oyzh.fx.plus.controls.FlexButton;
+import cn.oyzh.fx.plus.controls.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.FlexComboBox;
+import cn.oyzh.fx.plus.controls.FlexFlowPane;
+import cn.oyzh.fx.plus.controls.MsgTextArea;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.util.FXFileChooser;
+import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -52,14 +52,14 @@ import java.util.stream.Collectors;
  * @since 2020/10/13
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk数据导出",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeExport.fxml"
 )
-public class ZKNodeExportController extends FXController {
+public class ZKNodeExportController extends Controller {
 
     /**
      * 节点路径
@@ -190,7 +190,7 @@ public class ZKNodeExportController extends FXController {
         // 开始处理
         this.exportMsg.clear();
         this.disableNode.set(true);
-        this.view.appendTitle("===导出执行中===");
+        this.stage.appendTitle("===导出执行中===");
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.filters = this.filterStore.loadEnable();
@@ -258,7 +258,7 @@ public class ZKNodeExportController extends FXController {
                 // 结束处理
                 this.disableNode.set(false);
                 this.stopExportBtn.disable();
-                this.view.restoreTitle();
+                this.stage.restoreTitle();
                 SystemUtil.gcLater();
             }
         });
@@ -275,7 +275,7 @@ public class ZKNodeExportController extends FXController {
 
     @Override
     protected void bindListeners() {
-        this.view.hideOnEscape();
+        this.stage.hideOnEscape();
         // 节点禁用监听
         this.disableNode.addListener((observableValue, aBoolean, t1) -> {
             // this.charset.setDisable(t1);
@@ -301,18 +301,19 @@ public class ZKNodeExportController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        super.onViewShown(event);
-        this.zkItem = this.getViewProp("zkItem");
-        this.zkClient = this.getViewProp("zkClient");
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        this.zkItem = this.getStageProp("zkItem");
+        this.zkClient = this.getStageProp("zkClient");
         this.dictSort.setSelected(true);
         this.nodePath.setText(this.zkItem.nodePath());
         // // 初始化字符集
         // this.charset.select(this.zkClient.getCharset());
+        this.stage.hideOnEscape();
     }
 
     @Override
-    public void onViewHidden(WindowEvent event) {
+    public void onStageHidden(WindowEvent event) {
         this.stopExport();
     }
 

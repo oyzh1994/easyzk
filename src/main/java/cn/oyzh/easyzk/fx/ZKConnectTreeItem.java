@@ -1,16 +1,6 @@
 package cn.oyzh.easyzk.fx;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.thread.Task;
-import cn.oyzh.fx.common.thread.TaskBuilder;
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXDialogUtil;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.view.FXView;
-import cn.oyzh.fx.plus.view.FXViewUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
@@ -24,6 +14,16 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.common.thread.Task;
+import cn.oyzh.fx.common.thread.TaskBuilder;
+import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXDialogUtil;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -173,10 +173,10 @@ public class ZKConnectTreeItem extends BaseTreeItem {
      * 查看服务信息
      */
     private void serverInfo() {
-        FXView fxView = FXViewUtil.parseView(ZKServiceController.class, this.treeView().window());
+        StageWrapper fxView = StageUtil.parseStage(ZKServiceController.class, this.treeView().window());
         fxView.setProp("zkInfo", this.info());
         fxView.setProp("zkClient", this.zkClient);
-        fxView.show();
+        fxView.showExt();
     }
 
     /**
@@ -230,9 +230,9 @@ public class ZKConnectTreeItem extends BaseTreeItem {
      * 导入数据
      */
     private void importNode() {
-        FXView fxView = FXViewUtil.parseView(ZKNodeImportController.class, this.treeView().window());
+        StageWrapper fxView = StageUtil.parseStage(ZKNodeImportController.class, this.treeView().window());
         fxView.setProp("zkClient", this.zkClient);
-        fxView.show();
+        fxView.showExt();
     }
 
     /**
@@ -240,13 +240,13 @@ public class ZKConnectTreeItem extends BaseTreeItem {
      */
     @FXML
     private void transportData() {
-        FXView fxView = FXViewUtil.getView(ZKInfoTransportController.class);
-        if (fxView != null) {
-            fxView.close();
+        StageWrapper wrapper = StageUtil.getStage(ZKInfoTransportController.class);
+        if (wrapper != null) {
+            wrapper.close();
         }
-        fxView = FXViewUtil.parseView(ZKInfoTransportController.class);
-        fxView.setProp("formConnect", this.value);
-        fxView.show();
+        wrapper = StageUtil.parseStage(ZKInfoTransportController.class);
+        wrapper.setProp("formConnect", this.value);
+        wrapper.showExt();
     }
 
     /**
@@ -310,9 +310,9 @@ public class ZKConnectTreeItem extends BaseTreeItem {
         if (this.isConnect() && FXAlertUtil.confirm("需要关闭连接，继续么？")) {
             this.closeConnect();
         }
-        FXView fxView = FXViewUtil.parseView(ZKInfoUpdateController.class, this.treeView().window());
+        StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.treeView().window());
         fxView.setProp("zkInfo", this.value());
-        fxView.show();
+        fxView.showExt();
     }
 
     @Override

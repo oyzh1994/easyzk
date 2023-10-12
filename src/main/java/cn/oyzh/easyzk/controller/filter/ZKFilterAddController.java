@@ -1,15 +1,6 @@
 package cn.oyzh.easyzk.controller.filter;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
-import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.handler.TabSwitchHandler;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKFilter;
@@ -17,6 +8,14 @@ import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.ext.ClearableTextField;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXTipUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -30,14 +29,14 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2022/12/20
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk过滤配置新增",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "filter/zkFilterAdd.fxml"
 )
-public class ZKFilterAddController extends FXController {
+public class ZKFilterAddController extends Controller {
 
     /**
      * 关键字
@@ -86,7 +85,7 @@ public class ZKFilterAddController extends FXController {
                 EventUtil.fire(ZKEventTypes.ZK_FILTER_ADDED);
                 ZKEventUtil.treeChildFilter();
                 FXToastUtil.ok("新增ZK过滤配置成功!");
-                this.closeView();
+                this.closeStage();
             } else {
                 FXAlertUtil.warn("新增ZK过滤配置失败！");
             }
@@ -96,14 +95,8 @@ public class ZKFilterAddController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        TabSwitchHandler.init(this.view);
-        this.view.hideOnEscape();
-    }
-
-    @Override
-    public void onViewHidden(WindowEvent event) {
-        TabSwitchHandler.destroy(this.view);
-        super.onViewHidden(event);
+    public void onStageShown(WindowEvent event) {
+        this.stage.switchOnTab();
+        this.stage.hideOnEscape();
     }
 }

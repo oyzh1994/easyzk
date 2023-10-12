@@ -1,16 +1,5 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.event.EventReceiver;
-import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.tray.FXSystemTray;
-import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.view.FXView;
-import cn.oyzh.fx.plus.view.FXViewUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.PageInfo;
@@ -18,6 +7,19 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.store.PageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.ParentController;
+import cn.oyzh.fx.plus.controller.SubController;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
+import cn.oyzh.fx.plus.tray.FXSystemTray;
+import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -34,14 +36,14 @@ import java.util.List;
  * @since 2022/8/19
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         usePrimary = true,
         title = "EasyZK主页",
         iconUrls = ZKConst.ICON_PATH,
         cssUrls = ZKStyle.MAIN,
         value = ZKConst.FXML_BASE_PATH + "main.fxml"
 )
-public class MainController extends FXController {
+public class MainController extends ParentController {
 
     /**
      * 项目信息
@@ -119,13 +121,13 @@ public class MainController extends FXController {
      */
     private void showSetting() {
         FXUtil.runLater(() -> {
-            FXView fxView = FXViewUtil.getView(SettingController.class);
-            if (fxView != null) {
+            StageWrapper wrapper = StageUtil.getStage(SettingController.class);
+            if (wrapper != null) {
                 log.info("front setting.");
-                fxView.toFront();
+                wrapper.toFront();
             } else {
                 log.info("show setting.");
-                FXViewUtil.showView(SettingController.class, this.view);
+                StageUtil.showStage(SettingController.class, this.stage);
             }
         });
     }
@@ -135,24 +137,24 @@ public class MainController extends FXController {
      */
     private void showMain() {
         FXUtil.runLater(() -> {
-            FXView fxView = FXViewUtil.getView(MainController.class);
-            if (fxView != null) {
+            StageWrapper wrapper = StageUtil.getStage(MainController.class);
+            if (wrapper != null) {
                 log.info("front main.");
-                fxView.toFront();
+                wrapper.toFront();
             } else {
                 log.info("show main.");
-                FXViewUtil.showView(MainController.class);
+                StageUtil.showStage(MainController.class);
             }
         });
     }
 
     @Override
-    public List<FXController> getSubControllers() {
+    public List<? extends Controller> getSubControllers() {
         return Arrays.asList(this.zkMainController, this.headerController);
     }
 
     @Override
-    public void onViewCloseRequest(WindowEvent event) {
+    public void onStageCloseRequest(WindowEvent event) {
         log.warn("main view closing.");
         // 直接退出应用
         if (this.setting.isExitDirectly()) {
@@ -186,21 +188,21 @@ public class MainController extends FXController {
     }
 
     @Override
-    public void onViewShowing(WindowEvent event) {
-        super.onViewShowing(event);
-        this.view.setTitle(this.project.getName() + "-v" + this.project.getVersion());
+    public void onStageShowing(WindowEvent event) {
+        super.onStageShowing(event);
+        this.stage.setTitleExt(this.project.getName() + "-v" + this.project.getVersion());
     }
 
     @Override
-    public void onViewHidden(WindowEvent event) {
-        super.onViewHidden(event);
+    public void onStageHidden(WindowEvent event) {
+        super.onStageHidden(event);
         // 取消注册事件处理
         EventUtil.unregister(this);
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        super.onViewShown(event);
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
         // 注册事件处理
         EventUtil.register(this);
         try {
@@ -217,7 +219,7 @@ public class MainController extends FXController {
      */
     @EventReceiver(ZKEventTypes.APP_EXIT)
     public void exit() {
-        FXViewUtil.exit();
+        StageUtil.exit();
     }
 
     @Override
@@ -225,15 +227,15 @@ public class MainController extends FXController {
         boolean savePageInfo = false;
         // 记住页面大小
         if (this.setting.isRememberPageSize()) {
-            this.pageInfo.setWidth(this.view.getWidth());
-            this.pageInfo.setHeight(this.view.getHeight());
-            this.pageInfo.setMaximized(this.view.isMaximized());
+            this.pageInfo.setWidth(this.stage.getWidth());
+            this.pageInfo.setHeight(this.stage.getHeight());
+            this.pageInfo.setMaximized(this.stage.isMaximized());
             savePageInfo = true;
         }
         // 记住页面位置
         if (this.setting.isRememberPageLocation()) {
-            this.pageInfo.setScreenX(this.view.getX());
-            this.pageInfo.setScreenY(this.view.getY());
+            this.pageInfo.setScreenX(this.stage.getX());
+            this.pageInfo.setScreenY(this.stage.getY());
             savePageInfo = true;
         }
         // 保存页面信息
@@ -249,18 +251,18 @@ public class MainController extends FXController {
     }
 
     @Override
-    public void onViewInitialize(FXView view) {
-        super.onViewInitialize(view);
+    public void onStageInitialize(StageWrapper stage) {
+        super.onStageInitialize(stage);
         // 设置上次保存的页面大小
         if (this.setting.isRememberPageSize()) {
             if (this.pageInfo.isMaximized()) {
-                this.view.setMaximized(true);
+                this.stage.setMaximized(true);
                 if (log.isDebugEnabled()) {
                     log.debug("view setMaximized");
                 }
             } else if (this.pageInfo.getWidth() != null && this.pageInfo.getHeight() != null) {
-                this.view.setWidth(this.pageInfo.getWidth());
-                this.view.setHeight(this.pageInfo.getHeight());
+                this.stage.setWidth(this.pageInfo.getWidth());
+                this.stage.setHeight(this.pageInfo.getHeight());
                 if (log.isDebugEnabled()) {
                     log.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
                 }
@@ -268,8 +270,8 @@ public class MainController extends FXController {
         }
         // 设置上次保存的页面位置
         if (this.setting.isRememberPageLocation() && !this.pageInfo.isMaximized() && this.pageInfo.getScreenX() != null && this.pageInfo.getScreenY() != null) {
-            this.view.setX(this.pageInfo.getScreenX());
-            this.view.setY(this.pageInfo.getScreenY());
+            this.stage.setX(this.pageInfo.getScreenX());
+            this.stage.setY(this.pageInfo.getScreenY());
             if (log.isDebugEnabled()) {
                 log.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
             }

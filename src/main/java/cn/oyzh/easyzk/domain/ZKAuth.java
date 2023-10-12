@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.util.ObjectComparator;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -2,19 +2,19 @@ package cn.oyzh.easyzk.fx;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXDialogUtil;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.view.FXView;
-import cn.oyzh.fx.plus.view.FXViewUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXDialogUtil;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
@@ -153,9 +153,9 @@ public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
      * 添加连接
      */
     private void addConnect() {
-        FXView fxView = FXViewUtil.parseView(ZKInfoAddController.class, this.parent().window());
+        StageWrapper fxView = StageUtil.parseStage(ZKInfoAddController.class, this.parent().window());
         fxView.setProp("group", this.value);
-        fxView.show();
+        fxView.showExt();
     }
 
     /**

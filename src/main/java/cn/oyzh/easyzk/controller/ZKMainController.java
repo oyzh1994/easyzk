@@ -1,20 +1,5 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.oyzh.fx.common.Const;
-import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.FlexTabPane;
-import cn.oyzh.fx.plus.controls.MsgTextArea;
-import cn.oyzh.fx.plus.drag.DragUtil;
-import cn.oyzh.fx.plus.drag.DrapFileHandler;
-import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventGroup;
-import cn.oyzh.fx.plus.event.EventReceiver;
-import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.keyboard.KeyboardListener;
-import cn.oyzh.fx.plus.node.ResizeEnhance;
-import cn.oyzh.fx.plus.svg.SVGGlyph;
 import cn.oyzh.easyzk.domain.PageInfo;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
@@ -33,20 +18,30 @@ import cn.oyzh.easyzk.store.PageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.fx.common.Const;
+import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.plus.controller.ParentController;
+import cn.oyzh.fx.plus.controller.SubController;
+import cn.oyzh.fx.plus.controls.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.FlexTabPane;
+import cn.oyzh.fx.plus.controls.MsgTextArea;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventGroup;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.keyboard.KeyListener;
+import cn.oyzh.fx.plus.node.ResizeEnhance;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 
 /**
@@ -58,7 +53,7 @@ import java.util.Objects;
 @Lazy
 @Slf4j
 @Component
-public class ZKMainController extends FXController {
+public class ZKMainController extends ParentController {
 
     /**
      * 配置对象
@@ -214,16 +209,16 @@ public class ZKMainController extends FXController {
      */
     private void flushViewTitle(ZKInfo info) {
         if (info != null) {
-            this.view.appendTitle(" (" + info.getName() + ")");
+            this.stage.appendTitle(" (" + info.getName() + ")");
         } else {
-            this.view.restoreTitle();
+            this.stage.restoreTitle();
         }
         this.zkInfo = info;
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        super.onViewShown(event);
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
         // 注册事件处理
         EventUtil.register(this);
         EventUtil.register(this.tree);
@@ -240,8 +235,8 @@ public class ZKMainController extends FXController {
     }
 
     @Override
-    public void onViewHidden(WindowEvent event) {
-        super.onViewHidden(event);
+    public void onStageHidden(WindowEvent event) {
+        super.onStageHidden(event);
         // 取消注册事件处理
         EventUtil.unregister(this);
         EventUtil.unregister(this.tree);
@@ -251,8 +246,8 @@ public class ZKMainController extends FXController {
         // 保存页面拉伸
         this.savePageResize();
         // 取消F5按键监听
-        KeyboardListener.unListenKeyReleased(this.tree, KeyCode.F5);
-        KeyboardListener.unListenKeyReleased(this.tabPane, KeyCode.F5);
+        KeyListener.unListenReleased(this.tree, KeyCode.F5);
+        KeyListener.unListenReleased(this.tabPane, KeyCode.F5);
     }
 
     /**
@@ -324,36 +319,38 @@ public class ZKMainController extends FXController {
             }
         });
 
+        // 文件拖拽初始化
+        this.stage.initDragFile(ZKTreeCell.DRAG_CONTENT, this.tree.root()::dragFile);
 
-        DragUtil.initDragFile(new DrapFileHandler() {
-            @Override
-            public boolean checkDragboard(Dragboard dragboard) {
-                if (dragboard != null && Objects.equals(dragboard.getString(), ZKTreeCell.DRAG_CONTENT)) {
-                    return false;
-                }
-                return super.checkDragboard(dragboard);
-            }
-
-            @Override
-            public void onDragOver(DragEvent event) {
-                view.disable();
-                view.appendTitle("===松开鼠标以释放文件===");
-                super.onDragOver(event);
-            }
-
-            @Override
-            public void onDragExited(DragEvent event) {
-                view.enable();
-                view.restoreTitle();
-                super.onDragExited(event);
-            }
-
-            @Override
-            public void onDragDropped(DragEvent event, List<File> files) {
-                tree.root().dragFile(files);
-                super.onDragDropped(event, files);
-            }
-        }, this.view.getScene());
+        // DragUtil.initDragFile(new DrapFileHandler() {
+        //     @Override
+        //     public boolean checkDragboard(Dragboard dragboard) {
+        //         if (dragboard != null && Objects.equals(dragboard.getString(), ZKTreeCell.DRAG_CONTENT)) {
+        //             return false;
+        //         }
+        //         return super.checkDragboard(dragboard);
+        //     }
+        //
+        //     @Override
+        //     public void onDragOver(DragEvent event) {
+        //         stage.disable();
+        //         stage.appendTitle("===松开鼠标以释放文件===");
+        //         super.onDragOver(event);
+        //     }
+        //
+        //     @Override
+        //     public void onDragExited(DragEvent event) {
+        //         stage.enable();
+        //         stage.restoreTitle();
+        //         super.onDragExited(event);
+        //     }
+        //
+        //     @Override
+        //     public void onDragDropped(DragEvent event, List<File> files) {
+        //         tree.root().dragFile(files);
+        //         super.onDragDropped(event, files);
+        //     }
+        // }, this.stage.scene());
 
         // 拖动改变zk树大小处理
         this.resizeEnhance = new ResizeEnhance(this.zkMainLeft, Cursor.DEFAULT);
@@ -371,8 +368,8 @@ public class ZKMainController extends FXController {
         this.tree.setOnMouseMoved(this.resizeEnhance.mouseMoved());
         this.resizeEnhance.initResizeEvent();
         // 监听F5按键
-        KeyboardListener.listenKeyReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
-        KeyboardListener.listenKeyReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
+        KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
+        KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
     }
 
     /**
@@ -418,7 +415,7 @@ public class ZKMainController extends FXController {
     }
 
     @Override
-    public List<FXController> getSubControllers() {
+    public List<SubController> getSubControllers() {
         return Collections.singletonList(this.searchController);
     }
 

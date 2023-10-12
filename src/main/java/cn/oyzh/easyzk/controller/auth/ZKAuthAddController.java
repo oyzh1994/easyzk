@@ -1,19 +1,18 @@
 package cn.oyzh.easyzk.controller.auth;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.handler.TabSwitchHandler;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.ext.ClearableTextField;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXTipUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -27,14 +26,14 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2022/12/22
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk认证信息新增",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuthAdd.fxml"
 )
-public class ZKAuthAddController extends FXController {
+public class ZKAuthAddController extends Controller {
 
     /**
      * 用户名
@@ -77,7 +76,7 @@ public class ZKAuthAddController extends FXController {
             if (this.authStore.add(auth)) {
                 ZKAuthUtil.fireAuthAddEvent(auth);
                 FXToastUtil.ok("新增认证信息成功！");
-                this.closeView();
+                this.closeStage();
             } else {
                 FXAlertUtil.warn("新增认证信息失败！");
             }
@@ -87,14 +86,13 @@ public class ZKAuthAddController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        TabSwitchHandler.init(this.view);
-        this.view.hideOnEscape();
+    public void onStageShown(WindowEvent event) {
+        this.stage.switchOnTab();
+        this.stage.hideOnEscape();
     }
 
     @Override
-    public void onViewHidden(WindowEvent event) {
-        TabSwitchHandler.destroy(this.view);
-        super.onViewHidden(event);
+    public void onStageHidden(WindowEvent event) {
+        super.onStageHidden(event);
     }
 }

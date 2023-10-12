@@ -2,17 +2,6 @@ package cn.oyzh.easyzk.fx;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.dto.FriendlyInfo;
-import cn.oyzh.fx.common.thread.Task;
-import cn.oyzh.fx.common.thread.TaskBuilder;
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXDialogUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.view.FXView;
-import cn.oyzh.fx.plus.view.FXViewUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
@@ -25,6 +14,17 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.common.dto.FriendlyInfo;
+import cn.oyzh.fx.common.thread.Task;
+import cn.oyzh.fx.common.thread.TaskBuilder;
+import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXDialogUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -497,30 +497,30 @@ public class ZKNodeTreeItem extends BaseTreeItem {
      * 添加zk子节点
      */
     public void addNode() {
-        FXView fxView = FXViewUtil.parseView(ZKNodeAddController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(ZKNodeAddController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.zkClient());
-        fxView.show();
+        fxView.showExt();
     }
 
     /**
      * 认证zk节点
      */
     public void authNode() {
-        FXView fxView = FXViewUtil.parseView(ZKAuthController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(ZKAuthController.class, this.window());
         fxView.setProp("zkClient", this.zkClient());
         fxView.setProp("zkItem", this);
-        fxView.show();
+        fxView.showExt();
     }
 
     /**
      * 导出zk节点
      */
     public void exportNode() {
-        FXView fxView = FXViewUtil.parseView(ZKNodeExportController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(ZKNodeExportController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.zkClient());
-        fxView.show();
+        fxView.showExt();
     }
 
     @Override
@@ -1301,7 +1301,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
     /**
      * 清除子节点数量配额
      *
-     * @throws Exception
+     * @throws Exception 异常
      */
     public void clearQuotaNum() throws Exception {
         this.zkClient().delQuota(this.nodePath(), false, true);
@@ -1310,9 +1310,38 @@ public class ZKNodeTreeItem extends BaseTreeItem {
     /**
      * 清除节点数据配额
      *
-     * @throws Exception
+     * @throws Exception 异常
      */
     public void clearQuotaBytes() throws Exception {
         this.zkClient().delQuota(this.nodePath(), true, false);
+    }
+
+    /**
+     * 是否存在摘要权限
+     *
+     * @param digest 摘要
+     * @return 结果
+     */
+    public boolean existDigestACL(String digest) {
+        return this.value.existDigestACL(digest);
+    }
+
+    /**
+     * 是否有开放权限
+     *
+     * @return 结果
+     */
+    public boolean hasWorldACL() {
+        return this.value.hasWorldACL();
+    }
+
+    /**
+     * 是否存在IP权限
+     *
+     * @param ip ip内容
+     * @return 结果
+     */
+    public boolean existIPACL(String ip) {
+        return this.value.existIPACL(ip);
     }
 }

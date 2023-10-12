@@ -1,14 +1,12 @@
 package cn.oyzh.easyzk;
 
-import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.spring.FXApplication;
-import cn.oyzh.fx.plus.view.FXViewUtil;
 import cn.oyzh.easyzk.controller.MainController;
+import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.spring.SpringApplication;
+import cn.oyzh.fx.plus.stage.StageUtil;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
 import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
@@ -37,7 +35,7 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
         }
 )
 @Slf4j
-public class EasyZKApp extends FXApplication implements CommandLineRunner, DisposableBean {
+public class EasyZKApp extends SpringApplication {
 
     public static void main(String[] args) {
         launchSpring(EasyZKApp.class, args);
@@ -46,12 +44,12 @@ public class EasyZKApp extends FXApplication implements CommandLineRunner, Dispo
     @Override
     public void start(Stage primaryStage) {
         try {
-            // 开启定期gc
-            SystemUtil.gcInterval(60_000);
             // 开始执行业务
             super.start(primaryStage);
             // 显示主页面
-            FXViewUtil.showView(MainController.class);
+            StageUtil.showStage(MainController.class);
+            // 开启定期gc
+            SystemUtil.gcInterval(60_000);
             // 设置stage全部关闭后不自动销毁进程
             Platform.setImplicitExit(false);
         } catch (Exception ex) {

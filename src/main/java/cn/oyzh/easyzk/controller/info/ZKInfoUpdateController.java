@@ -1,7 +1,13 @@
 package cn.oyzh.easyzk.controller.info;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.plus.controller.FXController;
+import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.ZKStyle;
+import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.easyzk.util.ZKConnectUtil;
+import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexTabPane;
@@ -9,17 +15,10 @@ import cn.oyzh.fx.plus.controls.FlexTextArea;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
 import cn.oyzh.fx.plus.ext.NumberTextField;
 import cn.oyzh.fx.plus.ext.PortField;
-import cn.oyzh.fx.plus.handler.TabSwitchHandler;
 import cn.oyzh.fx.plus.information.FXAlertUtil;
 import cn.oyzh.fx.plus.information.FXTipUtil;
 import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
-import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
-import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKInfoStore;
-import cn.oyzh.easyzk.util.ZKConnectUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -33,14 +32,14 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2020/9/15
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk信息修改",
         modality = Modality.WINDOW_MODAL,
         iconUrls = ZKConst.ICON_PATH,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoUpdate.fxml"
 )
-public class ZKInfoUpdateController extends FXController {
+public class ZKInfoUpdateController extends Controller {
 
     /**
      * 监听节点
@@ -175,7 +174,7 @@ public class ZKInfoUpdateController extends FXController {
         // 检查连接地址
         String host = this.getHost();
         if (StrUtil.isNotBlank(host)) {
-            ZKConnectUtil.testConnect(this.view, host, 5);
+            ZKConnectUtil.testConnect(this.stage, host, 5);
         }
     }
 
@@ -224,15 +223,15 @@ public class ZKInfoUpdateController extends FXController {
         if (this.infoStore.update(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
             FXToastUtil.ok("修改ZK信息成功!");
-            this.closeView();
+            this.closeStage();
         } else {
             FXAlertUtil.warn("修改失败！");
         }
     }
 
     @Override
-    public void onViewShown(@NonNull WindowEvent event) {
-        this.zkInfo = this.getViewProp("zkInfo");
+    public void onStageShown(@NonNull WindowEvent event) {
+        this.zkInfo = this.getStageProp("zkInfo");
         this.name.setText(this.zkInfo.getName());
         this.remark.setText(this.zkInfo.getRemark());
         // this.charset.select(this.zkInfo.getCharset());
@@ -252,13 +251,7 @@ public class ZKInfoUpdateController extends FXController {
         this.listen.setSelected(this.zkInfo.getListen());
         this.cluster.setSelected(this.zkInfo.isCluster());
 
-        TabSwitchHandler.init(this.view);
-        this.view.hideOnEscape();
-    }
-
-    @Override
-    public void onViewHidden(WindowEvent event) {
-        TabSwitchHandler.destroy(this.view);
-        super.onViewHidden(event);
+        this.stage.switchOnTab();
+        this.stage.hideOnEscape();
     }
 }

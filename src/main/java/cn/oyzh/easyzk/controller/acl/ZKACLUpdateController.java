@@ -1,18 +1,22 @@
 package cn.oyzh.easyzk.controller.acl;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKACLUtil;
+import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
@@ -29,7 +33,7 @@ import java.util.List;
  * @author oyzh
  * @since 2022/12/20
  */
-@FXWindow(
+@StageAttribute(
         title = "zk节点权限修改",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
@@ -37,12 +41,34 @@ import java.util.List;
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLUpdate.fxml"
 )
 @Slf4j
-public class ZKACLUpdateController extends ZKACLBaseController {
+public class ZKACLUpdateController extends Controller {
 
     /**
      * zk权限信息
      */
     private ZKACL acl;
+
+    /**
+     * zk树节点
+     */
+    private ZKNodeTreeItem zkItem;
+
+    /**
+     * zk客户端
+     */
+    private ZKClient zkClient;
+
+    /**
+     * 权限
+     */
+    @FXML
+    private Pane perms;
+
+    /**
+     * 节点路径
+     */
+    @FXML
+    private TextField nodePath;
 
     /**
      * 权限类型
@@ -116,22 +142,25 @@ public class ZKACLUpdateController extends ZKACLBaseController {
         if (stat != null) {
             this.zkItem.refreshACL();
             FXToastUtil.ok("修改节点权限成功！");
-            this.closeView();
+            this.closeStage();
         } else {
             FXAlertUtil.warn("修改节点权限失败！");
         }
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        super.onViewShown(event);
-        this.acl = this.getViewProp("acl");
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        this.acl = this.getStageProp("acl");
+        // 获取初始化对象
+        this.zkItem = this.getStageProp("zkItem");
+        this.zkClient = this.getStageProp("zkClient");
 
-        CheckBox a = (CheckBox) this.permsNode.getChildren().get(0);
-        CheckBox w = (CheckBox) this.permsNode.getChildren().get(1);
-        CheckBox r = (CheckBox) this.permsNode.getChildren().get(2);
-        CheckBox d = (CheckBox) this.permsNode.getChildren().get(3);
-        CheckBox c = (CheckBox) this.permsNode.getChildren().get(4);
+        CheckBox a = (CheckBox) this.perms.getChildren().get(0);
+        CheckBox w = (CheckBox) this.perms.getChildren().get(1);
+        CheckBox r = (CheckBox) this.perms.getChildren().get(2);
+        CheckBox d = (CheckBox) this.perms.getChildren().get(3);
+        CheckBox c = (CheckBox) this.perms.getChildren().get(4);
         a.setSelected(this.acl.hasAdminPerm());
         w.setSelected(this.acl.hasWritePerm());
         r.setSelected(this.acl.hasReadPerm());
@@ -150,6 +179,37 @@ public class ZKACLUpdateController extends ZKACLBaseController {
         }
         this.aclType.setText(this.acl.schemeFriend().friendlyValue().toString()
                 + "(" + this.acl.schemeFriend().value().toString().toUpperCase() + ")");
-        this.view.hideOnEscape();
+        this.nodePath.setText(this.zkItem.decodeNodePath());
+        this.stage.hideOnEscape();
+    }
+
+    /**
+     * 获取权限
+     *
+     * @return 权限内容
+     */
+    private String getPerms() {
+        CheckBox a = (CheckBox) this.perms.getChildren().get(0);
+        CheckBox w = (CheckBox) this.perms.getChildren().get(1);
+        CheckBox r = (CheckBox) this.perms.getChildren().get(2);
+        CheckBox d = (CheckBox) this.perms.getChildren().get(3);
+        CheckBox c = (CheckBox) this.perms.getChildren().get(4);
+        StringBuilder builder = new StringBuilder();
+        if (a.isSelected()) {
+            builder.append("a");
+        }
+        if (w.isSelected()) {
+            builder.append("w");
+        }
+        if (r.isSelected()) {
+            builder.append("r");
+        }
+        if (d.isSelected()) {
+            builder.append("d");
+        }
+        if (c.isSelected()) {
+            builder.append("c");
+        }
+        return builder.toString();
     }
 }

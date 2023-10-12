@@ -4,16 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.event.EventReceiver;
-import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXDialogUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.util.FXFileChooser;
-import cn.oyzh.fx.plus.view.FXViewUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -24,6 +14,16 @@ import cn.oyzh.easyzk.msg.ZKInfoAddedMsg;
 import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXDialogUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
+import cn.oyzh.fx.plus.util.FXFileChooser;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
@@ -204,7 +204,7 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
      * 添加连接
      */
     private void addConnect() {
-        FXViewUtil.showView(ZKInfoAddController.class, this.window());
+        StageUtil.showStage(ZKInfoAddController.class, this.window());
     }
 
     /**
@@ -438,6 +438,6 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
      */
     @EventReceiver(ZKEventTypes.ZK_ADD_CONNECT)
     private void onAddConnect() {
-        FXViewUtil.showView(ZKInfoAddController.class, this.window());
+        StageUtil.showStage(ZKInfoAddController.class, this.window());
     }
 }

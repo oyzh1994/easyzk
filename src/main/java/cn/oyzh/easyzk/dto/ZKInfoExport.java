@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.dto;
 
+import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.util.SpringUtil;
-import cn.oyzh.easyzk.domain.ZKInfo;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;

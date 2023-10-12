@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.tabs.home;
 
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.view.FXMLLoaderExt;
 import cn.oyzh.easyzk.tabs.ZKBaseTab;
+import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
+import cn.oyzh.fx.plus.svg.SVGGlyph;
 import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -17,8 +17,7 @@ public class ZKHomeTab extends ZKBaseTab {
 
     @Override
     protected void loadContent() {
-        FXMLLoaderExt loaderExt = new FXMLLoaderExt();
-        Node content = loaderExt.load("/tabs/home/zkHomeTabContent.fxml");
+        Node content = FXMLLoaderExt.loadFromUrl("/tabs/home/zkHomeTabContent.fxml");
         content.setCache(true);
         content.setCacheHint(CacheHint.QUALITY);
         this.setContent(content);

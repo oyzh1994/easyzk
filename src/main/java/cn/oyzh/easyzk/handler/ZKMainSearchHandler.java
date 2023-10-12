@@ -1,14 +1,6 @@
 package cn.oyzh.easyzk.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.fx.common.thread.ExecutorUtil;
-import cn.oyzh.fx.common.thread.Task;
-import cn.oyzh.fx.common.thread.TaskBuilder;
-import cn.oyzh.fx.common.util.TextUtil;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FlexTextArea;
-import cn.oyzh.fx.plus.util.ControlUtil;
-import cn.oyzh.fx.plus.util.TreeViewUtil;
 import cn.oyzh.easyzk.dto.ZKSearchParam;
 import cn.oyzh.easyzk.dto.ZKSearchResult;
 import cn.oyzh.easyzk.fx.BaseTreeItem;
@@ -17,6 +9,13 @@ import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import cn.oyzh.easyzk.fx.ZKTreeView;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.fx.common.thread.ExecutorUtil;
+import cn.oyzh.fx.common.thread.Task;
+import cn.oyzh.fx.common.thread.TaskBuilder;
+import cn.oyzh.fx.common.util.TextUtil;
+import cn.oyzh.fx.plus.controls.FlexTextArea;
+import cn.oyzh.fx.plus.util.ControlUtil;
+import cn.oyzh.fx.plus.util.TreeViewUtil;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -39,7 +38,7 @@ import java.util.function.Consumer;
  * @since 2023/03/12
  */
 @Accessors(chain = true, fluent = true)
-public class ZKMainSearchHandler extends FXController {
+public class ZKMainSearchHandler {
 
     /**
      * 节点索引

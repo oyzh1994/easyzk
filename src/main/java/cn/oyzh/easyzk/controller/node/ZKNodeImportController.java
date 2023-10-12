@@ -3,10 +3,17 @@ package cn.oyzh.easyzk.controller.node;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.ZKStyle;
+import cn.oyzh.easyzk.dto.ZKNodeExport;
+import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.parser.ZKExceptionParser;
+import cn.oyzh.easyzk.util.ZKExportUtil;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.Counter;
 import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.controller.FXController;
+import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.FXLabel;
 import cn.oyzh.fx.plus.controls.FlexButton;
@@ -16,16 +23,9 @@ import cn.oyzh.fx.plus.controls.MsgTextArea;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.FXAlertUtil;
 import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.view.FXWindow;
-import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
-import cn.oyzh.easyzk.dto.ZKNodeExport;
-import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
-import cn.oyzh.easyzk.util.ZKExportUtil;
-import cn.oyzh.easyzk.zk.ZKClient;
 import javafx.fxml.FXML;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -48,14 +48,14 @@ import java.util.Map;
  * @since 2020/10/14
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk数据导入",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeImport.fxml"
 )
-public class ZKNodeImportController extends FXController {
+public class ZKNodeImportController extends Controller {
 
     /**
      * zk客户端
@@ -225,7 +225,7 @@ public class ZKNodeImportController extends FXController {
         this.importBtn.disable();
         this.chooseFile.disable();
         this.ignoreExist.disable();
-        this.view.appendTitle("===导入执行中===");
+        this.stage.appendTitle("===导入执行中===");
         // 忽略已存在节点
         boolean ignoreExist = this.ignoreExist.isSelected();
         // 执行导入
@@ -285,7 +285,7 @@ public class ZKNodeImportController extends FXController {
                 this.chooseFile.enable();
                 this.ignoreExist.enable();
                 this.stopImportBtn.disable();
-                this.view.restoreTitle();
+                this.stage.restoreTitle();
                 EventUtil.fire(ZKEventTypes.ZK_IMPORT_FINISH);
                 SystemUtil.gcLater();
             }
@@ -302,24 +302,24 @@ public class ZKNodeImportController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        this.zkClient = this.getViewProp("zkClient");
+    public void onStageShown(WindowEvent event) {
+        this.zkClient = this.getStageProp("zkClient");
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
         this.scriptInfo.addTextChangedListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StrUtil.isNotBlank(t1)));
-        this.view.hideOnEscape();
+        this.stage.hideOnEscape();
         // 文件拖拽相关
-        this.view.getScene().setOnDragOver(event1 -> {
-            this.view.disable();
-            this.view.appendTitle("===松开鼠标以释放文件===");
+        this.stage.scene().setOnDragOver(event1 -> {
+            this.stage.disable();
+            this.stage.appendTitle("===松开鼠标以释放文件===");
             event1.acceptTransferModes(TransferMode.ANY);
             event1.consume();
         });
-        this.view.getScene().setOnDragExited(event1 -> {
-            this.view.enable();
-            this.view.restoreTitle();
+        this.stage.scene().setOnDragExited(event1 -> {
+            this.stage.enable();
+            this.stage.restoreTitle();
             event1.consume();
         });
-        this.view.getScene().setOnDragDropped(event1 -> {
+        this.stage.scene().setOnDragDropped(event1 -> {
             this.dragFile(event1);
             event1.setDropCompleted(true);
             event1.consume();
@@ -327,7 +327,7 @@ public class ZKNodeImportController extends FXController {
     }
 
     @Override
-    public void onViewHidden(WindowEvent event) {
+    public void onStageHidden(WindowEvent event) {
         this.stopImport();
     }
 

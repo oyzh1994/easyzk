@@ -1,13 +1,13 @@
 package cn.oyzh.easyzk.controller;
 
 
-import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.common.util.SpringUtil;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FlexText;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
+import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.fx.common.util.SpringUtil;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.FlexText;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -18,14 +18,14 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2020/10/26
  */
-@FXWindow(
+@StageAttribute(
         resizeable = false,
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "about.fxml"
 )
-public class AboutController extends FXController {
+public class AboutController extends Controller {
 
     @FXML
     private FlexText name;
@@ -45,11 +45,11 @@ public class AboutController extends FXController {
     private final Project project = SpringUtil.getBean(Project.class);
 
     @Override
-    public void onViewShown(WindowEvent event) {
+    public void onStageShown(WindowEvent event) {
         this.name.setText(this.project.getName());
         this.version.setText("v" + this.project.getVersion());
         this.updateDate.setText(this.project.getUpdateDate());
         this.copyright.setText(this.project.getCopyright());
-        this.view.hideOnEscape();
+        this.stage.hideOnEscape();
     }
 }

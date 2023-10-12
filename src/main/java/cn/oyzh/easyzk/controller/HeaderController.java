@@ -1,17 +1,17 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.node.NodeGroupManage;
-import cn.oyzh.fx.plus.svg.SVGLabel;
-import cn.oyzh.fx.plus.view.FXView;
-import cn.oyzh.fx.plus.view.FXViewUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthMainController;
 import cn.oyzh.easyzk.controller.filter.ZKFilterMainController;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.fx.plus.controller.SubController;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.node.NodeGroupManage;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.svg.SVGLabel;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 @Lazy
 @Slf4j
 @Component
-public class HeaderController extends FXController {
+public class HeaderController extends SubController {
 
     /**
      * 项目信息
@@ -58,11 +58,11 @@ public class HeaderController extends FXController {
      */
     @FXML
     private void auth() {
-        FXView fxView = FXViewUtil.getView(ZKAuthMainController.class);
-        if (fxView != null) {
-            fxView.toFront();
+        StageWrapper wrapper = StageUtil.getStage(ZKAuthMainController.class);
+        if (wrapper != null) {
+            wrapper.toFront();
         } else {
-            FXViewUtil.showView(ZKAuthMainController.class);
+            StageUtil.showStage(ZKAuthMainController.class);
         }
     }
 
@@ -71,11 +71,11 @@ public class HeaderController extends FXController {
      */
     @FXML
     private void setting() {
-        FXView fxView = FXViewUtil.getView(SettingController.class);
-        if (fxView != null) {
-            fxView.toFront();
+        StageWrapper wrapper = StageUtil.getStage(SettingController.class);
+        if (wrapper != null) {
+            wrapper.toFront();
         } else {
-            FXViewUtil.showView(SettingController.class, this.view);
+            StageUtil.showStage(SettingController.class, this.stage);
         }
     }
 
@@ -84,7 +84,7 @@ public class HeaderController extends FXController {
      */
     @FXML
     private void about() {
-        FXViewUtil.showView(AboutController.class, this.view);
+        StageUtil.showStage(AboutController.class, this.stage);
     }
 
     /**
@@ -92,11 +92,11 @@ public class HeaderController extends FXController {
      */
     @FXML
     private void filter() {
-        FXView fxView = FXViewUtil.getView(ZKFilterMainController.class);
-        if (fxView != null) {
-            fxView.toFront();
+        StageWrapper wrapper = StageUtil.getStage(ZKFilterMainController.class);
+        if (wrapper != null) {
+            wrapper.toFront();
         } else {
-            FXViewUtil.showView(ZKFilterMainController.class);
+            StageUtil.showStage(ZKFilterMainController.class);
         }
     }
 
@@ -115,11 +115,11 @@ public class HeaderController extends FXController {
      */
     @FXML
     private void transport() {
-        FXView fxView = FXViewUtil.getView(ZKInfoTransportController.class);
-        if (fxView != null) {
-            fxView.toFront();
+        StageWrapper wrapper = StageUtil.getStage(ZKInfoTransportController.class);
+        if (wrapper != null) {
+            wrapper.toFront();
         } else {
-            FXViewUtil.showView(ZKInfoTransportController.class);
+            StageUtil.showStage(ZKInfoTransportController.class);
         }
     }
 
@@ -142,8 +142,8 @@ public class HeaderController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        super.onViewShown(event);
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
         this.treeMutexes.addNodes(this.collapseTree, this.expandTree);
         this.treeMutexes.manageBindVisible();
     }

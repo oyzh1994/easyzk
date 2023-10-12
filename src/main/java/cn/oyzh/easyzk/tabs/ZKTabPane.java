@@ -1,11 +1,5 @@
 package cn.oyzh.easyzk.tabs;
 
-import cn.oyzh.fx.common.thread.ExecutorUtil;
-import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controls.FlexTabPane;
-import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventReceiver;
-import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
@@ -17,6 +11,12 @@ import cn.oyzh.easyzk.msg.ZKOpenTerminalMsg;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
+import cn.oyzh.fx.common.thread.ExecutorUtil;
+import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.plus.controls.FlexTabPane;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.collections.ListChangeListener;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Tab;

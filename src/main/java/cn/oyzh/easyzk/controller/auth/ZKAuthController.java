@@ -2,20 +2,6 @@ package cn.oyzh.easyzk.controller.auth;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.plus.SimpleStringConverter;
-import cn.oyzh.fx.plus.controller.FXController;
-import cn.oyzh.fx.plus.controls.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.FlexComboBox;
-import cn.oyzh.fx.plus.controls.FlexVBox;
-import cn.oyzh.fx.plus.controls.ReadOnlyTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.handler.TabSwitchHandler;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
-import cn.oyzh.fx.plus.node.NodeGroupManage;
-import cn.oyzh.fx.plus.view.FXWindow;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKAuth;
@@ -27,6 +13,19 @@ import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.plus.SimpleStringConverter;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.FlexComboBox;
+import cn.oyzh.fx.plus.controls.FlexVBox;
+import cn.oyzh.fx.plus.controls.ReadOnlyTextField;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.ext.ClearableTextField;
+import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.FXTipUtil;
+import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.node.NodeGroupManage;
+import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -42,14 +41,14 @@ import java.util.List;
  * @since 2022/06/07
  */
 @Slf4j
-@FXWindow(
+@StageAttribute(
         title = "zk节点认证",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuth.fxml"
 )
-public class ZKAuthController extends FXController {
+public class ZKAuthController extends Controller {
 
     /**
      * 用户名
@@ -174,7 +173,7 @@ public class ZKAuthController extends FXController {
                 authMsg.result(true);
                 EventUtil.fire(ZKEventTypes.ZK_AUTH_SUCCESS, authMsg);
                 FXToastUtil.ok("认证成功！");
-                this.closeView();
+                this.closeStage();
             } else if (this.zkNode.aclEmpty() || this.zkNode.hasDigestACL()) {
                 EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
                 FXAlertUtil.warn("认证失败！");
@@ -189,8 +188,8 @@ public class ZKAuthController extends FXController {
     }
 
     @Override
-    public void onViewShown(WindowEvent event) {
-        this.zkItem = this.getViewProp("zkItem");
+    public void onStageShown(WindowEvent event) {
+        this.zkItem = this.getStageProp("zkItem");
         this.zkNode = this.zkItem.value();
         this.nodePath.setText(this.zkNode.decodeNodePath());
         this.nodeGroupManage.addNodes(this.authType1, this.authType2);
@@ -228,13 +227,7 @@ public class ZKAuthController extends FXController {
         } else if (this.zkNode.aclEmpty() && !authList.isEmpty()) {// 选中摘要列表认证
             this.authType.select(1);
         }
-        TabSwitchHandler.init(this.view);
-        this.view.hideOnEscape();
-    }
-
-    @Override
-    public void onViewHidden(WindowEvent event) {
-        TabSwitchHandler.destroy(this.view);
-        super.onViewHidden(event);
+        this.stage.switchOnTab();
+        this.stage.hideOnEscape();
     }
 }

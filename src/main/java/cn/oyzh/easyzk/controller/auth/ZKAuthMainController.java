@@ -16,7 +16,7 @@ import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
@@ -157,7 +157,7 @@ public class ZKAuthMainController extends Controller {
                         if (authStore.update(authVO)) {
                             ZKAuthUtil.fireAuthEnableEvent(authVO);
                         } else {
-                            FXAlertUtil.warn("修改状态失败！");
+                            MessageBox.warn("修改状态失败！");
                         }
                     });
                     return toggleSwitch;
@@ -173,7 +173,7 @@ public class ZKAuthMainController extends Controller {
      * @param auth 认证信息
      */
     private void delInfo(ZKAuth auth) {
-        if (FXAlertUtil.confirm("确定删除此认证信息？")) {
+        if (MessageBox.confirm("确定删除此认证信息？")) {
             this.authStore.delete(auth);
             this.firstPage();
         }
@@ -217,7 +217,7 @@ public class ZKAuthMainController extends Controller {
         this.user.setCellValueFactory(new PropertyValueFactory<>("user"));
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.password.setCellValueFactory(new PropertyValueFactory<>("password"));
-        this.searchKeyWord.addTextChangedListener((observableValue, s, t1) -> this.firstPage());
+        this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
         // 初始化表单
         this.initTable();
         // 显示首页

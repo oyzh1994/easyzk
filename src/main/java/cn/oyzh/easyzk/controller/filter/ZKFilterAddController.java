@@ -6,15 +6,12 @@ import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -69,11 +66,11 @@ public class ZKFilterAddController extends Controller {
         // 获取节点值
         String kw = this.kw.getText().trim();
         if (StrUtil.isBlank(kw)) {
-            FXTipUtil.tip("请输入过滤关键字！", this.kw);
+            MessageBox.tipMsg("请输入过滤关键字！", this.kw);
             return;
         }
         if (this.filterStore.exist(kw)) {
-            FXTipUtil.tip("此关键字已存在！", this.kw);
+            MessageBox.tipMsg("此关键字已存在！", this.kw);
             return;
         }
         try {
@@ -84,13 +81,14 @@ public class ZKFilterAddController extends Controller {
             if (this.filterStore.add(filter)) {
                 EventUtil.fire(ZKEventTypes.ZK_FILTER_ADDED);
                 ZKEventUtil.treeChildFilter();
-                FXToastUtil.ok("新增ZK过滤配置成功!");
+                MessageBox.okToast("新增ZK过滤配置成功!");
                 this.closeStage();
             } else {
-                FXAlertUtil.warn("新增ZK过滤配置失败！");
+                MessageBox.warn("新增ZK过滤配置失败！");
             }
-        } catch (Exception e) {
-            FXAlertUtil.warn(e, ZKExceptionParser.INSTANCE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
     }
 

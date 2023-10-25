@@ -1,7 +1,9 @@
 package cn.oyzh.easyzk;
 
 import cn.oyzh.easyzk.controller.MainController;
+import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import javafx.application.Platform;
@@ -44,6 +46,7 @@ public class EasyZKApp extends SpringApplication {
     @Override
     public void start(Stage primaryStage) {
         try {
+            MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 开始执行业务
             super.start(primaryStage);
             // 显示主页面

@@ -17,9 +17,7 @@ import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXDialogUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
@@ -110,7 +108,7 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
     private void exportConnect() {
         List<ZKInfo> zkInfos = this.infoStore.load();
         if (zkInfos.isEmpty()) {
-            FXAlertUtil.warn("zk连接列表为空！");
+            MessageBox.warn("zk连接列表为空！");
             return;
         }
         ZKInfoExport export = ZKInfoExport.fromConnects(zkInfos);
@@ -118,9 +116,9 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
         File file = FXFileChooser.save("保存zk连接列表", "zk连接列表.json", new FileChooser.ExtensionFilter[]{extensionFilter});
         try {
             FileUtil.writeUtf8String(export.toJSONString(), file);
-            FXToastUtil.ok("保存zk连接列表成功！");
+            MessageBox.okToast("保存zk连接列表成功！");
         } catch (Exception ex) {
-            FXAlertUtil.warn("保存zk连接列表失败！");
+            MessageBox.warn("保存zk连接列表失败！");
         }
     }
 
@@ -134,7 +132,7 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
             return;
         }
         if (files.size() != 1) {
-            FXAlertUtil.warn("仅支持单个文件！");
+            MessageBox.warn("仅支持单个文件！");
             return;
         }
         File file = files.get(0);
@@ -163,19 +161,19 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
             return;
         }
         if (!file.exists()) {
-            FXAlertUtil.warn("文件不存在！");
+            MessageBox.warn("文件不存在！");
             return;
         }
         if (file.isDirectory()) {
-            FXAlertUtil.warn("不支持文件夹！");
+            MessageBox.warn("不支持文件夹！");
             return;
         }
         if (!FileNameUtil.isType(file.getName(), "json")) {
-            FXAlertUtil.warn("仅支持json文件！");
+            MessageBox.warn("仅支持json文件！");
             return;
         }
         if (file.length() == 0) {
-            FXAlertUtil.warn("文件内容为空！");
+            MessageBox.warn("文件内容为空！");
             return;
         }
         try {
@@ -185,18 +183,18 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
             if (CollUtil.isNotEmpty(zkInfos)) {
                 for (ZKInfo zkInfo : zkInfos) {
                     if (this.infoStore.exist(zkInfo)) {
-                        FXAlertUtil.warn("连接[" + zkInfo.getName() + "]已存在");
+                        MessageBox.warn("连接[" + zkInfo.getName() + "]已存在");
                     } else if (this.infoStore.add(zkInfo)) {
                         this.addConnect(zkInfo);
                     } else {
-                        FXAlertUtil.warn("连接[" + zkInfo.getName() + "]导入失败");
+                        MessageBox.warn("连接[" + zkInfo.getName() + "]导入失败");
                     }
                 }
-                FXToastUtil.ok("导入zk连接列表成功！");
+                MessageBox.okToast("导入zk连接列表成功！");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn("解析zk连接列表失败！");
+            MessageBox.exception(ex, "解析zk连接列表失败！");
         }
     }
 
@@ -212,7 +210,7 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
      */
     @EventReceiver(ZKEventTypes.ZK_ADD_GROUP)
     private void addGroup() {
-        String groupName = FXDialogUtil.prompt("请输入分组名称");
+        String groupName = MessageBox.prompt("请输入分组名称");
 
         // 名称为null，则忽略
         if (groupName == null) {
@@ -221,21 +219,21 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
 
         // 不能为空
         if (StrUtil.isBlank(groupName)) {
-            FXAlertUtil.warn("名称不能为空！");
+            MessageBox.warn("名称不能为空！");
             return;
         }
 
         ZKGroup group = new ZKGroup();
         group.setName(groupName);
         if (this.groupStore.exist(group)) {
-            FXAlertUtil.warn("此分组已存在！");
+            MessageBox.warn("此分组已存在！");
             return;
         }
         group = this.groupStore.add(groupName);
         if (group != null) {
             this.addChild(new ZKGroupTreeItem(group, this.treeView()));
         } else {
-            FXAlertUtil.warn("添加分组失败！");
+            MessageBox.warn("添加分组失败！");
         }
     }
 

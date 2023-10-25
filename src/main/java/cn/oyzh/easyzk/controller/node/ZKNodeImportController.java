@@ -21,8 +21,7 @@ import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.FlexText;
 import cn.oyzh.fx.plus.controls.MsgTextArea;
 import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -137,7 +136,7 @@ public class ZKNodeImportController extends Controller {
             return;
         }
         if (files.size() != 1) {
-            FXAlertUtil.warn("仅支持单个文件！");
+            MessageBox.warn("仅支持单个文件！");
             return;
         }
         File file = files.get(0);
@@ -167,19 +166,19 @@ public class ZKNodeImportController extends Controller {
             return;
         }
         if (!file.exists()) {
-            FXAlertUtil.warn("文件不存在！");
+            MessageBox.warn("文件不存在！");
             return;
         }
         if (file.isDirectory()) {
-            FXAlertUtil.warn("不支持文件夹！");
+            MessageBox.warn("不支持文件夹！");
             return;
         }
         if (!FileNameUtil.isType(file.getName(), "txt", "json")) {
-            FXAlertUtil.warn("仅支持txt或json文件！");
+            MessageBox.warn("仅支持txt或json文件！");
             return;
         }
         if (file.length() == 0) {
-            FXAlertUtil.warn("文件内容为空！");
+            MessageBox.warn("文件内容为空！");
             return;
         }
         try {
@@ -204,7 +203,7 @@ public class ZKNodeImportController extends Controller {
             ex.printStackTrace();
             this.nodeExport = null;
             this.importBtn.disable();
-            FXAlertUtil.warn("解析脚本失败！");
+            MessageBox.exception(ex, "解析脚本失败");
         }
     }
 
@@ -269,15 +268,15 @@ public class ZKNodeImportController extends Controller {
                 this.updateStatus("数据导入收尾中...");
                 this.importMsg.waitTextExpend();
                 this.updateStatus("数据导入结束");
-                FXToastUtil.ok("导入数据结束！");
+                MessageBox.okToast("导入数据结束！");
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据导入取消");
-                    FXToastUtil.ok("导入数据取消！");
+                    MessageBox.okToast("导入数据取消！");
                 } else {
                     e.printStackTrace();
                     this.updateStatus("数据导入失败");
-                    FXAlertUtil.warn("导入数据失败！");
+                    MessageBox.warn("导入数据失败！");
                 }
             } finally {
                 // 结束处理
@@ -305,7 +304,7 @@ public class ZKNodeImportController extends Controller {
     public void onStageShown(WindowEvent event) {
         this.zkClient = this.getStageProp("zkClient");
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
-        this.scriptInfo.addTextChangedListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StrUtil.isNotBlank(t1)));
+        this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StrUtil.isNotBlank(t1)));
         this.stage.hideOnEscape();
         // 文件拖拽相关
         this.stage.scene().setOnDragOver(event1 -> {
@@ -349,7 +348,7 @@ public class ZKNodeImportController extends Controller {
         } else {
             msg = "导入节点：" + path + " 失败";
             if (ex != null) {
-                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.parse(ex);
+                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.apply(ex);
             }
         }
         this.importMsg.appendLine(msg);

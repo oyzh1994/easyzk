@@ -51,6 +51,15 @@ public class ZKSearchHistoryStore extends FileStore<ZKSearchHistory> {
     }
 
     /**
+     * 获取词汇
+     *
+     * @return 词汇列表
+     */
+    public synchronized List<String> getKw(int type) {
+        return this.load().parallelStream().filter(h -> Objects.equals(h.getType(), type)).map(ZKSearchHistory::getKw).collect(Collectors.toList());
+    }
+
+    /**
      * 获取搜索词
      *
      * @return 搜索词列表

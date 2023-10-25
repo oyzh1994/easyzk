@@ -23,8 +23,7 @@ import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.FlexComboBox;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.MsgTextArea;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -241,18 +240,18 @@ public class ZKNodeExportController extends Controller {
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);
                     this.updateStatus("文件保存成功");
-                    FXToastUtil.ok("导出数据成功！");
+                    MessageBox.okToast("导出数据成功！");
                 } else {
                     this.updateStatus("文件保存取消");
                 }
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据导出取消");
-                    FXToastUtil.ok("导出数据取消！");
+                    MessageBox.okToast("导出数据取消！");
                 } else {
                     e.printStackTrace();
                     this.updateStatus("数据导出失败");
-                    FXAlertUtil.warn("导出数据失败！");
+                    MessageBox.warn("导出数据失败！");
                 }
             } finally {
                 // 结束处理
@@ -289,11 +288,11 @@ public class ZKNodeExportController extends Controller {
         // 格式变化处理
         this.format.selectedIndexChanged((observableValue, number, t1) -> {
             if (t1.intValue() == 0) {
-                this.prefixPane.hideNode();
-                this.prettyPane.showNode();
+                this.prefixPane.disappear();
+                this.prettyPane.display();
             } else {
-                this.prefixPane.showNode();
-                this.prettyPane.hideNode();
+                this.prefixPane.display();
+                this.prettyPane.disappear();
             }
         });
         this.prefix.managedBindVisible();
@@ -376,7 +375,7 @@ public class ZKNodeExportController extends Controller {
         } else {
             msg = "导出节点：" + path + " 失败";
             if (ex != null) {
-                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.parse(ex);
+                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.apply(ex);
             }
         }
         this.exportMsg.appendLine(msg);

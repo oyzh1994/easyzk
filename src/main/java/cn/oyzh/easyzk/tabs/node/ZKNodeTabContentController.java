@@ -9,7 +9,6 @@ import cn.oyzh.easyzk.fx.ZKACLVBox;
 import cn.oyzh.easyzk.fx.ZKFormatComboBox;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import cn.oyzh.easyzk.fx.ZKRichDataTextArea;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
@@ -26,8 +25,7 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.ext.NumberTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
@@ -287,7 +285,7 @@ public class ZKNodeTabContentController implements Initializable {
 
         // 初始化文本、格式监听器
         this.format.selectedItemChanged(this.formatListener);
-        this.nodeData.addTextChangedListener(this.textListener);
+        this.nodeData.addTextChangeListener(this.textListener);
 
         // 初始化数据
         this.treeItem = treeItem;
@@ -365,7 +363,7 @@ public class ZKNodeTabContentController implements Initializable {
             this.treeItem.refreshACL();
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -377,7 +375,7 @@ public class ZKNodeTabContentController implements Initializable {
         StageWrapper fxView = StageUtil.parseStage(ZKACLAddController.class, this.window());
         fxView.setProp("zkItem", this.treeItem);
         fxView.setProp("zkClient", this.treeItem.zkClient());
-        fxView.showExt();
+        fxView.display();
     }
 
     /**
@@ -390,7 +388,7 @@ public class ZKNodeTabContentController implements Initializable {
         } catch (KeeperException.NoNodeException ignore) {
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -416,13 +414,13 @@ public class ZKNodeTabContentController implements Initializable {
                     .append(" : ")
                     .append(acl.permsFriend().getValue(this.aclViewSwitch.isSelected()));
             if (FXUtil.clipboardCopy(builder.toString())) {
-                FXToastUtil.ok("已复制权限信息到粘贴板");
+                MessageBox.okToast("已复制权限信息到粘贴板");
             } else {
-                FXAlertUtil.warn("复制权限信息失败");
+                MessageBox.warn("复制权限信息失败");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn("复制权限信息异常");
+            MessageBox.exception(ex, "复制权限信息异常");
         }
     }
 
@@ -439,10 +437,10 @@ public class ZKNodeTabContentController implements Initializable {
             fxView.setProp("acl", acl);
             fxView.setProp("zkItem", this.treeItem);
             fxView.setProp("zkClient", this.treeItem.zkClient());
-            fxView.showExt();
+            fxView.display();
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn("操作出现异常");
+            MessageBox.exception(ex, "操作出现异常");
         }
     }
 
@@ -451,27 +449,27 @@ public class ZKNodeTabContentController implements Initializable {
      */
     @FXML
     private void deleteACL(MouseEvent event) {
-        if (!FXAlertUtil.confirm("确定删除此权限控制？")) {
+        if (!MessageBox.confirm("确定删除此权限控制？")) {
             return;
         }
         SVGGlyph glyph = (SVGGlyph) event.getTarget();
         ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
         ZKACL acl = aclVBox.acl();
         if (this.treeItem.acl().size() == 1) {
-            FXAlertUtil.warn("请最少保留一个权限控制！");
+            MessageBox.warn("请最少保留一个权限控制！");
             return;
         }
         try {
             Stat stat = this.treeItem.deleteACL(acl);
             if (stat != null) {
                 this.reloadACL();
-                FXToastUtil.ok("删除权限控制成功！");
+                MessageBox.okToast("删除权限控制成功！");
             } else {
-                FXAlertUtil.warn("删除权限控制失败！");
+                MessageBox.warn("删除权限控制失败！");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -578,9 +576,9 @@ public class ZKNodeTabContentController implements Initializable {
             }
         }
         if (FXUtil.clipboardCopy(builder.toString())) {
-            FXToastUtil.ok("已复制节点状态到剪贴板");
+            MessageBox.okToast("已复制节点状态到剪贴板");
         } else {
-            FXAlertUtil.warn("复制节点状态到剪贴板失败！");
+            MessageBox.warn("复制节点状态到剪贴板失败！");
         }
     }
 
@@ -593,7 +591,7 @@ public class ZKNodeTabContentController implements Initializable {
             this.treeItem.refreshStat();
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -620,9 +618,9 @@ public class ZKNodeTabContentController implements Initializable {
     private void copyNode() {
         String data = this.treeItem.decodeNodePath() + " " + this.nodeData.getTextTrim();
         if (FXUtil.clipboardCopy(data)) {
-            FXToastUtil.ok("已复制节点到粘贴板");
+            MessageBox.okToast("已复制节点到粘贴板");
         } else {
-            FXAlertUtil.warn("复制节点到粘贴板失败");
+            MessageBox.warn("复制节点到粘贴板失败");
         }
     }
 
@@ -632,9 +630,9 @@ public class ZKNodeTabContentController implements Initializable {
     @FXML
     private void copyNodePath() {
         if (FXUtil.clipboardCopy(this.treeItem.decodeNodePath())) {
-            FXToastUtil.ok("已复制节点路径到粘贴板");
+            MessageBox.okToast("已复制节点路径到粘贴板");
         } else {
-            FXAlertUtil.warn("复制节点路径到粘贴板失败");
+            MessageBox.warn("复制节点路径到粘贴板失败");
         }
     }
 
@@ -644,7 +642,7 @@ public class ZKNodeTabContentController implements Initializable {
     @FXML
     public void reloadData() {
         // 放弃保存
-        if (this.treeItem.dataUnsaved() && !FXAlertUtil.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
             return;
         }
         // 刷新数据
@@ -654,7 +652,7 @@ public class ZKNodeTabContentController implements Initializable {
             this.initData();
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -664,8 +662,8 @@ public class ZKNodeTabContentController implements Initializable {
     @FXML
     private void collect() {
         this.treeItem.collect();
-        this.collect.hideNode();
-        this.unCollect.showNode();
+        this.collect.disappear();
+        this.unCollect.display();
     }
 
     /**
@@ -674,8 +672,8 @@ public class ZKNodeTabContentController implements Initializable {
     @FXML
     private void unCollect() {
         this.treeItem.unCollect();
-        this.collect.showNode();
-        this.unCollect.hideNode();
+        this.collect.display();
+        this.unCollect.disappear();
     }
 
     /**
@@ -684,7 +682,7 @@ public class ZKNodeTabContentController implements Initializable {
     @FXML
     private void saveNodeData() {
         if (this.treeItem.isDataTooLong()) {
-            FXAlertUtil.warn("数据太大，无法保存！");
+            MessageBox.warn("数据太大，无法保存！");
             return;
         }
         // 保存数据
@@ -738,7 +736,7 @@ public class ZKNodeTabContentController implements Initializable {
             StageWrapper fxView = StageUtil.parseStage(ZKNodeQRCodeController.class, this.window());
             fxView.setProp("zkNode", this.treeItem.value());
             fxView.setProp("nodeData", this.nodeData.getTextTrim());
-            fxView.showExt();
+            fxView.display();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -792,7 +790,7 @@ public class ZKNodeTabContentController implements Initializable {
                     this.nodeData.enable();
                     this.ignoreChanged = false;
                 })
-                .onError(ex -> FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE))
+                .onError(MessageBox::exception)
                 .build();
         ExecutorUtil.start(task, 20);
     }
@@ -898,9 +896,9 @@ public class ZKNodeTabContentController implements Initializable {
     private void saveQuota() {
         try {
             this.treeItem.saveQuota(this.quotaBytes.getValue(), (int) this.quotaNum.getValue());
-            FXAlertUtil.info("配额已保存");
+            MessageBox.info("配额已保存");
         } catch (Exception ex) {
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -912,9 +910,9 @@ public class ZKNodeTabContentController implements Initializable {
         try {
             this.treeItem.clearQuotaNum();
             this.quotaNum.setValue(-1);
-            FXAlertUtil.info("节点数量配额已清除");
+            MessageBox.info("节点数量配额已清除");
         } catch (Exception ex) {
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -926,9 +924,9 @@ public class ZKNodeTabContentController implements Initializable {
         try {
             this.treeItem.clearQuotaBytes();
             this.quotaBytes.setValue(-1);
-            FXAlertUtil.info("数据大小配额已清除");
+            MessageBox.info("数据大小配额已清除");
         } catch (Exception ex) {
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 }

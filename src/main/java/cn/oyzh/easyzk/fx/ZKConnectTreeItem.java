@@ -18,8 +18,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXDialogUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -176,7 +175,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
         StageWrapper fxView = StageUtil.parseStage(ZKServiceController.class, this.treeView().window());
         fxView.setProp("zkInfo", this.info());
         fxView.setProp("zkClient", this.zkClient);
-        fxView.showExt();
+        fxView.display();
     }
 
     /**
@@ -209,7 +208,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
                         this.zkClient.startWithListener();
                         if (!this.zkClient.isConnected()) {
                             if (!this.canceled) {
-                                FXAlertUtil.warn(info().getName() + "连接失败");
+                                MessageBox.warn(info().getName() + "连接失败");
                             }
                             this.canceled = false;
                         } else {
@@ -222,17 +221,13 @@ public class ZKConnectTreeItem extends BaseTreeItem {
         }
     }
 
-    private SVGGlyph graphic() {
-        return this.itemValue().graphic();
-    }
-
     /**
      * 导入数据
      */
     private void importNode() {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeImportController.class, this.treeView().window());
         fxView.setProp("zkClient", this.zkClient);
-        fxView.showExt();
+        fxView.display();
     }
 
     /**
@@ -242,11 +237,11 @@ public class ZKConnectTreeItem extends BaseTreeItem {
     private void transportData() {
         StageWrapper wrapper = StageUtil.getStage(ZKInfoTransportController.class);
         if (wrapper != null) {
-            wrapper.close();
+            wrapper.disappear();
         }
         wrapper = StageUtil.parseStage(ZKInfoTransportController.class);
         wrapper.setProp("formConnect", this.value);
-        wrapper.showExt();
+        wrapper.display();
     }
 
     /**
@@ -263,7 +258,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
      */
     public void closeConnect() {
         if (!this.isWaiting() && this.isConnect()) {
-            if (this.hasUnsavedNode() && !FXAlertUtil.confirm("发现节点数据未保存，确定关闭连接？")) {
+            if (this.hasUnsavedNode() && !MessageBox.confirm("发现节点数据未保存，确定关闭连接？")) {
                 return;
             }
             this.startWaiting();
@@ -272,9 +267,9 @@ public class ZKConnectTreeItem extends BaseTreeItem {
                     .onSuccess(() -> {
                         this.clearChildren();
                         SystemUtil.gcLater();
-                    }).onFinish(this::stopWaiting).onError(ex -> {
-                        FXAlertUtil.warn("关闭连接失败！");
-                    }).build();
+                    }).onFinish(this::stopWaiting)
+                    .onError(MessageBox::exception)
+                    .build();
             ThreadUtil.startVirtual(task);
         }
     }
@@ -307,21 +302,21 @@ public class ZKConnectTreeItem extends BaseTreeItem {
      * 编辑连接
      */
     private void editConnect() {
-        if (this.isConnect() && FXAlertUtil.confirm("需要关闭连接，继续么？")) {
+        if (this.isConnect() && MessageBox.confirm("需要关闭连接，继续么？")) {
             this.closeConnect();
         }
         StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.treeView().window());
         fxView.setProp("zkInfo", this.value());
-        fxView.showExt();
+        fxView.display();
     }
 
     @Override
     public void delete() {
-        if (FXAlertUtil.confirm("删除" + this.info().getName(), "确定删除连接？")) {
+        if (MessageBox.confirm("删除" + this.info().getName(), "确定删除连接？")) {
             this.closeConnect();
             if (this.getParent() instanceof ConnectManager connectManager) {
                 if (!connectManager.delConnectItem(this)) {
-                    FXAlertUtil.warn("删除连接失败！");
+                    MessageBox.warn("删除连接失败！");
                 }
             }
             ZKEventUtil.infoDeleted(this.value);
@@ -330,7 +325,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
 
     @Override
     public void rename() {
-        String connectName = FXDialogUtil.prompt("请输入新的连接名称", this.value.getName());
+        String connectName = MessageBox.prompt("请输入新的连接名称", this.value.getName());
 
         // 名称为null或者跟当前名称相同，则忽略
         if (connectName == null || Objects.equals(connectName, this.value.getName())) {
@@ -339,7 +334,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
 
         // 检查名称
         if (StrUtil.isBlank(connectName)) {
-            FXAlertUtil.warn("连接名称不能为空！");
+            MessageBox.warn("连接名称不能为空！");
             return;
         }
 
@@ -348,7 +343,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
         this.value.setName(connectName);
         if (this.infoStore.exist(this.value)) {
             this.value.setName(name);
-            FXAlertUtil.warn("此连接名称已存在！");
+            MessageBox.warn("此连接名称已存在！");
             return;
         }
 
@@ -356,7 +351,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
         if (this.infoStore.update(this.value)) {
             this.itemValue(new ZKConnectTreeItemValue(this));
         } else {
-            FXAlertUtil.warn("修改连接名称失败！");
+            MessageBox.warn("修改连接名称失败！");
         }
     }
 
@@ -377,7 +372,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
             // 连接中断事件
             if (n == ZKConnState.SUSPENDED) {
                 this.zkClient.close();
-                FXAlertUtil.warn(this.info().getName() + "连接中断");
+                MessageBox.warn(this.info().getName() + "连接中断");
             }
         });
         super.setValue(new ZKConnectTreeItemValue(this));
@@ -424,7 +419,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
             }
             SystemUtil.gcLater();
         } else {
-            FXAlertUtil.warn(this.info().getName() + "加载根节点失败");
+            MessageBox.warn(this.info().getName() + "加载根节点失败");
         }
     }
 

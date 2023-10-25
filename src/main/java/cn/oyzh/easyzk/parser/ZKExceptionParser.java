@@ -8,17 +8,17 @@ import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
 import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
-import cn.oyzh.fx.common.Parser;
-import lombok.NonNull;
 import org.apache.zookeeper.KeeperException;
 
+import java.util.function.Function;
+
 /**
- * zk异常信息解析
+ * zk异常信息解析器
  *
  * @author oyzh
  * @since 2020/7/2
  */
-public class ZKExceptionParser implements Parser<Exception, String> {
+public class ZKExceptionParser implements Function<Throwable, String> {
 
     /**
      * 当前实例
@@ -26,11 +26,14 @@ public class ZKExceptionParser implements Parser<Exception, String> {
     public final static ZKExceptionParser INSTANCE = new ZKExceptionParser();
 
     @Override
-    public String parse(@NonNull Exception e) {
+    public String apply(Throwable e) {
+        if (e == null) {
+            return null;
+        }
 
         if (e instanceof RuntimeException exception) {
             if (exception.getCause() != null) {
-                e = (Exception) e.getCause();
+                e = e.getCause();
             }
         }
 

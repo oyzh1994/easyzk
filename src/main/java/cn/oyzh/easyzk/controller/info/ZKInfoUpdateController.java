@@ -15,9 +15,7 @@ import cn.oyzh.fx.plus.controls.FlexTextArea;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
 import cn.oyzh.fx.plus.ext.NumberTextField;
 import cn.oyzh.fx.plus.ext.PortField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -148,7 +146,7 @@ public class ZKInfoUpdateController extends Controller {
         if (this.cluster.isSelected()) {
             if (host.contains("：")) {
                 this.tabPane.select(0);
-                FXTipUtil.tip("集群地址不合法！", this.host);
+                MessageBox.tipMsg("集群地址不合法！", this.host);
                 return null;
             }
             hostText = host;
@@ -204,7 +202,7 @@ public class ZKInfoUpdateController extends Controller {
         // 检查名称
         if (this.infoStore.exist(this.zkInfo)) {
             this.tabPane.select(0);
-            FXAlertUtil.warn("此名称已存在！");
+            MessageBox.warn("此名称已存在！");
             return;
         }
         // String charset = this.charset.getValue();
@@ -222,10 +220,10 @@ public class ZKInfoUpdateController extends Controller {
         // 保存数据
         if (this.infoStore.update(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
-            FXToastUtil.ok("修改ZK信息成功!");
+            MessageBox.okToast("修改ZK信息成功!");
             this.closeStage();
         } else {
-            FXAlertUtil.warn("修改失败！");
+            MessageBox.warn("修改失败！");
         }
     }
 

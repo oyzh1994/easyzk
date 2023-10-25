@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import cn.oyzh.easyzk.tabs.ZKBaseTab;
 import cn.oyzh.fx.plus.controls.FlexTextArea;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
 import cn.oyzh.fx.plus.svg.SVGLabel;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -68,7 +68,7 @@ public class ZKNodeTab extends ZKBaseTab {
         // 节点被移除
         if (this.treeItem.isBeDeleted()) {
             if (!this.treeItem.isIgnoreDeleted()) {
-                if (FXAlertUtil.confirm("此节点已被其他连接删除，是否移除此节点？")) {
+                if (MessageBox.confirm("此节点已被其他连接删除，是否移除此节点？")) {
                     this.treeItem.remove();
                     this.closeTab();
                 } else {
@@ -77,7 +77,7 @@ public class ZKNodeTab extends ZKBaseTab {
             }
         } else if (this.treeItem.isBeUpdated()) { // 节点被更新
             if (!this.treeItem.isIgnoreUpdated()) {
-                if (FXAlertUtil.confirm("此节点数据已被其他连接修改，是否更新数据？")) {
+                if (MessageBox.confirm("此节点数据已被其他连接修改，是否更新数据？")) {
                     this.treeItem.applyUpdate();
                     this.contentController.init(this.treeItem);
                     this.treeItem.flushGraphic();

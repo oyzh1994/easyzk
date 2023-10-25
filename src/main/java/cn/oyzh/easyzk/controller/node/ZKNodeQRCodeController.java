@@ -6,7 +6,7 @@ import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.common.util.QRCodeUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexImageView;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.ResourceUtil;
 import javafx.fxml.FXML;
@@ -87,9 +87,9 @@ public class ZKNodeQRCodeController extends Controller {
             ex.printStackTrace();
             log.warn("initQRCode error, ex:{}", ex.getMessage());
             if (ex.getMessage().contains("Data too big")) {
-                FXAlertUtil.warn("节点数据太大，不支持生成二维码！");
+                MessageBox.warn("节点数据太大，不支持生成二维码！");
             } else {
-                FXAlertUtil.warn("生成二维码异常");
+                MessageBox.exception(ex, "生成二维码异常");
             }
         }
     }

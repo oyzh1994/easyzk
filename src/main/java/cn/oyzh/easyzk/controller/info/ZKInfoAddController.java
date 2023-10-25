@@ -6,7 +6,6 @@ import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -17,9 +16,7 @@ import cn.oyzh.fx.plus.controls.FlexTextArea;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
 import cn.oyzh.fx.plus.ext.NumberTextField;
 import cn.oyzh.fx.plus.ext.PortField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -149,7 +146,7 @@ public class ZKInfoAddController extends Controller {
         if (this.cluster.isSelected()) {
             if (host.contains("：")) {
                 this.tabPane.select(0);
-                FXTipUtil.tip("集群地址不合法！", this.host);
+                MessageBox.tipMsg("集群地址不合法！", this.host);
                 return null;
             }
             hostText = host;
@@ -206,7 +203,7 @@ public class ZKInfoAddController extends Controller {
             zkInfo.setName(name);
             // 检查名称是否存在
             if (this.infoStore.exist(zkInfo)) {
-                FXAlertUtil.warn("此名称已存在！");
+                MessageBox.warn("此名称已存在！");
                 return;
             }
 
@@ -226,13 +223,14 @@ public class ZKInfoAddController extends Controller {
             boolean result = this.infoStore.add(zkInfo);
             if (result) {
                 ZKEventUtil.infoAdded(zkInfo);
-                FXToastUtil.ok("新增zk信息成功!");
+                MessageBox.okToast("新增zk信息成功!");
                 this.closeStage();
             } else {
-                FXAlertUtil.warn("新增zk信息失败！");
+                MessageBox.warn("新增zk信息失败！");
             }
         } catch (Exception ex) {
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
     }
 

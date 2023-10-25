@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.FlexCheckBox;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -225,10 +225,10 @@ public class SettingController extends Controller {
             if (!this.setting.isAutoAuth()) {
                 ZKAuthUtil.clearAuthed();
             }
-            FXToastUtil.ok("保存配置成功" + tips);
+            MessageBox.okToast("保存配置成功" + tips);
             this.closeStage();
         } else {
-            FXToastUtil.warn("保存配置失败！");
+            MessageBox.warnToast("保存配置失败！");
         }
     }
 

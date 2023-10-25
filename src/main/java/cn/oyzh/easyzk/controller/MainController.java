@@ -10,10 +10,9 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
-import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -165,7 +164,7 @@ public class MainController extends ParentController {
 
         // 总是询问
         if (this.setting.isExitAsk()) {
-            if (FXAlertUtil.confirm("确定退出" + this.project.getName() + "？")) {
+            if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
                 log.info("exit by confirm.");
                 this.exit();
             } else {
@@ -182,7 +181,7 @@ public class MainController extends ParentController {
                 tray.show();
             } else {
                 log.error("tray not support!");
-                FXAlertUtil.warn("不支持系统托盘！");
+                MessageBox.warn("不支持系统托盘！");
             }
         }
     }

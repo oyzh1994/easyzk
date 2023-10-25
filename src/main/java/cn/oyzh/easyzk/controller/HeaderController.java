@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupManage;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -105,7 +105,7 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void quit() {
-        if (FXAlertUtil.confirm("确定退出" + this.project.getName() + "？")) {
+        if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
             EventUtil.fire(ZKEventTypes.APP_EXIT);
         }
     }

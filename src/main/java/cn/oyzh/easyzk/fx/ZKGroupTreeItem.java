@@ -9,8 +9,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXDialogUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -91,7 +90,7 @@ public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
 
     @Override
     public void rename() {
-        String groupName = FXDialogUtil.prompt("请输入新的分组名称", this.value.getName());
+        String groupName = MessageBox.prompt("请输入新的分组名称", this.value.getName());
 
         // 名称为null或者跟当前名称相同，则忽略
         if (groupName == null || Objects.equals(groupName, this.value.getName())) {
@@ -100,7 +99,7 @@ public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
 
         // 检查名称
         if (StrUtil.isBlank(groupName)) {
-            FXAlertUtil.warn("分组名称不能为空！");
+            MessageBox.warn("分组名称不能为空！");
             return;
         }
 
@@ -109,7 +108,7 @@ public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
         this.value.setName(groupName);
         if (this.groupStore.exist(this.value)) {
             this.value.setName(name);
-            FXAlertUtil.warn("此分组已存在！");
+            MessageBox.warn("此分组已存在！");
             return;
         }
 
@@ -118,22 +117,22 @@ public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
             this.itemValue().flushName();
             // this.itemValue(groupName);
         } else {
-            FXAlertUtil.warn("修改分组名称失败！");
+            MessageBox.warn("修改分组名称失败！");
         }
     }
 
     @Override
     public void delete() {
-        if (this.isChildEmpty() && !FXAlertUtil.confirm("确定删除此分组？")) {
+        if (this.isChildEmpty() && !MessageBox.confirm("确定删除此分组？")) {
             return;
         }
-        if (!this.isChildEmpty() && !FXAlertUtil.confirm("确定删除此分组？(连接将移动到根节点)")) {
+        if (!this.isChildEmpty() && !MessageBox.confirm("确定删除此分组？(连接将移动到根节点)")) {
             return;
         }
 
         // 删除失败
         if (!this.groupStore.delete(this.value)) {
-            FXAlertUtil.warn("删除分组失败！");
+            MessageBox.warn("删除分组失败！");
             return;
         }
 
@@ -155,7 +154,7 @@ public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
     private void addConnect() {
         StageWrapper fxView = StageUtil.parseStage(ZKInfoAddController.class, this.parent().window());
         fxView.setProp("group", this.value);
-        fxView.showExt();
+        fxView.display();
     }
 
     /**

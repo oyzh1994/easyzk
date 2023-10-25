@@ -16,7 +16,7 @@ import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
@@ -155,7 +155,7 @@ public class ZKFilterMainController extends Controller {
                     toggleSwitch.selectedChanged((abs, o, n) -> {
                         filterVO.setEnable(n);
                         if (!filterStore.update(filterVO)) {
-                            FXAlertUtil.warn("修改状态失败！");
+                            MessageBox.warn("修改状态失败！");
                         } else {
                             ZKEventUtil.treeChildFilter();
                         }
@@ -181,7 +181,7 @@ public class ZKFilterMainController extends Controller {
                     toggleSwitch.selectedChanged((obs, o, n) -> {
                         filterVO.setPartMatch(n);
                         if (!filterStore.update(filterVO)) {
-                            FXAlertUtil.warn("修改匹配方式失败！");
+                            MessageBox.warn("修改匹配方式失败！");
                         } else if (filterVO.isEnable()) {
                             ZKEventUtil.treeChildFilter();
                         }
@@ -199,12 +199,12 @@ public class ZKFilterMainController extends Controller {
      * @param info zk信息
      */
     private void deleteInfo(ZKFilter info) {
-        if (FXAlertUtil.confirm("确定删除此过滤配置？")) {
+        if (MessageBox.confirm("确定删除此过滤配置？")) {
             if (this.filterStore.delete(info)) {
                 ZKEventUtil.treeChildFilter();
                 this.firstPage();
             } else {
-                FXAlertUtil.warn("删除过滤配置失败！");
+                MessageBox.warn("删除过滤配置失败！");
             }
         }
     }
@@ -246,7 +246,7 @@ public class ZKFilterMainController extends Controller {
         EventUtil.register(this);
         this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-        this.searchKeyWord.addTextChangedListener((observableValue, s, t1) -> this.firstPage());
+        this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
         // 初始化表单
         this.initTable();
         // 显示首页

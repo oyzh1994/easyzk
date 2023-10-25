@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
@@ -20,9 +19,7 @@ import cn.oyzh.fx.plus.controls.FlexComboBox;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexTextArea;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupManage;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
@@ -199,9 +196,9 @@ public class ZKACLAddController extends Controller {
     private void copyDigestText() {
         String data = this.digestText.getText();
         if (FXUtil.clipboardCopy(data)) {
-            FXToastUtil.ok("已复制摘要信息到剪贴板");
+            MessageBox.okToast("已复制摘要信息到剪贴板");
         } else {
-            FXAlertUtil.warn("复制摘要信息到剪贴板失败！");
+            MessageBox.warn("复制摘要信息到剪贴板失败！");
         }
     }
 
@@ -231,7 +228,7 @@ public class ZKACLAddController extends Controller {
             }
             String perms = this.getPerms();
             if (StrUtil.isBlank(perms)) {
-                FXAlertUtil.warn("请最少勾选一项权限！");
+                MessageBox.warn("请最少勾选一项权限！");
                 return;
             }
             if (this.aclType.getSelectedIndex() == 0) {
@@ -249,7 +246,7 @@ public class ZKACLAddController extends Controller {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -260,21 +257,21 @@ public class ZKACLAddController extends Controller {
         // 获取内容
         String user = this.digestInfo1User.getText().trim();
         if (StrUtil.isBlank(user)) {
-            FXTipUtil.tip("用户名不能为空！", this.digestInfo1User);
+            MessageBox.tipMsg("用户名不能为空！", this.digestInfo1User);
             return;
         }
         String password = this.digestInfo1Password.getText().trim();
         if (StrUtil.isBlank(password)) {
-            FXTipUtil.tip("密码不能为空！", this.digestInfo1Password);
+            MessageBox.tipMsg("密码不能为空！", this.digestInfo1Password);
             return;
         }
         String digest = ZKAuthUtil.digest(user, password);
         if (digest == null) {
-            FXAlertUtil.warn("认证信息处理异常！");
+            MessageBox.warn("认证信息处理异常！");
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            FXAlertUtil.warn("此摘要认证信息(Digest)已存在！");
+            MessageBox.warn("此摘要认证信息(Digest)已存在！");
             return;
         }
         ACL acl = new ACL();
@@ -296,25 +293,25 @@ public class ZKACLAddController extends Controller {
         String digest = this.digestInfo2.getText().trim();
         String[] text = digest.split(":");
         if (text.length != 2) {
-            FXTipUtil.tip("数据格式异常！", this.digestInfo2);
+            MessageBox.tipMsg("数据格式异常！", this.digestInfo2);
             return;
         }
         String user = text[0];
         String password = text[1];
         if (StrUtil.isBlank(user)) {
-            FXTipUtil.tip("用户名不能为空！", this.digestInfo2);
+            MessageBox.tipMsg("用户名不能为空！", this.digestInfo2);
             return;
         }
         if (StrUtil.isBlank(password)) {
-            FXTipUtil.tip("密码摘要不能为空！", this.digestInfo2);
+            MessageBox.tipMsg("密码摘要不能为空！", this.digestInfo2);
             return;
         }
         if (password.length() < 28) {
-            FXTipUtil.tip("密码摘要格式异常！", this.digestInfo2);
+            MessageBox.tipMsg("密码摘要格式异常！", this.digestInfo2);
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            FXAlertUtil.warn("此摘要认证信息(Digest)已存在！");
+            MessageBox.warn("此摘要认证信息(Digest)已存在！");
             return;
         }
         ACL acl = new ACL();
@@ -332,12 +329,12 @@ public class ZKACLAddController extends Controller {
         // 获取内容
         ZKAuth zkAuth = this.digestInfo3.getValue();
         if (zkAuth == null) {
-            FXTipUtil.tip("未选择数据或无数据！", this.digestInfo3);
+            MessageBox.tipMsg("未选择数据或无数据！", this.digestInfo3);
             return;
         }
         String digest = zkAuth.digest();
         if (this.zkItem.existDigestACL(digest)) {
-            FXAlertUtil.warn("此摘要认证信息(Digest)已存在！");
+            MessageBox.warn("此摘要认证信息(Digest)已存在！");
             return;
         }
         ACL acl = new ACL();
@@ -353,7 +350,7 @@ public class ZKACLAddController extends Controller {
      */
     private void addWorldACL() {
         if (this.zkItem.hasWorldACL()) {
-            FXAlertUtil.warn("World(开放认证)权限已存在！");
+            MessageBox.warn("World(开放认证)权限已存在！");
             return;
         }
         ACL acl = new ACL();
@@ -375,7 +372,7 @@ public class ZKACLAddController extends Controller {
         acl.setId(new Id("ip", ip));
         acl.setPerms(perms);
         if (this.zkItem.existIPACL(acl.idVal())) {
-            FXToastUtil.warn("IP" + ip + "已存在！");
+            MessageBox.warnToast("IP" + ip + "已存在！");
         } else {
             this.addACL(acl);
         }
@@ -402,7 +399,7 @@ public class ZKACLAddController extends Controller {
             acl.setId(new Id("ip", ip));
             acl.setPerms(perms);
             if (this.zkItem.existIPACL(acl.idVal())) {
-                FXToastUtil.warn("IP" + ip + "已存在！");
+                MessageBox.warnToast("IP" + ip + "已存在！");
                 return;
             }
             aclList.add(acl);
@@ -431,13 +428,14 @@ public class ZKACLAddController extends Controller {
             Stat stat = this.zkClient.addACL(this.zkItem.nodePath(), list);
             if (stat != null) {
                 this.zkItem.refreshACL();
-                FXToastUtil.ok("添加权限成功！");
+                MessageBox.okToast("添加权限成功！");
                 this.closeStage();
                 return true;
             }
-            FXAlertUtil.warn("添加权限失败！");
-        } catch (Exception e) {
-            FXAlertUtil.warn(e, ZKExceptionParser.INSTANCE);
+            MessageBox.warn("添加权限失败！");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
         return false;
     }
@@ -462,22 +460,22 @@ public class ZKACLAddController extends Controller {
         this.aclType.selectedIndexChanged((observableValue, number, t1) -> {
             // world权限
             if (t1.intValue() == 0) {
-                this.permsBox.showNode();
+                this.permsBox.display();
                 this.nodeGroupManage.visible(null);
             } else if (t1.intValue() == 1) {// digest权限1
-                this.permsBox.showNode();
+                this.permsBox.display();
                 this.nodeGroupManage.visible(this.digest1ACL);
             } else if (t1.intValue() == 2) {// digest权限2
-                this.permsBox.showNode();
+                this.permsBox.display();
                 this.nodeGroupManage.visible(this.digest2ACL);
             } else if (t1.intValue() == 3) {// digest权限3
-                this.permsBox.showNode();
+                this.permsBox.display();
                 this.nodeGroupManage.visible(this.digest3ACL);
             } else if (t1.intValue() == 4) {// 单IP权限
-                this.permsBox.showNode();
+                this.permsBox.display();
                 this.nodeGroupManage.visible(this.ip1ACL);
             } else if (t1.intValue() == 5) {// 多IP权限
-                this.permsBox.hideNode();
+                this.permsBox.disappear();
                 this.nodeGroupManage.visible(this.ip2ACL);
             }
         });
@@ -494,16 +492,16 @@ public class ZKACLAddController extends Controller {
             if (StrUtil.isNotBlank(user) && StrUtil.isNotBlank(password)) {
                 String digest = ZKAuthUtil.digest(user, password);
                 this.digestText.setText(digest);
-                this.copyDigestText.showNode();
+                this.copyDigestText.display();
             } else {
                 this.digestText.setText("");
-                this.copyDigestText.hideNode();
+                this.copyDigestText.disappear();
             }
         };
 
         // 认证信息更新时，动态显示摘要信息
-        this.digestInfo1User.addTextChangedListener(info1listener);
-        this.digestInfo1Password.addTextChangedListener(info1listener);
+        this.digestInfo1User.addTextChangeListener(info1listener);
+        this.digestInfo1Password.addTextChangeListener(info1listener);
         this.nodePath.setText(this.zkItem.decodeNodePath());
         this.stage.hideOnEscape();
     }

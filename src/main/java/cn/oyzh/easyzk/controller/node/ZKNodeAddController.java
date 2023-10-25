@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -16,9 +15,7 @@ import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexTextArea;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -175,13 +172,14 @@ public class ZKNodeAddController extends Controller {
             // 新增节点
             String node = this.zkClient.create(this.nodePathText, nodeData.getBytes(), List.of(acl), null, createMode, true);
             if (node == null) {
-                FXToastUtil.warn("新增子节点失败！");
+                MessageBox.warnToast("新增子节点失败！");
             } else {
-                FXToastUtil.ok("新增子节点成功！");
+                MessageBox.okToast("新增子节点成功！");
                 this.closeStage();
             }
-        } catch (Exception e) {
-            FXAlertUtil.warn(e, ZKExceptionParser.INSTANCE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
     }
 
@@ -254,7 +252,7 @@ public class ZKNodeAddController extends Controller {
         }
 
         if (builder.isEmpty()) {
-            FXAlertUtil.warn("请最少选择一项权限！");
+            MessageBox.warn("请最少选择一项权限！");
             return null;
         }
 
@@ -271,12 +269,12 @@ public class ZKNodeAddController extends Controller {
             // 获取内容
             String user = this.digestUser.getText().trim();
             if (StrUtil.isBlank(user)) {
-                FXTipUtil.tip("用户名不能为空！", this.digestUser);
+                MessageBox.tipMsg("用户名不能为空！", this.digestUser);
                 return null;
             }
             String password = this.digestPassword.getText().trim();
             if (StrUtil.isBlank(password)) {
-                FXTipUtil.tip("密码不能为空！", this.digestPassword);
+                MessageBox.tipMsg("密码不能为空！", this.digestPassword);
                 return null;
             }
             String digest = ZKAuthUtil.digest(user, password);
@@ -290,7 +288,7 @@ public class ZKNodeAddController extends Controller {
             try {
                 ZKACLUtil.checkIP(ip);
             } catch (Exception ex) {
-                FXTipUtil.tip(ex.getMessage(), this.digestPassword);
+                MessageBox.tipMsg(ex.getMessage(), this.digestPassword);
                 return null;
             }
             return new ACL(perms, new Id("ip", ip));
@@ -302,7 +300,7 @@ public class ZKNodeAddController extends Controller {
     @Override
     protected void bindListeners() {
         // 节点路径变化处理
-        this.nodePath.addTextChangedListener((observableValue, s, t1) -> {
+        this.nodePath.addTextChangeListener((observableValue, s, t1) -> {
             if (StrUtil.isNotBlank(t1)) {
                 this.nodePathText = ZKNodeUtil.concatPath(this.parentNode.getText(), t1).trim();
                 this.nodePathPreviewBox.setVisible(true);
@@ -316,14 +314,14 @@ public class ZKNodeAddController extends Controller {
         // 权限变化处理
         this.aclType.selectedIndexChanged((observable, oldValue, newValue) -> {
             if (newValue.intValue() == 0) {
-                this.ipACL.hideNode();
-                this.digestACL.hideNode();
+                this.ipACL.disappear();
+                this.digestACL.disappear();
             } else if (newValue.intValue() == 1) {
-                this.ipACL.hideNode();
-                this.digestACL.showNode();
+                this.ipACL.disappear();
+                this.digestACL.display();
             } else if (newValue.intValue() == 2) {
-                this.ipACL.showNode();
-                this.digestACL.hideNode();
+                this.ipACL.display();
+                this.digestACL.disappear();
             }
         });
 
@@ -340,8 +338,8 @@ public class ZKNodeAddController extends Controller {
         };
 
         // 认证信息更新时，动态显示摘要信息
-        this.digestUser.addTextChangedListener(info1listener);
-        this.digestPassword.addTextChangedListener(info1listener);
+        this.digestUser.addTextChangeListener(info1listener);
+        this.digestPassword.addTextChangeListener(info1listener);
     }
 
     @Override

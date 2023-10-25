@@ -258,7 +258,7 @@ public class ZKMainController extends ParentController {
     private void resizeMainLeft(Double newWidth) {
         if (newWidth != null && !Double.isNaN(newWidth)) {
             // 设置组件宽
-            this.zkMainLeft.setWidthAll(newWidth);
+            this.zkMainLeft.setRealWidth(newWidth);
             this.tabPane.setLayoutX(newWidth);
             this.tabPane.setFlexWidth("100% - " + newWidth);
             this.zkMainLeft.parentAutosize();
@@ -394,7 +394,7 @@ public class ZKMainController extends ParentController {
      */
     @EventReceiver(value = ZKEventTypes.LEFT_EXTEND, async = true, verbose = true)
     private void leftExtend() {
-        this.zkMainLeft.showNode();
+        this.zkMainLeft.display();
         double w = this.zkMainLeft.getMinWidth();
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
@@ -407,7 +407,7 @@ public class ZKMainController extends ParentController {
      */
     @EventReceiver(value = ZKEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
     private void leftCollapse() {
-        this.zkMainLeft.hideNode();
+        this.zkMainLeft.disappear();
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
         this.zkMainLeft.parentAutosize();

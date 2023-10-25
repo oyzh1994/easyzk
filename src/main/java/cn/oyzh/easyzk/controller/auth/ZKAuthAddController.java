@@ -4,14 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -61,27 +58,28 @@ public class ZKAuthAddController extends Controller {
             String user = this.user.getText().trim();
             String password = this.password.getText().trim();
             if (StrUtil.isBlank(user)) {
-                FXTipUtil.tip("用户名不能为空！", this.user);
+                MessageBox.tipMsg("用户名不能为空！", this.user);
                 return;
             }
             if (StrUtil.isBlank(password)) {
-                FXTipUtil.tip("密码不能为空！", this.password);
+                MessageBox.tipMsg("密码不能为空！", this.password);
                 return;
             }
             if (this.authStore.exist(user, password)) {
-                FXAlertUtil.warn("此认证用户名、认证密码信息已存在！");
+                MessageBox.warn("此认证用户名、认证密码信息已存在！");
                 return;
             }
             ZKAuth auth = new ZKAuth(user, password);
             if (this.authStore.add(auth)) {
                 ZKAuthUtil.fireAuthAddEvent(auth);
-                FXToastUtil.ok("新增认证信息成功！");
+                MessageBox.okToast("新增认证信息成功！");
                 this.closeStage();
             } else {
-                FXAlertUtil.warn("新增认证信息失败！");
+                MessageBox.warn("新增认证信息失败！");
             }
-        } catch (Exception e) {
-            FXAlertUtil.warn(e, ZKExceptionParser.INSTANCE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
     }
 

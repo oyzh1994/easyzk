@@ -4,8 +4,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -45,13 +44,13 @@ public class ZKConnectUtil {
                 view.restoreTitle();
                 if (client.isConnected()) {
                     client.close();
-                    FXToastUtil.ok("连接成功！");
+                    MessageBox.okToast("连接成功！");
                 } else {
-                    FXAlertUtil.warn("连接失败，请检查地址是否有效！");
+                    MessageBox.warn("连接失败，请检查地址是否有效！");
                 }
             });
-        } catch (Exception e) {
-            FXAlertUtil.warn("连接失败！");
+        } catch (Exception ex) {
+            MessageBox.exception(ex, "连接失败！");
         }
     }
 

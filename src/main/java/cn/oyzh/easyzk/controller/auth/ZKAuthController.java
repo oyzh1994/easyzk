@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import cn.oyzh.easyzk.msg.ZKAuthMsg;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -21,9 +20,7 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.ReadOnlyTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupManage;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -129,18 +126,18 @@ public class ZKAuthController extends Controller {
                 user = this.user.getText().trim();
                 password = this.password.getText().trim();
                 if (StrUtil.isBlank(user)) {
-                    FXTipUtil.tip("用户名不能为空！", this.user);
+                    MessageBox.tipMsg("用户名不能为空！", this.user);
                     return;
                 }
                 if (StrUtil.isBlank(password)) {
-                    FXTipUtil.tip("密码不能为空！", this.password);
+                    MessageBox.tipMsg("密码不能为空！", this.password);
                     return;
                 }
             } else if (this.authType2.isVisible()) {
                 // 获取内容
                 ZKAuth zkAuth = this.authList.getValue();
                 if (zkAuth == null) {
-                    FXTipUtil.tip("未选择数据或无数据！", this.authList);
+                    MessageBox.tipMsg("未选择数据或无数据！", this.authList);
                     return;
                 }
                 user = zkAuth.getUser();
@@ -149,8 +146,9 @@ public class ZKAuthController extends Controller {
             if (user != null && password != null) {
                 this.auth(user, password);
             }
-        } catch (Exception e) {
-            FXAlertUtil.warn(e, ZKExceptionParser.INSTANCE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
     }
 
@@ -172,18 +170,18 @@ public class ZKAuthController extends Controller {
                 }
                 authMsg.result(true);
                 EventUtil.fire(ZKEventTypes.ZK_AUTH_SUCCESS, authMsg);
-                FXToastUtil.ok("认证成功！");
+                MessageBox.okToast("认证成功！");
                 this.closeStage();
             } else if (this.zkNode.aclEmpty() || this.zkNode.hasDigestACL()) {
                 EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
-                FXAlertUtil.warn("认证失败！");
+                MessageBox.warn("认证失败！");
             } else {
                 EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
-                FXAlertUtil.warn("认证失败或此节点无需认证！");
+                MessageBox.warn("认证失败或此节点无需认证！");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn("认证失败！");
+            MessageBox.exception(ex, "认证失败");
         }
     }
 

@@ -20,7 +20,7 @@ public class ZKDataTextArea extends FlexTextArea {
     // public static Integer Cancel_Wrap_Threshold = 100 * 1000;
     //
     // {
-    //     this.addTextChangedListener((observable, oldValue, newValue) -> {
+    //     this.addTextChangeListener((observable, oldValue, newValue) -> {
     //         if (newValue != null) {
     //             if (newValue.length() > Cancel_Wrap_Threshold) {
     //                 if (this.isWrapText()) {

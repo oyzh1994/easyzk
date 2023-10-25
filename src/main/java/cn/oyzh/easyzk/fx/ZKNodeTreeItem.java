@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -18,9 +17,7 @@ import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXDialogUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -410,7 +407,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                         this.extend();
                     })
                     .onFinish(this::stopWaiting)
-                    .onError(ex -> FXToastUtil.exception(ex, ZKExceptionParser.INSTANCE))
+                    .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);
         }
@@ -500,7 +497,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeAddController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.zkClient());
-        fxView.showExt();
+        fxView.display();
     }
 
     /**
@@ -510,7 +507,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
         StageWrapper fxView = StageUtil.parseStage(ZKAuthController.class, this.window());
         fxView.setProp("zkClient", this.zkClient());
         fxView.setProp("zkItem", this);
-        fxView.showExt();
+        fxView.display();
     }
 
     /**
@@ -520,7 +517,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeExportController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.zkClient());
-        fxView.showExt();
+        fxView.display();
     }
 
     @Override
@@ -529,7 +526,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
         if (this.value.rootNode() || this.value.parentNode() || this.value.ephemeral()) {
             return;
         }
-        String nodeName = FXDialogUtil.prompt("请输入新的节点名称", this.value.nodeName());
+        String nodeName = MessageBox.prompt("请输入新的节点名称", this.value.nodeName());
         // 名称为空或名称跟当前名称相同，则忽略
         if (StrUtil.isBlank(nodeName) || Objects.equals(nodeName, this.value.nodeName())) {
             return;
@@ -539,7 +536,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
         String newNodePath = ZKNodeUtil.concatPath(parentPath, nodeName);
         try {
             if (this.zkClient().exists(newNodePath)) {
-                FXAlertUtil.warn("此节点已存在！");
+                MessageBox.warn("此节点已存在！");
                 return;
             }
             CreateMode createMode = this.value.ephemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
@@ -552,11 +549,11 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                 // 删除旧节点
                 this.deleteNode();
             } else {
-                FXAlertUtil.warn("修改节点名称失败！");
+                MessageBox.warn("修改节点名称失败！");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn("修改节点名称异常！");
+            MessageBox.exception(ex, "修改节点名称异常！");
         }
     }
 
@@ -567,11 +564,11 @@ public class ZKNodeTreeItem extends BaseTreeItem {
             return;
         }
         // 父节点删除提示
-        if (this.value.parentNode() && !FXAlertUtil.confirm("删除" + this.value.decodeNodePath(), "确实删除节点及所有子节点？（此操作无法撤销！）")) {
+        if (this.value.parentNode() && !MessageBox.confirm("删除" + this.value.decodeNodePath(), "确实删除节点及所有子节点？（此操作无法撤销！）")) {
             return;
         }
         // 子节点删除提示
-        if (this.value.subNode() && !FXAlertUtil.confirm("删除" + this.value.decodeNodePath(), "确定删除节点？")) {
+        if (this.value.subNode() && !MessageBox.confirm("删除" + this.value.decodeNodePath(), "确定删除节点？")) {
             return;
         }
 
@@ -579,11 +576,11 @@ public class ZKNodeTreeItem extends BaseTreeItem {
             @Override
             public void onStart() throws Exception {
                 deleteNode();
-                FXToastUtil.ok("节点已删除");
+                MessageBox.okToast("节点已删除");
             }
         };
         task.setFinish(this::stopWaiting);
-        task.setError(ex -> FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE));
+        task.setError(MessageBox::exception);
         this.startWaiting(task);
     }
 
@@ -621,7 +618,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                 .onFinish(this::stopWaiting)
                 .onStart(() -> this.loadChildes(true))
                 .onSuccess(() -> this.treeView().select(this))
-                .onError(ex -> FXAlertUtil.warn("加载失败！"))
+                .onError(ex -> MessageBox.exception(ex, "加载失败！"))
                 .build();
         this.startWaiting(task);
     }
@@ -634,7 +631,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                 .onFinish(this::stopWaiting)
                 .onStart(() -> this.collapseAll(this))
                 .onSuccess(() -> this.treeView().select(this))
-                .onError(ex -> FXAlertUtil.warn("收缩失败！"))
+                .onError(ex -> MessageBox.exception(ex, "收缩失败！"))
                 .build();
         this.startWaiting(task);
     }
@@ -647,7 +644,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                 .onFinish(this::stopWaiting)
                 .onStart(() -> this.expandAll(this))
                 .onSuccess(() -> this.treeView().select(this))
-                .onError(ex -> FXAlertUtil.warn("展开失败！"))
+                .onError(ex -> MessageBox.exception(ex, "展开失败！"))
                 .build();
         this.startWaiting(task);
     }
@@ -957,7 +954,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+                MessageBox.exception(ex);
             }
             return false;
         }
@@ -994,9 +991,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                     this.reExpanded();
                     this.refreshNode();
                 })
-                .onError(ex -> {
-                    FXToastUtil.exception(ex, ZKExceptionParser.INSTANCE);
-                })
+                .onError(MessageBox::exception)
                 .onFinish(this::stopWaiting)
                 .build();
         this.startWaiting(task);

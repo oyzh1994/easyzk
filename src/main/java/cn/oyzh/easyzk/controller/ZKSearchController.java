@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.dto.ZKSearchParam;
 import cn.oyzh.easyzk.dto.ZKSearchResult;
@@ -10,6 +9,8 @@ import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.fx.ZKTreeView;
 import cn.oyzh.easyzk.handler.ZKMainSearchHandler;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
+import cn.oyzh.fx.common.thread.Task;
+import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.FlexCheckBox;
@@ -18,20 +19,18 @@ import cn.oyzh.fx.plus.controls.FlexText;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.ext.ClearableTextField;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
+import cn.oyzh.fx.plus.ext.SearchTextField;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -48,13 +47,13 @@ public class ZKSearchController extends SubController {
      * 搜索-搜索词
      */
     @FXML
-    private ClearableTextField searchKW;
+    private SearchTextField searchKW;
 
     /**
      * 搜索-替换词
      */
     @FXML
-    private ClearableTextField replaceKW;
+    private SearchTextField replaceKW;
 
     /**
      * 搜索-主面板
@@ -146,17 +145,17 @@ public class ZKSearchController extends SubController {
     @FXML
     private SVGGlyph hideSearchMore;
 
-    /**
-     * 搜索-搜索历史
-     */
-    @FXML
-    private SVGGlyph searchHistory;
-
-    /**
-     * 搜索-替换历史
-     */
-    @FXML
-    private SVGGlyph replaceHistory;
+    // /**
+    //  * 搜索-搜索历史
+    //  */
+    // @FXML
+    // private SVGGlyph searchHistory;
+    //
+    // /**
+    //  * 搜索-替换历史
+    //  */
+    // @FXML
+    // private SVGGlyph replaceHistory;
     /**
      * zk树
      */
@@ -172,74 +171,77 @@ public class ZKSearchController extends SubController {
      */
     private final ZKSearchHistoryStore historyStore = ZKSearchHistoryStore.INSTANCE;
 
-    /**
-     * 搜索历史弹窗
-     */
-    private ZKSearchHistoryPopup searchHistoryPopup;
+    // /**
+    //  * 搜索历史弹窗
+    //  */
+    // private ZKSearchHistoryPopup searchHistoryPopup;
+    //
+    // /**
+    //  * 替换历史弹窗
+    //  */
+    // private ZKSearchHistoryPopup replaceHistoryPopup;
 
-    /**
-     * 替换历史弹窗
-     */
-    private ZKSearchHistoryPopup replaceHistoryPopup;
+    // /**
+    //  * 搜索-搜索历史
+    //  */
+    // @FXML
+    // private void searchHistory(MouseEvent event) {
+    //     if (this.searchHistoryPopup == null) {
+    //         this.searchHistoryPopup = new ZKSearchHistoryPopup(1);
+    //         this.searchKW.setHistoryPopup(this.searchHistoryPopup);
+    //     }
+    //     this.searchHistoryPopup.show(this.searchHistory, event);
+    //     // this.searchHistoryPopup.show(this.searchHistory, event.getScreenX(), event.getScreenY());
+    // }
 
-    /**
-     * 搜索-搜索历史
-     */
-    @FXML
-    private void searchHistory(MouseEvent event) {
-        if (this.searchHistoryPopup == null) {
-            this.searchHistoryPopup = new ZKSearchHistoryPopup(1);
-        }
-        this.searchHistoryPopup.show(this.searchHistory, event.getScreenX(), event.getScreenY());
-    }
+    // /**
+    //  * 搜索历史点击事件
+    //  *
+    //  * @param kw 点击关键词
+    //  */
+    // @EventReceiver(ZKEventTypes.ZK_SEARCH_HISTORY_SELECTED)
+    // private void searchHistorySelected(String kw) {
+    //     if (!this.searchKW.getTextTrim().equals(kw)) {
+    //         this.searchKW.setText(kw);
+    //     }
+    // }
 
-    /**
-     * 搜索历史点击事件
-     *
-     * @param kw 点击关键词
-     */
-    @EventReceiver(ZKEventTypes.ZK_SEARCH_HISTORY_SELECTED)
-    private void searchHistorySelected(String kw) {
-        if (!this.searchKW.getTextTrim().equals(kw)) {
-            this.searchKW.setText(kw);
-        }
-    }
+    // /**
+    //  * 搜索-搜索历史
+    //  */
+    // @FXML
+    // private void replaceHistory(MouseEvent event) {
+    //     if (this.replaceHistoryPopup == null) {
+    //         this.replaceHistoryPopup = new ZKSearchHistoryPopup(2);
+    //     }
+    //     this.replaceHistoryPopup.show(this.replaceHistory, event);
+    //     // this.replaceHistoryPopup.show(this.replaceHistory, event.getScreenX(), event.getScreenY());
+    // }
 
-    /**
-     * 搜索-搜索历史
-     */
-    @FXML
-    private void replaceHistory(MouseEvent event) {
-        if (this.replaceHistoryPopup == null) {
-            this.replaceHistoryPopup = new ZKSearchHistoryPopup(2);
-        }
-        this.replaceHistoryPopup.show(this.replaceHistory, event.getScreenX(), event.getScreenY());
-    }
-
-    /**
-     * 替换历史点击事件
-     *
-     * @param kw 点击关键词
-     */
-    @EventReceiver(ZKEventTypes.ZK_REPLACE_HISTORY_SELECTED)
-    private void replaceHistorySelected(String kw) {
-        if (!this.replaceKW.getTextTrim().equals(kw)) {
-            this.replaceKW.setText(kw);
-        }
-    }
+    // /**
+    //  * 替换历史点击事件
+    //  *
+    //  * @param kw 点击关键词
+    //  */
+    // @EventReceiver(ZKEventTypes.ZK_REPLACE_HISTORY_SELECTED)
+    // private void replaceHistorySelected(String kw) {
+    //     if (!this.replaceKW.getTextTrim().equals(kw)) {
+    //         this.replaceKW.setText(kw);
+    //     }
+    // }
 
     /**
      * 搜索-更多
      */
     @FXML
     private void showSearchMore() {
-        this.searchMore1.showNode();
-        this.searchMain.setHeightAll(108);
+        this.searchMore1.display();
+        this.searchMain.setRealHeight(108);
         this.treeView.setFlexHeight("100% - 144");
         // 重新布局
         this.searchMain.autosize();
-        this.hideSearchMore.showNode();
-        this.showSearchMore.hideNode();
+        this.hideSearchMore.display();
+        this.showSearchMore.disappear();
     }
 
     /**
@@ -247,13 +249,13 @@ public class ZKSearchController extends SubController {
      */
     @FXML
     private void hideSearchMore() {
-        this.searchMore1.hideNode();
-        this.searchMain.setHeightAll(36);
+        this.searchMore1.disappear();
+        this.searchMain.setRealHeight(36);
         this.treeView.setFlexHeight("100% - 72");
         // 重新布局
         this.searchMain.autosize();
-        this.hideSearchMore.hideNode();
-        this.showSearchMore.showNode();
+        this.hideSearchMore.disappear();
+        this.showSearchMore.display();
     }
 
     /**
@@ -265,25 +267,25 @@ public class ZKSearchController extends SubController {
         if (this.searchKW.isEmpty()) {
             return;
         }
+        // 检查选项
         if (!this.searchPath.isSelected() && !this.searchData.isSelected()) {
-            FXAlertUtil.warn("搜索名称和值请最少勾选一项！");
+            MessageBox.warn("搜索名称和值请最少勾选一项！");
             return;
         }
-        TaskManager.startDelayTask("zk:search:searchNext", () -> {
-            try {
-                this.treeView.disable();
-                // 执行搜索下一个
-                this.searchHandler.searchNext(this.getSearchParam());
-                // 更新搜索结果
-                this.updateSearchResult();
-                // 更新搜索历史
-                this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
-                this.treeView.enable();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                FXAlertUtil.warn("发生异常！");
-            }
-        }, 50);
+        Task task = TaskBuilder.newBuilder()
+                .onStart(() -> {
+                    this.treeView.disable();
+                    // 执行搜索下一个
+                    this.searchHandler.searchNext(this.getSearchParam());
+                    // 更新搜索结果
+                    this.updateSearchResult();
+                    // 更新搜索历史
+                    this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
+                })
+                .onFinish(() -> this.treeView.enable())
+                .onError(MessageBox::exception)
+                .build();
+        TaskManager.startDelayTask("zk:search:searchNext", task, 50);
     }
 
     /**
@@ -296,24 +298,23 @@ public class ZKSearchController extends SubController {
             return;
         }
         if (!this.searchPath.isSelected() && !this.searchData.isSelected()) {
-            FXAlertUtil.warn("搜索名称和值请最少勾选一项！");
+            MessageBox.warn("搜索名称和值请最少勾选一项！");
             return;
         }
-        TaskManager.startDelayTask("zk:search:searchPrev", () -> {
-            try {
-                this.treeView.disable();
-                // 执行搜索上一个
-                this.searchHandler.searchPrev(this.getSearchParam());
-                // 更新搜索结果
-                this.updateSearchResult();
-                // 更新搜索历史
-                this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
-                this.treeView.enable();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                FXAlertUtil.warn("发生异常！");
-            }
-        }, 50);
+        Task task = TaskBuilder.newBuilder()
+                .onStart(() -> {
+                    this.treeView.disable();
+                    // 执行搜索上一个
+                    this.searchHandler.searchPrev(this.getSearchParam());
+                    // 更新搜索结果
+                    this.updateSearchResult();
+                    // 更新搜索历史
+                    this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
+                })
+                .onFinish(() -> this.treeView.enable())
+                .onError(ex -> MessageBox.exception(ex))
+                .build();
+        TaskManager.startDelayTask("zk:search:searchPrev", task, 50);
     }
 
     /**
@@ -344,7 +345,7 @@ public class ZKSearchController extends SubController {
                         this.replaceTips.setText("");
                         ZKNodeTreeItem item = this.parent().activeItem();
                         if (item.isDataTooLong()) {
-                            FXAlertUtil.warn("数据太大，无法替换！");
+                            MessageBox.warn("数据太大，无法替换！");
                         } else if (item.saveData()) {
                             // 更新搜索结果
                             this.updateSearchResult();
@@ -358,8 +359,8 @@ public class ZKSearchController extends SubController {
                         this.replaceTips.setText("没有找到可替换项");
                     }
                 } catch (Exception ex) {
-                    // ex.printStackTrace();
-                    // FXAlertUtil.warn("发生异常！");
+                    ex.printStackTrace();
+                    MessageBox.exception(ex);
                 }
             });
         }, 50);
@@ -476,8 +477,8 @@ public class ZKSearchController extends SubController {
         this.searchPath.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        this.searchKW.addTextChangedListener((observable, oldValue, newValue) -> this.preSearch());
-        this.replaceKW.addTextChangedListener((observable, oldValue, newValue) -> {
+        this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
+        this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {
             this.replaceTips.setText("");
             this.searchCheck();
         });
@@ -510,6 +511,8 @@ public class ZKSearchController extends SubController {
         this.treeView = this.parent().tree;
         // 初始化搜索
         this.searchHandler.init(this.treeView, this.parent().tabPane);
+        this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup(1));
+        this.replaceKW.setHistoryPopup(new ZKSearchHistoryPopup(2));
     }
 
     @Override
@@ -527,29 +530,13 @@ public class ZKSearchController extends SubController {
     /**
      * zk搜索控件按键事件
      *
-     * @param e 事件
+     * @param event 事件
      */
     @FXML
-    private void onSearchKeyPressed(KeyEvent e) {
-        if (e.getCode() == KeyCode.ENTER) {
-            this.searchNext();
-        } else if (e.getCode() == KeyCode.TAB) {
+    private void onSearchKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
             if (this.searchMore1.isVisible()) {
                 this.replaceKW.requestFocus();
-            }
-        } else if (e.getCode() == KeyCode.UP) {
-            String currKW = this.searchKW.getTextTrim();
-            List<String> list = this.historyStore.getSearchKw();
-            String historyKW = this.getHistoryKW(currKW, list, true);
-            if (historyKW != null) {
-                this.searchHistorySelected(historyKW);
-            }
-        } else if (e.getCode() == KeyCode.DOWN) {
-            String currKW = this.searchKW.getTextTrim();
-            List<String> list = this.historyStore.getSearchKw();
-            String historyKW = this.getHistoryKW(currKW, list, false);
-            if (historyKW != null) {
-                this.searchHistorySelected(historyKW);
             }
         }
     }
@@ -557,71 +544,12 @@ public class ZKSearchController extends SubController {
     /**
      * zk替换控件按键事件
      *
-     * @param e 事件
+     * @param event 事件
      */
     @FXML
-    private void onReplaceKeyPressed(KeyEvent e) {
-        if (e.getCode() == KeyCode.ENTER) {
-            this.replace();
-        } else if (e.getCode() == KeyCode.TAB) {
+    private void onReplaceKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
             this.searchKW.requestFocus();
-        } else if (e.getCode() == KeyCode.UP) {
-            String currKW = this.replaceKW.getTextTrim();
-            List<String> list = this.historyStore.getReplaceKw();
-            String historyKW = this.getHistoryKW(currKW, list, true);
-            if (historyKW != null) {
-                this.replaceHistorySelected(historyKW);
-            }
-        } else if (e.getCode() == KeyCode.DOWN) {
-            String currKW = this.replaceKW.getTextTrim();
-            List<String> list = this.historyStore.getReplaceKw();
-            String historyKW = this.getHistoryKW(currKW, list, false);
-            if (historyKW != null) {
-                this.replaceHistorySelected(historyKW);
-            }
         }
-    }
-
-    /**
-     * 获取历史词汇
-     *
-     * @param currKW 当前词汇
-     * @param list   词汇列表
-     * @param isUp   是否向上查找
-     * @return 搜索词
-     */
-    private String getHistoryKW(String currKW, List<String> list, boolean isUp) {
-        if (list == null || list.isEmpty()) {
-            return null;
-        }
-        String kw;
-        if (isUp) {
-            // 获取首个
-            if (currKW == null) {
-                kw = CollUtil.getFirst(list);
-            } else {
-                int index = list.indexOf(currKW) + 1;
-                // 获取最后一个
-                if (index >= list.size()) {
-                    kw = CollUtil.getLast(list);
-                } else {// 获取目标索引数据
-                    kw = list.get(index);
-                }
-            }
-        } else {
-            // 获取最后一个
-            if (currKW == null) {
-                kw = CollUtil.getLast(list);
-            } else {
-                int index = list.indexOf(currKW) - 1;
-                // 获取首个
-                if (index <= 0) {
-                    kw = CollUtil.getFirst(list);
-                } else {// 获取目标索引数据
-                    kw = list.get(index);
-                }
-            }
-        }
-        return kw;
     }
 }

@@ -5,12 +5,10 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -108,7 +106,7 @@ public class ZKACLUpdateController extends Controller {
         try {
             String perms = this.getPerms();
             if (StrUtil.isBlank(perms)) {
-                FXAlertUtil.warn("请最少勾选一项权限！");
+                MessageBox.warn("请最少勾选一项权限！");
                 return;
             }
             List<ACL> aclList = this.zkClient.getACL(this.zkItem.nodePath());
@@ -124,11 +122,11 @@ public class ZKACLUpdateController extends Controller {
             if (updateFlag) {
                 this.updateACL(aclList);
             } else {
-                FXAlertUtil.warn("修改节点权限失败，未找到对应的权限！");
+                MessageBox.warn("修改节点权限失败，未找到对应的权限！");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            FXAlertUtil.warn(ex, ZKExceptionParser.INSTANCE);
+            MessageBox.exception(ex);
         }
     }
 
@@ -141,10 +139,10 @@ public class ZKACLUpdateController extends Controller {
         Stat stat = this.zkClient.setACL(this.zkItem.nodePath(), aclList);
         if (stat != null) {
             this.zkItem.refreshACL();
-            FXToastUtil.ok("修改节点权限成功！");
+            MessageBox.okToast("修改节点权限成功！");
             this.closeStage();
         } else {
-            FXAlertUtil.warn("修改节点权限失败！");
+            MessageBox.warn("修改节点权限失败！");
         }
     }
 

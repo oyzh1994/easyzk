@@ -19,9 +19,7 @@ import cn.oyzh.fx.plus.controls.FXLabel;
 import cn.oyzh.fx.plus.controls.FlexButton;
 import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.MsgTextArea;
-import cn.oyzh.fx.plus.information.FXAlertUtil;
-import cn.oyzh.fx.plus.information.FXTipUtil;
-import cn.oyzh.fx.plus.information.FXToastUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
@@ -155,17 +153,17 @@ public class ZKInfoTransportController extends Controller {
     private void doTransport() {
         // 检查连接
         if (this.formConnect.getValue() == null) {
-            FXTipUtil.tip("请选择一个传输连接", this.formConnect);
+            MessageBox.tipMsg("请选择一个传输连接", this.formConnect);
             return;
         }
         if (this.targetConnect.getValue() == null) {
-            FXTipUtil.tip("请选择一个目标连接", this.formConnect);
+            MessageBox.tipMsg("请选择一个目标连接", this.formConnect);
             return;
         }
         ZKInfo formInfo = this.formConnect.getValue();
         ZKInfo targetInfo = this.targetConnect.getValue();
         if (formInfo == targetInfo) {
-            FXTipUtil.tip("传输目标不能是自己", this.formConnect);
+            MessageBox.tipMsg("传输目标不能是自己", this.formConnect);
             return;
         }
 
@@ -183,7 +181,7 @@ public class ZKInfoTransportController extends Controller {
                 this.formClient.start();
                 if (!this.formClient.isConnected()) {
                     this.formConnect.requestFocus();
-                    FXAlertUtil.warn("传输连接[" + formInfo.getName() + "]初始化失败，连接异常");
+                    MessageBox.warn("传输连接[" + formInfo.getName() + "]初始化失败，连接异常");
                     return;
                 }
             } finally {
@@ -203,7 +201,7 @@ public class ZKInfoTransportController extends Controller {
                 this.targetClient.start();
                 if (!this.targetClient.isConnected()) {
                     this.targetConnect.requestFocus();
-                    FXAlertUtil.warn("目标连接[" + targetInfo.getName() + "]初始化失败，连接异常");
+                    MessageBox.warn("目标连接[" + targetInfo.getName() + "]初始化失败，连接异常");
                     return;
                 }
             } finally {
@@ -229,15 +227,15 @@ public class ZKInfoTransportController extends Controller {
                 this.updateStatus("数据传输收尾中....");
                 this.transportMsg.waitTextExpend();
                 this.updateStatus("数据传输结束");
-                FXToastUtil.ok("传输数据结束！");
-            } catch (Exception e) {
-                if (e.getClass().isAssignableFrom(InterruptedException.class)) {
+                MessageBox.okToast("传输数据结束！");
+            } catch (Exception ex) {
+                if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据传输取消");
-                    FXToastUtil.ok("传输数据取消！");
+                    MessageBox.okToast("传输数据取消！");
                 } else {
-                    e.printStackTrace();
+                    ex.printStackTrace();
                     this.updateStatus("数据传输失败");
-                    FXAlertUtil.warn("传输数据失败！");
+                    MessageBox.exception(ex, "传输数据失败！");
                 }
             } finally {
                 // 结束传输
@@ -425,7 +423,7 @@ public class ZKInfoTransportController extends Controller {
             this.counter.update(0);
             String msg = "传输节点：" + path + " 失败";
             if (ex != null) {
-                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.parse(ex);
+                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.apply(ex);
             }
             this.transportMsg.appendLine(msg);
         }

@@ -58,7 +58,7 @@
                 <Insets left="10" top="20"/>
             </HBox.margin>
         </FXLabel>
-        <CharsetComboBox prefWidth="120" fx:id="charset" promptText="导入字符集"
+        <CharsetComboBox stateManager="$stateManager" prefWidth="120" fx:id="charset" promptText="导入字符集"
                          tipText="默认是源信息的字符集">
             <HBox.margin>
                 <Insets left="5" top="12"/>

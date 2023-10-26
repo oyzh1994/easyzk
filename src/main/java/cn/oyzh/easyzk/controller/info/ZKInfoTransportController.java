@@ -292,11 +292,11 @@ public class ZKInfoTransportController extends Controller {
     private void closeZKClient() {
         if (this.formClient != null) {
             this.formClient.close();
-            this.formClient = null;
+            // this.formClient = null;
         }
         if (this.targetClient != null) {
             this.targetClient.close();
-            this.targetClient = null;
+            // this.targetClient = null;
         }
     }
 

@@ -302,8 +302,8 @@ public class ZKNodeExportController extends Controller {
                 this.prettyPane.disappear();
             }
         });
-        this.prefix.managedBindVisible();
-        this.pretty.managedBindVisible();
+        // this.prefix.managedBindVisible();
+        // this.pretty.managedBindVisible();
     }
 
     @Override

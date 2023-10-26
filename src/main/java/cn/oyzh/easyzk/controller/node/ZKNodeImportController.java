@@ -277,12 +277,12 @@ public class ZKNodeImportController extends Controller {
                 this.importMsg.waitTextExpend();
                 this.updateStatus("数据导入结束");
                 MessageBox.okToast("导入数据结束！");
-            } catch (Exception e) {
-                if (e.getClass().isAssignableFrom(InterruptedException.class)) {
+            } catch (Exception ex) {
+                if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据导入取消");
                     MessageBox.okToast("导入数据取消！");
                 } else {
-                    e.printStackTrace();
+                    ex.printStackTrace();
                     this.updateStatus("数据导入失败");
                     MessageBox.warn("导入数据失败！");
                 }

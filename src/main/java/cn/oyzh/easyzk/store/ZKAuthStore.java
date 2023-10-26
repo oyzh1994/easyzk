@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.util.FileStore;
+import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 @Slf4j
-public class ZKAuthStore extends FileStore<ZKAuth> {
+public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
 
     /**
      * 当前实例
@@ -125,7 +125,7 @@ public class ZKAuthStore extends FileStore<ZKAuth> {
         return paging;
     }
 
-    public boolean exist(@NonNull String user, @NonNull String password) {
+    public synchronized boolean exist(@NonNull String user, @NonNull String password) {
         List<ZKAuth> zkAuths = this.load();
         if (CollUtil.isEmpty(zkAuths)) {
             return false;
@@ -133,6 +133,5 @@ public class ZKAuthStore extends FileStore<ZKAuth> {
         Optional<ZKAuth> optional = zkAuths.parallelStream().filter(z -> z.compare(user, password)).findFirst();
         return optional.isPresent();
     }
-
 
 }

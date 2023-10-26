@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.plus.controls.CancelButton?>
-<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FXTab?>
 <?import cn.oyzh.fx.plus.controls.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.FXTab?>
 <?import cn.oyzh.fx.plus.controls.IconButton?>
-<?import cn.oyzh.fx.plus.ext.NumberTextField?>
-<?import cn.oyzh.fx.plus.ext.PortField?>
 <?import cn.oyzh.fx.plus.controls.LimitTextArea?>
 <?import cn.oyzh.fx.plus.controls.SubmitButton?>
+<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
+<?import cn.oyzh.fx.plus.ext.NumberTextField?>
+<?import cn.oyzh.fx.plus.ext.PortField?>
 <?import cn.oyzh.fx.plus.svg.SVGGlyph?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -20,7 +20,7 @@
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoUpdateController" realWidth="750" realHeight="400">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
         <FXTab text="基础设置">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FlexVBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接模式" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -85,7 +85,7 @@
             </FlexVBox>
         </FXTab>
         <FXTab text="高级设置">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FlexVBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="节点设置" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -130,7 +130,8 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 140" step="5" min="5" max="120" fx:id="sessionTimeOut"
+                    <NumberTextField realHeight="30" flexWidth="100% - 140" step="5" min="5" max="120"
+                                     fx:id="sessionTimeOut"
                                      tipText="超时时间(5-120)，单位秒，默认30分" value="30"
                                      require="true">
                         <HBox.margin>

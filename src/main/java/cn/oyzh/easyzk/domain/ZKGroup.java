@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ZKGroup implements Comparable<ZKGroup> {
+public class ZKGroup implements Comparable<ZKGroup>, ObjectComparator<ZKGroup> {
 
     /**
      * 分组id
@@ -53,5 +55,13 @@ public class ZKGroup implements Comparable<ZKGroup> {
      */
     public boolean isExpand() {
         return Boolean.TRUE == this.expand;
+    }
+
+    @Override
+    public boolean compare(ZKGroup t1) {
+        if (t1 == null) {
+            return false;
+        }
+        return StrUtil.equals(this.name, t1.name);
     }
 }

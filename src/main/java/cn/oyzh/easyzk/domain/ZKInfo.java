@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.domain;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import java.util.Objects;
  * @since 2020/3/6
  */
 @ToString
-public class ZKInfo implements Comparable<ZKInfo> {
+public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
 
     /**
      * 数据id
@@ -263,5 +264,13 @@ public class ZKInfo implements Comparable<ZKInfo> {
             ex.printStackTrace();
         }
         return -1;
+    }
+
+    @Override
+    public boolean compare(ZKInfo t1) {
+        if (t1 == null) {
+            return false;
+        }
+        return StrUtil.equals(this.name, t1.name);
     }
 }

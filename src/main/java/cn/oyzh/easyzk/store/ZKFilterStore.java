@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.util.FileStore;
+import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 @Slf4j
-public class ZKFilterStore extends FileStore<ZKFilter> {
+public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
 
     /**
      * 当前实例
@@ -119,7 +119,7 @@ public class ZKFilterStore extends FileStore<ZKFilter> {
     }
 
     @Override
-    public Paging<ZKFilter> getPage(int limit, Map<String, Object> params) {
+    public synchronized Paging<ZKFilter> getPage(int limit, Map<String, Object> params) {
         // 加载数据
         List<ZKFilter> list = this.load();
         // 分页对象
@@ -138,7 +138,7 @@ public class ZKFilterStore extends FileStore<ZKFilter> {
         return paging;
     }
 
-    public boolean exist(String kw) {
+    public synchronized boolean exist(String kw) {
         List<ZKFilter> filters = this.load();
         if (CollUtil.isEmpty(filters)) {
             return false;

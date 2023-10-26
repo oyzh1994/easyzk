@@ -4,12 +4,9 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.PageInfo;
-import cn.oyzh.fx.common.util.FileStore;
+import cn.oyzh.fx.common.store.ObjectFileStore;
 import com.alibaba.fastjson.JSON;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 
 /**
@@ -19,7 +16,7 @@ import java.util.List;
  * @since 2023/01/17
  */
 @Slf4j
-public class PageInfoStore extends FileStore<PageInfo> {
+public class PageInfoStore extends ObjectFileStore<PageInfo> {
 
     /**
      * 当前实例
@@ -29,7 +26,7 @@ public class PageInfoStore extends FileStore<PageInfo> {
     /**
      * 当前设置
      */
-    public static final PageInfo PAGE_INFO = INSTANCE.loadOne();
+    public static final PageInfo PAGE_INFO = INSTANCE.load();
 
     {
         this.filePath(ZKConst.STORE_PATH + "page_info.json");
@@ -37,34 +34,19 @@ public class PageInfoStore extends FileStore<PageInfo> {
     }
 
     @Override
-    public synchronized List<PageInfo> load() {
+    public synchronized PageInfo load() {
         PageInfo pageInfo = null;
-        String text = FileUtil.readString(this.storeFile(), this.charset());
-        if (StrUtil.isNotBlank(text)) {
-            try {
+        try {
+            String text = FileUtil.readString(this.storeFile(), this.charset());
+            if (StrUtil.isNotBlank(text)) {
                 pageInfo = JSON.parseObject(text, PageInfo.class);
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         if (pageInfo == null) {
             pageInfo = new PageInfo();
         }
-        return List.of(pageInfo);
-    }
-
-    @Override
-    public boolean add(@NonNull PageInfo data) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean update(@NonNull PageInfo data) {
-        return this.save(data);
-    }
-
-    @Override
-    public boolean delete(@NonNull PageInfo data) {
-        throw new UnsupportedOperationException();
+        return pageInfo;
     }
 }

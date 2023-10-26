@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.util.FileStore;
+import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 @Slf4j
-public class ZKSearchHistoryStore extends FileStore<ZKSearchHistory> {
+public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
 
     /**
      * 最大历史数量
@@ -57,24 +57,6 @@ public class ZKSearchHistoryStore extends FileStore<ZKSearchHistory> {
      */
     public synchronized List<String> getKw(int type) {
         return this.load().parallelStream().filter(h -> Objects.equals(h.getType(), type)).map(ZKSearchHistory::getKw).collect(Collectors.toList());
-    }
-
-    /**
-     * 获取搜索词
-     *
-     * @return 搜索词列表
-     */
-    public synchronized List<String> getSearchKw() {
-        return this.load().parallelStream().filter(h -> Objects.equals(h.getType(), 1)).map(ZKSearchHistory::getKw).collect(Collectors.toList());
-    }
-
-    /**
-     * 获取替换词
-     *
-     * @return 替换词列表
-     */
-    public synchronized List<String> getReplaceKw() {
-        return this.load().parallelStream().filter(h -> Objects.equals(h.getType(), 2)).map(ZKSearchHistory::getKw).collect(Collectors.toList());
     }
 
     @Override
@@ -112,7 +94,7 @@ public class ZKSearchHistoryStore extends FileStore<ZKSearchHistory> {
      * @param kw 关键词
      * @return 结果
      */
-    public boolean addSearchHistory(@NonNull String kw) {
+    public synchronized boolean addSearchHistory(@NonNull String kw) {
         return this.add(new ZKSearchHistory(kw, 1));
     }
 
@@ -122,30 +104,12 @@ public class ZKSearchHistoryStore extends FileStore<ZKSearchHistory> {
      * @param kw 关键词
      * @return 结果
      */
-    public boolean addReplaceHistory(@NonNull String kw) {
+    public synchronized boolean addReplaceHistory(@NonNull String kw) {
         return this.add(new ZKSearchHistory(kw, 2));
     }
 
     @Override
-    public synchronized boolean update(@NonNull ZKSearchHistory history) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean delete(@NonNull ZKSearchHistory history) {
-        try {
-            List<ZKSearchHistory> histories = this.load();
-            if (histories.removeIf(h -> h.compare(history))) {
-                return this.save(histories);
-            }
-        } catch (Exception e) {
-            log.warn("delete error,err:{}", e.getMessage());
-        }
-        return false;
-    }
-
-    @Override
     public Paging<ZKSearchHistory> getPage(int limit, Map<String, Object> params) {
-        throw new UnsupportedOperationException();
+        return super.getPage(limit, params);
     }
 }

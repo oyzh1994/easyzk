@@ -4,12 +4,10 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.fx.common.util.FileStore;
+import cn.oyzh.fx.common.store.ObjectFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 
 /**
@@ -19,7 +17,7 @@ import java.util.List;
  * @since 2022/8/26
  */
 @Slf4j
-public class ZKSettingStore extends FileStore<ZKSetting> {
+public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
 
     /**
      * 当前实例
@@ -29,7 +27,7 @@ public class ZKSettingStore extends FileStore<ZKSetting> {
     /**
      * 当前设置
      */
-    public static final ZKSetting SETTING = INSTANCE.loadOne();
+    public static final ZKSetting SETTING = INSTANCE.load();
 
     {
         this.filePath(ZKConst.STORE_PATH + "zk_setting.json");
@@ -37,34 +35,24 @@ public class ZKSettingStore extends FileStore<ZKSetting> {
     }
 
     @Override
-    public synchronized List<ZKSetting> load() {
+    public synchronized ZKSetting load() {
         ZKSetting setting = null;
-        String text = FileUtil.readString(this.storeFile(), this.charset());
-        if (StrUtil.isNotBlank(text)) {
-            try {
+        try {
+            String text = FileUtil.readString(this.storeFile(), this.charset());
+            if (StrUtil.isNotBlank(text)) {
                 setting = JSON.parseObject(text, ZKSetting.class);
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         if (setting == null) {
             setting = new ZKSetting();
         }
-        return List.of(setting);
-    }
-
-    @Override
-    public boolean add(@NonNull ZKSetting setting) {
-        throw new UnsupportedOperationException();
+        return setting;
     }
 
     @Override
     public boolean update(@NonNull ZKSetting setting) {
-        return this.save(setting);
-    }
-
-    @Override
-    public boolean delete(@NonNull ZKSetting setting) {
-        throw new UnsupportedOperationException();
+        return this.saveData(setting);
     }
 }

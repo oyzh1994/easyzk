@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ZKFilter {
+public class ZKFilter implements ObjectComparator<ZKFilter> {
 
     /**
      * 关键词
@@ -49,14 +50,9 @@ public class ZKFilter {
         return this;
     }
 
-    /**
-     * 比较信息
-     *
-     * @param filter 过滤信息
-     * @return 结果
-     */
+    @Override
     public boolean compare(ZKFilter filter) {
-        if (Objects.equals(this, filter)) {
+        if (this.equals(filter)) {
             return true;
         }
         return Objects.equals(filter.kw, this.kw);

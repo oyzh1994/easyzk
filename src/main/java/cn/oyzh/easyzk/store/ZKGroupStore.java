@@ -6,7 +6,7 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.fx.common.util.FileStore;
+import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @since 2023/5/12
  */
 @Slf4j
-public class ZKGroupStore extends FileStore<ZKGroup> {
+public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
 
     /**
      * 当前实例
@@ -119,7 +119,7 @@ public class ZKGroupStore extends FileStore<ZKGroup> {
      * @param zkGroup 分组信息
      * @return 结果
      */
-    public boolean exist(ZKGroup zkGroup) {
+    public synchronized boolean exist(ZKGroup zkGroup) {
         if (zkGroup == null) {
             return false;
         }

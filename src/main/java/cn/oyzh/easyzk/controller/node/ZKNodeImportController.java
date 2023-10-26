@@ -21,6 +21,7 @@ import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.FlexText;
 import cn.oyzh.fx.plus.controls.MsgTextArea;
 import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXFileChooser;
@@ -90,6 +91,12 @@ public class ZKNodeImportController extends Controller {
      */
     @FXML
     private FlexButton importBtn;
+
+    /**
+     * 状态管理器
+     */
+    @FXML
+    private StateManager stateManager;
 
     /**
      * 结束导入按钮
@@ -221,9 +228,10 @@ public class ZKNodeImportController extends Controller {
         }
         this.counter.setSum(this.nodeExport.counts());
         // 开始处理
-        this.importBtn.disable();
-        this.chooseFile.disable();
-        this.ignoreExist.disable();
+        this.stateManager.disable();
+        // this.importBtn.disable();
+        // this.chooseFile.disable();
+        // this.ignoreExist.disable();
         this.stage.appendTitle("===导入执行中===");
         // 忽略已存在节点
         boolean ignoreExist = this.ignoreExist.isSelected();
@@ -280,9 +288,10 @@ public class ZKNodeImportController extends Controller {
                 }
             } finally {
                 // 结束处理
-                this.importBtn.enable();
-                this.chooseFile.enable();
-                this.ignoreExist.enable();
+                // this.importBtn.enable();
+                // this.chooseFile.enable();
+                // this.ignoreExist.enable();
+                this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
                 EventUtil.fire(ZKEventTypes.ZK_IMPORT_FINISH);

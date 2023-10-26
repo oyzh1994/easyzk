@@ -19,6 +19,7 @@ import cn.oyzh.fx.plus.controls.FXLabel;
 import cn.oyzh.fx.plus.controls.FlexButton;
 import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.MsgTextArea;
+import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -50,6 +51,12 @@ import java.util.List;
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoTransport.fxml"
 )
 public class ZKInfoTransportController extends Controller {
+
+    /**
+     * 状态管理器
+     */
+    @FXML
+    private StateManager stateManager;
 
     /**
      * 节点已存在时跳过
@@ -249,27 +256,29 @@ public class ZKInfoTransportController extends Controller {
      * 传输开始
      */
     private void transportStart() {
-        this.existHandle.disable();
+        this.stateManager.disable();
         this.transportMsg.clear();
-        this.transportBtn.disable();
-        this.applyFilter.disable();
-        this.formCharset.disable();
-        this.targetCharset.disable();
+        // this.existHandle.disable();
+        // this.transportBtn.disable();
+        // this.applyFilter.disable();
+        // this.formCharset.disable();
+        // this.targetCharset.disable();
+        // this.targetConnect.disable();
         this.formConnect.disable();
-        this.targetConnect.disable();
     }
 
     /**
      * 传输结束
      */
     private void transportEnd() {
-        this.transportBtn.enable();
-        this.existHandle.enable();
+        this.stateManager.enable();
+        // this.existHandle.enable();
+        // this.transportBtn.enable();
+        // this.applyFilter.enable();
+        // this.formCharset.enable();
+        // this.targetCharset.enable();
+        // this.targetConnect.enable();
         this.stopTransportBtn.disable();
-        this.applyFilter.enable();
-        this.formCharset.enable();
-        this.targetCharset.enable();
-        this.targetConnect.enable();
         this.stage.restoreTitle();
         SystemUtil.gcLater();
         if (this.formInfo == null) {

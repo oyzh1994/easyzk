@@ -158,6 +158,6 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         e.printStackTrace();
-        return "未知错误！";
+        return e.getMessage();
     }
 }

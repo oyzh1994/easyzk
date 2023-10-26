@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyzk.fx.ConnectComboBox?>
 <?import cn.oyzh.fx.plus.controls.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexCheckBox?>
@@ -7,14 +8,17 @@
 <?import cn.oyzh.fx.plus.controls.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.IconButton?>
 <?import cn.oyzh.fx.plus.controls.MsgTextArea?>
+<?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import cn.oyzh.fx.plus.svg.SVGGlyph?>
-<?import cn.oyzh.easyzk.fx.ConnectComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoTransportController" realWidth="850" realHeight="600">
+    <fx:define>
+        <StateManager fx:id="stateManager" managedBindVisible="true"/>
+    </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="来源连接" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
@@ -31,7 +35,7 @@
                 <Insets left="10" top="20"/>
             </HBox.margin>
         </FXLabel>
-        <CharsetComboBox fx:id="formCharset" realHeight="30" prefWidth="120">
+        <CharsetComboBox stateManager="$stateManager" fx:id="formCharset" realHeight="30" prefWidth="120">
             <HBox.margin>
                 <Insets left="5" top="10"/>
             </HBox.margin>
@@ -43,7 +47,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ConnectComboBox fx:id="targetConnect" realHeight="30" flexWidth="100% - 315">
+        <ConnectComboBox stateManager="$stateManager" fx:id="targetConnect" realHeight="30" flexWidth="100% - 315">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -53,7 +57,7 @@
                 <Insets left="10" top="20"/>
             </HBox.margin>
         </FXLabel>
-        <CharsetComboBox fx:id="targetCharset" realHeight="30" prefWidth="120">
+        <CharsetComboBox stateManager="$stateManager" fx:id="targetCharset" realHeight="30" prefWidth="120">
             <HBox.margin>
                 <Insets left="5" top="10"/>
             </HBox.margin>
@@ -65,12 +69,13 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexCheckBox fx:id="existHandle" text="节点已存在时跳过" selected="true">
+        <FlexCheckBox stateManager="$stateManager" fx:id="existHandle" text="节点已存在时跳过" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="applyFilter" text="适用过滤配置" tipText="适用过滤配置列表的数据">
+        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="适用过滤配置"
+                      tipText="适用过滤配置列表的数据">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -91,7 +96,8 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton disable="true" tipText="开始执行传输" fx:id="transportBtn" onAction="#doTransport" realHeight="30"
+        <IconButton stateManager="$stateManager" disable="true" tipText="开始执行传输" fx:id="transportBtn"
+                    onAction="#doTransport" realHeight="30"
                     styleClass="btn,btn-primary"
                     text="传输"
                     iconSizePercent="0.75">

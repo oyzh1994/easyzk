@@ -23,6 +23,7 @@ import cn.oyzh.fx.plus.controls.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.FlexComboBox;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.MsgTextArea;
+import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXFileChooser;
@@ -114,17 +115,23 @@ public class ZKNodeExportController extends Controller {
     // @FXML
     // private CharsetComboBox charset;
 
-    /**
-     * 导出按钮
-     */
-    @FXML
-    private FlexButton exportBtn;
+    // /**
+    //  * 导出按钮
+    //  */
+    // @FXML
+    // private FlexButton exportBtn;
 
     /**
      * 结束导出按钮
      */
     @FXML
     private FlexButton stopExportBtn;
+
+    /**
+     * 状态管理器
+     */
+    @FXML
+    private StateManager stateManager;
 
     /**
      * 导出状态
@@ -168,11 +175,11 @@ public class ZKNodeExportController extends Controller {
      */
     private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
-    /**
-     * 禁用节点属性
-     */
-    @FXML
-    private final SimpleBooleanProperty disableNode = new SimpleBooleanProperty(false);
+    // /**
+    //  * 禁用节点属性
+    //  */
+    // @FXML
+    // private final SimpleBooleanProperty disableNode = new SimpleBooleanProperty(false);
 
     /**
      * 执行导出
@@ -188,7 +195,7 @@ public class ZKNodeExportController extends Controller {
         String properties = ZKNodeUtil.DATA_PROPERTIES + ZKNodeUtil.STAT_PROPERTIES;
         // 开始处理
         this.exportMsg.clear();
-        this.disableNode.set(true);
+        this.stateManager.disable();
         this.stage.appendTitle("===导出执行中===");
         // 适用过滤
         if (this.applyFilter.isSelected()) {
@@ -255,7 +262,7 @@ public class ZKNodeExportController extends Controller {
                 }
             } finally {
                 // 结束处理
-                this.disableNode.set(false);
+                this.stateManager.enable();
                 this.stopExportBtn.disable();
                 this.stage.restoreTitle();
                 SystemUtil.gcLater();
@@ -275,16 +282,16 @@ public class ZKNodeExportController extends Controller {
     @Override
     protected void bindListeners() {
         this.stage.hideOnEscape();
-        // 节点禁用监听
-        this.disableNode.addListener((observableValue, aBoolean, t1) -> {
-            // this.charset.setDisable(t1);
-            this.format.setDisable(t1);
-            this.prefix.setDisable(t1);
-            this.pretty.setDisable(t1);
-            this.dictSort.setDisable(t1);
-            this.exportBtn.setDisable(t1);
-            this.applyFilter.setDisable(t1);
-        });
+        // // 节点禁用监听
+        // this.disableNode.addListener((observableValue, aBoolean, t1) -> {
+        //     // this.charset.setDisable(t1);
+        //     this.format.setDisable(t1);
+        //     this.prefix.setDisable(t1);
+        //     this.pretty.setDisable(t1);
+        //     this.dictSort.setDisable(t1);
+        //     this.exportBtn.setDisable(t1);
+        //     this.applyFilter.setDisable(t1);
+        // });
         // 格式变化处理
         this.format.selectedIndexChanged((observableValue, number, t1) -> {
             if (t1.intValue() == 0) {

@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.controls.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.IconButton?>
+<?import cn.oyzh.fx.plus.controls.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.ReadOnlyTextField?>
+<?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import cn.oyzh.fx.plus.svg.SVGGlyph?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import java.lang.*?>
+<?import java.lang.String?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="650">
+    <fx:define>
+        <StateManager fx:id="stateManager" managedBindVisible="true"/>
+    </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
@@ -31,7 +46,8 @@
                 <Insets left="10" top="20"/>
             </HBox.margin>
         </FXLabel>
-        <FlexComboBox realWidth="120" initIndex="0" tipText="选择一种导出方式" fx:id="format">
+        <FlexComboBox stateManager="$stateManager" realWidth="120" initIndex="0" tipText="选择一种导出方式"
+                      fx:id="format">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="json格式(推荐)"/>
@@ -48,7 +64,7 @@
                     <Insets left="10" top="20"/>
                 </FlowPane.margin>
             </FXLabel>
-            <FlexComboBox prefWidth="100" initIndex="0" tipText="美化json" fx:id="pretty">
+            <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" tipText="美化json" fx:id="pretty">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="开启"/>
@@ -66,7 +82,7 @@
                     <Insets left="10" top="20"/>
                 </FlowPane.margin>
             </FXLabel>
-            <FlexComboBox prefWidth="100" initIndex="0" tipText="设置前缀" fx:id="prefix">
+            <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" tipText="设置前缀" fx:id="prefix">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="不设置"/>
@@ -96,12 +112,14 @@
         <!--         <Insets left="5" top="12"/> -->
         <!--     </HBox.margin> -->
         <!-- </CharsetComboBox> -->
-        <FlexCheckBox fx:id="dictSort" selected="true" text="按字典排序" tipText="节点路径按字典排序">
+        <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="按字典排序"
+                      tipText="节点路径按字典排序">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="applyFilter" text="适用过滤配置" tipText="适用过滤配置列表的数据">
+        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="适用过滤配置"
+                      tipText="适用过滤配置列表的数据">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -127,7 +145,8 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton tipText="开始执行导出" fx:id="exportBtn" onAction="#doExport" realHeight="30"
+        <IconButton stateManager="$stateManager" tipText="开始执行导出" onAction="#doExport"
+                    realHeight="30"
                     styleClass="btn,btn-primary"
                     text="导出"
                     iconSizePercent="0.75">

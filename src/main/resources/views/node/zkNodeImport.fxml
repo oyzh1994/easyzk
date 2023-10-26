@@ -9,19 +9,24 @@
 <?import cn.oyzh.fx.plus.controls.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.IconButton?>
 <?import cn.oyzh.fx.plus.controls.MsgTextArea?>
+<?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import cn.oyzh.fx.plus.svg.SVGGlyph?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeImportController" realWidth="850" realHeight="630">
+    <fx:define>
+        <StateManager fx:id="stateManager" managedBindVisible="true"/>
+    </fx:define>
     <FlexHBox realHeight="50" flexWidth="100%">
         <FXLabel text="文件信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <IconButton fx:id="chooseFile" tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
+        <IconButton stateManager="$stateManager" fx:id="chooseFile"
+                    tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
                     text="选择"
                     styleClass="btn,btn-success" iconSizePercent="0.75">
             <graphic>
@@ -43,7 +48,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexCheckBox fx:id="ignoreExist" text="节点已存在时跳过" selected="true">
+        <FlexCheckBox stateManager="$stateManager" fx:id="ignoreExist" text="节点已存在时跳过" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -75,7 +80,8 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
-        <IconButton tipText="开始执行导入" onAction="#doImport" styleClass="btn,btn-primary"
+        <IconButton stateManager="$stateManager" tipText="开始执行导入" onAction="#doImport"
+                    styleClass="btn,btn-primary"
                     text="导入" fx:id="importBtn" disable="true" iconSizePercent="0.75">
             <graphic>
                 <SVGGlyph url="/font/Import.svg" color="white"/>

@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.ext.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
@@ -328,8 +329,8 @@ public class ZKNodeTabContentController implements Initializable {
      *
      * @return 节点数据组件
      */
-    public FlexTextArea getDataNode() {
-        return (FlexTextArea) this.root.getTabs().get(0).getContent().lookup("#nodeData");
+    public FlexRichTextArea getDataNode() {
+        return this.nodeData;
     }
 
     /**

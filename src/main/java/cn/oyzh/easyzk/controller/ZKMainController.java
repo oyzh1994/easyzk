@@ -321,37 +321,6 @@ public class ZKMainController extends ParentController {
 
         // 文件拖拽初始化
         this.stage.initDragFile(ZKTreeCell.DRAG_CONTENT, this.tree.root()::dragFile);
-
-        // DragUtil.initDragFile(new DrapFileHandler() {
-        //     @Override
-        //     public boolean checkDragboard(Dragboard dragboard) {
-        //         if (dragboard != null && Objects.equals(dragboard.getString(), ZKTreeCell.DRAG_CONTENT)) {
-        //             return false;
-        //         }
-        //         return super.checkDragboard(dragboard);
-        //     }
-        //
-        //     @Override
-        //     public void onDragOver(DragEvent event) {
-        //         stage.disable();
-        //         stage.appendTitle("===松开鼠标以释放文件===");
-        //         super.onDragOver(event);
-        //     }
-        //
-        //     @Override
-        //     public void onDragExited(DragEvent event) {
-        //         stage.enable();
-        //         stage.restoreTitle();
-        //         super.onDragExited(event);
-        //     }
-        //
-        //     @Override
-        //     public void onDragDropped(DragEvent event, List<File> files) {
-        //         tree.root().dragFile(files);
-        //         super.onDragDropped(event, files);
-        //     }
-        // }, this.stage.scene());
-
         // 拖动改变zk树大小处理
         this.resizeEnhance = new ResizeEnhance(this.zkMainLeft, Cursor.DEFAULT);
         this.resizeEnhance.minWidth(390d);

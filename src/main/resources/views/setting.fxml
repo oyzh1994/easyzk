@@ -16,7 +16,7 @@
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="280">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="ZK设置">
-            <VBox>
+            <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel text="节点加载" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -66,10 +66,10 @@
                         <Insets top="10"/>
                     </VBox.margin>
                 </FlexHBox>
-            </VBox>
+            </FlexVBox>
         </FXTab>
         <FXTab text="页面设置">
-            <VBox>
+            <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel text="窗口关闭" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -126,7 +126,7 @@
                         <Insets top="10"/>
                     </VBox.margin>
                 </FlexHBox>
-            </VBox>
+            </FlexVBox>
         </FXTab>
         <!-- <FXTab text="页面布局"> -->
         <!--     <FlexVBox flexWidth="100%"> -->

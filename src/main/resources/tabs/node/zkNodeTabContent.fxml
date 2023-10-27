@@ -29,7 +29,7 @@
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
         </graphic>
-        <VBox>
+        <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
                 <SVGGlyph fx:id="saveNodeData" disable="true" tipText="保存(Ctrl+S)" size="16"
                           onMousePrimaryClicked="#saveNodeData"
@@ -148,28 +148,24 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <FlexVirtualizedScrollPane flexWidth="100%" flexHeight="100%">
+            <FlexVirtualizedScrollPane flexWidth="100%" flexHeight="100% - 32">
                 <content>
                     <ZKRichDataTextArea fontSize="12" fx:id="nodeData"
                                         onKeyPressed="#onNodeDataKeyPressed"
                                         text="数据加载中..."/>
-                    <!-- <ZKRichDataTextArea flexHeight="100% - 32" flexWidth="100% - 2" -->
-                    <!--                     fontSize="12" fx:id="nodeData" -->
-                    <!--                     onKeyPressed="#onNodeDataKeyPressed" -->
-                    <!--                     text="数据加载中..."/> -->
                 </content>
             </FlexVirtualizedScrollPane>
 
             <!-- <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 32" -->
             <!--                 flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" -->
             <!--                 text="数据加载中..."/> -->
-        </VBox>
+        </FlexVBox>
     </FXTab>
     <FXTab text="状态">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
         </graphic>
-        <VBox>
+        <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
                 <ToggleSwitch realHeight="16" realWidth="84" fx:id="statViewSwitch" unselectedText="专业视图"
                               selectedText="友好视图"
@@ -210,13 +206,13 @@
                 <fx:include source="zkNodeStatItem.fxml"/>
                 <fx:include source="zkNodeStatItem.fxml"/>
             </FlexVBox>
-        </VBox>
+        </FlexVBox>
     </FXTab>
     <FXTab text="权限">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/lock.svg" size="13"/>
         </graphic>
-        <VBox>
+        <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
                 <ToggleSwitch realHeight="16" realWidth="84" fx:id="aclViewSwitch" unselectedText="专业视图"
                               selectedText="友好视图"
@@ -414,13 +410,13 @@
                     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
                 </ZKACLVBox>
             </FlexVBox>
-        </VBox>
+        </FlexVBox>
     </FXTab>
     <FXTab text="配额">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/quota.svg" size="13"/>
         </graphic>
-        <VBox>
+        <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
                 <SVGGlyph tipText="刷新节点配额" size="15" onMousePrimaryClicked="#reloadQuota"
                           url="/font/reload.svg">
@@ -478,6 +474,6 @@
                     <FXButton text="清除" onAction="#clearQuotaBytes" styleClass="btn-danger"/>
                 </FlexHBox>
             </FlexVBox>
-        </VBox>
+        </FlexVBox>
     </FXTab>
 </FlexTabPane>

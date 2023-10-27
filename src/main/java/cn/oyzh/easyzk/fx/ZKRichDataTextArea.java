@@ -123,7 +123,7 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
 
     private static Pattern jsonKeyPattern() {
         if (Json_Key_Pattern == null) {
-            Json_Key_Pattern = Pattern.compile("\"(\\w*)\"\\s*:");
+            Json_Key_Pattern = Pattern.compile("\"([a-zA-Z0-9-_.]+[\\w\\s]*[\\w]+)\":");
         }
         return Json_Key_Pattern;
     }
@@ -153,11 +153,11 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
                 }
                 Matcher matcher2 = jsonKeyPattern().matcher(text);
                 while (matcher2.find()) {
-                    styles.add(new RichTextStyle(matcher2.start() + 1, matcher2.end() - 2, "-fx-fill: #EE2C2C;"));
+                    styles.add(new RichTextStyle(matcher2.start(), matcher2.end() - 1, "-fx-fill: #EE2C2C;"));
                 }
                 Matcher matcher3 = jsonValuePattern().matcher(text);
                 while (matcher3.find()) {
-                    styles.add(new RichTextStyle(matcher3.start() + 1, matcher3.end() - 1, "-fx-fill: green;"));
+                    styles.add(new RichTextStyle(matcher3.start(), matcher3.end(), "-fx-fill: green;"));
                 }
                 for (RichTextStyle style : styles) {
                     this.setStyle(style);

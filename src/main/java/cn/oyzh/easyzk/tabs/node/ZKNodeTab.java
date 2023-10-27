@@ -3,9 +3,9 @@ package cn.oyzh.easyzk.tabs.node;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import cn.oyzh.easyzk.tabs.ZKBaseTab;
-import cn.oyzh.fx.plus.controls.FlexTextArea;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
 import cn.oyzh.fx.plus.svg.SVGLabel;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -144,7 +144,7 @@ public class ZKNodeTab extends ZKBaseTab {
      *
      * @return 节点数据组件
      */
-    public FlexTextArea getDataNode() {
+    public FlexRichTextArea getDataNode() {
         return this.contentController.getDataNode();
     }
 

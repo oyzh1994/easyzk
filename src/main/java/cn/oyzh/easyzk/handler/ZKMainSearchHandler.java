@@ -14,6 +14,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.FlexTextArea;
+import cn.oyzh.fx.plus.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.TreeViewUtil;
 import javafx.scene.control.TreeItem;
@@ -68,7 +69,7 @@ public class ZKMainSearchHandler {
     /**
      * 数据组件
      */
-    private FlexTextArea dataNode;
+    private FlexRichTextArea dataNode;
 
     /**
      * 当前搜索节点
@@ -380,7 +381,7 @@ public class ZKMainSearchHandler {
      *
      * @return 数据节点
      */
-    private FlexTextArea findDataNode() {
+    private FlexRichTextArea findDataNode() {
         ZKNodeTab itemTab = this.tabPane.getNodeTab();
         if (itemTab != null) {
             itemTab.selectDataTab();

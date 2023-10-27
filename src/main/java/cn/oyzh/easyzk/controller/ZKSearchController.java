@@ -171,65 +171,6 @@ public class ZKSearchController extends SubController {
      */
     private final ZKSearchHistoryStore historyStore = ZKSearchHistoryStore.INSTANCE;
 
-    // /**
-    //  * 搜索历史弹窗
-    //  */
-    // private ZKSearchHistoryPopup searchHistoryPopup;
-    //
-    // /**
-    //  * 替换历史弹窗
-    //  */
-    // private ZKSearchHistoryPopup replaceHistoryPopup;
-
-    // /**
-    //  * 搜索-搜索历史
-    //  */
-    // @FXML
-    // private void searchHistory(MouseEvent event) {
-    //     if (this.searchHistoryPopup == null) {
-    //         this.searchHistoryPopup = new ZKSearchHistoryPopup(1);
-    //         this.searchKW.setHistoryPopup(this.searchHistoryPopup);
-    //     }
-    //     this.searchHistoryPopup.show(this.searchHistory, event);
-    //     // this.searchHistoryPopup.show(this.searchHistory, event.getScreenX(), event.getScreenY());
-    // }
-
-    // /**
-    //  * 搜索历史点击事件
-    //  *
-    //  * @param kw 点击关键词
-    //  */
-    // @EventReceiver(ZKEventTypes.ZK_SEARCH_HISTORY_SELECTED)
-    // private void searchHistorySelected(String kw) {
-    //     if (!this.searchKW.getTextTrim().equals(kw)) {
-    //         this.searchKW.setText(kw);
-    //     }
-    // }
-
-    // /**
-    //  * 搜索-搜索历史
-    //  */
-    // @FXML
-    // private void replaceHistory(MouseEvent event) {
-    //     if (this.replaceHistoryPopup == null) {
-    //         this.replaceHistoryPopup = new ZKSearchHistoryPopup(2);
-    //     }
-    //     this.replaceHistoryPopup.show(this.replaceHistory, event);
-    //     // this.replaceHistoryPopup.show(this.replaceHistory, event.getScreenX(), event.getScreenY());
-    // }
-
-    // /**
-    //  * 替换历史点击事件
-    //  *
-    //  * @param kw 点击关键词
-    //  */
-    // @EventReceiver(ZKEventTypes.ZK_REPLACE_HISTORY_SELECTED)
-    // private void replaceHistorySelected(String kw) {
-    //     if (!this.replaceKW.getTextTrim().equals(kw)) {
-    //         this.replaceKW.setText(kw);
-    //     }
-    // }
-
     /**
      * 搜索-更多
      */

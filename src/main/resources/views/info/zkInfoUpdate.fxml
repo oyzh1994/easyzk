@@ -20,7 +20,7 @@
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoUpdateController" realWidth="750" realHeight="400">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
         <FXTab text="基础设置">
-            <FlexVBox>
+            <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接模式" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -85,7 +85,7 @@
             </FlexVBox>
         </FXTab>
         <FXTab text="高级设置">
-            <FlexVBox>
+            <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="节点设置" styleClass="lbl,lbl-primary">
                         <HBox.margin>

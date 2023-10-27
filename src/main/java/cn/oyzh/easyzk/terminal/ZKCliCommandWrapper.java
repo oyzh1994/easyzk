@@ -11,13 +11,15 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
+ * Cli命令包装器
+ *
  * @author oyzh
  * @since 2023/9/20
  */
 public class ZKCliCommandWrapper {
 
     @Getter
-    private CliCommand command;
+    private final CliCommand command;
 
     private boolean initialized;
 

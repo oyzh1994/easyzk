@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.store.ZKSettingStore;

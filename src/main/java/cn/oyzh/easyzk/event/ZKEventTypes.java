@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.event;
 import lombok.experimental.UtilityClass;
 
 /**
- * zk事件
+ * zk事件类型
  *
  * @author oyzh
  * @since 2022/6/2
@@ -15,11 +15,6 @@ public class ZKEventTypes {
      * 应用退出事件
      */
     public static final String APP_EXIT = "APP_EXIT";
-
-    // /**
-    //  * 连接变更事件
-    //  */
-    // public static final String CONNECTION_CHANGED = "CONNECTION_CHANGED";
 
     /**
      * zk认证信息添加事件
@@ -122,7 +117,6 @@ public class ZKEventTypes {
      */
     public static final String ZK_CONNECTION_RECONNECTED = "ZK_CONNECTION_RECONNECTED";
 
-
     /**
      * zk信息新增
      */
@@ -173,16 +167,6 @@ public class ZKEventTypes {
      * zk搜索结束事件
      */
     public static final String ZK_SEARCH_FINISH = "ZK_SEARCH_FINISH";
-
-    /**
-     * zk搜索历史选择事件
-     */
-    public static final String ZK_SEARCH_HISTORY_SELECTED = "ZK_SEARCH_HISTORY_SELECTED";
-
-    /**
-     * zk替换历史选择事件
-     */
-    public static final String ZK_REPLACE_HISTORY_SELECTED = "ZK_REPLACE_HISTORY_SELECTED";
 
     /**
      * zk终端打开事件

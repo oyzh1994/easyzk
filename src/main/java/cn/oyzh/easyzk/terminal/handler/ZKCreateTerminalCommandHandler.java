@@ -1,11 +1,11 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.SetAclCommand;
+import org.apache.zookeeper.cli.CreateCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,31 +13,32 @@ import org.springframework.stereotype.Component;
  * @since 2023/09/20
  */
 @Component
-public class ZKSetAclTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new SetAclCommand();
+    private final CliCommand zkCommand = new CreateCommand();
 
     @Override
     public String commandName() {
-        return "setAcl";
+        return "create";
     }
 
     @Override
     public String commandArg() {
-        return "[-s] [-v version] path acl";
+        return "[-s] [-e] [-c] path [data] [acl]";
     }
 
     @Override
     public String commandDesc() {
-        return "设置权限";
+        return "创建节点";
     }
 
     @Override
     public String commandHelp() {
         return super.commandHelp() + "\n" +
-                "-s stats\n" +
-                "-v version";
+                "-s sequential\n" +
+                "-e ephemeral\n" +
+                "-c container";
     }
 }

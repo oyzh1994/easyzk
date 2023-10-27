@@ -1,11 +1,11 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.ListQuotaCommand;
+import org.apache.zookeeper.cli.StatCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
  * @since 2023/09/20
  */
 @Component
-public class ZKListQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+public class ZKStatTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new ListQuotaCommand();
+    private final CliCommand zkCommand = new StatCommand();
 
     @Override
     public String commandName() {
-        return "listquota";
+        return "stat";
     }
 
     @Override
@@ -31,6 +31,7 @@ public class ZKListQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandl
 
     @Override
     public String commandDesc() {
-        return "列举配额";
+        return "获取节点状态";
     }
+
 }

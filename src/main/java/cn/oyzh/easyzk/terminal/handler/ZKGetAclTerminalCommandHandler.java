@@ -1,11 +1,11 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.apache.zookeeper.cli.AddAuthCommand;
 import org.apache.zookeeper.cli.CliCommand;
+import org.apache.zookeeper.cli.GetAclCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,25 +13,30 @@ import org.springframework.stereotype.Component;
  * @since 2023/09/20
  */
 @Component
-public class ZKAddAuthTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+public class ZKGetAclTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new AddAuthCommand();
+    private final CliCommand zkCommand = new GetAclCommand();
 
     @Override
     public String commandName() {
-        return "addauth";
+        return "getAcl";
     }
 
     @Override
     public String commandArg() {
-        return "scheme auth";
+        return "[-s] path";
     }
 
     @Override
     public String commandDesc() {
-        return "添加认证";
+        return "获取权限";
     }
 
+    @Override
+    public String commandHelp() {
+        return super.commandHelp() + "\n" +
+                "-s stats";
+    }
 }

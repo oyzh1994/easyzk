@@ -13,7 +13,7 @@ import org.apache.zookeeper.KeeperException;
 import java.util.function.Function;
 
 /**
- * zk异常信息解析器
+ * zk异常解析器
  *
  * @author oyzh
  * @since 2020/7/2

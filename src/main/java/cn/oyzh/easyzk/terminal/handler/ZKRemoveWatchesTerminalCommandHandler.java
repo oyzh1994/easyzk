@@ -1,11 +1,11 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CreateCommand;
+import org.apache.zookeeper.cli.RemoveWatchesCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,32 +13,34 @@ import org.springframework.stereotype.Component;
  * @since 2023/09/20
  */
 @Component
-public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+public class ZKRemoveWatchesTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new CreateCommand();
+    private final CliCommand zkCommand = new RemoveWatchesCommand();
 
     @Override
     public String commandName() {
-        return "create";
+        return "removewatches";
     }
 
     @Override
     public String commandArg() {
-        return "[-s] [-e] [-c] path [data] [acl]";
+        return "path [-c|-d|-a] [-l]";
     }
 
     @Override
     public String commandDesc() {
-        return "创建节点";
+        return "移除订阅";
     }
+
 
     @Override
     public String commandHelp() {
         return super.commandHelp() + "\n" +
-                "-s sequential\n" +
-                "-e ephemeral\n" +
-                "-c container";
+                "-c child watcher type\n" +
+                "-d data watcher type\n" +
+                "-a any watcher type\n" +
+                "-l remove locally when there is no server connection";
     }
 }

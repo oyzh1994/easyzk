@@ -5,7 +5,7 @@ import cn.oyzh.fx.terminal.histroy.TerminalHistoryStore;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * redis终端命令历史
+ * zk终端命令历史
  *
  * @author oyzh
  * @since 2023/7/21

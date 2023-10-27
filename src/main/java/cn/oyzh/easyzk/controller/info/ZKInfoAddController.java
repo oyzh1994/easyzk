@@ -217,8 +217,8 @@ public class ZKInfoAddController extends Controller {
             zkInfo.setGroupId(this.group == null ? null : this.group.getGid());
             zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
             // zkInfo.setCharset("跟随系统".equals(charset) ? null : charset.toLowerCase());
-            zkInfo.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
-            zkInfo.setSessionTimeOut(sessionTimeOut == null ? 30 : sessionTimeOut.intValue());
+            zkInfo.setConnectTimeOut(connectTimeOut.intValue());
+            zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
             // 保存数据
             boolean result = this.infoStore.add(zkInfo);
             if (result) {

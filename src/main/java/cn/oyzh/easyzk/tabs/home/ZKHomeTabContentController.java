@@ -76,6 +76,6 @@ public class ZKHomeTabContentController implements Initializable {
      */
     @FXML
     private void openTerminal() {
-        ZKEventUtil.openTerminal();
+        ZKEventUtil.terminalOpen();
     }
 }

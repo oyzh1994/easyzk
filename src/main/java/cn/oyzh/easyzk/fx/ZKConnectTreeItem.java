@@ -182,7 +182,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
      * 打开终端
      */
     private void openTerminal() {
-        ZKEventUtil.openTerminal(this.value);
+        ZKEventUtil.terminalOpen(this.value);
     }
 
     /**

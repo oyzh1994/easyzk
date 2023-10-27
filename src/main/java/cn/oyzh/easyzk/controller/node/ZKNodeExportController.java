@@ -114,12 +114,6 @@ public class ZKNodeExportController extends Controller {
     // @FXML
     // private CharsetComboBox charset;
 
-    // /**
-    //  * 导出按钮
-    //  */
-    // @FXML
-    // private FlexButton exportBtn;
-
     /**
      * 结束导出按钮
      */
@@ -173,12 +167,6 @@ public class ZKNodeExportController extends Controller {
      * 过滤配置储存
      */
     private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
-
-    // /**
-    //  * 禁用节点属性
-    //  */
-    // @FXML
-    // private final SimpleBooleanProperty disableNode = new SimpleBooleanProperty(false);
 
     /**
      * 执行导出
@@ -281,16 +269,6 @@ public class ZKNodeExportController extends Controller {
     @Override
     protected void bindListeners() {
         this.stage.hideOnEscape();
-        // // 节点禁用监听
-        // this.disableNode.addListener((observableValue, aBoolean, t1) -> {
-        //     // this.charset.setDisable(t1);
-        //     this.format.setDisable(t1);
-        //     this.prefix.setDisable(t1);
-        //     this.pretty.setDisable(t1);
-        //     this.dictSort.setDisable(t1);
-        //     this.exportBtn.setDisable(t1);
-        //     this.applyFilter.setDisable(t1);
-        // });
         // 格式变化处理
         this.format.selectedIndexChanged((observableValue, number, t1) -> {
             if (t1.intValue() == 0) {
@@ -301,8 +279,6 @@ public class ZKNodeExportController extends Controller {
                 this.prettyPane.disappear();
             }
         });
-        // this.prefix.managedBindVisible();
-        // this.pretty.managedBindVisible();
     }
 
     @Override

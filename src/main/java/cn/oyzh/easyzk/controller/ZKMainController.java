@@ -167,7 +167,7 @@ public class ZKMainController extends ParentController {
      */
     @FXML
     private void openTerminal() {
-        ZKEventUtil.openTerminal();
+        ZKEventUtil.terminalOpen();
     }
 
     /**

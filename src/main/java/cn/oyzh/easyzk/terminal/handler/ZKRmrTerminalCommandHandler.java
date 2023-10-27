@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import org.springframework.stereotype.Component;
 

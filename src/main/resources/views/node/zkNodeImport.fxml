@@ -25,7 +25,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <IconButton stateManager="$stateManager" fx:id="chooseFile"
+        <IconButton stateManager="$stateManager"
                     tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
                     text="选择"
                     styleClass="btn,btn-success" iconSizePercent="0.75">

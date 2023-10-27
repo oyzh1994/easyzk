@@ -13,9 +13,9 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKCloseTerminalMsg implements ZKMsg {
+public class ZKTerminalOpenMsg implements ZKMsg {
 
-    private final String name = ZKEventTypes.ZK_CLOSE_TERMINAL;
+    private final String name = ZKEventTypes.ZK_OPEN_TERMINAL;
 
     private final String group = ZKEventGroups.TERMINAL_ACTION;
 

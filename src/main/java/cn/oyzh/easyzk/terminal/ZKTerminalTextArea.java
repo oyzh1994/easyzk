@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.ZooKeeper;
 
 /**
- * redis终端
+ * zk终端文本域
  *
  * @author oyzh
  * @since 2023/7/21
@@ -39,10 +39,19 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     @Accessors(chain = true, fluent = true)
     private ZKClient client;
 
+    /**
+     * zk连接
+     */
     private ZKConnect connect;
 
+    /**
+     * 获取zookeeper对象
+     *
+     * @return ZooKeeper
+     * @throws Exception 异常
+     */
     public ZooKeeper zooKeeper() throws Exception {
-        return client.getZooKeeper();
+        return this.client.getZooKeeper();
     }
 
     /**
@@ -85,13 +94,6 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     public boolean isTemporary() {
         return this.client.zkInfo().getId() == null;
     }
-
-    // @Override
-    // public void outputPrompt() {
-    //     if (!this.client.isConnecting()) {
-    //         super.outputPrompt();
-    //     }
-    // }
 
     /**
      * 是否已连接

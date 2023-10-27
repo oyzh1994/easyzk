@@ -88,9 +88,4 @@ public class ZKAuthAddController extends Controller {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }
-
-    @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
-    }
 }

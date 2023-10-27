@@ -1,21 +1,21 @@
 package cn.oyzh.easyzk.parser;
 
 import cn.oyzh.fx.common.Const;
-import cn.oyzh.fx.common.Parser;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import lombok.NonNull;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
- * zk状态解析
+ * zk状态解析器
  *
  * @author oyzh
  * @since 2020/3/26
  */
-public class ZKStatParser implements Parser<Stat, List<FriendlyInfo<Stat>>> {
+public class ZKStatParser implements Function<Stat, List<FriendlyInfo<Stat>>> {
 
     /**
      * 当前实例
@@ -23,7 +23,7 @@ public class ZKStatParser implements Parser<Stat, List<FriendlyInfo<Stat>>> {
     public final static ZKStatParser INSTANCE = new ZKStatParser();
 
     @Override
-    public List<FriendlyInfo<Stat>> parse(@NonNull Stat stat) {
+    public List<FriendlyInfo<Stat>> apply(@NonNull Stat stat) {
         List<FriendlyInfo<Stat>> statInfos = new ArrayList<>();
 
         FriendlyInfo<Stat> czxid = new FriendlyInfo<>();

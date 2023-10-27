@@ -1,6 +1,8 @@
 package cn.oyzh.easyzk.event;
 
 /**
+ * zk事件分组
+ *
  * @author oyzh
  * @since 2023/9/18
  */

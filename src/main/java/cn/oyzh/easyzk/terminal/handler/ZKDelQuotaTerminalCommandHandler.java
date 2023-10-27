@@ -1,11 +1,11 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.SetCommand;
+import org.apache.zookeeper.cli.DelQuotaCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,31 +13,31 @@ import org.springframework.stereotype.Component;
  * @since 2023/09/20
  */
 @Component
-public class ZKSetTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKDelQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new SetCommand();
+    private final CliCommand zkCommand = new DelQuotaCommand();
 
     @Override
     public String commandName() {
-        return "set";
+        return "delquota";
     }
 
     @Override
     public String commandArg() {
-        return "[-s] [-v version] path data";
+        return "[-n|-b] path";
     }
 
     @Override
     public String commandDesc() {
-        return "设置节点数据";
+        return "删除配额";
     }
 
     @Override
     public String commandHelp() {
         return super.commandHelp() + "\n" +
-                "-s stats\n" +
-                "-v version";
+                "-n num quota\n" +
+                "-b bytes quota";
     }
 }

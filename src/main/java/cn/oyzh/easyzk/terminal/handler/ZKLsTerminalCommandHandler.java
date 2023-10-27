@@ -1,11 +1,11 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.GetConfigCommand;
+import org.apache.zookeeper.cli.LsCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,31 +13,30 @@ import org.springframework.stereotype.Component;
  * @since 2023/09/20
  */
 @Component
-public class ZKGetConfigTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new GetConfigCommand();
+    private final CliCommand zkCommand = new LsCommand();
 
     @Override
     public String commandName() {
-        return "config";
+        return "ls";
     }
 
     @Override
     public String commandArg() {
-        return "[-c] [-s]";
+        return "[-s] path";
     }
 
     @Override
     public String commandDesc() {
-        return "获取配置";
+        return "获取子节点列表";
     }
 
     @Override
     public String commandHelp() {
-        return super.commandHelp() + "\n" +
-                "-c client connection string\n" +
-                "-s stats";
+        return super.commandHelp()+"\n" +
+                "-s stat";
     }
 }

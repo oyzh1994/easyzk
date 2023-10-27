@@ -5,7 +5,6 @@ import cn.oyzh.easyzk.msg.TreeChildChangedMsg;
 import cn.oyzh.easyzk.msg.TreeChildFilterMsg;
 import cn.oyzh.easyzk.msg.TreeGraphicChangedMsg;
 import cn.oyzh.easyzk.msg.TreeGraphicColorChangedMsg;
-import cn.oyzh.easyzk.msg.ZKCloseTerminalMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionConnectedMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionLostMsg;
@@ -15,7 +14,8 @@ import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
 import cn.oyzh.easyzk.msg.ZKNodeAddMsg;
 import cn.oyzh.easyzk.msg.ZKNodeDeleteMsg;
 import cn.oyzh.easyzk.msg.ZKNodeUpdateMsg;
-import cn.oyzh.easyzk.msg.ZKOpenTerminalMsg;
+import cn.oyzh.easyzk.msg.ZKTerminalCloseMsg;
+import cn.oyzh.easyzk.msg.ZKTerminalOpenMsg;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventBuilder;
@@ -24,6 +24,8 @@ import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
 
 /**
+ * zk事件工具
+ *
  * @author oyzh
  * @since 2023/9/18
  */
@@ -187,8 +189,8 @@ public class ZKEventUtil {
     /**
      * 终端打开事件
      */
-    public static void openTerminal() {
-        openTerminal(null);
+    public static void terminalOpen() {
+        terminalOpen(null);
     }
 
     /**
@@ -196,8 +198,8 @@ public class ZKEventUtil {
      *
      * @param info zk信息
      */
-    public static void openTerminal(ZKInfo info) {
-        ZKOpenTerminalMsg msg = new ZKOpenTerminalMsg();
+    public static void terminalOpen(ZKInfo info) {
+        ZKTerminalOpenMsg msg = new ZKTerminalOpenMsg();
         msg.info(info);
         Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
         EventUtil.fire(event);
@@ -208,8 +210,8 @@ public class ZKEventUtil {
      *
      * @param info zk信息
      */
-    public static void closeTerminal(ZKInfo info) {
-        ZKCloseTerminalMsg msg = new ZKCloseTerminalMsg();
+    public static void terminalClose(ZKInfo info) {
+        ZKTerminalCloseMsg msg = new ZKTerminalCloseMsg();
         msg.info(info);
         Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
         EventUtil.fire(event);

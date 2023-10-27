@@ -1,6 +1,7 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import lombok.AccessLevel;
@@ -36,7 +37,7 @@ public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<T
         try {
             return super.execute(command, terminal);
         } finally {
-            ZKEventUtil.closeTerminal(terminal.info());
+            ZKEventUtil.terminalClose(terminal.info());
         }
     }
 }

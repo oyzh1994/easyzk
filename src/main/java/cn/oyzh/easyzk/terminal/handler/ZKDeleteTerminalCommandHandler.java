@@ -1,11 +1,11 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.LsCommand;
+import org.apache.zookeeper.cli.DeleteCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,30 +13,31 @@ import org.springframework.stereotype.Component;
  * @since 2023/09/20
  */
 @Component
-public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKDeleteTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new LsCommand();
+    private final CliCommand zkCommand = new DeleteCommand();
 
     @Override
     public String commandName() {
-        return "ls";
+        return "delete";
     }
 
     @Override
     public String commandArg() {
-        return "[-s] path";
+        return "[-v version] path";
     }
 
     @Override
     public String commandDesc() {
-        return "获取子节点列表";
+        return "删除节点";
     }
 
     @Override
     public String commandHelp() {
-        return super.commandHelp()+"\n" +
-                "-s stat";
+        return super.commandHelp() + "\n" +
+                "-v version";
     }
+
 }

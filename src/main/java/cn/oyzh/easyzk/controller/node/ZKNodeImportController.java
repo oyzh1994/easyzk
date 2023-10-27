@@ -69,12 +69,6 @@ public class ZKNodeImportController extends Controller {
     private FlexText scriptInfo;
 
     /**
-     * 选择文件
-     */
-    @FXML
-    private FlexButton chooseFile;
-
-    /**
      * 忽略已存在的节点
      */
     @FXML
@@ -229,9 +223,6 @@ public class ZKNodeImportController extends Controller {
         this.counter.setSum(this.nodeExport.counts());
         // 开始处理
         this.stateManager.disable();
-        // this.importBtn.disable();
-        // this.chooseFile.disable();
-        // this.ignoreExist.disable();
         this.stage.appendTitle("===导入执行中===");
         // 忽略已存在节点
         boolean ignoreExist = this.ignoreExist.isSelected();
@@ -288,9 +279,6 @@ public class ZKNodeImportController extends Controller {
                 }
             } finally {
                 // 结束处理
-                // this.importBtn.enable();
-                // this.chooseFile.enable();
-                // this.ignoreExist.enable();
                 this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();

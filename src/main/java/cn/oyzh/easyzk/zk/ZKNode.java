@@ -352,7 +352,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 友好状态信息
      */
     public List<FriendlyInfo<Stat>> statInfos() {
-        return this.stat() == null ? Collections.emptyList() : ZKStatParser.INSTANCE.parse(this.stat());
+        return this.stat() == null ? Collections.emptyList() : ZKStatParser.INSTANCE.apply(this.stat());
     }
 
     @Override

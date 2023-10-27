@@ -5,9 +5,9 @@ import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import cn.oyzh.easyzk.msg.TreeGraphicChangedMsg;
 import cn.oyzh.easyzk.msg.TreeGraphicColorChangedMsg;
-import cn.oyzh.easyzk.msg.ZKCloseTerminalMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;
-import cn.oyzh.easyzk.msg.ZKOpenTerminalMsg;
+import cn.oyzh.easyzk.msg.ZKTerminalCloseMsg;
+import cn.oyzh.easyzk.msg.ZKTerminalOpenMsg;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
@@ -118,7 +118,7 @@ public class ZKTabPane extends FlexTabPane {
      * @param event 事件
      */
     @EventReceiver(value = ZKEventTypes.ZK_OPEN_TERMINAL, async = true, verbose = true)
-    private void openTerminal(Event<ZKOpenTerminalMsg> event) {
+    private void openTerminal(Event<ZKTerminalOpenMsg> event) {
         this.initTerminalTab(event.data().info());
     }
 
@@ -128,7 +128,7 @@ public class ZKTabPane extends FlexTabPane {
      * @param event 事件
      */
     @EventReceiver(value = ZKEventTypes.ZK_CLOSE_TERMINAL, async = true, verbose = true)
-    private void closeTerminal(Event<ZKCloseTerminalMsg> event) {
+    private void closeTerminal(Event<ZKTerminalCloseMsg> event) {
         try {
             // 寻找节点
             ZKTerminalTab terminalTab = this.getTerminalTab(event.data().info());

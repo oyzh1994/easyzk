@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyzk.shell.ZKTerminalTextArea?>
+<?import cn.oyzh.easyzk.terminal.ZKTerminalTextArea?>
 <ZKTerminalTextArea styleClass="panel,panel-primary" flexHeight="100%" fx:id="terminal" fontSize="12" editable="false" flexWidth="100%"
                     xmlns="http://javafx.com/javafx"
                     xmlns:fx="http://javafx.com/fxml"

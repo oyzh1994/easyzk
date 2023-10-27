@@ -52,7 +52,7 @@ public class ZKExportUtil {
      */
     @Deprecated
     public static String replaceData(String data) {
-        if (data == null || data.length() == 0) {
+        if (data == null || data.isEmpty()) {
             return data;
         }
         return data.lines().collect(Collectors.joining(LINE_REPLACE));
@@ -66,7 +66,7 @@ public class ZKExportUtil {
      */
     @Deprecated
     public static String restoreData(String data) {
-        if (data == null || data.length() == 0) {
+        if (data == null || data.isEmpty()) {
             return data;
         }
         return data.replaceAll(LINE_REPLACE, System.lineSeparator());

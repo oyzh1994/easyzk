@@ -237,7 +237,6 @@ public class ZKAuthUtil {
     public static void fireAuthAddEvent(@NonNull ZKAuth auth) {
         if (auth.getEnable()) {
             EventUtil.fire(ZKEventTypes.ZK_AUTH_ADDED, auth);
-            // FXEventUtil.fireEvent(ZKEvents.ZK_AUTH_ADD, auth);
         }
     }
 
@@ -249,7 +248,6 @@ public class ZKAuthUtil {
     public static void fireAuthEnableEvent(@NonNull ZKAuth auth) {
         if (auth.getEnable()) {
             EventUtil.fire(ZKEventTypes.ZK_AUTH_ENABLE, auth);
-            // FXEventUtil.fireEvent(ZKEvents.ZK_AUTH_ENABLE, auth);
         }
     }
 

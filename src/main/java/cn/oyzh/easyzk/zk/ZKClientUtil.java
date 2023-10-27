@@ -67,6 +67,8 @@ public class ZKClientUtil {
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
                 .connectString(host)
                 .maxCloseWaitMs(500)
+                .authorization(authInfos)
+                .waitForShutdownTimeoutMs(500)
                 .runSafeService(service)
                 .retryPolicy(retryPolicy)
                 .threadFactory(ZKThread::new)
@@ -74,10 +76,10 @@ public class ZKClientUtil {
                 .zookeeperFactory(new ZKFactory())
                 .sessionTimeoutMs(sessionTimeoutMs)
                 .connectionTimeoutMs(connectionTimeoutMs);
-        // 初始化认证
-        if (CollUtil.isNotEmpty(authInfos)) {
-            builder.authorization(authInfos);
-        }
+        // // 初始化认证
+        // if (CollUtil.isNotEmpty(authInfos)) {
+        //     builder.authorization(authInfos);
+        // }
         return builder.build();
     }
 

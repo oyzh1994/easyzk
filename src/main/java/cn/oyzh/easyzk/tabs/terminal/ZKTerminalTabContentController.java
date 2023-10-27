@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.shell.ZKTerminalTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.spring.ScopeType;
 import javafx.fxml.FXML;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- * redis命令行tab内容组件
+ * redis终端tab内容组件
  *
  * @author oyzh
  * @since 2023/07/21

@@ -17,35 +17,8 @@ public class ZKBaseTab extends FXTab {
     }
 
     /**
-     * 刷新tab标题
-     */
-    public void flushTitle() {
-    }
-
-    /**
-     * 刷新tab图标
-     */
-    public void flushGraphic() {
-    }
-
-    /**
-     * 刷新tab图标颜色
-     */
-    public void flushGraphicColor() {
-    }
-
-    /**
      * 加载内容
      */
     protected void loadContent() {
-    }
-
-    /**
-     * 关闭当前tab
-     */
-    protected void closeTab() {
-        if (this.isClosable()) {
-            FXUtil.runLater(() -> this.getTabPane().getTabs().remove(this));
-        }
     }
 }

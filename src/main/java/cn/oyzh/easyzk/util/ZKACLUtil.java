@@ -23,7 +23,9 @@ import java.util.Objects;
 @UtilityClass
 public class ZKACLUtil {
 
-
+    /**
+     * 开放的acl权限
+     */
     public static ACL OPEN_ACL = ZooDefs.Ids.OPEN_ACL_UNSAFE.get(0);
 
     /**
@@ -168,7 +170,7 @@ public class ZKACLUtil {
      */
     public static int toPermInt(@NonNull String perms) {
         perms = perms.trim().toLowerCase();
-        if (perms.length() == 0 || perms.length() > 5) {
+        if (perms.isEmpty() || perms.length() > 5) {
             throw new ZKException("无效的ACL权限数据！");
         }
         int permsInt = 0;

@@ -222,7 +222,7 @@ public class ZKNodeUtil {
      * @return 名称
      */
     public static String getName(String path) {
-        if (path == null || path.length() == 0) {
+        if (path == null || path.isEmpty()) {
             return "";
         }
         return "/".equals(path) ? "/" : ArrUtil.last(path.split("/"));

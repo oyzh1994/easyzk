@@ -180,7 +180,7 @@ public class ZKClient {
                 this.treeCache.getListenable().addListener(this.initializedListener);
                 this.treeCache.start();
             } else if (!this.isEnableListen()) {// 未开启监听则只创建连接状态初始化监听器
-                this.treeCache = ZKClientUtil.buildTreeCache(this.framework, "/");
+                this.treeCache = ZKClientUtil.buildTreeCache(this.framework);
                 this.treeCache.getListenable().addListener(this.initializedListener);
                 this.treeCache.start();
             }
@@ -304,8 +304,6 @@ public class ZKClient {
      */
     public void closeManual() {
         this.close();
-        // ZKNodeMsg treeMsg = new ZKNodeMsg(this, ZKEventTypes.ZK_CONNECTION_CLOSED);
-        // EventUtil.fire(ZKEventTypes.ZK_CONNECTION_CLOSED, treeMsg);
     }
 
     /**
@@ -638,33 +636,6 @@ public class ZKClient {
         return this.create(path, bytes, aclList, ttl, createMode, cParents);
     }
 
-    // /**
-    //  * 循环获取所有节点
-    //  *
-    //  * @param path 路径
-    //  * @return 节点列表
-    //  */
-    // public List<String> loop(@NonNull String path) throws Exception {
-    //     List<String> paths = new ArrayList<>();
-    //     this._loop(path, paths);
-    //     paths = paths.parallelStream().sorted().collect(Collectors.toList());
-    //     return paths;
-    // }
-    //
-    // /**
-    //  * 循环获取所有节点
-    //  *
-    //  * @param path  路径
-    //  * @param paths 节点列表
-    //  */
-    // private void _loop(@NonNull String path, List<String> paths) throws Exception {
-    //     paths.add(path);
-    //     List<String> list = this.getChildren(path);
-    //     for (String child : list) {
-    //         this._loop(ZKNodeUtil.concatPath(path, child), paths);
-    //     }
-    // }
-
     /**
      * 获取子节点
      *
@@ -935,10 +906,6 @@ public class ZKClient {
      * @param num   限制子节点数量
      */
     public boolean createQuota(@NonNull String path, long bytes, int num) throws Exception {
-        // StatsTrack track = new StatsTrack();
-        // track.setBytes(bytes);
-        // track.setCount(num);
-        // return SetQuotaCommand.createQuota(this.getZooKeeper(), path, track);
         return SetQuotaCommand.createQuota(this.getZooKeeper(), path, bytes, num);
     }
 
@@ -950,14 +917,6 @@ public class ZKClient {
      * @param num   删除子节点数量配额
      */
     public boolean delQuota(@NonNull String path, boolean bytes, boolean num) throws Exception {
-        // StatsTrack track = new StatsTrack();
-        // if (bytes) {
-        //     track.setBytes(-1);
-        // }
-        // if (num) {
-        //     track.setCount(-1);
-        // }
-        // return DelQuotaCommand.delQuota(this.getZooKeeper(), path, track);
         return DelQuotaCommand.delQuota(this.getZooKeeper(), path, bytes, num);
     }
 

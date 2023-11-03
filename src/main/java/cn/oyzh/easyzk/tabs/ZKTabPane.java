@@ -14,12 +14,11 @@ import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controls.FlexTabPane;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.collections.ListChangeListener;
-import javafx.scene.CacheHint;
 import javafx.scene.control.Tab;
 
 /**
@@ -28,11 +27,9 @@ import javafx.scene.control.Tab;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKTabPane extends FlexTabPane {
+public class ZKTabPane extends DynamicTabPane {
 
     {
-        this.setCache(true);
-        this.setCacheHint(CacheHint.QUALITY);
         this.initHomeTab();
         this.getTabs().addListener((ListChangeListener<? super Tab>) (c) -> {
             TaskManager.startDelayTask("zk:tab:init", () -> {
@@ -51,12 +48,7 @@ public class ZKTabPane extends FlexTabPane {
      * @return 主页tab
      */
     public ZKHomeTab getHomeTab() {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKHomeTab homeTab) {
-                return homeTab;
-            }
-        }
-        return null;
+        return super.getTab(ZKHomeTab.class);
     }
 
     /**
@@ -74,10 +66,7 @@ public class ZKTabPane extends FlexTabPane {
      * 关闭主页tab
      */
     public void closeHomeTab() {
-        ZKHomeTab homeTab = this.getHomeTab();
-        if (homeTab != null) {
-            super.removeTab(homeTab);
-        }
+        super.closeTab(ZKHomeTab.class);
     }
 
     /**
@@ -176,12 +165,7 @@ public class ZKTabPane extends FlexTabPane {
      * @return 节点tab
      */
     public ZKNodeTab getNodeTab() {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKNodeTab nodeTab) {
-                return nodeTab;
-            }
-        }
-        return null;
+        return super.getTab(ZKNodeTab.class);
     }
 
     /**
@@ -214,12 +198,7 @@ public class ZKTabPane extends FlexTabPane {
      * @return 认证tab
      */
     public ZKAuthTab getAuthTab() {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKAuthTab nodeTab) {
-                return nodeTab;
-            }
-        }
-        return null;
+        return super.getTab(ZKAuthTab.class);
     }
 
     /**
@@ -249,15 +228,6 @@ public class ZKTabPane extends FlexTabPane {
         ZKNodeTab nodeTab = this.getNodeTab();
         if (nodeTab != null && nodeTab.info() == msg.info()) {
             nodeTab.closeTab();
-        }
-    }
-
-    /**
-     * 重新载入
-     */
-    public void reload() {
-        if (this.getSelectedItem() instanceof ZKNodeTab itemTab) {
-            itemTab.reload();
         }
     }
 }

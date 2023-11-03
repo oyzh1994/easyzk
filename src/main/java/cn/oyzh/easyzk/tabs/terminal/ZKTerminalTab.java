@@ -16,11 +16,11 @@ public class ZKTerminalTab extends DynamicTab {
 
     @Override
     public void flushGraphic() {
-        SVGGlyph graphic = (SVGGlyph) this.getGraphic();
-        if (graphic == null) {
-            graphic = new SVGGlyph("/font/code library.svg", "13");
-            graphic.setCursor(Cursor.DEFAULT);
-            this.setGraphic(graphic);
+        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        if (glyph == null) {
+            glyph = new SVGGlyph("/font/code library.svg", "12");
+            glyph.setCursor(Cursor.DEFAULT);
+            this.graphic(glyph);
         }
     }
 
@@ -35,11 +35,11 @@ public class ZKTerminalTab extends DynamicTab {
                 info = new ZKInfo();
                 info.setName("未命名连接");
             }
-            // 设置文本
-            this.setText(info.getName());
             // 刷新图标
             this.flushGraphic();
-            // 初始化redis连接
+            // 设置标题
+            super.title(info.getName());
+            // 初始化zk连接
             this.controller().client(new ZKClient(info));
         } catch (Exception ex) {
             ex.printStackTrace();

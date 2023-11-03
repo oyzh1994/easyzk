@@ -1,9 +1,7 @@
 package cn.oyzh.easyzk.tabs.auth;
 
 import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.svg.SVGLabel;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.Cursor;
 
 /**
@@ -24,20 +22,16 @@ public class ZKAuthTab extends DynamicTab {
 
     @Override
     public void flushTitle() {
-        SVGLabel graphic = (SVGLabel) this.getGraphic();
-        // 设置文本
-        graphic.setText("zk认证信息列表");
-        // 设置提示文本
-        this.setTipText("zk认证信息列表");
+        super.title("认证信息列表");
     }
 
     @Override
     public void flushGraphic() {
-        SVGLabel label = (SVGLabel) this.getGraphic();
-        if (label == null) {
-            SVGLabel graphic1 = new SVGLabel(null, new SVGGlyph("/font/audit.svg", "12"));
-            graphic1.setCursor(Cursor.DEFAULT);
-            FXUtil.runWait(() -> this.setGraphic(graphic1));
+        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        if (glyph == null) {
+            glyph = new SVGGlyph("/font/audit.svg", "12");
+            glyph.setCursor(Cursor.DEFAULT);
+            this.graphic(glyph);
         }
     }
 

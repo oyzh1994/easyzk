@@ -7,7 +7,6 @@ import cn.oyzh.fx.plus.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
 import cn.oyzh.fx.plus.svg.SVGLabel;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.Cursor;
 import lombok.Getter;
 import lombok.NonNull;
@@ -84,19 +83,19 @@ public class ZKNodeTab extends DynamicTab {
         SVGLabel label = (SVGLabel) this.getGraphic();
         String svgUrl = this.treeItem.getSVGUrl();
         if (label == null || !Objects.equals(label.getUrl(), svgUrl)) {
-            SVGLabel graphic1 = new SVGLabel(null, new SVGGlyph(svgUrl, "12"));
-            graphic1.setCursor(Cursor.DEFAULT);
-            FXUtil.runLater(() -> this.setGraphic(graphic1));
+            SVGLabel svgLabel = new SVGLabel(null, new SVGGlyph(svgUrl, "12"));
+            svgLabel.setCursor(Cursor.DEFAULT);
+            this.graphic(svgLabel);
         }
     }
 
     @Override
     public void flushGraphicColor() {
-        SVGLabel graphic = (SVGLabel) this.getGraphic();
+        SVGLabel label = (SVGLabel) this.getGraphic();
         SVGGlyph glyph = this.treeItem.itemValue().graphic();
-        if (glyph != null && graphic != null && graphic.getColor() != glyph.getColor()) {
-            graphic.setColor(glyph.getColor());
-            graphic.setTextFill(glyph.getColor());
+        if (glyph != null && label != null && label.getColor() != glyph.getColor()) {
+            label.setColor(glyph.getColor());
+            label.setTextFill(glyph.getColor());
         }
     }
 
@@ -116,9 +115,7 @@ public class ZKNodeTab extends DynamicTab {
         this.controller().selectDataTab();
     }
 
-    /**
-     * 重新载入
-     */
+    @Override
     public void reload() {
         this.controller().reload();
     }

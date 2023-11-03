@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.msg.TreeGraphicColorChangedMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;
 import cn.oyzh.easyzk.msg.ZKTerminalCloseMsg;
 import cn.oyzh.easyzk.msg.ZKTerminalOpenMsg;
+import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
@@ -63,7 +64,9 @@ public class ZKTabPane extends FlexTabPane {
      */
     public void initHomeTab() {
         if (this.getHomeTab() == null) {
-            super.addTab(new ZKHomeTab());
+            ZKHomeTab tab = new ZKHomeTab();
+            tab.init();
+            super.addTab(tab);
         }
     }
 
@@ -202,6 +205,36 @@ public class ZKTabPane extends FlexTabPane {
             // 检查节点状态
             ZKNodeTab finalNodeTab = nodeTab;
             ExecutorUtil.start(() -> FXUtil.runLater(finalNodeTab::checkStatus), 5);
+        }
+    }
+
+    /**
+     * 获取认证tab
+     *
+     * @return 认证tab
+     */
+    public ZKAuthTab getAuthTab() {
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKAuthTab nodeTab) {
+                return nodeTab;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 初始化认证tab
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_AUTH_MAIN, async = true, verbose = true)
+    public void initAuthTab() {
+        ZKAuthTab tab = this.getAuthTab();
+        if (tab == null) {
+            tab = new ZKAuthTab();
+            tab.init();
+            super.addTab(tab);
+        }
+        if (!tab.isSelected()) {
+            this.select(tab);
         }
     }
 

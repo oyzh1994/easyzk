@@ -8,7 +8,7 @@
 <?import cn.oyzh.fx.plus.svg.SVGGlyph?>
 <FlexPane styleClass="panel,panel-primary" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="cn.oyzh.easyzk.tabs.home.ZKHomeTabContentController">
+          fx:controller="cn.oyzh.easyzk.tabs.home.ZKHomeTabContent">
     <ImageView fitWidth="120" fitHeight="120" layoutX="120" layoutY="120">
         <Image url="/image/zoo.png"/>
     </ImageView>

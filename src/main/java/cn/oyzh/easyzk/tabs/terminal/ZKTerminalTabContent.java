@@ -2,8 +2,11 @@ package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.spring.ScopeType;
+import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.NonNull;
 import org.springframework.context.annotation.Lazy;
@@ -19,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class ZKTerminalTabContentController {
+public class ZKTerminalTabContent extends DynamicTabController {
 
     /**
      * redis命令行文本域
@@ -52,5 +55,11 @@ public class ZKTerminalTabContentController {
      */
     public ZKInfo info() {
         return this.terminal.info();
+    }
+
+    @Override
+    public void onTabClose(Event handler) {
+        ZKConnectUtil.close(this.client(), true);
+        super.onTabClose(handler);
     }
 }

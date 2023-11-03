@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.oyzh.easyzk.controller.auth.ZKAuthMainController;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.controller.filter.ZKFilterMainController;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.event.ZKEventTypes;
@@ -58,12 +58,13 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void auth() {
-        StageWrapper wrapper = StageUtil.getStage(ZKAuthMainController.class);
-        if (wrapper != null) {
-            wrapper.toFront();
-        } else {
-            StageUtil.showStage(ZKAuthMainController.class);
-        }
+        // StageWrapper wrapper = StageUtil.getStage(ZKAuthMainController.class);
+        // if (wrapper != null) {
+        //     wrapper.toFront();
+        // } else {
+        //     StageUtil.showStage(ZKAuthMainController.class);
+        // }
+        ZKEventUtil.authMain();
     }
 
     /**

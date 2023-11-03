@@ -5,8 +5,8 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controls.FXLabel;
 import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  */
 @Lazy
 @Component
-public class ZKHomeTabContentController implements Initializable {
+public class ZKHomeTabContent extends DynamicTabController {
 
     /**
      * 软件信息

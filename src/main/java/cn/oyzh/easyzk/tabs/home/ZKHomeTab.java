@@ -1,11 +1,9 @@
 package cn.oyzh.easyzk.tabs.home;
 
-import cn.oyzh.easyzk.tabs.ZKBaseTab;
-import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
-import javafx.scene.CacheHint;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
+import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 
 /**
  * zk主页tab
@@ -13,17 +11,24 @@ import javafx.scene.Node;
  * @author oyzh
  * @since 2023/5/24
  */
-public class ZKHomeTab extends ZKBaseTab {
+public class ZKHomeTab extends DynamicTab {
+
+    /**
+     * 执行初始化
+     */
+    public void init() {
+        this.flushGraphic();
+        this.flushTitle();
+    }
 
     @Override
-    protected void loadContent() {
-        Node content = FXMLLoaderExt.loadFromUrl("/tabs/home/zkHomeTabContent.fxml");
-        content.setCache(true);
-        content.setCacheHint(CacheHint.QUALITY);
-        this.setContent(content);
+    protected String url() {
+        return "/tabs/home/zkHomeTabContent.fxml";
+    }
+
+    @Override
+    public void flushTitle() {
         this.setText("主页");
-        // 刷新图标
-        this.flushGraphic();
     }
 
     @Override
@@ -32,7 +37,8 @@ public class ZKHomeTab extends ZKBaseTab {
         if (graphic == null) {
             graphic = new SVGGlyph("/font/home.svg", "13");
             graphic.setCursor(Cursor.DEFAULT);
-            this.setGraphic(graphic);
+            SVGGlyph finalGraphic = graphic;
+            FXUtil.runWait(() -> this.setGraphic(finalGraphic));
         }
     }
 }

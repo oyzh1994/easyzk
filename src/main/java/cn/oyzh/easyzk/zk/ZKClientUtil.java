@@ -67,7 +67,7 @@ public class ZKClientUtil {
                 .connectString(host)
                 .maxCloseWaitMs(500)
                 .authorization(authInfos)
-                .waitForShutdownTimeoutMs(500)
+                // .waitForShutdownTimeoutMs(500)
                 .runSafeService(service)
                 .retryPolicy(retryPolicy)
                 .threadFactory(ZKThread::new)

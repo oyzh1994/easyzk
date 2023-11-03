@@ -1,15 +1,13 @@
-package cn.oyzh.easyzk.controller.auth;
+package cn.oyzh.easyzk.tabs.auth;
 
 import cn.hutool.core.map.MapUtil;
-import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
+import cn.oyzh.easyzk.controller.auth.ZKAuthAddController;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKAuthVO;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXTableCell;
 import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
@@ -17,36 +15,33 @@ import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
+import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
-import javafx.stage.WindowEvent;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
- * zk认证信息业务
+ * zk节点tab内容组件
  *
  * @author oyzh
- * @since 2020/9/14
+ * @since 2023/05/21
  */
+@Lazy
 @Slf4j
-@StageAttribute(
-        title = "zk认证信息列表",
-        iconUrls = ZKConst.ICON_PATH,
-        modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
-        value = ZKConst.FXML_BASE_PATH + "auth/zkAuthMain.fxml"
-)
-@Deprecated
-public class ZKAuthMainController extends Controller {
+@Component
+public class ZKAuthTabContent extends DynamicTabController {
 
     /**
      * 搜索词汇
@@ -208,11 +203,25 @@ public class ZKAuthMainController extends Controller {
      */
     @FXML
     private void toAdd() {
-        StageUtil.showStage(ZKAuthAddController.class, this.stage);
+        StageUtil.showStage(ZKAuthAddController.class);
+    }
+
+    /**
+     * 认证新增事件
+     */
+    @EventReceiver(ZKEventTypes.ZK_AUTH_ADDED)
+    private void authAdded() {
+        this.initDataList(Integer.MAX_VALUE);
     }
 
     @Override
-    public void onStageShown(@NonNull WindowEvent event) {
+    public void onTabClose(Event event) {
+        // 取消注册事件处理
+        EventUtil.unregister(this);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         // 注册事件处理
         EventUtil.register(this);
         this.user.setCellValueFactory(new PropertyValueFactory<>("user"));
@@ -223,20 +232,5 @@ public class ZKAuthMainController extends Controller {
         this.initTable();
         // 显示首页
         this.firstPage();
-        this.stage.hideOnEscape();
-    }
-
-    @Override
-    public void onStageHidden(WindowEvent event) {
-        // 取消注册事件处理
-        EventUtil.unregister(this);
-    }
-
-    /**
-     * 认证新增事件
-     */
-    @EventReceiver(ZKEventTypes.ZK_AUTH_ADDED)
-    private void authAdded() {
-        this.initDataList(Integer.MAX_VALUE);
     }
 }

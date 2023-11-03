@@ -1,14 +1,10 @@
 package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.tabs.ZKBaseTab;
-import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
-import javafx.scene.CacheHint;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 
 /**
  * redis终端tab
@@ -16,30 +12,7 @@ import javafx.scene.Node;
  * @author oyzh
  * @since 2023/7/21
  */
-public class ZKTerminalTab extends ZKBaseTab {
-
-    /**
-     * 内容controller
-     */
-    private ZKTerminalTabContentController contentController;
-
-    {
-        this.setClosable(true);
-        this.loadContent();
-        // 关闭连接
-        this.setOnCloseRequest(event -> ZKConnectUtil.close(this.contentController.client(), true));
-    }
-
-
-    @Override
-    protected void loadContent() {
-        FXMLLoaderExt loaderExt = new FXMLLoaderExt();
-        Node content = loaderExt.load("/tabs/terminal/zkTerminalTabContent.fxml");
-        content.setCache(true);
-        content.setCacheHint(CacheHint.QUALITY);
-        this.contentController = loaderExt.getController();
-        this.setContent(content);
-    }
+public class ZKTerminalTab extends DynamicTab {
 
     @Override
     public void flushGraphic() {
@@ -54,7 +27,7 @@ public class ZKTerminalTab extends ZKBaseTab {
     /**
      * 初始化
      *
-     * @param info redis信息
+     * @param info zk信息
      */
     public void init(ZKInfo info) {
         try {
@@ -67,7 +40,7 @@ public class ZKTerminalTab extends ZKBaseTab {
             // 刷新图标
             this.flushGraphic();
             // 初始化redis连接
-            this.contentController.client(new ZKClient(info));
+            this.controller().client(new ZKClient(info));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -79,7 +52,7 @@ public class ZKTerminalTab extends ZKBaseTab {
      * @return zk客户端
      */
     public ZKClient client() {
-        return this.contentController.client();
+        return this.controller().client();
     }
 
     /**
@@ -88,6 +61,16 @@ public class ZKTerminalTab extends ZKBaseTab {
      * @return zk信息
      */
     public ZKInfo info() {
-        return this.contentController.info();
+        return this.controller().info();
+    }
+
+    @Override
+    public ZKTerminalTabContent controller() {
+        return (ZKTerminalTabContent) super.controller();
+    }
+
+    @Override
+    protected String url() {
+        return "/tabs/node/zkTerminalTabContent.fxml";
     }
 }

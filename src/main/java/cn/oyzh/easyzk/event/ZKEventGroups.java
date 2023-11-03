@@ -38,4 +38,9 @@ public class ZKEventGroups {
      */
     public static final String CONNECTION_ACTION = "CONNECTION_ACTION";
 
+    /**
+     * 认证操作
+     */
+    public static final String AUTH_ACTION = "AUTH_ACTION";
+
 }

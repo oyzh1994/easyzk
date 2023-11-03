@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.msg.TreeChildChangedMsg;
 import cn.oyzh.easyzk.msg.TreeChildFilterMsg;
 import cn.oyzh.easyzk.msg.TreeGraphicChangedMsg;
 import cn.oyzh.easyzk.msg.TreeGraphicColorChangedMsg;
+import cn.oyzh.easyzk.msg.ZKAuthMainMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionConnectedMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionLostMsg;
@@ -213,6 +214,15 @@ public class ZKEventUtil {
     public static void terminalClose(ZKInfo info) {
         ZKTerminalCloseMsg msg = new ZKTerminalCloseMsg();
         msg.info(info);
+        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
+        EventUtil.fire(event);
+    }
+
+    /**
+     * 认证主页事件
+     */
+    public static void authMain() {
+        ZKAuthMainMsg msg = new ZKAuthMainMsg();
         Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
         EventUtil.fire(event);
     }

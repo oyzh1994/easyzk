@@ -2,16 +2,13 @@ package cn.oyzh.easyzk.tabs.node;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
-import cn.oyzh.easyzk.tabs.ZKBaseTab;
-import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
 import cn.oyzh.fx.plus.svg.SVGLabel;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.util.FXUtil;
-import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -24,29 +21,14 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKNodeTab extends ZKBaseTab {
-
-    {
-        this.setClosable(true);
-        this.setOnCloseRequest(event -> {
-            // 取消当前节点的选中
-            if (this.treeItem != null && this.treeItem.treeView().getSelectedItem() == this.treeItem) {
-                this.treeItem.treeView().select(this.treeItem.root());
-            }
-        });
-    }
+public class ZKNodeTab extends DynamicTab {
 
     /**
-     * zk树组件
+     * zk树节点
      */
     @Getter
     @Accessors(fluent = true, chain = true)
     private ZKNodeTreeItem treeItem;
-
-    /**
-     * 内容Controller
-     */
-    private ZKNodeTabContentController contentController;
 
     /**
      * 执行初始化
@@ -56,7 +38,7 @@ public class ZKNodeTab extends ZKBaseTab {
     public void init(@NonNull ZKNodeTreeItem treeItem) {
         this.treeItem = treeItem;
         // 初始化
-        this.contentController.init(treeItem);
+        this.controller().init(treeItem);
         // 刷新tab
         this.flush();
     }
@@ -79,24 +61,13 @@ public class ZKNodeTab extends ZKBaseTab {
             if (!this.treeItem.isIgnoreUpdated()) {
                 if (MessageBox.confirm("此节点数据已被其他连接修改，是否更新数据？")) {
                     this.treeItem.applyUpdate();
-                    this.contentController.init(this.treeItem);
+                    this.controller().init(this.treeItem);
                     this.treeItem.flushGraphic();
                 } else {
                     this.treeItem.setIgnoreUpdated(true);
                 }
             }
         }
-    }
-
-    /**
-     * 刷新tab
-     */
-    public void flush() {
-        FXUtil.runWait(() -> {
-            this.flushGraphic();
-            this.flushTitle();
-            this.flushGraphicColor();
-        });
     }
 
     @Override
@@ -129,37 +100,27 @@ public class ZKNodeTab extends ZKBaseTab {
         }
     }
 
-    @Override
-    protected void loadContent() {
-        FXMLLoaderExt loaderExt = new FXMLLoaderExt();
-        Node content = loaderExt.load("/tabs/node/zkNodeTabContent.fxml");
-        content.setCache(true);
-        content.setCacheHint(CacheHint.QUALITY);
-        this.contentController = loaderExt.getController();
-        this.setContent(content);
-    }
-
     /**
      * 获取节点数据组件
      *
      * @return 节点数据组件
      */
     public FlexRichTextArea getDataNode() {
-        return this.contentController.getDataNode();
+        return this.controller().getDataNode();
     }
 
     /**
      * 选中数据tab
      */
     public void selectDataTab() {
-        this.contentController.selectDataTab();
+        this.controller().selectDataTab();
     }
 
     /**
      * 重新载入
      */
     public void reload() {
-        this.contentController.reload();
+        this.controller().reload();
     }
 
     /**
@@ -169,5 +130,15 @@ public class ZKNodeTab extends ZKBaseTab {
      */
     public ZKInfo info() {
         return this.treeItem.info();
+    }
+
+    @Override
+    public ZKNodeTabContent controller() {
+        return (ZKNodeTabContent) super.controller();
+    }
+
+    @Override
+    protected String url() {
+        return "/tabs/node/zkNodeTabContent.fxml";
     }
 }

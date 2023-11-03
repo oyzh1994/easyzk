@@ -8,6 +8,7 @@ import cn.oyzh.fx.plus.controls.FXTab;
  * @author oyzh
  * @since 2023/05/21
  */
+@Deprecated
 public class ZKBaseTab extends FXTab {
 
     {

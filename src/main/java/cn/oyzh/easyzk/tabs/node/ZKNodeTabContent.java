@@ -20,7 +20,6 @@ import cn.oyzh.fx.plus.controls.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.FXLabel;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexTabPane;
-import cn.oyzh.fx.plus.controls.FlexTextArea;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
@@ -30,10 +29,11 @@ import cn.oyzh.fx.plus.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
+import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -64,7 +64,7 @@ import java.util.Set;
 @Lazy
 @Slf4j
 @Component
-public class ZKNodeTabContentController implements Initializable {
+public class ZKNodeTabContent extends DynamicTabController {
 
     /**
      * 根节点
@@ -275,7 +275,6 @@ public class ZKNodeTabContentController implements Initializable {
      * @param treeItem 树节点
      */
     public void init(ZKNodeTreeItem treeItem) {
-
         // 移除旧数据监听器
         if (this.treeItem != null) {
             this.treeItem.aclProperty().removeListener(this.aclListener);
@@ -929,5 +928,14 @@ public class ZKNodeTabContentController implements Initializable {
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
+    }
+
+    @Override
+    public void onTabClose(Event handler) {
+        // 取消当前节点的选中
+        if (this.treeItem != null && this.treeItem.treeView().getSelectedItem() == this.treeItem) {
+            this.treeItem.treeView().select(this.treeItem.root());
+        }
+        super.onTabClose(handler);
     }
 }

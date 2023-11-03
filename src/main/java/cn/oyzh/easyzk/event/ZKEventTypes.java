@@ -187,4 +187,9 @@ public class ZKEventTypes {
      * 添加连接事件
      */
     public static final String ZK_ADD_CONNECT = "ZK_ADD_CONNECT";
+
+    /**
+     * zk认证列表主页
+     */
+    public static final String ZK_AUTH_MAIN = "ZK_AUTH_MAIN";
 }

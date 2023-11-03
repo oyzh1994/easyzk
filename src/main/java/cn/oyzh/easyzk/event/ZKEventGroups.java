@@ -43,4 +43,9 @@ public class ZKEventGroups {
      */
     public static final String AUTH_ACTION = "AUTH_ACTION";
 
+    /**
+     * 过滤操作
+     */
+    public static final String FILTER_ACTION = "FILTER_ACTION";
+
 }

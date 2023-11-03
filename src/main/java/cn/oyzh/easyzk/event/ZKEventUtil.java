@@ -9,6 +9,7 @@ import cn.oyzh.easyzk.msg.ZKAuthMainMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionConnectedMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionLostMsg;
+import cn.oyzh.easyzk.msg.ZKFilterMainMsg;
 import cn.oyzh.easyzk.msg.ZKInfoAddedMsg;
 import cn.oyzh.easyzk.msg.ZKInfoDeletedMsg;
 import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
@@ -223,6 +224,15 @@ public class ZKEventUtil {
      */
     public static void authMain() {
         ZKAuthMainMsg msg = new ZKAuthMainMsg();
+        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
+        EventUtil.fire(event);
+    }
+
+    /**
+     * 过滤主页事件
+     */
+    public static void filterMain() {
+        ZKFilterMainMsg msg = new ZKFilterMainMsg();
         Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
         EventUtil.fire(event);
     }

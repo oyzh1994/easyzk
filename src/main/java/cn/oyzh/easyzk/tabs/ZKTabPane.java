@@ -9,6 +9,7 @@ import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;
 import cn.oyzh.easyzk.msg.ZKTerminalCloseMsg;
 import cn.oyzh.easyzk.msg.ZKTerminalOpenMsg;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
+import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
@@ -193,6 +194,20 @@ public class ZKTabPane extends DynamicTabPane {
     }
 
     /**
+     * 连接关闭事件
+     *
+     * @param event 事件
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_CONNECTION_CLOSED, async = true, verbose = true)
+    public void connectionClosed(Event<ZKConnectionClosedMsg> event) {
+        ZKConnectionClosedMsg msg = event.data();
+        ZKNodeTab nodeTab = this.getNodeTab();
+        if (nodeTab != null && nodeTab.info() == msg.info()) {
+            nodeTab.closeTab();
+        }
+    }
+
+    /**
      * 获取认证tab
      *
      * @return 认证tab
@@ -218,16 +233,27 @@ public class ZKTabPane extends DynamicTabPane {
     }
 
     /**
-     * 连接关闭事件
+     * 获取过滤tab
      *
-     * @param event 事件
+     * @return 过滤tab
      */
-    @EventReceiver(value = ZKEventTypes.ZK_CONNECTION_CLOSED, async = true, verbose = true)
-    public void connectionClosed(Event<ZKConnectionClosedMsg> event) {
-        ZKConnectionClosedMsg msg = event.data();
-        ZKNodeTab nodeTab = this.getNodeTab();
-        if (nodeTab != null && nodeTab.info() == msg.info()) {
-            nodeTab.closeTab();
+    public ZKFilterTab getFilterTab() {
+        return super.getTab(ZKFilterTab.class);
+    }
+
+    /**
+     * 初始化过滤tab
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_FILTER_MAIN, async = true, verbose = true)
+    public void initFilterTab() {
+        ZKFilterTab tab = this.getFilterTab();
+        if (tab == null) {
+            tab = new ZKFilterTab();
+            tab.init();
+            super.addTab(tab);
+        }
+        if (!tab.isSelected()) {
+            this.select(tab);
         }
     }
 }

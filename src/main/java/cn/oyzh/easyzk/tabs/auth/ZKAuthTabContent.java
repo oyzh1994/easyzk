@@ -9,6 +9,7 @@ import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.FXTableCell;
+import cn.oyzh.fx.plus.controls.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.event.EventReceiver;
@@ -33,10 +34,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * zk节点tab内容组件
+ * zk认证列表tab内容组件
  *
  * @author oyzh
- * @since 2023/05/21
+ * @since 2023/11/03
  */
 @Lazy
 @Slf4j
@@ -83,13 +84,13 @@ public class ZKAuthTabContent extends DynamicTabController {
      * 是否启用列
      */
     @FXML
-    private TableColumn<ZKAuthVO, String> enable;
+    private FlexTableColumn<ZKAuthVO, String> enable;
 
     /**
      * 数据操作列
      */
     @FXML
-    private TableColumn<ZKAuthVO, String> action;
+    private FlexTableColumn<ZKAuthVO, String> action;
 
     /**
      * 分页数据
@@ -118,7 +119,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      */
     private void initTable() {
         // 初始化操作栏
-        this.action.setCellFactory((cell) -> new FXTableCell<>() {
+        this.action.setCell(new FXTableCell<>() {
             private HBox hBox;
 
             @Override
@@ -137,14 +138,13 @@ public class ZKAuthTabContent extends DynamicTabController {
         });
 
         // 状态栏初始化
-        this.enable.setCellFactory((cell) -> new FXTableCell<>() {
+        this.enable.setCell(new FXTableCell<>() {
             @Override
             public ToggleSwitch initGraphic() {
                 ZKAuthVO authVO = this.getTableItem();
                 if (authVO != null) {
                     ToggleSwitch toggleSwitch = new ToggleSwitch();
-                    toggleSwitch.setStyle("-fx-font-size: 11");
-                    toggleSwitch.setPrefWidth(65);
+                    toggleSwitch.setFontSize(11);
                     toggleSwitch.setSelectedText("已启用");
                     toggleSwitch.setUnselectedText("已禁用");
                     toggleSwitch.setSelected(authVO.getEnable());

@@ -1,53 +1,48 @@
-package cn.oyzh.easyzk.controller.filter;
+package cn.oyzh.easyzk.tabs.filter;
 
 import cn.hutool.core.map.MapUtil;
-import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
+import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.dto.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXTableCell;
+import cn.oyzh.fx.plus.controls.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.ext.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.svg.SVGGlyph;
+import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
-import javafx.stage.WindowEvent;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
- * zk信息列表业务
+ * zk过滤列表tab内容组件
  *
  * @author oyzh
- * @since 2020/9/14
+ * @since 2023/11/03
  */
+@Lazy
 @Slf4j
-@StageAttribute(
-        title = "zk过滤配置列表",
-        modality = Modality.WINDOW_MODAL,
-        iconUrls = ZKConst.ICON_PATH,
-        cssUrls = ZKStyle.COMMON,
-        value = ZKConst.FXML_BASE_PATH + "filter/zkFilterMain.fxml"
-)
-@Deprecated
-public class ZKFilterMainController extends Controller {
+@Component
+public class ZKFilterTabContent extends DynamicTabController {
 
     /**
      * 分页组件
@@ -83,19 +78,19 @@ public class ZKFilterMainController extends Controller {
      * 数据状态列
      */
     @FXML
-    private TableColumn<ZKFilterVO, String> enable;
+    private FlexTableColumn<ZKFilterVO, String> enable;
 
     /**
      * 数据名称列
      */
     @FXML
-    private TableColumn<ZKFilterVO, String> partMatch;
+    private FlexTableColumn<ZKFilterVO, String> partMatch;
 
     /**
      * 数据操作列
      */
     @FXML
-    private TableColumn<ZKFilterVO, String> action;
+    private FlexTableColumn<ZKFilterVO, String> action;
 
     /**
      * 分页数据
@@ -124,7 +119,7 @@ public class ZKFilterMainController extends Controller {
      */
     private void initTable() {
         // 操作栏初始化
-        this.action.setCellFactory((cell) -> new FXTableCell<>() {
+        this.action.setCell(new FXTableCell<>() {
             private HBox hBox;
 
             @Override
@@ -142,14 +137,13 @@ public class ZKFilterMainController extends Controller {
         });
 
         // 状态栏初始化
-        this.enable.setCellFactory((cell) -> new FXTableCell<>() {
+        this.enable.setCell(new FXTableCell<>() {
             @Override
             public ToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();
                 if (filterVO != null) {
                     ToggleSwitch toggleSwitch = new ToggleSwitch();
-                    toggleSwitch.setStyle("-fx-font-size: 11");
-                    toggleSwitch.setPrefWidth(65);
+                    toggleSwitch.setFontSize(11);
                     toggleSwitch.setSelectedText("已启用");
                     toggleSwitch.setUnselectedText("已禁用");
                     toggleSwitch.setSelected(filterVO.isEnable());
@@ -168,14 +162,13 @@ public class ZKFilterMainController extends Controller {
         });
 
         // 匹配模式栏初始化
-        this.partMatch.setCellFactory((cell) -> new FXTableCell<>() {
+        this.partMatch.setCell(new FXTableCell<>() {
             @Override
             public ToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();
                 if (filterVO != null) {
                     ToggleSwitch toggleSwitch = new ToggleSwitch();
-                    toggleSwitch.setStyle("-fx-font-size: 11");
-                    toggleSwitch.setPrefWidth(78);
+                    toggleSwitch.fontSize(11);
                     toggleSwitch.setSelectedText("模糊匹配");
                     toggleSwitch.setUnselectedText("完全匹配");
                     toggleSwitch.setSelected(filterVO.isPartMatch());
@@ -215,7 +208,7 @@ public class ZKFilterMainController extends Controller {
      */
     @FXML
     private void toAdd() {
-        StageUtil.showStage(ZKFilterAddController.class, this.stage);
+        StageUtil.showStage(ZKFilterAddController.class);
     }
 
     /**
@@ -241,8 +234,16 @@ public class ZKFilterMainController extends Controller {
         this.initDataList(this.pageData.currentPage() + 1);
     }
 
+    /**
+     * 过滤新增事件
+     */
+    @EventReceiver(ZKEventTypes.ZK_FILTER_ADDED)
+    private void filterAdded() {
+        this.initDataList(Integer.MAX_VALUE);
+    }
+
     @Override
-    public void onStageShown(@NonNull WindowEvent event) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         // 注册事件处理
         EventUtil.register(this);
         this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
@@ -252,20 +253,11 @@ public class ZKFilterMainController extends Controller {
         this.initTable();
         // 显示首页
         this.firstPage();
-        this.stage.hideOnEscape();
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
+    public void onTabClose(Event event) {
         // 取消注册事件处理
         EventUtil.unregister(this);
-    }
-
-    /**
-     * 过滤新增事件
-     */
-    @EventReceiver(ZKEventTypes.ZK_FILTER_ADDED)
-    private void filterAdded() {
-        this.initDataList(Integer.MAX_VALUE);
     }
 }

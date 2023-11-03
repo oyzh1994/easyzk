@@ -189,7 +189,17 @@ public class ZKEventTypes {
     public static final String ZK_ADD_CONNECT = "ZK_ADD_CONNECT";
 
     /**
-     * zk认证列表主页
+     * zk认证
+     */
+    public static final String ZK_AUTH = "ZK_AUTH";
+
+    /**
+     * zk认证列表
      */
     public static final String ZK_AUTH_MAIN = "ZK_AUTH_MAIN";
+
+    /**
+     * zk过滤列表
+     */
+    public static final String ZK_FILTER_MAIN = "ZK_FILTER_MAIN";
 }

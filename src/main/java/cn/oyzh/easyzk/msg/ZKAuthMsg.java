@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.msg;
 
+import cn.oyzh.easyzk.event.ZKEventGroups;
+import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +13,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKAuthMsg {
+public class ZKAuthMsg implements ZKMsg {
 
     @Setter
     private String user;
@@ -24,4 +26,8 @@ public class ZKAuthMsg {
 
     @Setter
     private ZKNodeTreeItem item;
+
+    private final String name = ZKEventTypes.ZK_AUTH;
+
+    private final String group = ZKEventGroups.AUTH_ACTION;
 }

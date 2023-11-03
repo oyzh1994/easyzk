@@ -93,12 +93,13 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void filter() {
-        StageWrapper wrapper = StageUtil.getStage(ZKFilterMainController.class);
-        if (wrapper != null) {
-            wrapper.toFront();
-        } else {
-            StageUtil.showStage(ZKFilterMainController.class);
-        }
+        // StageWrapper wrapper = StageUtil.getStage(ZKFilterMainController.class);
+        // if (wrapper != null) {
+        //     wrapper.toFront();
+        // } else {
+        //     StageUtil.showStage(ZKFilterMainController.class);
+        // }
+        ZKEventUtil.filterMain();
     }
 
     /**

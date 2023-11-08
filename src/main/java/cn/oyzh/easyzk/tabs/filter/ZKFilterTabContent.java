@@ -119,7 +119,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      */
     private void initTable() {
         // 操作栏初始化
-        this.action.setCell(new FXTableCell<>() {
+        this.action.setCellFactory((cell) -> new FXTableCell<>() {
             private HBox hBox;
 
             @Override
@@ -137,7 +137,7 @@ public class ZKFilterTabContent extends DynamicTabController {
         });
 
         // 状态栏初始化
-        this.enable.setCell(new FXTableCell<>() {
+        this.enable.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
             public ToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();
@@ -162,7 +162,7 @@ public class ZKFilterTabContent extends DynamicTabController {
         });
 
         // 匹配模式栏初始化
-        this.partMatch.setCell(new FXTableCell<>() {
+        this.partMatch.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
             public ToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();

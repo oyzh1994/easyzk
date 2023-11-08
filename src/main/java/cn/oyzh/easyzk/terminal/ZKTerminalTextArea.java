@@ -25,11 +25,11 @@ import org.apache.zookeeper.ZooKeeper;
 public class ZKTerminalTextArea extends TerminalTextArea {
 
     {
+        this.keyHandler(ZKTerminalKeyHandler.INSTANCE);
         this.helpHandler(ZKTerminalHelpHandler.INSTANCE);
+        this.mouseHandler(ZKTerminalMouseHandler.INSTANCE);
         this.historyHandler(ZKTerminalHistoryHandler.INSTANCE);
         this.completeHandler(ZKTerminalCompleteHandler.INSTANCE);
-        this.keyHandler(ZKTerminalKeyHandler.INSTANCE);
-        this.mouseHandler(ZKTerminalMouseHandler.INSTANCE);
     }
 
     /**

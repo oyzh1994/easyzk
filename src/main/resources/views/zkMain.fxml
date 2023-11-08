@@ -4,14 +4,13 @@
 <?import cn.oyzh.fx.plus.controls.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
-<?import cn.oyzh.fx.plus.controls.FXTab?>
 <?import cn.oyzh.fx.plus.controls.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXTab?>
 <?import cn.oyzh.fx.plus.controls.MsgTextArea?>
 <?import cn.oyzh.fx.plus.svg.SVGGlyph?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <FlexPane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.ZKMainController" flexWidth="100%" flexHeight="100% - 30">
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="zkMainLeft">

@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.plus.controls.FXLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FlexHBox stylesheets="/css/bootstrapfx.css" flexWidth="100%" realHeight="24">
+<FlexHBox flexWidth="100%" realHeight="24">
     <FXLabel realWidth="135" maxHeight="20" styleClass="item-label,lbl,lbl-success">
         <HBox.margin>
             <Insets right="5"/>

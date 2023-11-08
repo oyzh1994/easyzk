@@ -1,13 +1,12 @@
 package cn.oyzh.easyzk.terminal;
 
-import cn.oyzh.fx.terminal.Terminal;
-import cn.oyzh.fx.terminal.key.BaseTerminalKeyHandler;
+import cn.oyzh.fx.terminal.key.TerminalKeyHandler;
 
 /**
  * @author oyzh
  * @since 2023/8/28
  */
-public class ZKTerminalKeyHandler extends BaseTerminalKeyHandler {
+public class ZKTerminalKeyHandler implements TerminalKeyHandler<ZKTerminalTextArea> {
 
     /**
      * 当前实例
@@ -15,14 +14,13 @@ public class ZKTerminalKeyHandler extends BaseTerminalKeyHandler {
     public static final ZKTerminalKeyHandler INSTANCE = new ZKTerminalKeyHandler();
 
     @Override
-    public boolean onEnterKeyPressed(Terminal terminal) throws Exception {
-        ZKTerminalTextArea textArea = (ZKTerminalTextArea) terminal;
+    public boolean onEnterKeyPressed(ZKTerminalTextArea terminal) throws Exception {
         String input = terminal.getInput();
-        if (textArea.isTemporary() && !textArea.isConnected()) {
-            textArea.connect(input);
+        if (terminal.isTemporary() && !terminal.isConnected()) {
+            terminal.connect(input);
             terminal.saveHistory(input);
-        } else if (textArea.isConnected()) {
-            super.onEnterKeyPressed(terminal);
+        } else if (terminal.isConnected()) {
+            TerminalKeyHandler.super.onEnterKeyPressed(terminal);
         }
         return false;
     }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXButton?>
+<?import cn.oyzh.fx.plus.controls.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.FXTab?>
+<?import cn.oyzh.fx.plus.controls.ReadOnlyTextField?>
+<?import cn.oyzh.fx.plus.controls.SubmitButton?>
+<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<FlexTabPane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cn.oyzh.easyzk.controller.tool.ZKToolController" realWidth="850" realHeight="600">
+    <FXTab text="摘要认证(digest)">
+        <FlexVBox flexHeight="100%" flexWidth="100%">
+            <FlexHBox flexWidth="100%" realHeight="50">
+                <FXLabel text="用户信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <HBox.margin>
+                        <Insets left="20" top="10"/>
+                    </HBox.margin>
+                </FXLabel>
+                <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 115" tipText="请输入用户名明文">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </ClearableTextField>
+                <ClearableTextField fx:id="pwd" realHeight="30" flexWidth="50% - 115" tipText="请输入密码明文">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </ClearableTextField>
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="50">
+                <FXLabel text="摘要信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <HBox.margin>
+                        <Insets left="20" top="10"/>
+                    </HBox.margin>
+                </FXLabel>
+                <ReadOnlyTextField fx:id="digest" realHeight="30" flexWidth="100% - 220">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </ReadOnlyTextField>
+                <FXButton text="复制" onAction="#copyDigest" prefHeight="30">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXButton>
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="50">
+                <SubmitButton onAction="#genDigest" text="生成摘要">
+                    <HBox.margin>
+                        <Insets left="95" top="10"/>
+                    </HBox.margin>
+                </SubmitButton>
+            </FlexHBox>
+        </FlexVBox>
+
+    </FXTab>
+</FlexTabPane>

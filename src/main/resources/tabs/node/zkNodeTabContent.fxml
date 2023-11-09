@@ -167,7 +167,7 @@
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
-                <ToggleSwitch realHeight="16" realWidth="84" fx:id="statViewSwitch" unselectedText="专业视图"
+                <ToggleSwitch realHeight="16" realWidth="86" fx:id="statViewSwitch" unselectedText="专业视图"
                               selectedText="友好视图"
                               selected="true">
                     <FlowPane.margin>
@@ -214,7 +214,7 @@
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
-                <ToggleSwitch realHeight="16" realWidth="84" fx:id="aclViewSwitch" unselectedText="专业视图"
+                <ToggleSwitch realHeight="16" realWidth="86" fx:id="aclViewSwitch" unselectedText="专业视图"
                               selectedText="友好视图"
                               selected="true">
                     <FlowPane.margin>

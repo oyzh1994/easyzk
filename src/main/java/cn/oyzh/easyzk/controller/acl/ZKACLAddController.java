@@ -501,7 +501,7 @@ public class ZKACLAddController extends Controller {
         // 认证信息更新时，动态显示摘要信息
         this.digestInfo1User.addTextChangeListener((observableValue, s, t1) -> {
             // 内容包含“:”，则直接切割字符为用户名密码
-            if (t1 != null && t1.contains(":") && StrUtil.isBlank(this.digestInfo1Password.getText())) {
+            if (t1 != null && t1.contains(":")) {
                 this.digestInfo1User.setText(t1.split(":")[0]);
                 this.digestInfo1Password.setText(t1.split(":")[1]);
             }

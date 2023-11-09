@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.controller.filter.ZKFilterMainController;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
+import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -126,11 +126,19 @@ public class HeaderController extends SubController {
     }
 
     /**
+     * 工具箱
+     */
+    @FXML
+    private void tool() {
+        StageUtil.showStage(ZKToolController.class, StageUtil.getPrimaryStage());
+    }
+
+    /**
      * 收缩左侧zk树
      */
     @FXML
     private void collapseTree() {
-        this.treeMutexes.visible( this.expandTree);
+        this.treeMutexes.visible(this.expandTree);
         EventUtil.fire(ZKEventTypes.LEFT_COLLAPSE);
     }
 
@@ -139,7 +147,7 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void expandTree() {
-        this.treeMutexes.visible( this.collapseTree);
+        this.treeMutexes.visible(this.collapseTree);
         EventUtil.fire(ZKEventTypes.LEFT_EXTEND);
     }
 

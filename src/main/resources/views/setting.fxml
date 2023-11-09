@@ -26,21 +26,21 @@
                     <fx:define>
                         <FXToggleGroup fx:id="loadMode"/>
                     </fx:define>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="修改后，重新打开连接生效" text="加载一级节点"
+                    <FXRadioButton toggleGroup="$loadMode" tipText="加载根节点及根节点的子节点" text="加载一级节点"
                                    realHeight="25" selected="true"
                                    fx:id="loadMode0" userData="0">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="修改后，重新打开连接生效" text="加载所有节点"
+                    <FXRadioButton toggleGroup="$loadMode" tipText="加载所有节点，耗时较长" text="加载所有节点"
                                    realHeight="25" fx:id="loadMode1"
                                    userData="1">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="修改后，重新打开连接生效" text="仅加载根节点"
+                    <FXRadioButton toggleGroup="$loadMode" tipText="只加载根节点数据" text="仅加载根节点"
                                    realHeight="25" fx:id="loadMode2"
                                    userData="2">
                         <HBox.margin>
@@ -57,7 +57,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FlexCheckBox text="自动认证节点" realHeight="25" selected="true" fx:id="authMode">
+                    <FlexCheckBox tipText="自动对已启用的认证信息执行认证" text="自动认证节点" realHeight="25" selected="true" fx:id="authMode">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>

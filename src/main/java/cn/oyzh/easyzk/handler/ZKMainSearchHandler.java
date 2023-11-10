@@ -3,8 +3,8 @@ package cn.oyzh.easyzk.handler;
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.dto.ZKSearchParam;
 import cn.oyzh.easyzk.dto.ZKSearchResult;
-import cn.oyzh.easyzk.fx.BaseTreeItem;
-import cn.oyzh.easyzk.fx.BaseTreeItemValue;
+import cn.oyzh.easyzk.fx.ZKTreeItem;
+import cn.oyzh.easyzk.fx.ZKTreeItemValue;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
 import cn.oyzh.easyzk.fx.ZKTreeView;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
@@ -305,9 +305,8 @@ public class ZKMainSearchHandler {
         this.dataIndex = 0;
         // 取消文本选中
         if (this.currentItem != null) {
-            // ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
-            BaseTreeItemValue value = (BaseTreeItemValue) this.currentItem.getValue();
-            ControlUtil.deselect(value.nameText());
+            ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
+            ControlUtil.deselect(value.text());
         }
         this.currentItem = item;
         // 取消文本组件的选中
@@ -367,9 +366,9 @@ public class ZKMainSearchHandler {
             // 初始化索引及文本组件
             this.dataIndex = 0;
             this.pathIndex = 0;
-            BaseTreeItemValue value = (BaseTreeItemValue) this.currentItem.getValue();
+            ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
             ControlUtil.deselect(this.dataNode);
-            ControlUtil.deselect(value.nameText());
+            ControlUtil.deselect(value.text());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -397,8 +396,8 @@ public class ZKMainSearchHandler {
     private boolean pathAnalyse() {
         try {
             String kw = this.searchParam.getKw();
-            BaseTreeItemValue value = (BaseTreeItemValue) this.currentItem.getValue();
-            Text text = value.nameText();
+            ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
+            Text text = value.text();
             String path = value.name();
             // 搜索索引
             int index = TextUtil.findIndex(path, kw, this.pathIndex, this.searchParam.isCompareCase(), this.searchParam.isFullMatch());
@@ -457,7 +456,7 @@ public class ZKMainSearchHandler {
         }
         boolean m1 = false, m2 = false;
         // 路径
-        if (this.searchParam.isSearchPath() && item instanceof BaseTreeItem treeItem) {
+        if (this.searchParam.isSearchPath() && item instanceof ZKTreeItem treeItem) {
             String value = treeItem.itemValue().name();
             m1 = this.searchParam.isMatch(value);
         }

@@ -15,14 +15,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Accessors(chain = true, fluent = true)
-public class ZKGroupTreeItemValue extends BaseTreeItemValue {
+public class ZKGroupTreeItemValue extends ZKTreeItemValue {
 
     private final ZKGroupTreeItem treeItem;
 
     public ZKGroupTreeItemValue(@NonNull ZKGroupTreeItem treeItem) {
         this.treeItem = treeItem;
         this.flushGraphic();
-        this.flushName();
+        this.flushText();
     }
 
     @Override
@@ -31,15 +31,12 @@ public class ZKGroupTreeItemValue extends BaseTreeItemValue {
     }
 
     @Override
-    public boolean flushGraphic() {
+    public void flushGraphic() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
         if (glyph == null) {
             glyph = new SVGGlyph("/font/group.svg", "12");
             this.graphic(glyph);
-            // this.treeItem.treeView().fireGraphicChanged(this.treeItem);
-            return true;
         }
-        return false;
     }
 
     @Override

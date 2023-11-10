@@ -23,14 +23,14 @@ import java.util.Objects;
  */
 @Slf4j
 @Accessors(chain = true, fluent = true)
-public class ZKNodeTreeItemValue extends BaseTreeItemValue {
+public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
     private final ZKNodeTreeItem treeItem;
 
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem treeItem) {
         this.treeItem = treeItem;
         this.flushGraphic();
-        this.flushName();
+        this.flushText();
         this.flushGraphicColor();
         treeItem.dataProperty().addListener((observableValue, bytes, t1) -> this.flushStatus());
         treeItem.childNumProperty().addListener((observableValue, bytes, t1) -> this.flushChildNum());
@@ -38,21 +38,18 @@ public class ZKNodeTreeItemValue extends BaseTreeItemValue {
 
     @Override
     public String name() {
-        // return this.treeItem.decodeNodePath();
         return this.treeItem.decodeNodeName();
     }
 
     @Override
-    public boolean flushGraphic() {
+    public void flushGraphic() {
         SVGGlyph curr = this.graphic();
         String svgUrl = this.getSVGUrl();
         // 设置图标
         if (curr == null || !Objects.equals(curr.getUrl(), svgUrl)) {
             this.graphic(new SVGGlyph(svgUrl, "12"));
             ZKEventUtil.graphicChanged(this.treeItem);
-            return true;
         }
-        return false;
     }
 
     @Override

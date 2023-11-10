@@ -15,22 +15,19 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.tree.FlexTreeView;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventGroup;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
+import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.util.MouseUtil;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Window;
 import javafx.util.Callback;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,26 +43,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Accessors(chain = true, fluent = true)
-public class ZKTreeView extends FlexTreeView {
-
-    /**
-     * 排序方式
-     */
-    @Getter
-    @Setter
-    private Boolean sortOrder;
-
-    /**
-     * 节点过滤器
-     */
-    @Getter
-    @Setter
-    private ZKTreeItemFilter itemFilter;
-
-    /**
-     * 导入中标志位
-     */
-    private volatile boolean importing;
+public class ZKTreeView extends RichTreeView {
 
     /**
      * 搜索中标志位
@@ -79,7 +57,7 @@ public class ZKTreeView extends FlexTreeView {
     private final ZKSetting setting = ZKSettingStore.SETTING;
 
     public ZKTreeView() {
-        this.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        this.dragContent = "zk_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new ZKTreeCell());
         // 初始化事件处理
         this.initEventHandler();
@@ -100,28 +78,6 @@ public class ZKTreeView extends FlexTreeView {
             ThreadUtil.startVirtual(treeItem::closeConnect);
         }
     }
-
-    /**
-     * 获取窗口
-     *
-     * @return 窗口
-     */
-    public Window window() {
-        return this.getScene().getWindow();
-    }
-
-    @Override
-    public void selectAndScroll(TreeItem<?> item) {
-        if (item instanceof ZKNodeTreeItem treeItem) {
-            item = treeItem.visiblyItem();
-        }
-        if (item != null) {
-            super.selectAndScroll(item);
-        } else {
-            this.clearSelection();
-        }
-    }
-
     /**
      * 初始化事件处理器
      */
@@ -142,7 +98,7 @@ public class ZKTreeView extends FlexTreeView {
         // 右键菜单事件
         this.setOnContextMenuRequested(e -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof BaseTreeItem treeItem) {
+            if (item instanceof ZKTreeItem treeItem) {
                 this.showContextMenu(treeItem.getMenuItems(), e.getScreenX() - 10, e.getScreenY() - 10);
             } else {
                 this.clearContextMenu();
@@ -151,14 +107,14 @@ public class ZKTreeView extends FlexTreeView {
         // f2按键处理
         KeyListener.listenReleased(this, KeyCode.F2, event -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof BaseTreeItem treeItem) {
+            if (item instanceof ZKTreeItem treeItem) {
                 treeItem.rename();
             }
         });
         // 删除按键处理
         KeyListener.listenReleased(this, KeyCode.DELETE, event -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof BaseTreeItem treeItem) {
+            if (item instanceof ZKTreeItem treeItem) {
                 treeItem.delete();
             }
         });
@@ -171,57 +127,6 @@ public class ZKTreeView extends FlexTreeView {
                 nodeTreeItem.root().closeConnect();
             }
         });
-    }
-
-    /**
-     * 导入开始事件
-     */
-    @EventReceiver(ZKEventTypes.ZK_IMPORT_START)
-    private void onImportStart() {
-        this.importing = true;
-        log.info("ZK_IMPORT_START.");
-    }
-
-    /**
-     * 导入结束事件
-     */
-    @EventReceiver(ZKEventTypes.ZK_IMPORT_FINISH)
-    private void onImportFinish() {
-        this.importing = false;
-        log.info("ZK_IMPORT_FINISH.");
-    }
-
-    /**
-     * 对节点排序
-     *
-     * @param sortOrder 排序方式
-     */
-    public void sortItem(Boolean sortOrder) {
-        this.sortOrder = sortOrder;
-        if (sortOrder != null) {
-            // 获取选中节点
-            TreeItem<?> item = this.getSelectedItem();
-            // 执行排序
-            if (item instanceof BaseTreeItem treeItem) {
-                treeItem.sort(sortOrder);
-            }
-            // 重新选中此节点
-            this.select(item);
-        }
-    }
-
-    /**
-     * 过滤节点
-     */
-    public void filterItem() {
-        // 获取选中节点
-        TreeItem<?> item = this.getSelectedItem();
-        // 清除选中节点
-        this.clearSelection();
-        // 执行过滤
-        this.root().filter(this.itemFilter);
-        // 选中并滚动节点
-        this.selectAndScroll(item);
     }
 
     /**
@@ -326,7 +231,7 @@ public class ZKTreeView extends FlexTreeView {
                 log.info("父节点未加载, 加载父节点.");
             }
             // 过滤节点
-            parent.filter(this.itemFilter());
+            parent.doFilter(this.itemFilter);
         } catch (Exception ex) {
             log.warn("新增节点失败！", ex);
         }
@@ -446,9 +351,7 @@ public class ZKTreeView extends FlexTreeView {
         this.searching = false;
     }
 
-    /**
-     * 展开节点
-     */
+    @Override
     public void expand() {
         TreeItem<?> item = this.getSelectedItem();
         if (item instanceof ZKNodeTreeItem treeItem) {
@@ -458,7 +361,7 @@ public class ZKTreeView extends FlexTreeView {
             if (treeItem.root() != null) {
                 treeItem.root().expandAll();
             }
-        } else if (item instanceof BaseTreeItem treeItem) {
+        } else if (item instanceof ZKTreeItem treeItem) {
             treeItem.extend();
         }
         if (item != null) {
@@ -466,9 +369,7 @@ public class ZKTreeView extends FlexTreeView {
         }
     }
 
-    /**
-     * 收缩节点
-     */
+    @Override
     public void collapse() {
         TreeItem<?> item = this.getSelectedItem();
         if (item instanceof ZKNodeTreeItem treeItem) {
@@ -478,21 +379,11 @@ public class ZKTreeView extends FlexTreeView {
             if (treeItem.root() != null) {
                 treeItem.root().collapseAll();
             }
-        } else if (item instanceof BaseTreeItem treeItem) {
+        } else if (item instanceof ZKTreeItem treeItem) {
             treeItem.collapse();
         }
         if (item != null) {
             this.select(item);
-        }
-    }
-
-    /**
-     * 重新载入
-     */
-    public void reload() {
-        TreeItem<?> item = this.getSelectedItem();
-        if (item instanceof ZKNodeTreeItem treeItem) {
-            treeItem.reloadChild();
         }
     }
 }

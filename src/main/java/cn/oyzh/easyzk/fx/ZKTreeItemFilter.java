@@ -4,6 +4,8 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.plus.trees.RichTreeItem;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +19,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/3/28
  */
-public class ZKTreeItemFilter {
+public class ZKTreeItemFilter implements RichTreeItemFilter {
 
     /**
      * 排除子节点
@@ -58,13 +60,8 @@ public class ZKTreeItemFilter {
         this.filters.addAll(this.filterStore.loadEnable());
     }
 
-    /**
-     * 节点过滤
-     *
-     * @param item 节点
-     * @return 结果
-     */
-    public boolean itemFilter(TreeItem<?> item) {
+    @Override
+    public Boolean apply(RichTreeItem item) {
         if (item instanceof ZKNodeTreeItem treeItem) {
             ZKNode node = treeItem.value();
             // 根节点直接展示

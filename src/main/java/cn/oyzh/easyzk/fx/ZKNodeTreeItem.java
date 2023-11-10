@@ -22,6 +22,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -54,7 +55,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2023/1/30
  */
 @Slf4j
-public class ZKNodeTreeItem extends BaseTreeItem {
+public class ZKNodeTreeItem extends ZKTreeItem {
 
     /**
      * zk节点
@@ -332,7 +333,7 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                     c.next();
                     // 添加、替换，执行过滤
                     if (c.wasAdded() || c.wasReplaced()) {
-                        this.filter(this.treeView().itemFilter());
+                        this.doFilter(this.treeView().itemFilter());
                     }
                     // 添加、移除、替换
                     if (c.wasAdded() || c.wasRemoved() || c.wasReplaced()) {
@@ -343,7 +344,8 @@ public class ZKNodeTreeItem extends BaseTreeItem {
                     }
                     // 添加、替换，执行排序
                     if (c.wasAdded() || c.wasReplaced()) {
-                        this.sort(this.treeView().sortOrder());
+                        this.sort();
+                        // this.sort(this.treeView().sortOrder());
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -962,12 +964,12 @@ public class ZKNodeTreeItem extends BaseTreeItem {
     }
 
     @Override
-    public void filter(@NonNull ZKTreeItemFilter filter) {
+    public void doFilter(@NonNull RichTreeItemFilter filter) {
         if (!this.isChildEmpty()) {
             List<ZKNodeTreeItem> childes = new CopyOnWriteArrayList<>(this.children());
             for (ZKNodeTreeItem child : childes) {
-                child.visible = filter.itemFilter(child);
-                child.filter(filter);
+                child.visible = filter.apply(child);
+                child.doFilter(filter);
             }
         }
     }
@@ -1075,16 +1077,24 @@ public class ZKNodeTreeItem extends BaseTreeItem {
     }
 
     @Override
-    public void sort(Boolean sortOrder) {
-        if (sortOrder != null && !this.isChildEmpty()) {
+    public void sortAsc() {
+        this.sortType = 0;
+        if (!this.isChildEmpty()) {
             // 执行排序
-            List<ZKNodeTreeItem> childes = super.getChildren();
-            if (sortOrder) {
-                childes.sort(Comparator.comparing(ZKNodeTreeItem::nodePath));
-            } else {
-                childes.sort((a, b) -> b.nodePath().compareTo(a.nodePath()));
-            }
-            childes.forEach(n -> n.sort(sortOrder));
+            List<ZKNodeTreeItem> childes = this.getChildren();
+            childes.sort(Comparator.comparing(ZKNodeTreeItem::nodePath));
+            childes.forEach(ZKNodeTreeItem::sortAsc);
+        }
+    }
+
+    @Override
+    public void sortDesc() {
+        this.sortType = 1;
+        if (!this.isChildEmpty()) {
+            // 执行排序
+            List<ZKNodeTreeItem> childes = this.getChildren();
+            childes.sort((a, b) -> b.nodePath().compareTo(a.nodePath()));
+            childes.forEach(ZKNodeTreeItem::sortDesc);
         }
     }
 
@@ -1137,7 +1147,8 @@ public class ZKNodeTreeItem extends BaseTreeItem {
     public void unCollect() {
         if (this.info().removeCollect(this.nodePath())) {
             ZKInfoStore.INSTANCE.update(this.info());
-            this.treeView().filterItem();
+            // this.treeView().filterItem();
+            this.parent().doFilter(this.treeView().itemFilter());
         }
     }
 

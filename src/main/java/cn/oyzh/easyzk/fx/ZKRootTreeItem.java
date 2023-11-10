@@ -21,6 +21,7 @@ import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.util.FXFileChooser;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -43,7 +44,7 @@ import java.util.Optional;
  * @since 2023/1/29
  */
 @Slf4j
-public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
+public class ZKRootTreeItem extends ZKTreeItem implements ConnectManager {
 
     /**
      * zk信息储存
@@ -55,21 +56,15 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
      */
     private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
 
-//    /**
-//     * zk设置
-//     */
-//    private final ZKSetting setting = ZKSettingStore.SETTING;
-
     public ZKRootTreeItem(@NonNull ZKTreeView treeView) {
         this.treeView(treeView);
-        this.itemValue(new ZKRootTreeItemValue(this));
-        // this.itemValue("ZK连接列表");
+        this.itemValue(new ZKRootTreeItemValue());
         // 注册事件处理
         EventUtil.register(this);
         // 初始化子节点
         this.initChildes();
         // 监听节点变化
-        this.getChildren().addListener((ListChangeListener<? super BaseTreeItem>) c -> {
+        this.getChildren().addListener((ListChangeListener<? super ZKTreeItem>) c -> {
             ZKEventUtil.treeChildChanged();
             this.treeView().flushLocal();
         });
@@ -247,7 +242,7 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
     }
 
     @Override
-    public ObservableList<BaseTreeItem> getChildren() {
+    public ObservableList<ZKTreeItem> getChildren() {
         return super.getChildren();
     }
 
@@ -267,7 +262,8 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
 //                }
             }
             this.getChildren().addAll(list);
-            this.sort(this.treeView().sortOrder());
+            this.sort();
+            // this.sort(this.treeView().sortOrder());
         }
     }
 
@@ -292,7 +288,7 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
      */
     private List<ZKGroupTreeItem> getGroupItems() {
         List<ZKGroupTreeItem> items = new ArrayList<>(this.getChildren().size());
-        for (BaseTreeItem item : this.getChildren()) {
+        for (ZKTreeItem item : this.getChildren()) {
             if (item instanceof ZKGroupTreeItem groupTreeItem) {
                 items.add(groupTreeItem);
             }
@@ -301,22 +297,28 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
     }
 
     @Override
-    public void sort(Boolean sortOrder) {
-        if (sortOrder != null) {
-            super.sort(sortOrder);
-            for (ZKGroupTreeItem groupItem : this.getGroupItems()) {
-                groupItem.sort(sortOrder);
-            }
+    public void sortAsc() {
+        this.sortType = 0;
+        for (ZKGroupTreeItem groupItem : this.getGroupItems()) {
+            groupItem.sortAsc();
         }
     }
 
     @Override
-    public void filter(@NonNull ZKTreeItemFilter filter) {
+    public void sortDesc() {
+        this.sortType = 1;
+        for (ZKGroupTreeItem groupItem : this.getGroupItems()) {
+            groupItem.sortDesc();
+        }
+    }
+
+    @Override
+    public void doFilter(RichTreeItemFilter itemFilter) {
         List<ZKConnectTreeItem> connectedItems = this.getConnectedItems();
-        if (CollUtil.isNotEmpty(connectedItems)) {
+        if (CollUtil.isNotEmpty(connectedItems) && itemFilter != null) {
             List<Runnable> tasks = new ArrayList<>(connectedItems.size());
             for (ZKConnectTreeItem connectedItem : connectedItems) {
-                tasks.add(() -> connectedItem.filter(filter));
+                tasks.add(() -> connectedItem.doFilter(itemFilter));
             }
             // 提交任务
             ThreadUtil.submitVirtual(tasks);
@@ -341,9 +343,9 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
     @EventReceiver(value = ZKEventTypes.ZK_INFO_UPDATED, async = true, verbose = true)
     private void onInfoUpdated(ZKInfoUpdatedMsg msg) {
         ZKInfo info = msg.info();
-        ObservableList<BaseTreeItem> items = this.getChildren();
+        ObservableList<ZKTreeItem> items = this.getChildren();
         f1:
-        for (BaseTreeItem item : items) {
+        for (ZKTreeItem item : items) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.value() == info) {
                     connectTreeItem.value(info);
@@ -389,7 +391,8 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
     public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.getChildren().addAll(items);
-            this.sort(this.treeView().sortOrder());
+            this.sort();
+            // this.sort(this.treeView().sortOrder());
         }
     }
 
@@ -406,7 +409,7 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
     @Override
     public List<ZKConnectTreeItem> getConnectItems() {
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildren().size());
-        for (BaseTreeItem child : this.getChildren()) {
+        for (ZKTreeItem child : this.getChildren()) {
             if (child instanceof ZKConnectTreeItem connectTreeItem) {
                 items.add(connectTreeItem);
             } else if (child instanceof ZKGroupTreeItem groupTreeItem) {
@@ -419,7 +422,7 @@ public class ZKRootTreeItem extends BaseTreeItem implements ConnectManager {
     @Override
     public List<ZKConnectTreeItem> getConnectedItems() {
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildren().size());
-        for (BaseTreeItem item : this.getChildren()) {
+        for (ZKTreeItem item : this.getChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.isConnect()) {
                     items.add(connectTreeItem);

@@ -16,14 +16,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Accessors(chain = true, fluent = true)
-public class ZKConnectTreeItemValue extends BaseTreeItemValue {
+public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
     private final ZKConnectTreeItem treeItem;
 
     public ZKConnectTreeItemValue(@NonNull ZKConnectTreeItem treeItem) {
         this.treeItem = treeItem;
         this.flushGraphic();
-        this.flushName();
+        this.flushText();
         treeItem.stateProperty().addListener((observableValue, bytes, t1) -> this.flushGraphicColor());
     }
 
@@ -33,25 +33,19 @@ public class ZKConnectTreeItemValue extends BaseTreeItemValue {
     }
 
     @Override
-    public boolean flushGraphic() {
+    public void flushGraphic() {
         ZKInfo value = treeItem.value();
         SVGGlyph glyph = this.graphic();
         if (glyph == null) {
             glyph = treeItem.value().isCluster() ? new SVGGlyph("/font/cluster.svg", "12") : new SVGGlyph("/font/server-connection.svg", "12");
             this.graphic(glyph);
-            return true;
-        }
-        if (value.isCluster() && !glyph.getUrl().contains("cluster")) {
+        } else if (value.isCluster() && !glyph.getUrl().contains("cluster")) {
             glyph = new SVGGlyph("/font/cluster.svg", "12");
             this.graphic(glyph);
-            return true;
-        }
-        if (!value.isCluster() && !glyph.getUrl().contains("connection")) {
+        } else if (!value.isCluster() && !glyph.getUrl().contains("connection")) {
             glyph = new SVGGlyph("/font/server-connection.svg", "12");
             this.graphic(glyph);
-            return true;
         }
-        return false;
     }
 
     @Override

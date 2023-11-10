@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKConnectTreeItem;
 import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
-import cn.oyzh.easyzk.fx.ZKTreeCell;
 import cn.oyzh.easyzk.fx.ZKTreeItemFilter;
 import cn.oyzh.easyzk.fx.ZKTreeView;
 import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
@@ -82,10 +81,10 @@ public class ZKMainController extends ParentController {
      */
     private ResizeEnhance resizeEnhance;
 
-    /**
-     * 倒序排序
-     */
-    private boolean ascSort;
+    // /**
+    //  * 倒序排序
+    //  */
+    // private boolean ascSort;
 
     /**
      * 节点排序(正序)
@@ -156,10 +155,15 @@ public class ZKMainController extends ParentController {
     @FXML
     private void sortNodes() {
         // 设置排序方式
-        this.ascSort = !this.ascSort;
-        this.sortAsc.setVisible(!this.ascSort);
-        this.sortDesc.setVisible(this.ascSort);
-        this.tree.sortItem(this.ascSort);
+        if (this.sortDesc.isVisible()) {
+            this.sortDesc.disappear();
+            this.sortAsc.display();
+            this.tree.sortAsc();
+        } else if (this.sortAsc.isVisible()) {
+            this.sortAsc.disappear();
+            this.sortDesc.display();
+            this.tree.sortDesc();
+        }
     }
 
     /**
@@ -185,7 +189,7 @@ public class ZKMainController extends ParentController {
                 this.treeItemFilter.setExcludeSub(this.filterSubNode.isSelected());
                 this.treeItemFilter.setExcludeEphemeral(this.filterEphemeral.isSelected());
             }
-            this.tree.filterItem();
+            this.tree.filter();
             this.tree.enable();
         }, 100);
     }
@@ -320,7 +324,7 @@ public class ZKMainController extends ParentController {
         });
 
         // 文件拖拽初始化
-        this.stage.initDragFile(ZKTreeCell.DRAG_CONTENT, this.tree.root()::dragFile);
+        this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);
         // 拖动改变zk树大小处理
         this.resizeEnhance = new ResizeEnhance(this.zkMainLeft, Cursor.DEFAULT);
         this.resizeEnhance.minWidth(390d);

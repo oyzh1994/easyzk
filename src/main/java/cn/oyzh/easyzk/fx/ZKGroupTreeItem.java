@@ -33,7 +33,7 @@ import java.util.Objects;
  * @since 2023/05/12
  */
 @Slf4j
-public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
+public class ZKGroupTreeItem extends ZKTreeItem implements ConnectManager {
 
     /**
      * 分组对象
@@ -114,8 +114,7 @@ public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
 
         // 修改名称
         if (this.groupStore.update(this.value)) {
-            this.itemValue().flushName();
-            // this.itemValue(groupName);
+            this.itemValue().flushText();
         } else {
             MessageBox.warn("修改分组名称失败！");
         }
@@ -195,7 +194,8 @@ public class ZKGroupTreeItem extends BaseTreeItem implements ConnectManager {
     public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.getChildren().addAll(items);
-            this.sort(this.treeView().sortOrder());
+            this.sort();
+            // this.sort(this.treeView().sortOrder());
         }
     }
 

@@ -23,6 +23,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -43,7 +44,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKConnectTreeItem extends BaseTreeItem {
+public class ZKConnectTreeItem extends ZKTreeItem {
 
     /**
      * zk信息
@@ -534,16 +535,25 @@ public class ZKConnectTreeItem extends BaseTreeItem {
     }
 
     @Override
-    public void sort(Boolean sortOrder) {
-        if (sortOrder != null && this.isConnect()) {
-            this.root().sort(sortOrder);
+    public void sortAsc() {
+        this.sortType = 0;
+        if (this.isConnect()) {
+            this.root().sortAsc();
         }
     }
 
     @Override
-    public void filter(@NonNull ZKTreeItemFilter filter) {
-        if (this.isConnect() && this.root() != null) {
-            this.root().filter(filter);
+    public void sortDesc() {
+        this.sortType = 1;
+        if (this.isConnect()) {
+            this.root().sortDesc();
+        }
+    }
+
+    @Override
+    public void doFilter(RichTreeItemFilter itemFilter) {
+        if (itemFilter != null && this.isConnect() && this.root() != null) {
+            this.root().doFilter(itemFilter);
             this.root().flushChildren();
         }
     }

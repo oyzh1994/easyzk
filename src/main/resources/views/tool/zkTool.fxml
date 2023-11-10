@@ -33,11 +33,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </FXLabel>
-                <DisabledField fx:id="digest" realHeight="30" flexWidth="100% - 220">
+                <ReadOnlyTextField fx:id="digest" realHeight="30" flexWidth="100% - 220">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </DisabledField>
+                </ReadOnlyTextField>
                 <FXButton text="复制" onAction="#copyDigest" prefHeight="30">
                     <HBox.margin>
                         <Insets left="10" top="10"/>

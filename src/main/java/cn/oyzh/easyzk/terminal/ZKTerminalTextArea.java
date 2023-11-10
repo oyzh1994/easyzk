@@ -145,7 +145,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * 临时连接处理
      */
     private void initByTemporary() {
-        this.outputLine("请输入连接地址然后回车，格式connect [-timeout timeout] -server [host ip:port] [-r]");
+        this.outputLine("请输入连接地址然后回车，格式connect [-timeout timeout] -server [host ip:port]");
         this.appendByPrompt("connect -timeout 3000 -server localhost:2181");
         this.enableInput();
         this.moveAndFlushCaret();

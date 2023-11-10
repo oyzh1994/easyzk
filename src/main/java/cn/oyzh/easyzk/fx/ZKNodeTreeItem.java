@@ -279,8 +279,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         if (this.dataProperty == null) {
             return false;
         }
-        byte[] bytes = this.dataProperty.get();
-        return bytes != null && bytes.length > 0;
+        return this.dataProperty.get() != null;
     }
 
     /**
@@ -983,9 +982,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         return this.root.isConnect() && !this.loaded && this.value.parentNode() && this.value.hasReadPerm();
     }
 
-    /**
-     * 重新加载子节点
-     */
+    @Override
     public void reloadChild() {
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> {
@@ -1110,21 +1107,21 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         return this.itemValue().graphic().getUrl().contains("lock");
     }
 
-    /**
-     * 获取可见的节点
-     *
-     * @return 可见节点
-     */
-    public ZKNodeTreeItem visiblyItem() {
-        ZKNodeTreeItem item = this;
-        do {
-            if (item.visible) {
-                return item;
-            }
-            item = item.parent();
-        } while (item != null);
-        return null;
-    }
+    // /**
+    //  * 获取可见的节点
+    //  *
+    //  * @return 可见节点
+    //  */
+    // public ZKNodeTreeItem visiblyItem() {
+    //     ZKNodeTreeItem item = this;
+    //     do {
+    //         if (item.visible) {
+    //             return item;
+    //         }
+    //         item = item.parent();
+    //     } while (item != null);
+    //     return null;
+    // }
 
     /**
      * 节点是否被收藏
@@ -1139,6 +1136,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
     public void collect() {
         this.info().addCollect(this.nodePath());
         ZKInfoStore.INSTANCE.update(this.info());
+        // this.parent().doFilter(this.treeView().itemFilter());
     }
 
     /**
@@ -1148,7 +1146,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         if (this.info().removeCollect(this.nodePath())) {
             ZKInfoStore.INSTANCE.update(this.info());
             // this.treeView().filterItem();
-            this.parent().doFilter(this.treeView().itemFilter());
+            // this.parent().doFilter(this.treeView().itemFilter());
         }
     }
 

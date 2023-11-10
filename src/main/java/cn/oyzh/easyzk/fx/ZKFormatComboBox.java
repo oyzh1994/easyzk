@@ -12,11 +12,11 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 public class ZKFormatComboBox extends FlexComboBox<String> {
 
     {
-        this.getItems().add("STRING(字符串)");
-        this.getItems().add("JSON(JSON串)");
-        this.getItems().add("BINARY(二进制)");
-        this.getItems().add("HEX(十六进制)");
-        this.getItems().add("RAW(原始)");
+        this.getItems().add("字符串");
+        this.getItems().add("JSON串");
+        this.getItems().add("二进制内容");
+        this.getItems().add("十六进制内容");
+        this.getItems().add("原始内容");
     }
 
     /**
@@ -25,11 +25,14 @@ public class ZKFormatComboBox extends FlexComboBox<String> {
      * @return 格式
      */
     public String getFormat() {
-        String val = this.getValue();
-        if (val == null || val.isEmpty()) {
-            return null;
-        }
-        return val.substring(0, val.indexOf("("));
+        int val = this.getSelectedIndex();
+        return switch (val) {
+            case 1 -> "JSON";
+            case 2 -> "BINARY";
+            case 3 -> "HEX";
+            case 4 -> "RAW";
+            default -> "STRING";
+        };
     }
 
     /**

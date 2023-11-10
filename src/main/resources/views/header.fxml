@@ -15,11 +15,6 @@
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="退出" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="13">
-        <FlowPane.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
-    </SVGLabel>
     <SVGLabel text="传输" onMousePrimaryClicked="#transport" tipText="传输数据"
               url="/font/arrow-left-right-line.svg" size="12">
         <FlowPane.margin>
@@ -51,6 +46,11 @@
     <SVGLabel visible="false" managed="false" fx:id="expandTree" text="展开" onMousePrimaryClicked="#expandTree"
               url="/font/arrow-to-right.svg" size="12"
               tipText="展开zk树">
+        <FlowPane.margin>
+            <Insets left="10" top="5" bottom="5"/>
+        </FlowPane.margin>
+    </SVGLabel>
+    <SVGLabel text="退出" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="13">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>

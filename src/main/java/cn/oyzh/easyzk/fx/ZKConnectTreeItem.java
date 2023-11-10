@@ -221,7 +221,10 @@ public class ZKConnectTreeItem extends ZKTreeItem {
                             this.loadRootNode();
                         }
                     })
-                    .onFinish(this::stopWaiting)
+                    .onFinish(() -> {
+                        this.stopWaiting();
+                        this.treeView().flushLocal();
+                    })
                     .build();
             ThreadUtil.startVirtual(task);
         }
@@ -273,7 +276,10 @@ public class ZKConnectTreeItem extends ZKTreeItem {
                     .onSuccess(() -> {
                         this.clearChildren();
                         SystemUtil.gcLater();
-                    }).onFinish(this::stopWaiting)
+                    }).onFinish(() -> {
+                        this.stopWaiting();
+                        this.treeView().flushLocal();
+                    })
                     .onError(MessageBox::exception)
                     .build();
             ThreadUtil.startVirtual(task);

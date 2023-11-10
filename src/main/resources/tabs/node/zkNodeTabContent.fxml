@@ -101,24 +101,24 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <FXLabel text="显示方式:" fontSize="11">
+                <FXLabel text="格式" fontSize="11">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
                 <ZKFormatComboBox fx:id="format" initIndex="0" fontSize="11" prefWidth="120" style="-fx-padding: 0;">
                     <FlowPane.margin>
-                        <Insets left="2"/>
+                        <Insets left="3"/>
                     </FlowPane.margin>
                 </ZKFormatComboBox>
-                <FXLabel text="字符集:" fontSize="11">
+                <FXLabel text="字符集" fontSize="11">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
                 <CharsetComboBox fx:id="charset" fontSize="11" prefWidth="95" style="-fx-padding: 0;">
                     <FlowPane.margin>
-                        <Insets left="2"/>
+                        <Insets left="3"/>
                     </FlowPane.margin>
                 </CharsetComboBox>
                 <FXLabel fx:id="nodePath" maxWidth="380" realHeight="15">

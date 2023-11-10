@@ -123,7 +123,7 @@ public class ZKNodeImportController extends Controller {
     /**
      * 计数器
      */
-    private Counter counter;
+    private final Counter counter = new Counter();
 
     /**
      * 拖拽文件
@@ -215,11 +215,7 @@ public class ZKNodeImportController extends Controller {
     private void doImport() {
         // 重置参数
         this.importMsg.clear();
-        if (this.counter == null) {
-            this.counter = new Counter();
-        } else {
-            this.counter.reset();
-        }
+        this.counter.reset();
         this.counter.setSum(this.nodeExport.counts());
         // 开始处理
         this.stateManager.disable();

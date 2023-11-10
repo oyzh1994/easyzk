@@ -1,11 +1,14 @@
 package cn.oyzh.easyzk.event;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * zk事件分组
  *
  * @author oyzh
  * @since 2023/9/18
  */
+@UtilityClass
 public class ZKEventGroups {
 
     /**

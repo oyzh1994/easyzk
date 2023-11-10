@@ -17,7 +17,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <DisabledField fx:id="nodePath" realHeight="30" flexWidth="100% - 140">
+        <DisabledField fx:id="nodePath" realHeight="30" flexWidth="100% - 200">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -29,7 +29,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexComboBox initIndex="0" fx:id="authType" tipText="认证方式" realHeight="30" flexWidth="100% - 140">
+        <FlexComboBox initIndex="0" fx:id="authType" tipText="认证方式" realHeight="30" flexWidth="100% - 200">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="用户密码明文"/>
@@ -48,17 +48,17 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 115" tipText="认证用户名" >
+            <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 105" tipText="认证用户名" >
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <ClearableTextField fx:id="password" realHeight="30" flexWidth="50% - 115" tipText="认证密码(明文)" >
+            <ClearableTextField fx:id="password" realHeight="30" flexWidth="50% - 105" tipText="认证密码(明文)" >
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <FlexCheckBox text="保存信息" fx:id="saveInfo1" tipText="保存认证信息" selected="true">
+            <FlexCheckBox text="保存认证" fx:id="saveInfo1" tipText="保存认证信息" selected="true">
                 <HBox.margin>
                     <Insets left="10" top="18"/>
                 </HBox.margin>
@@ -72,7 +72,7 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <FlexComboBox tipText="请选择认证信息" fx:id="authList" realHeight="30" flexWidth="100% - 140">
+            <FlexComboBox tipText="请选择认证信息" fx:id="authList" realHeight="30" flexWidth="100% - 200">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>

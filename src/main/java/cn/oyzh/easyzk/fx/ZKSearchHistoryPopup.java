@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.fx;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
-import cn.oyzh.fx.plus.ext.SearchHistoryPopup;
+import cn.oyzh.fx.plus.controls.popup.SearchHistoryPopup;
 
 import java.util.List;
 

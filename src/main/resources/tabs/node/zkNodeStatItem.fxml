@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexLabel?>
-<?import cn.oyzh.fx.plus.controls.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.controls.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexHBox flexWidth="100%" realHeight="24">

@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.fx.plus.controls.FXHBox;
-import cn.oyzh.fx.plus.controls.FXText;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;

@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.fx;
 
-import cn.oyzh.fx.plus.controls.FXTreeCell;
+import cn.oyzh.fx.plus.controls.tree.FXTreeCell;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.drag.DragUtil;
 import cn.oyzh.fx.plus.drag.DrapNodeHandler;

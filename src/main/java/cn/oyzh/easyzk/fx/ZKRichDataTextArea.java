@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.common.util.TextUtil;
-import cn.oyzh.fx.plus.rich.FlexRichTextArea;
-import cn.oyzh.fx.plus.rich.RichTextStyle;
+import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
+import cn.oyzh.fx.plus.controls.rich.RichTextStyle;
 import cn.oyzh.fx.plus.util.FXUtil;
 import lombok.Getter;
 import lombok.Setter;

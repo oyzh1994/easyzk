@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.fx;
 
-import cn.oyzh.fx.plus.controls.FlexComboBox;
+
+import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 
 /**
  * zk格式下拉框

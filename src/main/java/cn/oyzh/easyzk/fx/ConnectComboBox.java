@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.fx;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.fx.plus.SimpleStringConverter;
-import cn.oyzh.fx.plus.controls.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 
 import java.util.List;
 

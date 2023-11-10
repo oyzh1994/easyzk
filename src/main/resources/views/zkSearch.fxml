@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexText?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.FlexText?>
+<?import cn.oyzh.fx.plus.controls.textfield.SearchTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.ext.SearchTextField?>
 <FlexVBox styleClass="panel,panel-primary" fx:id="searchMain" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.controller.ZKSearchController">
@@ -25,8 +24,8 @@
                 <Insets left="6" top="15" right="3"/>
             </HBox.margin>
         </SVGGlyph>
-        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="220"
-                            tipText="搜索内容(Ctrl+F，↑↓切换，回车执行)" maxLen="30" onKeyPressed="#onSearchKeyPressed">
+        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225"
+                         tipText="搜索内容(Ctrl+F，↑↓切换，回车执行)" maxLen="30" onKeyPressed="#onSearchKeyPressed">
             <HBox.margin>
                 <Insets top="6"/>
             </HBox.margin>
@@ -56,7 +55,7 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox visible="false" managed="false" fx:id="searchMore1" realHeight="36" flexWidth="100%">
-        <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="220" maxLen="30"
+        <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="30"
                             tipText="替换节点值(↑↓切换，回车执行)" onKeyPressed="#onReplaceKeyPressed">
             <HBox.margin>
                 <Insets top="6" left="20"/>

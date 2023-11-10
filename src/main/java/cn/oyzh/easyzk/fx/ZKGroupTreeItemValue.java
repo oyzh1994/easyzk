@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.fx;
 
-import cn.oyzh.fx.plus.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 import lombok.experimental.Accessors;

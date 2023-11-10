@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.FlexTableView?>
-<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.PagePane?>
-<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"

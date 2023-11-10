@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.fx.ZKTreeView?>
 <?import cn.oyzh.easyzk.tabs.ZKTabPane?>
-<?import cn.oyzh.fx.plus.controls.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
-<?import cn.oyzh.fx.plus.controls.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.FXTab?>
-<?import cn.oyzh.fx.plus.controls.MsgTextArea?>
-<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexPane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
@@ -18,7 +18,7 @@
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/content.svg" size="13"/>
             </graphic>
-            <FlexVBox flexHeight="100%" flexWidth="100%" style="-fx-border-width: 0 1 0 0; -fx-border-color: gray">
+            <FlexVBox flexHeight="100%" flexWidth="100%" style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
                 <FlexHBox realHeight="36" flexWidth="100% - 8">
                     <SVGGlyph tipText="打开终端" size="15"
                               onMousePrimaryClicked="#openTerminal" url="/font/code library.svg">
@@ -68,7 +68,7 @@
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/message.svg" size="13"/>
             </graphic>
-            <FlexVBox flexWidth="100%" flexHeight="100%" style="-fx-border-width: 0 1 0 0; -fx-border-color: gray">
+            <FlexVBox flexWidth="100%" flexHeight="100%" style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
                 <FlexHBox realHeight="36">
                     <SVGGlyph tipText="清空消息" size="16" onMousePrimaryClicked="#clearMsg"
                               url="/font/clear.svg">

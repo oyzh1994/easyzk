@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.tabs.DynamicTab;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.tab.DynamicTab;
 import javafx.scene.Cursor;
 
 /**

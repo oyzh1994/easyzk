@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.util.SpringUtil;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.FlexText;
+import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;

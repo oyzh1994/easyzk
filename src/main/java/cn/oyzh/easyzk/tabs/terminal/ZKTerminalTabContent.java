@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.spring.ScopeType;
-import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.controls.tab.DynamicTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.NonNull;

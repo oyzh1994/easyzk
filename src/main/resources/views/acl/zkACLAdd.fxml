@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.*?>
+<?import cn.oyzh.fx.plus.controls.text.*?>
+<?import cn.oyzh.fx.plus.controls.area.*?>
+<?import cn.oyzh.fx.plus.controls.combo.*?>
+<?import cn.oyzh.fx.plus.controls.button.*?>
+<?import cn.oyzh.fx.plus.controls.textfield.*?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
-<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLAddController" realWidth="600" realHeight="420">
     <FlexHBox flexWidth="100%" realHeight="50">
@@ -15,11 +19,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ReadOnlyTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 140">
+        <DisabledField fx:id="nodePath" realHeight="30" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </ReadOnlyTextField>
+        </DisabledField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">

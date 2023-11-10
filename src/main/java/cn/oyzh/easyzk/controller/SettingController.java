@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
-import cn.oyzh.fx.plus.controls.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;

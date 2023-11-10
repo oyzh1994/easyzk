@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs;
 
-import cn.oyzh.fx.plus.controls.FXTab;
+
+import cn.oyzh.fx.plus.controls.tab.FXTab;
 
 /**
  * zk基础tab

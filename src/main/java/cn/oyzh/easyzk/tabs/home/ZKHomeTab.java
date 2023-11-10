@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.home;
 
-import cn.oyzh.fx.plus.svg.SVGGlyph;
-import cn.oyzh.fx.plus.tabs.DynamicTab;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.tab.DynamicTab;
 import javafx.scene.Cursor;
 
 /**

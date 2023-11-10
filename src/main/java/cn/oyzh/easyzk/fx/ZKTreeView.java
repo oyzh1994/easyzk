@@ -15,7 +15,7 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.FlexTreeView;
+import cn.oyzh.fx.plus.controls.tree.FlexTreeView;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventGroup;
 import cn.oyzh.fx.plus.event.EventReceiver;

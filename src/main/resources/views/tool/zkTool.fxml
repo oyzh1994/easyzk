@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.FXButton?>
-<?import cn.oyzh.fx.plus.controls.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.FXTab?>
-<?import cn.oyzh.fx.plus.controls.ReadOnlyTextField?>
-<?import cn.oyzh.fx.plus.controls.SubmitButton?>
-<?import cn.oyzh.fx.plus.ext.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.controls.tab.*?>
+<?import cn.oyzh.fx.plus.controls.text.*?>
+<?import cn.oyzh.fx.plus.controls.button.*?>
+<?import cn.oyzh.fx.plus.controls.textfield.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexTabPane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
@@ -37,11 +33,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </FXLabel>
-                <ReadOnlyTextField fx:id="digest" realHeight="30" flexWidth="100% - 220">
+                <DisabledField fx:id="digest" realHeight="30" flexWidth="100% - 220">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </ReadOnlyTextField>
+                </DisabledField>
                 <FXButton text="复制" onAction="#copyDigest" prefHeight="30">
                     <HBox.margin>
                         <Insets left="10" top="10"/>

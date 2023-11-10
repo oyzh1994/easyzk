@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;

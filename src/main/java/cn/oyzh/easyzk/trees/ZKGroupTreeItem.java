@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.trees;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
@@ -33,7 +33,7 @@ import java.util.Objects;
  * @since 2023/05/12
  */
 @Slf4j
-public class ZKGroupTreeItem extends ZKTreeItem implements ConnectManager {
+public class ZKGroupTreeItem extends ZKTreeItem implements ZKConnectManager {
 
     /**
      * 分组对象

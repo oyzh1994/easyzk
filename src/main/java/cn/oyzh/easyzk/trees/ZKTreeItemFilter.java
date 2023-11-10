@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.store.ZKFilterStore;
@@ -6,7 +6,6 @@ import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
-import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.Setter;
 

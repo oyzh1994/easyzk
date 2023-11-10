@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.trees;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
@@ -345,8 +345,8 @@ public class ZKConnectTreeItem extends ZKTreeItem {
     public void delete() {
         if (MessageBox.confirm("删除" + this.info().getName(), "确定删除连接？")) {
             this.closeConnect();
-            if (this.getParent() instanceof ConnectManager connectManager) {
-                if (!connectManager.delConnectItem(this)) {
+            if (this.getParent() instanceof ZKConnectManager ZKConnectManager) {
+                if (!ZKConnectManager.delConnectItem(this)) {
                     MessageBox.warn("删除连接失败！");
                 }
             }

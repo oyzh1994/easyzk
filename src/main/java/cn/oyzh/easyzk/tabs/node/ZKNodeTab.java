@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.node;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.trees;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
@@ -17,6 +17,7 @@ import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -44,7 +45,7 @@ import java.util.Optional;
  * @since 2023/1/29
  */
 @Slf4j
-public class ZKRootTreeItem extends ZKTreeItem implements ConnectManager {
+public class ZKRootTreeItem extends ZKTreeItem implements ZKConnectManager {
 
     /**
      * zk信息储存
@@ -440,5 +441,23 @@ public class ZKRootTreeItem extends ZKTreeItem implements ConnectManager {
     @EventReceiver(ZKEventTypes.ZK_ADD_CONNECT)
     private void onAddConnect() {
         StageUtil.showStage(ZKInfoAddController.class, this.window());
+    }
+
+    @Override
+    public boolean allowDrop() {
+        return true;
+    }
+
+    @Override
+    public boolean allowDropNode(DragNodeItem item) {
+        return item instanceof ZKConnectTreeItem;
+    }
+
+    @Override
+    public void onDropNode(DragNodeItem item) {
+        if (item instanceof ZKConnectTreeItem connectTreeItem) {
+            connectTreeItem.remove();
+            this.addConnectItem(connectTreeItem);
+        }
     }
 }

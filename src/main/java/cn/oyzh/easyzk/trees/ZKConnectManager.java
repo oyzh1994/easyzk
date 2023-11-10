@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.trees;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/5/12
  */
-public interface ConnectManager {
+public interface ZKConnectManager {
 
     /**
      * 添加连接

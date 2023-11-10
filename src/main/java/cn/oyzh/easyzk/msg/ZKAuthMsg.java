@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.msg;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

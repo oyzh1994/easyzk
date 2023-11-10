@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.fx.plus.trees.RichTreeItemValue;
 import lombok.extern.slf4j.Slf4j;

@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.fx.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.msg.TreeGraphicChangedMsg;
 import cn.oyzh.easyzk.msg.TreeGraphicColorChangedMsg;
 import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;

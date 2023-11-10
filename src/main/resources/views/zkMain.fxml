@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyzk.fx.ZKTreeView?>
+<?import cn.oyzh.easyzk.trees.ZKTreeView?>
 <?import cn.oyzh.easyzk.tabs.ZKTabPane?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>

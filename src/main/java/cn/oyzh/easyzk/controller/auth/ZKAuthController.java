@@ -18,12 +18,12 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupManage;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class ZKAuthController extends Controller {
      * 节点路径
      */
     @FXML
-    private ReadOnlyTextField nodePath;
+    private TextField nodePath;
 
     /**
      * 保存信息1

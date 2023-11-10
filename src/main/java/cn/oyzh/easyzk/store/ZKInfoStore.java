@@ -68,6 +68,9 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     public synchronized boolean add(@NonNull ZKInfo zkInfo) {
         try {
             if (!this.zkInfos.contains(zkInfo)) {
+                if (StrUtil.isBlank(zkInfo.getId())) {
+                    zkInfo.setId(UUID.fastUUID().toString(true));
+                }
                 // 添加到集合
                 this.zkInfos.add(zkInfo);
                 // 更新数据

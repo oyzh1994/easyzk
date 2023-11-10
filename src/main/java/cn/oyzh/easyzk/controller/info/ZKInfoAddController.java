@@ -243,6 +243,17 @@ public class ZKInfoAddController extends Controller {
             this.hostBox2.setVisible(n);
         });
         this.group = this.getStageProp("group");
+        this.hostIp.addTextChangeListener((observableValue, s, t1) -> {
+            // 内容包含“:”，则直接切割字符为ip端口
+            if (t1 != null && t1.contains(":")) {
+                try {
+                    this.hostIp.setText(t1.split(":")[0]);
+                    this.hostPort.setValue(Integer.parseInt(t1.split(":")[1]));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }

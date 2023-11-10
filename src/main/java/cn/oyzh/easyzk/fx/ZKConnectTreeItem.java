@@ -33,6 +33,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -126,6 +127,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
         } else if (this.isConnect()) {
             MenuItemExt closeConnect = MenuItemExt.newItem("关闭连接", new SVGGlyph("/font/poweroff.svg", "12"), "关闭zk连接(快捷键pause)", this::closeConnect);
             MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑zk连接", this::editConnect);
+            MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
             MenuItemExt server = MenuItemExt.newItem("服务信息", new SVGGlyph("/font/sever.svg", "12"), "查看连接服务信息", this::serverInfo);
             MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出zk数据", () -> this.root().exportNode());
             MenuItemExt importData = MenuItemExt.newItem("导入数据", new SVGGlyph("/font/Import.svg", "12"), "导入zk数据", this::importNode);
@@ -134,6 +136,7 @@ public class ZKConnectTreeItem extends BaseTreeItem {
 
             items.add(closeConnect);
             items.add(editConnect);
+            items.add(repeatConnect);
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
@@ -155,12 +158,14 @@ public class ZKConnectTreeItem extends BaseTreeItem {
             MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑zk连接", this::editConnect);
             MenuItemExt renameConnect = MenuItemExt.newItem("连接更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改连接名称(快捷键f2)", this::rename);
             MenuItemExt deleteConnect = MenuItemExt.newItem("删除连接", new SVGGlyph("/font/delete.svg", "12"), "删除zk连接(快捷键delete)", this::delete);
+            MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
             MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
             MenuItemExt openTerminal = MenuItemExt.newItem("打开终端", new SVGGlyph("/font/code library.svg", "12"), "打开终端窗口", this::openTerminal);
 
             items.add(connect);
             items.add(editConnect);
             items.add(renameConnect);
+            items.add(repeatConnect);
             items.add(transportData);
             items.add(deleteConnect);
             items.add(openTerminal);
@@ -308,6 +313,25 @@ public class ZKConnectTreeItem extends BaseTreeItem {
         StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.treeView().window());
         fxView.setProp("zkInfo", this.value());
         fxView.display();
+    }
+
+    /**
+     * 复制连接
+     */
+    private void repeatConnect() {
+        ZKInfo zkInfo = new ZKInfo();
+        zkInfo.copy(this.info());
+        zkInfo.setCollects(Collections.emptyList());
+        if (this.infoStore.add(zkInfo)) {
+            if (this.getGroupItem() != null) {
+                this.getGroupItem().addConnect(zkInfo);
+            } else {
+                ZKRootTreeItem parent = (ZKRootTreeItem) this.getParent();
+                parent.addConnect(zkInfo);
+            }
+        } else {
+            MessageBox.warn("复制连接失败！");
+        }
     }
 
     @Override

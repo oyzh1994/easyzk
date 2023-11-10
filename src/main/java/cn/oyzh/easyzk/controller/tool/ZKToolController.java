@@ -5,10 +5,10 @@ import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +46,7 @@ public class ZKToolController extends Controller {
      * 摘要
      */
     @FXML
-    private ReadOnlyTextField digest;
+    private TextField digest;
 
     /**
      * 生成摘要

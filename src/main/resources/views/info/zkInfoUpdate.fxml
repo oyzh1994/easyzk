@@ -16,19 +16,6 @@
         <FXTab text="基础设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接模式" styleClass="lbl,lbl-primary">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </FXLabel>
-                    <FlexCheckBox fx:id="cluster" text="集群模式" fontSize="11"
-                                  tipText="集群模式可填写多个连接，用,分隔">
-                        <HBox.margin>
-                            <Insets left="10" top="16"/>
-                        </HBox.margin>
-                    </FlexCheckBox>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
@@ -40,6 +27,19 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="连接模式" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexCheckBox fx:id="cluster" text="集群模式" fontSize="11"
+                                  tipText="集群模式可填写多个连接，用,分隔">
+                        <HBox.margin>
+                            <Insets left="10" top="16"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="hostBox1">
                     <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="lbl,lbl-primary">

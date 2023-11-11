@@ -63,7 +63,7 @@
                         </HBox.margin>
                     </FlexCheckBox>
                 </FlexHBox>
-                <fx:include fx:id="search" source="zkSearch.fxml" realHeight="30" flexWidth="100%"/>
+                <fx:include fx:id="search" source="search.fxml" realHeight="30" flexWidth="100%"/>
                 <ZKTreeView fx:id="tree" flexHeight="100% - 92" flexWidth="100%"/>
             </FlexVBox>
         </FXTab>

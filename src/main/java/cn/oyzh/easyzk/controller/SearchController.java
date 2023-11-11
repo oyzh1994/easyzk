@@ -41,7 +41,7 @@ import java.util.Objects;
  */
 @Lazy
 @Component
-public class ZKSearchController extends SubController {
+public class SearchController extends SubController {
 
     /**
      * 搜索-搜索词

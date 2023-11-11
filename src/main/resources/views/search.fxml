@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="panel,panel-primary" fx:id="searchMain" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="cn.oyzh.easyzk.controller.ZKSearchController">
+          fx:controller="cn.oyzh.easyzk.controller.SearchController">
     <FlexHBox realHeight="30" flexWidth="100%">
         <SVGGlyph url="/font/arrow-right.svg" tipText="展开更多"
                   onMousePrimaryClicked="#showSearchMore" sizeStr="7,12" fx:id="showSearchMore">

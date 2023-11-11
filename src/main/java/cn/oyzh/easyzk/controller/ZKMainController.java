@@ -132,7 +132,7 @@ public class ZKMainController extends ParentController {
      * zk搜索Controller
      */
     @FXML
-    private ZKSearchController searchController;
+    private SearchController searchController;
 
     /**
      * 页面信息

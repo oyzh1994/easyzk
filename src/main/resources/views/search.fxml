@@ -15,17 +15,19 @@
         <SVGGlyph url="/font/arrow-right.svg" tipText="展开更多"
                   onMousePrimaryClicked="#showSearchMore" sizeStr="7,12" fx:id="showSearchMore">
             <HBox.margin>
-                <Insets left="10" top="9" right="3"/>
+                <Insets left="9" top="9" right="3"/>
             </HBox.margin>
         </SVGGlyph>
-        <SVGGlyph visible="false" url="/font/arrow-down.svg" tipText="收起更多"
+        <SVGGlyph managed="false" visible="false" url="/font/arrow-down.svg" tipText="收起更多"
                   onMousePrimaryClicked="#hideSearchMore" sizeStr="12,7" fx:id="hideSearchMore">
             <HBox.margin>
                 <Insets left="6" top="9" right="3"/>
             </HBox.margin>
         </SVGGlyph>
-        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225"
-                         tipText="搜索内容(Ctrl+F，↑↓切换，回车执行)" maxLen="30" onKeyPressed="#onSearchKeyPressed">
+        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30"
+                         promptText="搜索(↑↓切换，回车执行)"
+                         tipText="使用Ctrl+F聚焦，使用↑↓切换历史，使用回车执行搜索"
+                         onKeyPressed="#onSearchKeyPressed">
             <HBox.margin>
                 <Insets top="3"/>
             </HBox.margin>
@@ -56,9 +58,11 @@
     </FlexHBox>
     <FlexHBox visible="false" managed="false" fx:id="searchMore1" realHeight="30" flexWidth="100%">
         <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="30"
-                            tipText="替换节点值(↑↓切换，回车执行)" onKeyPressed="#onReplaceKeyPressed">
+                         promptText="替换(↑↓切换，回车执行)"
+                         tipText="使用↑↓切换历史，使用回车执行搜索"
+                         onKeyPressed="#onReplaceKeyPressed">
             <HBox.margin>
-                <Insets top="3" left="20"/>
+                <Insets left="21" top="3"/>
             </HBox.margin>
         </SearchTextField>
         <SVGGlyph fx:id="replace" disable="true" url="/font/financial_replace.svg"
@@ -75,10 +79,15 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox visible="false" managed="false" fx:id="searchMore2" realHeight="30" flexWidth="100%"
-              fontSize="11">
-        <FlexCheckBox text="搜索名称" selected="true" fx:id="searchPath" realWidth="70">
+              fontSize="10">
+        <FlexCheckBox selected="true" fx:id="searchMode" text="过滤模式" realWidth="65">
             <HBox.margin>
-                <Insets left="20" top="3"/>
+                <Insets left="21" top="3"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox text="搜索名称" selected="true" fx:id="searchPath" realWidth="65">
+            <HBox.margin>
+                <Insets left="5" top="3"/>
             </HBox.margin>
         </FlexCheckBox>
         <FlexCheckBox text="搜索值" selected="true" fx:id="searchData" realWidth="60">
@@ -86,12 +95,12 @@
                 <Insets left="5" top="3"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox text="匹配大小写" fx:id="compareCase" realWidth="80">
+        <FlexCheckBox text="匹配大小写" fx:id="compareCase" realWidth="75">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox text="匹配全文" fx:id="fullMatch" realWidth="70">
+        <FlexCheckBox text="匹配全文" fx:id="fullMatch" realWidth="65">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>

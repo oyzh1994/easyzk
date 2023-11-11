@@ -9,13 +9,13 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
 import cn.oyzh.easyzk.msg.ZKMsg;
 import cn.oyzh.easyzk.msg.ZKMsgFormat;
+import cn.oyzh.easyzk.msg.ZKSearchFinishMsg;
 import cn.oyzh.easyzk.store.PageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.trees.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.ZKTreeItemFilter;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -145,11 +145,6 @@ public class ZKMainController extends ParentController {
     private final PageInfoStore pageInfoStore = PageInfoStore.INSTANCE;
 
     /**
-     * zk树节点过滤器
-     */
-    private final ZKTreeItemFilter treeItemFilter = new ZKTreeItemFilter();
-
-    /**
      * 对子节点排序，正序
      */
     @FXML
@@ -184,13 +179,13 @@ public class ZKMainController extends ParentController {
         TaskManager.startDelayTask("zk:tree:filter", () -> {
             this.tree.disable();
             if (this.onlyCollect.isSelected()) {
-                this.treeItemFilter.setOnlyCollect(true);
-                this.treeItemFilter.setExcludeSub(false);
-                this.treeItemFilter.setExcludeEphemeral(false);
+                this.tree.itemFilter().setOnlyCollect(true);
+                this.tree.itemFilter().setExcludeSub(false);
+                this.tree.itemFilter().setExcludeEphemeral(false);
             } else {
-                this.treeItemFilter.setOnlyCollect(false);
-                this.treeItemFilter.setExcludeSub(this.filterSubNode.isSelected());
-                this.treeItemFilter.setExcludeEphemeral(this.filterEphemeral.isSelected());
+                this.tree.itemFilter().setOnlyCollect(false);
+                this.tree.itemFilter().setExcludeSub(this.filterSubNode.isSelected());
+                this.tree.itemFilter().setExcludeEphemeral(this.filterEphemeral.isSelected());
             }
             this.tree.filter();
             this.tree.enable();
@@ -230,9 +225,6 @@ public class ZKMainController extends ParentController {
         EventUtil.register(this);
         EventUtil.register(this.tree);
         EventUtil.register(this.tabPane);
-        // 初始化过滤
-        this.tree.itemFilter(this.treeItemFilter);
-        this.treeItemFilter.initFilters();
         this.filter();
 
         // 设置上次保存的页面拉伸
@@ -361,7 +353,27 @@ public class ZKMainController extends ParentController {
      */
     @EventReceiver(value = ZKEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
     private void onTreeChildFilter() {
-        this.treeItemFilter.initFilters();
+        this.tree.itemFilter().initFilters();
+        this.filter();
+    }
+
+    /**
+     * 搜索开始事件
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_START, verbose = true)
+    private void searchStart() {
+        this.tree.itemFilter().setSearchParam(null);
+        this.filter();
+    }
+
+    /**
+     * 搜索结束事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, verbose = true)
+    private void searchEnd(ZKSearchFinishMsg msg) {
+        this.tree.itemFilter().setSearchParam(msg.searchParam());
         this.filter();
     }
 

@@ -32,6 +32,11 @@ public class ZKEventGroups {
     public static final String INFO_ACTION = "INFO_ACTION";
 
     /**
+     * 搜索操作
+     */
+    public static final String SEARCH_ACTION = "SEARCH_ACTION";
+
+    /**
      * 终端操作
      */
     public static final String TERMINAL_ACTION = "TERMINAL_ACTION";

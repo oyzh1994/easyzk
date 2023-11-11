@@ -23,6 +23,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +39,8 @@ import java.util.function.Consumer;
  * @author oyzh
  * @since 2023/03/12
  */
+@Lazy
+@Component
 @Accessors(chain = true, fluent = true)
 public class ZKMainSearchHandler {
 
@@ -450,7 +454,7 @@ public class ZKMainSearchHandler {
      * @param item 节点
      * @return 匹配类型
      */
-    private String isMatchParam(TreeItem<?> item) {
+    public String isMatchParam(TreeItem<?> item) {
         if (item == null || this.searchParam == null) {
             return null;
         }

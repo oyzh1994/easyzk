@@ -9,7 +9,7 @@
 <FlexVBox styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.oyzh.easyzk.tabs.auth.ZKAuthTabContent">
     <FlexHBox realHeight="50" flexWidth="100%">
-        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" tipText="搜索关键字">
+        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" promptText="搜索关键字" tipText="搜索关键字">
             <HBox.margin>
                 <Insets left="5" top="-4"/>
             </HBox.margin>

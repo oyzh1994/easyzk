@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller.node;
 
+import cn.hutool.core.io.IoUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.Const;
@@ -11,6 +12,7 @@ import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.ResourceUtil;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -43,7 +45,7 @@ public class ZKNodeQRCodeController extends Controller {
      * 二维码图片
      */
     @FXML
-    private FlexImageView qrcode;
+    private ImageView qrcode;
 
     @Override
     public void onStageShown(WindowEvent event) {
@@ -55,6 +57,8 @@ public class ZKNodeQRCodeController extends Controller {
      * 初始化二维码
      */
     private void initQRCode() {
+        ByteArrayInputStream bais = null;
+        ByteArrayOutputStream baos = null;
         try {
             log.info("read icon begin.");
             // icon图片
@@ -73,15 +77,13 @@ public class ZKNodeQRCodeController extends Controller {
                         .append("修改时间: ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
             }
             log.info("generate qrcode begin.");
-            BufferedImage source = QRCodeUtil.createImage(builder.toString(), 450, 450);
+            BufferedImage source = QRCodeUtil.createImage(builder.toString(), (int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
             QRCodeUtil.insertImage(source, icon);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            baos = new ByteArrayOutputStream();
             ImageIO.write(source, "png", baos);
-            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            bais = new ByteArrayInputStream(baos.toByteArray());
             this.qrcode.setImage(new Image(bais));
             log.info("generate qrcode finish size:{}", bais.available());
-            baos.close();
-            bais.close();
         } catch (Exception ex) {
             this.closeStage();
             ex.printStackTrace();
@@ -91,6 +93,9 @@ public class ZKNodeQRCodeController extends Controller {
             } else {
                 MessageBox.exception(ex, "生成二维码异常");
             }
+        } finally {
+            IoUtil.close(bais);
+            IoUtil.close(baos);
         }
     }
 }

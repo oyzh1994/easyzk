@@ -177,8 +177,8 @@ public class ZKSearchController extends SubController {
     @FXML
     private void showSearchMore() {
         this.searchMore1.display();
-        this.searchMain.setRealHeight(108);
-        this.treeView.setFlexHeight("100% - 144");
+        this.searchMain.setRealHeight(90);
+        this.treeView.setFlexHeight("100% - 122");
         // 重新布局
         this.searchMain.autosize();
         this.hideSearchMore.display();
@@ -191,8 +191,8 @@ public class ZKSearchController extends SubController {
     @FXML
     private void hideSearchMore() {
         this.searchMore1.disappear();
-        this.searchMain.setRealHeight(36);
-        this.treeView.setFlexHeight("100% - 72");
+        this.searchMain.setRealHeight(30);
+        this.treeView.setFlexHeight("100% - 92");
         // 重新布局
         this.searchMain.autosize();
         this.hideSearchMore.disappear();

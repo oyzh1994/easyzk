@@ -150,20 +150,23 @@ public class ZKMainController extends ParentController {
     private final ZKTreeItemFilter treeItemFilter = new ZKTreeItemFilter();
 
     /**
-     * 对子节点排序
+     * 对子节点排序，正序
      */
     @FXML
-    private void sortNodes() {
-        // 设置排序方式
-        if (this.sortDesc.isVisible()) {
-            this.sortDesc.disappear();
-            this.sortAsc.display();
-            this.tree.sortAsc();
-        } else if (this.sortAsc.isVisible()) {
-            this.sortAsc.disappear();
-            this.sortDesc.display();
-            this.tree.sortDesc();
-        }
+    private void sortAsc() {
+        this.sortDesc.disappear();
+        this.sortAsc.display();
+        this.tree.sortAsc();
+    }
+
+    /**
+     * 对子节点排序，倒序
+     */
+    @FXML
+    private void sortDesc() {
+        this.sortAsc.disappear();
+        this.sortDesc.display();
+        this.tree.sortDesc();
     }
 
     /**

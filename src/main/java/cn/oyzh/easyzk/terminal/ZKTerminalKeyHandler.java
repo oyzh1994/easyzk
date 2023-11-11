@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.terminal;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.util.SpringUtil;
+import cn.oyzh.fx.common.spring.SpringUtil;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import cn.oyzh.fx.terminal.key.TerminalKeyHandler;
 import cn.oyzh.fx.terminal.standard.HelpTerminalCommandHandler;

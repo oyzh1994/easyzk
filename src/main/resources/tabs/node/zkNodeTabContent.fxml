@@ -149,7 +149,6 @@
                                         text="数据加载中..."/>
                 </content>
             </FlexVirtualizedScrollPane>
-
             <!-- <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 32" -->
             <!--                 flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" -->
             <!--                 text="数据加载中..."/> -->

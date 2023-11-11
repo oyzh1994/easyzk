@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.FlexImageView?>
-<?import cn.oyzh.fx.plus.controls.FlexPane?>
-<FlexPane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController" realHeight="450" realWidth="450">
-    <FlexImageView flexHeight="100%" flexWidth="100%" fx:id="qrcode"/>
-</FlexPane>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<Pane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController" prefWidth="450" prefHeight="450">
+    <ImageView fitWidth="450" fitHeight="450" fx:id="qrcode"/>
+</Pane>

@@ -155,6 +155,13 @@ public class ZKNode implements Comparable<ZKNode> {
     }
 
     /**
+     * 加载耗时
+     */
+    @Getter
+    @Setter
+    private short loadTime;
+
+    /**
      * 节点路径
      */
     @Getter
@@ -251,8 +258,8 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 当前对象
      */
     public ZKNode copy(@NonNull ZKNode node) {
-        this.stat(node.stat());
         this.acl(node.acl());
+        this.stat(node.stat());
         this.nodePath = node.nodePath;
         this.nodeData(node.nodeData());
         return this;

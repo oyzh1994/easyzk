@@ -821,22 +821,22 @@ public class ZKClient {
         this.framework.sync().forPath(path);
     }
 
-    /**
-     * 设置节点数据
-     *
-     * @param node zk节点
-     * @param data 数据
-     * @return 结果
-     */
-    public boolean setData(@NonNull ZKNode node, String data) throws Exception {
-        byte[] bytes = data == null ? "".getBytes() : data.getBytes();
-        Stat stat = this.setData(node.nodePath(), bytes, null);
-        if (stat != null) {
-            node.stat(stat);
-            node.nodeData(bytes);
-        }
-        return stat != null;
-    }
+    // /**
+    //  * 设置节点数据
+    //  *
+    //  * @param node zk节点
+    //  * @param data 数据
+    //  * @return 结果
+    //  */
+    // public boolean setData(@NonNull ZKNode node, String data) throws Exception {
+    //     byte[] bytes = data == null ? "".getBytes() : data.getBytes();
+    //     Stat stat = this.setData(node.nodePath(), bytes, null);
+    //     if (stat != null) {
+    //         node.stat(stat);
+    //         node.nodeData(bytes);
+    //     }
+    //     return stat != null;
+    // }
 
     /**
      * 删除节点

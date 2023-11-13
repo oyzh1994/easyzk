@@ -7,8 +7,8 @@ import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.fx.ZKACLVBox;
 import cn.oyzh.easyzk.fx.ZKFormatComboBox;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.fx.ZKRichDataTextArea;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
@@ -137,10 +137,16 @@ public class ZKNodeTabContent extends DynamicTabController {
     private SVGGlyph addNode;
 
     /**
-     * 右侧zk节点路径
+     * 加载耗时
      */
     @FXML
-    private FXLabel nodePath;
+    private FXLabel loadTime;
+
+    // /**
+    //  * 右侧zk节点路径
+    //  */
+    // @FXML
+    // private FXLabel nodePath;
 
     /**
      * 右侧zk数据二维码视图
@@ -307,8 +313,11 @@ public class ZKNodeTabContent extends DynamicTabController {
         // 字符集处理
         this.charset.select(this.treeItem.getCharset());
 
-        // 节点路径处理
-        FXUtil.runWait(() -> this.nodePath.setText(this.treeItem.decodeNodePath()));
+        // 加载耗时处理
+        FXUtil.runWait(() -> this.loadTime.setText(this.treeItem.loadTime() + "ms"));
+
+        // // 节点路径处理
+        // FXUtil.runWait(() -> this.nodePath.setText(this.treeItem.decodeNodePath()));
 
         // 初始化数据
         if (this.root.getSelectedIndex() == 0) {
@@ -373,7 +382,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     private void toAddACL() {
         StageWrapper fxView = StageUtil.parseStage(ZKACLAddController.class, this.window());
         fxView.setProp("zkItem", this.treeItem);
-        fxView.setProp("zkClient", this.treeItem.zkClient());
+        fxView.setProp("zkClient", this.treeItem.client());
         fxView.display();
     }
 
@@ -435,7 +444,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             StageWrapper fxView = StageUtil.parseStage(ZKACLUpdateController.class, this.window());
             fxView.setProp("acl", acl);
             fxView.setProp("zkItem", this.treeItem);
-            fxView.setProp("zkClient", this.treeItem.zkClient());
+            fxView.setProp("zkClient", this.treeItem.client());
             fxView.display();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -535,7 +544,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * @param text 组件
      */
     private void handleACLState(ZKACL acl, Text text) {
-        Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.zkClient());
+        Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.client());
         if (CollUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
             text.setText("(已认证)");
         } else {

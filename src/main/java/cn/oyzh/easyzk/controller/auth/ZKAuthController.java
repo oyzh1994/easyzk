@@ -160,7 +160,7 @@ public class ZKAuthController extends Controller {
      */
     private void auth(String user, String password) {
         try {
-            ZKClient zkClient = this.zkItem.zkClient();
+            ZKClient zkClient = this.zkItem.client();
             int result = ZKAuthUtil.authNode(user, password, zkClient, this.zkNode);
             ZKAuthMsg authMsg = new ZKAuthMsg();
             authMsg.user(user).password(password).item(this.zkItem);
@@ -200,7 +200,7 @@ public class ZKAuthController extends Controller {
             }
         });
         this.authList.getItems().clear();
-        ZKClient client = this.zkItem.zkClient();
+        ZKClient client = this.zkItem.client();
         List<ZKAuth> authList = this.authStore.load();
         if (CollUtil.isNotEmpty(authList)) {
             this.authList.addItems(authList);

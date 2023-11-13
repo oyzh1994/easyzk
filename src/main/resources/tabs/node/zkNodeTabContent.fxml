@@ -121,11 +121,17 @@
                         <Insets left="3"/>
                     </FlowPane.margin>
                 </CharsetComboBox>
-                <FXLabel fx:id="nodePath" maxWidth="380" realHeight="15">
+                <FXLabel tipText="加载耗时" fx:id="loadTime"
+                         style="-fx-cursor: HAND;-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
+                <!-- <FXLabel tipText="节点路径" fx:id="nodePath" maxWidth="380" realHeight="15"> -->
+                <!--     <FlowPane.margin> -->
+                <!--         <Insets left="5"/> -->
+                <!--     </FlowPane.margin> -->
+                <!-- </FXLabel> -->
                 <SVGGlyph tipText="复制节点路径及数据" size="16"
                           onMousePrimaryClicked="#copyNode" url="/font/copy.svg">
                     <FlowPane.margin>

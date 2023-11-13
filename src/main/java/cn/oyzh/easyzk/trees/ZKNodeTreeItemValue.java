@@ -84,7 +84,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     public String getSVGUrl() {
         ZKNode value = this.treeItem.value();
         // 需要认证
-        if (ZKAuthUtil.isNeedAuth(value, this.treeItem.zkClient())) {
+        if (ZKAuthUtil.isNeedAuth(value, this.treeItem.client())) {
             return "/font/lock.svg";
         }
 

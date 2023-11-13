@@ -222,7 +222,8 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         }
         try {
             if (!this.value.nodeDataLoaded()) {
-                this.value.nodeData(this.zkClient().getData(this.nodePath()));
+                ZKNodeUtil.refreshData(this.client(), this.value);
+                // this.value.nodeData(this.zkClient().getData(this.nodePath()));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -375,8 +376,8 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      *
      * @return zk客户端
      */
-    public ZKClient zkClient() {
-        return this.root.zkClient();
+    public ZKClient client() {
+        return this.root.client();
     }
 
     /**
@@ -497,7 +498,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
     public void addNode() {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeAddController.class, this.window());
         fxView.setProp("zkItem", this);
-        fxView.setProp("zkClient", this.zkClient());
+        fxView.setProp("zkClient", this.client());
         fxView.display();
     }
 
@@ -506,7 +507,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      */
     public void authNode() {
         StageWrapper fxView = StageUtil.parseStage(ZKAuthController.class, this.window());
-        fxView.setProp("zkClient", this.zkClient());
+        fxView.setProp("zkClient", this.client());
         fxView.setProp("zkItem", this);
         fxView.display();
     }
@@ -517,7 +518,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
     public void exportNode() {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeExportController.class, this.window());
         fxView.setProp("zkItem", this);
-        fxView.setProp("zkClient", this.zkClient());
+        fxView.setProp("zkClient", this.client());
         fxView.display();
     }
 
@@ -536,7 +537,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         String parentPath = ZKNodeUtil.getParentPath(this.value.nodePath());
         String newNodePath = ZKNodeUtil.concatPath(parentPath, nodeName);
         try {
-            if (this.zkClient().exists(newNodePath)) {
+            if (this.client().exists(newNodePath)) {
                 MessageBox.warn("此节点已存在！");
                 return;
             }
@@ -546,7 +547,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
                 aclList.add(new ACL(zkacl.getPerms(), zkacl.getId()));
             }
             // 创建新节点并删除旧节点
-            if (this.zkClient().create(newNodePath, this.data(), aclList, null, createMode, true) != null) {
+            if (this.client().create(newNodePath, this.data(), aclList, null, createMode, true) != null) {
                 // 删除旧节点
                 this.deleteNode();
             } else {
@@ -592,7 +593,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      */
     private void deleteNode() throws Exception {
         // 执行删除
-        this.zkClient().delete(this.nodePath(), null, this.value.parentNode());
+        this.client().delete(this.nodePath(), null, this.value.parentNode());
         // 取消选中
         this.treeView().clearSelection();
         // 移除节点
@@ -791,7 +792,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
             // 待选中节点
             TreeItem<?> selectItem = null;
             // 如果是最后删除的节点或者当前节点被选中
-            if (this.zkClient().isLastDelete(this.nodePath()) || this.treeView().isSelected(this)) {
+            if (this.client().isLastDelete(this.nodePath()) || this.treeView().isSelected(this)) {
                 // 如果下一个节点不为null，则选中下一个节点，否则选中此节点的父节点
                 selectItem = this.nextSibling();
                 selectItem = selectItem == null ? parent : selectItem;
@@ -824,7 +825,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      */
     public void addChild(String path) {
         if (StrUtil.isNotBlank(path)) {
-            ZKNode node = ZKNodeUtil.getNode(this.zkClient(), path);
+            ZKNode node = ZKNodeUtil.getNode(this.client(), path);
             if (node != null) {
                 this.addChild(node);
             } else {
@@ -888,7 +889,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      * 刷新zk节点
      */
     public void refreshNode() {
-        ZKNodeUtil.refreshNode(this.zkClient(), this.value);
+        ZKNodeUtil.refreshNode(this.client(), this.value);
         this.clearStatus();
     }
 
@@ -899,7 +900,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         if (log.isDebugEnabled()) {
             log.debug("refreshData.");
         }
-        ZKNodeUtil.refreshData(this.zkClient(), this.value);
+        ZKNodeUtil.refreshData(this.client(), this.value);
         // 清空未保存的数据
         this.clearData();
         // 清空修改数据
@@ -913,7 +914,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         if (log.isDebugEnabled()) {
             log.debug("refreshACL.");
         }
-        this.value.acl(this.zkClient().getACL(this.nodePath()));
+        this.value.acl(this.client().getACL(this.nodePath()));
         // 刷新图标
         this.flushGraphic();
     }
@@ -922,7 +923,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      * 刷新zk节点配额
      */
     public void reloadQuota() throws Exception {
-        StatsTrack track = this.zkClient().listQuota(this.nodePath());
+        StatsTrack track = this.client().listQuota(this.nodePath());
         this.value.quota(track);
     }
 
@@ -930,7 +931,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      * 刷新zk节点状态
      */
     public void refreshStat() throws Exception {
-        ZKNodeUtil.refreshStat(this.zkClient(), this.value);
+        ZKNodeUtil.refreshStat(this.client(), this.value);
     }
 
     /**
@@ -943,7 +944,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
             try {
                 byte[] data = this.data();
                 // 更新数据
-                Stat stat = this.zkClient().setData(this.nodePath(), data);
+                Stat stat = this.client().setData(this.nodePath(), data);
                 if (stat != null) {
                     // 更新数据
                     this.value.stat(stat);
@@ -1009,12 +1010,12 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         this.loading = true;
         try {
             // 获取子节点列表
-            List<String> subList = this.zkClient().getChildren(this.nodePath());
+            List<String> subList = this.client().getChildren(this.nodePath());
             if (CollUtil.isEmpty(subList)) {
                 this.children().clear();
             } else {
                 // 获取节点列表
-                List<ZKNode> list = ZKNodeUtil.getChildNode(this.zkClient(), this.nodePath());
+                List<ZKNode> list = ZKNodeUtil.getChildNode(this.client(), this.nodePath());
                 // 覆盖
                 if (this.isChildEmpty()) {
                     this.replaceNodes(list);
@@ -1101,7 +1102,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      * @return 结果
      */
     public boolean needAuth() {
-        if (ZKAuthUtil.isNeedAuth(this.value, this.zkClient())) {
+        if (ZKAuthUtil.isNeedAuth(this.value, this.client())) {
             return true;
         }
         return this.itemValue().graphic().getUrl().contains("lock");
@@ -1185,7 +1186,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      * @throws Exception 异常
      */
     public Stat deleteACL(ZKACL acl) throws Exception {
-        return this.zkClient().deleteACL(this.nodePath(), acl);
+        return this.client().deleteACL(this.nodePath(), acl);
     }
 
     /**
@@ -1256,6 +1257,9 @@ public class ZKNodeTreeItem extends ZKTreeItem {
         return (ZKNodeTreeItemValue) super.getValue();
     }
 
+    /**
+     * 应用更改
+     */
     public void applyUpdate() {
         try {
             this.value.nodeData(this.updateData);
@@ -1298,8 +1302,8 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      * @throws Exception 异常
      */
     public void saveQuota(long bytes, int num) throws Exception {
-        this.zkClient().delQuota(this.nodePath(), true, true);
-        this.zkClient().createQuota(this.nodePath(), bytes, num);
+        this.client().delQuota(this.nodePath(), true, true);
+        this.client().createQuota(this.nodePath(), bytes, num);
     }
 
     /**
@@ -1308,7 +1312,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      * @throws Exception 异常
      */
     public void clearQuotaNum() throws Exception {
-        this.zkClient().delQuota(this.nodePath(), false, true);
+        this.client().delQuota(this.nodePath(), false, true);
     }
 
     /**
@@ -1317,7 +1321,7 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      * @throws Exception 异常
      */
     public void clearQuotaBytes() throws Exception {
-        this.zkClient().delQuota(this.nodePath(), true, false);
+        this.client().delQuota(this.nodePath(), true, false);
     }
 
     /**
@@ -1347,5 +1351,14 @@ public class ZKNodeTreeItem extends ZKTreeItem {
      */
     public boolean existIPACL(String ip) {
         return this.value.existIPACL(ip);
+    }
+
+    /**
+     * 获取加载耗时
+     *
+     * @return 加载耗时
+     */
+    public short loadTime() {
+        return this.value.loadTime() == 0 ? 1 : this.value.loadTime();
     }
 }

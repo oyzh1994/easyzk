@@ -58,7 +58,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private ZKClient zkClient;
+    private ZKClient client;
 
     /**
      * 已取消操作标志位
@@ -91,7 +91,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
      * @return 连接状态属性
      */
     public ReadOnlyObjectProperty<ZKConnState> stateProperty() {
-        return this.zkClient.stateProperty();
+        return this.client.stateProperty();
     }
 
     /**
@@ -133,7 +133,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
             MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出zk数据", () -> this.root().exportNode());
             MenuItemExt importData = MenuItemExt.newItem("导入数据", new SVGGlyph("/font/Import.svg", "12"), "导入zk数据", this::importNode);
             MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
-            server.setDisable(!this.zkClient.initialized());
+            server.setDisable(!this.client.initialized());
 
             items.add(closeConnect);
             items.add(editConnect);
@@ -180,7 +180,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
     private void serverInfo() {
         StageWrapper fxView = StageUtil.parseStage(ZKServiceController.class, this.treeView().window());
         fxView.setProp("zkInfo", this.info());
-        fxView.setProp("zkClient", this.zkClient);
+        fxView.setProp("zkClient", this.client);
         fxView.display();
     }
 
@@ -197,7 +197,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
     public void cancelConnect() {
         this.canceled = true;
         ThreadUtil.startVirtual(() -> {
-            this.zkClient.close();
+            this.client.close();
             this.stopWaiting();
         });
     }
@@ -211,8 +211,8 @@ public class ZKConnectTreeItem extends ZKTreeItem {
             this.startWaiting();
             Task task = TaskBuilder.newBuilder()
                     .onStart(() -> {
-                        this.zkClient.startWithListener();
-                        if (!this.zkClient.isConnected()) {
+                        this.client.startWithListener();
+                        if (!this.client.isConnected()) {
                             if (!this.canceled) {
                                 MessageBox.warn(info().getName() + "连接失败");
                             }
@@ -235,7 +235,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
      */
     private void importNode() {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeImportController.class, this.treeView().window());
-        fxView.setProp("zkClient", this.zkClient);
+        fxView.setProp("zkClient", this.client);
         fxView.display();
     }
 
@@ -259,7 +259,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
      * @return zk信息
      */
     public ZKInfo info() {
-        return this.zkClient == null ? null : this.zkClient.zkInfo();
+        return this.client == null ? null : this.client.zkInfo();
     }
 
     /**
@@ -272,7 +272,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
             }
             this.startWaiting();
             Task task = TaskBuilder.newBuilder()
-                    .onStart(this.zkClient::closeManual)
+                    .onStart(this.client::closeManual)
                     .onSuccess(() -> {
                         this.clearChildren();
                         SystemUtil.gcLater();
@@ -393,8 +393,8 @@ public class ZKConnectTreeItem extends ZKTreeItem {
      */
     public void value(@NonNull ZKInfo value) {
         this.value = value;
-        this.zkClient = new ZKClient(value);
-        this.zkClient.stateProperty().addListener((observable, o, n) -> {
+        this.client = new ZKClient(value);
+        this.client.stateProperty().addListener((observable, o, n) -> {
             // 连接关闭
             if (n == null || !n.isConnected()) {
                 // 清理子节点
@@ -402,7 +402,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
             }
             // 连接中断事件
             if (n == ZKConnState.SUSPENDED) {
-                this.zkClient.close();
+                this.client.close();
                 MessageBox.warn(this.info().getName() + "连接中断");
             }
         });
@@ -415,7 +415,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
      * @return 结果
      */
     public boolean isConnect() {
-        return this.zkClient != null && this.zkClient.isConnected();
+        return this.client != null && this.client.isConnected();
     }
 
     /**
@@ -424,7 +424,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
      * @return 结果
      */
     public boolean isConnecting() {
-        return this.zkClient != null && this.zkClient.isConnecting();
+        return this.client != null && this.client.isConnecting();
     }
 
     /**
@@ -432,7 +432,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
      */
     public void loadRootNode() {
         // 获取根节点
-        ZKNode rootNode = ZKNodeUtil.getNode(this.zkClient, "/");
+        ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
         if (rootNode != null) {
             // 生成根节点
             ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this);

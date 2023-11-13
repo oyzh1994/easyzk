@@ -225,7 +225,7 @@ public class ZKTreeView extends RichTreeView {
             } else if (parent.loaded()) {// 添加节点
                 parent.addChild(path);
                 log.info("节点不存在, 添加树节点.");
-            } else if (parent.zkClient().isLastCreate(path)) {// 加载子节点
+            } else if (parent.client().isLastCreate(path)) {// 加载子节点
                 parent.refreshStat();
                 parent.loadChildQuiet();
                 log.info("父节点未加载, 加载父节点.");
@@ -325,7 +325,7 @@ public class ZKTreeView extends RichTreeView {
                 List<ZKConnectTreeItem> connectTreeItems = this.root().getConnectedItems();
                 // 遍历添加认证信息，并手动触发认证事件
                 for (ZKConnectTreeItem item : connectTreeItems) {
-                    item.zkClient().addAuth(auth.getUser(), auth.getPassword());
+                    item.client().addAuth(auth.getUser(), auth.getPassword());
                 }
                 // 执行认证成功业务
                 this.authSuccess(null);

@@ -82,29 +82,33 @@ public class ZKNodeUtil {
         }
         try {
             // zk节点
-            ZKNode zkNode = new ZKNode();
+            ZKNode node = new ZKNode();
             // 设置节点路径
-            zkNode.nodePath(path);
+            node.nodePath(path);
             // 设置zk状态
             if (properties.contains("s")) {
-                zkNode.stat(client.checkExists(path));
+                node.stat(client.checkExists(path));
             }
             // 设置zk访问控制
             if (properties.contains("a")) {
                 try {
-                    zkNode.acl(client.getACL(path));
+                    node.acl(client.getACL(path));
                 } catch (KeeperException.NoAuthException ignored) {
                 }
             }
             // 设置zk数据
             if (properties.contains("d")) {
                 try {
-                    zkNode.nodeData(client.getData(path));
+                    long start = System.currentTimeMillis();
+                    node.nodeData(client.getData(path));
+                    long end = System.currentTimeMillis();
+                    long loadTime = end - start;
+                    node.loadTime((short) loadTime);
                 } catch (KeeperException.NoAuthException ignored) {
                 }
             }
             // 返回节点
-            return zkNode;
+            return node;
         } catch (Exception ex) {
             log.warn("getZKNode:{} error", path, ex);
         }
@@ -118,7 +122,11 @@ public class ZKNodeUtil {
      * @param node   zk节点
      */
     public void refreshData(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+        long start = System.currentTimeMillis();
         node.nodeData(client.getData(node.nodePath()));
+        long end = System.currentTimeMillis();
+        long loadTime = end - start;
+        node.loadTime((short) loadTime);
     }
 
     /**

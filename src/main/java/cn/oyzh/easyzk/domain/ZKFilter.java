@@ -26,16 +26,16 @@ public class ZKFilter implements ObjectComparator<ZKFilter> {
     private String kw;
 
     /**
+     * 是否启用
+     */
+    private boolean enable;
+
+    /**
      * 模糊匹配
      * true 模糊匹配
      * false 完全匹配
      */
     private boolean partMatch;
-
-    /**
-     * 是否启用
-     */
-    private boolean enable;
 
     /**
      * 复制对象

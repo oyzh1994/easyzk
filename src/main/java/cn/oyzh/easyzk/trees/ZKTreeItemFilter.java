@@ -1,6 +1,8 @@
 package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.dto.ZKSearchParam;
+import cn.oyzh.easyzk.handler.ZKMainSearchHandler;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -8,6 +10,9 @@ import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +23,8 @@ import java.util.List;
  * @author oyzh
  * @since 2023/3/28
  */
+@Lazy
+@Component
 public class ZKTreeItemFilter implements RichTreeItemFilter {
 
     /**
@@ -40,6 +47,19 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     @Setter
     @Getter
     private boolean excludeEphemeral;
+
+    /**
+     * 搜索参数
+     */
+    @Setter
+    @Getter
+    private ZKSearchParam searchParam;
+
+    /**
+     * zk主页搜索处理
+     */
+    @Autowired
+    private ZKMainSearchHandler searchHandler;
 
     /**
      * 过滤内容列表
@@ -80,8 +100,16 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤节点
-            return !ZKNodeUtil.isFiltered(treeItem.nodePath(), this.filters);
+            boolean unFiltered = !ZKNodeUtil.isFiltered(treeItem.nodePath(), this.filters);
+            if (!unFiltered) {
+                return false;
+            }
         }
-        return true;
+        // 如果不需要处理搜索参数，则直接返回true
+        if (this.searchParam == null || this.searchParam.isSearchMode() || this.searchParam.isEmpty()) {
+            return true;
+        }
+        // 判断是否满足搜索要求
+        return this.searchHandler.isMatchParam(item)!=null;
     }
 }

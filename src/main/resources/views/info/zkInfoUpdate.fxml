@@ -21,7 +21,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ClearableTextField tipText="请输入名称" maxLen="20" require="true" fx:id="name"
+                    <ClearableTextField promptText="请输入名称" tipText="请输入名称" maxLen="20" require="true" fx:id="name"
                                         realHeight="30" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -47,14 +47,20 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ClearableTextField fx:id="hostIp" tipText="连接地址，例如192.168.2.100" require="true"
+                    <ClearableTextField fx:id="hostIp"
+                                        promptText="连接地址，例如192.168.2.100"
+                                        tipText="连接地址，例如192.168.2.100"
+                                        require="true"
                                         realHeight="30"
                                         flexWidth="100% - 280" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <PortField realWidth="134" fx:id="hostPort" tipText="端口号(1-65535)" realHeight="30"
+                    <PortField realWidth="134" fx:id="hostPort"
+                               promptText="端口号(1-65535)"
+                               tipText="端口号(1-65535)"
+                               realHeight="30"
                                value="2181">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
@@ -68,6 +74,7 @@
                         </HBox.margin>
                     </FXLabel>
                     <LimitTextArea fx:id="host"
+                                   promptText="集群地址，用英文逗号分隔，例如:192.168.2.17:2181,192.168.2.17:2182,192.168.2.17:2183"
                                    tipText="集群地址，用英文逗号分隔，例如:192.168.2.17:2181,192.168.2.17:2182,192.168.2.17:2183"
                                    require="true"
                                    realHeight="120" flexWidth="100% - 140" maxLen="2048">
@@ -106,7 +113,9 @@
                         </HBox.margin>
                     </FXLabel>
                     <NumberTextField realHeight="30" flexWidth="100% - 140" min="3" max="30" fx:id="connectTimeOut"
-                                     tipText="超时时间(3-30)，单位秒，默认5秒" value="5"
+                                     promptText="超时时间(3-30)，单位秒，默认5秒"
+                                     tipText="超时时间(3-30)，单位秒，默认5秒"
+                                     value="5"
                                      require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -126,7 +135,9 @@
                     </FXLabel>
                     <NumberTextField realHeight="30" flexWidth="100% - 140" step="5" min="5" max="120"
                                      fx:id="sessionTimeOut"
-                                     tipText="超时时间(5-120)，单位秒，默认30分" value="30"
+                                     promptText="超时时间(5-120)，单位分钟，默认30分钟"
+                                     tipText="超时时间(5-120)，单位分钟，默认30分钟"
+                                     value="30"
                                      require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -156,7 +167,10 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <LimitTextArea fx:id="remark" tipText="请输入备注信息" maxLen="100"
+                    <LimitTextArea fx:id="remark"
+                                   promptText="请输入备注信息"
+                                   tipText="请输入备注信息"
+                                   maxLen="100"
                                    realHeight="80" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>

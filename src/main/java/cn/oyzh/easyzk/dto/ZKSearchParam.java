@@ -34,6 +34,13 @@ public class ZKSearchParam {
     private boolean searchPath;
 
     /**
+     * 搜索模式
+     * true 搜索模式
+     * false 过滤模式
+     */
+    private boolean searchMode;
+
+    /**
      * 匹配大小写
      */
     private boolean compareCase;
@@ -86,6 +93,9 @@ public class ZKSearchParam {
         if (!Objects.equals(this.fullMatch, param.fullMatch)) {
             return false;
         }
+        if (!Objects.equals(this.searchMode, param.searchMode)) {
+            return false;
+        }
         if (!Objects.equals(this.searchData, param.searchData)) {
             return false;
         }
@@ -93,5 +103,9 @@ public class ZKSearchParam {
             return false;
         }
         return Objects.equals(this.compareCase, param.compareCase);
+    }
+
+    public boolean isEmpty() {
+        return this.kw == null || this.kw.isEmpty();
     }
 }

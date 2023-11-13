@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.util.OSUtil;
-import cn.oyzh.fx.common.util.SpringUtil;
+import cn.oyzh.fx.common.spring.SpringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.NonNull;

@@ -11,7 +11,7 @@
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.filter.ZKFilterMainController" realWidth="750" realHeight="450">
     <FlexHBox realHeight="50" flexWidth="100%">
-        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" tipText="搜索关键字" >
+        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" promptText="搜索关键字" tipText="搜索关键字" >
             <HBox.margin>
                 <Insets left="5" top="-4"/>
             </HBox.margin>
@@ -21,7 +21,7 @@
                 <Insets left="5"/>
             </HBox.margin>
         </PagePane>
-        <SVGGlyph size="14" onMousePrimaryClicked="#toAdd" tipText="添加过滤信息" url="/font/add-fill.svg">
+        <SVGGlyph size="14" onMousePrimaryClicked="#toAdd"  tipText="添加过滤信息" url="/font/add-fill.svg">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>

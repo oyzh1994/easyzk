@@ -18,50 +18,53 @@
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/content.svg" size="13"/>
             </graphic>
-            <FlexVBox flexHeight="100%" flexWidth="100%" style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
-                <FlexHBox realHeight="36" flexWidth="100% - 8">
+            <FlexVBox flexHeight="100%" flexWidth="100% - 8"
+                      style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
+                <FlexHBox realHeight="30" flexWidth="100%">
                     <SVGGlyph tipText="打开终端" size="15"
                               onMousePrimaryClicked="#openTerminal" url="/font/code library.svg">
                         <HBox.margin>
-                            <Insets left="8" top="12"/>
+                            <Insets left="10" top="10"/>
                         </HBox.margin>
                     </SVGGlyph>
                     <SVGGlyph fx:id="sortAsc" tipText="对选中节点进行排序" size="15"
-                              onMousePrimaryClicked="#sortNodes" url="/font/sort-ascending.svg">
+                              onMousePrimaryClicked="#sortAsc" url="/font/sort-ascending.svg">
                         <HBox.margin>
-                            <Insets left="8" top="12"/>
+                            <Insets left="5" top="10"/>
                         </HBox.margin>
                     </SVGGlyph>
                     <SVGGlyph fx:id="sortDesc" tipText="对选中节点进行排序" size="15" visible="false" managed="false"
-                              onMousePrimaryClicked="#sortNodes" url="/font/sort-descending.svg">
+                              onMousePrimaryClicked="#sortDesc" url="/font/sort-descending.svg">
                         <HBox.margin>
-                            <Insets left="8" top="12"/>
+                            <Insets left="5" top="10"/>
                         </HBox.margin>
                     </SVGGlyph>
                     <SVGGlyph tipText="定位节点" size="17" onMousePrimaryClicked="#positionNode"
                               url="/font/positioning.svg">
                         <HBox.margin>
-                            <Insets left="5" top="12"/>
+                            <Insets left="5" top="10"/>
                         </HBox.margin>
                     </SVGGlyph>
-                    <FlexCheckBox text="过滤子节点" fx:id="filterSubNode" fontSize="11">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </FlexCheckBox>
+                </FlexHBox>
+                <FlexHBox realHeight="30" flexWidth="100%">
                     <FlexCheckBox text="过滤临时节点" fx:id="filterEphemeral" fontSize="11">
                         <HBox.margin>
-                            <Insets left="5" top="10"/>
+                            <Insets left="10" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="仅看收藏节点" fx:id="onlyCollect" fontSize="11">
+                    <FlexCheckBox text="过滤子节点" fx:id="filterSubNode" fontSize="11">
                         <HBox.margin>
-                            <Insets left="5" top="10"/>
+                            <Insets left="8" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="仅查看收藏节点" fx:id="onlyCollect" fontSize="11">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
                 </FlexHBox>
-                <fx:include fx:id="search" source="zkSearch.fxml" prefHeight="36" flexWidth="100% - 8"/>
-                <ZKTreeView fx:id="tree" flexHeight="100% - 74" flexWidth="100% - 8"/>
+                <fx:include fx:id="search" source="search.fxml" realHeight="30" flexWidth="100%"/>
+                <ZKTreeView fx:id="tree" flexHeight="100% - 92" flexWidth="100%"/>
             </FlexVBox>
         </FXTab>
         <FXTab text="消息">

@@ -11,8 +11,10 @@ import cn.oyzh.easyzk.msg.ZKNodeAddMsg;
 import cn.oyzh.easyzk.msg.ZKNodeAddedMsg;
 import cn.oyzh.easyzk.msg.ZKNodeDeletedMsg;
 import cn.oyzh.easyzk.msg.ZKNodeUpdatedMsg;
+import cn.oyzh.easyzk.msg.ZKSearchFinishMsg;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.fx.common.spring.SpringUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.Event;
@@ -61,8 +63,20 @@ public class ZKTreeView extends RichTreeView {
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new ZKTreeCell());
         // 初始化事件处理
         this.initEventHandler();
+        // 初始化根节点
         super.root(new ZKRootTreeItem(this));
         this.root().extend();
+    }
+
+    @Override
+    public ZKTreeItemFilter itemFilter() {
+        // 初始化过滤器
+        if (this.itemFilter == null) {
+            ZKTreeItemFilter filter = SpringUtil.getBean(ZKTreeItemFilter.class);
+            filter.initFilters();
+            this.itemFilter = filter;
+        }
+        return (ZKTreeItemFilter) this.itemFilter;
     }
 
     @Override
@@ -78,6 +92,7 @@ public class ZKTreeView extends RichTreeView {
             ThreadUtil.startVirtual(treeItem::closeConnect);
         }
     }
+
     /**
      * 初始化事件处理器
      */
@@ -346,7 +361,7 @@ public class ZKTreeView extends RichTreeView {
     /**
      * 搜索结束事件
      */
-    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, async = true, verbose = true)
+    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, verbose = true)
     private void searchEnd() {
         this.searching = false;
     }

@@ -48,12 +48,12 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 105" tipText="认证用户名" >
+            <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 105" promptText="认证用户名" tipText="认证用户名" >
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <ClearableTextField fx:id="password" realHeight="30" flexWidth="50% - 105" tipText="认证密码(明文)" >
+            <ClearableTextField fx:id="password" realHeight="30" flexWidth="50% - 105" promptText="认证密码(明文)" tipText="认证密码(明文)" >
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>

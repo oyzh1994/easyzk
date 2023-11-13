@@ -87,12 +87,12 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <ClearableTextField tipText="用户名" fx:id="digestInfo1User" realHeight="30" flexWidth="50% - 115" >
+            <ClearableTextField promptText="用户名" tipText="用户名" fx:id="digestInfo1User" realHeight="30" flexWidth="50% - 115" >
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <ClearableTextField tipText="密码(明文)" fx:id="digestInfo1Password" realHeight="30" flexWidth="50% - 115" >
+            <ClearableTextField promptText="密码(明文)" tipText="密码(明文)" fx:id="digestInfo1Password" realHeight="30" flexWidth="50% - 115" >
                 <HBox.margin>
                     <Insets left="5" top="10"/>
                 </HBox.margin>
@@ -122,7 +122,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ClearableTextField tipText="格式user:digest" fx:id="digestInfo2" realHeight="30" flexWidth="100% - 140" >
+        <ClearableTextField promptText="格式user:digest" tipText="格式user:digest" fx:id="digestInfo2" realHeight="30" flexWidth="100% - 140" >
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -146,7 +146,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ClearableTextField fx:id="ipContent1" realHeight="30" flexWidth="100% - 335" tipText="请输入ip地址" >
+        <ClearableTextField fx:id="ipContent1" realHeight="30" flexWidth="100% - 335" promptText="请输入ip地址" tipText="请输入ip地址" >
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>

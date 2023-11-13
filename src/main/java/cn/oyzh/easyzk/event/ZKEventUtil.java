@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.dto.ZKSearchParam;
 import cn.oyzh.easyzk.msg.TreeChildChangedMsg;
 import cn.oyzh.easyzk.msg.TreeChildFilterMsg;
 import cn.oyzh.easyzk.msg.TreeGraphicChangedMsg;
@@ -16,6 +17,8 @@ import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
 import cn.oyzh.easyzk.msg.ZKNodeAddMsg;
 import cn.oyzh.easyzk.msg.ZKNodeDeleteMsg;
 import cn.oyzh.easyzk.msg.ZKNodeUpdateMsg;
+import cn.oyzh.easyzk.msg.ZKSearchFinishMsg;
+import cn.oyzh.easyzk.msg.ZKSearchStartMsg;
 import cn.oyzh.easyzk.msg.ZKTerminalCloseMsg;
 import cn.oyzh.easyzk.msg.ZKTerminalOpenMsg;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -233,6 +236,26 @@ public class ZKEventUtil {
      */
     public static void filterMain() {
         ZKFilterMainMsg msg = new ZKFilterMainMsg();
+        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
+        EventUtil.fire(event);
+    }
+
+    /**
+     * 搜索开始事件
+     */
+    public static void searchStart(ZKSearchParam searchParam) {
+        ZKSearchStartMsg msg = new ZKSearchStartMsg();
+        msg.searchParam(searchParam);
+        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
+        EventUtil.fire(event);
+    }
+
+    /**
+     * 搜索结束事件
+     */
+    public static void searchFinish(ZKSearchParam searchParam) {
+        ZKSearchFinishMsg msg = new ZKSearchFinishMsg();
+        msg.searchParam(searchParam);
         Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
         EventUtil.fire(event);
     }

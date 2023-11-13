@@ -4,7 +4,7 @@ package cn.oyzh.easyzk.controller;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.common.util.SpringUtil;
+import cn.oyzh.fx.common.spring.SpringUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.stage.StageAttribute;

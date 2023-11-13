@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.dto.ZKSearchParam;
 import cn.oyzh.easyzk.dto.ZKSearchResult;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -28,6 +29,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.WindowEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +43,7 @@ import java.util.Objects;
  */
 @Lazy
 @Component
-public class ZKSearchController extends SubController {
+public class SearchController extends SubController {
 
     /**
      * 搜索-搜索词
@@ -98,6 +100,12 @@ public class ZKSearchController extends SubController {
     private SVGGlyph searchAnalyse;
 
     /**
+     * 搜索-搜索模式
+     */
+    @FXML
+    private FlexCheckBox searchMode;
+
+    /**
      * 搜索-搜索值
      */
     @FXML
@@ -145,17 +153,6 @@ public class ZKSearchController extends SubController {
     @FXML
     private SVGGlyph hideSearchMore;
 
-    // /**
-    //  * 搜索-搜索历史
-    //  */
-    // @FXML
-    // private SVGGlyph searchHistory;
-    //
-    // /**
-    //  * 搜索-替换历史
-    //  */
-    // @FXML
-    // private SVGGlyph replaceHistory;
     /**
      * zk树
      */
@@ -164,7 +161,8 @@ public class ZKSearchController extends SubController {
     /**
      * zk主页搜索处理
      */
-    private final ZKMainSearchHandler searchHandler = new ZKMainSearchHandler();
+    @Autowired
+    private  ZKMainSearchHandler searchHandler;
 
     /**
      * 搜索历史储存
@@ -177,8 +175,8 @@ public class ZKSearchController extends SubController {
     @FXML
     private void showSearchMore() {
         this.searchMore1.display();
-        this.searchMain.setRealHeight(108);
-        this.treeView.setFlexHeight("100% - 144");
+        this.searchMain.setRealHeight(90);
+        this.treeView.setFlexHeight("100% - 152");
         // 重新布局
         this.searchMain.autosize();
         this.hideSearchMore.display();
@@ -191,8 +189,8 @@ public class ZKSearchController extends SubController {
     @FXML
     private void hideSearchMore() {
         this.searchMore1.disappear();
-        this.searchMain.setRealHeight(36);
-        this.treeView.setFlexHeight("100% - 72");
+        this.searchMain.setRealHeight(30);
+        this.treeView.setFlexHeight("100% - 92");
         // 重新布局
         this.searchMain.autosize();
         this.hideSearchMore.disappear();
@@ -253,7 +251,7 @@ public class ZKSearchController extends SubController {
                     this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
                 })
                 .onFinish(() -> this.treeView.enable())
-                .onError(ex -> MessageBox.exception(ex))
+                .onError(MessageBox::exception)
                 .build();
         TaskManager.startDelayTask("zk:search:searchPrev", task, 50);
     }
@@ -315,17 +313,20 @@ public class ZKSearchController extends SubController {
             try {
                 this.searchCheck();
                 this.treeView.disable();
+                ZKSearchParam searchParam = this.getSearchParam();
                 if (!this.searchNext.isDisable()) {
+                    // 搜索开始
+                    ZKEventUtil.searchStart(searchParam);
                     this.searchResult.setText("搜索中...");
-                    // 触发事件
-                    EventUtil.fire(ZKEventTypes.ZK_SEARCH_START);
                     // 执行预搜索
-                    this.searchHandler.preSearch(this.getSearchParam());
+                    this.searchHandler.preSearch(searchParam);
                     this.searchResult.setText("");
                     // 更新搜索结果
                     this.updateSearchResult();
+                    // 搜索结束
+                    ZKEventUtil.searchFinish(searchParam);
                 } else {// 搜索结束
-                    EventUtil.fire(ZKEventTypes.ZK_SEARCH_FINISH);
+                    ZKEventUtil.searchFinish(searchParam);
                 }
                 this.treeView.enable();
             } catch (Exception ex) {
@@ -352,6 +353,7 @@ public class ZKSearchController extends SubController {
         searchParam.setKw(this.searchKW.getTextTrim());
         searchParam.setFullMatch(this.fullMatch.isSelected());
         searchParam.setSearchData(this.searchData.isSelected());
+        searchParam.setSearchMode(!this.searchMode.isSelected());
         searchParam.setSearchPath(this.searchPath.isSelected());
         searchParam.setCompareCase(this.compareCase.isSelected());
         return searchParam;
@@ -368,6 +370,7 @@ public class ZKSearchController extends SubController {
                 this.replaceKW.disable();
                 this.searchKW.disable();
                 this.searchNext.disable();
+                this.searchMode.disable();
                 return;
             }
 
@@ -407,16 +410,17 @@ public class ZKSearchController extends SubController {
     @Override
     protected void bindListeners() {
         // 搜索相关处理
-        this.searchMore1.managedProperty().bind(this.searchMore1.visibleProperty());
+        this.searchMore1.managedBindVisible();
         this.searchMore2.managedProperty().bind(this.searchMore1.visibleProperty());
         this.searchMore2.visibleProperty().bind(this.searchMore1.visibleProperty());
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
-        this.showSearchMore.managedProperty().bind(this.showSearchMore.visibleProperty());
+        this.showSearchMore.managedBindVisible();
         this.hideSearchMore.managedProperty().bind(this.hideSearchMore.visibleProperty());
         this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchPath.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.searchMode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
         this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {

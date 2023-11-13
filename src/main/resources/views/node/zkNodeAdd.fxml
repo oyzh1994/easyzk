@@ -58,7 +58,7 @@
                         </HBox.margin>
                     </FXLabel>
                     <ClearableTextField fx:id="nodePath" realHeight="30.0" flexWidth="100% - 140"
-                                        tipText="请输入节点路径" require="true">
+                                        promptText="请输入节点路径" tipText="请输入节点路径" require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -83,7 +83,9 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FlexTextArea fx:id="nodeData" flexHeight="100% - 25" tipText="请输入节点数据(可选)"
+                    <FlexTextArea fx:id="nodeData" flexHeight="100% - 25"
+                                  promptText="请输入节点数据(可选)"
+                                  tipText="请输入节点数据(可选)"
                                   flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -172,13 +174,12 @@
                                 <Insets left="20" top="10"/>
                             </HBox.margin>
                         </FXLabel>
-                        <ClearableTextField tipText="用户名" fx:id="digestUser" realHeight="30" flexWidth="50% - 115"
-                        >
+                        <ClearableTextField promptText="用户名" tipText="用户名" fx:id="digestUser" realHeight="30" flexWidth="50% - 115">
                             <HBox.margin>
                                 <Insets left="10" top="10"/>
                             </HBox.margin>
                         </ClearableTextField>
-                        <ClearableTextField tipText="密码(明文)" fx:id="digestPassword" realHeight="30"
+                        <ClearableTextField promptText="密码(明文)" tipText="密码(明文)" fx:id="digestPassword" realHeight="30"
                                             flexWidth="50% - 115">
                             <HBox.margin>
                                 <Insets left="5" top="10"/>
@@ -198,8 +199,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ClearableTextField fx:id="ipContent" realHeight="30" flexWidth="100% - 335" tipText="请输入ip地址"
-                    >
+                    <ClearableTextField fx:id="ipContent" realHeight="30" flexWidth="100% - 335" promptText="请输入ip地址" tipText="请输入ip地址">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

@@ -453,32 +453,60 @@ public class ZKNodeTreeItem extends ZKTreeItem {
             MenuItem cancel = MenuItemExt.newItem("取消操作", new SVGGlyph("/font/close.svg", "11"), "取消操作", this::cancel);
             items.add(cancel);
         } else {
-            MenuItem add = MenuItemExt.newItem("添加节点", new SVGGlyph("/font/add.svg", "12"), "添加zk子节点", this::addNode);
-            MenuItem export = MenuItemExt.newItem("导出节点", new SVGGlyph("/font/export.svg", "12"), "导出此zk节点及子节点数据", this::exportNode);
-            MenuItem rename = MenuItemExt.newItem("节点更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改节点名称(快捷键f2)", this::rename);
-            MenuItem delete = MenuItemExt.newItem("删除节点", new SVGGlyph("/font/delete.svg", "12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
-            MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载此zk节点子节点", this::reloadChild);
-            MenuItem loadAll = MenuItemExt.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载此zk节点全部子节点", this::loadChildAll);
-            MenuItem expandAll = MenuItemExt.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开此zk节点全部子节点", this::expandAll);
-            MenuItem collapseAll = MenuItemExt.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩此zk节点全部子节点", this::collapseAll);
+            // MenuItem add = MenuItemExt.newItem("添加节点", new SVGGlyph("/font/add.svg", "12"), "添加zk子节点", this::addNode);
+            // MenuItem export = MenuItemExt.newItem("导出节点", new SVGGlyph("/font/export.svg", "12"), "导出此zk节点及子节点数据", this::exportNode);
+            // MenuItem rename = MenuItemExt.newItem("节点更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改节点名称(快捷键f2)", this::rename);
+            // MenuItem delete = MenuItemExt.newItem("删除节点", new SVGGlyph("/font/delete.svg", "12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
+            // MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载此zk节点子节点", this::reloadChild);
+            // MenuItem loadAll = MenuItemExt.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载此zk节点全部子节点", this::loadChildAll);
+            // MenuItem expandAll = MenuItemExt.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开此zk节点全部子节点", this::expandAll);
+            // MenuItem collapseAll = MenuItemExt.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩此zk节点全部子节点", this::collapseAll);
             MenuItem auth = MenuItemExt.newItem("认证节点", new SVGGlyph("/font/unlock.svg", "12"), "对zk节点进行认证", this::authNode);
+            //
+            // add.setDisable(this.value.ephemeral());
+            // rename.setDisable(this.value.rootNode() || this.value.parentNode() || this.value.ephemeral());
+            // delete.setDisable(this.value.rootNode());
+            // loadAll.setDisable(this.value.subNode());
+            // expandAll.setDisable(this.value.subNode());
+            // collapseAll.setDisable(this.value.subNode());
+            // export.setDisable(!this.value.hasReadPerm());
+            //
+            // items.add(add);
+            // items.add(rename);
+            // items.add(delete);
+            // items.add(export);
+            // items.add(reload);
+            // items.add(loadAll);
+            // items.add(expandAll);
+            // items.add(collapseAll);
+            // items.add(auth);
 
-            add.setDisable(this.value.ephemeral());
-            rename.setDisable(this.value.rootNode() || this.value.parentNode() || this.value.ephemeral());
-            delete.setDisable(this.value.rootNode());
-            loadAll.setDisable(this.value.subNode());
-            expandAll.setDisable(this.value.subNode());
-            collapseAll.setDisable(this.value.subNode());
-            export.setDisable(!this.value.hasReadPerm());
-
-            items.add(add);
-            items.add(rename);
-            items.add(delete);
-            items.add(export);
-            items.add(reload);
-            items.add(loadAll);
-            items.add(expandAll);
-            items.add(collapseAll);
+            if (!this.ephemeral()) {
+                MenuItem add = MenuItemExt.newItem("添加节点", new SVGGlyph("/font/add.svg", "12"), "添加zk子节点", this::addNode);
+                items.add(add);
+            }
+            if (!this.value.rootNode() && this.value.subNode() && !this.ephemeral()) {
+                MenuItem rename = MenuItemExt.newItem("节点更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改节点名称(快捷键f2)", this::rename);
+                items.add(rename);
+            }
+            if (!this.value.rootNode()) {
+                MenuItem delete = MenuItemExt.newItem("删除节点", new SVGGlyph("/font/delete.svg", "12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
+                items.add(delete);
+            }
+            if (this.value.parentNode()) {
+                MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载此zk节点子节点", this::reloadChild);
+                MenuItem loadAll = MenuItemExt.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载此zk节点全部子节点", this::loadChildAll);
+                MenuItem expandAll = MenuItemExt.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开此zk节点全部子节点", this::expandAll);
+                MenuItem collapseAll = MenuItemExt.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩此zk节点全部子节点", this::collapseAll);
+                items.add(reload);
+                items.add(loadAll);
+                items.add(expandAll);
+                items.add(collapseAll);
+            }
+            if (this.value.hasReadPerm()) {
+                MenuItem export = MenuItemExt.newItem("导出节点", new SVGGlyph("/font/export.svg", "12"), "导出此zk节点及子节点数据", this::exportNode);
+                items.add(export);
+            }
             items.add(auth);
         }
         return items;

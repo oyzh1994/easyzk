@@ -135,21 +135,21 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
         return paging;
     }
 
-    /**
-     * 是否存在此zk信息
-     *
-     * @param zkInfo zk信息
-     * @return 结果
-     */
-    public synchronized boolean exist(ZKInfo zkInfo) {
-        if (zkInfo == null) {
-            return false;
-        }
-        for (ZKInfo info : this.zkInfos) {
-            if (info.compareTo(zkInfo) == 0 && info != zkInfo) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // /**
+    //  * 是否存在此zk信息
+    //  *
+    //  * @param zkInfo zk信息
+    //  * @return 结果
+    //  */
+    // public synchronized boolean exist(ZKInfo zkInfo) {
+    //     if (zkInfo == null) {
+    //         return false;
+    //     }
+    //     for (ZKInfo info : this.zkInfos) {
+    //         if (info.compareTo(zkInfo) == 0 && info != zkInfo) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 }

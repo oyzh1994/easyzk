@@ -328,6 +328,7 @@ public class ZKConnectTreeItem extends ZKTreeItem {
     private void repeatConnect() {
         ZKInfo zkInfo = new ZKInfo();
         zkInfo.copy(this.info());
+        zkInfo.setName(this.info().getName() + "-复制");
         zkInfo.setCollects(Collections.emptyList());
         if (this.infoStore.add(zkInfo)) {
             if (this.getGroupItem() != null) {
@@ -370,13 +371,13 @@ public class ZKConnectTreeItem extends ZKTreeItem {
         }
 
         // 检查是否存在
-        String name = this.value.getName();
+        // String name = this.value.getName();
         this.value.setName(connectName);
-        if (this.infoStore.exist(this.value)) {
-            this.value.setName(name);
-            MessageBox.warn("此连接名称已存在！");
-            return;
-        }
+        // if (this.infoStore.exist(this.value)) {
+        //     this.value.setName(name);
+        //     MessageBox.warn("此连接名称已存在！");
+        //     return;
+        // }
 
         // 修改名称
         if (this.infoStore.update(this.value)) {

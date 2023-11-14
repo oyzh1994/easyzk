@@ -15,7 +15,7 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
-import cn.oyzh.fx.plus.controls.textfield.PortField;
+import cn.oyzh.fx.plus.controls.textfield.PortTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -97,7 +97,7 @@ public class ZKInfoAddController extends Controller {
      * 连接端口
      */
     @FXML
-    private PortField hostPort;
+    private PortTextField hostPort;
 
     /**
      * 单节点组件
@@ -201,12 +201,11 @@ public class ZKInfoAddController extends Controller {
             String name = this.name.getTextTrim();
             ZKInfo zkInfo = new ZKInfo();
             zkInfo.setName(name);
-            // 检查名称是否存在
-            if (this.infoStore.exist(zkInfo)) {
-                MessageBox.warn("此名称已存在！");
-                return;
-            }
-
+            // // 检查名称是否存在
+            // if (this.infoStore.exist(zkInfo)) {
+            //     MessageBox.warn("此名称已存在！");
+            //     return;
+            // }
             // String charset = this.charset.getValue();
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number sessionTimeOut = this.sessionTimeOut.getValue();

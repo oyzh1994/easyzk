@@ -106,12 +106,12 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <ZKFormatComboBox fx:id="format" initIndex="0" fontSize="11" prefWidth="120" style="-fx-padding: 0;">
+                <ZKFormatComboBox fx:id="format" initIndex="0" fontSize="11" prefWidth="95" style="-fx-padding: 0;">
                     <FlowPane.margin>
                         <Insets left="3"/>
                     </FlowPane.margin>
                 </ZKFormatComboBox>
-                <FXLabel text="字符集" fontSize="11">
+                <FXLabel text="字符" fontSize="11">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -438,7 +438,9 @@
                         </HBox.margin>
                     </FXLabel>
                     <NumberTextField fx:id="quotaNum" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
-                                     tipText="设置节点配额子节点数量，-1代表无限制">
+                                     promptText="设置节点配额子节点数量，-1代表无限制"
+                                     tipText="设置节点配额子节点数量，-1代表无限制"
+                    >
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
@@ -460,7 +462,9 @@
                         </HBox.margin>
                     </FXLabel>
                     <NumberTextField fx:id="quotaBytes" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
-                                     tipText="设置节点配额总数据大小，单位字节，-1代表无限制">
+                                     promptText="设置节点配额总数据大小，单位字节，-1代表无限制"
+                                     tipText="设置节点配额总数据大小，单位字节，-1代表无限制"
+                    >
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>

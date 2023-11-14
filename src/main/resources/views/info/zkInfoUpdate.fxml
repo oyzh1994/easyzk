@@ -57,7 +57,7 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <PortField realWidth="134" fx:id="hostPort"
+                    <PortTextField realWidth="134" fx:id="hostPort"
                                promptText="端口号(1-65535)"
                                tipText="端口号(1-65535)"
                                realHeight="30"
@@ -65,7 +65,7 @@
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
-                    </PortField>
+                    </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="140" fx:id="hostBox2" visible="false" managed="false">
                     <FXLabel realHeight="30" realWidth="65" text="集群地址" styleClass="lbl,lbl-primary">

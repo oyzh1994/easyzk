@@ -14,7 +14,8 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ClearableTextField fx:id="user" realHeight="30" flexWidth="100% - 140" require="true" promptText="认证用户名"
+        <ClearableTextField fx:id="user" realHeight="30" flexWidth="100% - 140" require="true"
+                            promptText="认证用户名"
                             tipText="认证用户名">
             <HBox.margin>
                 <Insets left="10" top="10"/>

@@ -178,9 +178,10 @@ public class ZKRootTreeItem extends ZKTreeItem implements ZKConnectManager {
             List<ZKInfo> zkInfos = export.getConnects();
             if (CollUtil.isNotEmpty(zkInfos)) {
                 for (ZKInfo zkInfo : zkInfos) {
-                    if (this.infoStore.exist(zkInfo)) {
-                        MessageBox.warn("连接[" + zkInfo.getName() + "]已存在");
-                    } else if (this.infoStore.add(zkInfo)) {
+                    // if (this.infoStore.exist(zkInfo)) {
+                    //     MessageBox.warn("连接[" + zkInfo.getName() + "]已存在");
+                    // } else
+                    if (this.infoStore.add(zkInfo)) {
                         this.addConnect(zkInfo);
                     } else {
                         MessageBox.warn("连接[" + zkInfo.getName() + "]导入失败");

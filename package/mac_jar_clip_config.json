@@ -4,11 +4,11 @@
   "retainTemp": false,
   "delEmptyJar": true,
   "excludeJars": [
-    "javafx-fxml-20.0.1-win.jar",
-    "javafx-fxml-20.0.1-linux.jar",
-    "javafx-controls-20.0.1-win.jar",
-    "javafx-controls-20.0.1-linux.jar",
-    "javafx-graphics-20.0.1-win.jar",
-    "javafx-graphics-20.0.1-linux.jar"
+    "javafx-fxml-21.0.1-win.jar",
+    "javafx-fxml-21.0.1-linux.jar",
+    "javafx-controls-21.0.1-win.jar",
+    "javafx-controls-21.0.1-linux.jar",
+    "javafx-graphics-21.0.1-win.jar",
+    "javafx-graphics-21.0.1-linux.jar"
   ]
 }

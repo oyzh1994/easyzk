@@ -1,12 +1,12 @@
 {
   "vendor": "oyzh",
-  "version": "v1.5.8",
+  "version": "v1.5.9",
   "platform": "win_amd64",
-  "jarPath": "D:\\Workspaces\\OYZH\\moudle\\easyzk\\target\\easyzk-1.5.8.jar",
+  "jarPath": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.5.9.jar",
   "destPath": "D:\\Package\\EasyZK\\EasyZK",
   "mainClass": "cn.oyzh.easyzk.EasyZKApp",
   "appName": "EasyZK",
   "executable": "EasyZK",
   "compressType": "zip",
-  "appIcon": "D:\\Workspaces\\OYZH\\moudle\\easyzk\\resource\\zookeeper.ico"
+  "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zookeeper.ico"
 }

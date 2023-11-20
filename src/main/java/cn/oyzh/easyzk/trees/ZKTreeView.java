@@ -5,13 +5,11 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.msg.ZKAuthMsg;
-import cn.oyzh.easyzk.msg.ZKMsg;
-import cn.oyzh.easyzk.msg.ZKNodeAddMsg;
-import cn.oyzh.easyzk.msg.ZKNodeAddedMsg;
-import cn.oyzh.easyzk.msg.ZKNodeDeletedMsg;
-import cn.oyzh.easyzk.msg.ZKNodeUpdatedMsg;
-import cn.oyzh.easyzk.msg.ZKSearchFinishMsg;
+import cn.oyzh.easyzk.event.msg.ZKAuthMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeAddMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeAddedMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.common.spring.SpringUtil;
@@ -19,6 +17,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventGroup;
+import cn.oyzh.fx.plus.event.EventMsg;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
@@ -177,8 +176,8 @@ public class ZKTreeView extends RichTreeView {
      * @param event 事件
      */
     @EventGroup(value = ZKEventGroups.NODE_MSG, async = true, verbose = true)
-    private void zkNodeMsg(Event<ZKMsg> event) {
-        ZKMsg msg = event.data();
+    private void zkNodeMsg(Event<EventMsg> event) {
+        EventMsg msg = event.data();
         ThreadUtil.startVirtual(new Task() {
             @Override
             public void onStart() {

@@ -1,10 +1,11 @@
-package cn.oyzh.easyzk.msg;
+package cn.oyzh.easyzk.event.msg;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.plus.event.EventMsg;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -19,7 +20,7 @@ import java.nio.charset.Charset;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKNodeAddedMsg implements ZKMsg {
+public class ZKNodeAddedMsg implements EventMsg {
 
     private final String name = ZKEventTypes.ZK_NODE_ADDED;
 

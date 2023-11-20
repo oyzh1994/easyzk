@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.msg.ZKNodeAddedMsg;
-import cn.oyzh.easyzk.msg.ZKNodeDeletedMsg;
-import cn.oyzh.easyzk.msg.ZKNodeUpdatedMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeAddedMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventBuilder;
 import cn.oyzh.fx.plus.event.EventUtil;

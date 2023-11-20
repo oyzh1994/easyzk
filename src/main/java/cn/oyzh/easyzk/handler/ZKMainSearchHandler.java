@@ -14,6 +14,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
+import cn.oyzh.fx.plus.controls.rich.RichControlUtil;
 import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.TreeViewUtil;
 import javafx.scene.control.TreeItem;
@@ -314,7 +315,7 @@ public class ZKMainSearchHandler {
         }
         this.currentItem = item;
         // 取消文本组件的选中
-        ControlUtil.deselect(this.dataNode);
+        RichControlUtil.deselect(this.dataNode);
         // 清除索引信息
         if (item == null) {
             this.index = 0;
@@ -371,7 +372,7 @@ public class ZKMainSearchHandler {
             this.dataIndex = 0;
             this.pathIndex = 0;
             ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
-            ControlUtil.deselect(this.dataNode);
+            RichControlUtil.deselect(this.dataNode);
             ControlUtil.deselect(value.text());
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -2,17 +2,17 @@ package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
-import cn.oyzh.easyzk.msg.TreeGraphicChangedMsg;
-import cn.oyzh.easyzk.msg.TreeGraphicColorChangedMsg;
-import cn.oyzh.easyzk.msg.ZKConnectionClosedMsg;
-import cn.oyzh.easyzk.msg.ZKTerminalCloseMsg;
-import cn.oyzh.easyzk.msg.ZKTerminalOpenMsg;
+import cn.oyzh.easyzk.event.msg.TreeGraphicChangedMsg;
+import cn.oyzh.easyzk.event.msg.TreeGraphicColorChangedMsg;
+import cn.oyzh.easyzk.event.msg.ZKConnectionClosedMsg;
+import cn.oyzh.easyzk.event.msg.ZKTerminalCloseMsg;
+import cn.oyzh.easyzk.event.msg.ZKTerminalOpenMsg;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
 import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.event.Event;
@@ -106,21 +106,21 @@ public class ZKTabPane extends DynamicTabPane {
     }
 
     /**
-     * zk终端打开事件
+     * 终端打开事件
      *
      * @param event 事件
      */
-    @EventReceiver(value = ZKEventTypes.ZK_OPEN_TERMINAL, async = true, verbose = true)
+    @EventReceiver(value = ZKEventTypes.ZK_OPEN_TERMINAL, async = true, verbose = true, fxThread = true)
     private void openTerminal(Event<ZKTerminalOpenMsg> event) {
         this.initTerminalTab(event.data().info());
     }
 
     /**
-     * zk终端关闭事件
+     * 终端关闭事件
      *
      * @param event 事件
      */
-    @EventReceiver(value = ZKEventTypes.ZK_CLOSE_TERMINAL, async = true, verbose = true)
+    @EventReceiver(value = ZKEventTypes.ZK_CLOSE_TERMINAL, async = true, verbose = true, fxThread = true)
     private void closeTerminal(Event<ZKTerminalCloseMsg> event) {
         try {
             // 寻找节点

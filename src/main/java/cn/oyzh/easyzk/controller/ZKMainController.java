@@ -6,10 +6,8 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.msg.ZKInfoUpdatedMsg;
-import cn.oyzh.easyzk.msg.ZKMsg;
-import cn.oyzh.easyzk.msg.ZKMsgFormat;
-import cn.oyzh.easyzk.msg.ZKSearchFinishMsg;
+import cn.oyzh.easyzk.event.msg.ZKInfoUpdatedMsg;
+import cn.oyzh.easyzk.event.msg.ZKSearchFinishMsg;
 import cn.oyzh.easyzk.store.PageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
@@ -27,6 +25,8 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventGroup;
+import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.EventMsgFormatter;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -433,9 +433,9 @@ public class ZKMainController extends ParentController {
     @EventGroup(value = ZKEventGroups.NODE_ACTION, async = true, verbose = true)
     @EventGroup(value = ZKEventGroups.INFO_ACTION, async = true, verbose = true)
     @EventGroup(value = ZKEventGroups.CONNECTION_ACTION, async = true, verbose = true)
-    private void onZKMsg(Event<ZKMsg> event) {
-        if (event.data() instanceof ZKMsgFormat format) {
-            String formatMsg = format.formatMsg();
+    private void onZKMsg(Event<EventMsg> event) {
+        if (event.data() instanceof EventMsgFormatter formatter) {
+            String formatMsg = formatter.formatMsg();
             if (formatMsg != null) {
                 this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
             }

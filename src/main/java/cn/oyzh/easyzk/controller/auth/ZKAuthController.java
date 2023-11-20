@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
-import cn.oyzh.easyzk.msg.ZKAuthMsg;
+import cn.oyzh.easyzk.event.msg.ZKAuthMsg;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;

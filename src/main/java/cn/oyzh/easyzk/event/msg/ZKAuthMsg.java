@@ -1,8 +1,9 @@
-package cn.oyzh.easyzk.msg;
+package cn.oyzh.easyzk.event.msg;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
+import cn.oyzh.fx.plus.event.EventMsg;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKAuthMsg implements ZKMsg {
+public class ZKAuthMsg implements EventMsg {
 
     @Setter
     private String user;

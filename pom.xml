@@ -10,13 +10,13 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
+    <version>1.6.0</version>
+    <artifactId>easyzk</artifactId>
+    <description>zookeeper的可视化操作、导入导出、传输、命令行功能</description>
+
     <properties>
         <curator-version>4.3.0</curator-version>
     </properties>
-
-    <version>1.6.0</version>
-    <artifactId>easyzk</artifactId>
-    <description>zookeeper的管理，增强能力</description>
 
     <dependencies>
         <!-- json类库 -->

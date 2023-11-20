@@ -1,8 +1,9 @@
-package cn.oyzh.easyzk.msg;
+package cn.oyzh.easyzk.event.msg;
 
 import cn.oyzh.easyzk.dto.ZKSearchParam;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.fx.plus.event.EventMsg;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKSearchStartMsg implements ZKMsg {
+public class ZKSearchStartMsg implements EventMsg {
 
     private final String name = ZKEventTypes.ZK_SEARCH_START;
 

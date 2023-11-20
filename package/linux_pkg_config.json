@@ -1,13 +1,40 @@
 {
-  "vendor": "oyzh",
-  "version": "v1.5.9",
-  "platform": "linux_amd64",
-  "jarPath": "D:\\Workspaces\\OYZH\\Web\\easypanel\\easyzk\\target\\easyzk-1.0.jar",
-  "jrePath": "D:\\Package\\EasyZK\\linux_amd64_jre",
-  "destPath": "D:\\Package\\EasyZK\\EasyZK_linux",
-  "mainClass": "org.springframework.boot.loader.JarLauncher",
-  "appName": "EasyZK",
-  "executable": "EasyZK",
-  "compressType": "tar.gz",
-  "appIcon": "D:\\Workspaces\\OYZH\\Web\\easypanel\\easyzk\\resource\\zookeeper_512x512.png"
+  "enable": true,
+  "package": {
+    "enable": true,
+    "compressType": "tar.gz",
+    "platform": "linux_amd64",
+    "jrePath": "D:\\Package\\EasyZK\\linux_amd64_jre.zip",
+    "mainClass": "org.springframework.boot.loader.JarLauncher",
+    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.png"
+  },
+  "jlink": {
+    "enable": false,
+    "output": "/home/oyzh/Desktop/Package/EasyZK/jre",
+    "excludeFiles": [
+      "**libjawt.so",
+      "**libj2gss.so",
+      "**libjsound.so",
+      "**libjavajpeg.so",
+      "**libprefs.so",
+      "**libsplashscreen.so",
+      "**liblcms.so",
+      "**libjavaw.so",
+      "**jrunscript"
+    ]
+  },
+  "jre_clip": {
+    "enable": false
+  },
+  "jar_clip": {
+    "enable": true,
+    "excludeJars": [
+      "javafx-fxml-21.0.1-mac.jar",
+      "javafx-fxml-21.0.1-win.jar",
+      "javafx-controls-21.0.1-mac.jar",
+      "javafx-controls-21.0.1-win.jar",
+      "javafx-graphics-21.0.1-mac.jar",
+      "javafx-graphics-21.0.1-win.jar"
+    ]
+  }
 }

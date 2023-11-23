@@ -74,7 +74,7 @@ public class ZKMainController extends ParentController {
      * 左侧组件
      */
     @FXML
-    private FlexTabPane zkMainLeft;
+    private FlexTabPane tabPaneLeft;
 
     /**
      * 大小调整增强
@@ -149,8 +149,8 @@ public class ZKMainController extends ParentController {
      */
     @FXML
     private void sortAsc() {
-        this.sortDesc.disappear();
-        this.sortAsc.display();
+        this.sortAsc.disappear();
+        this.sortDesc.display();
         this.tree.sortAsc();
     }
 
@@ -159,8 +159,8 @@ public class ZKMainController extends ParentController {
      */
     @FXML
     private void sortDesc() {
-        this.sortAsc.disappear();
-        this.sortDesc.display();
+        this.sortDesc.disappear();
+        this.sortAsc.display();
         this.tree.sortDesc();
     }
 
@@ -257,10 +257,10 @@ public class ZKMainController extends ParentController {
     private void resizeMainLeft(Double newWidth) {
         if (newWidth != null && !Double.isNaN(newWidth)) {
             // 设置组件宽
-            this.zkMainLeft.setRealWidth(newWidth);
+            this.tabPaneLeft.setRealWidth(newWidth);
             this.tabPane.setLayoutX(newWidth);
             this.tabPane.setFlexWidth("100% - " + newWidth);
-            this.zkMainLeft.parentAutosize();
+            this.tabPaneLeft.parentAutosize();
         }
     }
 
@@ -275,7 +275,7 @@ public class ZKMainController extends ParentController {
      */
     private void savePageResize() {
         if (this.setting.isRememberPageResize()) {
-            this.pageInfo.setMainLeftWidth(this.zkMainLeft.getMinWidth());
+            this.pageInfo.setMainLeftWidth(this.tabPaneLeft.getMinWidth());
             this.pageInfoStore.update(this.pageInfo);
         }
     }
@@ -321,7 +321,7 @@ public class ZKMainController extends ParentController {
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);
         // 拖动改变zk树大小处理
-        this.resizeEnhance = new ResizeEnhance(this.zkMainLeft, Cursor.DEFAULT);
+        this.resizeEnhance = new ResizeEnhance(this.tabPaneLeft, Cursor.DEFAULT);
         this.resizeEnhance.minWidth(390d);
         this.resizeEnhance.maxWidth(800d);
         this.resizeEnhance.triggerThreshold(8d);
@@ -382,11 +382,11 @@ public class ZKMainController extends ParentController {
      */
     @EventReceiver(value = ZKEventTypes.LEFT_EXTEND, async = true, verbose = true)
     private void leftExtend() {
-        this.zkMainLeft.display();
-        double w = this.zkMainLeft.getMinWidth();
+        this.tabPaneLeft.display();
+        double w = this.tabPaneLeft.getMinWidth();
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
-        this.zkMainLeft.parentAutosize();
+        this.tabPaneLeft.parentAutosize();
         log.info("LEFT_EXTEND.");
     }
 
@@ -395,10 +395,10 @@ public class ZKMainController extends ParentController {
      */
     @EventReceiver(value = ZKEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
     private void leftCollapse() {
-        this.zkMainLeft.disappear();
+        this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
-        this.zkMainLeft.parentAutosize();
+        this.tabPaneLeft.parentAutosize();
         log.info("LEFT_COLLAPSE.");
     }
 

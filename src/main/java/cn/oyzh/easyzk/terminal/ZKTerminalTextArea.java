@@ -55,7 +55,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     }
 
     /**
-     * redis客户端连接状态监听器
+     * 客户端连接状态监听器
      */
     private ChangeListener<ZKConnState> connStateChangeListener;
 
@@ -71,7 +71,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     /**
      * 初始化
      *
-     * @param client redis客户端
+     * @param client 客户端
      */
     public void init(@NonNull ZKClient client) {
         this.client = client;

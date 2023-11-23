@@ -7,8 +7,8 @@ import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.exception.ZKException;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -23,7 +23,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupManage;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -59,7 +59,6 @@ import java.util.List;
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLAdd.fxml"
 )
 public class ZKACLAddController extends Controller {
-
 
     /**
      * zk树节点
@@ -195,11 +194,7 @@ public class ZKACLAddController extends Controller {
     @FXML
     private void copyDigestText() {
         String data = this.digestText.getText();
-        if (FXUtil.clipboardCopy(data)) {
-            MessageBox.okToast("已复制摘要信息到剪贴板");
-        } else {
-            MessageBox.warn("复制摘要信息到剪贴板失败！");
-        }
+        ClipboardUtil.setStringAndTip(data, "摘要信息");
     }
 
     /**

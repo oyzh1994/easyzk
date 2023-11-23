@@ -25,15 +25,15 @@ import org.springframework.stereotype.Component;
 public class ZKTerminalTabContent extends DynamicTabController {
 
     /**
-     * redis命令行文本域
+     * 命令行文本域
      */
     @FXML
     private ZKTerminalTextArea terminal;
 
     /**
-     * 设置redis客户端
+     * 设置客户端
      *
-     * @param client redis客户端
+     * @param client 客户端
      */
     public void client(@NonNull ZKClient client) {
         this.terminal.init(client);

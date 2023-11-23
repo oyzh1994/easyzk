@@ -7,7 +7,7 @@ import cn.oyzh.fx.terminal.util.TerminalManager;
 import java.util.List;
 
 /**
- * redis终端提示器
+ * 终端提示器
  *
  * @author oyzh
  * @since 2023/7/24

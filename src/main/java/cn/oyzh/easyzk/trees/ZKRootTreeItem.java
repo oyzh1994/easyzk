@@ -298,21 +298,21 @@ public class ZKRootTreeItem extends ZKTreeItem implements ZKConnectManager {
         return items;
     }
 
-    @Override
-    public void sortAsc() {
-        this.sortType = 0;
-        for (ZKGroupTreeItem groupItem : this.getGroupItems()) {
-            groupItem.sortAsc();
-        }
-    }
-
-    @Override
-    public void sortDesc() {
-        this.sortType = 1;
-        for (ZKGroupTreeItem groupItem : this.getGroupItems()) {
-            groupItem.sortDesc();
-        }
-    }
+    // @Override
+    // public void sortAsc() {
+    //     this.sortType = 0;
+    //     for (ZKGroupTreeItem groupItem : this.getGroupItems()) {
+    //         groupItem.sortAsc();
+    //     }
+    // }
+    //
+    // @Override
+    // public void sortDesc() {
+    //     this.sortType = 1;
+    //     for (ZKGroupTreeItem groupItem : this.getGroupItems()) {
+    //         groupItem.sortDesc();
+    //     }
+    // }
 
     @Override
     public void doFilter(RichTreeItemFilter itemFilter) {

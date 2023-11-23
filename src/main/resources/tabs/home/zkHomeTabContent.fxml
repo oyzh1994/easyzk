@@ -8,7 +8,7 @@
 <FlexPane styleClass="panel,panel-primary" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.tabs.home.ZKHomeTabContent">
-    <ImageView fitWidth="120" fitHeight="120" layoutX="120" layoutY="120">
+    <ImageView fitWidth="200" fitHeight="200" layoutX="50" layoutY="100">
         <Image url="/image/zoo.png"/>
     </ImageView>
     <FXText text="欢迎使用EasyZK！" layoutX="260" layoutY="150" fontSize="30"/>

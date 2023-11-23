@@ -30,6 +30,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -409,23 +410,11 @@ public class ZKNodeTabContent extends DynamicTabController {
             SVGGlyph glyph = (SVGGlyph) event.getTarget();
             ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
             ZKACL acl = aclVBox.acl();
-            StringBuilder builder = new StringBuilder();
-            builder.append(acl.idFriend().getName(this.aclViewSwitch.isSelected()))
-                    .append(" : ")
-                    .append(acl.idFriend().getValue(this.aclViewSwitch.isSelected()))
-                    .append(System.lineSeparator())
-                    .append(acl.schemeFriend().getName(this.aclViewSwitch.isSelected()))
-                    .append(" : ")
-                    .append(acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()))
-                    .append(System.lineSeparator())
-                    .append(acl.permsFriend().getName(this.aclViewSwitch.isSelected()))
-                    .append(" : ")
-                    .append(acl.permsFriend().getValue(this.aclViewSwitch.isSelected()));
-            if (FXUtil.clipboardCopy(builder.toString())) {
-                MessageBox.okToast("已复制权限信息到粘贴板");
-            } else {
-                MessageBox.warn("复制权限信息失败");
-            }
+            String builder = acl.idFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.idFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
+                    acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " +
+                    acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
+                    acl.permsFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.permsFriend().getValue(this.aclViewSwitch.isSelected());
+            ClipboardUtil.setStringAndTip(builder, "权限信息");
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex, "复制权限信息异常");
@@ -583,11 +572,7 @@ public class ZKNodeTabContent extends DynamicTabController {
                 builder.append(System.lineSeparator());
             }
         }
-        if (FXUtil.clipboardCopy(builder.toString())) {
-            MessageBox.okToast("已复制节点状态到剪贴板");
-        } else {
-            MessageBox.warn("复制节点状态到剪贴板失败！");
-        }
+        ClipboardUtil.setStringAndTip(builder.toString(), "节点状态");
     }
 
     /**
@@ -625,11 +610,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private void copyNode() {
         String data = this.treeItem.decodeNodePath() + " " + this.nodeData.getTextTrim();
-        if (FXUtil.clipboardCopy(data)) {
-            MessageBox.okToast("已复制节点到粘贴板");
-        } else {
-            MessageBox.warn("复制节点到粘贴板失败");
-        }
+        ClipboardUtil.setStringAndTip(data, "节点");
     }
 
     /**
@@ -637,11 +618,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     @FXML
     private void copyNodePath() {
-        if (FXUtil.clipboardCopy(this.treeItem.decodeNodePath())) {
-            MessageBox.okToast("已复制节点路径到粘贴板");
-        } else {
-            MessageBox.warn("复制节点路径到粘贴板失败");
-        }
+        ClipboardUtil.setStringAndTip(this.treeItem.decodeNodePath(), "节点路径");
     }
 
     /**
@@ -903,7 +880,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private void saveQuota() {
         try {
-            this.treeItem.saveQuota(this.quotaBytes.getValue(), (int) this.quotaNum.getValue());
+            this.treeItem.saveQuota(this.quotaBytes.getValue(), this.quotaNum.getValue().intValue());
             MessageBox.info("配额已保存");
         } catch (Exception ex) {
             MessageBox.exception(ex);

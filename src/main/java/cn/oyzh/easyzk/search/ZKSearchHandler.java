@@ -42,7 +42,7 @@ import java.util.function.Consumer;
 @Lazy
 @Component
 @Accessors(chain = true, fluent = true)
-public class ZKMainSearchHandler {
+public class ZKSearchHandler {
 
     /**
      * 节点索引

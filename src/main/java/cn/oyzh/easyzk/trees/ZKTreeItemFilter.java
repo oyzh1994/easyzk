@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.search.ZKSearchParam;
-import cn.oyzh.easyzk.search.ZKMainSearchHandler;
+import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -52,7 +52,7 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
      * zk主页搜索处理
      */
     @Autowired
-    private ZKMainSearchHandler searchHandler;
+    private ZKSearchHandler searchHandler;
 
     /**
      * 过滤内容列表

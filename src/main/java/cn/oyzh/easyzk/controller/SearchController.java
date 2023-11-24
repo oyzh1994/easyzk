@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
-import cn.oyzh.easyzk.search.ZKMainSearchHandler;
+import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -162,7 +162,7 @@ public class SearchController extends SubController {
      * zk主页搜索处理
      */
     @Autowired
-    private ZKMainSearchHandler searchHandler;
+    private ZKSearchHandler searchHandler;
 
     /**
      * 搜索历史储存

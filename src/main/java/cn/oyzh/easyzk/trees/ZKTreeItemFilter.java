@@ -78,7 +78,7 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
             // 判断是否满足搜索要求
             ZKSearchParam param = this.searchHandler.searchParam();
             if (param != null && param.isFilterMode() && !param.isEmpty()) {
-                return this.searchHandler.isMatchParam(item) != null;
+                return this.searchHandler.getMatchType(item) != null;
             }
 
             ZKNode node = treeItem.value();

@@ -13,8 +13,10 @@ import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.rich.RichControlUtil;
-import cn.oyzh.fx.plus.search.SearchResult;
+import cn.oyzh.fx.plus.search.SearchHandler;
+import cn.oyzh.fx.plus.search.SearchParam;
 import cn.oyzh.fx.plus.search.SearchValue;
+import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.TreeViewUtil;
 import javafx.scene.control.TreeItem;
@@ -42,17 +44,7 @@ import java.util.function.Consumer;
 @Lazy
 @Component
 @Accessors(chain = true, fluent = true)
-public class ZKSearchHandler {
-
-    /**
-     * 节点索引
-     */
-    private Integer index;
-
-    /**
-     * 最后操作
-     */
-    private String lastAction;
+public class ZKSearchHandler extends SearchHandler {
 
     /**
      * 路径索引
@@ -70,34 +62,20 @@ public class ZKSearchHandler {
     private ZKTabPane tabPane;
 
     /**
-     * 数据组件
-     */
-    private FlexRichTextArea dataNode;
-
-    /**
-     * 当前搜索节点
-     */
-    @Getter
-    private TreeItem<?> currentItem;
-
-    /**
-     * 当前搜索参数
-     */
-    @Getter
-    private ZKSearchParam searchParam;
-
-    /**
      * 树组件
      */
     private ZKTreeView treeNode;
 
     /**
-     * 当前搜索结果
+     * 数据组件
      */
-    private SearchResult searchResult;
+    private FlexRichTextArea dataNode;
 
     /**
-     * 搜索开始
+     * 初始化
+     *
+     * @param treeNode zk树组件
+     * @param tabPane  zk面板组件
      */
     public void init(@NonNull ZKTreeView treeNode, @NonNull ZKTabPane tabPane) {
         this.index = 0;
@@ -105,81 +83,23 @@ public class ZKSearchHandler {
         this.treeNode = treeNode;
     }
 
-    /**
-     * 清除搜索
-     */
-    public void clear() {
-        this.resetSearch();
-        this.currentItem = null;
-        this.searchParam = null;
-        this.searchResult = null;
+    @Override
+    public ZKSearchParam searchParam() {
+        return (ZKSearchParam) super.searchParam();
     }
 
-    /**
-     * 重置搜索
-     */
-    private void resetSearch() {
-        this.index = 0;
-        this.updateCurrentItem(null);
+    @Override
+    protected void resetSearch() {
+        super.resetSearch();
         this.pathIndex = null;
         this.dataIndex = null;
-        this.lastAction = null;
     }
 
-    /**
-     * 预搜索
-     *
-     * @param param 搜索参数
-     */
-    public void preSearch(ZKSearchParam param) {
+    @Override
+    public void preSearch(SearchParam param) {
         this.treeNode.disable();
-        // 初始化搜索参数
-        if (this.searchParam == null || !this.searchParam.equalsTo(param)) {
-            this.searchParam = param;
-            this.resetSearch();
-        }
-        // 获取匹配节点
-        List<SearchValue> matchItems = this.getMatchValues();
-        // 更新搜索信息
-        this.searchResult().setIndex(0);
-        this.searchResult().setMatchType(null);
-        this.searchResult().setCount(matchItems.size());
+        super.preSearch(param);
         this.treeNode.enable();
-    }
-
-    /**
-     * 更新搜索结果
-     */
-    public void updateResult() {
-        // 初始化搜索参数
-        if (this.searchParam != null) {
-            // 获取匹配节点
-            List<SearchValue> matchItems = this.getMatchValues();
-            // 更新搜索信息
-            this.searchResult().setCount(matchItems.size());
-            if (matchItems.isEmpty()) {
-                this.searchResult().setIndex(0);
-                this.searchResult().setMatchType(null);
-            }
-        }
-    }
-
-    /**
-     * 搜索下一个
-     *
-     * @param param 搜索参数
-     */
-    public void searchNext(ZKSearchParam param) {
-        this.doSearch(param, "next");
-    }
-
-    /**
-     * 搜索上一个
-     *
-     * @param param 搜索参数
-     */
-    public void searchPrev(ZKSearchParam param) {
-        this.doSearch(param, "prev");
     }
 
     /**
@@ -229,153 +149,50 @@ public class ZKSearchHandler {
         ExecutorUtil.start(task, 50);
     }
 
-    /**
-     * 执行搜索
-     *
-     * @param param  搜索参数
-     * @param action 操作
-     */
-    private void doSearch(ZKSearchParam param, String action) {
-        // 禁用树
+    @Override
+    protected void doSearch(SearchParam param, String action) {
         this.treeNode.disable();
-        try {
-            // 初始化搜索参数
-            if (this.searchParam == null || !this.searchParam.equalsTo(param)) {
-                this.searchParam = param;
-                this.resetSearch();
-            }
-            // 获取匹配节点
-            List<SearchValue> matchItems = this.getMatchValues();
-            // 更新搜索信息
-            this.searchResult().setCount(matchItems.size());
-            // 内容为空
-            if (matchItems.isEmpty()) {
-                // 更新节点
-                this.updateCurrentItem(null);
-                return;
-            }
-            // 操作不一致，更新索引
-            if (this.lastAction != null && !Objects.equals(action, this.lastAction)) {
-                this.index = "next".equals(this.lastAction) ? this.index - 2 : this.index + 2;
-            }
-            // 重置索引位置
-            if (this.index >= matchItems.size()) {
-                this.index = 0;
-            } else if (this.index < 0) {
-                this.index = matchItems.size() - 1;
-            }
-            // 数据排序
-            matchItems.sort(Comparator.comparing(SearchValue::getLevel));
-            // 获取索引数据
-            SearchValue itemExt = matchItems.get("next".equals(action) ? this.index++ : this.index--);
-            // 获取节点
-            TreeItem<?> item = itemExt.getItem();
-            // 更新节点
-            this.updateCurrentItem(item);
-            // 展开其父节点
-            TreeViewUtil.expandAll(item.getParent());
-            // 选中并滚动到此节点
-            this.treeNode.selectAndScroll(item);
-            // 更新搜索结果及参数
-            this.searchResult().setMatchType(itemExt.getMatchType());
-            this.searchResult().setIndex("next".equals(action) ? this.index : this.index + 2);
-            this.lastAction = action;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            this.treeNode.enable();
-        }
+        super.doSearch(param, action);
+        this.treeNode.enable();
     }
 
-    /**
-     * 获取当前搜索结果
-     *
-     * @return 搜索结果
-     */
-    public SearchResult searchResult() {
-        if (this.searchResult == null) {
-            this.searchResult = new SearchResult();
-        }
-        return this.searchResult;
+    @Override
+    protected void applyValue(SearchValue value, String action) {
+        super.applyValue(value, action);
+        // 选中并滚动到此节点
+        this.treeNode.selectAndScroll(value.getItem());
     }
 
-    /**
-     * 更新当前节点
-     *
-     * @param item 节点
-     */
-    private void updateCurrentItem(TreeItem<?> item) {
-        this.pathIndex = 0;
-        this.dataIndex = 0;
-        // 取消文本选中
-        if (this.currentItem != null) {
-            ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
-            ControlUtil.deselect(value.text());
-        }
-        this.currentItem = item;
+    @Override
+    protected void updateCurrentItem(TreeItem<?> item) {
         // 取消文本组件的选中
         RichControlUtil.deselect(this.dataNode);
-        // 清除索引信息
-        if (item == null) {
-            this.index = 0;
-            this.searchResult().setIndex(0);
-            this.searchResult().setMatchType(null);
-        }
+        this.pathIndex = 0;
+        this.dataIndex = 0;
+        super.updateCurrentItem(item);
     }
 
-    /**
-     * 获取匹配的节点列表
-     *
-     * @return 匹配的节点列表，扩展了属性
-     */
-    private List<SearchValue> getMatchValues() {
+    @Override
+    protected List<SearchValue> getMatchValues() {
         // 全部节点
         List<TreeItem<?>> allItem = TreeViewUtil.getAllItem(this.treeNode);
-        if (CollUtil.isEmpty(allItem)) {
-            return Collections.emptyList();
+        if (CollUtil.isNotEmpty(allItem)) {
+            List<SearchValue> items = new ArrayList<>(allItem.size());
+            for (TreeItem<?> item : allItem) {
+                // 获取匹配类型
+                String matchType = this.getMatchType(item);
+                if (matchType != null) {
+                    // 生成对象
+                    SearchValue searchValue = new SearchValue();
+                    searchValue.setItem(item);
+                    searchValue.setMatchType(matchType);
+                    searchValue.setLevel(this.treeNode.getTreeItemLevel(item));
+                    items.add(searchValue);
+                }
+            }
+            return items;
         }
-        List<SearchValue> items = new ArrayList<>(allItem.size());
-        for (TreeItem<?> item : allItem) {
-            // 获取匹配类型
-            String matchType = this.isMatchParam(item);
-            if (matchType != null) {
-                // 生成对象
-                SearchValue itemExt = new SearchValue();
-                itemExt.setItem(item);
-                itemExt.setMatchType(matchType);
-                itemExt.setLevel(this.treeNode.getTreeItemLevel(item));
-                items.add(itemExt);
-            }
-        }
-        return items;
-    }
-
-    /**
-     * 执行分析
-     */
-    public void doAnalyse() {
-        try {
-            // 判断节点是否存在
-            if (this.currentItem == null) {
-                return;
-            }
-            // 执行路径分析
-            if (this.searchParam.isSearchPath() && this.pathIndex != -100 && this.pathAnalyse()) {
-                return;
-            }
-            // 执行数据分析
-            if (this.searchParam.isSearchData() && this.dataIndex != -100 && this.dataAnalyse()) {
-                return;
-            }
-            // 初始化索引及文本组件
-            this.dataIndex = 0;
-            this.pathIndex = 0;
-            ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
-            RichControlUtil.deselect(this.dataNode);
-            ControlUtil.deselect(value.text());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        return Collections.emptyList();
     }
 
     /**
@@ -390,6 +207,35 @@ public class ZKSearchHandler {
             return itemTab.getDataNode();
         }
         return null;
+    }
+
+    /**
+     * 执行分析
+     */
+    @Override
+    public void doAnalyse() {
+        try {
+            // 判断节点是否存在
+            if (this.currentItem == null) {
+                return;
+            }
+            // 执行路径分析
+            if (this.searchParam().isSearchPath() && this.pathIndex != -100 && this.pathAnalyse()) {
+                return;
+            }
+            // 执行数据分析
+            if (this.searchParam().isSearchData() && this.dataIndex != -100 && this.dataAnalyse()) {
+                return;
+            }
+            // 初始化索引及文本组件
+            this.dataIndex = 0;
+            this.pathIndex = 0;
+            ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
+            RichControlUtil.deselect(this.dataNode);
+            ControlUtil.deselect(value.text());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -448,24 +294,19 @@ public class ZKSearchHandler {
         return false;
     }
 
-    /**
-     * 是否满足参数
-     *
-     * @param item 节点
-     * @return 匹配类型
-     */
-    public String isMatchParam(TreeItem<?> item) {
+    @Override
+    public String getMatchType(TreeItem<?> item) {
         if (item == null || this.searchParam == null) {
             return null;
         }
         boolean m1 = false, m2 = false;
         // 路径
-        if (this.searchParam.isSearchPath() && item instanceof ZKTreeItem<?> treeItem) {
+        if (this.searchParam().isSearchPath() && item instanceof RichTreeItem<?> treeItem) {
             String value = treeItem.getValue().name();
             m1 = this.searchParam.isMatch(value);
         }
         // 数据
-        if (this.searchParam.isSearchData() && item instanceof ZKNodeTreeItem treeItem) {
+        if (this.searchParam().isSearchData() && item instanceof ZKNodeTreeItem treeItem) {
             String data = treeItem.dataStr();
             m2 = this.searchParam.isMatch(data);
         }
@@ -483,6 +324,4 @@ public class ZKSearchHandler {
         }
         return null;
     }
-
-
 }

@@ -5,11 +5,11 @@ import cn.oyzh.easyzk.dto.ZKSearchParam;
 import cn.oyzh.easyzk.dto.ZKSearchResult;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
-import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.handler.ZKMainSearchHandler;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -103,7 +103,7 @@ public class SearchController extends SubController {
      * 搜索-搜索模式
      */
     @FXML
-    private FlexCheckBox searchMode;
+    private FlexCheckBox mode;
 
     /**
      * 搜索-搜索值
@@ -162,7 +162,7 @@ public class SearchController extends SubController {
      * zk主页搜索处理
      */
     @Autowired
-    private  ZKMainSearchHandler searchHandler;
+    private ZKMainSearchHandler searchHandler;
 
     /**
      * 搜索历史储存
@@ -313,20 +313,18 @@ public class SearchController extends SubController {
             try {
                 this.searchCheck();
                 this.treeView.disable();
-                ZKSearchParam searchParam = this.getSearchParam();
+                ZKSearchParam param = this.getSearchParam();
                 if (!this.searchNext.isDisable()) {
-                    // 搜索开始
-                    ZKEventUtil.searchStart(searchParam);
-                    this.searchResult.setText("搜索中...");
                     // 执行预搜索
-                    this.searchHandler.preSearch(searchParam);
-                    this.searchResult.setText("");
+                    this.searchResult.setText("搜索中...");
+                    this.searchHandler.preSearch(param);
+                    // 搜索开始
+                    ZKEventUtil.searchStart(param);
                     // 更新搜索结果
+                    this.searchResult.setText("");
                     this.updateSearchResult();
-                    // 搜索结束
-                    ZKEventUtil.searchFinish(searchParam);
                 } else {// 搜索结束
-                    ZKEventUtil.searchFinish(searchParam);
+                    ZKEventUtil.searchFinish(param);
                 }
                 this.treeView.enable();
             } catch (Exception ex) {
@@ -350,10 +348,10 @@ public class SearchController extends SubController {
      */
     private ZKSearchParam getSearchParam() {
         ZKSearchParam searchParam = new ZKSearchParam();
+        searchParam.setMode(this.mode.isSelected() ? 1 : 0);
         searchParam.setKw(this.searchKW.getTextTrim());
         searchParam.setFullMatch(this.fullMatch.isSelected());
         searchParam.setSearchData(this.searchData.isSelected());
-        searchParam.setSearchMode(!this.searchMode.isSelected());
         searchParam.setSearchPath(this.searchPath.isSelected());
         searchParam.setCompareCase(this.compareCase.isSelected());
         return searchParam;
@@ -366,11 +364,11 @@ public class SearchController extends SubController {
         try {
             // 搜索值、名称均未选择
             if (!this.searchData.isSelected() && !this.searchPath.isSelected()) {
+                this.mode.disable();
                 this.replace.disable();
                 this.replaceKW.disable();
                 this.searchKW.disable();
                 this.searchNext.disable();
-                this.searchMode.disable();
                 return;
             }
 
@@ -416,11 +414,11 @@ public class SearchController extends SubController {
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
         this.showSearchMore.managedBindVisible();
+        this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.hideSearchMore.managedProperty().bind(this.hideSearchMore.visibleProperty());
         this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchPath.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        this.searchMode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
         this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {

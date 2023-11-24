@@ -92,7 +92,7 @@ public class ZKNodeTab extends DynamicTab {
     @Override
     public void flushGraphicColor() {
         SVGLabel label = (SVGLabel) this.getGraphic();
-        SVGGlyph glyph = this.treeItem.itemValue().graphic();
+        SVGGlyph glyph = this.treeItem.getValue().graphic();
         if (glyph != null && label != null && label.getColor() != glyph.getColor()) {
             this.fill(label.getColor());
         }

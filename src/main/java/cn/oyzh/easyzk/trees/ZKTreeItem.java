@@ -2,7 +2,9 @@ package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.fx.plus.controls.tree.FlexTreeView;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
+import cn.oyzh.fx.plus.trees.RichTreeView;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,22 +15,14 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2023/2/7
  */
 @Slf4j
-public abstract class ZKTreeItem extends RichTreeItem   {
+public abstract class ZKTreeItem<V extends ZKTreeItemValue> extends RichTreeItem<V>   {
 
-    /**
-     * zk树
-     */
-    @Getter
-    @Accessors(chain = true, fluent = true)
-    private ZKTreeView treeView;
-
-    @Override
-    public ZKTreeItemValue itemValue() {
-        return (ZKTreeItemValue) super.getValue();
+    public ZKTreeItem(ZKTreeView treeView) {
+        super(treeView);
     }
 
     @Override
-    public void treeView(FlexTreeView treeView) {
-        this.treeView = (ZKTreeView) treeView;
+    public ZKTreeView getTreeView() {
+        return (ZKTreeView) super.getTreeView();
     }
 }

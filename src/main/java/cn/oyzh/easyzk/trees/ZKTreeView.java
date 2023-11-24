@@ -10,6 +10,7 @@ import cn.oyzh.easyzk.event.msg.ZKNodeAddMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeAddedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
+import cn.oyzh.easyzk.event.msg.ZKSearchFinishMsg;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.common.spring.SpringUtil;
@@ -352,17 +353,29 @@ public class ZKTreeView extends RichTreeView {
     /**
      * 搜索开始事件
      */
-    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_START, verbose = true)
-    private void searchStart() {
+    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_START, async = true, verbose = true)
+    private void onSearchStart() {
         this.searching = true;
+        this.filter();
     }
 
     /**
      * 搜索结束事件
+     *
      */
-    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, verbose = true)
-    private void searchEnd() {
+    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, async = true, verbose = true)
+    private void onSearchFinish( ) {
         this.searching = false;
+        this.filter();
+    }
+
+    /**
+     * 树节点过滤
+     */
+    @EventReceiver(value = ZKEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
+    private void onTreeChildFilter() {
+        this.itemFilter().initFilters();
+        this.filter();
     }
 
     @Override
@@ -372,10 +385,10 @@ public class ZKTreeView extends RichTreeView {
             treeItem.expandAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
             treeItem.extend();
-            if (treeItem.root() != null) {
-                treeItem.root().expandAll();
+            if (!treeItem.isChildEmpty()) {
+                treeItem.firstChild().expandAll();
             }
-        } else if (item instanceof ZKTreeItem treeItem) {
+        } else if (item instanceof ZKTreeItem<?> treeItem) {
             treeItem.extend();
         }
         if (item != null) {
@@ -390,10 +403,10 @@ public class ZKTreeView extends RichTreeView {
             treeItem.collapseAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
             treeItem.collapse();
-            if (treeItem.root() != null) {
-                treeItem.root().collapseAll();
+            if (!treeItem.isChildEmpty()) {
+                treeItem.firstChild().collapseAll();
             }
-        } else if (item instanceof ZKTreeItem treeItem) {
+        } else if (item instanceof ZKTreeItem<?> treeItem) {
             treeItem.collapse();
         }
         if (item != null) {

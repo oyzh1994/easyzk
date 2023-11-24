@@ -461,8 +461,8 @@ public class ZKMainSearchHandler {
         }
         boolean m1 = false, m2 = false;
         // 路径
-        if (this.searchParam.isSearchPath() && item instanceof ZKTreeItem treeItem) {
-            String value = treeItem.itemValue().name();
+        if (this.searchParam.isSearchPath() && item instanceof ZKTreeItem<?> treeItem) {
+            String value = treeItem.getValue().name();
             m1 = this.searchParam.isMatch(value);
         }
         // 数据

@@ -349,35 +349,6 @@ public class ZKMainController extends ParentController {
     }
 
     /**
-     * 树节点过滤
-     */
-    @EventReceiver(value = ZKEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
-    private void onTreeChildFilter() {
-        this.tree.itemFilter().initFilters();
-        this.filter();
-    }
-
-    /**
-     * 搜索开始事件
-     */
-    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_START, verbose = true)
-    private void searchStart() {
-        this.tree.itemFilter().setSearchParam(null);
-        this.filter();
-    }
-
-    /**
-     * 搜索结束事件
-     *
-     * @param msg 消息
-     */
-    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, verbose = true)
-    private void searchEnd(ZKSearchFinishMsg msg) {
-        this.tree.itemFilter().setSearchParam(msg.searchParam());
-        this.filter();
-    }
-
-    /**
      * 展开左侧
      */
     @EventReceiver(value = ZKEventTypes.LEFT_EXTEND, async = true, verbose = true)

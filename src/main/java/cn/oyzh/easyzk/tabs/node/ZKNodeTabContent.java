@@ -918,8 +918,8 @@ public class ZKNodeTabContent extends DynamicTabController {
     @Override
     public void onTabClose(Event handler) {
         // 取消当前节点的选中
-        if (this.treeItem != null && this.treeItem.treeView().getSelectedItem() == this.treeItem) {
-            this.treeItem.treeView().select(this.treeItem.root());
+        if (this.treeItem != null && this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
+            this.treeItem.getTreeView().select(this.treeItem.root());
         }
         super.onTabClose(handler);
     }

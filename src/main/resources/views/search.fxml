@@ -80,7 +80,7 @@
     </FlexHBox>
     <FlexHBox visible="false" managed="false" fx:id="searchMore2" realHeight="30" flexWidth="100%"
               fontSize="10">
-        <FlexCheckBox selected="true" fx:id="searchMode" text="过滤模式" realWidth="65">
+        <FlexCheckBox selected="true" fx:id="mode" text="过滤模式" realWidth="65">
             <HBox.margin>
                 <Insets left="21" top="3"/>
             </HBox.margin>

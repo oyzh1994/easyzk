@@ -33,7 +33,7 @@ import java.util.Objects;
  * @since 2023/05/12
  */
 @Slf4j
-public class ZKGroupTreeItem extends ZKTreeItem implements ZKConnectManager {
+public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements ZKConnectManager {
 
     /**
      * 分组对象
@@ -53,16 +53,16 @@ public class ZKGroupTreeItem extends ZKTreeItem implements ZKConnectManager {
     private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
 
     public ZKGroupTreeItem(@NonNull ZKGroup group, @NonNull ZKTreeView treeView) {
+        super(treeView);
         this.value = group;
-        this.treeView(treeView);
-        this.itemValue(new ZKGroupTreeItemValue(this));
+        this.setValue(new ZKGroupTreeItemValue(this));
         // this.itemValue(group.getName());
 
         // 监听节点变化
         this.getChildren().addListener((ListChangeListener<? super ZKConnectTreeItem>) c -> {
-            // this.treeView().fireChildChanged();
+            // this.getTreeView().fireChildChanged();
             ZKEventUtil.treeChildChanged();
-            this.treeView().flushLocal();
+            this.getTreeView().flushLocal();
         });
 
         // 监听展开变化
@@ -114,7 +114,7 @@ public class ZKGroupTreeItem extends ZKTreeItem implements ZKConnectManager {
 
         // 修改名称
         if (this.groupStore.update(this.value)) {
-            this.itemValue().flushText();
+            this.getValue().flushText();
         } else {
             MessageBox.warn("修改分组名称失败！");
         }
@@ -162,17 +162,13 @@ public class ZKGroupTreeItem extends ZKTreeItem implements ZKConnectManager {
      * @return zk根节点
      */
     public ZKRootTreeItem parent() {
-        return (ZKRootTreeItem) this.getParent();
-    }
-
-    @Override
-    public ObservableList<ZKConnectTreeItem> getChildren() {
-        return super.getChildren();
+        Object parent = this.getParent();
+        return (ZKRootTreeItem) parent;
     }
 
     @Override
     public void addConnect(@NonNull ZKInfo zkInfo) {
-        super.addChild(new ZKConnectTreeItem(zkInfo, this.treeView()));
+        super.addChild(new ZKConnectTreeItem(zkInfo, this.getTreeView()));
     }
 
     @Override
@@ -195,7 +191,7 @@ public class ZKGroupTreeItem extends ZKTreeItem implements ZKConnectManager {
         if (CollUtil.isNotEmpty(items)) {
             this.getChildren().addAll(items);
             this.sort();
-            // this.sort(this.treeView().sortOrder());
+            // this.sort(this.getTreeView().sortOrder());
         }
     }
 
@@ -217,9 +213,11 @@ public class ZKGroupTreeItem extends ZKTreeItem implements ZKConnectManager {
     @Override
     public List<ZKConnectTreeItem> getConnectedItems() {
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildren().size());
-        for (ZKConnectTreeItem item : this.getChildren()) {
-            if (item.isConnect()) {
-                items.add(item);
+        for (Object item : this.getChildren()) {
+            if (item instanceof ZKConnectTreeItem treeItem) {
+                if (treeItem.isConnect()) {
+                    items.add(treeItem);
+                }
             }
         }
         return items;
@@ -244,5 +242,15 @@ public class ZKGroupTreeItem extends ZKTreeItem implements ZKConnectManager {
             connectTreeItem.remove();
             this.addConnectItem(connectTreeItem);
         }
+    }
+
+    public List<ZKConnectTreeItem> children() {
+        List<ZKConnectTreeItem> list=new ArrayList<>();
+        for (Object child : this.getChildren()) {
+            if(child instanceof ZKConnectTreeItem treeItem){
+                list.add(treeItem);
+            }
+        }
+        return list;
     }
 }

@@ -49,13 +49,6 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     private boolean excludeEphemeral;
 
     /**
-     * 搜索参数
-     */
-    @Setter
-    @Getter
-    private ZKSearchParam searchParam;
-
-    /**
      * zk主页搜索处理
      */
     @Autowired
@@ -82,6 +75,12 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     @Override
     public Boolean apply(RichTreeItem item) {
         if (item instanceof ZKNodeTreeItem treeItem) {
+            // 判断是否满足搜索要求
+            ZKSearchParam param = this.searchHandler.searchParam();
+            if (param != null && param.isFilterMode() && !param.isEmpty()) {
+                return this.searchHandler.isMatchParam(item) != null;
+            }
+
             ZKNode node = treeItem.value();
             // 根节点直接展示
             if (node.rootNode()) {
@@ -100,16 +99,8 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤节点
-            boolean unFiltered = !ZKNodeUtil.isFiltered(treeItem.nodePath(), this.filters);
-            if (!unFiltered) {
-                return false;
-            }
+            return !ZKNodeUtil.isFiltered(treeItem.nodePath(), this.filters);
         }
-        // 如果不需要处理搜索参数，则直接返回true
-        if (this.searchParam == null || this.searchParam.isSearchMode() || this.searchParam.isEmpty()) {
-            return true;
-        }
-        // 判断是否满足搜索要求
-        return this.searchHandler.isMatchParam(item)!=null;
+        return true;
     }
 }

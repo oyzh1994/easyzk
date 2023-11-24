@@ -16,7 +16,9 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -57,20 +59,21 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         this.value = group;
         this.setValue(new ZKGroupTreeItemValue(this));
         // this.itemValue(group.getName());
-
+//        this.getChildren().addListener((ListChangeListener<? super ZKConnectTreeItem>) c -> {
+//            // this.getTreeView().fireChildChanged();
+//            ZKEventUtil.treeChildChanged();
+//            this.getTreeView().flushLocal();
+//        });
         // 监听节点变化
-        this.getChildren().addListener((ListChangeListener<? super ZKConnectTreeItem>) c -> {
-            // this.getTreeView().fireChildChanged();
+        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             ZKEventUtil.treeChildChanged();
-            this.getTreeView().flushLocal();
+//            this.flushLocal();
         });
-
         // 监听展开变化
         this.expandedProperty().addListener((observable, oldValue, newValue) -> {
             this.value.setExpand(newValue);
             this.groupStore.update(this.value);
         });
-
         // 判断是否展开
         this.setExpanded(this.value.isExpand());
     }

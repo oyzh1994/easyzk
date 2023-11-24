@@ -307,15 +307,16 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         super(root.getTreeView());
         this.root = root;
         this.value = value;
+        this.filterable = true;
         this.setValue(new ZKNodeTreeItemValue(this));
         super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             try {
-                // 添加、移除
+                // 添加、移除则刷新状态
                 if (event.wasAdded() || event.wasRemoved()) {
-                    // 刷新状态
                     this.refreshStat();
                 }
                 ZKEventUtil.treeChildChanged();
+//                this.flushLocal();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

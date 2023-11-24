@@ -26,7 +26,9 @@ import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.util.FXFileChooser;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import lombok.NonNull;
@@ -65,9 +67,14 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         // 初始化子节点
         this.initChildes();
         // 监听节点变化
-        this.getChildren().addListener((ListChangeListener<? super ZKTreeItem>) c -> {
+//        this.getChildren().addListener((ListChangeListener<? super ZKTreeItem>) c -> {
+//            ZKEventUtil.treeChildChanged();
+//            this.getTreeView().flushLocal();
+//        });
+        // 监听节点变化
+        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             ZKEventUtil.treeChildChanged();
-            this.getTreeView().flushLocal();
+//            this.flushLocal();
         });
     }
 

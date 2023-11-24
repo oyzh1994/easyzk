@@ -1,12 +1,11 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyzk.dto.ZKSearchParam;
-import cn.oyzh.easyzk.dto.ZKSearchResult;
+import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
-import cn.oyzh.easyzk.handler.ZKMainSearchHandler;
+import cn.oyzh.easyzk.search.ZKMainSearchHandler;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -25,6 +24,7 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
+import cn.oyzh.fx.plus.search.SearchResult;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -221,7 +221,7 @@ public class SearchController extends SubController {
                     // 更新搜索历史
                     this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
                 })
-                .onFinish(() -> this.treeView.enable())
+                .onFinish(this.treeView::enable)
                 .onError(MessageBox::exception)
                 .build();
         TaskManager.startDelayTask("zk:search:searchNext", task, 50);
@@ -394,7 +394,7 @@ public class SearchController extends SubController {
      * 更新搜索结果
      */
     private void updateSearchResult() {
-        ZKSearchResult result = this.searchHandler.searchResult();
+        SearchResult result = this.searchHandler.searchResult();
         if (result != null) {
             String matchType = result.getMatchTypeText();
             if (matchType.isEmpty()) {

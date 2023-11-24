@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.dto;
+package cn.oyzh.easyzk.search;
 
 import cn.oyzh.fx.plus.search.SearchParam;
 import lombok.Data;
@@ -32,9 +32,7 @@ public class ZKSearchParam extends SearchParam {
             if (!Objects.equals(this.searchData, param1.searchData)) {
                 return false;
             }
-            if (!Objects.equals(this.searchPath, param1.searchPath)) {
-                return false;
-            }
+            return Objects.equals(this.searchPath, param1.searchPath);
         }
         return false;
     }

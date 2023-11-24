@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.dto.ZKSearchParam;
+import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.event.msg.TreeChildChangedMsg;
 import cn.oyzh.easyzk.event.msg.TreeChildFilterMsg;
 import cn.oyzh.easyzk.event.msg.TreeGraphicChangedMsg;

@@ -24,7 +24,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -78,9 +78,13 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         super(treeView);
         this.value(value);
         // 监听节点变化
-        this.getChildren().addListener((ListChangeListener<? super TreeItem<ZKConnectTreeItemValue>>) c -> {
+//        this.getChildren().addListener((ListChangeListener<? super TreeItem<ZKConnectTreeItemValue>>) c -> {
+//            ZKEventUtil.treeChildChanged();
+//            this.getTreeView().flushLocal();
+//        });
+        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             ZKEventUtil.treeChildChanged();
-            this.getTreeView().flushLocal();
+//            this.flushLocal();
         });
     }
 

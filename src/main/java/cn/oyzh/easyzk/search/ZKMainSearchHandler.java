@@ -1,8 +1,6 @@
-package cn.oyzh.easyzk.handler;
+package cn.oyzh.easyzk.search;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.easyzk.dto.ZKSearchParam;
-import cn.oyzh.easyzk.dto.ZKSearchResult;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
@@ -15,12 +13,13 @@ import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.rich.RichControlUtil;
+import cn.oyzh.fx.plus.search.SearchResult;
+import cn.oyzh.fx.plus.search.SearchValue;
 import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.TreeViewUtil;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -95,7 +94,7 @@ public class ZKMainSearchHandler {
     /**
      * 当前搜索结果
      */
-    private ZKSearchResult searchResult;
+    private SearchResult searchResult;
 
     /**
      * 搜索开始
@@ -140,7 +139,7 @@ public class ZKMainSearchHandler {
             this.resetSearch();
         }
         // 获取匹配节点
-        List<TreeItemExt> matchItems = this.getMatchItems();
+        List<SearchValue> matchItems = this.getMatchValues();
         // 更新搜索信息
         this.searchResult().setIndex(0);
         this.searchResult().setMatchType(null);
@@ -155,7 +154,7 @@ public class ZKMainSearchHandler {
         // 初始化搜索参数
         if (this.searchParam != null) {
             // 获取匹配节点
-            List<TreeItemExt> matchItems = this.getMatchItems();
+            List<SearchValue> matchItems = this.getMatchValues();
             // 更新搜索信息
             this.searchResult().setCount(matchItems.size());
             if (matchItems.isEmpty()) {
@@ -194,9 +193,9 @@ public class ZKMainSearchHandler {
         if (!this.dataAnalyse()) {
             do {
                 // 获取匹配节点
-                List<TreeItemExt> matchItems = this.getMatchItems();
+                List<SearchValue> matchItems = this.getMatchValues();
                 // 如果找不到任何匹配数据的节点，则直接回调false
-                if (matchItems.parallelStream().noneMatch(TreeItemExt::isMatchData)) {
+                if (matchItems.parallelStream().noneMatch(SearchValue::isMatchData)) {
                     // 更新搜索结果
                     this.updateResult();
                     // 函数回调
@@ -246,7 +245,7 @@ public class ZKMainSearchHandler {
                 this.resetSearch();
             }
             // 获取匹配节点
-            List<TreeItemExt> matchItems = this.getMatchItems();
+            List<SearchValue> matchItems = this.getMatchValues();
             // 更新搜索信息
             this.searchResult().setCount(matchItems.size());
             // 内容为空
@@ -266,11 +265,11 @@ public class ZKMainSearchHandler {
                 this.index = matchItems.size() - 1;
             }
             // 数据排序
-            matchItems.sort(Comparator.comparing(TreeItemExt::level));
+            matchItems.sort(Comparator.comparing(SearchValue::getLevel));
             // 获取索引数据
-            TreeItemExt itemExt = matchItems.get("next".equals(action) ? this.index++ : this.index--);
+            SearchValue itemExt = matchItems.get("next".equals(action) ? this.index++ : this.index--);
             // 获取节点
-            TreeItem<?> item = itemExt.item;
+            TreeItem<?> item = itemExt.getItem();
             // 更新节点
             this.updateCurrentItem(item);
             // 展开其父节点
@@ -278,7 +277,7 @@ public class ZKMainSearchHandler {
             // 选中并滚动到此节点
             this.treeNode.selectAndScroll(item);
             // 更新搜索结果及参数
-            this.searchResult().setMatchType(itemExt.matchType);
+            this.searchResult().setMatchType(itemExt.getMatchType());
             this.searchResult().setIndex("next".equals(action) ? this.index : this.index + 2);
             this.lastAction = action;
         } catch (Exception ex) {
@@ -293,9 +292,9 @@ public class ZKMainSearchHandler {
      *
      * @return 搜索结果
      */
-    public ZKSearchResult searchResult() {
+    public SearchResult searchResult() {
         if (this.searchResult == null) {
-            this.searchResult = new ZKSearchResult();
+            this.searchResult = new SearchResult();
         }
         return this.searchResult;
     }
@@ -329,22 +328,22 @@ public class ZKMainSearchHandler {
      *
      * @return 匹配的节点列表，扩展了属性
      */
-    private List<TreeItemExt> getMatchItems() {
+    private List<SearchValue> getMatchValues() {
         // 全部节点
         List<TreeItem<?>> allItem = TreeViewUtil.getAllItem(this.treeNode);
         if (CollUtil.isEmpty(allItem)) {
             return Collections.emptyList();
         }
-        List<TreeItemExt> items = new ArrayList<>(allItem.size());
+        List<SearchValue> items = new ArrayList<>(allItem.size());
         for (TreeItem<?> item : allItem) {
             // 获取匹配类型
             String matchType = this.isMatchParam(item);
             if (matchType != null) {
                 // 生成对象
-                TreeItemExt itemExt = new TreeItemExt();
-                itemExt.item(item);
-                itemExt.matchType(matchType);
-                itemExt.level(this.treeNode.getTreeItemLevel(item));
+                SearchValue itemExt = new SearchValue();
+                itemExt.setItem(item);
+                itemExt.setMatchType(matchType);
+                itemExt.setLevel(this.treeNode.getTreeItemLevel(item));
                 items.add(itemExt);
             }
         }
@@ -485,29 +484,5 @@ public class ZKMainSearchHandler {
         return null;
     }
 
-    /**
-     * 节点扩展
-     */
-    @Data
-    private static class TreeItemExt {
 
-        /**
-         * 节点等级
-         */
-        private Integer level;
-
-        /**
-         * 节点
-         */
-        private TreeItem<?> item;
-
-        /**
-         * 匹配类型
-         */
-        private String matchType;
-
-        public boolean isMatchData() {
-            return Objects.equals(this.matchType, "data") || Objects.equals(this.matchType, "all");
-        }
-    }
 }

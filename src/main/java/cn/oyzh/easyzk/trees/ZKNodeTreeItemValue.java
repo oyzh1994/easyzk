@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +23,7 @@ import java.util.Objects;
  * @since 2023/4/7
  */
 @Slf4j
+@ToString
 @Accessors(chain = true, fluent = true)
 public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 

@@ -45,6 +45,11 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     private ZKConnect connect;
 
     /**
+     * 客户端连接状态监听器
+     */
+    private ChangeListener<ZKConnState> connStateChangeListener;
+
+    /**
      * 获取zookeeper对象
      *
      * @return ZooKeeper
@@ -54,18 +59,25 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         return this.client.getZooKeeper();
     }
 
-    /**
-     * 客户端连接状态监听器
-     */
-    private ChangeListener<ZKConnState> connStateChangeListener;
-
     @Override
     public void flushPrompt() {
-        if (!this.client.isConnected()) {
-            this.prompt("zk连接@" + this.client.infoName() + "> ");
+        String str;
+        if (this.isTemporary()) {
+            str = "zk连接";
         } else {
-            this.prompt("zk连接@" + this.client.infoName() + "（已连接）> ");
+            str = this.client.infoName();
         }
+        if (this.info().getHost() != null) {
+            str += "@" + this.info().getHost();
+        }
+        if (this.isConnecting()) {
+            str += "（连接中）> ";
+        } else if (this.isConnected()) {
+            str += "（已连接）> ";
+        } else {
+            str += "> ";
+        }
+        this.prompt(str);
     }
 
     /**
@@ -92,7 +104,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * @return 结果
      */
     public boolean isTemporary() {
-        return this.client.zkInfo().getId() == null;
+        return this.info().getId() == null;
     }
 
     /**
@@ -130,14 +142,13 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     public void connect(String input) {
         this.connect = ZKConnectUtil.parse(input);
         if (this.connect != null) {
-            this.client.zkInfo().setHost(connect.getHost() + ":" + connect.getPort());
-            this.client.zkInfo().setConnectTimeOut(connect.getTimeout());
-            this.intConnStat();
             this.disable();
-            ThreadUtil.startVirtual(() -> {
+            ZKConnectUtil.copyConnect(this.connect, this.info());
+            ExecutorUtil.start(() -> {
+                this.intStatListener();
                 this.client.start();
                 this.enable();
-            });
+            }, 10);
         }
     }
 
@@ -148,10 +159,24 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         this.outputLine("请输入连接地址然后回车，格式connect [-timeout timeout] -server [host ip:port]");
         this.appendByPrompt("connect -timeout 3000 -server localhost:2181");
         this.enableInput();
-        this.moveAndFlushCaret();
+        this.flushAndMoveCaretAnd();
     }
 
-    private void moveAndFlushCaret() {
+    /**
+     * 常驻连接处理
+     */
+    private void initByPermanent() {
+//        this.outputLine(this.info().getHost() + " 连接开始.");
+        ExecutorUtil.start(() -> {
+            this.intStatListener();
+            this.client.start();
+        }, 10);
+    }
+
+    /**
+     * 刷新光标并移动到尾部
+     */
+    private void flushAndMoveCaretAnd() {
         ExecutorUtil.start(() -> {
             this.flushCaret();
             this.moveCaretEnd();
@@ -159,20 +184,9 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     }
 
     /**
-     * 常驻连接处理
+     * 初始化连接状态监听器
      */
-    private void initByPermanent() {
-        this.outputLine(this.client.zkInfo().getHost() + " 连接开始.");
-        ExecutorUtil.start(() -> {
-            this.intConnStat();
-            this.client.start();
-        }, 10);
-    }
-
-    /**
-     * 初始化连接状态处理
-     */
-    private void intConnStat() {
+    private void intStatListener() {
         if (this.connStateChangeListener == null) {
             this.connStateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
@@ -180,34 +194,40 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                 String host = this.info().getHost();
                 if (t1 == ZKConnState.CONNECTED) {
                     this.outputLine(host + " 连接成功.");
-                    this.outputLine("输入\"help\"可查看支持的命令列表.");
-                    this.outputLine("输入\"命令 -?\"尝试获取此命令详情.");
+                    this.outputLine("输入\"help\"或者按下tab键可查看命令列表.");
+                    this.outputLine("输入\"命令 -?\"可查看此命令详情.");
                     this.outputPrompt();
                     this.flushCaret();
                     super.enableInput();
                 } else if (t1 == ZKConnState.CLOSED) {
-                    this.disableInput();
                     this.outputLine(host + " 连接关闭.");
-                } else if (t1 == ZKConnState.LOST) {
+                    this.enableInput();
+                } else if (t1 == ZKConnState.CONNECTING) {
+                    this.outputLine(host + " 开始连接.");
                     this.disableInput();
+                } else if (t1 == ZKConnState.LOST) {
                     this.outputLine(host + " 连接中断.");
+                    this.enableInput();
                 } else if (t1 == ZKConnState.FAILED) {
                     this.outputLine(host + " 连接失败.");
                     if (this.connect != null) {
                         this.appendByPrompt(this.connect.getInput());
                     }
-                    this.moveAndFlushCaret();
+                    this.flushAndMoveCaretAnd();
                     this.enableInput();
                 }
                 log.info("connState={}", t1);
             };
+            this.client().addStateListener(this.connStateChangeListener);
         }
-        this.client().addStateListener(this.connStateChangeListener);
     }
 
     @Override
     public void enableInput() {
-        if (this.isConnected() || this.isTemporary()) {
+        if (this.isConnecting()) {
+            return;
+        }
+        if (this.isConnected() || (!this.isConnected() && this.isTemporary())) {
             super.enableInput();
         }
     }

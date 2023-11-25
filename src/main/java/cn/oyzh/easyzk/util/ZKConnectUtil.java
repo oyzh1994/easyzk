@@ -119,4 +119,17 @@ public class ZKConnectUtil {
         }
         return null;
     }
+
+    /**
+     * 复制连接
+     *
+     * @param connect 连接对象
+     * @param info    zk对象
+     */
+    public static void copyConnect(ZKConnect connect, ZKInfo info) {
+        if (connect != null && info != null) {
+            info.setConnectTimeOut(connect.getTimeout());
+            info.setHost(connect.getHost() + ":" + connect.getPort());
+        }
+    }
 }

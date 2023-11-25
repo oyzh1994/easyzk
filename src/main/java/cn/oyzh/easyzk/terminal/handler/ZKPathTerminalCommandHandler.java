@@ -41,6 +41,7 @@ public abstract class ZKPathTerminalCommandHandler<C extends TerminalCommand> ex
                 terminal.outputLine(text);
                 terminal.outputPrompt();
                 terminal.outputByAppend(line);
+                terminal.moveCaretEnd(50);
             } else {
                 String newInput = line.substring(0, line.indexOf("/")) + ZKNodeUtil.concatPath(parentPath, list.get(0));
                 terminal.coverInput(newInput);

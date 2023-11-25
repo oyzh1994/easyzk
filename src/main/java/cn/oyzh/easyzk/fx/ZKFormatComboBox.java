@@ -14,8 +14,8 @@ public class ZKFormatComboBox extends FlexComboBox<String> {
     {
         this.getItems().add("字符串");
         this.getItems().add("JSON串");
-        this.getItems().add("二进制内容");
-        this.getItems().add("十六进制内容");
+        this.getItems().add("二进制");
+        this.getItems().add("十六进制");
         this.getItems().add("原始内容");
     }
 

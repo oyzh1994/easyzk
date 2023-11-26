@@ -2,11 +2,11 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.PageInfo;
 import cn.oyzh.fx.common.store.ObjectFileStore;
 import com.alibaba.fastjson.JSON;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/01/17
  */
-@Slf4j
+//@Slf4j
 public class PageInfoStore extends ObjectFileStore<PageInfo> {
 
     /**
@@ -30,7 +30,7 @@ public class PageInfoStore extends ObjectFileStore<PageInfo> {
 
     {
         this.filePath(ZKConst.STORE_PATH + "page_info.json");
-        log.info("PageInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("PageInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

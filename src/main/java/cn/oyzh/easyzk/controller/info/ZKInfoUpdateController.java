@@ -21,7 +21,6 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * zk信息修改业务
@@ -29,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2020/9/15
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk信息修改",
         modality = Modality.WINDOW_MODAL,

@@ -27,7 +27,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Id;
@@ -41,7 +40,7 @@ import java.util.List;
  * @author oyzh
  * @since 2020/10/09
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk子节点添加",
         iconUrls = ZKConst.ICON_PATH,

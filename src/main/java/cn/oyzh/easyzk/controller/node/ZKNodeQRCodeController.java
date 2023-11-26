@@ -1,12 +1,13 @@
 package cn.oyzh.easyzk.controller.node;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.extra.qrcode.QrConfig;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.Const;
-import cn.oyzh.fx.common.util.QRCodeUtil;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.FlexImageView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.ResourceUtil;
@@ -16,12 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 
 /**
@@ -30,7 +28,7 @@ import java.io.ByteArrayOutputStream;
  * @author oyzh
  * @since 2022/08/23
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         resizeable = false,
         iconUrls = ZKConst.ICON_PATH,
@@ -58,13 +56,13 @@ public class ZKNodeQRCodeController extends Controller {
      */
     private void initQRCode() {
         ByteArrayInputStream bais = null;
-        ByteArrayOutputStream baos = null;
+//        ByteArrayOutputStream baos = null;
         try {
-            log.info("read icon begin.");
+            StaticLog.info("read icon begin.");
             // icon图片
             var iconUrl = ResourceUtil.getResource(ZKConst.ICON_PATH);
             var icon = ImageIO.read(iconUrl);
-            log.info("read icon finish.");
+            StaticLog.info("read icon finish.");
             ZKNode zkNode = this.getStageProp("zkNode");
             String nodeData = this.getStageProp("nodeData");
             StringBuilder builder = new StringBuilder();
@@ -76,18 +74,22 @@ public class ZKNodeQRCodeController extends Controller {
                         .append("创建时间: ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
                         .append("修改时间: ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
             }
-            log.info("generate qrcode begin.");
-            BufferedImage source = QRCodeUtil.createImage(builder.toString(), (int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
-            QRCodeUtil.insertImage(source, icon);
-            baos = new ByteArrayOutputStream();
-            ImageIO.write(source, "png", baos);
-            bais = new ByteArrayInputStream(baos.toByteArray());
+            StaticLog.info("generate qrcode begin.");
+            QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
+            config.setImg(icon);
+            byte[] bytes = QrCodeUtil.generatePng(builder.toString(), config);
+//            BufferedImage source = QRCodeUtil.createImage(builder.toString(), (int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
+//            QRCodeUtil.insertImage(source, icon);
+//            baos = new ByteArrayOutputStream();
+//            ImageIO.write(source, "png", baos);
+//            bais = new ByteArrayInputStream(baos.toByteArray());
+            bais = new ByteArrayInputStream(bytes);
             this.qrcode.setImage(new Image(bais));
-            log.info("generate qrcode finish size:{}", bais.available());
+            StaticLog.info("generate qrcode finish size:{}", bais.available());
         } catch (Exception ex) {
             this.closeStage();
             ex.printStackTrace();
-            log.warn("initQRCode error, ex:{}", ex.getMessage());
+            StaticLog.warn("initQRCode error, ex:{}", ex.getMessage());
             if (ex.getMessage().contains("Data too big")) {
                 MessageBox.warn("节点数据太大，不支持生成二维码！");
             } else {
@@ -95,7 +97,7 @@ public class ZKNodeQRCodeController extends Controller {
             }
         } finally {
             IoUtil.close(bais);
-            IoUtil.close(baos);
+//            IoUtil.close(baos);
         }
     }
 }

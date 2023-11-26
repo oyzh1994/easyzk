@@ -18,7 +18,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
@@ -38,7 +37,7 @@ import java.util.List;
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLUpdate.fxml"
 )
-@Slf4j
+//@Slf4j
 public class ZKACLUpdateController extends Controller {
 
     /**

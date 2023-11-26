@@ -1,18 +1,17 @@
 package cn.oyzh.easyzk.terminal;
 
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
-import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.terminal.TerminalTextArea;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.ZooKeeper;
 
 /**
@@ -21,7 +20,7 @@ import org.apache.zookeeper.ZooKeeper;
  * @author oyzh
  * @since 2023/7/21
  */
-@Slf4j
+//@Slf4j
 public class ZKTerminalTextArea extends TerminalTextArea {
 
     {
@@ -216,7 +215,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                     this.flushAndMoveCaretAnd();
                     this.enableInput();
                 }
-                log.info("connState={}", t1);
+                StaticLog.info("connState={}", t1);
             };
             this.client().addStateListener(this.connStateChangeListener);
         }

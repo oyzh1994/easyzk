@@ -2,12 +2,12 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.store.ObjectFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2022/8/26
  */
-@Slf4j
+//@Slf4j
 public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
 
     /**
@@ -31,7 +31,7 @@ public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
 
     {
         this.filePath(ZKConst.STORE_PATH + "zk_setting.json");
-        log.info("ZKSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("ZKSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

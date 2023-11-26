@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.trees;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.auth.ZKAuthController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
@@ -34,7 +35,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
@@ -52,7 +52,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author oyzh
  * @since 2023/1/30
  */
-@Slf4j
+//@Slf4j
 public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     /**
@@ -730,7 +730,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 this.getTreeView().select(selectItem);
             }
         } else {
-            log.warn("remove fail, this.parent() is null.");
+            StaticLog.warn("remove fail, this.parent() is null.");
         }
     }
 
@@ -753,7 +753,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             if (node != null) {
                 this.addChild(node);
             } else {
-                log.warn("获取zk节点:{} 失败", path);
+                StaticLog.warn("获取zk节点:{} 失败", path);
             }
         }
     }
@@ -821,9 +821,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 刷新zk节点数据
      */
     public void refreshData() throws Exception {
-        if (log.isDebugEnabled()) {
-            log.debug("refreshData.");
-        }
+//        if (log.isDebugEnabled()) {
+            StaticLog.debug("refreshData.");
+//        }
         ZKNodeUtil.refreshData(this.client(), this.value);
         // 清空未保存的数据
         this.clearData();
@@ -835,9 +835,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 刷新zk节点权限
      */
     public void refreshACL() throws Exception {
-        if (log.isDebugEnabled()) {
-            log.debug("refreshACL.");
-        }
+//        if (log.isDebugEnabled()) {
+            StaticLog.debug("refreshACL.");
+//        }
         this.value.acl(this.client().getACL(this.nodePath()));
         // 刷新图标
         this.flushGraphic();

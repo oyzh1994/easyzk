@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.zk;
 
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.AuthInfo;
 import org.apache.curator.framework.CuratorFramework;
@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
  * @author oyzh
  * @since 2023/04/25
  */
-@Slf4j
+//@Slf4j
 @UtilityClass
 public class ZKClientUtil {
 
@@ -46,7 +46,7 @@ public class ZKClientUtil {
             // 加载已启用的认证
             List<ZKAuth> auths = ZKAuthUtil.loadEnableAuths();
             authInfos = ZKAuthUtil.toAuthInfo(auths);
-            log.info("auto authorization, auths: {}.", auths);
+            StaticLog.info("auto authorization, auths: {}.", auths);
         }
         return buildClient(zkInfo.getHost(), retryPolicy, zkInfo.connectTimeOutMs(), zkInfo.sessionTimeOutMs(), authInfos);
     }

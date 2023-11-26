@@ -7,7 +7,6 @@ import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * zk连接工具类
@@ -15,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2022/8/26
  */
-@Slf4j
+//@Slf4j
 @UtilityClass
 public class ZKConnectUtil {
 

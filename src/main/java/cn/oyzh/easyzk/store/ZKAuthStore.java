@@ -3,13 +3,13 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2022/12/16
  */
-@Slf4j
+//@Slf4j
 public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
 
     /**
@@ -34,7 +34,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
 
     {
         this.filePath(ZKConst.STORE_PATH + "zk_auth.json");
-        log.info("ZKAuthStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("ZKAuthStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
             }
             return true;
         } catch (Exception e) {
-            log.warn("add error,err:{}", e.getMessage());
+            StaticLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -79,7 +79,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
                 return this.save(auths);
             }
         } catch (Exception e) {
-            log.warn("update error,err:{}", e.getMessage());
+            StaticLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -99,7 +99,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
                 return this.save(zkAuths);
             }
         } catch (Exception e) {
-            log.warn("delete error,err:{}", e.getMessage());
+            StaticLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

@@ -3,13 +3,13 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2022/12/16
  */
-@Slf4j
+//@Slf4j
 public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
 
     /**
@@ -38,7 +38,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
 
     {
         this.filePath(ZKConst.STORE_PATH + "zk_search_history.json");
-        log.info("ZKSearchHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("ZKSearchHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
             // 保存数据
             return this.save(histories);
         } catch (Exception e) {
-            log.warn("add error,err:{}", e.getMessage());
+            StaticLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }

@@ -14,15 +14,12 @@ import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +31,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-@Slf4j
+//@Slf4j
 public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements ZKConnectManager {
 
     /**

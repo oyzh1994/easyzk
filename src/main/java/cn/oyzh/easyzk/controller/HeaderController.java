@@ -14,7 +14,6 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -26,7 +25,7 @@ import org.springframework.stereotype.Component;
  * @since 2022/1/26
  */
 @Lazy
-@Slf4j
+//@Slf4j
 @Component
 public class HeaderController extends SubController {
 

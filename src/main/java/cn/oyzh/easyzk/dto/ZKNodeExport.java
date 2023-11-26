@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/2/20
  */
-@Slf4j
+//@Slf4j
 public class ZKNodeExport {
 
     /**

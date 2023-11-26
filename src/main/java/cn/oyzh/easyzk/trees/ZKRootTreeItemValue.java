@@ -4,7 +4,6 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.plus.controls.FlexImageView;
 import cn.oyzh.fx.plus.util.IconUtil;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -13,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/4/7
  */
-@Slf4j
+//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class ZKRootTreeItemValue extends ZKTreeItemValue {
 

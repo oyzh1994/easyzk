@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.fx.plus.trees.RichTreeItemValue;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -10,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/4/7
  */
-@Slf4j
+//@Slf4j
 public abstract class ZKTreeItemValue extends RichTreeItemValue {
 
 }

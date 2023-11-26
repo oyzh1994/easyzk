@@ -27,7 +27,6 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
 
@@ -42,7 +41,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/04/07
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk数据传输",
         iconUrls = ZKConst.ICON_PATH,

@@ -1,13 +1,13 @@
 package cn.oyzh.easyzk.dto;
 
+import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.common.spring.SpringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/2/22
  */
-@Slf4j
+//@Slf4j
 public class ZKInfoExport {
 
     /**
@@ -61,7 +61,7 @@ public class ZKInfoExport {
      * @return ZKInfoExport
      */
     public static ZKInfoExport fromJSON(@NonNull String json) {
-        log.info("json: {}", json);
+        StaticLog.info("json: {}", json);
         JSONObject object = JSONObject.parseObject(json);
         ZKInfoExport export = new ZKInfoExport();
         export.connects = new ArrayList<>();

@@ -1,12 +1,11 @@
 package cn.oyzh.easyzk.search;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.easyzk.trees.ZKTreeItem;
-import cn.oyzh.easyzk.trees.ZKTreeItemValue;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
+import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
@@ -22,7 +21,6 @@ import cn.oyzh.fx.plus.util.TreeViewUtil;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.springframework.context.annotation.Lazy;
@@ -30,9 +28,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 /**

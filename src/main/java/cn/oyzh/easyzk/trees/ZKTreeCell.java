@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.fx.plus.trees.RichTreeCell;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * zk树节点工厂
@@ -9,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/3/31
  */
-@Slf4j
+//@Slf4j
 public class ZKTreeCell extends RichTreeCell<ZKTreeItemValue> {
 
     // @Override

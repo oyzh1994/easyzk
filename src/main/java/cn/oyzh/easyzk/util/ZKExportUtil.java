@@ -4,16 +4,16 @@ package cn.oyzh.easyzk.util;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.util.OSUtil;
-import cn.oyzh.fx.common.spring.SpringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/3/18
  */
-@Slf4j
+//@Slf4j
 @UtilityClass
 public class ZKExportUtil {
 
@@ -214,7 +214,7 @@ public class ZKExportUtil {
      * @return ZKNodeExport
      */
     public static ZKNodeExport fromJSON(@NonNull String json) {
-        log.info("json: {}", json);
+        StaticLog.info("json: {}", json);
         JSONObject object = JSONObject.parseObject(json);
         ZKNodeExport export = new ZKNodeExport();
         export.setNodes(new ArrayList<>());
@@ -243,7 +243,7 @@ public class ZKExportUtil {
      * @return ZKNodeExport
      */
     public static ZKNodeExport fromTxt(@NonNull String txt) {
-        log.info("txt: {}", txt);
+        StaticLog.info("txt: {}", txt);
         ZKNodeExport export = new ZKNodeExport();
         export.setNodes(new ArrayList<>());
         // 分割数据
@@ -282,7 +282,7 @@ public class ZKExportUtil {
         boolean isV155 = txt.contains(LINE_REPLACE) || export.version().contains("1.5.5");
         //boolean isV155 = txt.contains(LINE_REPLACE) || export.version().contains("1.5.5") || !txt.contains(TEXT_LINE_SEPARATOR);
         if (isV155) {
-            log.warn("当前导入数据版本为1.5.5版本");
+            StaticLog.warn("当前导入数据版本为1.5.5版本");
             v1_5_5_txtHandle(export, txtList);
         } else {
             txtHandle(export, txtList);
@@ -328,14 +328,14 @@ public class ZKExportUtil {
             // 当前为分割行
             if (t.equals(TEXT_LINE_SEPARATOR)) {
                 func.run();
-                if (log.isDebugEnabled()) {
-                    log.debug("寻找到分割行.");
-                }
+//                if (log.isDebugEnabled()) {
+                    StaticLog.debug("寻找到分割行.");
+//                }
             } else {// 当前是数据行
                 lineData.append(t);
-                if (log.isDebugEnabled()) {
-                    log.debug("寻找到数据行.");
-                }
+//                if (log.isDebugEnabled()) {
+                    StaticLog.debug("寻找到数据行.");
+//                }
             }
         }
         func.run();
@@ -360,7 +360,7 @@ public class ZKExportUtil {
                 node.put("data", restoreData(data));
                 export.getNodes().add(node);
             } else {
-                log.warn("数据:{} 不合法", t);
+                StaticLog.warn("数据:{} 不合法", t);
             }
         }
     }

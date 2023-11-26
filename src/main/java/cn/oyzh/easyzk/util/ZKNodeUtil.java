@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.exception.ZKException;
@@ -13,7 +14,6 @@ import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.ArrUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.data.Stat;
 
@@ -29,7 +29,7 @@ import java.util.concurrent.Callable;
  * @author oyzh
  * @since 2020/11/10
  */
-@Slf4j
+//@Slf4j
 @UtilityClass
 public class ZKNodeUtil {
 
@@ -110,7 +110,7 @@ public class ZKNodeUtil {
             // 返回节点
             return node;
         } catch (Exception ex) {
-            log.warn("getZKNode:{} error", path, ex);
+            StaticLog.warn("getZKNode:{} error", path, ex);
         }
         return null;
     }

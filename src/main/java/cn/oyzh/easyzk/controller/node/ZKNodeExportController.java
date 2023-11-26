@@ -3,12 +3,13 @@ package cn.oyzh.easyzk.controller.node;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKExportUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -34,7 +35,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2020/10/13
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk数据导出",
         iconUrls = ZKConst.ICON_PATH,
@@ -197,7 +197,7 @@ public class ZKNodeExportController extends Controller {
                 this.getNodeAll(path, properties, zkNodes);
                 // 取消操作
                 if (ThreadUtil.isInterrupted(this.exportTask)) {
-                    log.warn("export cancel!");
+                    StaticLog.warn("export cancel!");
                     return;
                 }
                 // 排除临时节点

@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -20,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/11/09
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk工具箱",
         iconUrls = ZKConst.ICON_PATH,

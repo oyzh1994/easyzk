@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.trees;
 
+import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
@@ -10,10 +12,8 @@ import cn.oyzh.easyzk.event.msg.ZKNodeAddMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeAddedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchFinishMsg;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.fx.common.spring.SpringUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.Event;
@@ -31,7 +31,6 @@ import javafx.util.Callback;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/1/29
  */
-@Slf4j
+//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class ZKTreeView extends RichTreeView {
 
@@ -228,7 +227,7 @@ public class ZKTreeView extends RichTreeView {
             ZKNodeTreeItem parent = this.findNodeItem(pPath, info);
             // 父节点不存在
             if (parent == null) {
-                log.warn("{}: 未找到新增节点的父节点，无法处理节点！", path);
+                StaticLog.warn("{}: 未找到新增节点的父节点，无法处理节点！", path);
                 return;
             }
             // 获取节点
@@ -236,19 +235,19 @@ public class ZKTreeView extends RichTreeView {
             // 刷新节点
             if (child != null) {
                 child.refreshNode();
-                log.info("节点已存在, 更新树节点.");
+                StaticLog.info("节点已存在, 更新树节点.");
             } else if (parent.loaded()) {// 添加节点
                 parent.addChild(path);
-                log.info("节点不存在, 添加树节点.");
+                StaticLog.info("节点不存在, 添加树节点.");
             } else if (parent.client().isLastCreate(path)) {// 加载子节点
                 parent.refreshStat();
                 parent.loadChildQuiet();
-                log.info("父节点未加载, 加载父节点.");
+                StaticLog.info("父节点未加载, 加载父节点.");
             }
             // 过滤节点
             parent.doFilter(this.itemFilter);
         } catch (Exception ex) {
-            log.warn("新增节点失败！", ex);
+            StaticLog.warn("新增节点失败！", ex);
         }
     }
 
@@ -269,10 +268,10 @@ public class ZKTreeView extends RichTreeView {
             if (item != null) {
                 item.setBeUpdated(msg.data());
             } else {
-                log.warn("{}: 未找到被修改节点，无法处理节点！", msg.decodeNodePath());
+                StaticLog.warn("{}: 未找到被修改节点，无法处理节点！", msg.decodeNodePath());
             }
         } catch (Exception ex) {
-            log.warn("修改节点失败！", ex);
+            StaticLog.warn("修改节点失败！", ex);
         }
     }
 
@@ -293,10 +292,10 @@ public class ZKTreeView extends RichTreeView {
             if (item != null) {
                 item.setBeDeleted();
             } else {
-                log.warn("{}: 未找到被删除节点，无法处理节点！", msg.decodeNodePath());
+                StaticLog.warn("{}: 未找到被删除节点，无法处理节点！", msg.decodeNodePath());
             }
         } catch (Exception ex) {
-            log.warn("删除节点失败！", ex);
+            StaticLog.warn("删除节点失败！", ex);
         }
     }
 

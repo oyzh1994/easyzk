@@ -6,9 +6,9 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.event.msg.ZKAuthMsg;
 import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -26,7 +26,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -37,7 +36,7 @@ import java.util.List;
  * @author oyzh
  * @since 2022/06/07
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk节点认证",
         iconUrls = ZKConst.ICON_PATH,

@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller;
 
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.PageInfo;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
@@ -7,7 +8,6 @@ import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.msg.ZKInfoUpdatedMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchFinishMsg;
 import cn.oyzh.easyzk.store.PageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
@@ -35,7 +35,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -50,7 +49,7 @@ import java.util.List;
  * @since 2020/9/16
  */
 @Lazy
-@Slf4j
+//@Slf4j
 @Component
 public class ZKMainController extends ParentController {
 
@@ -358,7 +357,7 @@ public class ZKMainController extends ParentController {
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
         this.tabPaneLeft.parentAutosize();
-        log.info("LEFT_EXTEND.");
+        StaticLog.info("LEFT_EXTEND.");
     }
 
     /**
@@ -370,7 +369,7 @@ public class ZKMainController extends ParentController {
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
         this.tabPaneLeft.parentAutosize();
-        log.info("LEFT_COLLAPSE.");
+        StaticLog.info("LEFT_COLLAPSE.");
     }
 
     @Override

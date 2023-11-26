@@ -16,7 +16,6 @@ import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -25,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2022/12/20
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk过滤配置新增",
         iconUrls = ZKConst.ICON_PATH,

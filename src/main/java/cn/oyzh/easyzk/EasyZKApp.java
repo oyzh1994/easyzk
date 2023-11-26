@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk;
 
+import cn.hutool.extra.spring.EnableSpringUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.fx.common.util.SystemUtil;
@@ -8,7 +10,6 @@ import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
 import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
@@ -36,7 +37,8 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
                 SqlInitializationAutoConfiguration.class,
         }
 )
-@Slf4j
+//@Slf4j
+@EnableSpringUtil
 public class EasyZKApp extends SpringApplication {
 
     public static void main(String[] args) {
@@ -62,11 +64,11 @@ public class EasyZKApp extends SpringApplication {
 
     @Override
     public void destroy() {
-        log.info("EasyZKApp destroyed.");
+        StaticLog.info("EasyZKApp destroyed.");
     }
 
     @Override
     public void run(String... args) {
-        log.info("EasyZKApp started.");
+        StaticLog.info("EasyZKApp started.");
     }
 }

@@ -5,7 +5,6 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -14,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/4/7
  */
-@Slf4j
+//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 

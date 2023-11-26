@@ -18,7 +18,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.Version;
 
 import java.util.List;
@@ -30,7 +29,7 @@ import java.util.List;
  * @author oyzh
  * @since 2022/08/25
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk服务信息",
         iconUrls = ZKConst.ICON_PATH,

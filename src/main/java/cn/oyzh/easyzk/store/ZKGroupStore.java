@@ -4,12 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/5/12
  */
-@Slf4j
+//@Slf4j
 public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
 
     /**
@@ -37,7 +37,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
 
     {
         this.filePath(ZKConst.STORE_PATH + "zk_group.json");
-        log.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
         this.zkGroups = this.load();
     }
 
@@ -81,7 +81,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
                 return this.save(this.zkGroups);
             }
         } catch (Exception e) {
-            log.warn("add error,err:{}", e.getMessage());
+            StaticLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -94,7 +94,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
                 return this.save(this.zkGroups);
             }
         } catch (Exception e) {
-            log.warn("update error,err:{}", e.getMessage());
+            StaticLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -107,7 +107,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
                 return this.save(this.zkGroups);
             }
         } catch (Exception e) {
-            log.warn("delete error,err:{}", e.getMessage());
+            StaticLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

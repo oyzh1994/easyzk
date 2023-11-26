@@ -43,7 +43,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
@@ -63,7 +62,7 @@ import java.util.Set;
  * @since 2023/05/21
  */
 @Lazy
-@Slf4j
+//@Slf4j
 @Component
 public class ZKNodeTabContent extends DynamicTabController {
 

@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.controller.node;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
@@ -33,7 +34,6 @@ import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -47,7 +47,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2020/10/14
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "zk数据导入",
         iconUrls = ZKConst.ICON_PATH,
@@ -230,7 +230,7 @@ public class ZKNodeImportController extends Controller {
                 for (Map<String, String> zkNode : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.importTask)) {
-                        log.warn("import cancel!");
+                        StaticLog.warn("import cancel!");
                         break;
                     }
                     // 获取数据

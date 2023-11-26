@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller;
 
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.PageInfo;
@@ -21,7 +22,6 @@ import cn.oyzh.fx.plus.tray.FXSystemTray;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.event.MouseEvent;
@@ -34,7 +34,7 @@ import java.util.List;
  * @author oyzh
  * @since 2022/8/19
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         usePrimary = true,
         title = "EasyZK主页",
@@ -100,7 +100,7 @@ public class MainController extends ParentController {
             tray.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), this::showSetting);
             // 退出程序
             tray.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
-                log.warn("exit app by tray.");
+                StaticLog.warn("exit app by tray.");
                 this.exit();
             });
             // 鼠标事件
@@ -122,10 +122,10 @@ public class MainController extends ParentController {
         FXUtil.runLater(() -> {
             StageWrapper wrapper = StageUtil.getStage(SettingController.class);
             if (wrapper != null) {
-                log.info("front setting.");
+                StaticLog.info("front setting.");
                 wrapper.toFront();
             } else {
-                log.info("show setting.");
+                StaticLog.info("show setting.");
                 StageUtil.showStage(SettingController.class, this.stage);
             }
         });
@@ -138,10 +138,10 @@ public class MainController extends ParentController {
         FXUtil.runLater(() -> {
             StageWrapper wrapper = StageUtil.getStage(MainController.class);
             if (wrapper != null) {
-                log.info("front main.");
+                StaticLog.info("front main.");
                 wrapper.toFront();
             } else {
-                log.info("show main.");
+                StaticLog.info("show main.");
                 StageUtil.showStage(MainController.class);
             }
         });
@@ -154,10 +154,10 @@ public class MainController extends ParentController {
 
     @Override
     public void onStageCloseRequest(WindowEvent event) {
-        log.warn("main view closing.");
+        StaticLog.warn("main view closing.");
         // 直接退出应用
         if (this.setting.isExitDirectly()) {
-            log.info("exit directly.");
+            StaticLog.info("exit directly.");
             this.exit();
             return;
         }
@@ -165,10 +165,10 @@ public class MainController extends ParentController {
         // 总是询问
         if (this.setting.isExitAsk()) {
             if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
-                log.info("exit by confirm.");
+                StaticLog.info("exit by confirm.");
                 this.exit();
             } else {
-                log.info("cancel by confirm.");
+                StaticLog.info("cancel by confirm.");
                 event.consume();
             }
             return;
@@ -177,10 +177,10 @@ public class MainController extends ParentController {
         // 系统托盘
         if (this.setting.isExitTray()) {
             if (tray != null) {
-                log.info("show tray.");
+                StaticLog.info("show tray.");
                 tray.show();
             } else {
-                log.error("tray not support!");
+                StaticLog.error("tray not support!");
                 MessageBox.warn("不支持系统托盘！");
             }
         }
@@ -208,7 +208,7 @@ public class MainController extends ParentController {
             this.initSystemTray();
             tray.show();
         } catch (Exception ex) {
-            log.warn("不支持系统托盘!");
+            StaticLog.warn("不支持系统托盘!");
             ex.printStackTrace();
         }
     }
@@ -256,24 +256,24 @@ public class MainController extends ParentController {
         if (this.setting.isRememberPageSize()) {
             if (this.pageInfo.isMaximized()) {
                 this.stage.setMaximized(true);
-                if (log.isDebugEnabled()) {
-                    log.debug("view setMaximized");
-                }
+//                if (log.isDebugEnabled()) {
+                    StaticLog.debug("view setMaximized");
+//                }
             } else if (this.pageInfo.getWidth() != null && this.pageInfo.getHeight() != null) {
                 this.stage.setWidth(this.pageInfo.getWidth());
                 this.stage.setHeight(this.pageInfo.getHeight());
-                if (log.isDebugEnabled()) {
-                    log.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
-                }
+//                if (log.isDebugEnabled()) {
+                    StaticLog.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
+//                }
             }
         }
         // 设置上次保存的页面位置
         if (this.setting.isRememberPageLocation() && !this.pageInfo.isMaximized() && this.pageInfo.getScreenX() != null && this.pageInfo.getScreenY() != null) {
             this.stage.setX(this.pageInfo.getScreenX());
             this.stage.setY(this.pageInfo.getScreenY());
-            if (log.isDebugEnabled()) {
-                log.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
-            }
+//            if (log.isDebugEnabled()) {
+                StaticLog.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
+//            }
         }
     }
 }

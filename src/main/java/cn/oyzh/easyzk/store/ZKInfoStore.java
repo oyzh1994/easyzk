@@ -4,13 +4,13 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2020/5/23
  */
-@Slf4j
+//@Slf4j
 public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
 
     /**
@@ -38,7 +38,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
 
     {
         this.filePath(ZKConst.STORE_PATH + "zk_info.json");
-        log.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
         this.zkInfos = this.load();
         for (ZKInfo zkInfo : this.zkInfos) {
             if (StrUtil.isBlank(zkInfo.getId())) {
@@ -77,7 +77,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
                 return this.save(this.zkInfos);
             }
         } catch (Exception e) {
-            log.warn("add error,err:{}", e.getMessage());
+            StaticLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -90,7 +90,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
                 return this.save(this.zkInfos);
             }
         } catch (Exception e) {
-            log.warn("update error,err:{}", e.getMessage());
+            StaticLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -103,7 +103,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
                 return this.save(this.zkInfos);
             }
         } catch (Exception e) {
-            log.warn("delete error,err:{}", e.getMessage());
+            StaticLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.zk;
 
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.msg.ZKNodeAddedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
@@ -11,7 +12,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -24,7 +24,7 @@ import org.apache.zookeeper.data.Stat;
  * @author oyzh
  * @since 2020/4/17
  */
-@Slf4j
+//@Slf4j
 @Accessors(fluent = true, chain = true)
 public class ZKTreeListener implements TreeCacheListener {
 
@@ -75,18 +75,18 @@ public class ZKTreeListener implements TreeCacheListener {
                 if (type == TreeCacheEvent.Type.NODE_UPDATED) {
                     long mtime = stat.getMtime();
                     if (nowTime - mtime >= this.maxTimeEffect) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Update消息已过时.");
-                        }
+//                        if (log.isDebugEnabled()) {
+                            StaticLog.debug("Update消息已过时.");
+//                        }
                         return;
                     }
                 }
                 if (type == TreeCacheEvent.Type.NODE_ADDED) {
                     long ctime = stat.getCtime();
                     if (nowTime - ctime >= this.maxTimeEffect) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Add消息已过时.");
-                        }
+//                        if (log.isDebugEnabled()) {
+                            StaticLog.debug("Add消息已过时.");
+//                        }
                         return;
                     }
                 }

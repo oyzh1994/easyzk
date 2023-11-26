@@ -24,7 +24,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.util.FXFileChooser;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -32,7 +31,6 @@ import javafx.scene.control.TreeItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/1/29
  */
-@Slf4j
+//@Slf4j
 public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements ZKConnectManager {
 
     /**

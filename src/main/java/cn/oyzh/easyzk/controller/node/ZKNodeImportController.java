@@ -49,7 +49,7 @@ import java.util.Map;
  */
 //@Slf4j
 @StageAttribute(
-        title = "zk数据导入",
+        title = "数据导入",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,

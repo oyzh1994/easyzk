@@ -342,14 +342,14 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.root.client();
     }
 
-    /**
-     * 获取窗口
-     *
-     * @return 窗口
-     */
-    public Window window() {
-        return this.getTreeView().window();
-    }
+//    /**
+//     * 获取窗口
+//     *
+//     * @return 窗口
+//     */
+//    public Window window() {
+//        return this.getTreeView().window();
+//    }
 
     /**
      * 获取节点路径

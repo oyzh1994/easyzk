@@ -19,7 +19,7 @@
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
-    <FlexHBox flexWidth="100%" realHeight="50">
+    <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox">
         <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>

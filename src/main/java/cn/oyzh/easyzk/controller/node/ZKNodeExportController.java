@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller.node;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
@@ -9,6 +10,7 @@ import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.easyzk.trees.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKExportUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -19,6 +21,7 @@ import cn.oyzh.fx.common.util.Counter;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
+import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
@@ -31,6 +34,7 @@ import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -52,13 +56,19 @@ import java.util.stream.Collectors;
  */
 //@Slf4j
 @StageAttribute(
-        title = "zk数据导出",
+        title = "数据导出",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeExport.fxml"
 )
 public class ZKNodeExportController extends Controller {
+
+    /**
+     * 节点路径组件
+     */
+    @FXML
+    private FlexHBox nodePathBox;
 
     /**
      * 节点路径
@@ -139,9 +149,9 @@ public class ZKNodeExportController extends Controller {
     private MsgTextArea exportMsg;
 
     /*
-     * 当前zk树节点
+     * 导出路径
      */
-    private ZKNodeTreeItem zkItem;
+    private String exportPath;
 
     /**
      * 当前zk对象
@@ -177,7 +187,7 @@ public class ZKNodeExportController extends Controller {
         this.counter.reset();
         this.exportMsg.clear();
         // 执行参数
-        String path = this.zkItem.nodePath();
+//        String path = this.zkItem.nodePath();
         boolean dictSort = this.dictSort.isSelected();
         String properties = ZKNodeUtil.DATA_PROPERTIES + ZKNodeUtil.STAT_PROPERTIES;
         // 开始处理
@@ -192,9 +202,18 @@ public class ZKNodeExportController extends Controller {
         this.exportTask = ThreadUtil.start(() -> {
             try {
                 this.stopExportBtn.enable();
+                // 初始化连接
+                if (!this.zkClient.isConnected()) {
+                    this.updateStatus("连接初始化中...");
+                    this.zkClient.start();
+                    if (!this.zkClient.isConnected()) {
+                        MessageBox.okToast("连接初始化失败！");
+                        return;
+                    }
+                }
                 // 获取节点
                 List<ZKNode> zkNodes = new ArrayList<>();
-                this.getNodeAll(path, properties, zkNodes);
+                this.getNodeAll(this.exportPath, properties, zkNodes);
                 // 取消操作
                 if (ThreadUtil.isInterrupted(this.exportTask)) {
                     StaticLog.warn("export cancel!");
@@ -202,6 +221,10 @@ public class ZKNodeExportController extends Controller {
                 }
                 // 排除临时节点
                 zkNodes = zkNodes.parallelStream().filter(ZKNode::persistent).collect(Collectors.toList());
+                if (CollUtil.isEmpty(zkNodes)) {
+                    MessageBox.okToast("获取数据失败或数据为空！");
+                    return;
+                }
                 // 节点按词典顺序排序
                 if (dictSort) {
                     zkNodes.sort(ZKNode::compareTo);
@@ -284,10 +307,18 @@ public class ZKNodeExportController extends Controller {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        this.zkItem = this.getStageProp("zkItem");
-        this.zkClient = this.getStageProp("zkClient");
-        this.dictSort.setSelected(true);
-        this.nodePath.setText(this.zkItem.nodePath());
+//        this.dictSort.setSelected(true);
+        TreeItem<?> item = this.getStageProp("zkItem");
+        if (item instanceof ZKNodeTreeItem treeItem) {
+            this.zkClient = this.getStageProp("zkClient");
+            this.exportPath = treeItem.nodePath();
+            this.nodePath.setText(treeItem.decodeNodePath());
+        } else if (item instanceof ZKConnectTreeItem treeItem) {
+            this.nodePathBox.managedBindVisible();
+            this.zkClient = new ZKClient(treeItem.info());
+            this.exportPath = "/";
+            this.nodePathBox.disappear();
+        }
         // // 初始化字符集
         // this.charset.select(this.zkClient.getCharset());
         this.stage.hideOnEscape();

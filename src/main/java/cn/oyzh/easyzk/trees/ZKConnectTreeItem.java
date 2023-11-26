@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.trees;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
+import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
 import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
 import cn.oyzh.easyzk.controller.node.ZKServiceController;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -144,6 +145,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             MenuItemExt renameConnect = MenuItemExt.newItem("连接更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改连接名称(快捷键f2)", this::rename);
             MenuItemExt deleteConnect = MenuItemExt.newItem("删除连接", new SVGGlyph("/font/delete.svg", "12"), "删除zk连接(快捷键delete)", this::delete);
             MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
+            MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出zk数据", this::exportNode);
             MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
             MenuItemExt openTerminal = MenuItemExt.newItem("打开终端", new SVGGlyph("/font/code library.svg", "12"), "打开终端窗口", this::openTerminal);
 
@@ -151,6 +153,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             items.add(editConnect);
             items.add(renameConnect);
             items.add(repeatConnect);
+            items.add(exportData);
             items.add(transportData);
             items.add(deleteConnect);
             items.add(openTerminal);
@@ -159,10 +162,20 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     }
 
     /**
+     * 导出zk节点
+     */
+    public void exportNode() {
+        StageWrapper fxView = StageUtil.parseStage(ZKNodeExportController.class, this.window());
+        fxView.setProp("zkItem", this);
+        fxView.setProp("zkClient", this.client());
+        fxView.display();
+    }
+
+    /**
      * 查看服务信息
      */
     private void serverInfo() {
-        StageWrapper fxView = StageUtil.parseStage(ZKServiceController.class, this.getTreeView().window());
+        StageWrapper fxView = StageUtil.parseStage(ZKServiceController.class, this.window());
         fxView.setProp("zkInfo", this.info());
         fxView.setProp("zkClient", this.client);
         fxView.display();

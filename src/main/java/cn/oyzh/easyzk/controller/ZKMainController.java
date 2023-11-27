@@ -294,16 +294,16 @@ public class ZKMainController extends ParentController {
         });
         this.filterSubNode.selectedChanged((obs, o, n) -> this.filter());
         this.filterEphemeral.selectedChanged((obs, o, n) -> this.filter());
-        this.sortAsc.managedProperty().bind(this.sortAsc.visibleProperty());
-        this.sortDesc.managedProperty().bind(this.sortDesc.visibleProperty());
-        this.tabPane.selectedTabChanged((abs, o, n) -> {
-            if (o != null) {
-                o.getStyleClass().remove("tab-active");
-            }
-            if (n != null) {
-                n.getStyleClass().add("tab-active");
-            }
-        });
+        this.sortAsc.managedBindVisible();
+        this.sortDesc.managedBindVisible();
+        // this.tabPane.selectedTabChanged((abs, o, n) -> {
+        //     if (o != null) {
+        //         o.getStyleClass().remove("tab-active");
+        //     }
+        //     if (n != null) {
+        //         n.getStyleClass().add("tab-active");
+        //     }
+        // });
 
         // zk树选中节点变化事件
         this.tree.selectItemChanged(item -> {
@@ -319,7 +319,7 @@ public class ZKMainController extends ParentController {
 
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);
-        // 拖动改变zk树大小处理
+        // 拖动改变redis树大小处理
         this.resizeEnhance = new ResizeEnhance(this.tabPaneLeft, Cursor.DEFAULT);
         this.resizeEnhance.minWidth(390d);
         this.resizeEnhance.maxWidth(800d);
@@ -334,6 +334,7 @@ public class ZKMainController extends ParentController {
         // 初始化拉伸事件
         this.tree.setOnMouseMoved(this.resizeEnhance.mouseMoved());
         this.resizeEnhance.initResizeEvent();
+
         // 监听F5按键
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
         KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());

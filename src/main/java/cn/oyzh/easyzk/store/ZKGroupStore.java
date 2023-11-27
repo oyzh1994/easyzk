@@ -4,11 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
             if (StrUtil.isBlank(text)) {
                 return new ArrayList<>();
             }
-            List<ZKGroup> zkGroups = JSON.parseArray(text, ZKGroup.class);
+            List<ZKGroup> zkGroups = JSONUtil.toList(text, ZKGroup.class);
             if (CollUtil.isNotEmpty(zkGroups)) {
                 zkGroups = zkGroups.parallelStream().sorted().collect(Collectors.toList());
             }

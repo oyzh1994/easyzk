@@ -23,8 +23,8 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -270,34 +270,34 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.dataProperty.get() != null;
     }
 
-    /**
-     * 子节点数量属性
-     */
-    private SimpleIntegerProperty childNumProperty;
-
-    /**
-     * 获取子节点数量
-     *
-     * @return 子节点数量
-     */
-    public int childNum() {
-        if (this.childNumProperty == null) {
-            return -1;
-        }
-        return this.childNumProperty.get();
-    }
-
-    /**
-     * 获取子节点数量属性
-     *
-     * @return 子节点数量属性
-     */
-    public SimpleIntegerProperty childNumProperty() {
-        if (this.childNumProperty == null) {
-            this.childNumProperty = new SimpleIntegerProperty();
-        }
-        return this.childNumProperty;
-    }
+    // /**
+    //  * 子节点数量属性
+    //  */
+    // private SimpleIntegerProperty childNumProperty;
+    //
+    // /**
+    //  * 获取子节点数量
+    //  *
+    //  * @return 子节点数量
+    //  */
+    // public int childNum() {
+    //     if (this.childNumProperty == null) {
+    //         return -1;
+    //     }
+    //     return this.childNumProperty.get();
+    // }
+    //
+    // /**
+    //  * 获取子节点数量属性
+    //  *
+    //  * @return 子节点数量属性
+    //  */
+    // public SimpleIntegerProperty childNumProperty() {
+    //     if (this.childNumProperty == null) {
+    //         this.childNumProperty = new SimpleIntegerProperty();
+    //     }
+    //     return this.childNumProperty;
+    // }
 
     public ZKNodeTreeItem(@NonNull ZKNode value, @NonNull ZKConnectTreeItem root) {
         super(root.getTreeView());
@@ -317,6 +317,20 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 ex.printStackTrace();
             }
         });
+        this.flushValue();
+    }
+
+    /**
+     * 刷新值
+     */
+    private void flushValue() {
+        this.getValue().num((long) this.getRealChildrenSize(), this.getChildren().size());
+    }
+
+    @Override
+    public synchronized void doFilter(RichTreeItemFilter itemFilter) {
+        super.doFilter(itemFilter);
+        this.flushValue();
     }
 
     // /**

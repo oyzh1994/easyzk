@@ -52,12 +52,12 @@
             </exclusions>
         </dependency>
 
-        <!-- java 辅助工具包 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>compile</scope>
-        </dependency>
+        <!-- &lt;!&ndash; java 辅助工具包 &ndash;&gt; -->
+        <!-- <dependency> -->
+        <!--     <groupId>org.projectlombok</groupId> -->
+        <!--     <artifactId>lombok</artifactId> -->
+        <!--     <scope>compile</scope> -->
+        <!-- </dependency> -->
 
         <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
         <dependency>
@@ -69,13 +69,6 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-crypto</artifactId>
-            <version>${hutool.version}</version>
-        </dependency>
-
-        <!-- json工具类库 -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-json</artifactId>
             <version>${hutool.version}</version>
         </dependency>
 
@@ -178,17 +171,17 @@
             </exclusions>
         </dependency>
 
-        <!-- fx通用 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>fx-common</artifactId>
-        </dependency>
+        <!-- &lt;!&ndash; fx通用 &ndash;&gt; -->
+        <!-- <dependency> -->
+        <!--     <groupId>cn.oyzh</groupId> -->
+        <!--     <artifactId>fx-common</artifactId> -->
+        <!-- </dependency> -->
 
-        <!-- fx增强 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>fx-plus</artifactId>
-        </dependency>
+        <!-- &lt;!&ndash; fx增强 &ndash;&gt; -->
+        <!-- <dependency> -->
+        <!--     <groupId>cn.oyzh</groupId> -->
+        <!--     <artifactId>fx-plus</artifactId> -->
+        <!-- </dependency> -->
 
         <!-- fx终端 -->
         <dependency>

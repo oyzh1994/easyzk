@@ -3,12 +3,12 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
         if (StrUtil.isBlank(text)) {
             return new ArrayList<>();
         }
-        List<ZKAuth> auths = JSON.parseArray(text, ZKAuth.class);
+        List<ZKAuth> auths = JSONUtil.toList(text, ZKAuth.class);
         if (CollUtil.isNotEmpty(auths)) {
             auths = auths.parallelStream().filter(Objects::nonNull).sorted((o1, o2) -> o1.getUser().compareToIgnoreCase(o2.getUser())).collect(Collectors.toList());
         }

@@ -2,11 +2,11 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.store.ObjectFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 
@@ -40,7 +40,7 @@ public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
         try {
             String text = FileUtil.readString(this.storeFile(), this.charset());
             if (StrUtil.isNotBlank(text)) {
-                setting = JSON.parseObject(text, ZKSetting.class);
+                setting = JSONUtil.toBean(text, ZKSetting.class);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

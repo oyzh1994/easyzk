@@ -4,12 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
             if (StrUtil.isBlank(text)) {
                 return new ArrayList<>();
             }
-            List<ZKInfo> zkInfos = JSON.parseArray(text, ZKInfo.class);
+            List<ZKInfo> zkInfos = JSONUtil.toList(text, ZKInfo.class);
             if (CollUtil.isNotEmpty(zkInfos)) {
                 zkInfos = zkInfos.parallelStream().sorted().collect(Collectors.toList());
             }

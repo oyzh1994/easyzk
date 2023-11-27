@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.controller.node;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
@@ -17,9 +18,6 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -208,13 +206,11 @@ public class ZKNodeAddController extends Controller {
         String text = this.nodeData.getTextTrim();
         try {
             if ("json".equals(this.nodeData.getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json);
+                String jsonStr = JSONUtil.toJsonStr(text);
                 this.nodeData.setText(jsonStr);
                 this.nodeData.setUserData("text");
             } else if (text.contains("{") || text.contains("[") || "text".equals(this.nodeData.getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json, true);
+                String jsonStr = JSONUtil.toJsonPrettyStr(text);
                 this.nodeData.setText(jsonStr);
                 this.nodeData.setUserData("json");
             }

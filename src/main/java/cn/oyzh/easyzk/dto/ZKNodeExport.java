@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONUtil;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -61,7 +61,10 @@ public class ZKNodeExport {
      * @return json字符串
      */
     public String toJSONString(boolean prettyFormat) {
-        return JSONObject.toJSONString(this, prettyFormat);
+        if (prettyFormat) {
+            return JSONUtil.toJsonPrettyStr(this);
+        }
+        return JSONUtil.toJsonStr(this);
     }
 
     /**
@@ -80,7 +83,7 @@ public class ZKNodeExport {
      * @param charset 字符集
      * @return 数据字节数组
      */
-    public byte[] getDateBytes(String data,@NonNull Charset charset) {
+    public byte[] getDateBytes(String data, @NonNull Charset charset) {
         // if (StrUtil.isBlank(charset)) {
         //     charset = StandardCharsets.UTF_8.name();
         // } else if ("跟随系统".equals(charset)) {

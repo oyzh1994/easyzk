@@ -5,13 +5,14 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.util.OSUtil;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -215,19 +216,19 @@ public class ZKExportUtil {
      */
     public static ZKNodeExport fromJSON(@NonNull String json) {
         StaticLog.info("json: {}", json);
-        JSONObject object = JSONObject.parseObject(json);
+        JSONObject object = JSONUtil.parseObj(json);
         ZKNodeExport export = new ZKNodeExport();
         export.setNodes(new ArrayList<>());
-        export.setVersion(object.getString("version"));
-        export.setCharset(object.getString("charset"));
-        export.setPlatform(object.getString("platform"));
+        export.setVersion(object.getStr("version"));
+        export.setCharset(object.getStr("charset"));
+        export.setPlatform(object.getStr("platform"));
         JSONArray nodes = object.getJSONArray("nodes");
         for (Object n : nodes) {
             JSONObject o = (JSONObject) n;
             Map<String, String> node = new HashMap<>();
-            node.put("path", o.getString("path"));
+            node.put("path", o.getStr("path"));
             if (o.containsKey("data")) {
-                node.put("data", o.getString("data"));
+                node.put("data", o.getStr("data"));
             } else {
                 node.put("data", "");
             }

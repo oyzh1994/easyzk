@@ -3,12 +3,12 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
         if (StrUtil.isBlank(text)) {
             return new ArrayList<>();
         }
-        return JSON.parseArray(text, ZKSearchHistory.class);
+        return JSONUtil.toList(text, ZKSearchHistory.class);
     }
 
     /**

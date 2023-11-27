@@ -26,6 +26,16 @@ import java.util.Objects;
 @Accessors(chain = true, fluent = true)
 public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
+    /**
+     * 子节点总数量
+     */
+    private Long childNum;
+
+    /**
+     * 子节点显示数量
+     */
+    private Integer showChildNum;
+
     private final ZKNodeTreeItem treeItem;
 
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem treeItem) {
@@ -34,7 +44,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         this.flushText();
         this.flushGraphicColor();
         treeItem.dataProperty().addListener((observableValue, bytes, t1) -> this.flushStatus());
-        treeItem.childNumProperty().addListener((observableValue, bytes, t1) -> this.flushChildNum());
     }
 
     @Override
@@ -88,7 +97,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         if (ZKAuthUtil.isNeedAuth(value, this.treeItem.client())) {
             return "/font/lock.svg";
         }
-
         // 临时节点
         if (value.ephemeral()) {
             return "/font/temp.svg";
@@ -98,34 +106,39 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         if (value.subNode()) {
             return "/font/file-text.svg";
         }
-
         // 父节点，已加载
         if (treeItem.loaded()) {
             return "/font/folder-open.svg";
         }
-
         // 父节点，未加载
         return "/font/folder.svg";
     }
 
     /**
-     * 初始化子节点数量组件
+     * 刷新子节点数量
      */
     private void flushChildNum() {
-        int childNum = this.treeItem.childNum();
-        FXText text = (FXText) this.getChild(2);
-        if (childNum == -1) {
-            this.removeChild(text);
-        } else if (text == null) {
-            text = new FXText("(" + childNum + ")");
+        // 寻找组件
+        FXText text = (FXText) this.lookup("#num");
+        if (text == null) {
+            text = new FXText();
+            text.setId("num");
             text.setFill(Color.valueOf("#228B22"));
             this.addChild(text);
             HBox.setMargin(text, new Insets(0, 0, 0, 3));
+        }
+        if (this.childNum == null || this.childNum == 0) {
+            text.setText("");
+        } else if (this.showChildNum == null || this.showChildNum == this.childNum.intValue()) {
+            text.setText("(" + this.childNum + ")");
         } else {
-            text.setText("(" + childNum + ")");
+            text.setText("(" + this.showChildNum + "/" + this.childNum + ")");
         }
     }
 
+    /**
+     * 刷新状态
+     */
     public void flushStatus() {
         FXText text = (FXText) this.getChild(1);
         if (this.treeItem.isBeDeleted()) {
@@ -144,5 +157,41 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     @Override
     public SVGGlyph graphic() {
         return (SVGGlyph) super.graphic();
+    }
+
+    /**
+     * 设置节点数量
+     *
+     * @param childNum     子节点总数量
+     * @param showChildNum 子节点显示数量
+     */
+    public void num(Long childNum, Integer showChildNum) {
+        if (childNum != null) {
+            this.childNum = childNum;
+        }
+        this.showChildNum = showChildNum;
+        this.flushChildNum();
+    }
+
+    /**
+     * 设置子节点总数量
+     *
+     * @param childNum 子节点总数量
+     */
+    public void childNum(Long childNum) {
+        if (childNum != null) {
+            this.childNum = childNum;
+            this.flushChildNum();
+        }
+    }
+
+    /**
+     * 设置子节点显示数量
+     *
+     * @param showChildNum 子节点显示数量
+     */
+    public void showChildNum(Integer showChildNum) {
+        this.showChildNum = showChildNum;
+        this.flushChildNum();
     }
 }

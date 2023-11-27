@@ -2,11 +2,11 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.PageInfo;
 import cn.oyzh.fx.common.store.ObjectFileStore;
-import com.alibaba.fastjson.JSON;
 
 
 /**
@@ -39,7 +39,7 @@ public class PageInfoStore extends ObjectFileStore<PageInfo> {
         try {
             String text = FileUtil.readString(this.storeFile(), this.charset());
             if (StrUtil.isNotBlank(text)) {
-                pageInfo = JSON.parseObject(text, PageInfo.class);
+                pageInfo = JSONUtil.toBean(text, PageInfo.class);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

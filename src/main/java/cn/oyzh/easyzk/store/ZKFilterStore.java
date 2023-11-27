@@ -3,12 +3,12 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
         if (StrUtil.isBlank(text)) {
             return new ArrayList<>();
         }
-        List<ZKFilter> filters = JSON.parseArray(text, ZKFilter.class);
+        List<ZKFilter> filters = JSONUtil.toList(text, ZKFilter.class);
         if (CollUtil.isNotEmpty(filters)) {
             filters = filters.parallelStream().filter(Objects::nonNull).sorted((o1, o2) -> o1.getKw().compareToIgnoreCase(o2.getKw())).collect(Collectors.toList());
         }

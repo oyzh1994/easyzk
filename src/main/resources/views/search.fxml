@@ -85,7 +85,7 @@
                 <Insets left="21" top="3"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox text="搜索名称" selected="true" fx:id="searchPath" realWidth="65">
+        <FlexCheckBox text="搜索路径" selected="true" fx:id="searchPath" realWidth="65">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>

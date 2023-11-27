@@ -170,7 +170,9 @@ public class ZKInfoAddController extends Controller {
     private void testConnect() {
         // 检查连接地址
         String host = this.getHost();
-        if (StrUtil.isNotBlank(host)) {
+        if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
+            MessageBox.warn("请填写地址");
+        } else {
             ZKConnectUtil.testConnect(this.stage, host, 5);
         }
     }

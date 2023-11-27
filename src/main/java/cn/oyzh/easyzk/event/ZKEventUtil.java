@@ -45,8 +45,7 @@ public class ZKEventUtil {
     public static void connectionLost(ZKClient client) {
         ZKConnectionLostMsg msg = new ZKConnectionLostMsg();
         msg.client(client);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -57,8 +56,7 @@ public class ZKEventUtil {
     public static void connectionClosed(ZKClient client) {
         ZKConnectionClosedMsg msg = new ZKConnectionClosedMsg();
         msg.client(client);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -69,8 +67,7 @@ public class ZKEventUtil {
     public static void connectionConnected(ZKClient client) {
         ZKConnectionConnectedMsg msg = new ZKConnectionConnectedMsg();
         msg.client(client);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -83,8 +80,7 @@ public class ZKEventUtil {
         ZKNodeAddMsg msg = new ZKNodeAddMsg();
         msg.path(path);
         msg.info(client.zkInfo());
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -97,8 +93,7 @@ public class ZKEventUtil {
         ZKNodeUpdateMsg msg = new ZKNodeUpdateMsg();
         msg.path(path);
         msg.infoName(client.infoName());
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -109,8 +104,7 @@ public class ZKEventUtil {
     public static void infoAdded(ZKInfo info) {
         ZKInfoAddedMsg msg = new ZKInfoAddedMsg();
         msg.info(info);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -121,8 +115,7 @@ public class ZKEventUtil {
     public static void infoUpdated(ZKInfo info) {
         ZKInfoUpdatedMsg msg = new ZKInfoUpdatedMsg();
         msg.info(info);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -133,8 +126,7 @@ public class ZKEventUtil {
     public static void infoDeleted(ZKInfo info) {
         ZKInfoDeletedMsg msg = new ZKInfoDeletedMsg();
         msg.info(info);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -149,8 +141,7 @@ public class ZKEventUtil {
         msg.path(path);
         msg.delChildren(delChildren);
         msg.infoName(client.infoName());
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -159,8 +150,7 @@ public class ZKEventUtil {
     public static void graphicChanged(TreeItem<?> treeItem) {
         TreeGraphicChangedMsg msg = new TreeGraphicChangedMsg();
         msg.item(treeItem);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -169,8 +159,7 @@ public class ZKEventUtil {
     public static void graphicColorChanged(TreeItem<?> treeItem) {
         TreeGraphicColorChangedMsg msg = new TreeGraphicColorChangedMsg();
         msg.item(treeItem);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -178,8 +167,7 @@ public class ZKEventUtil {
      */
     public static void treeChildChanged() {
         TreeChildChangedMsg msg = new TreeChildChangedMsg();
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -187,8 +175,7 @@ public class ZKEventUtil {
      */
     public static void treeChildFilter() {
         TreeChildFilterMsg msg = new TreeChildFilterMsg();
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -206,8 +193,7 @@ public class ZKEventUtil {
     public static void terminalOpen(ZKInfo info) {
         ZKTerminalOpenMsg msg = new ZKTerminalOpenMsg();
         msg.info(info);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -218,8 +204,7 @@ public class ZKEventUtil {
     public static void terminalClose(ZKInfo info) {
         ZKTerminalCloseMsg msg = new ZKTerminalCloseMsg();
         msg.info(info);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -227,8 +212,7 @@ public class ZKEventUtil {
      */
     public static void authMain() {
         ZKAuthMainMsg msg = new ZKAuthMainMsg();
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -236,8 +220,7 @@ public class ZKEventUtil {
      */
     public static void filterMain() {
         ZKFilterMainMsg msg = new ZKFilterMainMsg();
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -246,8 +229,7 @@ public class ZKEventUtil {
     public static void searchStart(ZKSearchParam searchParam) {
         ZKSearchStartMsg msg = new ZKSearchStartMsg();
         msg.searchParam(searchParam);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
     /**
@@ -256,7 +238,6 @@ public class ZKEventUtil {
     public static void searchFinish(ZKSearchParam searchParam) {
         ZKSearchFinishMsg msg = new ZKSearchFinishMsg();
         msg.searchParam(searchParam);
-        Event<Object> event = EventBuilder.newBuilder().type(msg.name()).group(msg.group()).data(msg).build();
-        EventUtil.fire(event);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 }

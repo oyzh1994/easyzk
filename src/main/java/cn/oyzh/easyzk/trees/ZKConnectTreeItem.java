@@ -231,7 +231,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 导入数据
      */
     private void importNode() {
-        StageWrapper fxView = StageUtil.parseStage(ZKNodeImportController.class, this.getTreeView().window());
+        StageWrapper fxView = StageUtil.parseStage(ZKNodeImportController.class, this.window());
         fxView.setProp("zkClient", this.client);
         fxView.display();
     }
@@ -314,7 +314,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         if (this.isConnect() && MessageBox.confirm("需要关闭连接，继续么？")) {
             this.closeConnect();
         }
-        StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.getTreeView().window());
+        StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.window());
         fxView.setProp("zkInfo", this.value());
         fxView.display();
     }
@@ -484,8 +484,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     private void getAllNodeItem(ZKNodeTreeItem item, List<ZKNodeTreeItem> list) {
         if (item != null) {
             list.add(item);
-            for (ZKNodeTreeItem treeItem : item.realChildren()) {
-                this.getAllNodeItem(treeItem, list);
+            for (TreeItem<?> treeItem : item.getShowChildren()) {
+                if (treeItem instanceof ZKNodeTreeItem nodeTreeItem) {
+                    this.getAllNodeItem(nodeTreeItem, list);
+                }
             }
         }
     }
@@ -523,13 +525,14 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         if (root.isChildEmpty()) {
             return null;
         }
-        List<ZKNodeTreeItem> children = root.realChildren();
         // 遍历子节点，寻找匹配节点
-        for (ZKNodeTreeItem item : children) {
-            ZKNodeTreeItem treeItem = this.findNodeItem(item, targetPath);
-            // 返回节点信息
-            if (treeItem != null) {
-                return treeItem;
+        for (TreeItem<?> item : root.getShowChildren()) {
+            if (item instanceof ZKNodeTreeItem nodeTreeItem) {
+                ZKNodeTreeItem treeItem = this.findNodeItem(nodeTreeItem, targetPath);
+                // 返回节点信息
+                if (treeItem != null) {
+                    return treeItem;
+                }
             }
         }
         return null;

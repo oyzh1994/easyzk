@@ -26,11 +26,9 @@ import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.stage.Window;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -45,8 +43,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author oyzh
@@ -60,7 +56,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     @Getter
     @Accessors(fluent = true, chain = true)
-    private ZKNode value;
+    private final ZKNode value;
 
     /**
      * 字符集
@@ -307,7 +303,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         super(root.getTreeView());
         this.root = root;
         this.value = value;
-        this.filterable = true;
+        this.setFilterable(true);
         this.setValue(new ZKNodeTreeItemValue(this));
         super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             try {
@@ -342,15 +338,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.root.client();
     }
 
-//    /**
-//     * 获取窗口
-//     *
-//     * @return 窗口
-//     */
-//    public Window window() {
-//        return this.getTreeView().window();
-//    }
-
     /**
      * 获取节点路径
      *
@@ -366,10 +353,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void loadChild() {
         if (this.canLoadSub()) {
             Task task = TaskBuilder.newBuilder()
-                    .onStart(() -> {
-                        this.loadChildes(false);
-                        this.extend();
-                    })
+                    .onStart(() -> this.loadChildes(false))
+                    .onSuccess(this::extend)
                     .onFinish(this::stopWaiting)
                     .onError(MessageBox::exception)
                     .build();
@@ -382,10 +367,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void loadChildQuiet() {
         if (this.canLoadSub()) {
-            Task task = TaskBuilder.newBuilder().onStart(() -> {
-                this.loadChildes(false);
-                this.extend();
-            }).build();
+            Task task = TaskBuilder.newBuilder()
+                    .onStart(() -> this.loadChildes(false))
+                    .onSuccess(this::extend)
+                    .build();
             ThreadUtil.startVirtual(task);
         }
     }
@@ -686,9 +671,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public ZKNodeTreeItem getChild(String path) {
         if (StrUtil.isNotBlank(path) && !this.isChildEmpty()) {
-            List<ZKNodeTreeItem> childes = new CopyOnWriteArrayList<>(this.realChildren());
-            Optional<ZKNodeTreeItem> item = childes.parallelStream().filter(i -> i.value.decodeNodePath().equals(path)).findAny();
-            return item.orElse(null);
+            for (TreeItem<?> child : this.getShowChildren()) {
+                if (child instanceof ZKNodeTreeItem treeItem) {
+                    if (treeItem.decodeNodePath().equals(path)) {
+                        return treeItem;
+                    }
+                }
+            }
         }
         return null;
     }
@@ -785,10 +774,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void addNodes(List<ZKNode> nodes) {
         if (CollUtil.isNotEmpty(nodes)) {
             // 生成子节点
-            List<ZKNodeTreeItem> childes = new ArrayList<>(nodes.size());
+            List<TreeItem<?>> childes = new ArrayList<>(nodes.size());
             nodes.forEach(s -> childes.add(new ZKNodeTreeItem(s, this.root)));
             // 添加子节点
-            this.realChildren.addAll(childes);
+            this.addChild(childes);
         }
     }
 
@@ -800,12 +789,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void replaceNodes(List<ZKNode> nodes) {
         if (CollUtil.isNotEmpty(nodes)) {
             // 生成子节点
-            List<ZKNodeTreeItem> childes = new ArrayList<>(nodes.size());
+            List<TreeItem<?>> childes = new ArrayList<>(nodes.size());
             nodes.forEach(s -> childes.add(new ZKNodeTreeItem(s, this.root)));
             // 设置子节点
-            this.realChildren.setAll(childes);
+            this.setChild(childes);
         } else {
-            this.realChildren.clear();
+            this.clearChild();
         }
     }
 
@@ -822,7 +811,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void refreshData() throws Exception {
 //        if (log.isDebugEnabled()) {
-            StaticLog.debug("refreshData.");
+        StaticLog.debug("refreshData.");
 //        }
         ZKNodeUtil.refreshData(this.client(), this.value);
         // 清空未保存的数据
@@ -836,7 +825,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void refreshACL() throws Exception {
 //        if (log.isDebugEnabled()) {
-            StaticLog.debug("refreshACL.");
+        StaticLog.debug("refreshACL.");
 //        }
         this.value.acl(this.client().getACL(this.nodePath()));
         // 刷新图标
@@ -948,24 +937,28 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 f1:
                 for (ZKNode node : list) {
                     // 判断节点是否存在
-                    for (ZKNodeTreeItem item : this.realChildren()) {
-                        if (StrUtil.equals(item.value.nodePath(), node.nodePath())) {
-                            item.value.copy(node);
-                            continue f1;
+                    for (TreeItem<?> item : this.getShowChildren()) {
+                        if (item instanceof ZKNodeTreeItem treeItem) {
+                            if (StrUtil.equals(treeItem.nodePath(), node.nodePath())) {
+                                treeItem.value.copy(node);
+                                continue f1;
+                            }
                         }
                     }
                     addList.add(node);
                 }
                 // 遍历列表寻找待删除节点
                 f1:
-                for (ZKNodeTreeItem item : this.realChildren()) {
-                    // 判断节点是否不存在
-                    for (ZKNode node : list) {
-                        if (StrUtil.equals(item.value.nodePath(), node.nodePath())) {
-                            continue f1;
+                for (TreeItem<?> item : this.getShowChildren()) {
+                    if (item instanceof ZKNodeTreeItem treeItem) {
+                        // 判断节点是否不存在
+                        for (ZKNode node : list) {
+                            if (StrUtil.equals(treeItem.nodePath(), node.nodePath())) {
+                                continue f1;
+                            }
                         }
+                        delList.add(item);
                     }
-                    delList.add(item);
                 }
                 // 删除节点
                 if (!delList.isEmpty()) {
@@ -978,11 +971,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             }
             // 递归处理
             if (loop && !this.isChildEmpty()) {
-                for (ZKNodeTreeItem child : this.realChildren()) {
-                    if (this.canceled || child.canceled) {
-                        break;
+                for (TreeItem<?> item : this.getShowChildren()) {
+                    if (item instanceof ZKNodeTreeItem treeItem) {
+                        if (this.canceled || treeItem.canceled) {
+                            break;
+                        }
+                        treeItem.loadChildes(true);
                     }
-                    child.loadChildes(true);
                 }
             }
         } catch (Exception ex) {
@@ -991,15 +986,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         } finally {
             this.loading = false;
         }
-    }
-
-    /**
-     * 真实子节点
-     *
-     * @return 真实子节点
-     */
-    public ObservableList<ZKNodeTreeItem> realChildren() {
-        return (ObservableList) super.realChildren;
     }
 
     @Override

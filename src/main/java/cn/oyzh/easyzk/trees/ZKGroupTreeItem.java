@@ -138,7 +138,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         // 处理连接
         if (!this.isChildEmpty()) {
             // 清除分组id
-            List<ZKConnectTreeItem> childes = this.getChildren();
+            List<ZKConnectTreeItem> childes = this.getConnectItems();
             childes.forEach(c -> c.value().setGroupId(null));
             // 连接转移到父节点
             this.parent().addConnectItems(childes);
@@ -151,7 +151,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
      * 添加连接
      */
     private void addConnect() {
-        StageWrapper fxView = StageUtil.parseStage(ZKInfoAddController.class, this.parent().window());
+        StageWrapper fxView = StageUtil.parseStage(ZKInfoAddController.class, this.window());
         fxView.setProp("group", this.value);
         fxView.display();
     }
@@ -168,20 +168,17 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
 
     @Override
     public void addConnect(@NonNull ZKInfo zkInfo) {
-        super.addChild(new ZKConnectTreeItem(zkInfo, this.getTreeView()));
+        this.addConnectItem(new ZKConnectTreeItem(zkInfo, this.getTreeView()));
     }
 
     @Override
     public void addConnectItem(@NonNull ZKConnectTreeItem item) {
-        if (this.getChildren().contains(item)) {
-            return;
-        }
-        if (!Objects.equals(item.value().getGroupId(), this.value.getGid())) {
-            item.value().setGroupId(this.value.getGid());
-            this.infoStore.update(item.value());
-        }
-        super.addChild(item);
-        if (!this.isExpanded()) {
+        if (!this.containsChild(item)) {
+            if (!Objects.equals(item.value().getGroupId(), this.value.getGid())) {
+                item.value().setGroupId(this.value.getGid());
+                this.infoStore.update(item.value());
+            }
+            super.addChild(item);
             this.extend();
         }
     }
@@ -189,8 +186,9 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     @Override
     public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
-            this.getChildren().addAll(items);
-            this.sort();
+            this.addChild((List) items);
+            this.extend();
+            // this.sort();
             // this.sort(this.getTreeView().sortOrder());
         }
     }
@@ -207,17 +205,10 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
 
     @Override
     public List<ZKConnectTreeItem> getConnectItems() {
-        return this.getChildren();
-    }
-
-    @Override
-    public List<ZKConnectTreeItem> getConnectedItems() {
-        List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildren().size());
-        for (Object item : this.getChildren()) {
+        List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
+        for (TreeItem<?> item : this.getShowChildren()) {
             if (item instanceof ZKConnectTreeItem treeItem) {
-                if (treeItem.isConnect()) {
-                    items.add(treeItem);
-                }
+                items.add(treeItem);
             }
         }
         return items;
@@ -242,15 +233,5 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
             connectTreeItem.remove();
             this.addConnectItem(connectTreeItem);
         }
-    }
-
-    public List<ZKConnectTreeItem> children() {
-        List<ZKConnectTreeItem> list=new ArrayList<>();
-        for (Object child : this.getChildren()) {
-            if(child instanceof ZKConnectTreeItem treeItem){
-                list.add(treeItem);
-            }
-        }
-        return list;
     }
 }

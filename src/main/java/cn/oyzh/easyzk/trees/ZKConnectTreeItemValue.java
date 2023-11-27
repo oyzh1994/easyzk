@@ -50,7 +50,7 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
     @Override
     public void flushGraphicColor() {
         SVGGlyph glyph = this.graphic();
-        if (this.treeItem.isConnect()) {
+        if (this.treeItem.isConnected()) {
             if (glyph.getColor() != Color.GREEN) {
                 glyph.setColor(Color.GREEN);
             }

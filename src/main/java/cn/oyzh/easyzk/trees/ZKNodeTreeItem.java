@@ -893,7 +893,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 结果
      */
     private boolean canLoadSub() {
-        return this.root.isConnect() && !this.loaded && this.value.parentNode() && this.value.hasReadPerm();
+        return this.root.isConnected() && !this.loaded && this.value.parentNode() && this.value.hasReadPerm();
     }
 
     @Override

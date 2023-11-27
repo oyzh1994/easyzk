@@ -43,7 +43,7 @@ import java.util.List;
  */
 //@Slf4j
 @StageAttribute(
-        title = "zk数据传输",
+        title = "数据传输",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = ZKStyle.COMMON,

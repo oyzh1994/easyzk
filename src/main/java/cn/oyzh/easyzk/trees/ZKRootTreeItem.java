@@ -383,7 +383,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
         for (TreeItem<?> item : this.getShowChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
-                if (connectTreeItem.isConnect()) {
+                if (connectTreeItem.isConnected()) {
                     items.add(connectTreeItem);
                 }
             } else if (item instanceof ZKGroupTreeItem groupTreeItem) {

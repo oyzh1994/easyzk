@@ -19,12 +19,12 @@
     </properties>
 
     <dependencies>
-        <!-- json类库 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <scope>compile</scope>
-        </dependency>
+        <!-- &lt;!&ndash; json类库 &ndash;&gt; -->
+        <!-- <dependency> -->
+        <!--     <groupId>com.alibaba</groupId> -->
+        <!--     <artifactId>fastjson</artifactId> -->
+        <!--     <scope>compile</scope> -->
+        <!-- </dependency> -->
 
         <!-- Spring boot -->
         <dependency>
@@ -69,6 +69,13 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-crypto</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+
+        <!-- json工具类库 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-json</artifactId>
             <version>${hutool.version}</version>
         </dependency>
 

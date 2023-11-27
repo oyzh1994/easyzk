@@ -109,7 +109,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         if (this.isConnecting()) {
             MenuItem cancelConnect = MenuItemExt.newItem("取消连接", new SVGGlyph("/font/close.svg", "11"), "取消zk连接", this::cancelConnect);
             items.add(cancelConnect);
-        } else if (this.isConnect()) {
+        } else if (this.isConnected()) {
             MenuItemExt closeConnect = MenuItemExt.newItem("关闭连接", new SVGGlyph("/font/poweroff.svg", "12"), "关闭zk连接(快捷键pause)", this::closeConnect);
             MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑zk连接", this::editConnect);
             MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
@@ -203,7 +203,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 连接
      */
     public void connect() {
-        if (!this.isConnect() && !this.isConnecting()) {
+        if (!this.isConnected() && !this.isConnecting()) {
             // 执行连接
             this.startWaiting();
             Task task = TaskBuilder.newBuilder()
@@ -263,7 +263,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 关闭连接
      */
     public void closeConnect() {
-        if (!this.isWaiting() && this.isConnect()) {
+        if (!this.isWaiting() && this.isConnected()) {
             if (this.hasUnsavedNode() && !MessageBox.confirm("发现节点数据未保存，确定关闭连接？")) {
                 return;
             }
@@ -300,7 +300,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public void free() {
-        if (!this.isConnect()) {
+        if (!this.isConnected()) {
             this.connect();
         } else {
             super.free();
@@ -311,7 +311,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 编辑连接
      */
     private void editConnect() {
-        if (this.isConnect() && MessageBox.confirm("需要关闭连接，继续么？")) {
+        if (this.isConnected() && MessageBox.confirm("需要关闭连接，继续么？")) {
             this.closeConnect();
         }
         StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.window());
@@ -407,7 +407,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      *
      * @return 结果
      */
-    public boolean isConnect() {
+    public boolean isConnected() {
         return this.client != null && this.client.isConnected();
     }
 
@@ -499,7 +499,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * @return zk节点
      */
     public ZKNodeTreeItem findNodeItem(@NonNull String targetPath) {
-        if (this.isConnect() && !this.isChildEmpty()) {
+        if (this.isConnected() && !this.isChildEmpty()) {
             return this.findNodeItem(this.firstChild(), targetPath);
         }
         return null;
@@ -558,7 +558,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     // @Override
     // public void doFilter(RichTreeItemFilter itemFilter) {
-    //     if (itemFilter != null && this.isConnect() && this.root() != null) {
+    //     if (itemFilter != null && this.isConnected() && this.root() != null) {
     //         this.root().doFilter(itemFilter);
     //         // this.root().flushChildren();
     //     }

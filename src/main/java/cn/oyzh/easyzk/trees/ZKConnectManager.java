@@ -70,7 +70,7 @@ public interface ZKConnectManager {
      * @return 已连接的连接节点
      */
     default List<ZKConnectTreeItem> getConnectedItems() {
-        return this.getConnectItems().parallelStream().filter(ZKConnectTreeItem::isConnect).collect(Collectors.toList());
+        return this.getConnectItems().parallelStream().filter(ZKConnectTreeItem::isConnected).collect(Collectors.toList());
     }
 
 }

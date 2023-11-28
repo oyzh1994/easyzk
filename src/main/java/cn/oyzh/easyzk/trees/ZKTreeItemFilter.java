@@ -75,12 +75,6 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     @Override
     public Boolean apply(RichTreeItem item) {
         if (item instanceof ZKNodeTreeItem treeItem) {
-            // 判断是否满足搜索要求
-            ZKSearchParam param = this.searchHandler.searchParam();
-            if (param != null && param.isFilterMode() && !param.isEmpty()) {
-                return this.searchHandler.getMatchType(item) != null;
-            }
-
             ZKNode node = treeItem.value();
             // 根节点直接展示
             if (node.rootNode()) {
@@ -99,7 +93,14 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤节点
-            return !ZKNodeUtil.isFiltered(treeItem.nodePath(), this.filters);
+            if (ZKNodeUtil.isFiltered(treeItem.nodePath(), this.filters)) {
+                return false;
+            }
+        }
+        // 判断是否满足搜索要求
+        ZKSearchParam param = this.searchHandler.searchParam();
+        if (param != null && param.isFilterMode() && !param.isEmpty()) {
+            return this.searchHandler.getMatchType(item) != null;
         }
         return true;
     }

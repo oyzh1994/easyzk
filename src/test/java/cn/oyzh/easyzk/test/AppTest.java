@@ -7,7 +7,8 @@ package cn.oyzh.easyzk.test;
 public class AppTest {
 
     public static void main(String[] args) {
-        AppMain.main(args);
+        TerminalApp.main(args);
+//        AppMain.main(args);
     }
 
 }

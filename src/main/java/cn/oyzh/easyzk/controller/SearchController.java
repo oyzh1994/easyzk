@@ -25,6 +25,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.search.SearchResult;
+import cn.oyzh.fx.plus.util.RenderService;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -52,10 +53,20 @@ public class SearchController extends SubController {
     private SearchTextField searchKW;
 
     /**
+     * 搜索中标志位
+     */
+    private boolean searching;
+
+    /**
      * 搜索-替换词
      */
     @FXML
     private SearchTextField replaceKW;
+
+    /**
+     * 替换中标志位
+     */
+    private boolean replacing;
 
     /**
      * 搜索-主面板
@@ -203,7 +214,7 @@ public class SearchController extends SubController {
     @FXML
     private void searchNext() {
         // 内容为空
-        if (this.searchKW.isEmpty()) {
+        if (this.searchKW.isEmpty() || this.searching) {
             return;
         }
         // 检查选项
@@ -211,9 +222,9 @@ public class SearchController extends SubController {
             MessageBox.warn("搜索名称和值请最少勾选一项！");
             return;
         }
+        this.searching = true;
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> {
-                    this.treeView.disable();
                     // 执行搜索下一个
                     this.searchHandler.searchNext(this.getSearchParam());
                     // 更新搜索结果
@@ -221,10 +232,10 @@ public class SearchController extends SubController {
                     // 更新搜索历史
                     this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
                 })
-                .onFinish(this.treeView::enable)
+                .onFinish(() -> this.searching = false)
                 .onError(MessageBox::exception)
                 .build();
-        TaskManager.startDelayTask("zk:search:searchNext", task, 50);
+        RenderService.submit(task);
     }
 
     /**
@@ -233,16 +244,16 @@ public class SearchController extends SubController {
     @FXML
     private void searchPrev() {
         // 内容为空
-        if (this.searchKW.isEmpty()) {
+        if (this.searchKW.isEmpty() || this.searching) {
             return;
         }
         if (!this.searchPath.isSelected() && !this.searchData.isSelected()) {
             MessageBox.warn("搜索名称和值请最少勾选一项！");
             return;
         }
+        this.searching = true;
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> {
-                    this.treeView.disable();
                     // 执行搜索上一个
                     this.searchHandler.searchPrev(this.getSearchParam());
                     // 更新搜索结果
@@ -250,10 +261,10 @@ public class SearchController extends SubController {
                     // 更新搜索历史
                     this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
                 })
-                .onFinish(() -> this.treeView.enable())
+                .onFinish(() -> this.searching = false)
                 .onError(MessageBox::exception)
                 .build();
-        TaskManager.startDelayTask("zk:search:searchPrev", task, 50);
+        RenderService.submit(task);
     }
 
     /**
@@ -262,7 +273,7 @@ public class SearchController extends SubController {
     @FXML
     private void replace() {
         // 内容为空
-        if (this.searchKW.isEmpty() || this.replaceKW.isEmpty()) {
+        if (this.searchKW.isEmpty() || this.replaceKW.isEmpty() || this.replacing) {
             return;
         }
         // 无需替换
@@ -275,12 +286,11 @@ public class SearchController extends SubController {
             this.replaceTips.setText("请初始化搜索参数");
             return;
         }
-        TaskManager.startDelayTask("zk:search:replace", () -> {
-            // 执行替换
-            this.searchHandler.replace(this.replaceKW.getText(), b -> {
-                try {
-                    // 找到匹配项
-                    if (b) {
+        this.replacing = true;
+        Task task = TaskBuilder.newBuilder()
+                .onStart(() -> {
+                    // 执行替换
+                    if (this.searchHandler.replace(this.replaceKW.getText())) {
                         this.replaceTips.setText("");
                         ZKNodeTreeItem item = this.parent().activeItem();
                         if (item.isDataTooLong()) {
@@ -297,12 +307,11 @@ public class SearchController extends SubController {
                         this.updateSearchResult();
                         this.replaceTips.setText("没有找到可替换项");
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    MessageBox.exception(ex);
-                }
-            });
-        }, 50);
+                })
+                .onFinish(() -> this.replacing = false)
+                .onError(MessageBox::exception)
+                .build();
+        RenderService.submit(task);
     }
 
     /**

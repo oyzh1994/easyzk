@@ -102,9 +102,9 @@ public class ZKSearchHandler extends SearchHandler {
      * 替换
      *
      * @param replaceKW 替换词
-     * @param onResult  搜索结果回调
+     * @return 结果
      */
-    public void replace(String replaceKW, Consumer<Boolean> onResult) {
+    public boolean replace(String replaceKW) {
         // 如果当前节点不符合分析条件，则寻找下一个节点
         if (!this.dataAnalyse()) {
             do {
@@ -114,9 +114,7 @@ public class ZKSearchHandler extends SearchHandler {
                 if (matchItems.parallelStream().noneMatch(SearchValue::isMatchData)) {
                     // 更新搜索结果
                     this.updateResult();
-                    // 函数回调
-                    onResult.accept(false);
-                    return;
+                    return false;
                 }
                 // 搜索下一个
                 this.searchNext(this.searchParam);
@@ -127,22 +125,16 @@ public class ZKSearchHandler extends SearchHandler {
                 }
             } while (true);
         }
-        Task task = TaskBuilder.newBuilder()
-                .onStart(() -> {
-                    if (this.dataNode != null) {
-                        // 记录旧的索引位置，替换数据后，这个索引值会变成0
-                        int index = this.dataIndex;
-                        // 替换选中内容
-                        this.dataNode.replaceSelection(replaceKW);
-                        // 更新数据索引，防止索引错位导致重复替换
-                        int len = replaceKW.length() - this.searchParam.getKw().length();
-                        this.dataIndex = index + len;
-                    }
-                })
-                .onFinish(() -> onResult.accept(true))
-                .build();
-        // 延迟处理
-        ExecutorUtil.start(task, 50);
+        if (this.dataNode != null) {
+            // 记录旧的索引位置，替换数据后，这个索引值会变成0
+            int index = this.dataIndex;
+            // 替换选中内容
+            this.dataNode.replaceSelection(replaceKW);
+            // 更新数据索引，防止索引错位导致重复替换
+            int len = replaceKW.length() - this.searchParam.getKw().length();
+            this.dataIndex = index + len;
+        }
+        return true;
     }
 
     @Override

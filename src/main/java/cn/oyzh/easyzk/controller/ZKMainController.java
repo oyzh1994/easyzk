@@ -311,7 +311,7 @@ public class ZKMainController extends ParentController {
                 this.tabPane.initNodeTab(treeItem);
                 this.flushViewTitle(treeItem.info());
             } else if (item instanceof ZKConnectTreeItem treeItem) {
-                this.flushViewTitle(treeItem.info());
+                this.flushViewTitle(treeItem.value());
             } else {
                 this.flushViewTitle(null);
             }
@@ -399,12 +399,12 @@ public class ZKMainController extends ParentController {
     }
 
     /**
-     * 处理zk消息
+     * 处理操作消息
      */
     @EventGroup(value = ZKEventGroups.NODE_ACTION, async = true, verbose = true)
     @EventGroup(value = ZKEventGroups.INFO_ACTION, async = true, verbose = true)
     @EventGroup(value = ZKEventGroups.CONNECTION_ACTION, async = true, verbose = true)
-    private void onZKMsg(Event<EventMsg> event) {
+    private void onActionMsg(Event<EventMsg> event) {
         if (event.data() instanceof EventMsgFormatter formatter) {
             String formatMsg = formatter.formatMsg();
             if (formatMsg != null) {

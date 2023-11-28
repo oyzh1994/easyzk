@@ -315,7 +315,7 @@ public class ZKNodeExportController extends Controller {
             this.nodePath.setText(treeItem.decodeNodePath());
         } else if (item instanceof ZKConnectTreeItem treeItem) {
             this.nodePathBox.managedBindVisible();
-            this.zkClient = new ZKClient(treeItem.info());
+            this.zkClient = new ZKClient(treeItem.value());
             this.exportPath = "/";
             this.nodePathBox.disappear();
         }

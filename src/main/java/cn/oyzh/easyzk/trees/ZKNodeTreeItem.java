@@ -1085,7 +1085,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return zk信息
      */
     public ZKInfo info() {
-        return this.root().info();
+        return this.root().value();
     }
 
     /**

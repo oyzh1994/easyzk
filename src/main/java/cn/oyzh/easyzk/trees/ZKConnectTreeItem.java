@@ -176,7 +176,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     private void serverInfo() {
         StageWrapper fxView = StageUtil.parseStage(ZKServiceController.class, this.window());
-        fxView.setProp("zkInfo", this.info());
+        fxView.setProp("zkInfo", this.value);
         fxView.setProp("zkClient", this.client);
         fxView.display();
     }
@@ -211,7 +211,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         this.client.startWithListener();
                         if (!this.client.isConnected()) {
                             if (!this.canceled) {
-                                MessageBox.warn(info().getName() + "连接失败");
+                                MessageBox.warn(this.value.getName() + "连接失败");
                             }
                             this.canceled = false;
                         } else {
@@ -250,14 +250,14 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         wrapper.display();
     }
 
-    /**
-     * zk信息
-     *
-     * @return zk信息
-     */
-    public ZKInfo info() {
-        return this.client == null ? null : this.client.zkInfo();
-    }
+    // /**
+    //  * zk信息
+    //  *
+    //  * @return zk信息
+    //  */
+    // public ZKInfo info() {
+    //     return this.client == null ? null : this.client.zkInfo();
+    // }
 
     /**
      * 关闭连接
@@ -324,8 +324,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     private void repeatConnect() {
         ZKInfo zkInfo = new ZKInfo();
-        zkInfo.copy(this.info());
-        zkInfo.setName(this.info().getName() + "-复制");
+        zkInfo.copy(this.value);
+        zkInfo.setName(this.value.getName() + "-复制");
         zkInfo.setCollects(Collections.emptyList());
         if (this.infoStore.add(zkInfo)) {
             this.parent().addConnect(zkInfo);
@@ -336,7 +336,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public void delete() {
-        if (MessageBox.confirm("删除" + this.info().getName(), "确定删除连接？")) {
+        if (MessageBox.confirm("删除" + this.value().getName(), "确定删除连接？")) {
             this.closeConnect();
             if (this.getParent() instanceof ZKConnectManager ZKConnectManager) {
                 if (!ZKConnectManager.delConnectItem(this)) {
@@ -396,7 +396,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             // 连接中断事件
             if (n == ZKConnState.SUSPENDED) {
                 this.client.close();
-                MessageBox.warn(this.info().getName() + "连接中断");
+                MessageBox.warn(this.value().getName() + "连接中断");
             }
         });
         super.setValue(new ZKConnectTreeItemValue(this));
@@ -443,7 +443,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             }
             SystemUtil.gcLater();
         } else {
-            MessageBox.warn(this.info().getName() + "加载根节点失败");
+            MessageBox.warn(this.value().getName() + "加载根节点失败");
         }
     }
 

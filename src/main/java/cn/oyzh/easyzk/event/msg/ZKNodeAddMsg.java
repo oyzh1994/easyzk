@@ -29,7 +29,7 @@ public class ZKNodeAddMsg implements EventMsg, EventMsgFormatter {
 
     @Override
     public String formatMsg() {
-        return String.format("[%s] 新增节点[%s]", this.info.getName(), this.path);
+        return String.format("[%s] 新增节点:%s", this.info.getName(), this.path);
     }
 
 }

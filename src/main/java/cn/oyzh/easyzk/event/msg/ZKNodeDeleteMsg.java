@@ -32,8 +32,8 @@ public class ZKNodeDeleteMsg implements EventMsg, EventMsgFormatter {
     @Override
     public String formatMsg() {
         if (this.delChildren) {
-            return String.format("[%s] 删除节点[%s]及子节点", this.infoName, this.path);
+            return String.format("[%s] 级联删除节点:%s", this.infoName, this.path);
         }
-        return String.format("[%s] 删除节点[%s]", this.infoName, this.path);
+        return String.format("[%s] 删除节点:%s", this.infoName, this.path);
     }
 }

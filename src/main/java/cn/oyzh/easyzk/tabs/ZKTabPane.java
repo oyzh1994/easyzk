@@ -196,11 +196,10 @@ public class ZKTabPane extends DynamicTabPane {
     /**
      * 连接关闭事件
      *
-     * @param event 事件
+     * @param msg 消息
      */
     @EventReceiver(value = ZKEventTypes.ZK_CONNECTION_CLOSED, async = true, verbose = true)
-    public void connectionClosed(Event<ZKConnectionClosedMsg> event) {
-        ZKConnectionClosedMsg msg = event.data();
+    public void connectionClosed(ZKConnectionClosedMsg msg) {
         ZKNodeTab nodeTab = this.getNodeTab();
         if (nodeTab != null && nodeTab.info() == msg.info()) {
             nodeTab.closeTab();

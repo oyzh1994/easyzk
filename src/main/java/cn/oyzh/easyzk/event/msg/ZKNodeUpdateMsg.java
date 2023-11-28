@@ -28,6 +28,6 @@ public class ZKNodeUpdateMsg implements EventMsg, EventMsgFormatter {
 
     @Override
     public String formatMsg() {
-        return String.format("[%s] 修改节点[%s]", this.infoName, this.path);
+        return String.format("[%s] 修改节点:%s", this.infoName, this.path);
     }
 }

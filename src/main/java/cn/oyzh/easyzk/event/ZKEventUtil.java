@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.event;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.msg.TreeChildChangedMsg;
 import cn.oyzh.easyzk.event.msg.TreeChildFilterMsg;
+import cn.oyzh.easyzk.event.msg.TreeChildSelectedMsg;
 import cn.oyzh.easyzk.event.msg.TreeGraphicChangedMsg;
 import cn.oyzh.easyzk.event.msg.TreeGraphicColorChangedMsg;
 import cn.oyzh.easyzk.event.msg.ZKAuthMainMsg;
@@ -21,6 +22,7 @@ import cn.oyzh.easyzk.event.msg.ZKSearchStartMsg;
 import cn.oyzh.easyzk.event.msg.ZKTerminalCloseMsg;
 import cn.oyzh.easyzk.event.msg.ZKTerminalOpenMsg;
 import cn.oyzh.easyzk.search.ZKSearchParam;
+import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventBuilder;
@@ -177,6 +179,16 @@ public class ZKEventUtil {
         TreeChildFilterMsg msg = new TreeChildFilterMsg();
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
+
+    /**
+     * 树节点选中事件
+     */
+    public static void treeChildSelected(ZKNodeTreeItem item) {
+        TreeChildSelectedMsg msg = new TreeChildSelectedMsg();
+        msg.item(item);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
 
     /**
      * 终端打开事件

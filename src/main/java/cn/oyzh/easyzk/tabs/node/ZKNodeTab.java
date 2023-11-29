@@ -35,11 +35,15 @@ public class ZKNodeTab extends DynamicTab {
      * @param treeItem zk树节点
      */
     public void init(@NonNull ZKNodeTreeItem treeItem) {
-        this.treeItem = treeItem;
-        // 初始化
-        this.controller().init(treeItem);
-        // 刷新tab
-        this.flush();
+        if (treeItem != this.treeItem) {
+            this.treeItem = treeItem;
+            // 初始化
+            this.controller().init(treeItem);
+            // 刷新tab
+            this.flush();
+            // 检查节点状态
+            this.checkStatus();
+        }
     }
 
     /**

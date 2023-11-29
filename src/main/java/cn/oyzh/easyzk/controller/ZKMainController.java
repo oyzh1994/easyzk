@@ -307,10 +307,11 @@ public class ZKMainController extends ParentController {
         // });
 
         // zk树选中节点变化事件
-        this.tree.selectItemChanged(item -> RenderService.submit(() -> {
+        this.tree.selectItemChanged(item -> RenderService.submitFXLater(() -> {
             if (item instanceof ZKNodeTreeItem treeItem) {
-                this.tabPane.initNodeTab(treeItem);
+                // this.tabPane.initNodeTab(treeItem);
                 this.flushViewTitle(treeItem.info());
+                ZKEventUtil.treeChildSelected(treeItem);
             } else if (item instanceof ZKConnectTreeItem treeItem) {
                 this.flushViewTitle(treeItem.value());
             } else {

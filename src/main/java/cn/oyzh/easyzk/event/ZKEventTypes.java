@@ -98,6 +98,11 @@ public class ZKEventTypes {
     public static final String TREE_CHILD_FILTER = "TREE_CHILD_FILTER";
 
     /**
+     * zk树子节点选中事件
+     */
+    public static final String TREE_CHILD_SELECTED = "TREE_CHILD_SELECTED";
+
+    /**
      * zk树图标变化事件
      */
     public static final String TREE_GRAPHIC_CHANGED = "TREE_GRAPHIC_CHANGED";

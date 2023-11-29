@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.event.msg.TreeChildSelectedMsg;
 import cn.oyzh.easyzk.event.msg.TreeGraphicChangedMsg;
 import cn.oyzh.easyzk.event.msg.TreeGraphicColorChangedMsg;
 import cn.oyzh.easyzk.event.msg.ZKConnectionClosedMsg;
@@ -12,12 +13,10 @@ import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
-import cn.oyzh.fx.plus.util.RenderService;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 
@@ -171,23 +170,22 @@ public class ZKTabPane extends DynamicTabPane {
     /**
      * 初始化节点tab
      *
-     * @param item 节点
+     * @param msg 消息
      */
-    public void initNodeTab(ZKNodeTreeItem item) {
-        if (item != null) {
+    @EventReceiver(value = ZKEventTypes.TREE_CHILD_SELECTED, async = true, verbose = true, fxThread = true)
+    public void initNodeTab(TreeChildSelectedMsg msg) {
+        if (msg != null && msg.item() != null) {
             ZKNodeTab nodeTab = this.getNodeTab();
             if (nodeTab == null) {
                 nodeTab = new ZKNodeTab();
-                nodeTab.init(item);
                 super.addTab(nodeTab);
-            } else {
-                nodeTab.init(item);
             }
             if (!nodeTab.isSelected()) {
                 this.select(nodeTab);
             }
-            // 检查节点状态
-            RenderService.submitFXLater(nodeTab::checkStatus);
+            nodeTab.init(msg.item());
+            // // 检查节点状态
+            // RenderService.submitFXLater(nodeTab::checkStatus);
         }
     }
 

@@ -1,14 +1,10 @@
 package cn.oyzh.easyzk.search;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.trees.ZKTreeView;
-import cn.oyzh.fx.common.thread.ExecutorUtil;
-import cn.oyzh.fx.common.thread.Task;
-import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.rich.RichControlUtil;
@@ -17,7 +13,6 @@ import cn.oyzh.fx.plus.search.SearchParam;
 import cn.oyzh.fx.plus.search.SearchValue;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.util.ControlUtil;
-import cn.oyzh.fx.plus.util.TreeViewUtil;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -26,10 +21,7 @@ import lombok.experimental.Accessors;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * zk主页搜索处理器
@@ -162,25 +154,7 @@ public class ZKSearchHandler extends SearchHandler {
 
     @Override
     protected List<SearchValue> getMatchValues() {
-        // 全部节点
-        List<TreeItem<?>> allItem = TreeViewUtil.getAllItem(this.treeNode);
-        if (CollUtil.isNotEmpty(allItem)) {
-            List<SearchValue> items = new ArrayList<>(allItem.size());
-            for (TreeItem<?> item : allItem) {
-                // 获取匹配类型
-                String matchType = this.getMatchType(item);
-                if (matchType != null) {
-                    // 生成对象
-                    SearchValue searchValue = new SearchValue();
-                    searchValue.setItem(item);
-                    searchValue.setMatchType(matchType);
-                    searchValue.setLevel(this.treeNode.getTreeItemLevel(item));
-                    items.add(searchValue);
-                }
-            }
-            return items;
-        }
-        return Collections.emptyList();
+        return super.getMatchValues(this.treeNode.root());
     }
 
     /**

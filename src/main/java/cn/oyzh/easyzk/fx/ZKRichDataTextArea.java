@@ -6,7 +6,6 @@ import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.rich.RichTextStyle;
 import cn.oyzh.fx.plus.util.FXUtil;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +28,24 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
      * 3 hex
      * 4 raw
      */
-    @Setter
     @Getter
     private byte showType = 0;
 
     /**
      * 显示数据
+     *
+     * @param showType 显示类型
+     * @param rawData  显示数据
+     */
+    public void showData(byte showType, Object rawData) {
+        this.showType = showType;
+        this.showRawData(rawData);
+    }
+
+    /**
+     * 显示数据
+     *
+     * @param rawData 显示数据
      */
     public void showData(Object rawData) {
         switch (this.showType) {

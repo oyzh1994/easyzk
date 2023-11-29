@@ -21,9 +21,6 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/4/7
  */
-//@Slf4j
-@ToString
-@Accessors(chain = true, fluent = true)
 public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
     /**
@@ -36,19 +33,13 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
      */
     private Integer showChildNum;
 
-    private final ZKNodeTreeItem treeItem;
+    private final ZKNodeTreeItem item;
 
-    public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem treeItem) {
-        this.treeItem = treeItem;
+    public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
+        this.item = item;
         this.flushGraphic();
-        this.flushText();
         this.flushGraphicColor();
-        treeItem.dataProperty().addListener((observableValue, bytes, t1) -> this.flushStatus());
-    }
-
-    @Override
-    public String name() {
-        return this.treeItem.decodeNodeName();
+        this.name(item.decodeNodeName());
     }
 
     @Override
@@ -58,31 +49,31 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         // 设置图标
         if (curr == null || !Objects.equals(curr.getUrl(), svgUrl)) {
             this.graphic(new SVGGlyph(svgUrl, "12"));
-            ZKEventUtil.graphicChanged(this.treeItem);
+            ZKEventUtil.graphicChanged(this.item);
         }
     }
 
     @Override
     public void flushGraphicColor() {
         SVGGlyph glyph = this.graphic();
-        if (this.treeItem.isBeDeleted()) {
+        if (this.item.isBeDeleted()) {
             if (glyph.getColor() != Color.RED) {
                 glyph.setColor(Color.RED);
-                ZKEventUtil.graphicColorChanged(this.treeItem);
+                ZKEventUtil.graphicColorChanged(this.item);
             }
-        } else if (this.treeItem.dataUnsaved()) {
+        } else if (this.item.dataUnsaved()) {
             if (glyph.getColor() != Color.ORANGE) {
                 glyph.setColor(Color.ORANGE);
-                ZKEventUtil.graphicColorChanged(this.treeItem);
+                ZKEventUtil.graphicColorChanged(this.item);
             }
-        } else if (this.treeItem.isBeUpdated()) {
+        } else if (this.item.isBeUpdated()) {
             if (glyph.getColor() != Color.PURPLE) {
                 glyph.setColor(Color.PURPLE);
-                ZKEventUtil.graphicColorChanged(this.treeItem);
+                ZKEventUtil.graphicColorChanged(this.item);
             }
         } else if (glyph.getColor() != Color.BLACK) {
             glyph.setColor(Color.BLACK);
-            ZKEventUtil.graphicColorChanged(this.treeItem);
+            ZKEventUtil.graphicColorChanged(this.item);
         }
     }
 
@@ -92,22 +83,21 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
      * @return 图标地址
      */
     public String getSVGUrl() {
-        ZKNode value = this.treeItem.value();
+        ZKNode value = this.item.value();
         // 需要认证
-        if (ZKAuthUtil.isNeedAuth(value, this.treeItem.client())) {
+        if (ZKAuthUtil.isNeedAuth(value, this.item.client())) {
             return "/font/lock.svg";
         }
         // 临时节点
         if (value.ephemeral()) {
             return "/font/temp.svg";
-
         }
         // 子节点
         if (value.subNode()) {
             return "/font/file-text.svg";
         }
         // 父节点，已加载
-        if (treeItem.loaded()) {
+        if (this.item.loaded()) {
             return "/font/folder-open.svg";
         }
         // 父节点，未加载
@@ -140,12 +130,12 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
      * 刷新状态
      */
     public void flushStatus() {
-        FXText text = (FXText) this.getChild(1);
-        if (this.treeItem.isBeDeleted()) {
+        FXText text = this.text();
+        if (this.item.isBeDeleted()) {
             text.setFill(Color.RED);
-        } else if (this.treeItem.dataUnsaved()) {
+        } else if (this.item.dataUnsaved()) {
             text.setFill(Color.ORANGE);
-        } else if (this.treeItem.isBeUpdated()) {
+        } else if (this.item.isBeUpdated()) {
             text.setFill(Color.PURPLE);
         } else {
             text.setFill(Color.BLACK);
@@ -169,28 +159,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         if (childNum != null) {
             this.childNum = childNum;
         }
-        this.showChildNum = showChildNum;
-        this.flushChildNum();
-    }
-
-    /**
-     * 设置子节点总数量
-     *
-     * @param childNum 子节点总数量
-     */
-    public void childNum(Long childNum) {
-        if (childNum != null) {
-            this.childNum = childNum;
-            this.flushChildNum();
-        }
-    }
-
-    /**
-     * 设置子节点显示数量
-     *
-     * @param showChildNum 子节点显示数量
-     */
-    public void showChildNum(Integer showChildNum) {
         this.showChildNum = showChildNum;
         this.flushChildNum();
     }

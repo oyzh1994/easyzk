@@ -12,10 +12,6 @@ import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.thread.ExecutorUtil;
-import cn.oyzh.fx.common.thread.Task;
-import cn.oyzh.fx.common.thread.TaskBuilder;
-import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.PagePane;
@@ -32,6 +28,7 @@ import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.RenderService;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -198,15 +195,10 @@ public class ZKNodeTabContent extends DynamicTabController {
     protected NumberTextField quotaBytes;
 
     /**
-     * 忽略变化
-     */
-    private boolean ignoreChanged;
-
-    /**
      * 文本监听器
      */
     private final ChangeListener<String> textListener = (observable, oldValue, newValue) -> {
-        if (!this.ignoreChanged) {
+        if (this.treeItem != null) {
             this.treeItem.data(newValue);
         }
     };
@@ -215,12 +207,10 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 数据监听器
      */
     private final ChangeListener<byte[]> dataListener = (observable, oldValue, newValue) -> {
-        if (!this.ignoreChanged) {
-            if (newValue == null) {
-                this.saveNodeData.disable();
-            } else {
-                this.saveNodeData.enable();
-            }
+        if (newValue == null) {
+            this.saveNodeData.disable();
+        } else {
+            this.saveNodeData.enable();
         }
     };
 
@@ -228,38 +218,30 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 状态监听器
      */
     private final ChangeListener<Stat> statListener = (observable, oldValue, newValue) -> {
-        if (!this.ignoreChanged) {
-            this.initStat();
-        }
+        this.initStat();
     };
 
     /**
      * 权限监听器
      */
     private final ChangeListener<List<ZKACL>> aclListener = (observable, oldValue, newValue) -> {
-        if (!this.ignoreChanged) {
-            this.initAcl();
-        }
+        this.initAcl();
     };
 
     /**
      * 配额监听器
      */
     private final ChangeListener<StatsTrack> quotaListener = (observable, oldValue, newValue) -> {
-        if (!this.ignoreChanged) {
-            this.initQuota();
-        }
+        this.initQuota();
     };
 
     /**
      * 格式监听器
      */
     private final ChangeListener<String> formatListener = (observable, oldValue, newValue) -> {
-        this.ignoreChanged = true;
         if (this.format.isStringFormat()) {
             this.showData((byte) 0);
             this.nodeData.setEditable(true);
-            this.nodeData.setEditable(false);
         } else if (this.format.isJsonFormat()) {
             this.showData((byte) 1);
             this.nodeData.setEditable(true);
@@ -277,34 +259,38 @@ public class ZKNodeTabContent extends DynamicTabController {
     /**
      * 初始化
      *
-     * @param treeItem 树节点
+     * @param item 树节点
      */
-    public void init(ZKNodeTreeItem treeItem) {
+    public void init(ZKNodeTreeItem item) {
         // 移除旧数据监听器
         if (this.treeItem != null) {
-            this.treeItem.aclProperty().removeListener(this.aclListener);
-            this.treeItem.dataProperty().removeListener(this.dataListener);
-            this.treeItem.statProperty().removeListener(this.statListener);
-            this.treeItem.quotaProperty().removeListener(this.quotaListener);
+            this.treeItem.clearListener();
         }
-
-        // 初始化文本、格式监听器
-        this.format.selectedItemChanged(this.formatListener);
-        this.nodeData.addTextChangeListener(this.textListener);
-
         // 初始化数据
-        this.treeItem = treeItem;
-
+        this.treeItem = item;
+        // 初始化数据
+        if (this.root.getSelectedIndex() == 0) {
+            this.showData(item.dataStr());
+        } else if (this.root.getSelectedIndex() == 1) {
+            this.treeItem = item;
+            this.initStat();
+        } else if (this.root.getSelectedIndex() == 2) {
+            this.treeItem = item;
+            this.initAcl();
+        } else if (this.root.getSelectedIndex() == 3) {
+            this.treeItem = item;
+            this.initQuota();
+        }
         // 设置监听器
-        this.treeItem.aclProperty().addListener(this.aclListener);
-        this.treeItem.dataProperty().addListener(this.dataListener);
-        this.treeItem.statProperty().addListener(this.statListener);
-        this.treeItem.quotaProperty().addListener(this.quotaListener);
+        this.treeItem.addAclListener(this.aclListener);
+        this.treeItem.addDataListener(this.dataListener);
+        this.treeItem.addStatListener(this.statListener);
+        this.treeItem.addQuotaListener(this.quotaListener);
 
         // 按钮状态处理
+        this.saveNodeData.disable();
         this.addNode.setDisable(this.treeItem.ephemeral());
         this.node2QRCode.setDisable(!this.treeItem.hasReadPerm());
-        this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
 
         // 收藏处理
         this.collect.setVisible(!this.treeItem.isCollect());
@@ -315,20 +301,6 @@ public class ZKNodeTabContent extends DynamicTabController {
 
         // 加载耗时处理
         FXUtil.runWait(() -> this.loadTime.setText(this.treeItem.loadTime() + "ms"));
-
-        // // 节点路径处理
-        // FXUtil.runWait(() -> this.nodePath.setText(this.treeItem.decodeNodePath()));
-
-        // 初始化数据
-        if (this.root.getSelectedIndex() == 0) {
-            this.initData();
-        } else if (this.root.getSelectedIndex() == 1) {
-            this.initStat();
-        } else if (this.root.getSelectedIndex() == 2) {
-            this.initAcl();
-        } else if (this.root.getSelectedIndex() == 3) {
-            this.initQuota();
-        }
     }
 
     /**
@@ -633,7 +605,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         try {
             this.treeItem.refreshData();
             // 数据变更
-            this.initData();
+            this.showData();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -671,7 +643,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         }
         // 保存数据
         if (this.treeItem.dataUnsaved()) {
-            ThreadUtil.startVirtual(() -> this.treeItem.saveData());
+            RenderService.submit(this.treeItem::saveData);
         }
     }
 
@@ -749,10 +721,10 @@ public class ZKNodeTabContent extends DynamicTabController {
     }
 
     /**
-     * 初始化数据
+     * 显示数据
      */
-    public void initData() {
-        this.showData(this.nodeData.getShowType());
+    protected void showData() {
+        this.showData(this.nodeData.getShowType(), this.treeItem.dataStr());
     }
 
     /**
@@ -761,28 +733,39 @@ public class ZKNodeTabContent extends DynamicTabController {
      * @param showType 类型
      */
     protected void showData(byte showType) {
-        // 标记为忽略变化
-        this.ignoreChanged = true;
+        this.showData(showType, this.treeItem.dataStr());
+    }
+
+    /**
+     * 显示数据
+     *
+     * @param data 数据
+     */
+    protected void showData(String data) {
+        this.showData(this.nodeData.getShowType(), data);
+    }
+
+    /**
+     * 显示数据
+     *
+     * @param showType 类型
+     * @param data     数据
+     */
+    protected void showData(byte showType, String data) {
         this.nodeData.disable();
-        this.nodeData.clear();
         this.nodeData.setPromptText("数据加载中...");
-        this.nodeData.setShowType(showType);
-        Task task = TaskBuilder.newBuilder()
-                .onStart(() -> this.nodeData.showData(this.treeItem.dataStr()))
-                .onFinish(() -> {
-                    this.nodeData.setPromptText("");
-                    this.nodeData.enable();
-                    this.ignoreChanged = false;
-                })
-                .onError(MessageBox::exception)
-                .build();
-        ExecutorUtil.start(task, 20);
+        this.nodeData.showData(showType, data);
+        this.nodeData.setPromptText("");
+        this.nodeData.enable();
     }
 
     /**
      * 初始化状态
      */
     public void initStat() {
+        if (this.treeItem == null) {
+            return;
+        }
         List<FriendlyInfo<Stat>> statInfos = this.treeItem.statInfos();
         // 遍历属性
         for (int i = 0; i < statInfos.size(); i++) {
@@ -803,6 +786,9 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 初始化权限
      */
     public void initAcl() {
+        if (this.treeItem == null) {
+            return;
+        }
         if (this.treeItem.aclEmpty()) {
             this.aclViewSwitch.disable();
         } else {
@@ -820,6 +806,9 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 初始化配额
      */
     public void initQuota() {
+        if (this.treeItem == null) {
+            return;
+        }
         StatsTrack quota = this.treeItem.quota();
         if (quota != null) {
             this.quotaNum.setValue(quota.getCount());
@@ -835,15 +824,10 @@ public class ZKNodeTabContent extends DynamicTabController {
         // 收藏处理
         this.collect.managedProperty().bind(this.collect.visibleProperty());
         this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
-
-        // 节点数据处理
-        this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-        this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
-
         // 切换tab
         this.root.selectedIndexChanged((observable, oldValue, newValue) -> {
             if (newValue.intValue() == 0) {
-                this.initData();
+                this.showData();
             } else if (newValue.intValue() == 1) {
                 this.initStat();
             } else if (newValue.intValue() == 2) {
@@ -852,7 +836,14 @@ public class ZKNodeTabContent extends DynamicTabController {
                 this.initQuota();
             }
         });
-
+        // 格式监听
+        this.format.selectedItemChanged(this.formatListener);
+        // 数据监听
+        this.nodeData.addTextChangeListener(this.textListener);
+        // undo监听
+        this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+        // redo监听
+        this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         // 切换显示监听
         this.aclViewSwitch.selectedChanged((abs, o, n) -> this.initAcl());
         // 切换显示监听
@@ -860,7 +851,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         // 字符集选择事件
         this.charset.selectedItemChanged((observable, oldValue, newValue) -> {
             this.treeItem.setCharset(this.charset.getCharset());
-            this.initData();
+            this.showData();
         });
     }
 

@@ -13,12 +13,11 @@ import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
-import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
-import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.RenderService;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 
@@ -188,8 +187,7 @@ public class ZKTabPane extends DynamicTabPane {
                 this.select(nodeTab);
             }
             // 检查节点状态
-            ZKNodeTab finalNodeTab = nodeTab;
-            ExecutorUtil.start(() -> FXUtil.runLater(finalNodeTab::checkStatus), 5);
+            RenderService.submitFXLater(nodeTab::checkStatus);
         }
     }
 

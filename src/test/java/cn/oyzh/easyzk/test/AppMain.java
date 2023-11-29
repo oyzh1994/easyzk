@@ -581,8 +581,8 @@ public class AppMain extends Application {
         ZKRichDataTextArea textArea = new ZKRichDataTextArea();
         textArea.setFlexWidth("100%");
         textArea.setFlexHeight("100%");
-        textArea.setShowType((byte) 1);
-        textArea.showData(xx);
+        // textArea.setShowType((byte) 1);
+        textArea.showData((byte) 1, xx);
 
 
         // FlexVirtualizedScrollPane<BaseRichTextArea> sp = new FlexVirtualizedScrollPane<>(textArea);
@@ -615,7 +615,7 @@ public class AppMain extends Application {
     }
 
     private void test25(Stage stage) {
-        TextArea textArea=new TextArea();
+        TextArea textArea = new TextArea();
         VBox vbox = new VBox(textArea);
         textArea.setText("This is <span style=\"color:red;\">red</span> text.");
 

@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -200,6 +201,97 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     }
 
     /**
+     * 数据监听器
+     */
+    private ChangeListener<byte[]> dataListener;
+
+    /**
+     * 状态监听器
+     */
+    private ChangeListener<Stat> statListener;
+
+    /**
+     * 权限监听器
+     */
+    private ChangeListener<List<ZKACL>> aclListener;
+
+    /**
+     * 配额监听器
+     */
+    private ChangeListener<StatsTrack> quotaListener;
+
+    /**
+     * 添加数据监听器
+     *
+     * @param dataListener 数据监听器
+     */
+    public void addDataListener(ChangeListener<byte[]> dataListener) {
+        if (this.dataListener != null) {
+            this.dataProperty().removeListener(this.dataListener);
+        }
+        this.dataListener = dataListener;
+        if (dataListener != null) {
+
+            this.dataProperty().addListener(this.dataListener);
+        }
+    }
+
+    /**
+     * 添加状态监听器
+     *
+     * @param statListener 数据监听器
+     */
+    public void addStatListener(ChangeListener<Stat> statListener) {
+        if (this.statListener != null) {
+            this.statProperty().removeListener(this.statListener);
+        }
+        this.statListener = statListener;
+        if (statListener != null) {
+            this.statProperty().addListener(this.statListener);
+        }
+    }
+
+    /**
+     * 添加权限监听器
+     *
+     * @param aclListener 权限监听器
+     */
+    public void addAclListener(ChangeListener<List<ZKACL>> aclListener) {
+        if (this.aclListener != null) {
+            this.aclProperty().removeListener(this.aclListener);
+        }
+        this.aclListener = aclListener;
+        if (aclListener != null) {
+            this.aclProperty().addListener(this.aclListener);
+        }
+    }
+
+    /**
+     * 添加配额监听器
+     *
+     * @param quotaListener 配额监听器
+     */
+    public void addQuotaListener(ChangeListener<StatsTrack> quotaListener) {
+        if (this.quotaListener != null) {
+            this.quotaProperty().removeListener(this.quotaListener);
+        }
+        this.quotaListener = quotaListener;
+        if (quotaListener != null) {
+            this.quotaProperty().addListener(this.quotaListener);
+        }
+    }
+
+    /**
+     * 清除监听器
+     */
+    public void clearListener() {
+        this.addDataListener(null);
+        this.addStatListener(null);
+        this.addAclListener(null);
+        this.addQuotaListener(null);
+    }
+
+    /**
      * 获取数据
      *
      * @return 数据
@@ -238,6 +330,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void data(byte[] data) {
         this.dataProperty().set(data);
+        this.getValue().flushStatus();
     }
 
     /**
@@ -246,7 +339,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @param data 数据
      */
     public void data(String data) {
-        this.dataProperty().set(data.getBytes(this.charset));
+        if (!Objects.equals(this.dataStr(), data)) {
+            this.dataProperty().set(data.getBytes(this.charset));
+            this.getValue().flushStatus();
+        }
     }
 
     /**
@@ -255,6 +351,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void clearData() {
         if (this.dataProperty != null) {
             this.dataProperty.set(null);
+            this.getValue().flushStatus();
         }
     }
 

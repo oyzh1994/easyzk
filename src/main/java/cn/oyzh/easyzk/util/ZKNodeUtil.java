@@ -136,8 +136,7 @@ public class ZKNodeUtil {
      * @param node   zk节点
      */
     public void refreshStat(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
-        Stat stat = client.checkExists(node.nodePath());
-        node.stat(stat);
+        node.stat(client.checkExists(node.nodePath()));
     }
 
     /**

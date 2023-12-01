@@ -95,7 +95,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return acl权限
      */
     public List<ZKACL> acl() {
-        return this.aclProperty == null ? Collections.emptyList() : aclProperty.get();
+        return this.aclProperty == null ? Collections.emptyList() : this.aclProperty.get();
     }
 
     /**
@@ -142,7 +142,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 状态
      */
     public Stat stat() {
-        return this.statProperty == null ? null : statProperty.get();
+        return this.statProperty == null ? null : this.statProperty.get();
     }
 
     /**
@@ -458,15 +458,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 结果
      */
     public boolean hasACL(@NonNull String type) {
-        if (!this.aclEmpty()) {
-            type = type.toLowerCase();
-            for (ZKACL acl : this.acl()) {
-                if (acl.schemeVal().equals(type)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return this.acl().parallelStream().anyMatch(a -> a.schemeVal().equalsIgnoreCase(type));
     }
 
     /**
@@ -558,5 +550,23 @@ public class ZKNode implements Comparable<ZKNode> {
      */
     public List<ZKACL> getDigestACLs() {
         return this.getACLByType("digest");
+    }
+
+    /**
+     * 获取子节点数量
+     *
+     * @return 子节点数量
+     */
+    public int getNumChildren() {
+        return this.stat() == null ? 0 : this.stat().getNumChildren();
+    }
+
+    /**
+     * 是否有子节点
+     *
+     * @return 结果
+     */
+    public boolean hasChildren() {
+        return this.getNumChildren() > 0;
     }
 }

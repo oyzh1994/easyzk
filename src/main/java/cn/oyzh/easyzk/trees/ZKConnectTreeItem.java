@@ -79,14 +79,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         super(treeView);
         this.value(value);
         // 监听节点变化
-//        this.getChildren().addListener((ListChangeListener<? super TreeItem<ZKConnectTreeItemValue>>) c -> {
-//            ZKEventUtil.treeChildChanged();
-//            this.getTreeView().flushLocal();
-//        });
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            ZKEventUtil.treeChildChanged();
-//            this.flushLocal();
-        });
+        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> ZKEventUtil.treeChildChanged());
     }
 
     /**
@@ -218,10 +211,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                             this.loadRootNode();
                         }
                     })
-                    .onFinish(() -> {
-                        this.stopWaiting();
-                        this.getTreeView().flushLocal();
-                    })
+                    .onSuccess(this::flushLocal)
+                    .onFinish(this::stopWaiting)
                     .build();
             ThreadUtil.startVirtual(task);
         }
@@ -250,15 +241,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         wrapper.display();
     }
 
-    // /**
-    //  * zk信息
-    //  *
-    //  * @return zk信息
-    //  */
-    // public ZKInfo info() {
-    //     return this.client == null ? null : this.client.zkInfo();
-    // }
-
     /**
      * 关闭连接
      */
@@ -267,19 +249,16 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             if (this.hasUnsavedNode() && !MessageBox.confirm("发现节点数据未保存，确定关闭连接？")) {
                 return;
             }
-            this.startWaiting();
             Task task = TaskBuilder.newBuilder()
                     .onStart(this.client::closeManual)
                     .onSuccess(() -> {
                         this.clearChild();
+                        this.flushLocal();
                         SystemUtil.gcLater();
-                    }).onFinish(() -> {
-                        this.stopWaiting();
-                        this.getTreeView().flushLocal();
-                    })
+                    }).onFinish(this::stopWaiting)
                     .onError(MessageBox::exception)
                     .build();
-            ThreadUtil.startVirtual(task);
+            this.startWaiting(task);
         }
     }
 
@@ -350,27 +329,23 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     @Override
     public void rename() {
         String connectName = MessageBox.prompt("请输入新的连接名称", this.value.getName());
-
         // 名称为null或者跟当前名称相同，则忽略
         if (connectName == null || Objects.equals(connectName, this.value.getName())) {
             return;
         }
-
         // 检查名称
         if (StrUtil.isBlank(connectName)) {
             MessageBox.warn("连接名称不能为空！");
             return;
         }
-
+        this.value.setName(connectName);
         // 检查是否存在
         // String name = this.value.getName();
-        this.value.setName(connectName);
         // if (this.infoStore.exist(this.value)) {
         //     this.value.setName(name);
         //     MessageBox.warn("此连接名称已存在！");
         //     return;
         // }
-
         // 修改名称
         if (this.infoStore.update(this.value)) {
             this.setValue(new ZKConnectTreeItemValue(this));
@@ -437,32 +412,15 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             rootItem.extend();
             // 加载全部节点
             if (this.setting.isLoadAll()) {
-                rootItem.loadChildes(true);
+                rootItem.loadChildAll();
             } else if (!this.setting.isLoadRoot()) {// 加载一级节点
-                rootItem.loadChildes(false);
+                rootItem.loadChild();
             }
             SystemUtil.gcLater();
         } else {
             MessageBox.warn(this.value().getName() + "加载根节点失败");
         }
     }
-
-    // @Override
-    // public ObservableList<ZKNodeTreeItem> getChildren() {
-    //     return super.getChildren();
-    // }
-    //
-    // /**
-    //  * 清理子节点
-    //  */
-    // public void clearChildren() {
-    //     try {
-    //         this.setExpanded(false);
-    //         this.getChildren().clear();
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    // }
 
     /**
      * 获取全部zk子节点列表
@@ -556,14 +514,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         }
     }
 
-    // @Override
-    // public void doFilter(RichTreeItemFilter itemFilter) {
-    //     if (itemFilter != null && this.isConnected() && this.root() != null) {
-    //         this.root().doFilter(itemFilter);
-    //         // this.root().flushChildren();
-    //     }
-    // }
-
     /**
      * 获取当前父节点
      *
@@ -581,9 +531,4 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public boolean allowDrag() {
         return true;
     }
-
-    // @Override
-    // public ZKConnectTreeItemValue itemValue() {
-    //     return (ZKConnectTreeItemValue) super.itemValue();
-    // }
 }

@@ -15,8 +15,11 @@ import cn.oyzh.easyzk.event.msg.ZKInfoAddedMsg;
 import cn.oyzh.easyzk.event.msg.ZKInfoDeletedMsg;
 import cn.oyzh.easyzk.event.msg.ZKInfoUpdatedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeAddMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeAddedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeDeleteMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeUpdateMsg;
+import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
 import cn.oyzh.easyzk.event.msg.ZKSearchFinishMsg;
 import cn.oyzh.easyzk.event.msg.ZKSearchStartMsg;
 import cn.oyzh.easyzk.event.msg.ZKTerminalCloseMsg;
@@ -29,6 +32,7 @@ import cn.oyzh.fx.plus.event.EventBuilder;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
+import org.apache.zookeeper.data.Stat;
 
 /**
  * zk事件工具
@@ -86,6 +90,23 @@ public class ZKEventUtil {
     }
 
     /**
+     * 节点已添加事件
+     *
+     * @param client   zk客户端
+     * @param stat     状态
+     * @param nodeData 数据
+     * @param nodePath 路径
+     */
+    public static void nodeAdded(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
+        ZKNodeAddedMsg msg = new ZKNodeAddedMsg();
+        msg.stat(stat);
+        msg.data(nodeData);
+        msg.path(nodePath);
+        msg.client(client);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
      * 节点修改事件
      *
      * @param client zk客户端
@@ -95,6 +116,54 @@ public class ZKEventUtil {
         ZKNodeUpdateMsg msg = new ZKNodeUpdateMsg();
         msg.path(path);
         msg.infoName(client.infoName());
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 节点已修改事件
+     *
+     * @param client   zk客户端
+     * @param stat     状态
+     * @param nodeData 数据
+     * @param nodePath 路径
+     */
+    public static void nodeUpdated(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
+        ZKNodeUpdatedMsg msg = new ZKNodeUpdatedMsg();
+        msg.stat(stat);
+        msg.data(nodeData);
+        msg.path(nodePath);
+        msg.client(client);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+
+    /**
+     * 节点删除事件
+     *
+     * @param client      zk客户端
+     * @param path        路径
+     * @param delChildren 是否删除子节点
+     */
+    public static void nodeDelete(ZKClient client, String path, boolean delChildren) {
+        ZKNodeDeleteMsg msg = new ZKNodeDeleteMsg();
+        msg.path(path);
+        msg.delChildren(delChildren);
+        msg.infoName(client.infoName());
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 节点已删除事件
+     *
+     * @param client   zk客户端
+     * @param stat     状态
+     * @param nodePath 路径
+     */
+    public static void nodeDeleted(ZKClient client, Stat stat, String nodePath) {
+        ZKNodeDeletedMsg msg = new ZKNodeDeletedMsg();
+        msg.stat(stat);
+        msg.path(nodePath);
+        msg.client(client);
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
@@ -132,27 +201,12 @@ public class ZKEventUtil {
     }
 
     /**
-     * 节点删除事件
-     *
-     * @param client      zk客户端
-     * @param path        路径
-     * @param delChildren 是否删除子节点
-     */
-    public static void nodeDelete(ZKClient client, String path, boolean delChildren) {
-        ZKNodeDeleteMsg msg = new ZKNodeDeleteMsg();
-        msg.path(path);
-        msg.delChildren(delChildren);
-        msg.infoName(client.infoName());
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
-    }
-
-    /**
      * 图标变化事件
      */
     public static void graphicChanged(TreeItem<?> treeItem) {
         TreeGraphicChangedMsg msg = new TreeGraphicChangedMsg();
         msg.item(treeItem);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.fireDelay(EventBuilder.newBuilder(msg).build(), 200);
     }
 
     /**
@@ -161,7 +215,7 @@ public class ZKEventUtil {
     public static void graphicColorChanged(TreeItem<?> treeItem) {
         TreeGraphicColorChangedMsg msg = new TreeGraphicColorChangedMsg();
         msg.item(treeItem);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.fireDelay(EventBuilder.newBuilder(msg).build(), 200);
     }
 
     /**
@@ -169,7 +223,7 @@ public class ZKEventUtil {
      */
     public static void treeChildChanged() {
         TreeChildChangedMsg msg = new TreeChildChangedMsg();
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.fireDelay(EventBuilder.newBuilder(msg).build(), 200);
     }
 
     /**
@@ -177,7 +231,7 @@ public class ZKEventUtil {
      */
     public static void treeChildFilter() {
         TreeChildFilterMsg msg = new TreeChildFilterMsg();
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.fireDelay(EventBuilder.newBuilder(msg).build(), 200);
     }
 
     /**

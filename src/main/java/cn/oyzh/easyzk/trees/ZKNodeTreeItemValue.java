@@ -5,12 +5,11 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
+import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
-import lombok.ToString;
-import lombok.experimental.Accessors;
 
 import java.util.Objects;
 
@@ -33,24 +32,46 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
      */
     private Integer showChildNum;
 
+    /**
+     * 树节点
+     */
     private final ZKNodeTreeItem item;
 
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
         this.item = item;
-        this.flushGraphic();
-        this.flushGraphicColor();
-        this.name(item.decodeNodeName());
+//        this.flushGraphic();
+//        this.name(item.decodeNodeName());
+//        this.flushGraphicColor();
     }
 
     @Override
     public void flushGraphic() {
         SVGGlyph curr = this.graphic();
+        if (curr != null && curr.isWaiting()) {
+            return;
+        }
         String svgUrl = this.getSVGUrl();
         // 设置图标
         if (curr == null || !Objects.equals(curr.getUrl(), svgUrl)) {
             this.graphic(new SVGGlyph(svgUrl, "12"));
             ZKEventUtil.graphicChanged(this.item);
         }
+    }
+
+    /**
+     * 初始化内容
+     */
+    public void initialize() {
+        this.flushGraphic();
+        this.flushText();
+        this.flushGraphicColor();
+    }
+
+    /**
+     * 销毁内容
+     */
+    public void destroy() {
+        FXUtil.runLater(()-> this.getChildren().clear());
     }
 
     @Override
@@ -112,9 +133,9 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         FXText text = (FXText) this.lookup("#num");
         if (text == null) {
             text = new FXText();
+            this.addChild(text);
             text.setId("num");
             text.setFill(Color.valueOf("#228B22"));
-            this.addChild(text);
             HBox.setMargin(text, new Insets(0, 0, 0, 3));
         }
         if (this.childNum == null || this.childNum == 0) {
@@ -161,5 +182,10 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         }
         this.showChildNum = showChildNum;
         this.flushChildNum();
+    }
+
+    @Override
+    public String name() {
+        return this.item.decodeNodeName();
     }
 }

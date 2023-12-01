@@ -57,12 +57,6 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void auth() {
-        // StageWrapper wrapper = StageUtil.getStage(ZKAuthMainController.class);
-        // if (wrapper != null) {
-        //     wrapper.toFront();
-        // } else {
-        //     StageUtil.showStage(ZKAuthMainController.class);
-        // }
         ZKEventUtil.authMain();
     }
 
@@ -92,12 +86,6 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void filter() {
-        // StageWrapper wrapper = StageUtil.getStage(ZKFilterMainController.class);
-        // if (wrapper != null) {
-        //     wrapper.toFront();
-        // } else {
-        //     StageUtil.showStage(ZKFilterMainController.class);
-        // }
         ZKEventUtil.filterMain();
     }
 

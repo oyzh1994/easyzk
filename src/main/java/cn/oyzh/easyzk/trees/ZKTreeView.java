@@ -112,7 +112,7 @@ public class ZKTreeView extends RichTreeView {
         // 右键菜单事件
         this.setOnContextMenuRequested(e -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof ZKTreeItem treeItem) {
+            if (item instanceof ZKTreeItem<?> treeItem) {
                 this.showContextMenu(treeItem.getMenuItems(), e.getScreenX() - 10, e.getScreenY() - 10);
             } else {
                 this.clearContextMenu();
@@ -121,14 +121,14 @@ public class ZKTreeView extends RichTreeView {
         // f2按键处理
         KeyListener.listenReleased(this, KeyCode.F2, event -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof ZKTreeItem treeItem) {
+            if (item instanceof ZKTreeItem<?> treeItem) {
                 treeItem.rename();
             }
         });
         // 删除按键处理
         KeyListener.listenReleased(this, KeyCode.DELETE, event -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof ZKTreeItem treeItem) {
+            if (item instanceof ZKTreeItem<?> treeItem) {
                 treeItem.delete();
             }
         });
@@ -178,16 +178,11 @@ public class ZKTreeView extends RichTreeView {
     @EventGroup(value = ZKEventGroups.NODE_MSG, async = true, verbose = true)
     private void zkNodeMsg(Event<EventMsg> event) {
         EventMsg msg = event.data();
-        ThreadUtil.startVirtual(new Task() {
-            @Override
-            public void onStart() {
-                switch (msg.name()) {
-                    case ZKEventTypes.ZK_NODE_ADDED -> nodeAdded((ZKNodeAddedMsg) msg);
-                    case ZKEventTypes.ZK_NODE_DELETED -> nodeDeleted((ZKNodeDeletedMsg) msg);
-                    case ZKEventTypes.ZK_NODE_UPDATED -> nodeUpdated((ZKNodeUpdatedMsg) msg);
-                }
-            }
-        });
+        switch (msg.name()) {
+            case ZKEventTypes.ZK_NODE_ADDED -> nodeAdded((ZKNodeAddedMsg) msg);
+            case ZKEventTypes.ZK_NODE_DELETED -> nodeDeleted((ZKNodeDeletedMsg) msg);
+            case ZKEventTypes.ZK_NODE_UPDATED -> nodeUpdated((ZKNodeUpdatedMsg) msg);
+        }
     }
 
     /**
@@ -360,10 +355,9 @@ public class ZKTreeView extends RichTreeView {
 
     /**
      * 搜索结束事件
-     *
      */
     @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, async = true, verbose = true)
-    private void onSearchFinish( ) {
+    private void onSearchFinish() {
         this.searching = false;
         this.filter();
     }

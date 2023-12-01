@@ -31,7 +31,7 @@ public class ZKTabPane extends DynamicTabPane {
     {
         this.initHomeTab();
         this.getTabs().addListener((ListChangeListener<? super Tab>) (c) -> {
-            TaskManager.startDelayTask("zk:tab:init", () -> {
+            TaskManager.startDelay("zk:tab:init", () -> {
                 if (this.tabsEmpty()) {
                     this.initHomeTab();
                 } else if (this.tabsSize() > 1) {

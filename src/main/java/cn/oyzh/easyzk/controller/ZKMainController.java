@@ -176,7 +176,7 @@ public class ZKMainController extends ParentController {
      * 执行过滤
      */
     private void filter() {
-        TaskManager.startDelayTask("zk:tree:filter", () -> {
+        TaskManager.startDelay("zk:tree:filter", () -> {
             this.tree.disable();
             if (this.onlyCollect.isSelected()) {
                 this.tree.itemFilter().setOnlyCollect(true);

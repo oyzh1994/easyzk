@@ -318,7 +318,7 @@ public class SearchController extends SubController {
      * 预搜索
      */
     private void preSearch() {
-        TaskManager.startDelayTask("zk:search:preSearch", () -> {
+        TaskManager.startDelay("zk:search:preSearch", () -> {
             try {
                 this.searchCheck();
                 this.treeView.disable();
@@ -448,7 +448,7 @@ public class SearchController extends SubController {
     @EventReceiver(value = ZKEventTypes.TREE_CHILD_CHANGED, async = true, verbose = true)
     public void flushSearchResult() {
         if (this.treeView.searching()) {
-            TaskManager.startDelayTask("zk:search:flushSearchResult", () -> {
+            TaskManager.startDelay("zk:search:flushSearchResult", () -> {
                 this.searchHandler.updateResult();
                 this.updateSearchResult();
             }, 300);

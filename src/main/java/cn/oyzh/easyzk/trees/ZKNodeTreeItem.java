@@ -125,7 +125,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void setBeDeleted() {
         this.beDeleted = true;
         this.ignoreDeleted = false;
-        this.flushStatus();
+        this.flushValue();
     }
 
     /**
@@ -145,7 +145,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void setBeUpdated(byte[] updateData) {
         this.updateData = updateData;
         this.ignoreUpdated = false;
-        this.flushStatus();
+        this.flushValue();
     }
 
     /**
@@ -154,7 +154,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void clearStatus() {
         this.beDeleted = false;
         this.updateData = null;
-        this.flushStatus();
+        this.flushValue();
     }
 
     /**
@@ -330,7 +330,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void data(byte[] data) {
         this.dataProperty().set(data);
-        this.flushStatus();
+        this.flushValue();
     }
 
     /**
@@ -341,7 +341,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void data(String data) {
         if (!Objects.equals(this.dataStr(), data)) {
             this.dataProperty().set(data.getBytes(this.charset));
-            this.flushStatus();
+            this.flushValue();
         }
     }
 
@@ -351,7 +351,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void clearData() {
         if (this.dataProperty != null) {
             this.dataProperty.set(null);
-            this.flushStatus();
+            this.flushValue();
         }
     }
 
@@ -373,72 +373,96 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.value = value;
         this.setFilterable(true);
         this.setValue(new ZKNodeTreeItemValue(this));
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            try {
-                // 添加、移除则刷新状态
-                if (event.wasAdded() || event.wasRemoved()) {
-                    this.refreshStat();
-                }
-                ZKEventUtil.treeChildChanged();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-        this.initialize();
+        this.initValue();
         this.flushValue();
-//        super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-//            this.initializeChild();
-//        });
-//        super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-//            this.destroyChild();
-//        });
-//        if (this.value.rootNode()) {
-//            this.initialize();
-//        } else {
-//            this.visibleProperty().addListener((observableValue, aBoolean, t1) -> {
-//                if (!t1) {
-//                    this.destroy();
-////                } else {
-////                    this.initialize();
-//                }
-//            });
-//        }
-    }
-
-    /**
-     * 初始化内容
-     */
-    protected synchronized void initialize() {
-        if (this.getValue().getChildren().isEmpty()) {
-            this.getValue().initialize();
-        }
-    }
-
-
-    /**
-     * 销毁内容
-     */
-    protected synchronized void destroy() {
-        if (!this.getValue().getChildren().isEmpty()) {
-            this.getValue().destroy();
+        if (this.value.rootNode()) {
+            super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler());
+        } else {
+            this.visibleProperty().addListener((observableValue, aBoolean, t1) -> {
+                super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler());
+            });
         }
     }
 
     /**
-     * 初始化内容
+     * 事件处理
      */
-    protected synchronized void initializeChild() {
-        for (ZKNodeTreeItem showChild : this.showChildren()) {
-            showChild.initialize();
+    private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler = null;
+
+    private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler() {
+        if (this.treeEventEventHandler == null) {
+            this.treeEventEventHandler = event -> {
+                if (this.equals(event.getTreeItem())) {
+                    if (event.getEventType() == branchCollapsedEvent()) {
+                        this.clearChildValue();
+                    } else if (event.getEventType() == branchExpandedEvent()) {
+                        this.initChildValue();
+                    } else if (event.getEventType() == childrenModificationEvent()) {
+                        try {
+                            // 添加、移除则刷新状态
+                            if (event.wasAdded() || event.wasRemoved()) {
+                                this.refreshStat();
+                            }
+                            ZKEventUtil.treeChildChanged();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            };
+        }
+        return this.treeEventEventHandler;
+    }
+
+    /**
+     * 初始化值
+     */
+    protected void initValue() {
+        try {
+            if (this.getValue().getChildren().isEmpty()) {
+                this.getValue().flush();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     /**
-     * 销毁内容
+     * 销毁值
      */
-    protected synchronized void destroyChild() {
-        for (ZKNodeTreeItem showChild : this.showChildren()) {
-            showChild.destroy();
+    protected void clearValue() {
+        try {
+            if (!this.getValue().getChildren().isEmpty()) {
+                this.getValue().clearChild();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 初始化子节点值
+     */
+    protected void initChildValue() {
+        try {
+            for (ZKNodeTreeItem showChild : this.showChildren()) {
+                showChild.initValue();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 销毁子节点值
+     */
+    protected void clearChildValue() {
+        try {
+            for (ZKNodeTreeItem showChild : this.showChildren()) {
+                showChild.clearValue();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -446,7 +470,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 刷新值
      */
     private void flushValue() {
-        BackgroundService.submit(() -> this.getValue().num((long) this.value.getNumChildren(), this.getChildren().size()));
+        BackgroundService.submit(()->this.getValue().flush());
     }
 
     @Override
@@ -481,7 +505,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             Task task = TaskBuilder.newBuilder()
                     .onStart(() -> this.loadChildes(false))
                     .onSuccess(this::extend)
-                    .onFinish(this::stopWaiting)
+                    .onFinish(() -> {
+                        this.stopWaiting();
+                        this.flushValue();
+                    })
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);
@@ -496,6 +523,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             Task task = TaskBuilder.newBuilder()
                     .onStart(() -> this.loadChildes(false))
                     .onSuccess(this::extend)
+                    .onFinish(this::flushValue)
                     .onError(Throwable::printStackTrace)
                     .build();
             ThreadUtil.startVirtual(task);
@@ -692,9 +720,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void loadChildAll() {
         Task task = TaskBuilder.newBuilder()
-                .onFinish(this::stopWaiting)
+                .onFinish(() -> {
+                    this.stopWaiting();
+                    this.flushValue();
+                })
                 .onStart(() -> this.loadChildes(true))
-                .onSuccess(this::flushValue)
                 .onError(ex -> MessageBox.exception(ex, "加载失败！"))
                 .build();
         this.startWaiting(task);
@@ -1164,13 +1194,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    /**
-     * 刷新状态
-     */
-    public void flushStatus() {
-        this.getValue().flushStatus();
     }
 
     /**

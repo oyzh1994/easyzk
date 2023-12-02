@@ -25,7 +25,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.search.SearchResult;
-import cn.oyzh.fx.plus.thread.RenderService;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -219,7 +218,7 @@ public class SearchController extends SubController {
         }
         // 检查选项
         if (!this.searchPath.isSelected() && !this.searchData.isSelected()) {
-            MessageBox.warn("搜索名称和值请最少勾选一项！");
+            MessageBox.warn("路径和值请勾选一项！");
             return;
         }
         this.searching = true;
@@ -235,7 +234,7 @@ public class SearchController extends SubController {
                 .onFinish(() -> this.searching = false)
                 .onError(MessageBox::exception)
                 .build();
-        RenderService.submit(task);
+        TaskManager.startDelay("zk:search:searchNext", task, 100);
     }
 
     /**
@@ -264,7 +263,7 @@ public class SearchController extends SubController {
                 .onFinish(() -> this.searching = false)
                 .onError(MessageBox::exception)
                 .build();
-        RenderService.submit(task);
+        TaskManager.startDelay("zk:search:searchPrev", task, 100);
     }
 
     /**
@@ -311,7 +310,7 @@ public class SearchController extends SubController {
                 .onFinish(() -> this.replacing = false)
                 .onError(MessageBox::exception)
                 .build();
-        RenderService.submit(task);
+        TaskManager.startDelay("zk:search:replace", task, 100);
     }
 
     /**

@@ -25,7 +25,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     /**
      * 子节点总数量
      */
-    private Long childNum;
+    private Integer childNum;
 
     /**
      * 子节点显示数量
@@ -59,19 +59,13 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     }
 
     /**
-     * 初始化内容
+     * 刷新内容
      */
-    public void initialize() {
+    public void flush() {
         this.flushGraphic();
         this.flushText();
         this.flushGraphicColor();
-    }
-
-    /**
-     * 销毁内容
-     */
-    public void destroy() {
-        FXUtil.runLater(()-> this.getChildren().clear());
+        this.flushNum(this.item.value().getNumChildren(), this.item.getChildren().size());
     }
 
     @Override
@@ -171,12 +165,12 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     }
 
     /**
-     * 设置节点数量
+     * 刷新节点数量
      *
      * @param childNum     子节点总数量
      * @param showChildNum 子节点显示数量
      */
-    public void num(Long childNum, Integer showChildNum) {
+    public void flushNum(Integer childNum, Integer showChildNum) {
         if (childNum != null) {
             this.childNum = childNum;
         }

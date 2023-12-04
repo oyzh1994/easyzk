@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller.tool;
 
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
@@ -53,6 +54,14 @@ public class ZKToolController extends Controller {
     @FXML
     private void genDigest() {
         try {
+            if(StrUtil.isBlank(this.user.getText())){
+                this.user.requestFocus();
+                return;
+            }
+            if(StrUtil.isBlank(this.pwd.getText())){
+                this.pwd.requestFocus();
+                return;
+            }
             String digest1 = ZKAuthUtil.digest(this.user.getText(), this.pwd.getText());
             this.digest.setText(digest1);
         } catch (Exception ex) {

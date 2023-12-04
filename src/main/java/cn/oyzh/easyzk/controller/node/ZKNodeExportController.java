@@ -236,7 +236,7 @@ public class ZKNodeExportController extends Controller {
                 // 文件格式
                 FileChooser.ExtensionFilter extensionFilter;
                 // 处理名称
-                String fileName = "zk连接-" + this.zkClient.zkInfo().getName() + "-导出数据";
+                String fileName = "ZK连接-" + this.zkClient.zkInfo().getName() + "-导出数据";
                 if (isJSON) {
                     boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
                     exportData = ZKExportUtil.nodesToJSON(zkNodes, CharsetUtil.defaultCharsetName(), prettyFormat);

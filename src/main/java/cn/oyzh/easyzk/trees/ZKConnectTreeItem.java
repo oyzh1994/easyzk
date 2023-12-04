@@ -292,10 +292,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     private void editConnect() {
         if (this.isConnected() && MessageBox.confirm("需要关闭连接，继续么？")) {
             this.closeConnect();
+            StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.window());
+            fxView.setProp("zkInfo", this.value());
+            fxView.display();
         }
-        StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.window());
-        fxView.setProp("zkInfo", this.value());
-        fxView.display();
     }
 
     /**

@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.thread.BackgroundService;
 import lombok.NonNull;
 
 /**
@@ -22,6 +22,6 @@ public class ZKThread extends Thread {
 
     @Override
     public void run() {
-        ThreadUtil.start(task);
+        BackgroundService.submit(task);
     }
 }

@@ -61,7 +61,7 @@ public class ZKClientUtil {
      * @return zk客户端
      */
     public static CuratorFramework buildClient(@NonNull String host, @NonNull RetryPolicy retryPolicy, int connectionTimeoutMs, int sessionTimeoutMs, List<AuthInfo> authInfos) {
-        ExecutorService service = Executors.newVirtualThreadPerTaskExecutor();
+        ExecutorService service = Executors.newCachedThreadPool();
         // 构建builder
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
                 .connectString(host)

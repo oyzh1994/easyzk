@@ -244,7 +244,7 @@ public class ZKClient {
                     long endTime = System.currentTimeMillis();
                     StaticLog.info("zkClient connected used:{}ms.", (endTime - starTime.get()));
                 }
-                StaticLog.info("ConnectionState changed:{}", s);
+                StaticLog.info("ConnectionState changed:{}==============================", s);
             });
             // 开始连接时间
             starTime.set(System.currentTimeMillis());

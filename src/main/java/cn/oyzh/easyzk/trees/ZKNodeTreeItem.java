@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.trees;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.auth.ZKAuthController;
@@ -523,7 +522,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             Task task = TaskBuilder.newBuilder()
                     .onStart(() -> this.loadChildes(false))
                     .onSuccess(this::extend)
-                    .onFinish(this::flushValue)
                     .onError(Throwable::printStackTrace)
                     .build();
             ThreadUtil.startVirtual(task);
@@ -652,7 +650,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             // 创建新节点并删除旧节点
             if (this.client().create(newNodePath, this.data(), aclList, null, createMode, true) != null) {
                 // 删除旧节点
-                this.deleteNode();
+                this.remove();
             } else {
                 MessageBox.warn("修改节点名称失败！");
             }
@@ -676,31 +674,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.value.subNode() && !MessageBox.confirm("删除" + this.value.decodeNodePath(), "确定删除节点？")) {
             return;
         }
-
-        Task task = new Task() {
-            @Override
-            public void onStart() throws Exception {
-                deleteNode();
-            }
-        };
-        task.setFinish(this::stopWaiting);
-        task.setError(MessageBox::exception);
-        task.setSuccess(() -> MessageBox.okToast("节点已删除"));
+        Task task = TaskBuilder.newBuilder()
+                .onStart(this::remove)
+                .onFinish(this::stopWaiting)
+                .onError(MessageBox::exception)
+                .onSuccess(() -> MessageBox.okToast("节点已删除"))
+                .build();
         this.startWaiting(task);
-    }
-
-    /**
-     * 删除节点
-     *
-     * @throws Exception 异常
-     */
-    private void deleteNode() throws Exception {
-        // 执行删除
-        this.client().delete(this.nodePath(), null, this.value.parentNode());
-        // 取消选中
-        this.getTreeView().clearSelection();
-        // 移除节点
-        this.remove();
     }
 
     /**
@@ -777,26 +757,39 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void remove() {
-        ZKNodeTreeItem parent = this.parent();
-        if (parent != null) {
-            // 待选中节点
-            TreeItem<?> selectItem = null;
-            // 如果是最后删除的节点或者当前节点被选中
-            if (this.client().isLastDelete(this.nodePath()) || this.getTreeView().isSelected(this)) {
-                // 如果下一个节点不为null，则选中下一个节点，否则选中此节点的父节点
-                selectItem = this.nextSibling();
-                selectItem = selectItem == null ? parent : selectItem;
+        // 执行删除
+        try {
+            this.client().delete(this.nodePath(), null, this.value.parentNode());
+            // 取消选中
+            this.getTreeView().clearSelection();
+            // 获取父节点
+            ZKNodeTreeItem parent = this.parent();
+            // 删除节点
+            if (parent != null) {
+                // 待选中节点
+                TreeItem<?> selectItem = null;
+                // 如果是最后删除的节点或者当前节点被选中
+                if (this.client().isLastDelete(this.nodePath()) || this.getTreeView().isSelected(this)) {
+                    // 如果下一个节点不为null，则选中下一个节点，否则选中此节点的父节点
+                    selectItem = this.nextSibling();
+                    selectItem = selectItem == null ? parent : selectItem;
+                }
+                // 取消此节点的收藏
+                this.unCollect();
+                // 移除此节点
+                parent.removeChild(this);
+                // 选中节点
+                if (selectItem != null) {
+                    this.getTreeView().select(selectItem);
+                }
+                // 刷新父节点的状态及值
+                parent.refreshStat();
+                parent.flushValue();
+            } else {
+                StaticLog.warn("remove fail, this.parent() is null.");
             }
-            // 取消此节点的收藏
-            this.unCollect();
-            // 移除此节点
-            parent.removeChild(this);
-            // 选中节点
-            if (selectItem != null) {
-                this.getTreeView().select(selectItem);
-            }
-        } else {
-            StaticLog.warn("remove fail, this.parent() is null.");
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 

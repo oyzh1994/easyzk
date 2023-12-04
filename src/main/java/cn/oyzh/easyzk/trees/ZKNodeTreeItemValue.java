@@ -5,7 +5,6 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -25,12 +24,12 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     /**
      * 子节点总数量
      */
-    private Integer childNum;
+    private Integer totalNum;
 
     /**
      * 子节点显示数量
      */
-    private Integer showChildNum;
+    private Integer showNum;
 
     /**
      * 树节点
@@ -120,28 +119,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     }
 
     /**
-     * 刷新子节点数量
-     */
-    private void flushChildNum() {
-        // 寻找组件
-        FXText text = (FXText) this.lookup("#num");
-        if (text == null) {
-            text = new FXText();
-            this.addChild(text);
-            text.setId("num");
-            text.setFill(Color.valueOf("#228B22"));
-            HBox.setMargin(text, new Insets(0, 0, 0, 3));
-        }
-        if (this.childNum == null || this.childNum == 0) {
-            text.setText("");
-        } else if (this.showChildNum == null || this.showChildNum == this.childNum.intValue()) {
-            text.setText("(" + this.childNum + ")");
-        } else {
-            text.setText("(" + this.showChildNum + "/" + this.childNum + ")");
-        }
-    }
-
-    /**
      * 刷新状态
      */
     public void flushStatus() {
@@ -167,15 +144,30 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     /**
      * 刷新节点数量
      *
-     * @param childNum     子节点总数量
-     * @param showChildNum 子节点显示数量
+     * @param totalNum 子节点总数量
+     * @param showNum  子节点显示数量
      */
-    public void flushNum(Integer childNum, Integer showChildNum) {
-        if (childNum != null) {
-            this.childNum = childNum;
+    public void flushNum(Integer totalNum, Integer showNum) {
+        if (totalNum != null) {
+            this.totalNum = totalNum;
         }
-        this.showChildNum = showChildNum;
-        this.flushChildNum();
+        this.showNum = showNum;
+        // 寻找组件
+        FXText text = (FXText) this.lookup("#num");
+        if (text == null) {
+            text = new FXText();
+            this.addChild(text);
+            text.setId("num");
+            text.setFill(Color.valueOf("#228B22"));
+            HBox.setMargin(text, new Insets(0, 0, 0, 3));
+        }
+        if (this.totalNum == null || this.totalNum == 0) {
+            text.setText("");
+        } else if (this.showNum == null || this.showNum.intValue() == this.totalNum.intValue()) {
+            text.setText("(" + this.totalNum + ")");
+        } else {
+            text.setText("(" + this.showNum + "/" + this.totalNum + ")");
+        }
     }
 
     @Override

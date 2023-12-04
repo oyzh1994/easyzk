@@ -232,6 +232,7 @@ public class ZKTreeView extends RichTreeView {
                 child.refreshNode();
                 StaticLog.info("节点已存在, 更新树节点.");
             } else if (parent.loaded()) {// 添加节点
+                parent.refreshStat();
                 parent.addChild(path);
                 StaticLog.info("节点不存在, 添加树节点.");
             } else if (parent.client().isLastCreate(path)) {// 加载子节点

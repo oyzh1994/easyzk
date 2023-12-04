@@ -950,7 +950,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 f1:
                 for (ZKNode node : list) {
                     // 判断节点是否存在
-                    if (this.isChildEmpty()) {
+                    if (!this.isChildEmpty()) {
                         for (ZKNodeTreeItem item : this.showChildren()) {
                             if (StrUtil.equals(item.nodePath(), node.nodePath())) {
                                 item.value.copy(node);

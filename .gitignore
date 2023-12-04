@@ -1,6 +1,9 @@
 ### compile ###
 target/
 
+### 崩溃日志
+hs_err_*.log
+
 ### IntelliJ IDEA ###
 .idea/
 

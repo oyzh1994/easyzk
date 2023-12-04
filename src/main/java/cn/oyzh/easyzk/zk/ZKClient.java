@@ -906,7 +906,10 @@ public class ZKClient {
      * @param num   限制子节点数量
      */
     public boolean createQuota(@NonNull String path, long bytes, int num) throws Exception {
-        return SetQuotaCommand.createQuota(this.getZooKeeper(), path, bytes, num);
+        if (path.equals("/")) {
+            return false;
+        }
+        return SetQuotaCommand.createQuota(this.getZooKeeper(), path.equals("/") ? "" : path, bytes, num);
     }
 
     /**
@@ -917,7 +920,10 @@ public class ZKClient {
      * @param num   删除子节点数量配额
      */
     public boolean delQuota(@NonNull String path, boolean bytes, boolean num) throws Exception {
-        return DelQuotaCommand.delQuota(this.getZooKeeper(), path, bytes, num);
+        if (path.equals("/")) {
+            return false;
+        }
+        return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, bytes, num);
     }
 
     /**
@@ -926,6 +932,9 @@ public class ZKClient {
      * @param path 路径
      */
     public StatsTrack listQuota(@NonNull String path) throws Exception {
+        if (path.equals("/")) {
+            return null;
+        }
         String absolutePath = Quotas.quotaZookeeper + path + "/" + Quotas.limitNode;
         byte[] data = this.getData(absolutePath);
         return new StatsTrack(new String(data));

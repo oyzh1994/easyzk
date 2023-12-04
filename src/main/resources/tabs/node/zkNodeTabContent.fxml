@@ -3,14 +3,20 @@
 <?import cn.oyzh.easyzk.fx.ZKACLVBox?>
 <?import cn.oyzh.easyzk.fx.ZKFormatComboBox?>
 <?import cn.oyzh.easyzk.fx.ZKRichDataTextArea?>
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.svg.*?>
-<?import cn.oyzh.fx.plus.controls.tab.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.rich.*?>
-<?import cn.oyzh.fx.plus.controls.combo.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.controls.rich.FlexVirtualizedScrollPane?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.FlexText?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.ToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
@@ -411,7 +417,7 @@
             </FlexVBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="配额">
+    <FXTab text="配额" fx:id="quotaTab">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/quota.svg" size="13"/>
         </graphic>

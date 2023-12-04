@@ -14,6 +14,7 @@ import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -47,6 +48,18 @@ import java.util.List;
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeAdd.fxml"
 )
 public class ZKNodeAddController extends Controller {
+
+    /**
+     * 权限tab
+     */
+    @FXML
+    private FXTab aclTab;
+
+    /**
+     * 数据tab
+     */
+    @FXML
+    private FXTab dataTab;
 
     /**
      * 节点路径
@@ -154,11 +167,13 @@ public class ZKNodeAddController extends Controller {
     @FXML
     private void addZKNode() {
         if (!this.nodePath.validate()) {
+            this.dataTab.selectTab();
             return;
         }
         // 获取权限
         ACL acl = this.getACL();
         if (acl == null) {
+            this.aclTab.selectTab();
             return;
         }
         // 获取节点值
@@ -290,7 +305,6 @@ public class ZKNodeAddController extends Controller {
         }
         return null;
     }
-
 
     @Override
     protected void bindListeners() {

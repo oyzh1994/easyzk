@@ -12,6 +12,7 @@ import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.plus.controls.FXHBox;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.PagePane;
@@ -19,6 +20,7 @@ import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
@@ -26,6 +28,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -181,6 +184,12 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     @FXML
     protected ZKFormatComboBox format;
+
+    /**
+     * 配额组件tab
+     */
+    @FXML
+    protected FXTab quotaTab;
 
     /**
      * 子节点数量配额
@@ -382,8 +391,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
             ZKACL acl = aclVBox.acl();
             String builder = acl.idFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.idFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
-                    acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " +
-                    acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
+                    acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
                     acl.permsFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.permsFriend().getValue(this.aclViewSwitch.isSelected());
             ClipboardUtil.setStringAndTip(builder, "权限信息");
         } catch (Exception ex) {
@@ -488,7 +496,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             HBox schemeBox = (HBox) vBox.lookup(".acl-scheme");
             Text statusText = (Text) vBox.lookup(".acl-status");
             // 执行渲染
-            FXUtil.runLater(() -> {
+            BackgroundService.submitFX(() -> {
                 this.handleACLState(acl, statusText);
                 this.handleACLInfo(acl.idFriend(), idBox);
                 this.handleACLInfo(acl.permsFriend(), permsBox);
@@ -808,6 +816,11 @@ public class ZKNodeTabContent extends DynamicTabController {
     public void initQuota() {
         if (this.treeItem == null) {
             return;
+        }
+        if (this.treeItem.value().rootNode()) {
+            this.quotaTab.getContent().setDisable(true);
+        } else {
+            this.quotaTab.getContent().setDisable(false);
         }
         StatsTrack quota = this.treeItem.quota();
         if (quota != null) {

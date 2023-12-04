@@ -484,13 +484,11 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             return null;
         }
         // 遍历子节点，寻找匹配节点
-        for (TreeItem<?> item : root.getShowChildren()) {
-            if (item instanceof ZKNodeTreeItem nodeTreeItem) {
-                ZKNodeTreeItem treeItem = this.findNodeItem(nodeTreeItem, targetPath);
-                // 返回节点信息
-                if (treeItem != null) {
-                    return treeItem;
-                }
+        for (ZKNodeTreeItem item : root.showChildren()) {
+            ZKNodeTreeItem treeItem = this.findNodeItem(item, targetPath);
+            // 返回节点信息
+            if (treeItem != null) {
+                return treeItem;
             }
         }
         return null;

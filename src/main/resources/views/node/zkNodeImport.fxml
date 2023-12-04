@@ -78,7 +78,7 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
-        <IconButton stateManager="$stateManager" tipText="开始执行导入" onAction="#doImport"
+        <IconButton tipText="开始执行导入" onAction="#doImport"
                     styleClass="btn,btn-primary"
                     text="导入" fx:id="importBtn" disable="true" iconSizePercent="0.75">
             <graphic>

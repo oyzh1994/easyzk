@@ -218,6 +218,7 @@ public class ZKNodeImportController extends Controller {
         this.counter.reset();
         this.counter.setSum(this.nodeExport.counts());
         // 开始处理
+        this.importBtn.disable();
         this.stateManager.disable();
         this.stage.appendTitle("===导入执行中===");
         // 忽略已存在节点
@@ -275,6 +276,7 @@ public class ZKNodeImportController extends Controller {
                 }
             } finally {
                 // 结束处理
+                this.importBtn.enable();
                 this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();

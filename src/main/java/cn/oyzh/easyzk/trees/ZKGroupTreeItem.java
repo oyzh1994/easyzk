@@ -55,17 +55,8 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         super(treeView);
         this.value = group;
         this.setValue(new ZKGroupTreeItemValue(this));
-        // this.itemValue(group.getName());
-//        this.getChildren().addListener((ListChangeListener<? super ZKConnectTreeItem>) c -> {
-//            // this.getTreeView().fireChildChanged();
-//            ZKEventUtil.treeChildChanged();
-//            this.getTreeView().flushLocal();
-//        });
         // 监听节点变化
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            ZKEventUtil.treeChildChanged();
-//            this.flushLocal();
-        });
+        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> ZKEventUtil.treeChildChanged());
         // 监听展开变化
         this.expandedProperty().addListener((observable, oldValue, newValue) -> {
             this.value.setExpand(newValue);

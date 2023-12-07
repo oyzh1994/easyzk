@@ -266,26 +266,13 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      */
     private List<ZKGroupTreeItem> getGroupItems() {
         List<ZKGroupTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getShowChildren()) {
+        for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof ZKGroupTreeItem groupTreeItem) {
                 items.add(groupTreeItem);
             }
         }
         return items;
     }
-
-    // @Override
-    // public void doFilter(RichTreeItemFilter itemFilter) {
-    //     List<ZKConnectTreeItem> connectedItems = this.getConnectedItems();
-    //     if (CollUtil.isNotEmpty(connectedItems) && itemFilter != null) {
-    //         List<Runnable> tasks = new ArrayList<>(connectedItems.size());
-    //         for (ZKConnectTreeItem connectedItem : connectedItems) {
-    //             tasks.add(() -> connectedItem.doFilter(itemFilter));
-    //         }
-    //         // 提交任务
-    //         ThreadUtil.submitVirtual(tasks);
-    //     }
-    // }
 
     /**
      * 连接新增事件
@@ -306,7 +293,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     private void onInfoUpdated(ZKInfoUpdatedMsg msg) {
         ZKInfo info = msg.info();
         f1:
-        for (TreeItem<?> item : this.getShowChildren()) {
+        for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.value() == info) {
                     connectTreeItem.value(info);
@@ -368,7 +355,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     @Override
     public List<ZKConnectTreeItem> getConnectItems() {
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> child : this.getShowChildren()) {
+        for (TreeItem<?> child : this.getRealChildren()) {
             if (child instanceof ZKConnectTreeItem connectTreeItem) {
                 items.add(connectTreeItem);
             } else if (child instanceof ZKGroupTreeItem groupTreeItem) {
@@ -381,7 +368,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     @Override
     public List<ZKConnectTreeItem> getConnectedItems() {
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getShowChildren()) {
+        for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.isConnected()) {
                     items.add(connectTreeItem);

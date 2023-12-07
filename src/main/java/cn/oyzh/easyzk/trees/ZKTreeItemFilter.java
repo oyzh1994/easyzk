@@ -73,7 +73,7 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     }
 
     @Override
-    public Boolean apply(RichTreeItem item) {
+    public boolean test(RichTreeItem<?> item) {
         if (item instanceof ZKNodeTreeItem treeItem) {
             ZKNode node = treeItem.value();
             // 根节点直接展示

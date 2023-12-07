@@ -744,7 +744,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public ZKNodeTreeItem getChild(String path) {
         if (StrUtil.isNotBlank(path) && !this.isChildEmpty()) {
-            for (TreeItem<?> child : this.getShowChildren()) {
+            for (TreeItem<?> child : this.getRealChildren()) {
                 if (child instanceof ZKNodeTreeItem treeItem) {
                     if (treeItem.decodeNodePath().equals(path)) {
                         return treeItem;
@@ -1012,7 +1012,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 节点内容
      */
     public List<ZKNodeTreeItem> showChildren() {
-        List list = super.getShowChildren();
+        List list = super.getRealChildren();
         return list;
     }
 

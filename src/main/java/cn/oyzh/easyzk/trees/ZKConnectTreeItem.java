@@ -442,7 +442,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     private void getAllNodeItem(ZKNodeTreeItem item, List<ZKNodeTreeItem> list) {
         if (item != null) {
             list.add(item);
-            for (TreeItem<?> treeItem : item.getShowChildren()) {
+            for (TreeItem<?> treeItem : item.getRealChildren()) {
                 if (treeItem instanceof ZKNodeTreeItem nodeTreeItem) {
                     this.getAllNodeItem(nodeTreeItem, list);
                 }

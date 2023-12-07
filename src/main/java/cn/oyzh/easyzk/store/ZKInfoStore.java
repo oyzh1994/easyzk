@@ -50,17 +50,26 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
 
     @Override
     public synchronized List<ZKInfo> load() {
+        // 如果zkInfos为空
         if (this.zkInfos == null) {
+            // 读取storeFile文件的内容
             String text = FileUtil.readString(this.storeFile(), this.charset());
+            // 如果文件内容为空
             if (StrUtil.isBlank(text)) {
+                // 返回空列表
                 return new ArrayList<>();
             }
+            // 将文件内容解析为ZKInfo列表
             List<ZKInfo> zkInfos = JSONUtil.toList(text, ZKInfo.class);
+            // 如果ZKInfo列表非空
             if (CollUtil.isNotEmpty(zkInfos)) {
+                // 对ZKInfo列表进行排序
                 zkInfos = zkInfos.parallelStream().sorted().collect(Collectors.toList());
             }
+            // 返回排序后的ZKInfo列表
             return zkInfos;
         }
+        // 返回已有的ZKInfo列表
         return this.zkInfos;
     }
 
@@ -134,22 +143,4 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
         }
         return paging;
     }
-
-    // /**
-    //  * 是否存在此zk信息
-    //  *
-    //  * @param zkInfo zk信息
-    //  * @return 结果
-    //  */
-    // public synchronized boolean exist(ZKInfo zkInfo) {
-    //     if (zkInfo == null) {
-    //         return false;
-    //     }
-    //     for (ZKInfo info : this.zkInfos) {
-    //         if (info.compareTo(zkInfo) == 0 && info != zkInfo) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 }

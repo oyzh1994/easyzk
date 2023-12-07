@@ -180,12 +180,10 @@ public class ZKTabPane extends DynamicTabPane {
                 nodeTab = new ZKNodeTab();
                 super.addTab(nodeTab);
             }
-            if (!nodeTab.isSelected()) {
-                this.select(nodeTab);
-            }
+            // 选中节点
+            this.select(nodeTab);
+            // 初始化节点
             nodeTab.init(msg.item());
-            // // 检查节点状态
-            // RenderService.submitFXLater(nodeTab::checkStatus);
         }
     }
 

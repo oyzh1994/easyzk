@@ -56,26 +56,33 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
      * @return 已启用的数据列表
      */
     public synchronized List<ZKFilter> loadEnable() {
+        // 加载所有数据
         List<ZKFilter> filters = this.load();
+        // 如果数据列表不为空
         if (CollUtil.isNotEmpty(filters)) {
+            // 过滤出已启用的数据
             filters = filters.parallelStream().filter(ZKFilter::isEnable).toList();
         }
+        // 返回已启用的数据列表
         return filters;
     }
 
     @Override
     public synchronized boolean add(@NonNull ZKFilter filter) {
         try {
+            // 加载过滤器集合
             List<ZKFilter> filters = this.load();
+            // 并行地在过滤器集合中筛选符合给定过滤器条件的过滤器
             Optional<ZKFilter> optional = filters.parallelStream().filter(filter::compare).findFirst();
             if (optional.isEmpty()) {
-                // 添加到集合
+                // 如果没有找到符合要求的过滤器，则将新的过滤器添加到集合中
                 filters.add(filter);
-                // 更新数据
+                // 更新数据并保存过滤器集合
                 return this.save(filters);
             }
             return true;
         } catch (Exception e) {
+            // 捕获异常并打印错误日志
             StaticLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
@@ -84,9 +91,12 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
     @Override
     public synchronized boolean update(@NonNull ZKFilter filter) {
         try {
+            // 加载过滤器列表
             List<ZKFilter> filters = this.load();
+            // 并行地在过滤器列表中进行比较，找到匹配的过滤器
             Optional<ZKFilter> optional = filters.parallelStream().filter(filter::compare).findFirst();
             if (optional.isPresent()) {
+                // 复制过滤器
                 optional.get().copy(filter);
                 // 更新数据
                 return this.save(filters);
@@ -138,6 +148,12 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
         return paging;
     }
 
+    /**
+     * 判断给定关键字是否存在于过滤器列表中
+     *
+     * @param kw 给定的关键字
+     * @return 若存在则返回true，否则返回false
+     */
     public synchronized boolean exist(String kw) {
         List<ZKFilter> filters = this.load();
         if (CollUtil.isEmpty(filters)) {

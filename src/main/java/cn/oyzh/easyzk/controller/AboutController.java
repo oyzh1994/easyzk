@@ -46,10 +46,15 @@ public class AboutController extends Controller {
 
     @Override
     public void onStageShown(WindowEvent event) {
+        // 当舞台被显示时，设置名称文本框的文本为项目名称
         this.name.setText(this.project.getName());
+        // 设置版本文本框的文本为项目版本号
         this.version.setText("v" + this.project.getVersion());
+        // 设置更新日期文本框的文本为项目的更新日期
         this.updateDate.setText(this.project.getUpdateDate());
+        // 设置版权文本框的文本为项目的版权信息
         this.copyright.setText(this.project.getCopyright());
+        // 隐藏舞台并响应键盘上的Esc键
         this.stage.hideOnEscape();
     }
 }

@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * @since 2023/4/7
  */
 //@Slf4j
-@Accessors(chain = true, fluent = true)
+// @Accessors(chain = true, fluent = true)
 public class ZKRootTreeItemValue extends ZKTreeItemValue {
 
     public ZKRootTreeItemValue() {

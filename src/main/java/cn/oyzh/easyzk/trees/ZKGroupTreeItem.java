@@ -179,8 +179,6 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         if (CollUtil.isNotEmpty(items)) {
             this.addChild((List) items);
             this.extend();
-            // this.sort();
-            // this.sort(this.getTreeView().sortOrder());
         }
     }
 

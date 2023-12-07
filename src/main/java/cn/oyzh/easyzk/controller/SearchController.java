@@ -356,13 +356,13 @@ public class SearchController extends SubController {
      */
     private ZKSearchParam getSearchParam() {
         ZKSearchParam searchParam = new ZKSearchParam();
-        searchParam.setMode(this.mode.isSelected() ? 1 : 0);
-        searchParam.setKw(this.searchKW.getTextTrim());
-        searchParam.setFullMatch(this.fullMatch.isSelected());
-        searchParam.setSearchData(this.searchData.isSelected());
-        searchParam.setSearchPath(this.searchPath.isSelected());
-        searchParam.setCompareCase(this.compareCase.isSelected());
-        return searchParam;
+        searchParam.setMode(this.mode.isSelected() ? 1 : 0);  // 设置搜索模式
+        searchParam.setKw(this.searchKW.getTextTrim());  // 设置搜索关键字
+        searchParam.setFullMatch(this.fullMatch.isSelected());  // 设置是否全匹配
+        searchParam.setSearchData(this.searchData.isSelected());  // 设置是否搜索数据
+        searchParam.setSearchPath(this.searchPath.isSelected());  // 设置是否搜索路径
+        searchParam.setCompareCase(this.compareCase.isSelected());  // 设置是否区分大小写
+        return searchParam;  // 返回搜索参数
     }
 
     /**
@@ -415,26 +415,40 @@ public class SearchController extends SubController {
 
     @Override
     protected void bindListeners() {
-        // 搜索相关处理
+        // 绑定搜索更多1的事件
         this.searchMore1.managedBindVisible();
+        // 将searchMore2的visible属性绑定到searchMore1的visibleProperty()
         this.searchMore2.managedProperty().bind(this.searchMore1.visibleProperty());
+        // 将searchMore2的visibleProperty绑定到searchMore1的visibleProperty()
         this.searchMore2.visibleProperty().bind(this.searchMore1.visibleProperty());
+        // 将searchPrev的disableProperty绑定到searchNext的disableProperty
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
+        // 将searchAnalyse的disableProperty绑定到searchNext的disableProperty
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
+        // 绑定showSearchMore的事件，使其managedBindVisible()
         this.showSearchMore.managedBindVisible();
+        // 绑定mode的selectedChanged事件，当mode的值发生变化时调用preSearch()方法
         this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        // 绑定hideSearchMore的事件，使其managedProperty绑定到hideSearchMore的visibleProperty
         this.hideSearchMore.managedProperty().bind(this.hideSearchMore.visibleProperty());
+        // 当fullMatch的值发生变化时调用preSearch()方法
         this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        // 当searchPath的值发生变化时调用preSearch()方法
         this.searchPath.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        // 当searchData的值发生变化时调用preSearch()方法
         this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        // 当compareCase的值发生变化时调用preSearch()方法
         this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        // 当searchKW添加文本时调用preSearch()方法
         this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
+        // 当replaceKW添加文本时，清空replaceTips的文本并调用searchCheck()方法
         this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {
             this.replaceTips.setText("");
             this.searchCheck();
         });
 
         // 搜索触发事件
+        // 监听stage的键盘按下事件，如果按下的键为F且Ctrl键同时按下，将焦点移至searchKW文本框并选中所有文本
         KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(e -> {
             this.searchKW.requestFocus();
             this.searchKW.selectEnd();

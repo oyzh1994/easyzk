@@ -37,13 +37,16 @@ public class PageInfoStore extends ObjectFileStore<PageInfo> {
     public synchronized PageInfo load() {
         PageInfo pageInfo = null;
         try {
+            // 从文件中读取文本内容
             String text = FileUtil.readString(this.storeFile(), this.charset());
             if (StrUtil.isNotBlank(text)) {
+                // 将文本内容转换为页面信息对象
                 pageInfo = JSONUtil.toBean(text, PageInfo.class);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        // 如果页面信息为空，则创建一个新的页面信息对象
         if (pageInfo == null) {
             pageInfo = new PageInfo();
         }

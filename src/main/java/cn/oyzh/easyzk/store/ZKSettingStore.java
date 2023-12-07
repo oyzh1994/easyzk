@@ -38,13 +38,16 @@ public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
     public synchronized ZKSetting load() {
         ZKSetting setting = null;
         try {
+            // 读取配置文件内容
             String text = FileUtil.readString(this.storeFile(), this.charset());
             if (StrUtil.isNotBlank(text)) {
+                // 将配置文件内容解析为ZKSetting对象
                 setting = JSONUtil.toBean(text, ZKSetting.class);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        // 如果解析失败，则返回一个新的ZKSetting对象
         if (setting == null) {
             setting = new ZKSetting();
         }

@@ -33,28 +33,43 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public void flushGraphic() {
+        // 获取树项的值
         ZKInfo value = treeItem.value();
+        // 获取图形
         SVGGlyph glyph = this.graphic();
+        // 如果图形为空
         if (glyph == null) {
-            glyph = treeItem.value().isCluster() ? new SVGGlyph("/font/cluster.svg", "12") : new SVGGlyph("/font/server-connection.svg", "12");
+            // 如果值是集群，则使用"/font/cluster.svg"作为URL，大小为"12"
+            // 如果值不是集群，则使用"/font/server-connection.svg"作为URL，大小为"12"
+            glyph = value.isCluster() ? new SVGGlyph("/font/cluster.svg", "12") : new SVGGlyph("/font/server-connection.svg", "12");
+            // 设置图形
             this.graphic(glyph);
-        } else if (value.isCluster() && !glyph.getUrl().contains("cluster")) {
+        } else if (value.isCluster() && !glyph.getUrl().contains("cluster")) { // 如果值是集群且图形URL不包含"cluster"
+            // 使用"/font/cluster.svg"作为URL，大小为"12"
             glyph = new SVGGlyph("/font/cluster.svg", "12");
+            // 设置图形
             this.graphic(glyph);
-        } else if (!value.isCluster() && !glyph.getUrl().contains("connection")) {
+        } else if (!value.isCluster() && !glyph.getUrl().contains("connection")) {// 如果值不是集群且图形URL不包含"connection"
+            // 使用"/font/server-connection.svg"作为URL，大小为"12"
             glyph = new SVGGlyph("/font/server-connection.svg", "12");
+            // 设置图形
             this.graphic(glyph);
         }
     }
 
     @Override
     public void flushGraphicColor() {
+        // 获取当前图形符号
         SVGGlyph glyph = this.graphic();
+        // 如果当前树项已连接
         if (this.treeItem.isConnected()) {
+            // 如果图形符号的颜色不是绿色
             if (glyph.getColor() != Color.GREEN) {
+                // 将图形符号的颜色设置为绿色
                 glyph.setColor(Color.GREEN);
             }
-        } else if (glyph.getColor() != Color.BLACK) {
+        } else if (glyph.getColor() != Color.BLACK) {// 如果当前树项未连接
+            // 将图形符号的颜色设置为黑色
             glyph.setColor(Color.BLACK);
         }
     }

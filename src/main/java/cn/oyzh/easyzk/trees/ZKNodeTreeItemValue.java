@@ -21,15 +21,15 @@ import java.util.Objects;
  */
 public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
-    /**
-     * 子节点总数量
-     */
-    private Integer totalNum;
-
-    /**
-     * 子节点显示数量
-     */
-    private Integer showNum;
+    // /**
+    //  * 子节点总数量
+    //  */
+    // private Integer totalNum;
+    //
+    // /**
+    //  * 子节点显示数量
+    //  */
+    // private Integer showNum;
 
     /**
      * 树节点
@@ -67,26 +67,43 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         this.flushNum(this.item.value().getNumChildren(), this.item.getChildren().size());
     }
 
+    /**
+     * 刷新图形颜色
+     */
     @Override
     public void flushGraphicColor() {
+        // 获取图形符号
         SVGGlyph glyph = this.graphic();
+
+        // 如果节点被删除
         if (this.item.isBeDeleted()) {
+            // 如果图形颜色不是红色
             if (glyph.getColor() != Color.RED) {
+                // 设置图形颜色为红色
                 glyph.setColor(Color.RED);
+                // 触发图形颜色改变事件
                 ZKEventUtil.graphicColorChanged(this.item);
             }
-        } else if (this.item.dataUnsaved()) {
+        } else if (this.item.dataUnsaved()) { // 如果节点数据未保存
+            // 如果图形颜色不是橙色
             if (glyph.getColor() != Color.ORANGE) {
+                // 设置图形颜色为橙色
                 glyph.setColor(Color.ORANGE);
+                // 触发图形颜色改变事件
                 ZKEventUtil.graphicColorChanged(this.item);
             }
-        } else if (this.item.isBeUpdated()) {
+        } else if (this.item.isBeUpdated()) { // 如果节点已被更新
+            // 如果图形颜色不是紫色
             if (glyph.getColor() != Color.PURPLE) {
+                // 设置图形颜色为紫色
                 glyph.setColor(Color.PURPLE);
+                // 触发图形颜色改变事件
                 ZKEventUtil.graphicColorChanged(this.item);
             }
-        } else if (glyph.getColor() != Color.BLACK) {
+        } else if (glyph.getColor() != Color.BLACK) {// 如果图形颜色不是黑色
+            // 设置图形颜色为黑色
             glyph.setColor(Color.BLACK);
+            // 触发图形颜色改变事件
             ZKEventUtil.graphicColorChanged(this.item);
         }
     }
@@ -148,10 +165,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
      * @param showNum  子节点显示数量
      */
     public void flushNum(Integer totalNum, Integer showNum) {
-        if (totalNum != null) {
-            this.totalNum = totalNum;
-        }
-        this.showNum = showNum;
         // 寻找组件
         FXText text = (FXText) this.lookup("#num");
         if (text == null) {
@@ -161,12 +174,12 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
             text.setFill(Color.valueOf("#228B22"));
             HBox.setMargin(text, new Insets(0, 0, 0, 3));
         }
-        if (this.totalNum == null || this.totalNum == 0) {
+        if (totalNum == null || totalNum == 0) {
             text.setText("");
-        } else if (this.showNum == null || this.showNum.intValue() == this.totalNum.intValue()) {
-            text.setText("(" + this.totalNum + ")");
+        } else if (showNum == null || showNum.intValue() == totalNum.intValue()) {
+            text.setText("(" + totalNum + ")");
         } else {
-            text.setText("(" + this.showNum + "/" + this.totalNum + ")");
+            text.setText("(" + showNum + "/" + totalNum + ")");
         }
     }
 

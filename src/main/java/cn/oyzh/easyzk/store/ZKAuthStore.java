@@ -39,12 +39,15 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
 
     @Override
     public synchronized List<ZKAuth> load() {
+        // 从存储文件中读取权限列表的文本信息
         String text = FileUtil.readString(this.storeFile(), this.charset());
         if (StrUtil.isBlank(text)) {
             return new ArrayList<>();
         }
+        // 将文本信息解析为权限列表
         List<ZKAuth> auths = JSONUtil.toList(text, ZKAuth.class);
         if (CollUtil.isNotEmpty(auths)) {
+            // 过滤掉空的权限对象，并按照用户名称进行排序
             auths = auths.parallelStream().filter(Objects::nonNull).sorted((o1, o2) -> o1.getUser().compareToIgnoreCase(o2.getUser())).collect(Collectors.toList());
         }
         return auths;

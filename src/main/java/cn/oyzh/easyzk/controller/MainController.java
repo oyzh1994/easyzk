@@ -256,24 +256,18 @@ public class MainController extends ParentController {
         if (this.setting.isRememberPageSize()) {
             if (this.pageInfo.isMaximized()) {
                 this.stage.setMaximized(true);
-//                if (log.isDebugEnabled()) {
-                    StaticLog.debug("view setMaximized");
-//                }
+                StaticLog.debug("view setMaximized");
             } else if (this.pageInfo.getWidth() != null && this.pageInfo.getHeight() != null) {
                 this.stage.setWidth(this.pageInfo.getWidth());
                 this.stage.setHeight(this.pageInfo.getHeight());
-//                if (log.isDebugEnabled()) {
-                    StaticLog.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
-//                }
+                StaticLog.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
             }
         }
         // 设置上次保存的页面位置
         if (this.setting.isRememberPageLocation() && !this.pageInfo.isMaximized() && this.pageInfo.getScreenX() != null && this.pageInfo.getScreenY() != null) {
             this.stage.setX(this.pageInfo.getScreenX());
             this.stage.setY(this.pageInfo.getScreenY());
-//            if (log.isDebugEnabled()) {
-                StaticLog.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
-//            }
+            StaticLog.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
         }
     }
 }

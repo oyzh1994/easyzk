@@ -8,6 +8,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.exception.ZKException;
+import cn.oyzh.easyzk.exception.ZKNoAuthException;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -15,7 +16,6 @@ import cn.oyzh.fx.common.util.ArrUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.data.Stat;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -312,23 +312,27 @@ public class ZKNodeUtil {
      * @return 子节点列表
      */
     public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, @NonNull String properties) throws Exception {
-        // 获取子节点
-        List<String> children = client.getChildren(parentPath);
-        // 为空，直接返回
-        if (CollUtil.isEmpty(children)) {
+        try {
+            // 获取子节点
+            List<String> children = client.getChildren(parentPath);
+            // 为空，直接返回
+            if (CollUtil.isEmpty(children)) {
+                return Collections.emptyList();
+            }
+            // 任务列表
+            List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
+            // 获取节点数据
+            for (String sub : children) {
+                // 对节点路径做处理
+                String path = ZKNodeUtil.concatPath(parentPath, sub);
+                // 添加到任务列表
+                tasks.add(() -> getNode(client, path, properties));
+            }
+            children.clear();
+            // 返回数据
+            return ThreadUtil.invokeVirtual(tasks);
+        } catch (ZKNoAuthException ex) {
             return Collections.emptyList();
         }
-        // 任务列表
-        List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
-        // 获取节点数据
-        for (String sub : children) {
-            // 对节点路径做处理
-            String path = ZKNodeUtil.concatPath(parentPath, sub);
-            // 添加到任务列表
-            tasks.add(() -> getNode(client, path, properties));
-        }
-        children.clear();
-        // 返回数据
-        return ThreadUtil.invokeVirtual(tasks);
     }
 }

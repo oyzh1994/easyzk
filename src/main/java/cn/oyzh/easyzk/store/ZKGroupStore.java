@@ -44,12 +44,15 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
     @Override
     public synchronized List<ZKGroup> load() {
         if (this.zkGroups == null) {
+            // 读取存储文件中的文本
             String text = FileUtil.readString(this.storeFile(), this.charset());
             if (StrUtil.isBlank(text)) {
                 return new ArrayList<>();
             }
+            // 将文本转换为ZKGroup列表
             List<ZKGroup> zkGroups = JSONUtil.toList(text, ZKGroup.class);
             if (CollUtil.isNotEmpty(zkGroups)) {
+                // 对ZKGroup列表进行排序
                 zkGroups = zkGroups.parallelStream().sorted().collect(Collectors.toList());
             }
             return zkGroups;
@@ -120,14 +123,18 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
      * @return 结果
      */
     public synchronized boolean exist(ZKGroup zkGroup) {
+        // 如果传入的分组信息为空，则直接返回false
         if (zkGroup == null) {
             return false;
         }
+        // 遍历this.zkGroups列表，检查是否存在与传入的分组信息相同的分组
         for (ZKGroup group : this.zkGroups) {
-            if (Objects.equals(group.getName(), zkGroup.getName()) && group != zkGroup) {
+            if (Objects.equals(group.getName(), zkGroup.getName()) && group != zkGroup) {  // 如果分组名称相同且不是同一个对象，则说明存在相同的分组信息，返回true
                 return true;
             }
         }
+        // 循环结束后仍未找到相同的分组信息，返回false
         return false;
     }
+
 }

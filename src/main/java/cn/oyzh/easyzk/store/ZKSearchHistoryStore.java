@@ -43,10 +43,13 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
 
     @Override
     public synchronized List<ZKSearchHistory> load() {
+        // 从文件中读取字符串内容
         String text = FileUtil.readString(this.storeFile(), this.charset());
+        // 如果字符串为空，则返回空列表
         if (StrUtil.isBlank(text)) {
             return new ArrayList<>();
         }
+        // 将字符串解析为搜索历史记录列表
         return JSONUtil.toList(text, ZKSearchHistory.class);
     }
 

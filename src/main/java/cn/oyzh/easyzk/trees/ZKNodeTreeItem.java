@@ -377,9 +377,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.value.rootNode()) {
             super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler());
         } else {
-            this.visibleProperty().addListener((observableValue, aBoolean, t1) -> {
-                super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler());
-            });
+            this.visibleProperty().addListener((observableValue, aBoolean, t1) -> super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler()));
         }
     }
 
@@ -391,7 +389,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler() {
         if (this.treeEventEventHandler == null) {
             this.treeEventEventHandler = event -> {
-                if (this.equals(event.getTreeItem())) {
+                if (Objects.equals(this, event.getTreeItem())) {
                     if (event.getEventType() == branchCollapsedEvent()) {
                         this.clearChildValue();
                     } else if (event.getEventType() == branchExpandedEvent()) {
@@ -469,7 +467,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 刷新值
      */
     private void flushValue() {
-        BackgroundService.submit(()->this.getValue().flush());
+        BackgroundService.submit(() -> this.getValue().flush());
     }
 
     @Override
@@ -1012,8 +1010,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 节点内容
      */
     public List<ZKNodeTreeItem> showChildren() {
-        List list = super.getRealChildren();
-        return list;
+        return (List) super.getRealChildren();
     }
 
     @Override

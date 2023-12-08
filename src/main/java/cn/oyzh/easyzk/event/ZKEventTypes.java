@@ -137,7 +137,6 @@ public class ZKEventTypes {
      */
     public static final String ZK_INFO_DELETED = "ZK_INFO_DELETED";
 
-
     /**
      * zk过滤配置新增
      */

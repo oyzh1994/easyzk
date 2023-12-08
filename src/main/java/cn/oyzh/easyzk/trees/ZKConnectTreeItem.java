@@ -290,12 +290,15 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 编辑连接
      */
     private void editConnect() {
-        if (this.isConnected() && MessageBox.confirm("需要关闭连接，继续么？")) {
+        if (this.isConnected()) {
+            if (!MessageBox.confirm("需要关闭连接，继续么？")) {
+                return;
+            }
             this.closeConnect();
-            StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.window());
-            fxView.setProp("zkInfo", this.value());
-            fxView.display();
         }
+        StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.window());
+        fxView.setProp("zkInfo", this.value());
+        fxView.display();
     }
 
     /**
@@ -317,12 +320,11 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public void delete() {
         if (MessageBox.confirm("删除" + this.value().getName(), "确定删除连接？")) {
             this.closeConnect();
-            if (this.getParent() instanceof ZKConnectManager ZKConnectManager) {
-                if (!ZKConnectManager.delConnectItem(this)) {
-                    MessageBox.warn("删除连接失败！");
-                }
+            if (this.parent().delConnectItem(this)) {
+                ZKEventUtil.infoDeleted(this.value);
+            } else {
+                MessageBox.warn("删除连接失败！");
             }
-            ZKEventUtil.infoDeleted(this.value);
         }
     }
 

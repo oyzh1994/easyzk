@@ -282,7 +282,6 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     @EventReceiver(ZKEventTypes.ZK_INFO_ADDED)
     private void onInfoAdded(ZKInfoAddedMsg msg) {
         this.addConnect(msg.info());
-        this.extend();
     }
 
     /**
@@ -313,11 +312,13 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
     @Override
     public void addConnect(@NonNull ZKInfo zkInfo) {
-        ZKGroupTreeItem groupTreeItem = this.getGroupItem(zkInfo.getGroupId());
-        if (groupTreeItem == null) {
+        ZKGroupTreeItem groupItem = this.getGroupItem(zkInfo.getGroupId());
+        if (groupItem == null) {
             super.addChild(new ZKConnectTreeItem(zkInfo, this.getTreeView()));
+            this.extend();
         } else {
-            groupTreeItem.addConnect(zkInfo);
+            groupItem.addConnect(zkInfo);
+            groupItem.extend();
         }
     }
 

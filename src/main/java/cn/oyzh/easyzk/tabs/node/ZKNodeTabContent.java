@@ -12,7 +12,6 @@ import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controls.FXHBox;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.PagePane;
@@ -309,7 +308,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.charset.select(this.treeItem.getCharset());
 
         // 加载耗时处理
-        FXUtil.runWait(() -> this.loadTime.setText(this.treeItem.loadTime() + "ms"));
+        FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
     }
 
     /**

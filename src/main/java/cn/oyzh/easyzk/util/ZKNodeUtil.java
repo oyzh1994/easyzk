@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * zk节点工具类
@@ -81,32 +82,58 @@ public class ZKNodeUtil {
             throw new ZKException("path:" + path + "是不合法的路径！");
         }
         try {
+            long start = System.currentTimeMillis();
             // zk节点
             ZKNode node = new ZKNode();
-            // 设置节点路径
-            node.nodePath(path);
+            // 任务处理
+            List<Runnable> tasks = new ArrayList<>();
+            // 异常
+            AtomicReference<Exception> exceptionReference = new AtomicReference<>();
             // 设置zk状态
             if (properties.contains("s")) {
-                node.stat(client.checkExists(path));
+                tasks.add(() -> {
+                    try {
+                        node.stat(client.checkExists(path));
+                    } catch (KeeperException.NoAuthException ignored) {
+                    } catch (Exception ex) {
+                        exceptionReference.set(ex);
+                    }
+                });
             }
             // 设置zk访问控制
             if (properties.contains("a")) {
-                try {
-                    node.acl(client.getACL(path));
-                } catch (KeeperException.NoAuthException ignored) {
-                }
+                tasks.add(() -> {
+                    try {
+                        node.acl(client.getACL(path));
+                    } catch (KeeperException.NoAuthException ignored) {
+                    } catch (Exception ex) {
+                        exceptionReference.set(ex);
+                    }
+                });
             }
             // 设置zk数据
             if (properties.contains("d")) {
-                try {
-                    long start = System.currentTimeMillis();
-                    node.nodeData(client.getData(path));
-                    long end = System.currentTimeMillis();
-                    long loadTime = end - start;
-                    node.loadTime((short) loadTime);
-                } catch (KeeperException.NoAuthException ignored) {
-                }
+                tasks.add(() -> {
+                    try {
+                        node.nodeData(client.getData(path));
+                    } catch (KeeperException.NoAuthException ignored) {
+                    } catch (Exception ex) {
+                        exceptionReference.set(ex);
+                    }
+                });
             }
+            // 提交任务
+            ThreadUtil.submitVirtual(tasks);
+            // 抛出异常
+            if (exceptionReference.get() != null) {
+                throw exceptionReference.get();
+            }
+            // 设置加载时间
+            long end = System.currentTimeMillis();
+            long loadTime = end - start;
+            node.loadTime((short) loadTime);
+            // 设置节点路径
+            node.nodePath(path);
             // 返回节点
             return node;
         } catch (Exception ex) {
@@ -330,7 +357,7 @@ public class ZKNodeUtil {
             }
             children.clear();
             // 返回数据
-            return ThreadUtil.invokeVirtual(tasks);
+            return ThreadUtil.invoke(tasks);
         } catch (ZKNoAuthException ex) {
             return Collections.emptyList();
         }

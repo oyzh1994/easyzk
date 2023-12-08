@@ -282,6 +282,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     @EventReceiver(ZKEventTypes.ZK_INFO_ADDED)
     private void onInfoAdded(ZKInfoAddedMsg msg) {
         this.addConnect(msg.info());
+        this.extend();
     }
 
     /**
@@ -337,8 +338,6 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         if (CollUtil.isNotEmpty(items)) {
             this.addChild((List) items);
             this.extend();
-            // this.sort();
-            // this.sort(this.treeView().sortOrder());
         }
     }
 

@@ -55,15 +55,20 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         super(treeView);
         this.value = group;
         this.setValue(new ZKGroupTreeItemValue(this));
-        // 监听节点变化
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> ZKEventUtil.treeChildChanged());
-        // 监听展开变化
-        this.expandedProperty().addListener((observable, oldValue, newValue) -> {
-            this.value.setExpand(newValue);
-            this.groupStore.update(this.value);
-        });
         // 判断是否展开
         this.setExpanded(this.value.isExpand());
+        // 监听节点变化
+        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> ZKEventUtil.treeChildChanged());
+        // 监听收缩变化
+        super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+            this.value.setExpand(false);
+            this.groupStore.update(this.value);
+        });
+        // 监听展开变化
+        super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+            this.value.setExpand(true);
+            this.groupStore.update(this.value);
+        });
     }
 
     @Override
@@ -72,7 +77,6 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         MenuItem addConnect = MenuItemExt.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加zk连接", this::addConnect);
         MenuItem renameGroup = MenuItemExt.newItem("分组更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改分组名称(快捷键f2)", this::rename);
         MenuItem delGroup = MenuItemExt.newItem("删除分组", new SVGGlyph("/font/delete.svg", "12"), "删除此分组", this::delete);
-
         items.add(addConnect);
         items.add(renameGroup);
         items.add(delGroup);
@@ -82,18 +86,14 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     @Override
     public void rename() {
         String groupName = MessageBox.prompt("请输入新的分组名称", this.value.getName());
-
         // 名称为null或者跟当前名称相同，则忽略
         if (groupName == null || Objects.equals(groupName, this.value.getName())) {
             return;
         }
-
         // 检查名称
         if (StrUtil.isBlank(groupName)) {
-            MessageBox.warn("分组名称不能为空！");
             return;
         }
-
         // 检查是否存在
         String name = this.value.getName();
         this.value.setName(groupName);
@@ -102,7 +102,6 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
             MessageBox.warn("此分组已存在！");
             return;
         }
-
         // 修改名称
         if (this.groupStore.update(this.value)) {
             this.getValue().flushText();
@@ -170,7 +169,6 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
                 this.infoStore.update(item.value());
             }
             super.addChild(item);
-            this.extend();
         }
     }
 
@@ -178,7 +176,6 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.addChild((List) items);
-            this.extend();
         }
     }
 

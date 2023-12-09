@@ -498,19 +498,21 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public void sortAsc() {
-        this.sortType = 0;
-        ZKNodeTreeItem child = this.firstChild();
-        if (child != null) {
-            this.firstChild().sortAsc();
+        if (super.isSortable()) {
+            ZKNodeTreeItem firstChild = this.firstChild();
+            if (firstChild != null) {
+                firstChild.sortAsc();
+            }
         }
     }
 
     @Override
     public void sortDesc() {
-        this.sortType = 1;
-        ZKNodeTreeItem child = this.firstChild();
-        if (child != null) {
-            this.firstChild().sortDesc();
+        if (super.isSortable()) {
+            ZKNodeTreeItem firstChild = this.firstChild();
+            if (firstChild != null) {
+                firstChild.sortDesc();
+            }
         }
     }
 

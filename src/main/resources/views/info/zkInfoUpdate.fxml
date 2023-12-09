@@ -105,6 +105,11 @@
                             <Insets left="10" top="16"/>
                         </HBox.margin>
                     </FlexCheckBox>
+                    <FlexCheckBox text="只读模式" tipText="开启只读模式，防止误操作数据" fx:id="readonly">
+                        <HBox.margin>
+                            <Insets left="10" top="16"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="lbl,lbl-primary">

@@ -50,12 +50,12 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
     @Setter
     private String remark;
 
-    // /**
-    //  * 字符集
-    //  */
-    // @Getter
-    // @Setter
-    // private String charset;
+    /**
+     * 只读模式
+     */
+    @Setter
+    @Getter
+    private Boolean readonly;
 
     /**
      * 分组id
@@ -122,12 +122,21 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
         this.listen = zkInfo.listen;
         this.cluster = zkInfo.cluster;
         this.groupId = zkInfo.groupId;
-        // this.charset = zkInfo.charset;
+        this.readonly = zkInfo.readonly;
         this.collects = zkInfo.collects;
         this.compatibility = zkInfo.compatibility;
         this.connectTimeOut = zkInfo.connectTimeOut;
         this.sessionTimeOut = zkInfo.sessionTimeOut;
         return this;
+    }
+
+    /**
+     * 是否只读模式
+     *
+     * @return 结果
+     */
+    public boolean isReadonly() {
+        return BooleanUtil.isTrue(this.readonly);
     }
 
     /**

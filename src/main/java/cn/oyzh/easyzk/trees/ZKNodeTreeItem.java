@@ -23,6 +23,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
+import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -648,7 +649,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             // 创建新节点并删除旧节点
             if (this.client().create(newNodePath, this.data(), aclList, null, createMode, true) != null) {
                 // 删除旧节点
-                this.remove();
+                this._delete();
             } else {
                 MessageBox.warn("修改节点名称失败！");
             }
@@ -672,13 +673,33 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.value.subNode() && !MessageBox.confirm("删除" + this.value.decodeNodePath(), "确定删除节点？")) {
             return;
         }
+        // 创建任务
         Task task = TaskBuilder.newBuilder()
-                .onStart(this::remove)
+                .onStart(() -> {
+                    try {
+                        this._delete();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .onFinish(this::stopWaiting)
                 .onError(MessageBox::exception)
                 .onSuccess(() -> MessageBox.okToast("节点已删除"))
                 .build();
         this.startWaiting(task);
+    }
+
+    /**
+     * 删除节点实际业务
+     *
+     * @throws Exception 异常
+     */
+    private void _delete() throws Exception {
+        // 执行删除
+        this.client().delete(this.nodePath(), null, this.value.parentNode());
+        // 刷新状态
+        this.parent().refreshStat();
+        this.remove();
     }
 
     /**
@@ -755,39 +776,32 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void remove() {
-        // 执行删除
-        try {
-            this.client().delete(this.nodePath(), null, this.value.parentNode());
-            // 取消选中
-            this.getTreeView().clearSelection();
-            // 获取父节点
-            ZKNodeTreeItem parent = this.parent();
-            // 删除节点
-            if (parent != null) {
-                // 待选中节点
-                TreeItem<?> selectItem = null;
-                // 如果是最后删除的节点或者当前节点被选中
-                if (this.client().isLastDelete(this.nodePath()) || this.getTreeView().isSelected(this)) {
-                    // 如果下一个节点不为null，则选中下一个节点，否则选中此节点的父节点
-                    selectItem = this.nextSibling();
-                    selectItem = selectItem == null ? parent : selectItem;
-                }
-                // 取消此节点的收藏
-                this.unCollect();
-                // 移除此节点
-                parent.removeChild(this);
-                // 选中节点
-                if (selectItem != null) {
-                    this.getTreeView().select(selectItem);
-                }
-                // 刷新父节点的状态及值
-                parent.refreshStat();
-                parent.flushValue();
-            } else {
-                StaticLog.warn("remove fail, this.parent() is null.");
+        // 取消选中
+        this.getTreeView().clearSelection();
+        // 获取父节点
+        ZKNodeTreeItem parent = this.parent();
+        // 删除节点
+        if (parent != null) {
+            // 待选中节点
+            TreeItem<?> selectItem = null;
+            // 如果是最后删除的节点或者当前节点被选中
+            if (this.client().isLastDelete(this.nodePath()) || this.getTreeView().isSelected(this)) {
+                // 如果下一个节点不为null，则选中下一个节点，否则选中此节点的父节点
+                selectItem = this.nextSibling();
+                selectItem = selectItem == null ? parent : selectItem;
             }
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
+            // 取消此节点的收藏
+            this.unCollect();
+            // 移除此节点
+            parent.removeChild(this);
+            // 选中节点
+            if (selectItem != null) {
+                this.getTreeView().select(selectItem);
+            }
+            // 刷新父节点值
+            parent.flushValue();
+        } else {
+            StaticLog.warn("remove fail, this.parent() is null.");
         }
     }
 
@@ -1015,24 +1029,34 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void sortAsc() {
-        this.sortType = 0;
-        if (!this.isChildEmpty()) {
-            // 执行排序
-            List<ZKNodeTreeItem> childes = this.getChildren();
-            childes.sort(Comparator.comparing(ZKNodeTreeItem::nodePath));
-            childes.forEach(ZKNodeTreeItem::sortAsc);
+        if (super.isSortable()) {
+            super.sortAsc();
+            this.showChildren().forEach(ZKNodeTreeItem::sortAsc);
         }
     }
 
     @Override
-    public void sortDesc() {
-        this.sortType = 1;
-        if (!this.isChildEmpty()) {
-            // 执行排序
-            List<ZKNodeTreeItem> childes = this.getChildren();
-            childes.sort((a, b) -> b.nodePath().compareTo(a.nodePath()));
-            childes.forEach(ZKNodeTreeItem::sortDesc);
+    protected int sortAsc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
+        if (item1 instanceof ZKNodeTreeItem node1 && item2 instanceof ZKNodeTreeItem node2) {
+            return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(node1, node2);
         }
+        return super.sortAsc(item1, item2);
+    }
+
+    @Override
+    public void sortDesc() {
+        if (super.isSortable()) {
+            super.sortDesc();
+            this.showChildren().forEach(ZKNodeTreeItem::sortDesc);
+        }
+    }
+
+    @Override
+    protected int sortDesc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
+        if (item1 instanceof ZKNodeTreeItem node1 && item2 instanceof ZKNodeTreeItem node2) {
+            return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(node2, node1);
+        }
+        return super.sortDesc(item1, item2);
     }
 
     /**

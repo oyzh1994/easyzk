@@ -149,15 +149,20 @@ public class ZKExceptionParser implements Function<Throwable, String> {
             return "连接丢失！";
         }
 
+        String message = e.getMessage();
+        if (e instanceof UnsupportedOperationException) {
+            return message;
+        }
+
         if (e instanceof IllegalArgumentException) {
-            return e.getMessage();
+            return message;
         }
 
         if (e instanceof ZKException) {
-            return e.getMessage();
+            return message;
         }
 
         e.printStackTrace();
-        return e.getMessage();
+        return message;
     }
 }

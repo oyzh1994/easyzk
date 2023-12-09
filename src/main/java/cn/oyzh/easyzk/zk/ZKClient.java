@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.exception.ReadonlyOperationException;
 import cn.oyzh.easyzk.exception.ZKNoAdminPermException;
 import cn.oyzh.easyzk.exception.ZKNoChildPermException;
 import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
@@ -164,6 +165,24 @@ public class ZKClient {
                 }
             }
         });
+    }
+
+    /**
+     * 是否只读模式
+     *
+     * @return 结果
+     */
+    public boolean isReadonly() {
+        return this.zkInfo.isReadonly();
+    }
+
+    /**
+     * 如果只读模式不支持操作，则抛出异常
+     */
+    public void throwReadonlyException() {
+        if (this.isReadonly()) {
+            throw new ReadonlyOperationException();
+        }
     }
 
     /**
@@ -413,6 +432,7 @@ public class ZKClient {
      * @throws Exception 异常
      */
     public Stat setACL(@NonNull String path, @NonNull List<ACL> aclList, Integer version) throws Exception {
+        this.throwReadonlyException();
         try {
             return this.framework.setACL().withVersion(version == null ? -1 : version).withACL(aclList).forPath(path);
         } catch (Exception ex) {
@@ -432,6 +452,7 @@ public class ZKClient {
      * @throws Exception 异常
      */
     public void setACL(@NonNull List<String> paths, @NonNull List<ACL> aclList) throws Exception {
+        this.throwReadonlyException();
         String path = null;
         try {
             for (String s : paths) {
@@ -561,6 +582,7 @@ public class ZKClient {
      * @param cParents   在需要的时候是否创建父节点
      */
     public String create(@NonNull String path, byte[] data, @NonNull List<ACL> aclList, Long ttl, @NonNull CreateMode createMode, boolean cParents) throws Exception {
+        this.throwReadonlyException();
         String old = this.lastCreate;
         try {
             this.lastCreate = path;
@@ -631,7 +653,6 @@ public class ZKClient {
         byte[] bytes = null;
         if (data != null) {
             bytes = data.getBytes();
-            // bytes = data.getBytes(TextUtil.getCharset(this.getCharset()));
         }
         return this.create(path, bytes, aclList, ttl, createMode, cParents);
     }
@@ -794,6 +815,7 @@ public class ZKClient {
      * @return Stat 状态
      */
     public Stat setData(@NonNull String path, byte @NonNull [] data, Integer version) throws Exception {
+        this.throwReadonlyException();
         String old = this.lastUpdate;
         try {
             this.lastUpdate = path;
@@ -818,25 +840,9 @@ public class ZKClient {
      * @param path 路径
      */
     public void sync(@NonNull String path) throws Exception {
+        this.throwReadonlyException();
         this.framework.sync().forPath(path);
     }
-
-    // /**
-    //  * 设置节点数据
-    //  *
-    //  * @param node zk节点
-    //  * @param data 数据
-    //  * @return 结果
-    //  */
-    // public boolean setData(@NonNull ZKNode node, String data) throws Exception {
-    //     byte[] bytes = data == null ? "".getBytes() : data.getBytes();
-    //     Stat stat = this.setData(node.nodePath(), bytes, null);
-    //     if (stat != null) {
-    //         node.stat(stat);
-    //         node.nodeData(bytes);
-    //     }
-    //     return stat != null;
-    // }
 
     /**
      * 删除节点
@@ -855,6 +861,7 @@ public class ZKClient {
      * @param delChildren 删除子节点
      */
     public void delete(@NonNull String path, Integer version, boolean delChildren) throws Exception {
+        this.throwReadonlyException();
         String old = this.lastDelete;
         try {
             this.lastDelete = path;
@@ -906,6 +913,7 @@ public class ZKClient {
      * @param num   限制子节点数量
      */
     public boolean createQuota(@NonNull String path, long bytes, int num) throws Exception {
+        this.throwReadonlyException();
         if (path.equals("/")) {
             return false;
         }
@@ -920,6 +928,7 @@ public class ZKClient {
      * @param num   删除子节点数量配额
      */
     public boolean delQuota(@NonNull String path, boolean bytes, boolean num) throws Exception {
+        this.throwReadonlyException();
         if (path.equals("/")) {
             return false;
         }

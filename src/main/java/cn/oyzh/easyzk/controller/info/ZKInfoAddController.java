@@ -38,11 +38,11 @@ import javafx.stage.WindowEvent;
 )
 public class ZKInfoAddController extends Controller {
 
-    // /**
-    //  * 字符集
-    //  */
-    // @FXML
-    // private FlexComboBox<String> charset;
+    /**
+     * 只读模式
+     */
+    @FXML
+    private FlexCheckBox readonly;
 
     /**
      * tab组件
@@ -202,21 +202,15 @@ public class ZKInfoAddController extends Controller {
             String name = this.name.getTextTrim();
             ZKInfo zkInfo = new ZKInfo();
             zkInfo.setName(name);
-            // // 检查名称是否存在
-            // if (this.infoStore.exist(zkInfo)) {
-            //     MessageBox.warn("此名称已存在！");
-            //     return;
-            // }
-            // String charset = this.charset.getValue();
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number sessionTimeOut = this.sessionTimeOut.getValue();
             zkInfo.setHost(host);
             zkInfo.setRemark(this.remark.getTextTrim());
             zkInfo.setListen(this.listen.isSelected());
             zkInfo.setCluster(this.cluster.isSelected());
+            zkInfo.setReadonly(this.readonly.isSelected());
             zkInfo.setGroupId(this.group == null ? null : this.group.getGid());
             zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
-            // zkInfo.setCharset("跟随系统".equals(charset) ? null : charset.toLowerCase());
             zkInfo.setConnectTimeOut(connectTimeOut.intValue());
             zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
             // 保存数据

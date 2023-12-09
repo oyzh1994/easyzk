@@ -39,6 +39,12 @@ import lombok.NonNull;
 public class ZKInfoUpdateController extends Controller {
 
     /**
+     * 只读模式
+     */
+    @FXML
+    private FlexCheckBox readonly;
+
+    /**
      * 监听节点
      */
     @FXML
@@ -66,12 +72,6 @@ public class ZKInfoUpdateController extends Controller {
      * zk信息
      */
     private ZKInfo zkInfo;
-
-    // /**
-    //  * 字符集
-    //  */
-    // @FXML
-    // private CharsetComboBox charset;
 
     /**
      * 名称
@@ -200,13 +200,6 @@ public class ZKInfoUpdateController extends Controller {
         }
         String name = this.name.getTextTrim();
         this.zkInfo.setName(name);
-        // // 检查名称
-        // if (this.infoStore.exist(this.zkInfo)) {
-        //     this.tabPane.select(0);
-        //     MessageBox.warn("此名称已存在！");
-        //     return;
-        // }
-        // String charset = this.charset.getValue();
         Number connectTimeOut = this.connectTimeOut.getValue();
         Number sessionTimeOut = this.sessionTimeOut.getValue();
 
@@ -214,10 +207,10 @@ public class ZKInfoUpdateController extends Controller {
         this.zkInfo.setHost(host.trim());
         this.zkInfo.setListen(this.listen.isSelected());
         this.zkInfo.setCluster(this.cluster.isSelected());
+        this.zkInfo.setReadonly(this.readonly.isSelected());
         this.zkInfo.setConnectTimeOut(connectTimeOut.intValue());
         this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
         this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
-        // this.zkInfo.setCharset("跟随系统".equals(charset) ? null : charset.toLowerCase());
         // 保存数据
         if (this.infoStore.update(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
@@ -233,7 +226,7 @@ public class ZKInfoUpdateController extends Controller {
         this.zkInfo = this.getStageProp("zkInfo");
         this.name.setText(this.zkInfo.getName());
         this.remark.setText(this.zkInfo.getRemark());
-        // this.charset.select(this.zkInfo.getCharset());
+        this.readonly.setSelected(this.zkInfo.isReadonly());
         this.connectTimeOut.setValue(this.zkInfo.getConnectTimeOut());
         this.sessionTimeOut.setValue(this.zkInfo.getSessionTimeOut());
         this.compatibility.setSelected(this.zkInfo.compatibility34());
@@ -260,7 +253,6 @@ public class ZKInfoUpdateController extends Controller {
                 }
             }
         });
-
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }

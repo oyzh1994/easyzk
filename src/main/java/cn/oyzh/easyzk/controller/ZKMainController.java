@@ -297,15 +297,6 @@ public class ZKMainController extends ParentController {
         this.filterEphemeral.selectedChanged((obs, o, n) -> this.filter());
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
-        // this.tabPane.selectedTabChanged((abs, o, n) -> {
-        //     if (o != null) {
-        //         o.getStyleClass().remove("tab-active");
-        //     }
-        //     if (n != null) {
-        //         n.getStyleClass().add("tab-active");
-        //     }
-        // });
-
         // zk树选中节点变化事件
         this.tree.selectItemChanged(item -> RenderService.submitFXLater(() -> {
             if (item instanceof ZKNodeTreeItem treeItem) {

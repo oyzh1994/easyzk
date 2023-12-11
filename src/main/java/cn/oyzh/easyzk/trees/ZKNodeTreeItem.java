@@ -675,13 +675,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         }
         // 创建任务
         Task task = TaskBuilder.newBuilder()
-                .onStart(() -> {
-                    try {
-                        this._delete();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
+                .onStart(this::_delete)
                 .onFinish(this::stopWaiting)
                 .onError(MessageBox::exception)
                 .onSuccess(() -> MessageBox.okToast("节点已删除"))
@@ -691,15 +685,17 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     /**
      * 删除节点实际业务
-     *
-     * @throws Exception 异常
      */
-    private void _delete() throws Exception {
-        // 执行删除
-        this.client().delete(this.nodePath(), null, this.value.parentNode());
-        // 刷新状态
-        this.parent().refreshStat();
-        this.remove();
+    private void _delete() {
+        try {
+            // 执行删除
+            this.client().delete(this.nodePath(), null, this.value.parentNode());
+            // 刷新状态
+            this.parent().refreshStat();
+            this.remove();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     /**

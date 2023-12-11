@@ -12,6 +12,7 @@ import cn.oyzh.fx.plus.search.SearchHandler;
 import cn.oyzh.fx.plus.search.SearchParam;
 import cn.oyzh.fx.plus.search.SearchValue;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
+import cn.oyzh.fx.plus.trees.RichTreeItemValue;
 import cn.oyzh.fx.plus.util.ControlUtil;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
@@ -137,8 +138,8 @@ public class ZKSearchHandler extends SearchHandler {
     }
 
     @Override
-    protected void applyValue(SearchValue value, String action) {
-        super.applyValue(value, action);
+    protected void applyValue(SearchValue value, int index) {
+        super.applyValue(value, index);
         // 选中并滚动到此节点
         this.treeNode.selectAndScroll(value.getItem());
     }
@@ -163,7 +164,7 @@ public class ZKSearchHandler extends SearchHandler {
      * @return 数据节点
      */
     private FlexRichTextArea findDataNode() {
-        ZKNodeTab itemTab = this.tabPane.getNodeTab();
+        ZKNodeTab itemTab = this.tabPane.getNodeTab(this.currentItem);
         if (itemTab != null) {
             itemTab.selectDataTab();
             return itemTab.getDataNode();
@@ -208,7 +209,7 @@ public class ZKSearchHandler extends SearchHandler {
     private boolean pathAnalyse() {
         try {
             String kw = this.searchParam.getKw();
-            ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
+            RichTreeItemValue value = (RichTreeItemValue) this.currentItem.getValue();
             Text text = value.text();
             String path = value.name();
             // 搜索索引
@@ -217,7 +218,7 @@ public class ZKSearchHandler extends SearchHandler {
                 int end = index + kw.length();
                 text.setSelectionStart(index);
                 text.setSelectionEnd(end);
-                text.setSelectionFill(Color.GREEN);
+                text.setSelectionFill(Color.CHARTREUSE);
                 this.pathIndex = end;
                 return true;
             }

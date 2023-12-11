@@ -12,6 +12,7 @@ import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.PagePane;
@@ -47,6 +48,7 @@ import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -61,8 +63,8 @@ import java.util.Set;
  * @since 2023/05/21
  */
 @Lazy
-//@Slf4j
 @Component
+@Scope(ScopeType.PROTOTYPE)
 public class ZKNodeTabContent extends DynamicTabController {
 
     /**

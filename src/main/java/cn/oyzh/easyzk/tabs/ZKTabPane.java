@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.msg.TreeChildSelectedMsg;
 import cn.oyzh.easyzk.event.msg.TreeGraphicChangedMsg;
@@ -8,17 +9,28 @@ import cn.oyzh.easyzk.event.msg.TreeGraphicColorChangedMsg;
 import cn.oyzh.easyzk.event.msg.ZKConnectionClosedMsg;
 import cn.oyzh.easyzk.event.msg.ZKTerminalCloseMsg;
 import cn.oyzh.easyzk.event.msg.ZKTerminalOpenMsg;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
 import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
+import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TreeItem;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * zk切换面板
@@ -28,17 +40,80 @@ import javafx.scene.control.Tab;
  */
 public class ZKTabPane extends DynamicTabPane {
 
-    {
+    @Override
+    protected void initTabPane() {
+        super.initTabPane();
         this.initHomeTab();
+        // 监听tab
         this.getTabs().addListener((ListChangeListener<? super Tab>) (c) -> {
-            TaskManager.startDelay("zk:tab:init", () -> {
-                if (this.tabsEmpty()) {
-                    this.initHomeTab();
-                } else if (this.tabsSize() > 1) {
-                    this.closeHomeTab();
+            while (c.next()) {
+                if (c.wasAdded() || c.wasRemoved()) {
+                    TaskManager.startDelay("zk:homeTab:flush", this::flushHomeTab, 100);
+                    if (c.wasAdded()) {
+                        TaskManager.startDelay("zk:nodeTab:flush", this::flushNodeTab, 100);
+                    }
                 }
-            }, 100);
+            }
         });
+    }
+
+    /**
+     * 刷新主页标签
+     */
+    private void flushHomeTab() {
+        if (this.tabsEmpty()) {
+            this.initHomeTab();
+        } else if (this.tabsSize() > 1) {
+            this.closeHomeTab();
+        }
+    }
+
+    /**
+     * 刷新节点标签
+     */
+    private void flushNodeTab() {
+        // 获取设置
+        ZKSetting setting = ZKSettingStore.SETTING;
+        // 判断是否需要处理tab限制
+        if (setting.isTabUnLimit()) {
+            return;
+        }
+        // 获取全部节点tab
+        List<ZKNodeTab> tabs = this.getNodeTabs();
+        // 数据不满足限制要求，则直接忽略
+        if (tabs.size() <= setting.getTabLimit()) {
+            return;
+        }
+        // tab处理函数
+        Consumer<List<ZKNodeTab>> func = tabList -> {
+            // 数据满足限制要求才处理
+            if (tabList.size() > setting.getTabLimit()) {
+                // 进行排序
+                tabList.sort((o1, o2) -> Comparator.comparingLong(ZKNodeTab::getOpenedTime).compare(o2, o1));
+                // 跳过指定数量
+                List<ZKNodeTab> list = tabList.stream().skip(setting.getTabLimit()).toList();
+                // 移除tab
+                if (!list.isEmpty()) {
+                    FXUtil.runLater(() -> this.getTabs().removeAll(list));
+                }
+            }
+        };
+        // 限制全部连接
+        if (setting.isAllTabLimitStrategy()) {
+            func.accept(tabs);
+        } else if (setting.isSingleTabLimitStrategy()) {// 限制单个连接
+            // 分组处理
+            Map<ZKClient, List<ZKNodeTab>> map = new HashMap<>();
+            // 按分组添加到map
+            for (ZKNodeTab tab : tabs) {
+                List<ZKNodeTab> list = map.computeIfAbsent(tab.client(), k -> new ArrayList<>());
+                list.add(tab);
+            }
+            // 处理值
+            for (List<ZKNodeTab> tabList : map.values()) {
+                func.accept(tabList);
+            }
+        }
     }
 
     /**
@@ -139,9 +214,10 @@ public class ZKTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = ZKEventTypes.TREE_GRAPHIC_CHANGED, async = true, verbose = true)
     public void graphicChanged(TreeGraphicChangedMsg msg) {
-        ZKNodeTab nodeTab = this.getNodeTab();
-        if (nodeTab != null && nodeTab.treeItem() == msg.item()) {
+        ZKNodeTab nodeTab = this.getNodeTab(msg.item());
+        if (nodeTab != null) {
             nodeTab.flushGraphic();
+            nodeTab.flushTitle();
         }
     }
 
@@ -152,8 +228,8 @@ public class ZKTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = ZKEventTypes.TREE_GRAPHIC_COLOR_CHANGED, async = true, verbose = true)
     public void graphicColorChanged(TreeGraphicColorChangedMsg msg) {
-        ZKNodeTab nodeTab = this.getNodeTab();
-        if (nodeTab != null && nodeTab.treeItem() == msg.item()) {
+        ZKNodeTab nodeTab = this.getNodeTab(msg.item());
+        if (nodeTab != null) {
             nodeTab.flushGraphicColor();
         }
     }
@@ -161,10 +237,33 @@ public class ZKTabPane extends DynamicTabPane {
     /**
      * 获取节点tab
      *
+     * @param item 树节点
      * @return 节点tab
      */
-    public ZKNodeTab getNodeTab() {
-        return super.getTab(ZKNodeTab.class);
+    public ZKNodeTab getNodeTab(TreeItem<?> item) {
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKNodeTab nodeTab) {
+                if (nodeTab.treeItem() == item) {
+                    return nodeTab;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取节点tab列表
+     *
+     * @return 节点tab列表
+     */
+    public List<ZKNodeTab> getNodeTabs() {
+        List<ZKNodeTab> list = new ArrayList<>();
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKNodeTab nodeTab) {
+                list.add(nodeTab);
+            }
+        }
+        return list;
     }
 
     /**
@@ -175,7 +274,7 @@ public class ZKTabPane extends DynamicTabPane {
     @EventReceiver(value = ZKEventTypes.TREE_CHILD_SELECTED, async = true, verbose = true, fxThread = true)
     public void initNodeTab(TreeChildSelectedMsg msg) {
         if (msg != null && msg.item() != null) {
-            ZKNodeTab nodeTab = this.getNodeTab();
+            ZKNodeTab nodeTab = this.getNodeTab(msg.item());
             if (nodeTab == null) {
                 nodeTab = new ZKNodeTab();
                 super.addTab(nodeTab);
@@ -194,9 +293,10 @@ public class ZKTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = ZKEventTypes.ZK_CONNECTION_CLOSED, async = true, verbose = true)
     public void connectionClosed(ZKConnectionClosedMsg msg) {
-        ZKNodeTab nodeTab = this.getNodeTab();
-        if (nodeTab != null && nodeTab.info() == msg.info()) {
-            nodeTab.closeTab();
+        for (ZKNodeTab nodeTab : this.getNodeTabs()) {
+            if (nodeTab.client() == msg.client()) {
+                nodeTab.closeTab();
+            }
         }
     }
 

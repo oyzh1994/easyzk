@@ -14,7 +14,6 @@ import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventGroup;
@@ -60,11 +59,36 @@ public class ZKTreeView extends RichTreeView {
     public ZKTreeView() {
         this.dragContent = "zk_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new ZKTreeCell());
-        // 初始化事件处理
-        this.initEventHandler();
         // 初始化根节点
         super.root(new ZKRootTreeItem(this));
         this.root().extend();
+    }
+
+    @Override
+    protected void initTreeView() {
+        super.initTreeView();
+        // 主鼠标按钮点击事件
+        super.setOnMousePrimaryClicked(e -> {
+            if (MouseUtil.isSingleClick(e)) {
+                this.clearContextMenu();
+            } else {
+                TreeItem<?> item = this.getSelectedItem();
+                if (item instanceof ZKConnectTreeItem treeItem) {
+                    treeItem.connect();
+                } else if (item instanceof ZKNodeTreeItem treeItem) {
+                    treeItem.loadChild();
+                }
+            }
+        });
+        // 暂停按键处理
+        KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
+            TreeItem<?> item = this.getSelectedItem();
+            if (item instanceof ZKConnectTreeItem treeItem) {
+                treeItem.closeConnect();
+            } else if (item instanceof ZKNodeTreeItem nodeTreeItem) {
+                nodeTreeItem.root().closeConnect();
+            }
+        });
     }
 
     @Override
@@ -90,57 +114,6 @@ public class ZKTreeView extends RichTreeView {
         for (ZKConnectTreeItem treeItem : this.root().getConnectedItems()) {
             ThreadUtil.startVirtual(treeItem::closeConnect);
         }
-    }
-
-    /**
-     * 初始化事件处理器
-     */
-    protected void initEventHandler() {
-        // 主鼠标按钮点击事件
-        super.setOnMousePrimaryClicked(e -> {
-            if (MouseUtil.isSingleClick(e)) {
-                this.clearContextMenu();
-            } else {
-                TreeItem<?> item = this.getSelectedItem();
-                if (item instanceof ZKConnectTreeItem treeItem) {
-                    treeItem.connect();
-                } else if (item instanceof ZKNodeTreeItem treeItem) {
-                    treeItem.loadChild();
-                }
-            }
-        });
-        // 右键菜单事件
-        this.setOnContextMenuRequested(e -> {
-            TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof ZKTreeItem<?> treeItem) {
-                this.showContextMenu(treeItem.getMenuItems(), e.getScreenX() - 10, e.getScreenY() - 10);
-            } else {
-                this.clearContextMenu();
-            }
-        });
-        // f2按键处理
-        KeyListener.listenReleased(this, KeyCode.F2, event -> {
-            TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof ZKTreeItem<?> treeItem) {
-                treeItem.rename();
-            }
-        });
-        // 删除按键处理
-        KeyListener.listenReleased(this, KeyCode.DELETE, event -> {
-            TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof ZKTreeItem<?> treeItem) {
-                treeItem.delete();
-            }
-        });
-        // 暂停按键处理
-        KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
-            TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof ZKConnectTreeItem treeItem) {
-                treeItem.closeConnect();
-            } else if (item instanceof ZKNodeTreeItem nodeTreeItem) {
-                nodeTreeItem.root().closeConnect();
-            }
-        });
     }
 
     /**

@@ -9,8 +9,10 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Modality;
@@ -92,24 +94,6 @@ public class SettingController extends Controller {
      */
     @FXML
     private RadioButton loadMode1;
-    //
-    // /**
-    //  * 页面布局
-    //  */
-    // @FXML
-    // private FXToggleGroup layout;
-    //
-    // /**
-    //  * 页面布局1
-    //  */
-    // @FXML
-    // private RadioButton layout1;
-    //
-    // /**
-    //  * 页面布局2
-    //  */
-    // @FXML
-    // private RadioButton layout2;
 
     /**
      * ZK连接后加载方式2
@@ -123,11 +107,17 @@ public class SettingController extends Controller {
     @FXML
     private FlexCheckBox authMode;
 
-//    /**
-//     * 分组自动展开
-//     */
-//    @FXML
-//    private FlexCheckBox groupExpand;
+    /**
+     * 标签数量限制
+     */
+    @FXML
+    private NumberTextField tabLimit;
+
+    /**
+     * 标签策略
+     */
+    @FXML
+    private DynamicTabStrategyComboBox tabStrategy;
 
     /**
      * 配置对象
@@ -150,7 +140,6 @@ public class SettingController extends Controller {
                 case 2 -> this.exitMode2.setSelected(true);
             }
         }
-
         // 节点加载处理
         if (this.setting.getLoadMode() != null) {
             switch (this.setting.getLoadMode()) {
@@ -159,39 +148,25 @@ public class SettingController extends Controller {
                 case 2 -> this.loadMode2.setSelected(true);
             }
         }
-
         // 节点认证处理
         if (this.setting.getAuthMode() != null) {
             this.authMode.setSelected(this.setting.isAutoAuth());
         }
-
         // 记住页面大小处理
         if (this.setting.getPageInfo() != null) {
             this.pageSize.setSelected(this.setting.isRememberPageSize());
         }
-
         // 记住页面拉伸处理
         if (this.setting.getRememberPageResize() != null) {
             this.pageResize.setSelected(this.setting.isRememberPageResize());
         }
-
         // 记住页面位置处理
         if (this.setting.getRememberPageLocation() != null) {
             this.pageLocation.setSelected(this.setting.isRememberPageLocation());
         }
-
-//        // 分组展开处理
-//        if (this.setting.getGroupExpand() != null) {
-//            this.groupExpand.setSelected(this.setting.isGroupExpand());
-//        }
-
-        // // 布局模式处理
-        // if (this.setting.getLayout() != null) {
-        //     switch (this.setting.getLayout()) {
-        //         case 0 -> this.layout1.setSelected(true);
-        //         case 1 -> this.layout2.setSelected(true);
-        //     }
-        // }
+        // 标签相关处理
+        this.tabLimit.setValue(this.setting.getTabLimit());
+        this.tabStrategy.select(this.setting.getTabStrategy());
     }
 
     /**
@@ -201,22 +176,16 @@ public class SettingController extends Controller {
     private void saveSetting() {
         String tips = "";
         int authMode = this.authMode.isSelected() ? 0 : 1;
-//        int groupExpand = this.groupExpand.isSelected() ? 1 : 0;
-//         int layout = Integer.parseInt(this.layout.selectedUserData());
         int loadMode = Integer.parseInt(this.loadMode.selectedUserData());
         // 设置参数
         if (!Objects.equals(this.setting.getLoadMode(), loadMode) || !Objects.equals(this.setting.getAuthMode(), authMode)) {
             tips = "（重新打开连接生效）";
         }
-//         if ( !Objects.equals(this.setting.getLayout(), layout)) {
-// //        if (!Objects.equals(this.setting.getGroupExpand(), groupExpand) || !Objects.equals(this.setting.getLayout(), layout)) {
-//             tips = "（重启软件生效）";
-//         }
-        // this.setting.setLayout(layout);
         this.setting.setLoadMode(loadMode);
         this.setting.setAuthMode(authMode);
-//        this.setting.setGroupExpand(groupExpand);
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
+        this.setting.setTabStrategy(this.tabStrategy.getStrategy());
+        this.setting.setTabLimit(this.tabLimit.getValue().intValue());
         this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
         this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
         this.setting.setExitMode(Integer.parseInt(this.exitMode.selectedUserData()));

@@ -9,9 +9,13 @@
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="280">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -57,7 +61,8 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FlexCheckBox tipText="自动对已启用的认证信息执行认证" text="自动认证节点" realHeight="25" selected="true" fx:id="authMode">
+                    <FlexCheckBox tipText="自动对已启用的认证信息执行认证" text="自动认证节点" realHeight="25"
+                                  selected="true" fx:id="authMode">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
@@ -128,41 +133,48 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <!-- <FXTab text="页面布局"> -->
-        <!--     <FlexVBox flexWidth="100%"> -->
-        <!--         <FlexHBox flexWidth="100%" realHeight="50"> -->
-        <!--             <FXLabel text="显示模块" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary"> -->
-        <!--                 <HBox.margin> -->
-        <!--                     <Insets left="20" top="10"/> -->
-        <!--                 </HBox.margin> -->
-        <!--             </FXLabel> -->
-        <!--             <fx:define> -->
-        <!--                 <FXToggleGroup fx:id="layout"/> -->
-        <!--             </fx:define> -->
-        <!--             <FXRadioButton toggleGroup="$layout" text="显示全部模块" realHeight="25" selected="true" -->
-        <!--                            fx:id="layout1" userData="0"> -->
-        <!--                 <graphic> -->
-        <!--                     <SVGGlyph url="/font/a-Layout1.svg"/> -->
-        <!--                 </graphic> -->
-        <!--                 <HBox.margin> -->
-        <!--                     <Insets left="10" top="12"/> -->
-        <!--                 </HBox.margin> -->
-        <!--             </FXRadioButton> -->
-        <!--             <FXRadioButton toggleGroup="$layout" text="隐藏消息模块" realHeight="25" fx:id="layout2" -->
-        <!--                            userData="1"> -->
-        <!--                 <graphic> -->
-        <!--                     <SVGGlyph url="/font/a-Layout4.svg"/> -->
-        <!--                 </graphic> -->
-        <!--                 <HBox.margin> -->
-        <!--                     <Insets left="10" top="12"/> -->
-        <!--                 </HBox.margin> -->
-        <!--             </FXRadioButton> -->
-        <!--             <VBox.margin> -->
-        <!--                 <Insets top="10"/> -->
-        <!--             </VBox.margin> -->
-        <!--         </FlexHBox> -->
-        <!--     </FlexVBox> -->
-        <!-- </FXTab> -->
+        <FXTab text="标签设置">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="限制策略" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <DynamicTabStrategyComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
+                                                fx:id="tabStrategy">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="所有连接"/>
+                                <String fx:value="单个连接"/>
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </DynamicTabStrategyComboBox>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="限制数量" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <NumberTextField fx:id="tabLimit" value="1" step="10" min="0" max="1000" flexWidth="100% - 140" realHeight="30"
+                                     tipText="0代表无限制，最大值1000">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </NumberTextField>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#saveSetting" text="保存">

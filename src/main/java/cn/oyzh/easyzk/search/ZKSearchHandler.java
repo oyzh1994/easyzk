@@ -218,7 +218,7 @@ public class ZKSearchHandler extends SearchHandler {
                 int end = index + kw.length();
                 text.setSelectionStart(index);
                 text.setSelectionEnd(end);
-                text.setSelectionFill(Color.CHARTREUSE);
+                text.setSelectionFill(Color.ORANGERED);
                 this.pathIndex = end;
                 return true;
             }

@@ -143,12 +143,6 @@
                     </FXLabel>
                     <DynamicTabStrategyComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
                                                 fx:id="tabStrategy">
-                        <items>
-                            <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="所有连接"/>
-                                <String fx:value="单个连接"/>
-                            </FXCollections>
-                        </items>
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

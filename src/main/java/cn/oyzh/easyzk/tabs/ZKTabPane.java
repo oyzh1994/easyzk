@@ -242,10 +242,8 @@ public class ZKTabPane extends DynamicTabPane {
      */
     public ZKNodeTab getNodeTab(TreeItem<?> item) {
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKNodeTab nodeTab) {
-                if (nodeTab.treeItem() == item) {
-                    return nodeTab;
-                }
+            if (tab instanceof ZKNodeTab nodeTab && nodeTab.treeItem() == item) {
+                return nodeTab;
             }
         }
         return null;

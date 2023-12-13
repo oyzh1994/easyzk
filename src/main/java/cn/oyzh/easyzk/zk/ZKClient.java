@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
+import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.easyzk.exception.ZKNoAdminPermException;
 import cn.oyzh.easyzk.exception.ZKNoChildPermException;
 import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
@@ -290,7 +291,7 @@ public class ZKClient {
         } catch (Exception ex) {
             this.state.set(ZKConnState.FAILED);
             StaticLog.warn("zkClient start error", ex);
-            throw new RuntimeException(ex);
+            throw new ZKException(ex);
         }
     }
 

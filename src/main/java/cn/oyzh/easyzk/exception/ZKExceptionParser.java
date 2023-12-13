@@ -1,13 +1,5 @@
-package cn.oyzh.easyzk.parser;
+package cn.oyzh.easyzk.exception;
 
-import cn.oyzh.easyzk.exception.ZKConnectSateException;
-import cn.oyzh.easyzk.exception.ZKException;
-import cn.oyzh.easyzk.exception.ZKNoAdminPermException;
-import cn.oyzh.easyzk.exception.ZKNoChildPermException;
-import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
-import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
-import cn.oyzh.easyzk.exception.ZKNoReadPermException;
-import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import org.apache.zookeeper.KeeperException;
 
 import java.util.function.Function;
@@ -31,8 +23,8 @@ public class ZKExceptionParser implements Function<Throwable, String> {
             return null;
         }
 
-        if (e instanceof RuntimeException exception) {
-            if (exception.getCause() != null) {
+        if (e instanceof RuntimeException) {
+            if (e.getCause() != null) {
                 e = e.getCause();
             }
         }

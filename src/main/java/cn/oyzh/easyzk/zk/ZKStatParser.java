@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.parser;
+package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.common.dto.FriendlyInfo;

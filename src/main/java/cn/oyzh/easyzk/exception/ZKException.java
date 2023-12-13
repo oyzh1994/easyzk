@@ -16,4 +16,7 @@ public class ZKException extends RuntimeException {
         super(message);
     }
 
+    public ZKException(Exception ex) {
+        super(ex);
+    }
 }

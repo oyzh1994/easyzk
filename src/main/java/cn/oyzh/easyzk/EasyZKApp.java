@@ -3,7 +3,7 @@ package cn.oyzh.easyzk;
 import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.MainController;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
+import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.spring.SpringApplication;

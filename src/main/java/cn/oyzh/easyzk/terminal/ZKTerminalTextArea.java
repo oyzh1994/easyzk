@@ -4,7 +4,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
-import cn.oyzh.easyzk.parser.ZKExceptionParser;
+import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ExecutorUtil;

@@ -287,8 +287,10 @@ public class ZKClient {
                     this.state.set(ZKConnState.FAILED);
                 }
             }
-        } catch (Exception e) {
-            StaticLog.warn("zkClient start error", e);
+        } catch (Exception ex) {
+            this.state.set(ZKConnState.FAILED);
+            StaticLog.warn("zkClient start error", ex);
+            throw new RuntimeException(ex);
         }
     }
 

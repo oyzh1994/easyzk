@@ -4,6 +4,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
+import cn.oyzh.easyzk.parser.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
@@ -45,7 +46,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     /**
      * 客户端连接状态监听器
      */
-    private ChangeListener<ZKConnState> connStateChangeListener;
+    private ChangeListener<ZKConnState> stateChangeListener;
 
     /**
      * 获取zookeeper对象
@@ -146,11 +147,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         if (this.connect != null) {
             this.disable();
             ZKConnectUtil.copyConnect(this.connect, this.info());
-            ExecutorUtil.start(() -> {
-                this.intStatListener();
-                this.client.start();
-                this.enable();
-            }, 10);
+            this.start();
         }
     }
 
@@ -172,9 +169,22 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * 常驻连接处理
      */
     private void initByPermanent() {
+        this.start();
+    }
+
+    /**
+     * 开始连接
+     */
+    private void start() {
         ExecutorUtil.start(() -> {
-            this.intStatListener();
-            this.client.start();
+            try {
+                this.intStatListener();
+                this.client.start();
+            } catch (Exception ex) {
+                this.onError(ZKExceptionParser.INSTANCE.apply(ex));
+            } finally {
+                this.enable();
+            }
         }, 10);
     }
 
@@ -192,8 +202,8 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * 初始化连接状态监听器
      */
     private void intStatListener() {
-        if (this.connStateChangeListener == null) {
-            this.connStateChangeListener = (observableValue, state, t1) -> {
+        if (this.stateChangeListener == null) {
+            this.stateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
                 // 获取连接
                 String host = this.info().getHost();
@@ -223,7 +233,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                 }
                 StaticLog.info("connState={}", t1);
             };
-            this.client().addStateListener(this.connStateChangeListener);
+            this.client().addStateListener(this.stateChangeListener);
         }
     }
 

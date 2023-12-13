@@ -157,7 +157,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <NumberTextField fx:id="tabLimit" value="1" step="10" min="0" max="1000" flexWidth="100% - 140" realHeight="30"
+                    <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140" realHeight="30"
                                      tipText="0代表无限制，最大值1000">
                         <HBox.margin>
                             <Insets left="10" top="10"/>

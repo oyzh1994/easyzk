@@ -23,7 +23,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
-import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -1024,6 +1023,14 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     }
 
     @Override
+    public int compareTo(Object o) {
+        if (o instanceof ZKNodeTreeItem item) {
+            return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(this, item);
+        }
+        return super.compareTo(o);
+    }
+
+    @Override
     public void sortAsc() {
         if (super.isSortable()) {
             super.sortAsc();
@@ -1031,13 +1038,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         }
     }
 
-    @Override
-    protected int sortAsc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
-        if (item1 instanceof ZKNodeTreeItem node1 && item2 instanceof ZKNodeTreeItem node2) {
-            return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(node1, node2);
-        }
-        return super.sortAsc(item1, item2);
-    }
+    // @Override
+    // protected int sortAsc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
+    //     if (item1 instanceof ZKNodeTreeItem node1 && item2 instanceof ZKNodeTreeItem node2) {
+    //         return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(node1, node2);
+    //     }
+    //     return super.sortAsc(item1, item2);
+    // }
 
     @Override
     public void sortDesc() {
@@ -1047,13 +1054,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         }
     }
 
-    @Override
-    protected int sortDesc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
-        if (item1 instanceof ZKNodeTreeItem node1 && item2 instanceof ZKNodeTreeItem node2) {
-            return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(node2, node1);
-        }
-        return super.sortDesc(item1, item2);
-    }
+    // @Override
+    // protected int sortDesc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
+    //     if (item1 instanceof ZKNodeTreeItem node1 && item2 instanceof ZKNodeTreeItem node2) {
+    //         return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(node2, node1);
+    //     }
+    //     return super.sortDesc(item1, item2);
+    // }
 
     /**
      * 是否需要认证

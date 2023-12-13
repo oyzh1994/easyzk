@@ -39,7 +39,7 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
      */
     public void showData(byte showType, Object rawData) {
         this.showType = showType;
-        this.showRawData(rawData);
+        this.showData(rawData);
     }
 
     /**

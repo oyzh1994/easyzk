@@ -81,38 +81,30 @@ public class ZKFormatComboBox extends FlexComboBox<String> {
     }
 
     /**
+     * 选择字符串格式
+     */
+    public void selectString() {
+        this.select(0);
+    }
+
+    /**
      * 选择二进制格式
      */
     public void selectBinary() {
-        for (String item : this.getItems()) {
-            if (item.contains("BINARY")) {
-                this.select(item);
-                break;
-            }
-        }
+        this.select(2);
     }
 
     /**
      * 选择十六进制格式
      */
     public void selectHex() {
-        for (String item : this.getItems()) {
-            if (item.contains("HEX")) {
-                this.select(item);
-                break;
-            }
-        }
+        this.select(3);
     }
 
     /**
      * 选择json格式
      */
     public void selectJson() {
-        for (String item : this.getItems()) {
-            if (item.contains("JSON")) {
-                this.select(item);
-                break;
-            }
-        }
+        this.select(1);
     }
 }

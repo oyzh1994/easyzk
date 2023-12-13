@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.terminal.handler;
 
+import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +18,7 @@ public class ZKLs2TerminalCommandHandler extends ZKPathTerminalCommandHandler<Te
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new Ls2Command();
+    private final CliCommand cliCommand = new Ls2Command();
 
     @Override
     public String commandName() {

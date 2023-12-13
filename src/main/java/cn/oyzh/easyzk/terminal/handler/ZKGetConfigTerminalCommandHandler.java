@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.terminal.handler;
 
+import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +18,7 @@ public class ZKGetConfigTerminalCommandHandler extends ZKCliTerminalCommandHandl
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new GetConfigCommand();
+    private final CliCommand cliCommand = new GetConfigCommand();
 
     @Override
     public String commandName() {

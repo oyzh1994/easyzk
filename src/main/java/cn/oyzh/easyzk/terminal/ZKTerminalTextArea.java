@@ -20,7 +20,6 @@ import org.apache.zookeeper.ZooKeeper;
  * @author oyzh
  * @since 2023/7/21
  */
-//@Slf4j
 public class ZKTerminalTextArea extends TerminalTextArea {
 
     {
@@ -72,7 +71,11 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         if (this.isConnecting()) {
             str += "（连接中）> ";
         } else if (this.isConnected()) {
-            str += "（已连接）> ";
+            if (this.client.isReadonly()) {
+                str += "（已连接/只读模式）> ";
+            } else {
+                str += "（已连接）> ";
+            }
         } else {
             str += "> ";
         }
@@ -155,7 +158,11 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * 临时连接处理
      */
     private void initByTemporary() {
-        this.outputLine("请输入连接地址然后回车，格式connect [-timeout timeout] -server [host ip:port]");
+        this.outputLine("请输入信息然后回车");
+        this.outputLine(" connect [-timeout timeout] [-server server] [-r]");
+        this.outputLine("-timeout 超时时间，单位毫秒");
+        this.outputLine("-server 连接地址，ip:端口");
+        this.outputLine("-r 只读模式");
         this.appendByPrompt("connect -timeout 3000 -server localhost:2181");
         this.enableInput();
         this.flushAndMoveCaretAnd();
@@ -165,7 +172,6 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * 常驻连接处理
      */
     private void initByPermanent() {
-//        this.outputLine(this.info().getHost() + " 连接开始.");
         ExecutorUtil.start(() -> {
             this.intStatListener();
             this.client.start();

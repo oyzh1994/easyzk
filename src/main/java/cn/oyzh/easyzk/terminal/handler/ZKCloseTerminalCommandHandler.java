@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -20,7 +21,7 @@ public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<T
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new CloseCommand();
+    private final CliCommand cliCommand = new CloseCommand();
 
     @Override
     public String commandName() {

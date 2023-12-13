@@ -1,8 +1,5 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal;
 
-import cn.oyzh.easyzk.terminal.ZKCliCommandWrapper;
-import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import cn.oyzh.fx.terminal.util.TerminalUtil;
@@ -14,7 +11,7 @@ import org.apache.zookeeper.cli.CliCommand;
  */
 public abstract class ZKCliTerminalCommandHandler<C extends TerminalCommand> extends ZKTerminalCommandHandler<C> {
 
-    protected abstract CliCommand zkCommand();
+    protected abstract CliCommand cliCommand();
 
     @Override
     public C parseCommand(String line) {
@@ -29,7 +26,7 @@ public abstract class ZKCliTerminalCommandHandler<C extends TerminalCommand> ext
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             terminal.disable();
-            ZKCliCommandWrapper wrapper = new ZKCliCommandWrapper(this.zkCommand());
+            ZKCliCommandWrapper wrapper = new ZKCliCommandWrapper(this.cliCommand());
             wrapper.parse(command.args());
             wrapper.init(terminal.zooKeeper());
             wrapper.setOnResponse(result::appendResult);

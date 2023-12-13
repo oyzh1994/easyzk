@@ -1,6 +1,10 @@
 package cn.oyzh.easyzk.terminal.handler;
 
+import cn.oyzh.easyzk.exception.ReadonlyOperationException;
+import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
+import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -17,7 +21,7 @@ public class ZKReconfigTerminalCommandHandler extends ZKCliTerminalCommandHandle
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new ReconfigCommand();
+    private final CliCommand cliCommand = new ReconfigCommand();
 
     @Override
     public String commandName() {
@@ -43,5 +47,13 @@ public class ZKReconfigTerminalCommandHandler extends ZKCliTerminalCommandHandle
                 "-members comma-separated list of config strings for non-incremental reconfig\n" +
                 "-add comma-separated list of config strings for new servers\n" +
                 "-remove comma-separated list of server IDs to remove";
+    }
+
+    @Override
+    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
+        if (terminal.client().isReadonly()) {
+            return TerminalExecuteResult.fail(new ReadonlyOperationException());
+        }
+        return super.execute(command, terminal);
     }
 }

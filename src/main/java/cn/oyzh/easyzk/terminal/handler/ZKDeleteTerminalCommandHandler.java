@@ -1,6 +1,10 @@
 package cn.oyzh.easyzk.terminal.handler;
 
+import cn.oyzh.easyzk.exception.ReadonlyOperationException;
+import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
+import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -17,7 +21,7 @@ public class ZKDeleteTerminalCommandHandler extends ZKPathTerminalCommandHandler
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new DeleteCommand();
+    private final CliCommand cliCommand = new DeleteCommand();
 
     @Override
     public String commandName() {
@@ -40,4 +44,11 @@ public class ZKDeleteTerminalCommandHandler extends ZKPathTerminalCommandHandler
                 "-v version";
     }
 
+    @Override
+    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
+        if (terminal.client().isReadonly()) {
+            return TerminalExecuteResult.fail(new ReadonlyOperationException());
+        }
+        return super.execute(command, terminal);
+    }
 }

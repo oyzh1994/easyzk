@@ -108,7 +108,7 @@ public class ZKConnectUtil {
                     } else if (type == 1) {
                         connect.setTimeout(Integer.parseInt(words[i + 1]) / 1000);
                     } else if (type == 2) {
-                        connect.setReadOnly(true);
+                        connect.setReadonly(true);
                     }
                 }
                 return connect;
@@ -127,6 +127,7 @@ public class ZKConnectUtil {
      */
     public static void copyConnect(ZKConnect connect, ZKInfo info) {
         if (connect != null && info != null) {
+            info.setReadonly(connect.isReadonly());
             info.setConnectTimeOut(connect.getTimeout());
             info.setHost(connect.getHost() + ":" + connect.getPort());
         }

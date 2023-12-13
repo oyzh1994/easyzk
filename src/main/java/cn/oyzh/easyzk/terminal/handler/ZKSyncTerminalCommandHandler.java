@@ -1,6 +1,10 @@
 package cn.oyzh.easyzk.terminal.handler;
 
+import cn.oyzh.easyzk.exception.ReadonlyOperationException;
+import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
+import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -17,7 +21,7 @@ public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<T
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand zkCommand = new SyncCommand();
+    private final CliCommand cliCommand = new SyncCommand();
 
     @Override
     public String commandName() {
@@ -32,6 +36,14 @@ public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<T
     @Override
     public String commandDesc() {
         return "同步节点";
+    }
+
+    @Override
+    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
+        if (terminal.client().isReadonly()) {
+            return TerminalExecuteResult.fail(new ReadonlyOperationException());
+        }
+        return super.execute(command, terminal);
     }
 
 }

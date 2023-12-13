@@ -40,5 +40,5 @@ public class ZKConnect {
      * 只读模式
      */
     @Setter
-    private boolean readOnly;
+    private boolean readonly;
 }

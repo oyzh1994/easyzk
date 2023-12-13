@@ -1,8 +1,6 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
-import cn.oyzh.easyzk.terminal.ZKTerminalUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;

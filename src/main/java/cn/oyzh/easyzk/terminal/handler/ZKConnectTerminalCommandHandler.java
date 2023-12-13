@@ -23,7 +23,7 @@ public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<Te
 
     @Override
     protected boolean checkArgs(String[] args) throws RuntimeException {
-        return args != null && args.length >= 2 && args.length <= 5;
+        return args != null && args.length >= 2 && args.length <= 6;
     }
 
     @Override

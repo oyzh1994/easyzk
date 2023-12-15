@@ -18,10 +18,10 @@ import lombok.experimental.Accessors;
 public class ZKInfoUpdatedMsg implements EventMsg, EventMsgFormatter {
 
     @Getter
-    private String name = ZKEventTypes.ZK_INFO_UPDATED;
+    private final String name = ZKEventTypes.ZK_INFO_UPDATED;
 
     @Getter
-    private String group = ZKEventGroups.INFO_ACTION;
+    private final String group = ZKEventGroups.INFO_ACTION;
 
     @Setter
     private ZKInfo info;

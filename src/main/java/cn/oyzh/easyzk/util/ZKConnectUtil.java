@@ -21,21 +21,16 @@ public class ZKConnectUtil {
     /**
      * 测试连接
      *
-     * @param view    页面
-     * @param host    地址
-     * @param timeout 超时事件
+     * @param view 页面
+     * @param info zk信息
      */
-    public static void testConnect(StageWrapper view, String host, int timeout) {
-        try {
-            ThreadUtil.startVirtual(() -> {
+    public static void testConnect(StageWrapper view, ZKInfo info) {
+        ThreadUtil.startVirtual(() -> {
+            try {
                 view.disable();
                 view.waitCursor();
                 view.appendTitle("==连接测试中...");
-                // 创建zk信息
-                ZKInfo zkInfo = new ZKInfo();
-                zkInfo.setHost(host);
-                zkInfo.setConnectTimeOut(timeout);
-                ZKClient client = new ZKClient(zkInfo);
+                ZKClient client = new ZKClient(info);
                 // 开始连接
                 client.start();
                 view.enable();
@@ -47,11 +42,51 @@ public class ZKConnectUtil {
                 } else {
                     MessageBox.warn("连接失败，请检查地址是否有效！");
                 }
-            });
-        } catch (Exception ex) {
-            MessageBox.exception(ex, "连接失败！");
-        }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            } finally {
+                view.enable();
+                view.defaultCursor();
+                view.restoreTitle();
+            }
+        });
     }
+
+    // /**
+    //  * 测试连接
+    //  *
+    //  * @param view    页面
+    //  * @param host    地址
+    //  * @param timeout 超时事件
+    //  */
+    // public static void testConnect(StageWrapper view, String host, int timeout) {
+    //     try {
+    //         ThreadUtil.startVirtual(() -> {
+    //             view.disable();
+    //             view.waitCursor();
+    //             view.appendTitle("==连接测试中...");
+    //             // 创建zk信息
+    //             ZKInfo zkInfo = new ZKInfo();
+    //             zkInfo.setHost(host);
+    //             zkInfo.setConnectTimeOut(timeout);
+    //             ZKClient client = new ZKClient(zkInfo);
+    //             // 开始连接
+    //             client.start();
+    //             view.enable();
+    //             view.defaultCursor();
+    //             view.restoreTitle();
+    //             if (client.isConnected()) {
+    //                 client.close();
+    //                 MessageBox.okToast("连接成功！");
+    //             } else {
+    //                 MessageBox.warn("连接失败，请检查地址是否有效！");
+    //             }
+    //         });
+    //     } catch (Exception ex) {
+    //         MessageBox.exception(ex, "连接失败！");
+    //     }
+    // }
 
     /**
      * 关闭zk客户端

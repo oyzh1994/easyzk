@@ -7,8 +7,10 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
+import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
+import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -50,11 +52,11 @@ public class ZKInfoUpdateController extends Controller {
     @FXML
     private FlexCheckBox listen;
 
-    /**
-     * 集群模式
-     */
-    @FXML
-    private FlexCheckBox cluster;
+    // /**
+    //  * 集群模式
+    //  */
+    // @FXML
+    // private FlexCheckBox cluster;
 
     /**
      * 兼容模式开关
@@ -79,11 +81,11 @@ public class ZKInfoUpdateController extends Controller {
     @FXML
     private ClearableTextField name;
 
-    /**
-     * 连接地址
-     */
-    @FXML
-    private FlexTextArea host;
+    // /**
+    //  * 连接地址
+    //  */
+    // @FXML
+    // private FlexTextArea host;
 
     /**
      * 连接ip
@@ -97,17 +99,17 @@ public class ZKInfoUpdateController extends Controller {
     @FXML
     private PortTextField hostPort;
 
-    /**
-     * 单节点组件
-     */
-    @FXML
-    private FlexHBox hostBox1;
+    // /**
+    //  * 单节点组件
+    //  */
+    // @FXML
+    // private FlexHBox hostBox1;
 
-    /**
-     * 集群组件
-     */
-    @FXML
-    private FlexHBox hostBox2;
+    // /**
+    //  * 集群组件
+    //  */
+    // @FXML
+    // private FlexHBox hostBox2;
 
     /**
      * 备注
@@ -128,6 +130,60 @@ public class ZKInfoUpdateController extends Controller {
     private NumberTextField sessionTimeOut;
 
     /**
+     * 开启ssh
+     */
+    @FXML
+    private ToggleSwitch sshForward;
+
+    /**
+     * ssh主机地址
+     */
+    @FXML
+    private ClearableTextField sshHost;
+
+    /**
+     * ssh主机端口
+     */
+    @FXML
+    private PortTextField sshPort;
+
+    /**
+     * ssh主机端口
+     */
+    @FXML
+    private NumberTextField sshTimeout;
+
+    /**
+     * ssh主机用户
+     */
+    @FXML
+    private ClearableTextField sshUser;
+
+    /**
+     * ssh主机密码
+     */
+    @FXML
+    private ClearableTextField sshPassword;
+
+    /**
+     * ssh连接组件
+     */
+    @FXML
+    private FlexHBox sshHostBox;
+
+    /**
+     * ssh认证组件
+     */
+    @FXML
+    private FlexHBox sshAuthBox;
+
+    /**
+     * ssh超时组件
+     */
+    @FXML
+    private FlexHBox sshTimeoutBox;
+
+    /**
      * zk连接储存对象
      */
     private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
@@ -139,28 +195,43 @@ public class ZKInfoUpdateController extends Controller {
      */
     private String getHost() {
         String hostText;
-        String host = this.host.getTextTrim();
+        // String host = this.host.getTextTrim();
         String hostIp = this.hostIp.getTextTrim();
         this.tabPane.select(0);
-        if (this.cluster.isSelected()) {
-            if (host.contains("：")) {
-                this.tabPane.select(0);
-                MessageBox.tipMsg("集群地址不合法！", this.host);
-                return null;
-            }
-            hostText = host;
-        } else {
-            if (!this.hostPort.validate()) {
-                this.tabPane.select(0);
-                return null;
-            }
-            if (!this.hostIp.validate()) {
-                this.tabPane.select(0);
-                return null;
-            }
-            hostText = hostIp + ":" + this.hostPort.getValue();
+        // if (this.cluster.isSelected()) {
+        //     if (host.contains("：")) {
+        //         this.tabPane.select(0);
+        //         MessageBox.tipMsg("集群地址不合法！", this.host);
+        //         return null;
+        //     }
+        //     hostText = host;
+        // } else {
+        if (!this.hostPort.validate()) {
+            this.tabPane.select(0);
+            return null;
         }
+        if (!this.hostIp.validate()) {
+            this.tabPane.select(0);
+            return null;
+        }
+        hostText = hostIp + ":" + this.hostPort.getValue();
+        // }
         return hostText;
+    }
+
+    /**
+     * 获取ssh信息
+     *
+     * @return ssh连接信息
+     */
+    private SSHConnectInfo getSSHInfo() {
+        SSHConnectInfo sshConnectInfo = new SSHConnectInfo();
+        sshConnectInfo.setHost(this.sshHost.getText());
+        sshConnectInfo.setUser(this.sshUser.getText());
+        sshConnectInfo.setPassword(this.sshPassword.getText());
+        sshConnectInfo.setPort(this.sshPort.getIntValue());
+        sshConnectInfo.setTimeout(this.sshTimeout.getIntValue());
+        return sshConnectInfo;
     }
 
     /**
@@ -173,7 +244,15 @@ public class ZKInfoUpdateController extends Controller {
         if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
             MessageBox.warn("请填写地址");
         } else {
-            ZKConnectUtil.testConnect(this.stage, host, 5);
+            // 创建zk信息
+            ZKInfo zkInfo = new ZKInfo();
+            zkInfo.setHost(host);
+            zkInfo.setConnectTimeOut(3);
+            zkInfo.setSshForward(this.sshForward.isSelected());
+            if (zkInfo.isSSHForward()) {
+                zkInfo.setSshInfo(this.getSSHInfo());
+            }
+            ZKConnectUtil.testConnect(this.stage, zkInfo);
         }
     }
 
@@ -186,28 +265,30 @@ public class ZKInfoUpdateController extends Controller {
         if (host == null) {
             return;
         }
-        if (this.cluster.isSelected()) {
-            // 校验名称是否未填
-            if (!this.name.validate()) {
-                this.tabPane.select(0);
-                return;
-            }
-        } else {
-            // 名称未填，则直接以host为名称
-            if (StrUtil.isBlank(this.name.getTextTrim())) {
-                this.name.setText(host.replace(":", "_"));
-            }
+        // if (this.cluster.isSelected()) {
+        //     // 校验名称是否未填
+        //     if (!this.name.validate()) {
+        //         this.tabPane.select(0);
+        //         return;
+        //     }
+        // } else {
+        // 名称未填，则直接以host为名称
+        if (StrUtil.isBlank(this.name.getTextTrim())) {
+            this.name.setText(host.replace(":", "_"));
         }
+        // }
         String name = this.name.getTextTrim();
         this.zkInfo.setName(name);
         Number connectTimeOut = this.connectTimeOut.getValue();
         Number sessionTimeOut = this.sessionTimeOut.getValue();
 
-        this.zkInfo.setRemark(this.remark.getTextTrim());
         this.zkInfo.setHost(host.trim());
+        this.zkInfo.setSshInfo(this.getSSHInfo());
         this.zkInfo.setListen(this.listen.isSelected());
-        this.zkInfo.setCluster(this.cluster.isSelected());
+        this.zkInfo.setRemark(this.remark.getTextTrim());
+        // this.zkInfo.setCluster(this.cluster.isSelected());
         this.zkInfo.setReadonly(this.readonly.isSelected());
+        this.zkInfo.setSshForward(this.sshForward.isSelected());
         this.zkInfo.setConnectTimeOut(connectTimeOut.intValue());
         this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
         this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
@@ -222,26 +303,8 @@ public class ZKInfoUpdateController extends Controller {
     }
 
     @Override
-    public void onStageShown(@NonNull WindowEvent event) {
-        this.zkInfo = this.getStageProp("zkInfo");
-        this.name.setText(this.zkInfo.getName());
-        this.remark.setText(this.zkInfo.getRemark());
-        this.readonly.setSelected(this.zkInfo.isReadonly());
-        this.connectTimeOut.setValue(this.zkInfo.getConnectTimeOut());
-        this.sessionTimeOut.setValue(this.zkInfo.getSessionTimeOut());
-        this.compatibility.setSelected(this.zkInfo.compatibility34());
-
-        this.hostBox1.managedBindVisible();
-        this.hostBox2.managedBindVisible();
-        this.host.setText(this.zkInfo.getHost());
-        this.hostIp.setText(this.zkInfo.hostIp());
-        this.hostPort.setValue(this.zkInfo.hostPort());
-        this.cluster.selectedChanged((obs, o, n) -> {
-            this.hostBox1.setVisible(!n);
-            this.hostBox2.setVisible(n);
-        });
-        this.listen.setSelected(this.zkInfo.getListen());
-        this.cluster.setSelected(this.zkInfo.isCluster());
+    protected void bindListeners() {
+        // 连接ip处理
         this.hostIp.addTextChangeListener((observableValue, s, t1) -> {
             // 内容包含“:”，则直接切割字符为ip端口
             if (t1 != null && t1.contains(":")) {
@@ -253,6 +316,52 @@ public class ZKInfoUpdateController extends Controller {
                 }
             }
         });
+        // // 集群模式处理
+        // this.cluster.selectedChanged((obs, o, n) -> {
+        //     this.hostBox1.setVisible(!n);
+        //     this.hostBox2.setVisible(n);
+        // });
+        // // host处理
+        // this.hostBox1.managedBindVisible();
+        // this.hostBox2.managedBindVisible();
+        // ssh配置
+        this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
+            if (newValue) {
+                this.sshAuthBox.enable();
+                this.sshHostBox.enable();
+                this.sshTimeoutBox.enable();
+            } else {
+                this.sshAuthBox.disable();
+                this.sshHostBox.disable();
+                this.sshTimeoutBox.disable();
+            }
+        });
+    }
+
+    @Override
+    public void onStageShown(@NonNull WindowEvent event) {
+        super.onStageShown(event);
+        this.zkInfo = this.getStageProp("zkInfo");
+        this.name.setText(this.zkInfo.getName());
+        this.remark.setText(this.zkInfo.getRemark());
+        this.readonly.setSelected(this.zkInfo.isReadonly());
+        this.connectTimeOut.setValue(this.zkInfo.getConnectTimeOut());
+        this.sessionTimeOut.setValue(this.zkInfo.getSessionTimeOut());
+        this.compatibility.setSelected(this.zkInfo.compatibility34());
+        // this.host.setText(this.zkInfo.getHost());
+        this.hostIp.setText(this.zkInfo.hostIp());
+        this.hostPort.setValue(this.zkInfo.hostPort());
+        this.listen.setSelected(this.zkInfo.getListen());
+        // this.cluster.setSelected(this.zkInfo.isCluster());
+        // ssh连接信息
+        SSHConnectInfo connectInfo = this.zkInfo.getSshInfo();
+        if (connectInfo != null) {
+            this.sshHost.setText(connectInfo.getHost());
+            this.sshUser.setText(connectInfo.getUser());
+            this.sshPort.setValue(connectInfo.getPort());
+            this.sshTimeout.setValue(connectInfo.getTimeout());
+            this.sshPassword.setText(connectInfo.getPassword());
+        }
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }

@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.exception;
 
+import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.common.ssh.SSHException;
 import org.apache.zookeeper.KeeperException;
 
 import java.util.function.Function;
@@ -27,6 +29,13 @@ public class ZKExceptionParser implements Function<Throwable, String> {
             if (e.getCause() != null) {
                 e = e.getCause();
             }
+        }
+
+        if (e instanceof SSHException e1) {
+            if (StrUtil.contains(e.getMessage(), "Auth fail")) {
+                return "ssh认证失败，请检查ssh用户名、密码是否正确";
+            }
+            return e1.getMessage();
         }
 
         if (e instanceof ZKNoChildPermException exception) {

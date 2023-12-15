@@ -279,7 +279,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      *
      * @param msg 消息
      */
-    @EventReceiver(ZKEventTypes.ZK_INFO_ADDED)
+    @EventReceiver(value = ZKEventTypes.ZK_INFO_ADDED, async = true, verbose = true)
     private void onInfoAdded(ZKInfoAddedMsg msg) {
         this.addConnect(msg.info());
     }

@@ -28,28 +28,28 @@ import java.util.concurrent.Executors;
 @UtilityClass
 public class ZKClientUtil {
 
-    /**
-     * 构建zk客户端
-     *
-     * @param zkInfo      zk信息
-     * @param retryPolicy 重试策略
-     * @return zk客户端
-     */
-    public static CuratorFramework buildClient(@NonNull ZKInfo zkInfo, RetryPolicy retryPolicy) {
-        if (retryPolicy == null) {
-            retryPolicy = new RetryOneTime(3_000);
-        }
-        // 认证信息列表
-        List<AuthInfo> authInfos = null;
-        // 开启自动认证
-        if (ZKSettingStore.SETTING.isAutoAuth()) {
-            // 加载已启用的认证
-            List<ZKAuth> auths = ZKAuthUtil.loadEnableAuths();
-            authInfos = ZKAuthUtil.toAuthInfo(auths);
-            StaticLog.info("auto authorization, auths: {}.", auths);
-        }
-        return buildClient(zkInfo.getHost(), retryPolicy, zkInfo.connectTimeOutMs(), zkInfo.sessionTimeOutMs(), authInfos);
-    }
+    // /**
+    //  * 构建zk客户端
+    //  *
+    //  * @param zkInfo      zk信息
+    //  * @param retryPolicy 重试策略
+    //  * @return zk客户端
+    //  */
+    // public static CuratorFramework buildClient(@NonNull ZKInfo zkInfo, RetryPolicy retryPolicy) {
+    //     if (retryPolicy == null) {
+    //         retryPolicy = new RetryOneTime(3_000);
+    //     }
+    //     // 认证信息列表
+    //     List<AuthInfo> authInfos = null;
+    //     // 开启自动认证
+    //     if (ZKSettingStore.SETTING.isAutoAuth()) {
+    //         // 加载已启用的认证
+    //         List<ZKAuth> auths = ZKAuthUtil.loadEnableAuths();
+    //         authInfos = ZKAuthUtil.toAuthInfo(auths);
+    //         StaticLog.info("auto authorization, auths: {}.", auths);
+    //     }
+    //     return buildClient(zkInfo.getHost(), retryPolicy, zkInfo.connectTimeOutMs(), zkInfo.sessionTimeOutMs(), authInfos);
+    // }
 
     /**
      * 构建zk客户端
@@ -75,10 +75,6 @@ public class ZKClientUtil {
                 .zookeeperFactory(new ZKFactory())
                 .sessionTimeoutMs(sessionTimeoutMs)
                 .connectionTimeoutMs(connectionTimeoutMs);
-        // // 初始化认证
-        // if (CollUtil.isNotEmpty(authInfos)) {
-        //     builder.authorization(authInfos);
-        // }
         return builder.build();
     }
 

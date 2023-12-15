@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.domain;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.Getter;
 import lombok.NonNull;
@@ -110,6 +111,20 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
     private Integer connectTimeOut;
 
     /**
+     * 是否开启ssh转发
+     */
+    @Setter
+    @Getter
+    private Boolean sshForward;
+
+    /**
+     * ssh信息
+     */
+    @Setter
+    @Getter
+    private SSHConnectInfo sshInfo;
+
+    /**
      * 复制对象
      *
      * @param zkInfo zk信息
@@ -128,6 +143,15 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
         this.connectTimeOut = zkInfo.connectTimeOut;
         this.sessionTimeOut = zkInfo.sessionTimeOut;
         return this;
+    }
+
+    /**
+     * 是否ssh转发
+     *
+     * @return 结果
+     */
+    public boolean isSSHForward() {
+        return BooleanUtil.isTrue(this.sshForward);
     }
 
     /**

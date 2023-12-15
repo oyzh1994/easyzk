@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.zk;
 
 import cn.hutool.log.StaticLog;
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.enums.ZKConnState;
@@ -15,6 +16,8 @@ import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.common.ssh.SSHForwardInfo;
+import cn.oyzh.fx.common.ssh.SSHForwarder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -24,6 +27,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.curator.RetryPolicy;
+import org.apache.curator.framework.AuthInfo;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CreateBuilder;
@@ -33,6 +37,7 @@ import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.apache.curator.framework.recipes.cache.TreeCacheListener;
 import org.apache.curator.framework.state.ConnectionState;
+import org.apache.curator.retry.RetryOneTime;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Quotas;
@@ -88,6 +93,11 @@ public class ZKClient {
      * 树监听对象
      */
     private TreeCache treeCache;
+
+    /**
+     * ssh端口转发器
+     */
+    private SSHForwarder sshForwarder;
 
     /**
      * 是否已初始化
@@ -152,6 +162,9 @@ public class ZKClient {
 
     public ZKClient(@NonNull ZKInfo zkInfo) {
         this.zkInfo = zkInfo;
+        if (zkInfo.isSSHForward()) {
+            this.sshForwarder = new SSHForwarder(zkInfo.getSshInfo());
+        }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || !newValue.isConnected()) {
                 this.closeTreeCache();
@@ -251,9 +264,11 @@ public class ZKClient {
         if (this.isConnected() || this.isConnecting()) {
             return;
         }
+        // 初始化客户端
+        this.initClient();
         try {
             // 创建客户端
-            this.framework = ZKClientUtil.buildClient(this.zkInfo, this.retryPolicy);
+            // this.framework = ZKClientUtil.buildClient(this.zkInfo, this.retryPolicy);
             // 开始连接时间
             final AtomicLong starTime = new AtomicLong();
             // 设置连接监听事件
@@ -296,6 +311,41 @@ public class ZKClient {
     }
 
     /**
+     * 初始化客户端
+     */
+    private void initClient() {
+        // 连接地址
+        String host;
+        // ssh端口转发
+        if (this.zkInfo.isSSHForward()) {
+            SSHForwardInfo forwardInfo = new SSHForwardInfo();
+            forwardInfo.setHost(this.zkInfo.hostIp());
+            forwardInfo.setPort(this.zkInfo.hostPort());
+            int localPort = this.sshForwarder.forward(forwardInfo);
+            // 连接信息
+            host = "127.0.0.1:" + localPort;
+        } else {// 直连
+            // 连接信息
+            host = this.zkInfo.hostIp() + ":" + this.zkInfo.hostPort();
+        }
+        // 认证信息列表
+        List<AuthInfo> authInfos = null;
+        // 开启自动认证
+        if (ZKSettingStore.SETTING.isAutoAuth()) {
+            // 加载已启用的认证
+            List<ZKAuth> auths = ZKAuthUtil.loadEnableAuths();
+            authInfos = ZKAuthUtil.toAuthInfo(auths);
+            StaticLog.info("auto authorization, auths: {}.", auths);
+        }
+        // 重试策略
+        if (this.retryPolicy == null) {
+            this.retryPolicy = new RetryOneTime(3_000);
+        }
+        // 创建客户端
+        this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.zkInfo.connectTimeOutMs(), this.zkInfo.sessionTimeOutMs(), authInfos);
+    }
+
+    /**
      * 关闭zk
      */
     public void close() {
@@ -311,6 +361,10 @@ public class ZKClient {
             if (this.framework != null) {
                 this.framework.close();
                 this.framework = null;
+            }
+            // 销毁端口转发
+            if (this.zkInfo.isSSHForward()) {
+                this.sshForwarder.destroy();
             }
             this.closeTreeCache();
             this.initialized = false;

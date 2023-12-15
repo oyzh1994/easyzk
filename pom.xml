@@ -182,6 +182,14 @@
             </exclusions>
         </dependency>
 
+        <!-- ssh类库 -->
+        <!-- https://mvnrepository.com/artifact/com.github.mwiede/jsch -->
+        <dependency>
+            <groupId>com.github.mwiede</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.2.13</version>
+        </dependency>
+
         <!-- 测试类库 -->
         <dependency>
             <groupId>junit</groupId>

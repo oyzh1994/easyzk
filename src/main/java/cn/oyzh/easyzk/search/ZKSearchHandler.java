@@ -179,15 +179,15 @@ public class ZKSearchHandler extends SearchHandler {
     public void doAnalyse() {
         try {
             // 判断节点是否存在
-            if (this.currentItem == null) {
+            if (this.currentItem == null || this.searchResult == null) {
                 return;
             }
             // 执行路径分析
-            if (this.searchParam().isSearchPath() && this.pathIndex != -100 && this.pathAnalyse()) {
+            if (this.searchResult.isMatchName() && this.searchParam().isSearchPath() && this.pathIndex != -100 && this.pathAnalyse()) {
                 return;
             }
             // 执行数据分析
-            if (this.searchParam().isSearchData() && this.dataIndex != -100 && this.dataAnalyse()) {
+            if (this.searchResult.isMatchData() && this.searchParam().isSearchData() && this.dataIndex != -100 && this.dataAnalyse()) {
                 return;
             }
             // 初始化索引及文本组件

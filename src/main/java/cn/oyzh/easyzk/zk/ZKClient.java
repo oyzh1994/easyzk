@@ -64,7 +64,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author oyzh
  * @since 2020/6/8
  */
-//@Slf4j
 @Accessors(fluent = true, chain = true)
 public class ZKClient {
 

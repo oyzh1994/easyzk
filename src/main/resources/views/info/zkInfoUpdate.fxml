@@ -89,7 +89,7 @@
                 <!--     </LimitTextArea> -->
                 <!-- </FlexHBox> -->
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="节点设置" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接设置" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>

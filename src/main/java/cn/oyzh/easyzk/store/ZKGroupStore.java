@@ -33,31 +33,31 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
     /**
      * 已加载的zk节点
      */
-    private final List<ZKGroup> zkGroups;
+    private final List<ZKGroup> groups;
 
     {
         this.filePath(ZKConst.STORE_PATH + "zk_group.json");
         StaticLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
-        this.zkGroups = this.load();
+        this.groups = this.load();
     }
 
     @Override
     public synchronized List<ZKGroup> load() {
-        if (this.zkGroups == null) {
+        if (this.groups == null) {
             // 读取存储文件中的文本
             String text = FileUtil.readString(this.storeFile(), this.charset());
             if (StrUtil.isBlank(text)) {
                 return new ArrayList<>();
             }
             // 将文本转换为ZKGroup列表
-            List<ZKGroup> zkGroups = JSONUtil.toList(text, ZKGroup.class);
-            if (CollUtil.isNotEmpty(zkGroups)) {
+            List<ZKGroup> groups = JSONUtil.toList(text, ZKGroup.class);
+            if (CollUtil.isNotEmpty(groups)) {
                 // 对ZKGroup列表进行排序
-                zkGroups = zkGroups.parallelStream().sorted().collect(Collectors.toList());
+                groups = groups.parallelStream().sorted().collect(Collectors.toList());
             }
-            return zkGroups;
+            return groups;
         }
-        return this.zkGroups;
+        return this.groups;
     }
 
     /**
@@ -77,11 +77,11 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
     @Override
     public synchronized boolean add(@NonNull ZKGroup zkGroup) {
         try {
-            if (!this.zkGroups.contains(zkGroup)) {
+            if (!this.groups.contains(zkGroup)) {
                 // 添加到集合
-                this.zkGroups.add(zkGroup);
+                this.groups.add(zkGroup);
                 // 更新数据
-                return this.save(this.zkGroups);
+                return this.save(this.groups);
             }
         } catch (Exception e) {
             StaticLog.warn("add error,err:{}", e.getMessage());
@@ -93,8 +93,8 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
     public synchronized boolean update(@NonNull ZKGroup zkGroup) {
         try {
             // 更新数据
-            if (this.zkGroups.contains(zkGroup)) {
-                return this.save(this.zkGroups);
+            if (this.groups.contains(zkGroup)) {
+                return this.save(this.groups);
             }
         } catch (Exception e) {
             StaticLog.warn("update error,err:{}", e.getMessage());
@@ -106,8 +106,8 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
     public synchronized boolean delete(@NonNull ZKGroup zkGroup) {
         try {
             // 删除数据
-            if (this.zkGroups.remove(zkGroup)) {
-                return this.save(this.zkGroups);
+            if (this.groups.remove(zkGroup)) {
+                return this.save(this.groups);
             }
         } catch (Exception e) {
             StaticLog.warn("delete error,err:{}", e.getMessage());
@@ -128,7 +128,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
             return false;
         }
         // 遍历this.zkGroups列表，检查是否存在与传入的分组信息相同的分组
-        for (ZKGroup group : this.zkGroups) {
+        for (ZKGroup group : this.groups) {
             if (Objects.equals(group.getName(), zkGroup.getName()) && group != zkGroup) {  // 如果分组名称相同且不是同一个对象，则说明存在相同的分组信息，返回true
                 return true;
             }

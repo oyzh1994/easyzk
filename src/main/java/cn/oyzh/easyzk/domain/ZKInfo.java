@@ -137,8 +137,10 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
         this.listen = zkInfo.listen;
         this.cluster = zkInfo.cluster;
         this.groupId = zkInfo.groupId;
+        this.sshInfo = zkInfo.sshInfo;
         this.readonly = zkInfo.readonly;
         this.collects = zkInfo.collects;
+        this.sshForward = zkInfo.sshForward;
         this.compatibility = zkInfo.compatibility;
         this.connectTimeOut = zkInfo.connectTimeOut;
         this.sessionTimeOut = zkInfo.sessionTimeOut;

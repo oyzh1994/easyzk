@@ -3,10 +3,10 @@ package cn.oyzh.easyzk.controller;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
-import cn.oyzh.easyzk.domain.PageInfo;
+import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.store.PageInfoStore;
+import cn.oyzh.easyzk.store.ZKPageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -70,7 +70,7 @@ public class MainController extends ParentController {
     /**
      * 页面信息
      */
-    private final PageInfo pageInfo = PageInfoStore.PAGE_INFO;
+    private final ZKPageInfo pageInfo = ZKPageInfoStore.PAGE_INFO;
 
     /**
      * zk相关配置
@@ -80,7 +80,7 @@ public class MainController extends ParentController {
     /**
      * 页面信息储存
      */
-    private final PageInfoStore pageInfoStore = PageInfoStore.INSTANCE;
+    private final ZKPageInfoStore pageInfoStore = ZKPageInfoStore.INSTANCE;
 
     /**
      * 初始化系统托盘

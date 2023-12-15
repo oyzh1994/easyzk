@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.PageInfo;
+import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.fx.common.store.ObjectFileStore;
 
 
@@ -16,17 +16,17 @@ import cn.oyzh.fx.common.store.ObjectFileStore;
  * @since 2023/01/17
  */
 //@Slf4j
-public class PageInfoStore extends ObjectFileStore<PageInfo> {
+public class ZKPageInfoStore extends ObjectFileStore<ZKPageInfo> {
 
     /**
      * 当前实例
      */
-    public static final PageInfoStore INSTANCE = new PageInfoStore();
+    public static final ZKPageInfoStore INSTANCE = new ZKPageInfoStore();
 
     /**
      * 当前设置
      */
-    public static final PageInfo PAGE_INFO = INSTANCE.load();
+    public static final ZKPageInfo PAGE_INFO = INSTANCE.load();
 
     {
         this.filePath(ZKConst.STORE_PATH + "page_info.json");
@@ -34,21 +34,21 @@ public class PageInfoStore extends ObjectFileStore<PageInfo> {
     }
 
     @Override
-    public synchronized PageInfo load() {
-        PageInfo pageInfo = null;
+    public synchronized ZKPageInfo load() {
+        ZKPageInfo pageInfo = null;
         try {
             // 从文件中读取文本内容
             String text = FileUtil.readString(this.storeFile(), this.charset());
             if (StrUtil.isNotBlank(text)) {
                 // 将文本内容转换为页面信息对象
-                pageInfo = JSONUtil.toBean(text, PageInfo.class);
+                pageInfo = JSONUtil.toBean(text, ZKPageInfo.class);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         // 如果页面信息为空，则创建一个新的页面信息对象
         if (pageInfo == null) {
-            pageInfo = new PageInfo();
+            pageInfo = new ZKPageInfo();
         }
         return pageInfo;
     }

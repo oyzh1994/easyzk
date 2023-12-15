@@ -31,7 +31,6 @@ import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeEnhance;
-import cn.oyzh.fx.plus.thread.RenderService;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
@@ -298,7 +297,7 @@ public class ZKMainController extends ParentController {
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
         // zk树选中节点变化事件
-        this.tree.selectItemChanged(item -> RenderService.submitFXLater(() -> {
+        this.tree.selectItemChanged(item -> {
             if (item instanceof ZKNodeTreeItem treeItem) {
                 // this.tabPane.initNodeTab(treeItem);
                 this.flushViewTitle(treeItem.info());
@@ -308,7 +307,7 @@ public class ZKMainController extends ParentController {
             } else {
                 this.flushViewTitle(null);
             }
-        }));
+        });
 
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);

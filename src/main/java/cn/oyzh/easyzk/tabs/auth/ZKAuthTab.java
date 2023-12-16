@@ -12,12 +12,9 @@ import javafx.scene.Cursor;
  */
 public class ZKAuthTab extends DynamicTab {
 
-    /**
-     * 执行初始化
-     */
-    public void init() {
-        this.flushGraphic();
-        this.flushTitle();
+    public ZKAuthTab(){
+        super();
+        super.flush();
     }
 
     @Override

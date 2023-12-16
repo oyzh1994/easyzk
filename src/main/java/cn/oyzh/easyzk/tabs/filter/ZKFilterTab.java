@@ -12,12 +12,9 @@ import javafx.scene.Cursor;
  */
 public class ZKFilterTab extends DynamicTab {
 
-    /**
-     * 执行初始化
-     */
-    public void init() {
-        this.flushGraphic();
-        this.flushTitle();
+    public ZKFilterTab(){
+        super();
+        super.flush();
     }
 
     @Override

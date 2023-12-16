@@ -12,12 +12,9 @@ import javafx.scene.Cursor;
  */
 public class ZKHomeTab extends DynamicTab {
 
-    /**
-     * 执行初始化
-     */
-    public void init() {
-        this.flushGraphic();
-        this.flushTitle();
+    public ZKHomeTab(){
+        super();
+        super.flush();
     }
 
     @Override

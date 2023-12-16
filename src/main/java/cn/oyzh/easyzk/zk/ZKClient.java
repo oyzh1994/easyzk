@@ -369,8 +369,8 @@ public class ZKClient {
             this.initialized = false;
             ZKAuthUtil.removeAuthed(this);
             StaticLog.info("zkClient closed.");
-        } catch (Exception e) {
-            StaticLog.warn("zkClient close error.", e);
+        } catch (Exception ex) {
+            StaticLog.warn("zkClient close error.", ex);
         }
     }
 

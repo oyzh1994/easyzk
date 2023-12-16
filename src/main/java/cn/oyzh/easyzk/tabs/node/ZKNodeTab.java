@@ -6,7 +6,6 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -88,30 +87,29 @@ public class ZKNodeTab extends DynamicTab {
 
     @Override
     public void flushTitle() {
-        SVGLabel graphic = (SVGLabel) this.getGraphic();
         // 设置文本
-        graphic.setText("（" + this.treeItem.infoName() + "）" + treeItem.decodeNodePath());
+        this.setText(this.treeItem.infoName() + "-" + this.treeItem.decodeNodePath());
         // 设置提示文本
-        this.setTipText("（" + this.treeItem.infoName() + "）" + this.treeItem.decodeNodePath());
+        this.setTipText(this.treeItem.infoName() + "-" + this.treeItem.decodeNodePath());
     }
 
     @Override
     public void flushGraphic() {
-        SVGLabel label = (SVGLabel) this.getGraphic();
+        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         String svgUrl = this.treeItem.getSVGUrl();
-        if (label == null || !Objects.equals(label.getUrl(), svgUrl)) {
-            SVGLabel svgLabel = new SVGLabel(null, new SVGGlyph(svgUrl, "12"));
-            svgLabel.setCursor(Cursor.DEFAULT);
-            this.graphic(svgLabel);
+        if (glyph == null || !Objects.equals(glyph.getUrl(), svgUrl)) {
+            glyph = new SVGGlyph(svgUrl, "12");
+            glyph.setCursor(Cursor.DEFAULT);
+            this.graphic(glyph);
         }
     }
 
     @Override
     public void flushGraphicColor() {
-        SVGLabel label = (SVGLabel) this.getGraphic();
-        SVGGlyph glyph = this.treeItem.graphic();
-        if (glyph != null && label != null && label.getColor() != glyph.getColor()) {
-            this.fill(label.getColor());
+        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        SVGGlyph graphic = this.treeItem.graphic();
+        if (glyph != null && graphic != null && graphic.getColor() != glyph.getColor()) {
+            this.fill(graphic.getColor());
         }
     }
 

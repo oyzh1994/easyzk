@@ -130,9 +130,7 @@ public class ZKTabPane extends DynamicTabPane {
      */
     public void initHomeTab() {
         if (this.getHomeTab() == null) {
-            ZKHomeTab tab = new ZKHomeTab();
-            tab.init();
-            super.addTab(tab);
+            super.addTab(new ZKHomeTab());
         }
     }
 
@@ -315,12 +313,9 @@ public class ZKTabPane extends DynamicTabPane {
         ZKAuthTab tab = this.getAuthTab();
         if (tab == null) {
             tab = new ZKAuthTab();
-            tab.init();
             super.addTab(tab);
         }
-        if (!tab.isSelected()) {
-            this.select(tab);
-        }
+        this.select(tab);
     }
 
     /**
@@ -340,11 +335,8 @@ public class ZKTabPane extends DynamicTabPane {
         ZKFilterTab tab = this.getFilterTab();
         if (tab == null) {
             tab = new ZKFilterTab();
-            tab.init();
             super.addTab(tab);
         }
-        if (!tab.isSelected()) {
-            this.select(tab);
-        }
+        this.select(tab);
     }
 }

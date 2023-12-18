@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -57,13 +58,14 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
     public void flushGraphicColor() {
         // 获取当前图形符号
         SVGGlyph glyph = this.graphic();
-        // 如果当前树项已连接，但是图形符号的颜色不是绿色
-        if (this.treeItem.isConnected() && glyph.getColor() != Color.GREEN) {
-            // 将图形符号的颜色设置为绿色
+        if (this.treeItem.isConnected()) {
             glyph.setColor(Color.GREEN);
-        } else if (!this.treeItem.isConnected() &&glyph.getColor() != Color.BLACK) {// 如果当前树项未连接，但是图形符号的颜色不是黑色
-            // 将图形符号的颜色设置为黑色
-            glyph.setColor(Color.BLACK);
+        } else if (!this.treeItem.isConnected()) {
+            if (ThemeManager.isDarkMode()) {
+                glyph.setColor(Color.WHITE);
+            } else {
+                glyph.setColor(Color.BLACK);
+            }
         }
     }
 

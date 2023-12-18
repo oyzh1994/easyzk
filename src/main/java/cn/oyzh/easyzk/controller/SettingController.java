@@ -207,7 +207,7 @@ public class SettingController extends Controller {
             }
             MessageBox.okToast("保存配置成功" + tips);
             this.closeStage();
-            ThemeManager.setCurrentTheme(this.theme.getValue());
+            ThemeManager.currentTheme(this.theme.getValue());
         } else {
             MessageBox.warnToast("保存配置失败！");
         }

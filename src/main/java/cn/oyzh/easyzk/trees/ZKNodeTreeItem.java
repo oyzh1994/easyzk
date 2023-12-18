@@ -416,7 +416,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     protected void initValue() {
         try {
-            if (this.getValue().getChildren().isEmpty()) {
+            if (this.getValue().isChildEmpty()) {
                 this.getValue().flush();
             }
         } catch (Exception ex) {
@@ -429,7 +429,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     protected void clearValue() {
         try {
-            if (!this.getValue().getChildren().isEmpty()) {
+            if (!this.getValue().isChildEmpty()) {
                 this.getValue().clearChild();
             }
         } catch (Exception ex) {

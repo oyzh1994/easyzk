@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -61,7 +62,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
     public void flushGraphicColor() {
         // 获取图形符号
         SVGGlyph glyph = this.graphic();
-
         // 如果节点被删除
         if (this.item.isBeDeleted()) {
             // 如果图形颜色不是红色
@@ -87,9 +87,12 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
                 // 触发图形颜色改变事件
                 ZKEventUtil.graphicColorChanged(this.item);
             }
-        } else if (glyph.getColor() != Color.BLACK) {// 如果图形颜色不是黑色
-            // 设置图形颜色为黑色
-            glyph.setColor(Color.BLACK);
+        } else {
+            if (ThemeManager.isDarkMode()) {
+                glyph.setColor(Color.WHITE);
+            } else {
+                glyph.setColor(Color.BLACK);
+            }
             // 触发图形颜色改变事件
             ZKEventUtil.graphicColorChanged(this.item);
         }
@@ -122,23 +125,23 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         return "/font/folder.svg";
     }
 
-    /**
-     * 刷新状态
-     */
-    public void flushStatus() {
-        FXText text = this.text();
-        if (this.item.isBeDeleted()) {
-            text.setFill(Color.RED);
-        } else if (this.item.dataUnsaved()) {
-            text.setFill(Color.ORANGE);
-        } else if (this.item.isBeUpdated()) {
-            text.setFill(Color.PURPLE);
-        } else {
-            text.setFill(Color.BLACK);
-        }
-        this.flushGraphic();
-        this.flushGraphicColor();
-    }
+//    /**
+//     * 刷新状态
+//     */
+//    public void flushStatus() {
+//        FXText text = this.text();
+//        if (this.item.isBeDeleted()) {
+//            text.setFill(Color.RED);
+//        } else if (this.item.dataUnsaved()) {
+//            text.setFill(Color.ORANGE);
+//        } else if (this.item.isBeUpdated()) {
+//            text.setFill(Color.PURPLE);
+//        } else {
+//            text.setFill(Color.BLACK);
+//        }
+//        this.flushGraphic();
+//        this.flushGraphicColor();
+//    }
 
     @Override
     public SVGGlyph graphic() {

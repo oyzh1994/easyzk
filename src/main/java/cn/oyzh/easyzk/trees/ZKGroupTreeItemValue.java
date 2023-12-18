@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -41,9 +42,13 @@ public class ZKGroupTreeItemValue extends ZKTreeItemValue {
     @Override
     public void flushGraphicColor() {
         if (this.graphic() instanceof SVGGlyph glyph) {
-            if (this.treeItem.isChildEmpty() && glyph.getColor() != Color.BLACK) {
-                glyph.setColor(Color.BLACK);
-            } else if (!this.treeItem.isChildEmpty() && glyph.getColor() != Color.DEEPSKYBLUE) {
+            if (this.treeItem.isChildEmpty()) {
+                if (ThemeManager.isDarkMode()) {
+                    glyph.setColor(Color.WHITE);
+                } else {
+                    glyph.setColor(Color.BLACK);
+                }
+            } else {
                 glyph.setColor(Color.DEEPSKYBLUE);
             }
         }

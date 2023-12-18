@@ -54,7 +54,8 @@ public class AboutController extends Controller {
         this.updateDate.setText(this.project.getUpdateDate());
         // 设置版权文本框的文本为项目的版权信息
         this.copyright.setText(this.project.getCopyright());
-        // 隐藏舞台并响应键盘上的Esc键
+        // 设置标题
+        this.stage.setTitleExt("关于" + this.project.getName());
         this.stage.hideOnEscape();
     }
 }

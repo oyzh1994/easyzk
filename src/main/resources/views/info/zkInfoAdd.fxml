@@ -8,7 +8,7 @@
 <?import cn.oyzh.fx.plus.controls.textfield.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoAddController" realWidth="750" realHeight="320">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="基础设置">

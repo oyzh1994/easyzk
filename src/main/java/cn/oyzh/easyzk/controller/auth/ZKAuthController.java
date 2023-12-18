@@ -41,7 +41,7 @@ import java.util.List;
         title = "zk节点认证",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuth.fxml"
 )
 public class ZKAuthController extends Controller {

@@ -33,7 +33,7 @@ public class ZKGroupTreeItemValue extends ZKTreeItemValue {
     public void flushGraphic() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
         if (glyph == null) {
-            glyph = new SVGGlyph("/font/group.svg", "12");
+            glyph = new SVGGlyph("/font/group.svg", "10");
             this.graphic(glyph);
         }
     }

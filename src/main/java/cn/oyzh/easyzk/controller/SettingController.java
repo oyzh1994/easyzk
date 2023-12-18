@@ -13,6 +13,8 @@ import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
+import cn.oyzh.fx.plus.theme.ThemeComboBox;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Modality;
@@ -30,7 +32,7 @@ import java.util.Objects;
         title = "应用设置",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "setting.fxml"
 )
 public class SettingController extends Controller {
@@ -120,6 +122,12 @@ public class SettingController extends Controller {
     private DynamicTabStrategyComboBox tabStrategy;
 
     /**
+     * 主题
+     */
+    @FXML
+    private ThemeComboBox theme;
+
+    /**
      * 配置对象
      */
     private final ZKSetting setting = ZKSettingStore.SETTING;
@@ -164,6 +172,8 @@ public class SettingController extends Controller {
         if (this.setting.getRememberPageLocation() != null) {
             this.pageLocation.setSelected(this.setting.isRememberPageLocation());
         }
+        // 主题相关处理
+        this.theme.select(this.setting.getTheme());
         // 标签相关处理
         this.tabLimit.setValue(this.setting.getTabLimit());
         this.tabStrategy.select(this.setting.getTabStrategy());
@@ -183,6 +193,7 @@ public class SettingController extends Controller {
         }
         this.setting.setLoadMode(loadMode);
         this.setting.setAuthMode(authMode);
+        this.setting.setTheme(this.theme.getValue().name());
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
         this.setting.setTabLimit(this.tabLimit.getValue().intValue());
@@ -196,6 +207,7 @@ public class SettingController extends Controller {
             }
             MessageBox.okToast("保存配置成功" + tips);
             this.closeStage();
+            ThemeManager.setCurrentTheme(this.theme.getValue());
         } else {
             MessageBox.warnToast("保存配置失败！");
         }

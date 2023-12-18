@@ -4,10 +4,12 @@ import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,7 +39,6 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
                 SqlInitializationAutoConfiguration.class,
         }
 )
-//@Slf4j
 @EnableSpringUtil
 public class EasyZKApp extends SpringApplication {
 
@@ -48,11 +49,14 @@ public class EasyZKApp extends SpringApplication {
     @Override
     public void start(Stage primaryStage) {
         try {
-            MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 开始执行业务
             super.start(primaryStage);
             // 显示主页面
             StageUtil.showStage(MainController.class);
+            // 注册异常处理器
+            MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
+            // 初始化主题
+            ThemeManager.setCurrentTheme(ZKSettingStore.SETTING.getTheme());
             // 开启定期gc
             SystemUtil.gcInterval(60_000);
             // 设置stage全部关闭后不自动销毁进程

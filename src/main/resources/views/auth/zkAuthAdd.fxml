@@ -6,7 +6,7 @@
 <?import cn.oyzh.fx.plus.controls.text.*?>
 <?import cn.oyzh.fx.plus.controls.button.*?>
 <?import cn.oyzh.fx.plus.controls.textfield.*?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthAddController" realWidth="750" realHeight="240">
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="用 户 名" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">

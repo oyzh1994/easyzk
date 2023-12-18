@@ -29,13 +29,12 @@ import java.util.List;
  * @author oyzh
  * @since 2022/08/25
  */
-//@Slf4j
 @StageAttribute(
         title = "zk服务信息",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         stageStyle = StageStyle.DECORATED,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkService.fxml"
 )
 public class ZKServiceController extends Controller {

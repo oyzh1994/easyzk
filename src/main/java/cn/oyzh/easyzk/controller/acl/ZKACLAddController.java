@@ -54,7 +54,7 @@ import java.util.List;
         title = "zk节点权限新增",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLAdd.fxml"
 )
 public class ZKACLAddController extends Controller {

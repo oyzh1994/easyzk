@@ -35,7 +35,7 @@ import javafx.stage.WindowEvent;
         title = "zk信息新增",
         modality = Modality.WINDOW_MODAL,
         iconUrls = ZKConst.ICON_PATH,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoAdd.fxml"
 )
 public class ZKInfoAddController extends Controller {

@@ -39,12 +39,11 @@ import java.util.List;
  * @author oyzh
  * @since 2020/10/09
  */
-//@Slf4j
 @StageAttribute(
         title = "zk子节点添加",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeAdd.fxml"
 )
 public class ZKNodeAddController extends Controller {

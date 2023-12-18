@@ -46,7 +46,7 @@ import java.util.List;
         title = "数据传输",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoTransport.fxml"
 )
 public class ZKInfoTransportController extends Controller {

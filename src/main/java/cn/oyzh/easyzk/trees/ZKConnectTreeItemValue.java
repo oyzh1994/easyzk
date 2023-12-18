@@ -39,19 +39,15 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
         SVGGlyph glyph = this.graphic();
         // 如果图形为空
         if (glyph == null) {
-            // 如果值是集群，则使用"/font/cluster.svg"作为URL，大小为"12"
-            // 如果值不是集群，则使用"/font/server-connection.svg"作为URL，大小为"12"
-            glyph = value.isCluster() ? new SVGGlyph("/font/cluster.svg", "12") : new SVGGlyph("/font/server-connection.svg", "12");
+            glyph = value.isCluster() ? new SVGGlyph("/font/cluster.svg", "10") : new SVGGlyph("/font/server-connection.svg", "12");
             // 设置图形
             this.graphic(glyph);
-        } else if (value.isCluster() && !glyph.getUrl().contains("cluster")) { // 如果值是集群且图形URL不包含"cluster"
-            // 使用"/font/cluster.svg"作为URL，大小为"12"
-            glyph = new SVGGlyph("/font/cluster.svg", "12");
+        } else if (value.isCluster() && !glyph.getUrl().contains("cluster")) {
+            glyph = new SVGGlyph("/font/cluster.svg", "10");
             // 设置图形
             this.graphic(glyph);
-        } else if (!value.isCluster() && !glyph.getUrl().contains("connection")) {// 如果值不是集群且图形URL不包含"connection"
-            // 使用"/font/server-connection.svg"作为URL，大小为"12"
-            glyph = new SVGGlyph("/font/server-connection.svg", "12");
+        } else if (!value.isCluster() && !glyph.getUrl().contains("connection")) {
+            glyph = new SVGGlyph("/font/server-connection.svg", "10");
             // 设置图形
             this.graphic(glyph);
         }

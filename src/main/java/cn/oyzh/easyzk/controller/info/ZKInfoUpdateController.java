@@ -35,7 +35,7 @@ import lombok.NonNull;
         title = "zk信息修改",
         modality = Modality.WINDOW_MODAL,
         iconUrls = ZKConst.ICON_PATH,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoUpdate.fxml"
 )
 public class ZKInfoUpdateController extends Controller {

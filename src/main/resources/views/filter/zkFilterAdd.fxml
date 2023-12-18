@@ -6,7 +6,7 @@
 <?import cn.oyzh.fx.plus.controls.text.*?>
 <?import cn.oyzh.fx.plus.controls.button.*?>
 <?import cn.oyzh.fx.plus.controls.textfield.*?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.filter.ZKFilterAddController" realWidth="750" realHeight="240">
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="关 键 字" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">

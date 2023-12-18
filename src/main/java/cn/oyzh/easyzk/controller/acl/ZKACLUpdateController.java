@@ -34,7 +34,7 @@ import java.util.List;
         title = "zk节点权限修改",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLUpdate.fxml"
 )
 //@Slf4j

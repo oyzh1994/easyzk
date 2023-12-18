@@ -5,7 +5,7 @@
 <?import cn.oyzh.fx.plus.controls.svg.*?>
 <?import cn.oyzh.fx.plus.controls.text.*?>
 <?import cn.oyzh.fx.plus.controls.button.*?>
-<FlexPane styleClass="panel,panel-primary" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
+<FlexPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.tabs.home.ZKHomeTabContent">
     <ImageView fitWidth="200" fitHeight="200" layoutX="50" layoutY="100">
@@ -14,19 +14,19 @@
     <FXText text="欢迎使用EasyZK！" layoutX="260" layoutY="150" fontSize="30"/>
     <FXLabel fx:id="softInfo" layoutX="260" layoutY="180"/>
     <FXLabel fx:id="jdkInfo" layoutX="260" layoutY="220"/>
-    <IconButton onMousePrimaryClicked="#addConnect" layoutX="260" layoutY="260" styleClass="btn,btn-success"
+    <IconButton onMousePrimaryClicked="#addConnect" layoutX="260" layoutY="260" styleClass="success"
                 text="添加连接">
         <graphic>
             <SVGGlyph url="/font/add.svg"/>
         </graphic>
     </IconButton>
-    <IconButton onMousePrimaryClicked="#addGroup" layoutX="370" layoutY="260" styleClass="btn,btn-primary"
+    <IconButton onMousePrimaryClicked="#addGroup" layoutX="370" layoutY="260" styleClass="accent"
                 text="添加分组">
         <graphic>
             <SVGGlyph url="/font/addGroup.svg"/>
         </graphic>
     </IconButton>
-    <IconButton onMousePrimaryClicked="#openTerminal" layoutX="480" layoutY="260" styleClass="btn,btn-block"
+    <IconButton onMousePrimaryClicked="#openTerminal" layoutX="480" layoutY="260"
                 text="打开终端">
         <graphic>
             <SVGGlyph url="/font/code library.svg"/>

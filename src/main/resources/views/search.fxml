@@ -8,7 +8,7 @@
 <?import cn.oyzh.fx.plus.controls.textfield.SearchTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FlexVBox styleClass="panel,panel-primary" fx:id="searchMain" xmlns="http://javafx.com/javafx"
+<FlexVBox styleClass="root" fx:id="searchMain" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.controller.SearchController">
     <FlexHBox realHeight="30" flexWidth="100%">

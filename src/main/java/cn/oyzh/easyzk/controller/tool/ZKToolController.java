@@ -20,12 +20,11 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2023/11/09
  */
-//@Slf4j
 @StageAttribute(
         title = "zk工具箱",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "tool/zkTool.fxml"
 )
 public class ZKToolController extends Controller {

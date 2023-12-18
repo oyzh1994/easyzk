@@ -34,12 +34,11 @@ import java.util.List;
  * @author oyzh
  * @since 2022/8/19
  */
-//@Slf4j
 @StageAttribute(
         usePrimary = true,
         title = "EasyZK主页",
         iconUrls = ZKConst.ICON_PATH,
-        cssUrls = ZKStyle.MAIN,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "main.fxml"
 )
 public class MainController extends ParentController {

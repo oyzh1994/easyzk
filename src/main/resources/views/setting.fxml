@@ -10,13 +10,12 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="280">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="ZK设置">
@@ -163,6 +162,26 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </NumberTextField>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="主题设置">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="主题名称" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ThemeComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种主题"
+                                                fx:id="theme">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ThemeComboBox>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>

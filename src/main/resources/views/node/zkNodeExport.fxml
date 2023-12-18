@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="650">
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
@@ -131,7 +131,7 @@
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-            <MsgTextArea editable="false" maxLine="300" fx:id="exportMsg" flexWidth="100%" flexHeight="100% - 20"/>
+            <MsgTextArea maxLine="300" fx:id="exportMsg" flexWidth="100%" flexHeight="100% - 20"/>
             <FXLabel fx:id="exportStatus"/>
         </FlexVBox>
     </FlexHBox>

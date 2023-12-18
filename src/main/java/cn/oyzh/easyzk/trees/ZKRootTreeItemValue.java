@@ -12,8 +12,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/4/7
  */
-//@Slf4j
-// @Accessors(chain = true, fluent = true)
 public class ZKRootTreeItemValue extends ZKTreeItemValue {
 
     public ZKRootTreeItemValue() {
@@ -29,7 +27,7 @@ public class ZKRootTreeItemValue extends ZKTreeItemValue {
     @Override
     public void flushGraphic() {
         if (this.graphic() == null) {
-            this.graphic(new FlexImageView(IconUtil.getIcon(ZKConst.ICON_PATH), 14));
+            this.graphic(new FlexImageView(IconUtil.getIcon(ZKConst.ICON_PATH), 12));
         }
     }
 

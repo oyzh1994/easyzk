@@ -22,7 +22,7 @@ import javafx.stage.WindowEvent;
         resizeable = false,
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "about.fxml"
 )
 public class AboutController extends Controller {

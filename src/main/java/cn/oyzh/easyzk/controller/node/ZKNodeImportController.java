@@ -47,12 +47,11 @@ import java.util.Map;
  * @author oyzh
  * @since 2020/10/14
  */
-//@Slf4j
 @StageAttribute(
         title = "数据导入",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeImport.fxml"
 )
 public class ZKNodeImportController extends Controller {

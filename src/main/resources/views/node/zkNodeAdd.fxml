@@ -13,7 +13,7 @@
 <?import cn.oyzh.fx.plus.controls.svg.*?>
 <?import cn.oyzh.fx.plus.controls.button.*?>
 <?import cn.oyzh.fx.plus.controls.textfield.*?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="550">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="数据" fx:id="dataTab">

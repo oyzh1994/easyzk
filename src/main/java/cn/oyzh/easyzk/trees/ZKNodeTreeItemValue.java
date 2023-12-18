@@ -21,16 +21,6 @@ import java.util.Objects;
  */
 public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
-    // /**
-    //  * 子节点总数量
-    //  */
-    // private Integer totalNum;
-    //
-    // /**
-    //  * 子节点显示数量
-    //  */
-    // private Integer showNum;
-
     /**
      * 树节点
      */
@@ -38,9 +28,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
         this.item = item;
-//        this.flushGraphic();
-//        this.name(item.decodeNodeName());
-//        this.flushGraphicColor();
     }
 
     @Override
@@ -52,7 +39,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         String svgUrl = this.getSVGUrl();
         // 设置图标
         if (curr == null || !Objects.equals(curr.getUrl(), svgUrl)) {
-            this.graphic(new SVGGlyph(svgUrl, "12"));
+            this.graphic(new SVGGlyph(svgUrl, "10"));
             ZKEventUtil.graphicChanged(this.item);
         }
     }

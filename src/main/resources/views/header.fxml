@@ -3,14 +3,14 @@
 <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
-<FlexFlowPane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <SVGLabel text="认证" onMousePrimaryClicked="#auth" tipText="节点认证配置" url="/font/audit.svg" size="13">
+    <SVGLabel text="认证" onMousePrimaryClicked="#auth" tipText="节点认证配置" url="/font/audit.svg" size="12">
         <FlowPane.margin>
             <Insets left="8" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="过滤" onMousePrimaryClicked="#filter" tipText="节点过滤配置" url="/font/filter.svg" size="13">
+    <SVGLabel text="过滤" onMousePrimaryClicked="#filter" tipText="节点过滤配置" url="/font/filter.svg" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
@@ -50,7 +50,7 @@
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="退出" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="13">
+    <SVGLabel text="退出" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>

@@ -29,7 +29,7 @@ import javafx.stage.WindowEvent;
         title = "zk过滤配置新增",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "filter/zkFilterAdd.fxml"
 )
 public class ZKFilterAddController extends Controller {

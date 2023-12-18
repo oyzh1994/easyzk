@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<Pane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<Pane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController" prefWidth="450" prefHeight="450">
     <ImageView fitWidth="450" fitHeight="450" fx:id="qrcode"/>
 </Pane>

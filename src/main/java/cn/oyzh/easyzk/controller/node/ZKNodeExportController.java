@@ -54,12 +54,11 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2020/10/13
  */
-//@Slf4j
 @StageAttribute(
         title = "数据导出",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = ZKStyle.COMMON,
+        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeExport.fxml"
 )
 public class ZKNodeExportController extends Controller {

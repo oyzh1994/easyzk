@@ -12,14 +12,15 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ZKStyle {
 
-    /**
-     * 通用样式文件
-     */
-    public final static String COMMON = FXStyle.JMETRO + ";" + FXStyle.JMETRO_LIGHT_THEME + ";" + FXStyle.BOOTSTRAP_FX;
-
-    /**
-     * 主页样式文件
-     */
-    public final static String MAIN = COMMON + ";/css/main.css";
+    // /**
+    //  * 通用样式文件
+    //  */
+    // public final static String COMMON = FXStyle.FX_BASE;
+    // // public final static String COMMON = FXStyle.JMETRO + ";" + FXStyle.JMETRO_LIGHT_THEME + ";" + FXStyle.BOOTSTRAP_FX;
+    //
+    // /**
+    //  * 主页样式文件
+    //  */
+    // public final static String MAIN = COMMON + ";/css/main.css";
 
 }

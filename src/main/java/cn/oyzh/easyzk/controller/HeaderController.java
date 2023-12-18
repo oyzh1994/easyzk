@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component;
  * @since 2022/1/26
  */
 @Lazy
-//@Slf4j
 @Component
 public class HeaderController extends SubController {
 

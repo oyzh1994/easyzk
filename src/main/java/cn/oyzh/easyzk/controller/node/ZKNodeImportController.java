@@ -262,7 +262,7 @@ public class ZKNodeImportController extends Controller {
                 }
                 // 收尾工作
                 this.updateStatus("数据导入收尾中...");
-                this.importMsg.waitTextExpend();
+                // this.importMsg.waitTextExpend();
                 this.updateStatus("数据导入结束");
                 MessageBox.okToast("导入数据结束！");
             } catch (Exception ex) {

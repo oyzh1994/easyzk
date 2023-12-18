@@ -204,12 +204,13 @@ public class ZKNodeExportController extends Controller {
                 this.stopExportBtn.enable();
                 // 初始化连接
                 if (!this.zkClient.isConnected()) {
-                    this.updateStatus("连接初始化中...");
+                    this.updateStatus("连接初始化...");
                     this.zkClient.start();
                     if (!this.zkClient.isConnected()) {
                         MessageBox.okToast("连接初始化失败！");
                         return;
                     }
+                    this.updateStatus("导出执行中...");
                 }
                 // 获取节点
                 List<ZKNode> zkNodes = new ArrayList<>();
@@ -251,7 +252,7 @@ public class ZKNodeExportController extends Controller {
                 }
                 // 收尾工作
                 this.updateStatus("处理文件中...");
-                this.exportMsg.waitTextExpend();
+                // this.exportMsg.waitTextExpend();
                 File file = FXFileChooser.save("导出zk数据", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {

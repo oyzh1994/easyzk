@@ -1,12 +1,14 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.fx.common.thread.Task;
@@ -175,6 +177,16 @@ public class SearchController extends SubController {
     private ZKSearchHandler searchHandler;
 
     /**
+     * 设置
+     */
+    private final ZKSetting setting = ZKSettingStore.SETTING;
+
+    /**
+     * 设置储存
+     */
+    private final ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
+
+    /**
      * 搜索历史储存
      */
     private final ZKSearchHistoryStore historyStore = ZKSearchHistoryStore.INSTANCE;
@@ -191,6 +203,8 @@ public class SearchController extends SubController {
         this.searchMain.autosize();
         this.hideSearchMore.display();
         this.showSearchMore.disappear();
+        this.setting.setSearchMoreExpand((byte) 1);
+        this.settingStore.update(ZKSettingStore.SETTING);
     }
 
     /**
@@ -205,6 +219,8 @@ public class SearchController extends SubController {
         this.searchMain.autosize();
         this.hideSearchMore.disappear();
         this.showSearchMore.display();
+        this.setting.setSearchMoreExpand((byte) 0);
+        this.settingStore.update(ZKSettingStore.SETTING);
     }
 
     /**
@@ -478,6 +494,10 @@ public class SearchController extends SubController {
         this.searchHandler.init(this.treeView, this.parent().tabPane);
         this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup(1));
         this.replaceKW.setHistoryPopup(new ZKSearchHistoryPopup(2));
+        // 显示更多
+        if (this.setting.isSearchMoreExpand()) {
+            this.showSearchMore();
+        }
     }
 
     @Override

@@ -82,14 +82,14 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
     @Setter
     private Boolean listen;
 
-    /**
-     * 集群模式
-     * 0|null: 否
-     * 1: 是
-     */
-    @Setter
-    @Getter
-    private Boolean cluster;
+    // /**
+    //  * 集群模式
+    //  * 0|null: 否
+    //  * 1: 是
+    //  */
+    // @Setter
+    // @Getter
+    // private Boolean cluster;
 
     /**
      * 收藏的节点
@@ -135,7 +135,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
         this.host = zkInfo.host;
         this.remark = zkInfo.remark;
         this.listen = zkInfo.listen;
-        this.cluster = zkInfo.cluster;
+        // this.cluster = zkInfo.cluster;
         this.groupId = zkInfo.groupId;
         this.sshInfo = zkInfo.sshInfo;
         this.readonly = zkInfo.readonly;
@@ -238,14 +238,14 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
         return this.listen == null || this.listen;
     }
 
-    /**
-     * 是否集群模式
-     *
-     * @return 结果
-     */
-    public boolean isCluster() {
-        return BooleanUtil.isTrue(this.cluster) || StrUtil.count(this.host, ":") > 1;
-    }
+    // /**
+    //  * 是否集群模式
+    //  *
+    //  * @return 结果
+    //  */
+    // public boolean isCluster() {
+    //     return BooleanUtil.isTrue(this.cluster) || StrUtil.count(this.host, ":") > 1;
+    // }
 
     /**
      * 获取连接超时毫秒值

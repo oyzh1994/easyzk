@@ -34,20 +34,10 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public void flushGraphic() {
-        // 获取树项的值
-        ZKInfo value = treeItem.value();
         // 获取图形
         SVGGlyph glyph = this.graphic();
         // 如果图形为空
         if (glyph == null) {
-            glyph = value.isCluster() ? new SVGGlyph("/font/cluster.svg", "10") : new SVGGlyph("/font/server-connection.svg", "12");
-            // 设置图形
-            this.graphic(glyph);
-        } else if (value.isCluster() && !glyph.getUrl().contains("cluster")) {
-            glyph = new SVGGlyph("/font/cluster.svg", "10");
-            // 设置图形
-            this.graphic(glyph);
-        } else if (!value.isCluster() && !glyph.getUrl().contains("connection")) {
             glyph = new SVGGlyph("/font/server-connection.svg", "10");
             // 设置图形
             this.graphic(glyph);

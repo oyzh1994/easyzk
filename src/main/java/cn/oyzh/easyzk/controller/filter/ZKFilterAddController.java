@@ -24,12 +24,10 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2022/12/20
  */
-//@Slf4j
 @StageAttribute(
         title = "zk过滤配置新增",
         iconUrls = ZKConst.ICON_PATH,
-        modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
+        modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "filter/zkFilterAdd.fxml"
 )
 public class ZKFilterAddController extends Controller {

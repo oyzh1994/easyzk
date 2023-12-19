@@ -20,14 +20,21 @@ public class ZKSetting extends Setting {
      * 1 加载所有节点
      * 2 仅加载根节点
      */
-    private Integer loadMode;
+    private Byte loadMode;
 
     /**
      * 节点认证
      * 0|null 自动认证
      * 1 不自动认证
      */
-    private Integer authMode;
+    private Byte authMode;
+
+    /**
+     * 搜索-更多-展开状态
+     * 0|null 不展开
+     * 1 展开
+     */
+    private Byte searchMoreExpand;
 
     /**
      * 是否自动认证
@@ -54,5 +61,14 @@ public class ZKSetting extends Setting {
      */
     public boolean isLoadRoot() {
         return this.loadMode != null && this.loadMode == 2;
+    }
+
+    /**
+     * 是否展开搜索-更多
+     *
+     * @return 结果
+     */
+    public boolean isSearchMoreExpand() {
+        return this.searchMoreExpand != null && this.searchMoreExpand == 1;
     }
 }

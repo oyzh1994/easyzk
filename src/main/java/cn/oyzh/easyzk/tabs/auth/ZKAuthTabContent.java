@@ -21,6 +21,7 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,7 +40,6 @@ import java.util.ResourceBundle;
  * @since 2023/11/03
  */
 @Lazy
-//@Slf4j
 @Component
 public class ZKAuthTabContent extends DynamicTabController {
 
@@ -107,7 +107,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      * @param pageNo 页码
      */
     private void initDataList(int pageNo) {
-        this.pageData = this.authStore.getPage(10, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
+        this.pageData = this.authStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(ZKAuthVO.convert(this.pageData.page(pageNo)));
         this.pagePane.setPaging(this.pageData);
@@ -128,9 +128,8 @@ public class ZKAuthTabContent extends DynamicTabController {
                     SVGGlyph del = new SVGGlyph("/font/delete.svg", 14.d);
                     del.setTipText("删除");
                     del.setOnMousePrimaryClicked((event) -> delInfo(this.getTableItem()));
-
                     this.hBox = new HBox(del);
-                    this.hBox.setSpacing(5);
+                    HBox.setMargin(del, new Insets(7, 0, 0, 5));
                 }
                 return this.hBox;
             }

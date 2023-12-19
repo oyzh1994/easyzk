@@ -25,8 +25,7 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         title = "zk认证信息新增",
         iconUrls = ZKConst.ICON_PATH,
-        modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
+        modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuthAdd.fxml"
 )
 public class ZKAuthAddController extends Controller {

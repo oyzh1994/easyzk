@@ -32,7 +32,6 @@ import java.util.Objects;
         title = "应用设置",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "setting.fxml"
 )
 public class SettingController extends Controller {
@@ -185,8 +184,8 @@ public class SettingController extends Controller {
     @FXML
     private void saveSetting() {
         String tips = "";
-        int authMode = this.authMode.isSelected() ? 0 : 1;
-        int loadMode = Integer.parseInt(this.loadMode.selectedUserData());
+        byte authMode = (byte) (this.authMode.isSelected() ? 0 : 1);
+        byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
         // 设置参数
         if (!Objects.equals(this.setting.getLoadMode(), loadMode) || !Objects.equals(this.setting.getAuthMode(), authMode)) {
             tips = "（重新打开连接生效）";

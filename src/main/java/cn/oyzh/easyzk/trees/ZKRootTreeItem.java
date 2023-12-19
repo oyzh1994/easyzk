@@ -317,7 +317,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             this.extend();
         } else {
             groupItem.addConnect(zkInfo);
-            groupItem.extend();
+            // groupItem.extend();
         }
     }
 

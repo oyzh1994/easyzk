@@ -28,7 +28,6 @@ import java.io.ByteArrayInputStream;
  * @author oyzh
  * @since 2022/08/23
  */
-//@Slf4j
 @StageAttribute(
         resizeable = false,
         iconUrls = ZKConst.ICON_PATH,

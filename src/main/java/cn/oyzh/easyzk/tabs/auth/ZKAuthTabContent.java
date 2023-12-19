@@ -8,8 +8,8 @@ import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.PagePane;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
@@ -139,10 +139,10 @@ public class ZKAuthTabContent extends DynamicTabController {
         // 状态栏初始化
         this.enable.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
-            public ToggleSwitch initGraphic() {
+            public FXToggleSwitch initGraphic() {
                 ZKAuthVO authVO = this.getTableItem();
                 if (authVO != null) {
-                    ToggleSwitch toggleSwitch = new ToggleSwitch();
+                    FXToggleSwitch toggleSwitch = new FXToggleSwitch();
                     toggleSwitch.setFontSize(11);
                     toggleSwitch.setSelectedText("已启用");
                     toggleSwitch.setUnselectedText("已禁用");

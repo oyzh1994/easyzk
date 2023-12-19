@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.tab.*?>
-<?import cn.oyzh.fx.plus.controls.svg.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.area.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoUpdateController" realWidth="750" realHeight="320">
-    <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
+    <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="基础设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
@@ -20,26 +35,14 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ClearableTextField promptText="请输入名称" tipText="请输入名称" maxLen="20" require="true" fx:id="name"
+                    <ClearableTextField fx:id="name" promptText="请输入名称" tipText="请输入名称" maxLen="20"
+                                        require="true"
                                         realHeight="30" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
-                <!-- <FlexHBox flexWidth="100%" realHeight="50"> -->
-                <!--     <FXLabel realHeight="30" realWidth="65" text="连接模式" styleClass="lbl,lbl-primary"> -->
-                <!--         <HBox.margin> -->
-                <!--             <Insets left="20" top="10"/> -->
-                <!--         </HBox.margin> -->
-                <!--     </FXLabel> -->
-                <!--     <FlexCheckBox fx:id="cluster" text="集群模式" fontSize="11" -->
-                <!--                   tipText="集群模式可填写多个连接，用,分隔"> -->
-                <!--         <HBox.margin> -->
-                <!--             <Insets left="10" top="16"/> -->
-                <!--         </HBox.margin> -->
-                <!--     </FlexCheckBox> -->
-                <!-- </FlexHBox> -->
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -47,7 +50,6 @@
                         </HBox.margin>
                     </FXLabel>
                     <ClearableTextField fx:id="hostIp"
-                                        promptText="连接地址，例如192.168.2.100"
                                         tipText="连接地址，例如192.168.2.100"
                                         require="true"
                                         realHeight="30"
@@ -57,7 +59,7 @@
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" >
+                <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接端口" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
@@ -72,22 +74,6 @@
                         </HBox.margin>
                     </PortTextField>
                 </FlexHBox>
-                <!-- <FlexHBox flexWidth="100%" realHeight="140" fx:id="hostBox2" visible="false" managed="false"> -->
-                <!--     <FXLabel realHeight="30" realWidth="65" text="集群地址" styleClass="lbl,lbl-primary"> -->
-                <!--         <HBox.margin> -->
-                <!--             <Insets left="20" top="10"/> -->
-                <!--         </HBox.margin> -->
-                <!--     </FXLabel> -->
-                <!--     <LimitTextArea fx:id="host" -->
-                <!--                    promptText="集群地址，用英文逗号分隔，例如:192.168.2.17:2181,192.168.2.17:2182,192.168.2.17:2183" -->
-                <!--                    tipText="集群地址，用英文逗号分隔，例如:192.168.2.17:2181,192.168.2.17:2182,192.168.2.17:2183" -->
-                <!--                    require="true" -->
-                <!--                    realHeight="120" flexWidth="100% - 140" maxLen="2048"> -->
-                <!--         <HBox.margin> -->
-                <!--             <Insets left="10" top="10"/> -->
-                <!--         </HBox.margin> -->
-                <!--     </LimitTextArea> -->
-                <!-- </FlexHBox> -->
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接设置" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -143,12 +129,11 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 140" step="5" min="5" max="120"
-                                     fx:id="sessionTimeOut"
+                    <NumberTextField realHeight="30" flexWidth="100% - 140" min="5" max="120" fx:id="sessionTimeOut"
                                      promptText="超时时间(5-120)，单位分钟，默认30分钟"
                                      tipText="超时时间(5-120)，单位分钟，默认30分钟"
                                      value="30"
-                                     require="true">
+                                     require="true" step="5">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -165,11 +150,10 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <LimitTextArea fx:id="remark"
+                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140"
                                    promptText="请输入备注信息"
                                    tipText="请输入备注信息"
-                                   maxLen="100"
-                                   realHeight="80" flexWidth="100% - 140">
+                                   maxLen="100">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -185,12 +169,11 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭"
-                                  realHeight="20">
+                    <FXToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭">
                         <HBox.margin>
                             <Insets left="10" top="15"/>
                         </HBox.margin>
-                    </ToggleSwitch>
+                    </FXToggleSwitch>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshHostBox" disable="true">
                     <FXLabel realHeight="30" realWidth="65" text="主机信息" styleClass="lbl,lbl-primary">
@@ -256,7 +239,7 @@
         </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton onAction="#testConnect" text="测试" styleClass="btn,btn-success" iconSizePercent="0.8">
+        <IconButton onAction="#testConnect" text="测试" styleClass="success" iconSizePercent="0.8">
             <graphic>
                 <SVGGlyph url="/font/link.svg"/>
             </graphic>

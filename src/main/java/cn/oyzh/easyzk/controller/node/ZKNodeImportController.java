@@ -5,7 +5,6 @@ import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
@@ -25,8 +24,8 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -151,7 +150,7 @@ public class ZKNodeImportController extends Controller {
     private void chooseFile() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files|TXT files", "*.json", "*.txt");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FXFileChooser.choose("选择zk脚本", new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose("选择zk脚本", new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseFile(file);
     }

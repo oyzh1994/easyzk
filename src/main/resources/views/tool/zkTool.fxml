@@ -18,16 +18,14 @@
                 </FXLabel>
                 <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 115"
                                     promptText="请输入用户名明文"
-                                    tipText="请输入用户名明文"
-                >
+                                    tipText="请输入用户名明文">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
                 <ClearableTextField fx:id="pwd" realHeight="30" flexWidth="50% - 115"
                                     promptText="请输入密码明文"
-                                    tipText="请输入密码明文"
-                >
+                                    tipText="请输入密码明文">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
@@ -58,6 +56,5 @@
                 </SubmitButton>
             </FlexHBox>
         </FlexVBox>
-
     </FXTab>
 </FlexTabPane>

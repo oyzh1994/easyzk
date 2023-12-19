@@ -30,8 +30,8 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
@@ -252,7 +252,7 @@ public class ZKNodeExportController extends Controller {
                 // 收尾工作
                 this.updateStatus("处理文件中...");
                 // this.exportMsg.waitTextExpend();
-                File file = FXFileChooser.save("导出zk数据", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
+                File file = FileChooserUtil.save("导出zk数据", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);

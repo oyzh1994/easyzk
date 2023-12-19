@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.tab.*?>
-<?import cn.oyzh.fx.plus.controls.svg.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.area.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
+<?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
@@ -27,19 +35,6 @@
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
-                <!-- <FlexHBox flexWidth="100%" realHeight="50"> -->
-                <!--     <FXLabel realHeight="30" realWidth="65" text="连接模式" styleClass="lbl,lbl-primary"> -->
-                <!--         <HBox.margin> -->
-                <!--             <Insets left="20" top="10"/> -->
-                <!--         </HBox.margin> -->
-                <!--     </FXLabel> -->
-                <!--     <FlexCheckBox fx:id="cluster" text="集群模式" fontSize="11" -->
-                <!--                   tipText="集群模式可填写多个连接，用,分隔"> -->
-                <!--         <HBox.margin> -->
-                <!--             <Insets left="10" top="16"/> -->
-                <!--         </HBox.margin> -->
-                <!--     </FlexCheckBox> -->
-                <!-- </FlexHBox> -->
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -56,37 +51,21 @@
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" >
+                <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接端口" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
                     <PortTextField flexWidth="100% - 140" fx:id="hostPort"
-                               tipText="端口号(1-65535)"
-                               realHeight="30"
-                               value="2181">
+                                   tipText="端口号(1-65535)"
+                                   realHeight="30"
+                                   value="2181">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </PortTextField>
                 </FlexHBox>
-                <!-- <FlexHBox flexWidth="100%" realHeight="140" fx:id="hostBox2" visible="false" managed="false"> -->
-                <!--     <FXLabel realHeight="30" realWidth="65" text="集群地址" styleClass="lbl,lbl-primary"> -->
-                <!--         <HBox.margin> -->
-                <!--             <Insets left="20" top="10"/> -->
-                <!--         </HBox.margin> -->
-                <!--     </FXLabel> -->
-                <!--     <LimitTextArea fx:id="host" -->
-                <!--                    promptText="集群地址，用英文逗号分隔，例如:192.168.2.17:2181,192.168.2.17:2182,192.168.2.17:2183" -->
-                <!--                    tipText="集群地址，用英文逗号分隔，例如:192.168.2.17:2181,192.168.2.17:2182,192.168.2.17:2183" -->
-                <!--                    require="true" -->
-                <!--                    realHeight="120" flexWidth="100% - 140" maxLen="2048"> -->
-                <!--         <HBox.margin> -->
-                <!--             <Insets left="10" top="10"/> -->
-                <!--         </HBox.margin> -->
-                <!--     </LimitTextArea> -->
-                <!-- </FlexHBox> -->
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接设置" styleClass="lbl,lbl-primary">
                         <HBox.margin>
@@ -182,12 +161,11 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭"
-                                  realHeight="20">
+                    <FXToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭">
                         <HBox.margin>
                             <Insets left="10" top="15"/>
                         </HBox.margin>
-                    </ToggleSwitch>
+                    </FXToggleSwitch>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshHostBox" disable="true">
                     <FXLabel realHeight="30" realWidth="65" text="主机信息" styleClass="lbl,lbl-primary">
@@ -253,7 +231,7 @@
         </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton onAction="#testConnect" text="测试" styleClass="btn,btn-success" iconSizePercent="0.8">
+        <IconButton onAction="#testConnect" text="测试" styleClass="success" iconSizePercent="0.8">
             <graphic>
                 <SVGGlyph url="/font/link.svg"/>
             </graphic>

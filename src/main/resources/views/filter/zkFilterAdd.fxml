@@ -26,12 +26,12 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ToggleSwitch fx:id="partMatch" selectedText="模糊匹配" unselectedText="完全匹配" realHeight="20"
+        <FXToggleSwitch fx:id="partMatch" selectedText="模糊匹配" unselectedText="完全匹配"
                         prefWidth="105" selected="true">
             <HBox.margin>
                 <Insets left="15" top="16"/>
             </HBox.margin>
-        </ToggleSwitch>
+        </FXToggleSwitch>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="启用配置" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
@@ -39,12 +39,12 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ToggleSwitch fx:id="enable" selectedText="启用配置" unselectedText="禁用配置" realHeight="20"
+        <FXToggleSwitch fx:id="enable" selectedText="启用配置" unselectedText="禁用配置"
                         prefWidth="105" selected="true">
             <HBox.margin>
                 <Insets left="15" top="16"/>
             </HBox.margin>
-        </ToggleSwitch>
+        </FXToggleSwitch>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addZKFilter">

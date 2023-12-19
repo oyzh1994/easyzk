@@ -98,7 +98,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <IconButton stateManager="$stateManager" tipText="开始执行传输" fx:id="transportBtn"
                     onAction="#doTransport" realHeight="30"
-                    styleClass="btn,btn-primary"
+                    styleClass="accent"
                     text="传输"
                     iconSizePercent="0.75">
             <graphic>

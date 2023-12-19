@@ -10,8 +10,8 @@ import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.FlexHBox;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -128,7 +128,7 @@ public class ZKInfoAddController extends Controller {
      * 开启ssh
      */
     @FXML
-    private ToggleSwitch sshForward;
+    private FXToggleSwitch sshForward;
 
     /**
      * ssh主机地址

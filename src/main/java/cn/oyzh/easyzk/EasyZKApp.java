@@ -49,14 +49,14 @@ public class EasyZKApp extends SpringApplication {
     @Override
     public void start(Stage primaryStage) {
         try {
+            // 初始化主题
+            ThemeManager.currentTheme(ZKSettingStore.SETTING.getTheme());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 开始执行业务
             super.start(primaryStage);
             // 显示主页面
             StageUtil.showStage(MainController.class);
-            // 初始化主题
-            ThemeManager.currentTheme(ZKSettingStore.SETTING.getTheme());
             // 开启定期gc
             SystemUtil.gcInterval(60_000);
             // 设置stage全部关闭后不自动销毁进程

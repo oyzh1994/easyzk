@@ -26,7 +26,7 @@
         <IconButton stateManager="$stateManager"
                     tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
                     text="选择"
-                    styleClass="btn,btn-success" iconSizePercent="0.75">
+                    styleClass="success" iconSizePercent="0.75">
             <graphic>
                 <SVGGlyph url="/font/file.svg"/>
             </graphic>
@@ -79,7 +79,7 @@
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
         <IconButton tipText="开始执行导入" onAction="#doImport"
-                    styleClass="btn,btn-primary"
+                    styleClass="accent"
                     text="导入" fx:id="importBtn" disable="true" iconSizePercent="0.75">
             <graphic>
                 <SVGGlyph url="/font/Import.svg" color="white"/>
@@ -89,7 +89,7 @@
             </HBox.margin>
         </IconButton>
         <IconButton disable="true" text="结束" fx:id="stopImportBtn" tipText="结束导入" onAction="#stopImport"
-                    styleClass="btn,btn-default"
+                    styleClass="default"
                     realHeight="30" iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>

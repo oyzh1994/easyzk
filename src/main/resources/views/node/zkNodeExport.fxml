@@ -37,7 +37,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexComboBox stateManager="$stateManager" realWidth="120" initIndex="0" tipText="选择一种导出方式"
+        <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="选择一种导出方式"
                       fx:id="format">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -93,16 +93,6 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <!-- <FXLabel text="字符:" realWidth="30"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="10" top="20"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <!-- <CharsetComboBox prefWidth="120" fx:id="charset" promptText="导出字符集" tipText="默认是此连接的字符集"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5" top="12"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </CharsetComboBox> -->
         <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="按字典排序"
                       tipText="节点路径按字典排序">
             <HBox.margin>
@@ -115,11 +105,6 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <!-- <FlexCheckBox fx:id="excludeEphemeral" disable="true" selected="true" text="排除临时节点"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="10" top="18"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FlexCheckBox> -->
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
         <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
@@ -138,7 +123,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <IconButton stateManager="$stateManager" tipText="开始执行导出" onAction="#doExport"
                     realHeight="30"
-                    styleClass="btn,btn-primary"
+                    styleClass="accent"
                     text="导出"
                     iconSizePercent="0.75">
             <graphic>
@@ -149,7 +134,7 @@
             </HBox.margin>
         </IconButton>
         <IconButton disable="true" text="结束" fx:id="stopExportBtn" tipText="结束导出" onAction="#stopExport"
-                    styleClass="btn,btn-default"
+                    styleClass="default"
                     realHeight="30" iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>

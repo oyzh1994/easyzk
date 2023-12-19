@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -44,13 +44,13 @@ public class ZKFilterAddController extends Controller {
      * 是否启用
      */
     @FXML
-    private ToggleSwitch enable;
+    private FXToggleSwitch enable;
 
     /**
      * 模糊匹配
      */
     @FXML
-    private ToggleSwitch partMatch;
+    private FXToggleSwitch partMatch;
 
     /**
      * zk过滤配置储存

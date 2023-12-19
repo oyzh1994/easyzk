@@ -13,10 +13,10 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.spring.ScopeType;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.PagePane;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -83,7 +83,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * zk属性视图切换按钮
      */
     @FXML
-    private ToggleSwitch statViewSwitch;
+    private FXToggleSwitch statViewSwitch;
 
     /**
      * 右侧acl组件
@@ -117,7 +117,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 右侧zk权限视图切换按钮
      */
     @FXML
-    private ToggleSwitch aclViewSwitch;
+    private FXToggleSwitch aclViewSwitch;
 
     /**
      * 收藏节点

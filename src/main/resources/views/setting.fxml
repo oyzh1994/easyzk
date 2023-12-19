@@ -21,7 +21,7 @@
         <FXTab text="ZK设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="节点加载" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="节点加载" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -55,7 +55,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="节点认证" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="节点认证" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -75,7 +75,7 @@
         <FXTab text="窗口设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="窗口关闭" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="窗口关闭" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -106,7 +106,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="窗口记忆" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="窗口记忆" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -135,7 +135,7 @@
         <FXTab text="标签设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="限制策略" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="限制策略" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -151,7 +151,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="限制数量" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="限制数量" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -171,7 +171,7 @@
         <FXTab text="主题设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="主题名称" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="主题名称" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>

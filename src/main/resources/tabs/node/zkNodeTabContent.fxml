@@ -149,8 +149,7 @@
             <FlexVirtualizedScrollPane flexWidth="100%" flexHeight="100% - 32">
                 <content>
                     <ZKRichDataTextArea fontSize="12" fx:id="nodeData"
-                                        onKeyPressed="#onNodeDataKeyPressed"
-                                        text="数据加载中..."/>
+                                        onKeyPressed="#onNodeDataKeyPressed"/>
                 </content>
             </FlexVirtualizedScrollPane>
             <!-- <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 32" -->
@@ -212,8 +211,8 @@
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
                 <FXToggleSwitch fx:id="aclViewSwitch" unselectedText="专业视图"
-                              selectedText="友好视图"
-                              selected="true">
+                                selectedText="友好视图"
+                                selected="true">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -430,7 +429,7 @@
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <FXLabel realWidth="135" text="子节点数量" maxHeight="24" styleClass="item-label,lbl,lbl-success">
+                    <FXLabel realWidth="135" text="子节点数量" maxHeight="24" styleClass="item-label,success">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
@@ -454,7 +453,7 @@
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <FXLabel realWidth="135" text="总数据大小" maxHeight="24" styleClass="item-label,lbl,lbl-success">
+                    <FXLabel realWidth="135" text="总数据大小" maxHeight="24" styleClass="item-label,success">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>

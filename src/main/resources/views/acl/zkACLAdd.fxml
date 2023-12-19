@@ -14,7 +14,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLAddController" realWidth="600" realHeight="420">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="节点路径" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+        <FXLabel text="节点路径" realWidth="65" realHeight="30" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -26,7 +26,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+        <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -48,7 +48,7 @@
         </FlexComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="permsBox">
-        <FXLabel text="权限范围" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+        <FXLabel text="权限范围" realWidth="65" realHeight="30" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -82,7 +82,7 @@
     </FlexHBox>
     <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digest1ACL">
         <FlexHBox realHeight="50" flexWidth="100%">
-            <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+            <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -117,7 +117,7 @@
         </FlexHBox>
     </FlexVBox>
     <FlexHBox flexWidth="100%" managed="false" realHeight="50" visible="false" fx:id="digest2ACL">
-        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -129,7 +129,7 @@
         </ClearableTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" managed="false" realHeight="50" visible="false" fx:id="digest3ACL">
-        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -141,7 +141,7 @@
         </FlexComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" managed="false" visible="false" fx:id="ip1ACL">
-        <FXLabel text="IP地址" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+        <FXLabel text="IP地址" realWidth="65" realHeight="30" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -152,14 +152,14 @@
             </HBox.margin>
         </ClearableTextField>
         <FlexButton realHeight="30" realWidth="65" text="网段模式" onMousePrimaryClicked="#segmentModel"
-                    styleClass="lbl,lbl-success">
+                    styleClass="success">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </FlexButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" managed="false" realHeight="260" visible="false" fx:id="ip2ACL">
-        <FXLabel text="IP内容" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+        <FXLabel text="IP内容" realWidth="65" realHeight="30" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

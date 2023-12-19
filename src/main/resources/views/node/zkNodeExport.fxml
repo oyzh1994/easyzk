@@ -20,7 +20,7 @@
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox">
-        <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -32,7 +32,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="导出格式" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="导出格式" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -88,7 +88,7 @@
         </FlexFlowPane>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="导出配置" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="导出配置" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -107,7 +107,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

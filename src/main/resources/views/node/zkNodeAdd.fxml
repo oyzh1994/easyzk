@@ -19,7 +19,7 @@
         <FXTab text="数据" fx:id="dataTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="parentNodeBox">
-                    <FXLabel text="上级节点" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="上级节点" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -31,7 +31,7 @@
                     </DisabledTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="节点类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="节点类型" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -52,7 +52,7 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -65,7 +65,7 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathPreviewBox" visible="false" managed="false">
-                    <FXLabel text="路径预览" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="路径预览" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -78,7 +78,7 @@
                     </DisabledTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" flexHeight="100% - 195">
-                    <FXLabel text="节点数据" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                    <FXLabel text="节点数据" realHeight="30" realWidth="65" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -116,7 +116,7 @@
         <FXTab text="权限" fx:id="aclTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                    <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -135,7 +135,7 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="权限范围" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                    <FXLabel text="权限范围" realWidth="65" realHeight="30" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -169,7 +169,7 @@
                 </FlexHBox>
                 <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digestACL">
                     <FlexHBox realHeight="50" flexWidth="100%">
-                        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="accent">
                             <HBox.margin>
                                 <Insets left="20" top="10"/>
                             </HBox.margin>
@@ -194,7 +194,7 @@
                     </FlexHBox>
                 </FlexVBox>
                 <FlexHBox flexWidth="100%" realHeight="50" managed="false" visible="false" fx:id="ipACL">
-                    <FXLabel text="IP地址" realWidth="65" realHeight="30" styleClass="lbl,lbl-primary">
+                    <FXLabel text="IP地址" realWidth="65" realHeight="30" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>

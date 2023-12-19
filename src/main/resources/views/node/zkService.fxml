@@ -15,7 +15,7 @@
         </VBox.margin>
     </FXSeparator>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="节点名称" realHeight="30" realWidth="85" styleClass="lbl,lbl-primary">
+        <FXLabel text="节点名称" realHeight="30" realWidth="85" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -27,7 +27,7 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="sdk版本" realHeight="30" realWidth="85" styleClass="lbl,lbl-primary">
+        <FXLabel text="sdk版本" realHeight="30" realWidth="85" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -39,7 +39,7 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="80">
-        <FXLabel text="连接地址" realHeight="30" realWidth="85" styleClass="lbl,lbl-primary">
+        <FXLabel text="连接地址" realHeight="30" realWidth="85" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

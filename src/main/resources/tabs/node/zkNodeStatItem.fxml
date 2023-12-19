@@ -4,10 +4,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexHBox flexWidth="100%" realHeight="35">
-    <FXLabel realWidth="135" realHeight="30" styleClass="lbl,lbl-success">
+    <FXLabel realWidth="135" realHeight="30" styleClass="success">
         <HBox.margin>
             <Insets right="5"/>
         </HBox.margin>
     </FXLabel>
-    <FlexLabel realHeight="30" flexWidth="100% - 180" styleClass="lbl,lbl-success"/>
+    <FlexLabel realHeight="30" flexWidth="100% - 180" styleClass="success"/>
 </FlexHBox>

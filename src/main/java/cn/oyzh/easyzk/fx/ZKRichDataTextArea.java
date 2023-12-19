@@ -4,6 +4,7 @@ import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.rich.RichTextStyle;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import lombok.Getter;
 
@@ -187,6 +188,7 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
             });
         } else {
             this.clearTextStyle();
+            super.changeTheme(ThemeManager.currentTheme());
         }
     }
 }

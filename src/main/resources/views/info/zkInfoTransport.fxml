@@ -20,7 +20,7 @@
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="来源连接" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="来源连接" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -42,7 +42,7 @@
         </CharsetComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="目标连接" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="目标连接" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -64,7 +64,7 @@
         </CharsetComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="传输选项" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="传输选项" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -82,7 +82,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="280">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

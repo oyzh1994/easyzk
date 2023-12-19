@@ -159,6 +159,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         FXText text = (FXText) this.lookup("#num");
         if (text == null) {
             text = new FXText();
+            text.disableTheme();
             this.addChild(text);
             text.setId("num");
             text.setFill(Color.valueOf("#228B22"));

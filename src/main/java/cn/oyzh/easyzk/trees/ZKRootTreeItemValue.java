@@ -30,9 +30,4 @@ public class ZKRootTreeItemValue extends ZKTreeItemValue {
             this.graphic(new FlexImageView(IconUtil.getIcon(ZKConst.ICON_PATH), 12));
         }
     }
-
-    @Override
-    public void flushGraphicColor() {
-
-    }
 }

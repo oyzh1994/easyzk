@@ -21,6 +21,7 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -129,7 +130,7 @@ public class ZKFilterTabContent extends DynamicTabController {
                     del.setTipText("删除");
                     del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
                     this.hBox = new HBox(del);
-                    this.hBox.setSpacing(5);
+                    HBox.setMargin(del, new Insets(7, 0, 0, 5));
                 }
                 return hBox;
             }

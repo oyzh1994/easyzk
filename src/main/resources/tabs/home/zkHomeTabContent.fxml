@@ -9,7 +9,7 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.tabs.home.ZKHomeTabContent">
     <ImageView fitWidth="200" fitHeight="200" layoutX="50" layoutY="100">
-        <Image url="/image/zoo.png"/>
+        <Image url="/image/zoo_no_bg.png"/>
     </ImageView>
     <FXText text="欢迎使用EasyZK！" layoutX="260" layoutY="150" fontSize="30"/>
     <FXLabel fx:id="softInfo" layoutX="260" layoutY="180"/>

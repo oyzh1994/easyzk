@@ -1,9 +1,7 @@
 package cn.oyzh.easyzk.trees.root;
 
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
-import cn.oyzh.fx.plus.controls.FlexImageView;
-import cn.oyzh.fx.plus.util.IconUtil;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 
 
 /**
@@ -21,13 +19,14 @@ public class ZKRootTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public String name() {
-        return "ZK连接列表";
+        return "Zookeeper连接列表";
     }
 
     @Override
     public void flushGraphic() {
         if (this.graphic() == null) {
-            this.graphic(new FlexImageView(IconUtil.getIcon(ZKConst.ICON_PATH), 12));
+            SVGGlyph glyph = new SVGGlyph("/font/zookeeper.svg", "12,10");
+            this.graphic(glyph);
         }
     }
 }

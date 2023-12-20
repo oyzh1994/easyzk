@@ -26,7 +26,7 @@
             <SVGGlyph url="/font/addGroup.svg"/>
         </graphic>
     </IconButton>
-    <IconButton onMousePrimaryClicked="#openTerminal" layoutX="480" layoutY="260"
+    <IconButton onMousePrimaryClicked="#openTerminal" layoutX="480" layoutY="260" styleClass="default"
                 text="打开终端">
         <graphic>
             <SVGGlyph url="/font/code library.svg"/>

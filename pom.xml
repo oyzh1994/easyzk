@@ -9,7 +9,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
     <artifactId>easyzk</artifactId>
     <description>zookeeper的可视化操作、导入导出、传输、命令行功能</description>
 

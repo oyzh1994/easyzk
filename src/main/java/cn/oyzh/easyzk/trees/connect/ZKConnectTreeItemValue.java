@@ -1,6 +1,6 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.connect;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/4/7
  */
-//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
@@ -34,11 +33,9 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public void flushGraphic() {
-        // 获取图形
-        SVGGlyph glyph = this.graphic();
-        // 如果图形为空
-        if (glyph == null) {
-            glyph = new SVGGlyph("/font/server-connection.svg", "10");
+        if (this.graphic() == null) {
+            SVGGlyph glyph = new SVGGlyph("/font/server-connection.svg", 10);
+            glyph.disableTheme();
             // 设置图形
             this.graphic(glyph);
         }
@@ -50,7 +47,7 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
         SVGGlyph glyph = this.graphic();
         if (this.treeItem.isConnected()) {
             glyph.setColor(Color.GREEN);
-        } else if (!this.treeItem.isConnected()) {
+        } else {
             if (ThemeManager.isDarkMode()) {
                 glyph.setColor(Color.WHITE);
             } else {

@@ -1,6 +1,7 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -33,14 +34,16 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public void flushGraphic() {
-        SVGGlyph curr = this.graphic();
-        if (curr != null && curr.isWaiting()) {
+        SVGGlyph glyph = this.graphic();
+        if (glyph != null && glyph.isWaiting()) {
             return;
         }
         String svgUrl = this.getSVGUrl();
         // 设置图标
-        if (curr == null || !Objects.equals(curr.getUrl(), svgUrl)) {
-            this.graphic(new SVGGlyph(svgUrl, "10"));
+        if (glyph == null || !Objects.equals(glyph.getUrl(), svgUrl)) {
+            glyph = new SVGGlyph(svgUrl, 10);
+            glyph.disableTheme();
+            this.graphic(glyph);
             ZKEventUtil.graphicChanged(this.item);
         }
     }
@@ -124,24 +127,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         // 父节点，未加载
         return "/font/folder.svg";
     }
-
-//    /**
-//     * 刷新状态
-//     */
-//    public void flushStatus() {
-//        FXText text = this.text();
-//        if (this.item.isBeDeleted()) {
-//            text.setFill(Color.RED);
-//        } else if (this.item.dataUnsaved()) {
-//            text.setFill(Color.ORANGE);
-//        } else if (this.item.isBeUpdated()) {
-//            text.setFill(Color.PURPLE);
-//        } else {
-//            text.setFill(Color.BLACK);
-//        }
-//        this.flushGraphic();
-//        this.flushGraphicColor();
-//    }
 
     @Override
     public SVGGlyph graphic() {

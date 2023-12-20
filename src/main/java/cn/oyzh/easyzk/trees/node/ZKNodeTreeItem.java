@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.node;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
@@ -9,6 +9,8 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.easyzk.trees.ZKTreeItem;
+import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -1038,14 +1040,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         }
     }
 
-    // @Override
-    // protected int sortAsc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
-    //     if (item1 instanceof ZKNodeTreeItem node1 && item2 instanceof ZKNodeTreeItem node2) {
-    //         return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(node1, node2);
-    //     }
-    //     return super.sortAsc(item1, item2);
-    // }
-
     @Override
     public void sortDesc() {
         if (super.isSortable()) {
@@ -1053,14 +1047,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             this.showChildren().forEach(ZKNodeTreeItem::sortDesc);
         }
     }
-
-    // @Override
-    // protected int sortDesc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
-    //     if (item1 instanceof ZKNodeTreeItem node1 && item2 instanceof ZKNodeTreeItem node2) {
-    //         return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(node2, node1);
-    //     }
-    //     return super.sortDesc(item1, item2);
-    // }
 
     /**
      * 是否需要认证

@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.node;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;

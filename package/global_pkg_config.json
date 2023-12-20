@@ -1,11 +1,11 @@
 {
     "destPath": "D:\\Package\\EasyZK",
     "jdkPath": "D:\\Libraries\\JDKs\\openjdk-21_windows-x64_bin\\jdk-21",
-    "jarPath": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.1.jar",
+    "jarPath": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.2.jar",
     "retainDuringDir": false,
     "package": {
         "vendor": "oyzh",
-        "version": "v1.6.1",
+        "version": "v1.6.2",
         "appName": "EasyZK",
         "executable": "EasyZK",
         "desc": "这是一个Zookeeper管理工具，简化提供导入导出、传输、控制台、可视化操作等高级功能."

@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
-import cn.oyzh.easyzk.trees.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
@@ -204,7 +204,7 @@ public class SearchController extends SubController {
         this.hideSearchMore.display();
         this.showSearchMore.disappear();
         this.setting.setSearchMoreExpand((byte) 1);
-        this.settingStore.update(ZKSettingStore.SETTING);
+        this.settingStore.update(this.setting);
     }
 
     /**
@@ -220,7 +220,7 @@ public class SearchController extends SubController {
         this.hideSearchMore.disappear();
         this.showSearchMore.display();
         this.setting.setSearchMoreExpand((byte) 0);
-        this.settingStore.update(ZKSettingStore.SETTING);
+        this.settingStore.update(this.setting);
     }
 
     /**

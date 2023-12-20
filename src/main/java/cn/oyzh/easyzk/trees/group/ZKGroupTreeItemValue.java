@@ -1,5 +1,6 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.group;
 
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
@@ -34,7 +35,8 @@ public class ZKGroupTreeItemValue extends ZKTreeItemValue {
     public void flushGraphic() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
         if (glyph == null) {
-            glyph = new SVGGlyph("/font/group.svg", "10");
+            glyph = new SVGGlyph("/font/group.svg", 10);
+            glyph.disableTheme();
             this.graphic(glyph);
         }
     }

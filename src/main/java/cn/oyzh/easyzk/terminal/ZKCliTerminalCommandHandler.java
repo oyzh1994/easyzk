@@ -26,9 +26,9 @@ public abstract class ZKCliTerminalCommandHandler<C extends TerminalCommand> ext
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             terminal.disable();
-            ZKCliCommandWrapper wrapper = new ZKCliCommandWrapper(this.cliCommand());
+            ZKCliCommandWrapper wrapper = new ZKCliCommandWrapper(this.cliCommand(), terminal.zooKeeper());
             wrapper.parse(command.args());
-            wrapper.init(terminal.zooKeeper());
+            // wrapper.init(terminal.zooKeeper());
             wrapper.setOnResponse(result::appendResult);
             wrapper.exec();
         } catch (Exception ex) {

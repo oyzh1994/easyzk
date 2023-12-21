@@ -2,12 +2,17 @@ package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
+import cn.oyzh.fx.terminal.util.TerminalUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.Ls2Command;
+import org.apache.zookeeper.cli.CommandFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author oyzh
@@ -18,7 +23,18 @@ public class ZKLs2TerminalCommandHandler extends ZKPathTerminalCommandHandler<Te
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new Ls2Command();
+    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.LS);
+
+    @Override
+    public TerminalCommand parseCommand(String line) {
+        String[] args = TerminalUtil.split(line);
+        TerminalCommand command = new TerminalCommand();
+        List<String> list = new ArrayList<>();
+        Collections.addAll(list, args);
+        list.add(1, "-s");
+        command.args(list.toArray(new String[]{}));
+        return command;
+    }
 
     @Override
     public String commandName() {
@@ -33,5 +49,10 @@ public class ZKLs2TerminalCommandHandler extends ZKPathTerminalCommandHandler<Te
     @Override
     public String commandDesc() {
         return "获取子节点列表及状态";
+    }
+
+    @Override
+    public boolean commandDeprecated() {
+        return true;
     }
 }

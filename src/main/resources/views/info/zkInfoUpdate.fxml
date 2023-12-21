@@ -92,7 +92,7 @@
                         </HBox.margin>
                     </FlexCheckBox>
                     <FlexCheckBox fx:id="compatibility" text="兼容模式" fontSize="11"
-                                  tipText="如果zookeeper服务端是3.4.x或者更早以前的版本，或添加节点时出现未实现提示，或无法连接，可尝试开启此选项">
+                                  tipText="如果zk服务端是3.4.x版本或更早、添加节点时出现未实现提示，无法连接、连接异常等，可尝试开启此选项">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>

@@ -1,10 +1,12 @@
 package cn.oyzh.easyzk.terminal.handler;
 
-import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
-import org.apache.zookeeper.Version;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import org.apache.zookeeper.cli.CliCommand;
+import org.apache.zookeeper.cli.CommandFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,24 +14,28 @@ import org.springframework.stereotype.Component;
  * @since 2023/09/20
  */
 @Component
-public class ZKVersionTerminalCommandHandler extends ZKTerminalCommandHandler<TerminalCommand> {
+public class ZKVersionTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+
+    @Getter(AccessLevel.PROTECTED)
+    @Accessors(fluent = true)
+    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.VERSION);
 
     @Override
     protected boolean checkArgs(String[] words) {
         return words.length == 1;
     }
 
-    @Override
-    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            result.setResult(Version.getFullVersion());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
+    // @Override
+    // public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
+    //     TerminalExecuteResult result = new TerminalExecuteResult();
+    //     try {
+    //         result.setResult(Version.getFullVersion());
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //         result.setException(ex);
+    //     }
+    //     return result;
+    // }
 
     @Override
     public String commandName() {

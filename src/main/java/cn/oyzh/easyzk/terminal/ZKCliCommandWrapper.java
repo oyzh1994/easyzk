@@ -2,12 +2,11 @@ package cn.oyzh.easyzk.terminal;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.cli.ParseException;
-import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.cli.CliCommand;
+import org.apache.zookeeper.cli.CliException;
+import org.apache.zookeeper.cli.CliParseException;
 
-import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
@@ -26,19 +25,25 @@ public class ZKCliCommandWrapper {
     @Setter
     private Consumer<String> onResponse;
 
-    public ZKCliCommandWrapper(CliCommand command) {
+    public ZKCliCommandWrapper(CliCommand command, ZooKeeper zooKeeper) {
         this.command = command;
+        this.init(zooKeeper);
     }
 
-    public void init(ZooKeeper zooKeeper) {
+    /**
+     * 初始化
+     *
+     * @param zooKeeper zk客户端
+     */
+    private void init(ZooKeeper zooKeeper) {
         if (!this.initialized) {
             this.initialized = true;
             this.command.setZk(zooKeeper);
             this.command.setOut(new ZKCliPrintStream() {
                 @Override
-                public void onResponse(String response) {
+                public void onResponse(String str) {
                     if (onResponse != null) {
-                        onResponse.accept(response);
+                        onResponse.accept(str);
                     }
                 }
             });
@@ -53,12 +58,25 @@ public class ZKCliCommandWrapper {
         }
     }
 
-    public CliCommand parse(String[] cmdArgs) throws ParseException {
+    /**
+     * 解析命令
+     *
+     * @param cmdArgs 命令及参数
+     * @return 命令
+     * @throws CliParseException 异常
+     */
+    public CliCommand parse(String[] cmdArgs) throws CliParseException {
         this.command.parse(cmdArgs);
         return this.command;
     }
 
-    public boolean exec() throws IOException, InterruptedException, KeeperException {
+    /**
+     * 执行命令
+     *
+     * @return 结果
+     * @throws CliParseException 异常
+     */
+    public boolean exec() throws CliException {
         return this.command.exec();
     }
 }

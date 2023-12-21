@@ -219,9 +219,16 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                     this.enableInput();
                 } else if (t1 == ZKConnState.CONNECTING) {
                     this.outputLine(host + " 开始连接.");
-                    this.disableInput();
-                } else if (t1 == ZKConnState.LOST) {
+                } else if (t1 == ZKConnState.SUSPENDED) {
                     this.outputLine(host + " 连接中断.");
+                    this.enableInput();
+                } else if (t1 == ZKConnState.RECONNECTED) {
+                    this.outputLine(host + " 连接恢复.");
+                    this.outputPrompt();
+                    this.flushCaret();
+                    super.enableInput();
+                } else if (t1 == ZKConnState.LOST) {
+                    this.outputLine(host + " 连接丢失.");
                     this.enableInput();
                 } else if (t1 == ZKConnState.FAILED) {
                     this.outputLine(host + " 连接失败.");

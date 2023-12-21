@@ -13,4 +13,9 @@ public class ZKRmrTerminalCommandHandler extends ZKDeleteallTerminalCommandHandl
     public String commandName() {
         return "rmr";
     }
+
+    @Override
+    public boolean commandDeprecated() {
+        return true;
+    }
 }

@@ -11,33 +11,33 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author oyzh
- * @since 2023/09/20
+ * @since 2023/12/21
  */
 @Component
-public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKGetAllChildrenNumberCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.LS);
+    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_ALL_CHILDREN_NUMBER);
 
     @Override
     public String commandName() {
-        return "ls";
+        return "getAllChildrenNumber";
     }
 
     @Override
     public String commandArg() {
-        return "[-s] path";
+        return "path";
     }
 
     @Override
     public String commandDesc() {
-        return "获取子节点列表";
+        return "获取全部子节点数量";
     }
 
+
     @Override
-    public String commandHelp() {
-        return super.commandHelp() + "\n" +
-                "-s stat";
+    public String commandSupportedVersion() {
+        return "3.5.0";
     }
 }

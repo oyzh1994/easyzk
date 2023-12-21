@@ -11,33 +11,22 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author oyzh
- * @since 2023/09/20
+ * @since 2023/12/21
  */
 @Component
-public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKWhoAmITerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.LS);
+    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.WHO_AM_I);
 
     @Override
     public String commandName() {
-        return "ls";
-    }
-
-    @Override
-    public String commandArg() {
-        return "[-s] path";
+        return "whoami";
     }
 
     @Override
     public String commandDesc() {
-        return "获取子节点列表";
-    }
-
-    @Override
-    public String commandHelp() {
-        return super.commandHelp() + "\n" +
-                "-s stat";
+        return "获取连接用户信息";
     }
 }

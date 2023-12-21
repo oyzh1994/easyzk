@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.ListQuotaCommand;
+import org.apache.zookeeper.cli.CommandFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,7 +18,7 @@ public class ZKListQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandl
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new ListQuotaCommand();
+    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.LIST_QUOTA);
 
     @Override
     public String commandName() {

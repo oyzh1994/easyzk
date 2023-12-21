@@ -9,7 +9,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.DeleteAllCommand;
+import org.apache.zookeeper.cli.CommandFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,7 +21,7 @@ public class ZKDeleteallTerminalCommandHandler extends ZKPathTerminalCommandHand
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new DeleteAllCommand();
+    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DELETE_ALL);
 
     @Override
     public String commandName() {

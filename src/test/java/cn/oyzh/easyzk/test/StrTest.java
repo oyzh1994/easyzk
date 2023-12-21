@@ -29,6 +29,6 @@ public class StrTest {
         list.add("33311");
         list.add("测试11");
         list.add("测试1133");
-        System.out.println(TextUtil.beautifyFormat(list, 4));
+        System.out.println(TextUtil.beautifyFormat(list, 4, 0));
     }
 }

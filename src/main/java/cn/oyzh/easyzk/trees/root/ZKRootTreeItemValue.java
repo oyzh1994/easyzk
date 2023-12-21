@@ -25,7 +25,7 @@ public class ZKRootTreeItemValue extends ZKTreeItemValue {
     @Override
     public void flushGraphic() {
         if (this.graphic() == null) {
-            SVGGlyph glyph = new SVGGlyph("/font/zookeeper.svg", "12,10");
+            SVGGlyph glyph = new SVGGlyph("/font/Zookeeper1.svg", 12);
             this.graphic(glyph);
         }
     }

@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.controller;
 
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventTypes;
@@ -18,7 +17,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import cn.oyzh.fx.plus.tray.FXSystemTray;
+import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
@@ -48,11 +47,6 @@ public class MainController extends ParentController {
      */
     @Autowired
     private Project project;
-
-    /**
-     * 系统托盘
-     */
-    private static FXSystemTray tray;
 
     /**
      * 头部页面
@@ -85,32 +79,31 @@ public class MainController extends ParentController {
      * 初始化系统托盘
      */
     private void initSystemTray() {
-        if (tray != null) {
-            return;
-        }
-        try {
-            // 初始化托盘
-            tray = new FXSystemTray(ZKConst.ICON_PATH);
-            // 设置标题
-            tray.setTitle(this.project.getName() + " v" + this.project.getVersion());
-            // 打开主页
-            tray.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), this::showMain);
-            // 打开设置
-            tray.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), this::showSetting);
-            // 退出程序
-            tray.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
-                StaticLog.warn("exit app by tray.");
-                this.exit();
-            });
-            // 鼠标事件
-            tray.onMouseClicked(e -> {
-                // 单击鼠标主键，显示主页
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    this.showMain();
-                }
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (!TrayManager.exist()) {
+            try {
+                // 初始化
+                TrayManager.init(ZKConst.ICON_PATH);
+                // 设置标题
+                TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
+                // 打开主页
+                TrayManager.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), this::showMain);
+                // 打开设置
+                TrayManager.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), this::showSetting);
+                // 退出程序
+                TrayManager.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
+                    StaticLog.warn("exit app by tray.");
+                    this.exit();
+                });
+                // 鼠标事件
+                TrayManager.onMouseClicked(e -> {
+                    // 单击鼠标主键，显示主页
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        this.showMain();
+                    }
+                });
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -175,9 +168,9 @@ public class MainController extends ParentController {
 
         // 系统托盘
         if (this.setting.isExitTray()) {
-            if (tray != null) {
+            if (TrayManager.exist()) {
                 StaticLog.info("show tray.");
-                tray.show();
+                TrayManager.show();
             } else {
                 StaticLog.error("tray not support!");
                 MessageBox.warn("不支持系统托盘！");
@@ -205,7 +198,7 @@ public class MainController extends ParentController {
         EventUtil.register(this);
         try {
             this.initSystemTray();
-            tray.show();
+            TrayManager.show();
         } catch (Exception ex) {
             StaticLog.warn("不支持系统托盘!");
             ex.printStackTrace();
@@ -240,11 +233,8 @@ public class MainController extends ParentController {
         if (savePageInfo) {
             this.pageInfoStore.update(this.pageInfo);
         }
-
         // 关闭托盘
-        if (tray != null) {
-            tray.close();
-        }
+        TrayManager.destroy();
         super.onSystemExit();
     }
 

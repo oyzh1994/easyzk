@@ -7,9 +7,7 @@ import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
-import cn.oyzh.fx.plus.tray.FXSystemTray;
 import cn.oyzh.fx.plus.util.ResourceUtil;
 import javafx.application.Application;
 import javafx.event.Event;
@@ -520,32 +518,32 @@ public class AppMain extends Application {
     //
     //}
 
-    private void test22(Stage stage) {
-        // 初始化托盘
-        FXSystemTray tray = new FXSystemTray(ZKConst.ICON_PATH);
-        // 设置标题
-        tray.setTitle("test1");
-        // 打开主页
-        tray.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), () -> {
-
-        });
-        // 打开设置
-        tray.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), () -> {
-
-        });
-        // 退出程序
-        tray.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
-        });
-        // 鼠标事件
-        tray.onMouseClicked(e -> {
-            // 单击鼠标主键，显示主页
-            if (e.getButton() == MouseEvent.BUTTON1) {
-            }
-        });
-
-        tray.show();
-
-    }
+    // private void test22(Stage stage) {
+    //     // 初始化托盘
+    //     FXSystemTray tray = new FXSystemTray(ZKConst.ICON_PATH);
+    //     // 设置标题
+    //     tray.setTitle("test1");
+    //     // 打开主页
+    //     tray.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), () -> {
+    //
+    //     });
+    //     // 打开设置
+    //     tray.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), () -> {
+    //
+    //     });
+    //     // 退出程序
+    //     tray.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
+    //     });
+    //     // 鼠标事件
+    //     tray.onMouseClicked(e -> {
+    //         // 单击鼠标主键，显示主页
+    //         if (e.getButton() == MouseEvent.BUTTON1) {
+    //         }
+    //     });
+    //
+    //     tray.show();
+    //
+    // }
 
     private void test23(Stage stage) {
         SplitPane pane = new SplitPane();

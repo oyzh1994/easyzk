@@ -4,14 +4,12 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.store.ZKPageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -92,7 +90,8 @@ public class MainController extends ParentController {
                 // 退出程序
                 TrayManager.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
                     StaticLog.warn("exit app by tray.");
-                    this.exit();
+                    // this.exit();
+                    StageUtil.exit();
                 });
                 // 鼠标事件
                 TrayManager.onMouseClicked(e -> {
@@ -150,24 +149,18 @@ public class MainController extends ParentController {
         // 直接退出应用
         if (this.setting.isExitDirectly()) {
             StaticLog.info("exit directly.");
-            this.exit();
-            return;
-        }
-
-        // 总是询问
-        if (this.setting.isExitAsk()) {
+            // this.exit();
+            StageUtil.exit();
+        } else if (this.setting.isExitAsk()) { // 总是询问
             if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
                 StaticLog.info("exit by confirm.");
-                this.exit();
+                // this.exit();
+                StageUtil.exit();
             } else {
                 StaticLog.info("cancel by confirm.");
                 event.consume();
             }
-            return;
-        }
-
-        // 系统托盘
-        if (this.setting.isExitTray()) {
+        } else if (this.setting.isExitTray()) {// 系统托盘
             if (TrayManager.exist()) {
                 StaticLog.info("show tray.");
                 TrayManager.show();
@@ -205,13 +198,13 @@ public class MainController extends ParentController {
         }
     }
 
-    /**
-     * 应用退出
-     */
-    @EventReceiver(ZKEventTypes.APP_EXIT)
-    public void exit() {
-        StageUtil.exit();
-    }
+    // /**
+    //  * 应用退出
+    //  */
+    // @EventReceiver(ZKEventTypes.APP_EXIT)
+    // public void exit() {
+    //     StageUtil.exit();
+    // }
 
     @Override
     public void onSystemExit() {

@@ -94,7 +94,8 @@ public class HeaderController extends SubController {
     @FXML
     private void quit() {
         if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
-            EventUtil.fire(ZKEventTypes.APP_EXIT);
+            // EventUtil.fire(ZKEventTypes.APP_EXIT);
+            StageUtil.exit();
         }
     }
 

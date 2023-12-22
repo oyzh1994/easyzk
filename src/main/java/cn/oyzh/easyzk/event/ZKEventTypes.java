@@ -11,10 +11,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ZKEventTypes {
 
-    /**
-     * 应用退出事件
-     */
-    public static final String APP_EXIT = "APP_EXIT";
+    // /**
+    //  * 应用退出事件
+    //  */
+    // public static final String APP_EXIT = "APP_EXIT";
 
     /**
      * zk认证信息添加事件

@@ -9,7 +9,7 @@ import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupManage;
+import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.fxml.FXML;
@@ -49,7 +49,7 @@ public class HeaderController extends SubController {
     /**
      * zk树互斥器
      */
-    private final NodeGroupManage treeMutexes = new NodeGroupManage();
+    private final NodeMutexes treeMutexes = new NodeMutexes();
 
     /**
      * 认证管理

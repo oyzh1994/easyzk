@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupManage;
+import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -35,12 +35,10 @@ import java.util.List;
  * @author oyzh
  * @since 2022/06/07
  */
-//@Slf4j
 @StageAttribute(
         title = "zk节点认证",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuth.fxml"
 )
 public class ZKAuthController extends Controller {
@@ -111,7 +109,7 @@ public class ZKAuthController extends Controller {
     /**
      * 节点互斥器
      */
-    private final NodeGroupManage nodeGroupManage = new NodeGroupManage();
+    private final NodeMutexes nodeGroupManage = new NodeMutexes();
 
     /**
      * 认证

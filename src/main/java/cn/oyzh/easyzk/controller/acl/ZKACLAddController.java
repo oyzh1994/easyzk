@@ -20,7 +20,7 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupManage;
+import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.beans.value.ChangeListener;
@@ -179,7 +179,7 @@ public class ZKACLAddController extends Controller {
     /**
      * 节点互斥器
      */
-    private final NodeGroupManage nodeGroupManage = new NodeGroupManage();
+    private final NodeMutexes nodeGroupManage = new NodeMutexes();
 
     /**
      * 认证信息储存

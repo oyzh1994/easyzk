@@ -341,7 +341,8 @@ public class ZKClient {
             this.retryPolicy = new RetryOneTime(3_000);
         }
         // 创建客户端
-        this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.zkInfo.connectTimeOutMs(), this.zkInfo.sessionTimeOutMs(), authInfos, this.zkInfo.compatibility34());
+        this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.zkInfo.connectTimeOutMs(), this.zkInfo.sessionTimeOutMs(), authInfos, true);
+        // this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.zkInfo.connectTimeOutMs(), this.zkInfo.sessionTimeOutMs(), authInfos, this.zkInfo.compatibility34());
     }
 
     /**
@@ -973,11 +974,11 @@ public class ZKClient {
         if (path.equals("/")) {
             return false;
         }
-        StatsTrack track = new StatsTrack();
-        track.setBytes(bytes);
-        track.setCount(num);
-        return SetQuotaCommand.createQuota(this.getZooKeeper(), path.equals("/") ? "" : path, track);
-        // return SetQuotaCommand.createQuota(this.getZooKeeper(), path.equals("/") ? "" : path, bytes, num);
+        // StatsTrack track = new StatsTrack();
+        // track.setBytes(bytes);
+        // track.setCount(num);
+        // return SetQuotaCommand.createQuota(this.getZooKeeper(), path.equals("/") ? "" : path, track);
+        return SetQuotaCommand.createQuota(this.getZooKeeper(), path.equals("/") ? "" : path, bytes, num);
     }
 
     /**
@@ -992,20 +993,20 @@ public class ZKClient {
         if (path.equals("/")) {
             return false;
         }
-        // 清除全部配额
-        if (bytes && num) {
-            return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, null);
-        }
-        // 清除指定配额
-        StatsTrack track = new StatsTrack();
-        if (bytes) {
-            track.setBytes(1L);
-        }
-        if (num) {
-            track.setCount(1L);
-        }
-        return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, track);
-        // return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, bytes, num);
+        // // 清除全部配额
+        // if (bytes && num) {
+        //     return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, null);
+        // }
+        // // 清除指定配额
+        // StatsTrack track = new StatsTrack();
+        // if (bytes) {
+        //     track.setBytes(1L);
+        // }
+        // if (num) {
+        //     track.setCount(1L);
+        // }
+        // return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, track);
+        return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, bytes, num);
     }
 
     /**

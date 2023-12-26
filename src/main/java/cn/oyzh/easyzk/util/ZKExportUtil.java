@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -155,8 +156,12 @@ public class ZKExportUtil {
                 builder.append(prefix).append(" ");
             }
             // 拼接数据
-            builder.append(n.nodePath()).append(" ").append(n.nodeData());
-            // builder.append(n.nodePath()).append(" ").append(n.nodeDataStr(charset));
+            builder.append(n.nodePath()).append(" ");
+            // String data = n.nodeData();
+            String data = n.nodeDataStr(charset);
+            if (data != null) {
+                builder.append(data);
+            }
         }
         return builder.toString();
     }
@@ -185,7 +190,6 @@ public class ZKExportUtil {
             node.put("path", n.nodePath());
             // String data = n.nodeData();
             String data = n.nodeDataStr(charset);
-            // String data = n.nodeDataStr(charset);
             if (data != null) {
                 node.put("data", data);
             }
@@ -280,8 +284,8 @@ public class ZKExportUtil {
             txtList.remove(metaLine);
         }
         // 是否v1.5.5版本
-        boolean isV155 = txt.contains(LINE_REPLACE) || export.version().contains("1.5.5");
-        //boolean isV155 = txt.contains(LINE_REPLACE) || export.version().contains("1.5.5") || !txt.contains(TEXT_LINE_SEPARATOR);
+        boolean isV155 =  Objects.equals(export.getVersion(), "1.5.5");
+        // boolean isV155 = txt.contains(LINE_REPLACE) || export.version().contains("1.5.5") || !txt.contains(TEXT_LINE_SEPARATOR);
         if (isV155) {
             StaticLog.warn("当前导入数据版本为1.5.5版本");
             v1_5_5_txtHandle(export, txtList);
@@ -329,14 +333,10 @@ public class ZKExportUtil {
             // 当前为分割行
             if (t.equals(TEXT_LINE_SEPARATOR)) {
                 func.run();
-//                if (log.isDebugEnabled()) {
-                    StaticLog.debug("寻找到分割行.");
-//                }
+                StaticLog.debug("寻找到分割行.");
             } else {// 当前是数据行
                 lineData.append(t);
-//                if (log.isDebugEnabled()) {
-                    StaticLog.debug("寻找到数据行.");
-//                }
+                StaticLog.debug("寻找到数据行.");
             }
         }
         func.run();

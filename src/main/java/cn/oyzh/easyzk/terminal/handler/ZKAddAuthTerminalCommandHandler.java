@@ -5,8 +5,9 @@ import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import org.apache.zookeeper.cli.AddAuthCommand;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CommandFactory;
+// import org.apache.zookeeper.cli.CommandFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,7 +19,8 @@ public class ZKAddAuthTerminalCommandHandler extends ZKCliTerminalCommandHandler
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.ADD_AUTH);
+    private final CliCommand cliCommand = new AddAuthCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.ADD_AUTH);
 
     @Override
     public String commandName() {

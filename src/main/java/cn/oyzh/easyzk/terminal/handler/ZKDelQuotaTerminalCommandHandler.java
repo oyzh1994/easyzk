@@ -9,7 +9,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CommandFactory;
+// import org.apache.zookeeper.cli.CommandFactory;
+import org.apache.zookeeper.cli.DelQuotaCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,7 +22,8 @@ public class ZKDelQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandle
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DEL_QUOTA);
+    private final CliCommand cliCommand =new DelQuotaCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DEL_QUOTA);
 
     @Override
     public String commandName() {

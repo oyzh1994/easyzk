@@ -2,11 +2,12 @@ package cn.oyzh.easyzk.terminal;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.cli.ParseException;
+import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CliException;
-import org.apache.zookeeper.cli.CliParseException;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
@@ -63,20 +64,42 @@ public class ZKCliCommandWrapper {
      *
      * @param cmdArgs 命令及参数
      * @return 命令
-     * @throws CliParseException 异常
+     * @throws ParseException 异常
      */
-    public CliCommand parse(String[] cmdArgs) throws CliParseException {
+    public CliCommand parse(String[] cmdArgs) throws ParseException {
         this.command.parse(cmdArgs);
         return this.command;
     }
+
+    // /**
+    //  * 解析命令
+    //  *
+    //  * @param cmdArgs 命令及参数
+    //  * @return 命令
+    //  * @throws CliParseException 异常
+    //  */
+    // public CliCommand parse(String[] cmdArgs) throws CliParseException {
+    //     this.command.parse(cmdArgs);
+    //     return this.command;
+    // }
 
     /**
      * 执行命令
      *
      * @return 结果
-     * @throws CliParseException 异常
+     * @throws IOException, InterruptedException, KeeperException 异常
      */
-    public boolean exec() throws CliException {
+    public boolean exec() throws IOException, InterruptedException, KeeperException {
         return this.command.exec();
     }
+
+    // /**
+    //  * 执行命令
+    //  *
+    //  * @return 结果
+    //  * @throws CliParseException 异常
+    //  */
+    // public boolean exec() throws CliException {
+    //     return this.command.exec();
+    // }
 }

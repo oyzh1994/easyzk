@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
+import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;

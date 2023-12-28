@@ -9,12 +9,12 @@
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="280">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">

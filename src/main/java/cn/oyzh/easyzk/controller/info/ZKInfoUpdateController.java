@@ -13,10 +13,10 @@ import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.digital.NumberTextField;
+import cn.oyzh.fx.plus.controls.digital.PortTextField;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
-import cn.oyzh.fx.plus.controls.textfield.PortTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -35,7 +35,6 @@ import lombok.NonNull;
         title = "zk信息修改",
         modality = Modality.WINDOW_MODAL,
         iconUrls = ZKConst.ICON_PATH,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoUpdate.fxml"
 )
 public class ZKInfoUpdateController extends Controller {

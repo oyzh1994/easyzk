@@ -9,18 +9,18 @@
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
-<?import cn.oyzh.fx.plus.controls.PagePane?>
 <?import cn.oyzh.fx.plus.controls.rich.FlexVirtualizedScrollPane?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.page.PageBox?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -229,12 +229,12 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <PagePane fx:id="aclPage" iconSize="14"
-                          realWidth="100" onPrevClicked="#prevPage" onNextClicked="#nextPage">
+                <PageBox fx:id="aclPage" realHeight="22"
+                          realWidth="300" onPrevClicked="#prevPage" onNextClicked="#nextPage">
                     <FlowPane.margin>
-                        <Insets left="5" top="2"/>
+                        <Insets left="5" top="1"/>
                     </FlowPane.margin>
-                </PagePane>
+                </PageBox>
                 <padding>
                     <Insets top="9"/>
                 </padding>
@@ -429,31 +429,30 @@
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <FXLabel realWidth="135" text="子节点数量" maxHeight="24" styleClass="item-label,success">
+                    <FXLabel realWidth="135" text="子节点数量" maxHeight="24" styleClass="success">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
                     </FXLabel>
                     <NumberTextField fx:id="quotaNum" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
                                      promptText="设置节点配额子节点数量，-1代表无限制"
-                                     tipText="设置节点配额子节点数量，-1代表无限制"
-                    >
+                                     tipText="设置节点配额子节点数量，-1代表无限制">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <FXButton text="保存" onAction="#saveQuota" styleClass="btn-primary">
+                    <FXButton text="保存" onAction="#saveQuota" styleClass="accent">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
                     </FXButton>
-                    <FXButton text="清除" onAction="#clearQuotaNum" styleClass="btn-danger"/>
+                    <FXButton text="清除" onAction="#clearQuotaNum" styleClass="danger"/>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="24">
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <FXLabel realWidth="135" text="总数据大小" maxHeight="24" styleClass="item-label,success">
+                    <FXLabel realWidth="135" text="总数据大小" maxHeight="24" styleClass="success">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
@@ -466,7 +465,7 @@
                             <Insets right="5"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <FXButton text="保存" onAction="#saveQuota" styleClass="btn-primary">
+                    <FXButton text="保存" onAction="#saveQuota" styleClass="accent">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>

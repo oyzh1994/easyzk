@@ -68,21 +68,8 @@ public class ZKTreeView extends RichTreeView {
     }
 
     @Override
-    protected void initTreeView() {
-        super.initTreeView();
-        // 主鼠标按钮点击事件
-        super.setOnMousePrimaryClicked(e -> {
-            if (MouseUtil.isSingleClick(e)) {
-                this.clearContextMenu();
-            } else {
-                TreeItem<?> item = this.getSelectedItem();
-                if (item instanceof ZKConnectTreeItem treeItem) {
-                    treeItem.connect();
-                } else if (item instanceof ZKNodeTreeItem treeItem) {
-                    treeItem.loadChild();
-                }
-            }
-        });
+    protected void initEvenListener() {
+        super.initEvenListener();
         // 暂停按键处理
         KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
             TreeItem<?> item = this.getSelectedItem();

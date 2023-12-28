@@ -7,6 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKServiceController" realHeight="600" realWidth="900">
     <FXSeparator flexWidth="100% - 24" text="服务信息">
@@ -60,11 +61,11 @@
     <!--        <Insets left="12" top="5" bottom="5"/>-->
     <!--    </VBox.margin>-->
     <!--</Splitter>-->
-    <PagePane onNextClicked="#nextPage" onPrevClicked="#prevPage" fx:id="pagePane" iconSize="14" realWidth="100">
+    <PageBox onNextClicked="#nextPage" onPrevClicked="#prevPage" fx:id="pagePane" realHeight="22" realWidth="350">
         <VBox.margin>
             <Insets left="12" bottom="5"/>
         </VBox.margin>
-    </PagePane>
+    </PageBox>
     <FlexTableView flexWidth="100% - 28" fx:id="listTable" styleClass="fx-table-left">
         <VBox.margin>
             <Insets left="12" top="5"/>

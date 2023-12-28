@@ -16,14 +16,14 @@ import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
-import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
+import cn.oyzh.fx.plus.controls.digital.NumberTextField;
+import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -105,7 +105,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 右侧acl分页组件
      */
     @FXML
-    private PagePane<ZKACL> aclPage;
+    private PageBox<ZKACL> aclPage;
 
     /**
      * 右侧zk权限视图切换按钮
@@ -475,7 +475,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      *
      * @param pageNo 页码
      */
-    private void renderNode(int pageNo) {
+    private void renderNode(long pageNo) {
         // 获取子节点
         List<Node> nodes = this.aclBox.getChildren();
         // 隐藏子节点

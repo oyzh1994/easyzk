@@ -6,6 +6,7 @@
 <?import cn.oyzh.fx.plus.controls.textfield.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.filter.ZKFilterTabContent">
     <FlexHBox realHeight="50" flexWidth="100%">
@@ -14,16 +15,16 @@
                 <Insets left="5" top="-4"/>
             </HBox.margin>
         </ClearableTextField>
-        <PagePane fx:id="pagePane" onNextClicked="#nextPage" onPrevClicked="#prevPage" iconSize="14">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </PagePane>
         <SVGGlyph size="14" onMousePrimaryClicked="#toAdd" tipText="添加过滤信息" url="/font/add-fill.svg">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
         </SVGGlyph>
+        <PageBox fx:id="pagePane" onNextClicked="#nextPage" onPrevClicked="#prevPage" realHeight="22" realWidth="300">
+            <HBox.margin>
+                <Insets left="5" top="-3"/>
+            </HBox.margin>
+        </PageBox>
         <padding>
             <Insets top="18"/>
         </padding>

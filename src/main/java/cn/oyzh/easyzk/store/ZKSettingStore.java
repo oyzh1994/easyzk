@@ -16,7 +16,6 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2022/8/26
  */
-//@Slf4j
 public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
 
     /**

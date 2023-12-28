@@ -6,7 +6,6 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -91,11 +90,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
                 ZKEventUtil.graphicColorChanged(this.item);
             }
         } else {
-            if (ThemeManager.isDarkMode()) {
-                glyph.setColor(Color.WHITE);
-            } else {
-                glyph.setColor(Color.BLACK);
-            }
+            super.flushGraphicColor();
             // 触发图形颜色改变事件
             ZKEventUtil.graphicColorChanged(this.item);
         }

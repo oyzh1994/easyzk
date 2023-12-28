@@ -1,17 +1,16 @@
 package cn.oyzh.easyzk.controller.node;
 
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.PagePane;
+import cn.oyzh.fx.plus.controls.page.PageBox;
+import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -61,13 +60,13 @@ public class ZKServiceController extends Controller {
      * 分页组件
      */
     @FXML
-    private PagePane<ZKServerNode> pagePane;
+    private PageBox<ZKServerNode> pagePane;
 
     /**
      * 数据列表
      */
     @FXML
-    private TableView<ZKServerNode> listTable;
+    private FlexTableView<ZKServerNode> listTable;
 
     /**
      * id列
@@ -115,8 +114,7 @@ public class ZKServiceController extends Controller {
      */
     @FXML
     private void prevPage() {
-        this.listTable.getItems().clear();
-        this.listTable.getItems().addAll(this.pageData.prev());
+        this.listTable.setItem(this.pageData.prev());
     }
 
     /**
@@ -124,8 +122,7 @@ public class ZKServiceController extends Controller {
      */
     @FXML
     private void nextPage() {
-        this.listTable.getItems().clear();
-        this.listTable.getItems().addAll(this.pageData.next());
+        this.listTable.setItem(this.pageData.next());
     }
 
     @Override
@@ -144,7 +141,7 @@ public class ZKServiceController extends Controller {
 
         ZKClient zkClient = this.getStageProp("zkClient");
         List<ZKServerNode> servers = zkClient.getServers();
-        this.pageData = new Paging<>(servers, 10);
+        this.pageData = new Paging<>(servers, 3);
         this.pagePane.setPaging(this.pageData);
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(this.pageData.first());

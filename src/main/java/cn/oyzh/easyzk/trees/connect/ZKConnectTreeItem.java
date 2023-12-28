@@ -537,4 +537,9 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public boolean allowDrag() {
         return true;
     }
+
+    @Override
+    public void onPrimaryDoubleClick() {
+        this.connect();
+    }
 }

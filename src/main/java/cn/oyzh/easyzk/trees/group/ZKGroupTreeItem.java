@@ -123,13 +123,11 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         if (!this.isChildEmpty() && !MessageBox.confirm("确定删除此分组？(连接将移动到根节点)")) {
             return;
         }
-
         // 删除失败
         if (!this.groupStore.delete(this.value)) {
             MessageBox.warn("删除分组失败！");
             return;
         }
-
         // 处理连接
         if (!this.isChildEmpty()) {
             // 清除分组id

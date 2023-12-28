@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -48,11 +47,7 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
         if (this.treeItem.isConnected()) {
             glyph.setColor(Color.GREEN);
         } else {
-            if (ThemeManager.isDarkMode()) {
-                glyph.setColor(Color.WHITE);
-            } else {
-                glyph.setColor(Color.BLACK);
-            }
+            super.flushGraphicColor();
         }
     }
 

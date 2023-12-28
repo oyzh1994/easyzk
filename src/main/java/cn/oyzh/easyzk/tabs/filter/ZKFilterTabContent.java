@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
-import cn.oyzh.fx.plus.controls.PagePane;
+import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
@@ -40,7 +40,6 @@ import java.util.ResourceBundle;
  * @since 2023/11/03
  */
 @Lazy
-//@Slf4j
 @Component
 public class ZKFilterTabContent extends DynamicTabController {
 
@@ -48,7 +47,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      * 分页组件
      */
     @FXML
-    private PagePane<ZKFilter> pagePane;
+    private PageBox<ZKFilter> pagePane;
 
     /**
      * 搜索词汇
@@ -107,7 +106,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      *
      * @param pageNo 数据页码
      */
-    private void initDataList(int pageNo) {
+    private void initDataList(long pageNo) {
         this.pageData = this.filterStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(ZKFilterVO.convert(this.pageData.page(pageNo)));

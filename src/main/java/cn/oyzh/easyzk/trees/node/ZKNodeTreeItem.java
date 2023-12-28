@@ -1290,4 +1290,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public short loadTime() {
         return this.value.loadTime() == 0 ? 1 : this.value.loadTime();
     }
+
+    @Override
+    public void onPrimaryDoubleClick() {
+        this.loadChild();
+    }
 }

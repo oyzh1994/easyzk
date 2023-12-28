@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
-import cn.oyzh.fx.plus.controls.PagePane;
+import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
@@ -53,7 +53,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      * 分页组件
      */
     @FXML
-    private PagePane<ZKAuth> pagePane;
+    private PageBox<ZKAuth> pagePane;
 
     /**
      * 数据列表
@@ -106,7 +106,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      *
      * @param pageNo 页码
      */
-    private void initDataList(int pageNo) {
+    private void initDataList(long pageNo) {
         this.pageData = this.authStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(ZKAuthVO.convert(this.pageData.page(pageNo)));

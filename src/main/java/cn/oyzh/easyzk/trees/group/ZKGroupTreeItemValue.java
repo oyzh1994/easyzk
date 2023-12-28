@@ -2,33 +2,29 @@ package cn.oyzh.easyzk.trees.group;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
-import lombok.experimental.Accessors;
 
 
 /**
- * zk树节点值
+ * zk树group值
  *
  * @author oyzh
  * @since 2023/4/7
  */
-//@Slf4j
-@Accessors(chain = true, fluent = true)
 public class ZKGroupTreeItemValue extends ZKTreeItemValue {
 
-    private final ZKGroupTreeItem treeItem;
+    private final ZKGroupTreeItem item;
 
-    public ZKGroupTreeItemValue(@NonNull ZKGroupTreeItem treeItem) {
-        this.treeItem = treeItem;
+    public ZKGroupTreeItemValue(@NonNull ZKGroupTreeItem item) {
+        this.item = item;
         this.flushGraphic();
         this.flushText();
     }
 
     @Override
     public String name() {
-        return this.treeItem.value().getName();
+        return this.item.value().getName();
     }
 
     @Override
@@ -44,12 +40,8 @@ public class ZKGroupTreeItemValue extends ZKTreeItemValue {
     @Override
     public void flushGraphicColor() {
         if (this.graphic() instanceof SVGGlyph glyph) {
-            if (this.treeItem.isChildEmpty()) {
-                if (ThemeManager.isDarkMode()) {
-                    glyph.setColor(Color.WHITE);
-                } else {
-                    glyph.setColor(Color.BLACK);
-                }
+            if (this.item.isChildEmpty()) {
+               super.flushGraphicColor();
             } else {
                 glyph.setColor(Color.DEEPSKYBLUE);
             }

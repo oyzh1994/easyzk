@@ -566,12 +566,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 MenuItem delete = MenuItemExt.newItem("删除节点", new SVGGlyph("/font/delete.svg", "12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
                 items.add(delete);
             }
+            MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载节点数据", this::reloadChild);
+            items.add(reload);
             if (this.value.parentNode()) {
-                MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载此zk节点子节点", this::reloadChild);
-                MenuItem loadAll = MenuItemExt.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载此zk节点全部子节点", this::loadChildAll);
-                MenuItem expandAll = MenuItemExt.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开此zk节点全部子节点", this::expandAll);
-                MenuItem collapseAll = MenuItemExt.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩此zk节点全部子节点", this::collapseAll);
-                items.add(reload);
+                MenuItem loadAll = MenuItemExt.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载全部子节点", this::loadChildAll);
+                MenuItem expandAll = MenuItemExt.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开全部子节点", this::expandAll);
+                MenuItem collapseAll = MenuItemExt.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩全部子节点", this::collapseAll);
                 items.add(loadAll);
                 items.add(expandAll);
                 items.add(collapseAll);
@@ -916,9 +916,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void reloadChild() {
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> {
-                    this.loadChildes(false);
-                    this.reExpanded();
                     this.refreshNode();
+                    this.loadChildes(false);
+                    this.flushGraphic();
+                    this.reExpanded();
                 })
                 .onError(MessageBox::exception)
                 .onFinish(this::stopWaiting)
@@ -948,55 +949,39 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 List<TreeItem<?>> addList = new ArrayList<>(list.size());
                 // 移除列表
                 List<TreeItem<?>> delList = new ArrayList<>(list.size());
+                // 预加载标志位
+                boolean loadPre = false;
                 // 遍历列表寻找待更新或者待添加节点
                 f1:
                 for (ZKNode node : list) {
                     // 判断节点是否存在
-                    if (!this.isChildEmpty()) {
-                        for (ZKNodeTreeItem item : this.showChildren()) {
-                            if (StrUtil.equals(item.nodePath(), node.nodePath())) {
-                                item.value.copy(node);
-                                continue f1;
-                            }
+                    for (ZKNodeTreeItem item : this.showChildren()) {
+                        if (item.nodeEquals(node)) {
+                            item.copy(node);
+                            continue f1;
                         }
                     }
+                    // 添加到集合
                     addList.add(new ZKNodeTreeItem(node, this.root));
                     // 预先加载一部分
-                    if (addList.size() > 20) {
+                    if (addList.size() > 20 && !loadPre) {
                         this.addChild(addList);
+                        this.extend();
                         addList.clear();
-                        // 根据递归深度判断是否当前节点
-                        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-                        int depth = 0;
-                        for (StackTraceElement e : stackTrace) {
-                            if (e.getMethodName().equals("loadChildes")) {
-                                depth++;
-                            }
-                            if (depth > 1) {
-                                break;
-                            }
-                        }
-                        // 是当前节点，则展开
-                        if (depth <= 1) {
-                            this.extend();
-                        }
+                        loadPre = true;
                     }
                 }
                 // 遍历列表寻找待删除节点
                 for (ZKNodeTreeItem item : this.showChildren()) {
                     // 判断节点是否不存在
-                    if (list.parallelStream().noneMatch(node -> StrUtil.equals(item.nodePath(), node.nodePath()))) {
+                    if (list.parallelStream().noneMatch(item::nodeEquals)) {
                         delList.add(item);
                     }
                 }
                 // 删除节点
-                if (!delList.isEmpty()) {
-                    this.removeChild(delList);
-                }
+                this.removeChild(delList);
                 // 添加节点
-                if (!addList.isEmpty()) {
-                    this.addChild(addList);
-                }
+                this.addChild(addList);
             }
             // 递归处理
             if (loop && !this.isChildEmpty()) {
@@ -1016,6 +1001,25 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         } finally {
             this.loading = false;
         }
+    }
+
+    /**
+     * 复制节点
+     *
+     * @param node zk节点
+     */
+    public void copy(ZKNode node) {
+        this.value.copy(node);
+    }
+
+    /**
+     * 节点比较
+     *
+     * @param node 目标节点
+     * @return 结果
+     */
+    public boolean nodeEquals(ZKNode node) {
+        return this.value.nodeEquals(node);
     }
 
     /**

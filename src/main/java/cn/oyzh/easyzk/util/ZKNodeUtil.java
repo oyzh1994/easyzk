@@ -85,45 +85,35 @@ public class ZKNodeUtil {
             long start = System.currentTimeMillis();
             // zk节点
             ZKNode node = new ZKNode();
-            // 任务处理
-            List<Runnable> tasks = new ArrayList<>();
             // 异常
             AtomicReference<Exception> exceptionReference = new AtomicReference<>();
             // 设置zk状态
             if (properties.contains("s")) {
-                tasks.add(() -> {
-                    try {
-                        node.stat(client.checkExists(path));
-                    } catch (KeeperException.NoAuthException ignored) {
-                    } catch (Exception ex) {
-                        exceptionReference.set(ex);
-                    }
-                });
+                try {
+                    node.stat(client.checkExists(path));
+                } catch (KeeperException.NoAuthException ignored) {
+                } catch (Exception ex) {
+                    exceptionReference.set(ex);
+                }
             }
             // 设置zk访问控制
             if (properties.contains("a")) {
-                tasks.add(() -> {
-                    try {
-                        node.acl(client.getACL(path));
-                    } catch (KeeperException.NoAuthException ignored) {
-                    } catch (Exception ex) {
-                        exceptionReference.set(ex);
-                    }
-                });
+                try {
+                    node.acl(client.getACL(path));
+                } catch (KeeperException.NoAuthException ignored) {
+                } catch (Exception ex) {
+                    exceptionReference.set(ex);
+                }
             }
             // 设置zk数据
             if (properties.contains("d")) {
-                tasks.add(() -> {
-                    try {
-                        node.nodeData(client.getData(path));
-                    } catch (KeeperException.NoAuthException ignored) {
-                    } catch (Exception ex) {
-                        exceptionReference.set(ex);
-                    }
-                });
+                try {
+                    node.nodeData(client.getData(path));
+                } catch (KeeperException.NoAuthException ignored) {
+                } catch (Exception ex) {
+                    exceptionReference.set(ex);
+                }
             }
-            // 提交任务
-            ThreadUtil.submitVirtual(tasks);
             // 抛出异常
             if (exceptionReference.get() != null) {
                 throw exceptionReference.get();

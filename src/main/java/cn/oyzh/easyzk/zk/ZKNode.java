@@ -251,7 +251,7 @@ public class ZKNode implements Comparable<ZKNode> {
     }
 
     /**
-     * 复制对象
+     * 复制节点
      *
      * @param node zk节点
      * @return 当前对象
@@ -567,5 +567,15 @@ public class ZKNode implements Comparable<ZKNode> {
      */
     public boolean hasChildren() {
         return this.getNumChildren() > 0;
+    }
+
+    /**
+     * 节点比较
+     *
+     * @param node 目标节点
+     * @return 结果
+     */
+    public boolean nodeEquals(ZKNode node) {
+        return node != null && StrUtil.equals(this.nodePath(), node.nodePath());
     }
 }

@@ -9,7 +9,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <version>1.6.2</version>
+    <version>1.6.3</version>
     <artifactId>easyzk</artifactId>
     <description>zookeeper的可视化操作、导入导出、传输、命令行功能</description>
 
@@ -100,6 +100,13 @@
                     <artifactId>javacc</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.yetus/audience-annotations -->
+        <dependency>
+            <groupId>org.apache.yetus</groupId>
+            <artifactId>audience-annotations</artifactId>
+            <version>0.15.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->

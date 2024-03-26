@@ -1009,7 +1009,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             }
         } catch (Exception ex) {
             this.loaded = false;
-            throw new RuntimeException(ex);
+            // 非取消、连接关闭情况下，则抛出异常
+            if (!this.canceled && !this.root().isConnected()) {
+                throw new RuntimeException(ex);
+            }
         } finally {
             this.loading = false;
         }

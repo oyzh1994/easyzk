@@ -212,11 +212,9 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         } else {
                             this.loadRootNode();
                         }
-                    })
-                    .onFinish(() -> {
-                        this.stopWaiting();
                         this.flushGraphic();
                     })
+                    .onFinish(this::stopWaiting)
                     .onSuccess(this::flushLocal)
                     .onError(MessageBox::exception)
                     .build();
@@ -267,7 +265,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     public void closeConnect(boolean waiting) {
         Runnable func = () -> {
-            this.client.closeManual();
+            this.client.close();
             this.clearChild();
             this.flushGraphic();
         };
@@ -363,13 +361,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             return;
         }
         this.value.setName(connectName);
-        // 检查是否存在
-        // String name = this.value.getName();
-        // if (this.infoStore.exist(this.value)) {
-        //     this.value.setName(name);
-        //     MessageBox.warn("此连接名称已存在！");
-        //     return;
-        // }
         // 修改名称
         if (this.infoStore.update(this.value)) {
             this.setValue(new ZKConnectTreeItemValue(this));

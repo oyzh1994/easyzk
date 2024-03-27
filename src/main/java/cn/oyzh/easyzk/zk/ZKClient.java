@@ -375,12 +375,12 @@ public class ZKClient {
         }
     }
 
-    /**
-     * 关闭zk，手动模式
-     */
-    public void closeManual() {
-        this.close();
-    }
+    // /**
+    //  * 关闭zk，手动模式
+    //  */
+    // public void closeManual() {
+    //     this.close();
+    // }
 
     /**
      * 是否最后创建的节点

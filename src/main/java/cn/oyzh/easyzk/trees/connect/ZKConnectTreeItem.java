@@ -13,9 +13,9 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -201,12 +201,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     public void connect() {
         if (!this.isConnected() && !this.isConnecting()) {
-            // 执行连接
-            this.startWaiting();
             Task task = TaskBuilder.newBuilder()
                     .onStart(() -> {
                         this.client.startWithListener();
-                        if (!this.client.isConnected()) {
+                        if (!this.isConnected()) {
                             if (!this.canceled) {
                                 MessageBox.warn(this.value.getName() + "连接失败");
                             }
@@ -215,10 +213,15 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                             this.loadRootNode();
                         }
                     })
+                    .onFinish(() -> {
+                        this.stopWaiting();
+                        this.flushGraphic();
+                    })
                     .onSuccess(this::flushLocal)
-                    .onFinish(this::stopWaiting)
+                    .onError(MessageBox::exception)
                     .build();
-            ThreadUtil.startVirtual(task);
+            // 执行连接
+            this.startWaiting(task);
         }
     }
 
@@ -249,20 +252,35 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 关闭连接
      */
     public void closeConnect() {
-        if (!this.isWaiting() && this.isConnected()) {
+        if (this.isConnected()) {
             if (this.hasUnsavedNode() && !MessageBox.confirm("发现节点数据未保存，确定关闭连接？")) {
                 return;
             }
+            this.closeConnect(true);
+        }
+    }
+
+    /**
+     * 关闭连接
+     *
+     * @param waiting 是否开启等待动画
+     */
+    public void closeConnect(boolean waiting) {
+        Runnable func = () -> {
+            this.client.closeManual();
+            this.clearChild();
+            this.flushGraphic();
+        };
+        if (waiting) {
             Task task = TaskBuilder.newBuilder()
-                    .onStart(this.client::closeManual)
-                    .onSuccess(() -> {
-                        this.clearChild();
-                        this.flushLocal();
-                        SystemUtil.gcLater();
-                    }).onFinish(this::stopWaiting)
+                    .onStart(func)
+                    .onFinish(this::stopWaiting)
+                    .onSuccess(this::flushLocal)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);
+        } else {
+            func.run();
         }
     }
 
@@ -323,7 +341,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     @Override
     public void delete() {
         if (MessageBox.confirm("删除" + this.value().getName(), "确定删除连接？")) {
-            this.closeConnect();
+            this.closeConnect(false);
             if (this.parent().delConnectItem(this)) {
                 ZKEventUtil.infoDeleted(this.value);
             } else {

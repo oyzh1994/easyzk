@@ -71,18 +71,6 @@ public class ZKCliCommandWrapper {
         return this.command;
     }
 
-    // /**
-    //  * 解析命令
-    //  *
-    //  * @param cmdArgs 命令及参数
-    //  * @return 命令
-    //  * @throws CliParseException 异常
-    //  */
-    // public CliCommand parse(String[] cmdArgs) throws CliParseException {
-    //     this.command.parse(cmdArgs);
-    //     return this.command;
-    // }
-
     /**
      * 执行命令
      *
@@ -92,14 +80,4 @@ public class ZKCliCommandWrapper {
     public boolean exec() throws IOException, InterruptedException, KeeperException {
         return this.command.exec();
     }
-
-    // /**
-    //  * 执行命令
-    //  *
-    //  * @return 结果
-    //  * @throws CliParseException 异常
-    //  */
-    // public boolean exec() throws CliException {
-    //     return this.command.exec();
-    // }
 }

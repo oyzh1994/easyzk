@@ -24,7 +24,6 @@ import cn.oyzh.fx.plus.event.EventMsg;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
-import cn.oyzh.fx.plus.util.MouseUtil;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -102,7 +101,7 @@ public class ZKTreeView extends RichTreeView {
      */
     public void closeConnects() {
         for (ZKConnectTreeItem treeItem : this.root().getConnectedItems()) {
-            ThreadUtil.startVirtual(treeItem::closeConnect);
+            ThreadUtil.startVirtual(() -> treeItem.closeConnect(false));
         }
     }
 

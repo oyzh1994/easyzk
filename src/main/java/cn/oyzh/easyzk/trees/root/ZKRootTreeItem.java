@@ -146,7 +146,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             MessageBox.warn("仅支持单个文件！");
             return;
         }
-        File file = files.get(0);
+        File file = CollUtil.getFirst(files);
         // 解析文件
         this.parseConnect(file);
     }

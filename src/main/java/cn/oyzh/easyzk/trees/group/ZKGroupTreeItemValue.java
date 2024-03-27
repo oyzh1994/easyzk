@@ -39,12 +39,10 @@ public class ZKGroupTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public void flushGraphicColor() {
-        if (this.graphic() instanceof SVGGlyph glyph) {
-            if (this.item.isChildEmpty()) {
-               super.flushGraphicColor();
-            } else {
-                glyph.setColor(Color.DEEPSKYBLUE);
-            }
+        if (this.item.isChildEmpty()) {
+            super.flushGraphicColor();
+        } else if (this.graphic() instanceof SVGGlyph glyph) {
+            glyph.setColor(Color.DEEPSKYBLUE);
         }
     }
 }

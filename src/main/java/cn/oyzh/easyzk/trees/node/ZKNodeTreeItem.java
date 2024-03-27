@@ -921,6 +921,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                     this.flushGraphic();
                     this.reExpanded();
                 })
+                .onSuccess(this::flushLocal)
                 .onError(MessageBox::exception)
                 .onFinish(this::stopWaiting)
                 .build();

@@ -389,9 +389,9 @@ public class SearchController extends SubController {
         // 搜索触发事件
         KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(_ -> {
             if (this.searchMain.isVisible()) {
-                this.searchMain.disappear();
+                this.searchOpen();
             } else {
-                this.searchMain.display();
+                this.searchClose();
                 this.searchKW.requestFocus();
                 this.searchKW.selectEnd();
             }
@@ -427,6 +427,7 @@ public class SearchController extends SubController {
     @EventReceiver(value = ZKEventTypes.ZK_SEARCH_OPEN, async = true, verbose = true)
     public void searchOpen() {
         this.searchMain.display();
+        this.treeView.setFlexHeight("100% - 150");
     }
 
     /**
@@ -435,6 +436,7 @@ public class SearchController extends SubController {
     @EventReceiver(value = ZKEventTypes.ZK_SEARCH_CLOSE, async = true, verbose = true)
     public void searchClose() {
         this.searchMain.disappear();
+        this.treeView.setFlexHeight("100% - 60");
     }
 
     @Override

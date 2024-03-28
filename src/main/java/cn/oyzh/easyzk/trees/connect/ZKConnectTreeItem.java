@@ -212,7 +212,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         } else {
                             this.loadRootNode();
                         }
-                        this.flushGraphic();
                     })
                     .onFinish(this::stopWaiting)
                     .onSuccess(this::flushLocal)

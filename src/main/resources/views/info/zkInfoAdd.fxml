@@ -78,7 +78,7 @@
                         </HBox.margin>
                     </FlexCheckBox>
                     <FlexCheckBox fx:id="listen" text="监听节点" fontSize="11" selected="true"
-                                  tipText="监听连接的节点变化，可看到其他终端的操作，关闭后仅能看到当前终端的操作，数据更新可能不及时">
+                                  tipText="监听节点变化，可看到其他客户端的操作，关闭后仅能看到当前客户端的操作，数据更新可能不及时">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>

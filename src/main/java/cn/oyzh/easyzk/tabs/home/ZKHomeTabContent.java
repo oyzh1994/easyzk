@@ -7,10 +7,10 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -39,8 +39,7 @@ public class ZKHomeTabContent extends DynamicTabController {
     /**
      * 项目对象
      */
-    @Autowired
-    private Project project;
+    private final Project project = new Project();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -469,7 +469,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 刷新值
      */
     private void flushValue() {
-        BackgroundService.submit(() -> this.getValue().flush());
+         this.getValue().flush();
     }
 
     @Override
@@ -569,9 +569,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载节点数据", this::reloadChild);
             items.add(reload);
             if (this.value.parentNode()) {
+                MenuItem unload = MenuItemExt.newItem("取消加载", new SVGGlyph("/font/stop.svg", "12"), "取消加载子节点", this::unloadChild);
                 MenuItem loadAll = MenuItemExt.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载全部子节点", this::loadChildAll);
                 MenuItem expandAll = MenuItemExt.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开全部子节点", this::expandAll);
                 MenuItem collapseAll = MenuItemExt.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩全部子节点", this::collapseAll);
+                items.add(unload);
                 items.add(loadAll);
                 items.add(expandAll);
                 items.add(collapseAll);
@@ -709,6 +711,14 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             return treeItem;
         }
         return null;
+    }
+
+    /**
+     * 取消加载
+     */
+    public void unloadChild() {
+        this.clearChild();
+        this.loaded = false;
     }
 
     /**

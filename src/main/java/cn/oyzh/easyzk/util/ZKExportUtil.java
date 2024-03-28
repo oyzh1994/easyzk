@@ -74,60 +74,6 @@ public class ZKExportUtil {
         return data.replaceAll(LINE_REPLACE, System.lineSeparator());
     }
 
-//    /**
-//     * 从zk节点数据生成
-//     *
-//     * @param zkNodes zk节点数据
-//     * @return 数据字符串
-//     */
-//    public static String fromNodes(@NonNull List<ZKNode> zkNodes, boolean isJSON, String charset) {
-//        String exportData;
-//        Project project = SpringUtil.getBean(Project.class);
-//        //ZKNode fistNode = CollectionUtil.first(zkNodes);
-//        String version = project.getVersion();
-//        String platform = OSUtil.getOSType();
-//        //String charset = fistNode != null ? fistNode.charset() : null;
-//        if (isJSON) {
-//            ZKNodeExport export = new ZKNodeExport();
-//            // 元信息
-//            export.setNodes(new ArrayList<>());
-//            export.setVersion(version);
-//            export.setCharset(charset);
-//            export.setPlatform(platform);
-//            // 拼接数据
-//            if (CollectionUtil.isNotEmpty(zkNodes)) {
-//                for (ZKNode n : zkNodes) {
-//                    Map<String, String> node = new HashMap<>();
-//                    node.put("path", n.nodePath());
-//                    String data = n.nodeDataStr(charset);
-//                    if (data != null) {
-//                        node.put("data", data);
-//                    }
-//                    export.getNodes().add(node);
-//                }
-//            }
-//            exportData = export.toJSONString();
-//        } else {
-//            StringBuilder builder = new StringBuilder();
-//            // 元信息
-//            builder.append("**")
-//                    .append("version=").append(version).append(" ")
-//                    .append("charset=").append(charset).append(" ")
-//                    .append("platform=").append(platform).append(" ")
-//                    .append("**")
-//                    .append(System.lineSeparator());
-//            // 拼接数据
-//            for (ZKNode n : zkNodes) {
-//                String nodeData = n.nodeDataStr();
-//                // 格式化数据的换行符
-//                nodeData = replaceData(nodeData);
-//                builder.append(n.nodePath()).append(" ").append(nodeData).append(System.lineSeparator());
-//            }
-//            exportData = builder.toString();
-//        }
-//        return exportData;
-//    }
-
     /**
      * zk节点数据生成文本
      *
@@ -137,7 +83,7 @@ public class ZKExportUtil {
      * @return 数据文本字符串
      */
     public static String nodesToTxt(@NonNull List<ZKNode> zkNodes, String charset, String prefix) {
-        Project project = SpringUtil.getBean(Project.class);
+        Project project = new Project();
         String version = project.getVersion();
         String platform = OSUtil.getOSType();
         StringBuilder builder = new StringBuilder();
@@ -175,7 +121,7 @@ public class ZKExportUtil {
      * @return 数据json字符串
      */
     public static String nodesToJSON(@NonNull List<ZKNode> zkNodes, String charset, boolean prettyFormat) {
-        Project project = SpringUtil.getBean(Project.class);
+        Project project = new Project();
         String version = project.getVersion();
         String platform = OSUtil.getOSType();
         ZKNodeExport export = new ZKNodeExport();

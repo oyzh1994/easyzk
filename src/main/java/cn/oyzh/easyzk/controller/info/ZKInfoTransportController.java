@@ -41,12 +41,10 @@ import java.util.List;
  * @author oyzh
  * @since 2023/04/07
  */
-//@Slf4j
 @StageAttribute(
         title = "数据传输",
         iconUrls = ZKConst.ICON_PATH,
-        modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
+        modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoTransport.fxml"
 )
 public class ZKInfoTransportController extends Controller {

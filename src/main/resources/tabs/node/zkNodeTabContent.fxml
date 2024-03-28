@@ -70,18 +70,18 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="添加子节点" size="16" fx:id="addNode"
-                          onMousePrimaryClicked="#addNode" url="/font/add.svg">
-                    <FlowPane.margin>
-                        <Insets left="5" top="5"/>
-                    </FlowPane.margin>
-                </SVGGlyph>
-                <SVGGlyph tipText="删除节点" size="16"
-                          onMousePrimaryClicked="#deleteNode" url="/font/delete.svg">
-                    <FlowPane.margin>
-                        <Insets left="5" top="5"/>
-                    </FlowPane.margin>
-                </SVGGlyph>
+                <!-- <SVGGlyph tipText="添加子节点" size="16" fx:id="addNode" -->
+                <!--           onMousePrimaryClicked="#addNode" url="/font/add.svg"> -->
+                <!--     <FlowPane.margin> -->
+                <!--         <Insets left="5" top="5"/> -->
+                <!--     </FlowPane.margin> -->
+                <!-- </SVGGlyph> -->
+                <!-- <SVGGlyph tipText="删除节点" size="16" -->
+                <!--           onMousePrimaryClicked="#deleteNode" url="/font/delete.svg"> -->
+                <!--     <FlowPane.margin> -->
+                <!--         <Insets left="5" top="5"/> -->
+                <!--     </FlowPane.margin> -->
+                <!-- </SVGGlyph> -->
                 <SVGGlyph tipText="认证节点" size="15" onMousePrimaryClicked="#authNode" url="/font/unlock.svg">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
@@ -459,8 +459,7 @@
                     </FXLabel>
                     <NumberTextField fx:id="quotaBytes" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
                                      promptText="设置节点配额总数据大小，单位字节，-1代表无限制"
-                                     tipText="设置节点配额总数据大小，单位字节，-1代表无限制"
-                    >
+                                     tipText="设置节点配额总数据大小，单位字节，-1代表无限制">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
@@ -470,7 +469,7 @@
                             <Insets right="5"/>
                         </HBox.margin>
                     </FXButton>
-                    <FXButton text="清除" onAction="#clearQuotaBytes" styleClass="btn-danger"/>
+                    <FXButton text="清除" onAction="#clearQuotaBytes" styleClass="danger"/>
                 </FlexHBox>
             </FlexVBox>
         </FlexVBox>

@@ -1,9 +1,7 @@
 package cn.oyzh.easyzk.controller;
 
 
-import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.text.FlexText;
@@ -22,7 +20,6 @@ import javafx.stage.WindowEvent;
         resizeable = false,
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "about.fxml"
 )
 public class AboutController extends Controller {
@@ -42,7 +39,7 @@ public class AboutController extends Controller {
     /**
      * 项目信息
      */
-    private final Project project = SpringUtil.getBean(Project.class);
+    private final Project project = new Project();
 
     @Override
     public void onStageShown(WindowEvent event) {

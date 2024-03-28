@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="650">
+          fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="680">
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>

@@ -19,7 +19,6 @@ import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -43,8 +42,7 @@ public class MainController extends ParentController {
     /**
      * 项目信息
      */
-    @Autowired
-    private Project project;
+    private final Project project = new Project();
 
     /**
      * 头部页面

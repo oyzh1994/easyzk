@@ -131,11 +131,11 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private SVGGlyph unCollect;
 
-    /**
-     * 添加节点
-     */
-    @FXML
-    private SVGGlyph addNode;
+    // /**
+    //  * 添加节点
+    //  */
+    // @FXML
+    // private SVGGlyph addNode;
 
     /**
      * 加载耗时
@@ -293,7 +293,7 @@ public class ZKNodeTabContent extends DynamicTabController {
 
         // 按钮状态处理
         this.saveNodeData.disable();
-        this.addNode.setDisable(this.treeItem.ephemeral());
+        // this.addNode.setDisable(this.treeItem.ephemeral());
         this.node2QRCode.setDisable(!this.treeItem.hasReadPerm());
 
         // 收藏处理
@@ -567,21 +567,21 @@ public class ZKNodeTabContent extends DynamicTabController {
         }
     }
 
-    /**
-     * 添加子节点
-     */
-    @FXML
-    private void addNode() {
-        this.treeItem.addNode();
-    }
-
-    /**
-     * 删除zk节点
-     */
-    @FXML
-    private void deleteNode() {
-        this.treeItem.delete();
-    }
+    // /**
+    //  * 添加子节点
+    //  */
+    // @FXML
+    // private void addNode() {
+    //     this.treeItem.addNode();
+    // }
+    //
+    // /**
+    //  * 删除zk节点
+    //  */
+    // @FXML
+    // private void deleteNode() {
+    //     this.treeItem.delete();
+    // }
 
     /**
      * 复制节点路径及数据

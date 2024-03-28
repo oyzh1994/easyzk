@@ -47,7 +47,7 @@ public class ZKInfoExport {
      */
     public static ZKInfoExport fromConnects(@NonNull List<ZKInfo> zkInfos) {
         ZKInfoExport export = new ZKInfoExport();
-        Project project = SpringUtil.getBean(Project.class);
+        Project project = new Project();
         export.version = project.getVersion();
         export.connects = zkInfos;
         export.platform = System.getProperty("os.name");

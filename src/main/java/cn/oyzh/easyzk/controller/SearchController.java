@@ -1,21 +1,18 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
-import cn.oyzh.easyzk.store.ZKSettingStore;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubController;
-import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -74,18 +71,6 @@ public class SearchController extends SubController {
      */
     @FXML
     private FlexVBox searchMain;
-
-    /**
-     * 搜索-更多1
-     */
-    @FXML
-    private FlexHBox searchMore1;
-
-    /**
-     * 搜索-更多2
-     */
-    @FXML
-    private FlexHBox searchMore2;
 
     /**
      * 搜索-下一个
@@ -154,18 +139,6 @@ public class SearchController extends SubController {
     private FlexText replaceTips;
 
     /**
-     * 搜索-更多
-     */
-    @FXML
-    private SVGGlyph showSearchMore;
-
-    /**
-     * 搜索-更少
-     */
-    @FXML
-    private SVGGlyph hideSearchMore;
-
-    /**
      * zk树
      */
     private ZKTreeView treeView;
@@ -177,51 +150,9 @@ public class SearchController extends SubController {
     private ZKSearchHandler searchHandler;
 
     /**
-     * 设置
-     */
-    private final ZKSetting setting = ZKSettingStore.SETTING;
-
-    /**
-     * 设置储存
-     */
-    private final ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
-
-    /**
      * 搜索历史储存
      */
     private final ZKSearchHistoryStore historyStore = ZKSearchHistoryStore.INSTANCE;
-
-    /**
-     * 搜索-更多
-     */
-    @FXML
-    private void showSearchMore() {
-        this.searchMore1.display();
-        this.searchMain.setRealHeight(90);
-        this.treeView.setFlexHeight("100% - 152");
-        // 重新布局
-        this.searchMain.autosize();
-        this.hideSearchMore.display();
-        this.showSearchMore.disappear();
-        this.setting.setSearchMoreExpand((byte) 1);
-        this.settingStore.update(this.setting);
-    }
-
-    /**
-     * 搜索-更少
-     */
-    @FXML
-    private void hideSearchMore() {
-        this.searchMore1.disappear();
-        this.searchMain.setRealHeight(30);
-        this.treeView.setFlexHeight("100% - 92");
-        // 重新布局
-        this.searchMain.autosize();
-        this.hideSearchMore.disappear();
-        this.showSearchMore.display();
-        this.setting.setSearchMoreExpand((byte) 0);
-        this.settingStore.update(this.setting);
-    }
 
     /**
      * 搜索-搜索下一个
@@ -350,9 +281,10 @@ public class SearchController extends SubController {
                 } else {// 搜索结束
                     ZKEventUtil.searchFinish(param);
                 }
-                this.treeView.enable();
             } catch (Exception ex) {
                 ex.printStackTrace();
+            } finally {
+                this.treeView.enable();
             }
         }, 300);
     }
@@ -431,44 +363,49 @@ public class SearchController extends SubController {
 
     @Override
     protected void bindListeners() {
-        // 绑定搜索更多1的事件
-        this.searchMore1.managedBindVisible();
-        // 将searchMore2的visible属性绑定到searchMore1的visibleProperty()
-        this.searchMore2.managedProperty().bind(this.searchMore1.visibleProperty());
-        // 将searchMore2的visibleProperty绑定到searchMore1的visibleProperty()
-        this.searchMore2.visibleProperty().bind(this.searchMore1.visibleProperty());
+        this.searchMain.managedBindVisible();
         // 将searchPrev的disableProperty绑定到searchNext的disableProperty
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
         // 将searchAnalyse的disableProperty绑定到searchNext的disableProperty
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
-        // 绑定showSearchMore的事件，使其managedBindVisible()
-        this.showSearchMore.managedBindVisible();
         // 绑定mode的selectedChanged事件，当mode的值发生变化时调用preSearch()方法
-        this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        // 绑定hideSearchMore的事件，使其managedProperty绑定到hideSearchMore的visibleProperty
-        this.hideSearchMore.managedProperty().bind(this.hideSearchMore.visibleProperty());
+        this.mode.selectedChanged((_, _, _) -> this.preSearch());
         // 当fullMatch的值发生变化时调用preSearch()方法
-        this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.fullMatch.selectedChanged((_, _, _) -> this.preSearch());
         // 当searchPath的值发生变化时调用preSearch()方法
-        this.searchPath.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.searchPath.selectedChanged((_, _, _) -> this.preSearch());
         // 当searchData的值发生变化时调用preSearch()方法
-        this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.searchData.selectedChanged((_, _, _) -> this.preSearch());
         // 当compareCase的值发生变化时调用preSearch()方法
-        this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.compareCase.selectedChanged((_, _, _) -> this.preSearch());
         // 当searchKW添加文本时调用preSearch()方法
-        this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
+        this.searchKW.addTextChangeListener((_, _, _) -> this.preSearch());
         // 当replaceKW添加文本时，清空replaceTips的文本并调用searchCheck()方法
-        this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {
+        this.replaceKW.addTextChangeListener((_, _, _) -> {
             this.replaceTips.setText("");
             this.searchCheck();
         });
 
         // 搜索触发事件
-        // 监听stage的键盘按下事件，如果按下的键为F且Ctrl键同时按下，将焦点移至searchKW文本框并选中所有文本
-        KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(e -> {
-            this.searchKW.requestFocus();
-            this.searchKW.selectEnd();
+        KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(_ -> {
+            if (this.searchMain.isVisible()) {
+                this.searchMain.disappear();
+            } else {
+                this.searchMain.display();
+                this.searchKW.requestFocus();
+                this.searchKW.selectEnd();
+            }
         }));
+
+        // 监听搜索组件显示事件
+        this.searchMain.visibleProperty().addListener((_, _, newValue) -> {
+            if (newValue) {
+                this.preSearch();
+            } else {
+                this.searchHandler.preSearch(null);
+                ZKEventUtil.searchFinish(null);
+            }
+        });
     }
 
     /**
@@ -484,6 +421,22 @@ public class SearchController extends SubController {
         }
     }
 
+    /**
+     * 搜索打开
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_OPEN, async = true, verbose = true)
+    public void searchOpen() {
+        this.searchMain.display();
+    }
+
+    /**
+     * 搜索关闭
+     */
+    @EventReceiver(value = ZKEventTypes.ZK_SEARCH_CLOSE, async = true, verbose = true)
+    public void searchClose() {
+        this.searchMain.disappear();
+    }
+
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
@@ -494,10 +447,6 @@ public class SearchController extends SubController {
         this.searchHandler.init(this.treeView, this.parent().tabPane);
         this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup(1));
         this.replaceKW.setHistoryPopup(new ZKSearchHistoryPopup(2));
-        // 显示更多
-        if (this.setting.isSearchMoreExpand()) {
-            this.showSearchMore();
-        }
     }
 
     @Override
@@ -520,9 +469,7 @@ public class SearchController extends SubController {
     @FXML
     private void onSearchKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.TAB) {
-            if (this.searchMore1.isVisible()) {
-                this.replaceKW.requestFocus();
-            }
+            this.replaceKW.requestFocus();
         }
     }
 

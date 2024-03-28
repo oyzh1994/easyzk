@@ -173,6 +173,16 @@ public class ZKEventTypes {
     public static final String ZK_SEARCH_FINISH = "ZK_SEARCH_FINISH";
 
     /**
+     * zk搜索打开事件
+     */
+    public static final String ZK_SEARCH_OPEN = "ZK_SEARCH_OPEN";
+
+    /**
+     * zk搜索关闭事件
+     */
+    public static final String ZK_SEARCH_CLOSE = "ZK_SEARCH_CLOSE";
+
+    /**
      * zk终端打开事件
      */
     public static final String ZK_OPEN_TERMINAL = "ZK_OPEN_TERMINAL";

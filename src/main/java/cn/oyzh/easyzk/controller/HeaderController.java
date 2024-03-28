@@ -35,6 +35,12 @@ public class HeaderController extends SubController {
     private Project project;
 
     /**
+     * 搜索
+     */
+    @FXML
+    private SVGLabel search;
+
+    /**
      * 展开zk树
      */
     @FXML
@@ -94,7 +100,6 @@ public class HeaderController extends SubController {
     @FXML
     private void quit() {
         if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
-            // EventUtil.fire(ZKEventTypes.APP_EXIT);
             StageUtil.exit();
         }
     }
@@ -136,6 +141,20 @@ public class HeaderController extends SubController {
     private void expandTree() {
         this.treeMutexes.visible(this.collapseTree);
         EventUtil.fire(ZKEventTypes.LEFT_EXTEND);
+    }
+
+    /**
+     * 搜索
+     */
+    @FXML
+    private void search() {
+        if (this.search.hasProp("open")) {
+            ZKEventUtil.searchClose();
+            this.search.removeProp("open");
+        } else {
+            ZKEventUtil.searchOpen();
+            this.search.setProp("open", true);
+        }
     }
 
     @Override

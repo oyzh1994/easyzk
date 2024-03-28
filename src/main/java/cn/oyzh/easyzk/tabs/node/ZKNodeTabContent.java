@@ -143,12 +143,6 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private FXLabel loadTime;
 
-    // /**
-    //  * 右侧zk节点路径
-    //  */
-    // @FXML
-    // private FXLabel nodePath;
-
     /**
      * 右侧zk数据二维码视图
      */
@@ -248,7 +242,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     /**
      * 格式监听器
      */
-    private final ChangeListener<String> formatListener = (observable, oldValue, newValue) -> {
+    private final ChangeListener<String> formatListener = (_, _, _) -> {
         if (this.format.isStringFormat()) {
             this.showData((byte) 0);
             this.nodeData.setEditable(true);
@@ -308,6 +302,11 @@ public class ZKNodeTabContent extends DynamicTabController {
 
         // 字符集处理
         this.charset.select(this.treeItem.getCharset());
+
+        // undo监听
+        this.nodeData.undoableProperty().addListener((_, _, t1) -> this.dataUndo.setDisable(!t1));
+        // redo监听
+        this.nodeData.redoableProperty().addListener((_, _, t1) -> this.dataRedo.setDisable(!t1));
 
         // 加载耗时处理
         FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
@@ -839,7 +838,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.collect.managedProperty().bind(this.collect.visibleProperty());
         this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
         // 切换tab
-        this.root.selectedIndexChanged((observable, oldValue, newValue) -> {
+        this.root.selectedIndexChanged((_, _, newValue) -> {
             if (newValue.intValue() == 0) {
                 this.showData();
             } else if (newValue.intValue() == 1) {
@@ -854,16 +853,12 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.format.selectedItemChanged(this.formatListener);
         // 数据监听
         this.nodeData.addTextChangeListener(this.textListener);
-        // undo监听
-        this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-        // redo监听
-        this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         // 切换显示监听
-        this.aclViewSwitch.selectedChanged((abs, o, n) -> this.initAcl());
+        this.aclViewSwitch.selectedChanged((_, _, _) -> this.initAcl());
         // 切换显示监听
-        this.statViewSwitch.selectedChanged((abs, o, n) -> this.initStat());
+        this.statViewSwitch.selectedChanged((_, _, _) -> this.initStat());
         // 字符集选择事件
-        this.charset.selectedItemChanged((observable, oldValue, newValue) -> {
+        this.charset.selectedItemChanged((_, _, _) -> {
             this.treeItem.setCharset(this.charset.getCharset());
             this.showData();
         });

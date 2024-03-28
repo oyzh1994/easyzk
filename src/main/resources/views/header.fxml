@@ -5,9 +5,14 @@
 <?import javafx.scene.layout.FlowPane?>
 <FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <SVGLabel text="认证" onMousePrimaryClicked="#auth" tipText="节点认证配置" url="/font/audit.svg" size="12">
+    <SVGLabel text="查找" fx:id="search" onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" url="/font/search.svg" size="14">
         <FlowPane.margin>
             <Insets left="8" top="5" bottom="5"/>
+        </FlowPane.margin>
+    </SVGLabel>
+    <SVGLabel text="认证" onMousePrimaryClicked="#auth" tipText="节点认证配置" url="/font/audit.svg" size="12">
+        <FlowPane.margin>
+            <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
     <SVGLabel text="过滤" onMousePrimaryClicked="#filter" tipText="节点过滤配置" url="/font/filter.svg" size="12">

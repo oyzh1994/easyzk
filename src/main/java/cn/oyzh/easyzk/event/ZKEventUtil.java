@@ -20,7 +20,9 @@ import cn.oyzh.easyzk.event.msg.ZKNodeDeleteMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeUpdateMsg;
 import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
+import cn.oyzh.easyzk.event.msg.ZKSearchCloseMsg;
 import cn.oyzh.easyzk.event.msg.ZKSearchFinishMsg;
+import cn.oyzh.easyzk.event.msg.ZKSearchOpenMsg;
 import cn.oyzh.easyzk.event.msg.ZKSearchStartMsg;
 import cn.oyzh.easyzk.event.msg.ZKTerminalCloseMsg;
 import cn.oyzh.easyzk.event.msg.ZKTerminalOpenMsg;
@@ -242,7 +244,6 @@ public class ZKEventUtil {
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
-
     /**
      * 终端打开事件
      */
@@ -303,6 +304,22 @@ public class ZKEventUtil {
     public static void searchFinish(ZKSearchParam searchParam) {
         ZKSearchFinishMsg msg = new ZKSearchFinishMsg();
         msg.searchParam(searchParam);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 搜索打开事件
+     */
+    public static void searchOpen() {
+        ZKSearchOpenMsg msg = new ZKSearchOpenMsg();
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 搜索关闭事件
+     */
+    public static void searchClose() {
+        ZKSearchCloseMsg msg = new ZKSearchCloseMsg();
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 }

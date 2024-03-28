@@ -716,10 +716,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void loadChildAll() {
         Task task = TaskBuilder.newBuilder()
-                .onFinish(() -> {
-                    this.stopWaiting();
-                    this.flushValue();
-                })
+                .onFinish(this::stopWaiting)
+                .onSuccess(this::flushValue)
                 .onStart(() -> this.loadChildes(true))
                 .onError(ex -> MessageBox.exception(ex, "加载失败！"))
                 .build();
@@ -921,9 +919,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                     this.flushGraphic();
                     this.reExpanded();
                 })
+                .onFinish(this::stopWaiting)
                 .onSuccess(this::flushLocal)
                 .onError(MessageBox::exception)
-                .onFinish(this::stopWaiting)
                 .build();
         this.startWaiting(task);
     }

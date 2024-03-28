@@ -35,114 +35,114 @@
                           onMousePrimaryClicked="#saveNodeData"
                           url="/font/save.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph disable="true" fx:id="dataUndo" tipText="撤销(Ctrl+Z)" size="16"
                           onMousePrimaryClicked="#dataUndo"
                           url="/font/data_revoke.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph disable="true" fx:id="dataRedo" tipText="重做(Ctrl+Y)" size="16"
                           onMousePrimaryClicked="#dataRedo"
                           url="/font/data_redo.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
                           tipText="粘贴(Ctrl+V)">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData" tipText="清空数据">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph disable="true" tipText="节点转二维码" fx:id="node2QRCode" size="16"
                           onMousePrimaryClicked="#node2QRCode"
                           url="/font/qrcode.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph tipText="添加子节点" size="16" fx:id="addNode"
                           onMousePrimaryClicked="#addNode" url="/font/add.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph tipText="删除节点" size="16"
                           onMousePrimaryClicked="#deleteNode" url="/font/delete.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph tipText="认证节点" size="15" onMousePrimaryClicked="#authNode" url="/font/unlock.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph fx:id="collect" tipText="收藏节点" size="15"
                           onMousePrimaryClicked="#collect"
                           url="/font/star-l.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph visible="false" managed="false" fx:id="unCollect" tipText="取消收藏节点" size="15"
                           onMousePrimaryClicked="#unCollect"
                           url="/font/star.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph tipText="刷新节点(F5)" size="15" onMousePrimaryClicked="#reloadData"
                           url="/font/reload.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <FXLabel text="格式" fontSize="11">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </FXLabel>
                 <ZKFormatComboBox fx:id="format" initIndex="0" fontSize="11" prefWidth="100" style="-fx-padding: 0;">
                     <FlowPane.margin>
-                        <Insets left="3"/>
+                        <Insets left="3" top="5"/>
                     </FlowPane.margin>
                 </ZKFormatComboBox>
                 <FXLabel text="字符" fontSize="11">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </FXLabel>
                 <CharsetComboBox fx:id="charset" fontSize="11" prefWidth="115" style="-fx-padding: 0;">
                     <FlowPane.margin>
-                        <Insets left="3"/>
+                        <Insets left="3" top="5"/>
                     </FlowPane.margin>
                 </CharsetComboBox>
                 <FXLabel tipText="节点加载时间" fx:id="loadTime"
                          style="-fx-cursor: HAND;-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </FXLabel>
                 <SVGGlyph tipText="复制节点路径及数据" size="16"
                           onMousePrimaryClicked="#copyNode" url="/font/copy.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph tipText="复制节点路径" size="16"
                           onMousePrimaryClicked="#copyNodePath" url="/font/copy-path.svg">
                     <FlowPane.margin>
-                        <Insets left="5"/>
+                        <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
             </FlexFlowPane>

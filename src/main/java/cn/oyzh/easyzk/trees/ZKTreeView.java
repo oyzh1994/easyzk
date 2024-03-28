@@ -43,7 +43,6 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/1/29
  */
-//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class ZKTreeView extends RichTreeView {
 
@@ -334,48 +333,37 @@ public class ZKTreeView extends RichTreeView {
         this.filter();
     }
 
-    /**
-     * 重写父类方法，用于展开当前选中的项
-     */
     @Override
     public void expand() {
         TreeItem<?> item = this.getSelectedItem();
         if (item instanceof ZKNodeTreeItem treeItem) {
-            treeItem.expandAll(); // 展开所有子项
+            treeItem.expandAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
-            treeItem.extend(); // 扩展连接项
+            treeItem.extend();
             if (!treeItem.isChildEmpty()) {
                 treeItem.firstChild().expandAll(); // 展开第一个子项的所有子项
             }
         } else if (item instanceof ZKTreeItem<?> treeItem) {
-            treeItem.extend(); // 扩展普通项
+            treeItem.extend();
         }
         if (item != null) {
-            this.select(item); // 选中展开的项
+            this.select(item);
         }
     }
 
-    /**
-     * 重写父类方法，用于折叠当前选中的树项
-     */
     @Override
     public void collapse() {
-        // 获取当前选中的树项
         TreeItem<?> item = this.getSelectedItem();
         if (item instanceof ZKNodeTreeItem treeItem) {
-            // 如果当前树项是ZKNodeTreeItem类型，则折叠所有子树项
             treeItem.collapseAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
-            // 如果当前树项是ZKConnectTreeItem类型，则折叠当前树项，并折叠第一个子树项
             treeItem.collapse();
             if (!treeItem.isChildEmpty()) {
                 treeItem.firstChild().collapseAll();
             }
         } else if (item instanceof ZKTreeItem<?> treeItem) {
-            // 如果当前树项是ZKTreeItem类型，则只折叠当前树项
             treeItem.collapse();
         }
-        // 选中折叠后的树项
         if (item != null) {
             this.select(item);
         }

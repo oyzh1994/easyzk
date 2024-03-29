@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
@@ -15,20 +15,21 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKConnectionConnectedEvent extends Event<ZKClient> implements EventFormatter {
-
+public class ZKConnectionClosedEvent extends Event<ZKClient> implements EventFormatter {
 
     {
         super.group(ZKEventGroups.CONNECTION_ACTION);
-        super.type(ZKEventTypes.ZK_CONNECTION_CONNECTED);
+        super.type(ZKEventTypes.ZK_CONNECTION_CLOSED);
     }
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] 客户端已连接", this.data().infoName());
+        return String.format("[%s] 客户端已断开", this.data().infoName());
     }
 
     public ZKInfo info() {
         return this.data().zkInfo();
     }
+
+
 }

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
@@ -12,10 +12,10 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKFilterMainEvent extends Event<Object> {
+public class TreeChildFilterEvent extends Event<Object> {
 
     {
-        super.group(ZKEventGroups.FILTER_ACTION);
-        super.type(ZKEventTypes.ZK_FILTER_MAIN);
+        super.group(ZKEventGroups.TREE_ACTION);
+        super.type(ZKEventTypes.TREE_CHILD_FILTER);
     }
 }

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
@@ -15,11 +15,11 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(fluent = true)
-public class ZKNodeAddedEvent extends Event<ZKNode> {
+public class ZKNodeDeletedEvent extends Event<ZKNode>   {
 
     {
         super.group(ZKEventGroups.NODE_MSG);
-        super.type(ZKEventTypes.ZK_NODE_ADDED);
+        super.type(ZKEventTypes.ZK_NODE_DELETED);
     }
 
     private ZKClient client;
@@ -35,5 +35,4 @@ public class ZKNodeAddedEvent extends Event<ZKNode> {
     public ZKInfo info(){
         return this.client.zkInfo();
     }
-
 }

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
@@ -13,10 +13,10 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeGraphicColorChangedEvent extends Event<TreeItem<?>> {
+public class TreeGraphicChangedEvent extends Event<TreeItem<?>> {
 
     {
         super.group(ZKEventGroups.TREE_ACTION);
-        super.type(ZKEventTypes.TREE_GRAPHIC_COLOR_CHANGED);
+        super.type(ZKEventTypes.TREE_GRAPHIC_CHANGED);
     }
 }

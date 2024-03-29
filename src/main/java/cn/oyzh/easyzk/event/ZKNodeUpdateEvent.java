@@ -1,6 +1,5 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.fx.plus.event.Event;
@@ -14,18 +13,17 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(fluent = true)
-public class ZKNodeAddEvent extends Event<String> implements EventFormatter {
+public class ZKNodeUpdateEvent extends Event<String> implements EventFormatter {
 
     {
         super.group(ZKEventGroups.NODE_ACTION);
-        super.type(ZKEventTypes.ZK_NODE_ADD);
+        super.type(ZKEventTypes.ZK_NODE_UPDATE);
     }
 
-    private ZKInfo info;
+    private String infoName;
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] 新增节点:%s", this.info.getName(), this.data());
+        return String.format("[%s] 修改节点:%s", this.infoName, this.data());
     }
-
 }

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
@@ -13,11 +13,11 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKSearchFinishEvent extends Event<ZKSearchParam> {
+public class ZKSearchStartEvent extends Event<ZKSearchParam> {
 
     {
         super.group(ZKEventGroups.SEARCH_ACTION);
-        super.type(ZKEventTypes.ZK_SEARCH_FINISH);
+        super.type(ZKEventTypes.ZK_SEARCH_START);
     }
 
 }

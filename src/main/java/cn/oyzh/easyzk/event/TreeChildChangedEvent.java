@@ -1,22 +1,21 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.fx.plus.event.Event;
-import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/9/28
+ * @since 2023/9/19
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeGraphicChangedEvent extends Event<TreeItem<?>> {
+public class TreeChildChangedEvent extends Event<Object> {
 
     {
         super.group(ZKEventGroups.TREE_ACTION);
-        super.type(ZKEventTypes.TREE_GRAPHIC_CHANGED);
+        super.type(ZKEventTypes.TREE_CHILD_CHANGED);
     }
 }

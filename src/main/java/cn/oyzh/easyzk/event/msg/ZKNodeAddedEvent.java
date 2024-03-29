@@ -15,18 +15,14 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(fluent = true)
-public class ZKNodeUpdatedMsg extends Event<ZKNode> {
+public class ZKNodeAddedEvent extends Event<ZKNode> {
 
     {
         super.group(ZKEventGroups.NODE_MSG);
-        super.type(ZKEventTypes.ZK_NODE_UPDATED);
+        super.type(ZKEventTypes.ZK_NODE_ADDED);
     }
 
     private ZKClient client;
-
-    public byte[] nodeData() {
-        return this.data().nodeData();
-    }
 
     public String nodePath() {
         return this.data().nodePath();
@@ -36,7 +32,7 @@ public class ZKNodeUpdatedMsg extends Event<ZKNode> {
         return this.data().decodeNodePath();
     }
 
-    public ZKInfo info() {
+    public ZKInfo info(){
         return this.client.zkInfo();
     }
 

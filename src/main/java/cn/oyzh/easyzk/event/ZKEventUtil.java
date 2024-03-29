@@ -2,28 +2,28 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.event.msg.TreeChildChangedMsg;
-import cn.oyzh.easyzk.event.msg.TreeChildFilterMsg;
-import cn.oyzh.easyzk.event.msg.TreeChildSelectedMsg;
-import cn.oyzh.easyzk.event.msg.TreeGraphicChangedMsg;
-import cn.oyzh.easyzk.event.msg.TreeGraphicColorChangedMsg;
-import cn.oyzh.easyzk.event.msg.ZKAuthMainMsg;
-import cn.oyzh.easyzk.event.msg.ZKConnectionClosedMsg;
-import cn.oyzh.easyzk.event.msg.ZKConnectionConnectedMsg;
-import cn.oyzh.easyzk.event.msg.ZKConnectionLostMsg;
-import cn.oyzh.easyzk.event.msg.ZKFilterMainMsg;
-import cn.oyzh.easyzk.event.msg.ZKInfoDeletedMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeAddMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeAddedMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeDeleteMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeUpdateMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchCloseMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchFinishMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchOpenMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchStartMsg;
-import cn.oyzh.easyzk.event.msg.ZKTerminalCloseMsg;
+import cn.oyzh.easyzk.event.msg.TreeChildChangedEvent;
+import cn.oyzh.easyzk.event.msg.TreeChildFilterEvent;
+import cn.oyzh.easyzk.event.msg.TreeChildSelectedEvent;
+import cn.oyzh.easyzk.event.msg.TreeGraphicChangedEvent;
+import cn.oyzh.easyzk.event.msg.TreeGraphicColorChangedEvent;
+import cn.oyzh.easyzk.event.msg.ZKAuthMainEvent;
+import cn.oyzh.easyzk.event.msg.ZKConnectionClosedEvent;
+import cn.oyzh.easyzk.event.msg.ZKConnectionConnectedEvent;
+import cn.oyzh.easyzk.event.msg.ZKConnectionLostEvent;
+import cn.oyzh.easyzk.event.msg.ZKFilterMainEvent;
+import cn.oyzh.easyzk.event.msg.ZKInfoDeletedEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeAddEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeAddedEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeDeleteEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeDeletedEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeUpdateEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedEvent;
+import cn.oyzh.easyzk.event.msg.ZKSearchCloseEvent;
+import cn.oyzh.easyzk.event.msg.ZKSearchFinishEvent;
+import cn.oyzh.easyzk.event.msg.ZKSearchOpenEvent;
+import cn.oyzh.easyzk.event.msg.ZKSearchStartEvent;
+import cn.oyzh.easyzk.event.msg.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -49,7 +49,7 @@ public class ZKEventUtil {
      * @param client zk客户端
      */
     public static void connectionLost(ZKClient client) {
-        ZKConnectionLostMsg msg = new ZKConnectionLostMsg();
+        ZKConnectionLostEvent msg = new ZKConnectionLostEvent();
         msg.data(client);
         EventUtil.post(msg);
     }
@@ -60,7 +60,7 @@ public class ZKEventUtil {
      * @param client zk客户端
      */
     public static void connectionClosed(ZKClient client) {
-        ZKConnectionClosedMsg msg = new ZKConnectionClosedMsg();
+        ZKConnectionClosedEvent msg = new ZKConnectionClosedEvent();
         msg.data(client);
         EventUtil.post(msg);
     }
@@ -71,7 +71,7 @@ public class ZKEventUtil {
      * @param client zk客户端
      */
     public static void connectionConnected(ZKClient client) {
-        ZKConnectionConnectedMsg msg = new ZKConnectionConnectedMsg();
+        ZKConnectionConnectedEvent msg = new ZKConnectionConnectedEvent();
         msg.data(client);
         EventUtil.post(msg);
     }
@@ -83,7 +83,7 @@ public class ZKEventUtil {
      * @param path   路径
      */
     public static void nodeAdd(ZKClient client, String path) {
-        ZKNodeAddMsg msg = new ZKNodeAddMsg();
+        ZKNodeAddEvent msg = new ZKNodeAddEvent();
         msg.data(path);
         msg.info(client.zkInfo());
         EventUtil.post(msg);
@@ -98,7 +98,7 @@ public class ZKEventUtil {
      * @param nodePath 路径
      */
     public static void nodeAdded(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
-        ZKNodeAddedMsg msg = new ZKNodeAddedMsg();
+        ZKNodeAddedEvent msg = new ZKNodeAddedEvent();
         ZKNode zkNode = new ZKNode();
         zkNode.stat(stat);
         zkNode.nodePath(nodePath);
@@ -115,7 +115,7 @@ public class ZKEventUtil {
      * @param path   路径
      */
     public static void nodeUpdate(ZKClient client, String path) {
-        ZKNodeUpdateMsg msg = new ZKNodeUpdateMsg();
+        ZKNodeUpdateEvent msg = new ZKNodeUpdateEvent();
         msg.data(path);
         msg.infoName(client.infoName());
         EventUtil.post(msg);
@@ -130,7 +130,7 @@ public class ZKEventUtil {
      * @param nodePath 路径
      */
     public static void nodeUpdated(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
-        ZKNodeUpdatedMsg msg = new ZKNodeUpdatedMsg();
+        ZKNodeUpdatedEvent msg = new ZKNodeUpdatedEvent();
         ZKNode zkNode = new ZKNode();
         zkNode.stat(stat);
         zkNode.nodePath(nodePath);
@@ -149,7 +149,7 @@ public class ZKEventUtil {
      * @param delChildren 是否删除子节点
      */
     public static void nodeDelete(ZKClient client, String path, boolean delChildren) {
-        ZKNodeDeleteMsg msg = new ZKNodeDeleteMsg();
+        ZKNodeDeleteEvent msg = new ZKNodeDeleteEvent();
         msg.data(path);
         msg.delChildren(delChildren);
         msg.infoName(client.infoName());
@@ -164,7 +164,7 @@ public class ZKEventUtil {
      * @param nodePath 路径
      */
     public static void nodeDeleted(ZKClient client, Stat stat, String nodePath) {
-        ZKNodeDeletedMsg msg = new ZKNodeDeletedMsg();
+        ZKNodeDeletedEvent msg = new ZKNodeDeletedEvent();
         ZKNode zkNode = new ZKNode();
         zkNode.stat(stat);
         zkNode.nodePath(nodePath);
@@ -201,7 +201,7 @@ public class ZKEventUtil {
      * @param info zk信息
      */
     public static void infoDeleted(ZKInfo info) {
-        ZKInfoDeletedMsg msg = new ZKInfoDeletedMsg();
+        ZKInfoDeletedEvent msg = new ZKInfoDeletedEvent();
         msg.data(info);
         EventUtil.post(msg);
     }
@@ -210,7 +210,7 @@ public class ZKEventUtil {
      * 图标变化事件
      */
     public static void graphicChanged(TreeItem<?> treeItem) {
-        TreeGraphicChangedMsg msg = new TreeGraphicChangedMsg();
+        TreeGraphicChangedEvent msg = new TreeGraphicChangedEvent();
         msg.data(treeItem);
         EventUtil.postDelay(msg, 200);
     }
@@ -219,7 +219,7 @@ public class ZKEventUtil {
      * 图标颜色变化事件
      */
     public static void graphicColorChanged(TreeItem<?> treeItem) {
-        TreeGraphicColorChangedMsg msg = new TreeGraphicColorChangedMsg();
+        TreeGraphicColorChangedEvent msg = new TreeGraphicColorChangedEvent();
         msg.data(treeItem);
         EventUtil.postDelay(msg, 200);
     }
@@ -228,21 +228,21 @@ public class ZKEventUtil {
      * 树节点变化事件
      */
     public static void treeChildChanged() {
-        EventUtil.postDelay(new TreeChildChangedMsg(), 200);
+        EventUtil.postDelay(new TreeChildChangedEvent(), 200);
     }
 
     /**
      * 树节点过滤事件
      */
     public static void treeChildFilter() {
-        EventUtil.postDelay(new TreeChildFilterMsg(), 200);
+        EventUtil.postDelay(new TreeChildFilterEvent(), 200);
     }
 
     /**
      * 树节点选中事件
      */
     public static void treeChildSelected(ZKNodeTreeItem item) {
-        TreeChildSelectedMsg msg = new TreeChildSelectedMsg();
+        TreeChildSelectedEvent msg = new TreeChildSelectedEvent();
         msg.data(item);
         EventUtil.post(msg);
     }
@@ -271,7 +271,7 @@ public class ZKEventUtil {
      * @param info zk信息
      */
     public static void terminalClose(ZKInfo info) {
-        ZKTerminalCloseMsg event = new ZKTerminalCloseMsg();
+        ZKTerminalCloseEvent event = new ZKTerminalCloseEvent();
         event.data(info);
         EventUtil.post(event);
     }
@@ -280,21 +280,21 @@ public class ZKEventUtil {
      * 认证主页事件
      */
     public static void authMain() {
-        EventUtil.post(new ZKAuthMainMsg());
+        EventUtil.post(new ZKAuthMainEvent());
     }
 
     /**
      * 过滤主页事件
      */
     public static void filterMain() {
-        EventUtil.post(new ZKFilterMainMsg());
+        EventUtil.post(new ZKFilterMainEvent());
     }
 
     /**
      * 搜索开始事件
      */
     public static void searchStart(ZKSearchParam searchParam) {
-        ZKSearchStartMsg msg = new ZKSearchStartMsg();
+        ZKSearchStartEvent msg = new ZKSearchStartEvent();
         msg.data(searchParam);
         EventUtil.post(msg);
     }
@@ -303,7 +303,7 @@ public class ZKEventUtil {
      * 搜索结束事件
      */
     public static void searchFinish(ZKSearchParam searchParam) {
-        ZKSearchFinishMsg msg = new ZKSearchFinishMsg();
+        ZKSearchFinishEvent msg = new ZKSearchFinishEvent();
         msg.data(searchParam);
         EventUtil.post(msg);
     }
@@ -312,14 +312,14 @@ public class ZKEventUtil {
      * 搜索打开事件
      */
     public static void searchOpen() {
-        EventUtil.post(new ZKSearchOpenMsg());
+        EventUtil.post(new ZKSearchOpenEvent());
     }
 
     /**
      * 搜索关闭事件
      */
     public static void searchClose() {
-        EventUtil.post(new ZKSearchCloseMsg());
+        EventUtil.post(new ZKSearchCloseEvent());
     }
 
     /**

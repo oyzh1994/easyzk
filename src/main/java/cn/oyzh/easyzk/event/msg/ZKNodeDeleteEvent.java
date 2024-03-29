@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKNodeDeleteMsg extends Event<String> implements EventFormatter {
+public class ZKNodeDeleteEvent extends Event<String> implements EventFormatter {
 
     {
         super.group(ZKEventGroups.NODE_ACTION);

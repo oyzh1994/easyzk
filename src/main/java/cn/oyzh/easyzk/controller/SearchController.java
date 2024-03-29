@@ -1,11 +1,10 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.msg.TreeChildChangedMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchCloseMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchOpenMsg;
+import cn.oyzh.easyzk.event.msg.TreeChildChangedEvent;
+import cn.oyzh.easyzk.event.msg.ZKSearchCloseEvent;
+import cn.oyzh.easyzk.event.msg.ZKSearchOpenEvent;
 import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchParam;
@@ -21,7 +20,6 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.controls.textfield.SearchTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -416,7 +414,7 @@ public class SearchController extends SubController {
      */
     // @EventReceiver(value = ZKEventTypes.TREE_CHILD_CHANGED, async = true, verbose = true)
     @Subscribe
-    public void flushSearchResult(TreeChildChangedMsg event) {
+    public void flushSearchResult(TreeChildChangedEvent event) {
         if (this.treeView.searching()) {
             TaskManager.startDelay("zk:search:flushSearchResult", () -> {
                 this.searchHandler.updateResult();
@@ -430,7 +428,7 @@ public class SearchController extends SubController {
      */
     // @EventReceiver(value = ZKEventTypes.ZK_SEARCH_OPEN, async = true, verbose = true)
     @Subscribe
-    public void searchOpen(ZKSearchOpenMsg event) {
+    public void searchOpen(ZKSearchOpenEvent event) {
         this.searchMain.display();
         this.treeView.setFlexHeight("100% - 150");
     }
@@ -440,7 +438,7 @@ public class SearchController extends SubController {
      */
     @Subscribe
     // @EventReceiver(value = ZKEventTypes.ZK_SEARCH_CLOSE, async = true, verbose = true)
-    public void searchClose(ZKSearchCloseMsg event) {
+    public void searchClose(ZKSearchCloseEvent event) {
         this.searchMain.disappear();
         this.treeView.setFlexHeight("100% - 60");
     }

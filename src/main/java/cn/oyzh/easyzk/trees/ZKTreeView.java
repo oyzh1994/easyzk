@@ -13,13 +13,13 @@ import cn.oyzh.easyzk.event.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.ZKAuthEnabledEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
-import cn.oyzh.easyzk.event.msg.TreeChildFilterMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeAddMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeAddedMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeDeletedMsg;
-import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchFinishMsg;
-import cn.oyzh.easyzk.event.msg.ZKSearchStartMsg;
+import cn.oyzh.easyzk.event.msg.TreeChildFilterEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeAddEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeAddedEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeDeletedEvent;
+import cn.oyzh.easyzk.event.msg.ZKNodeUpdatedEvent;
+import cn.oyzh.easyzk.event.msg.ZKSearchFinishEvent;
+import cn.oyzh.easyzk.event.msg.ZKSearchStartEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
@@ -159,7 +159,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      * @param msg 消息
      */
     @Subscribe
-    private void nodeAdded(ZKNodeAddedMsg msg) {
+    private void nodeAdded(ZKNodeAddedEvent msg) {
         if (msg.client().isLastCreate(msg.nodePath())) {
             msg.client().clearLastCreate();
         } else {
@@ -174,7 +174,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     // @EventReceiver(value = ZKEventTypes.ZK_NODE_ADD, async = true, verbose = true)
     @Subscribe
-    private void nodeAdd(ZKNodeAddMsg msg) {
+    private void nodeAdd(ZKNodeAddEvent msg) {
         this.nodeAdd(msg.data(), msg.info());
     }
 
@@ -223,7 +223,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      * @param msg 消息
      */
     @Subscribe
-    private void nodeUpdated(ZKNodeUpdatedMsg msg) {
+    private void nodeUpdated(ZKNodeUpdatedEvent msg) {
         if (msg.client().isLastUpdate(msg.nodePath())) {
             msg.client().clearLastUpdate();
             return;
@@ -248,7 +248,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      * @param msg 消息
      */
     @Subscribe
-    private void nodeDeleted(ZKNodeDeletedMsg msg) {
+    private void nodeDeleted(ZKNodeDeletedEvent msg) {
         if (msg.client().isLastDelete(msg.nodePath())) {
             msg.client().clearLastDelete();
             return;
@@ -332,7 +332,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     // @EventReceiver(value = ZKEventTypes.ZK_SEARCH_START, async = true, verbose = true)
     @Subscribe
-    private void onSearchStart(ZKSearchStartMsg event) {
+    private void onSearchStart(ZKSearchStartEvent event) {
         this.searching = true;
         this.filter();
     }
@@ -342,7 +342,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     // @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, async = true, verbose = true)
     @Subscribe
-    private void onSearchFinish(ZKSearchFinishMsg event) {
+    private void onSearchFinish(ZKSearchFinishEvent event) {
         this.searching = false;
         this.filter();
     }
@@ -352,7 +352,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     // @EventReceiver(value = ZKEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
     @Subscribe
-    private void onTreeChildFilter(TreeChildFilterMsg event) {
+    private void onTreeChildFilter(TreeChildFilterEvent event) {
         this.itemFilter().initFilters();
         this.filter();
     }

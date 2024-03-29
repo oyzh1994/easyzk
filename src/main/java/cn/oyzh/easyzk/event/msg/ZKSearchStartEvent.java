@@ -2,20 +2,22 @@ package cn.oyzh.easyzk.event.msg;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/9/19
+ * @since 2023/11/11
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeChildChangedMsg extends Event<Object> {
+public class ZKSearchStartEvent extends Event<ZKSearchParam> {
 
     {
-        super.group(ZKEventGroups.TREE_ACTION);
-        super.type(ZKEventTypes.TREE_CHILD_CHANGED);
+        super.group(ZKEventGroups.SEARCH_ACTION);
+        super.type(ZKEventTypes.ZK_SEARCH_START);
     }
+
 }

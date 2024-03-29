@@ -3,27 +3,31 @@ package cn.oyzh.easyzk.event.msg;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/9/18
+ * @since 2023/9/19
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKInfoDeletedMsg extends Event<ZKInfo> implements EventFormatter {
+public class ZKConnectionLostEvent extends Event<ZKClient> implements EventFormatter {
 
     {
-        super.group(ZKEventGroups.INFO_ACTION);
-        super.type(ZKEventTypes.ZK_INFO_DELETED);
+        super.group(ZKEventGroups.CONNECTION_ACTION);
+        super.type(ZKEventTypes.ZK_CONNECTION_LOST);
     }
 
     @Override
     public String eventFormat() {
-        return String.format("连接[%s] 已删除", this.data().getName());
+        return String.format("[%s] 客户端已中断", this.data().infoName());
+    }
+
+    public ZKInfo info() {
+        return this.data().zkInfo();
     }
 }

@@ -2,23 +2,20 @@ package cn.oyzh.easyzk.event.msg;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/11/29
+ * @since 2023/9/19
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeChildSelectedMsg extends Event<ZKNodeTreeItem> {
+public class ZKAuthMainEvent extends Event<Object> {
 
     {
-        super.group(ZKEventGroups.TREE_ACTION);
-        super.type(ZKEventTypes.TREE_CHILD_SELECTED);
+        super.group(ZKEventGroups.AUTH_ACTION);
+        super.type(ZKEventTypes.ZK_AUTH_MAIN);
     }
-
 }

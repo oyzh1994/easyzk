@@ -5,7 +5,6 @@ import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.fx.plus.event.Event;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,10 +13,10 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeGraphicColorChangedMsg extends Event<TreeItem<?>> {
+public class TreeGraphicChangedEvent extends Event<TreeItem<?>> {
 
     {
         super.group(ZKEventGroups.TREE_ACTION);
-        super.type(ZKEventTypes.TREE_GRAPHIC_COLOR_CHANGED);
+        super.type(ZKEventTypes.TREE_GRAPHIC_CHANGED);
     }
 }

@@ -1,23 +1,23 @@
 package cn.oyzh.easyzk.event.msg;
 
+import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.fx.plus.event.Event;
-import javafx.scene.control.TreeItem;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/9/28
+ * @since 2023/9/21
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeGraphicChangedMsg extends Event<TreeItem<?>> {
+public class ZKTerminalCloseEvent extends Event<ZKInfo> {
 
     {
-        super.group(ZKEventGroups.TREE_ACTION);
-        super.type(ZKEventTypes.TREE_GRAPHIC_CHANGED);
+        super.group(ZKEventGroups.TERMINAL_ACTION);
+        super.type(ZKEventTypes.ZK_CLOSE_TERMINAL);
     }
+
 }

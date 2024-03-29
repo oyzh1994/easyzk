@@ -7,7 +7,6 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -16,7 +15,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKConnectionConnectedMsg extends Event<ZKClient> implements EventFormatter {
+public class ZKConnectionConnectedEvent extends Event<ZKClient> implements EventFormatter {
 
 
     {

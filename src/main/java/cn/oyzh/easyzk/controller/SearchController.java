@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.easyzk.event.TreeChildChangedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.msg.TreeChildChangedEvent;
-import cn.oyzh.easyzk.event.msg.ZKSearchCloseEvent;
-import cn.oyzh.easyzk.event.msg.ZKSearchOpenEvent;
+import cn.oyzh.easyzk.event.ZKSearchCloseEvent;
+import cn.oyzh.easyzk.event.ZKSearchOpenEvent;
 import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchParam;

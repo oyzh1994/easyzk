@@ -2,13 +2,15 @@ package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.easyzk.event.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.event.msg.TreeChildSelectedMsg;
 import cn.oyzh.easyzk.event.msg.TreeGraphicChangedMsg;
 import cn.oyzh.easyzk.event.msg.TreeGraphicColorChangedMsg;
+import cn.oyzh.easyzk.event.msg.ZKAuthMainMsg;
 import cn.oyzh.easyzk.event.msg.ZKConnectionClosedMsg;
 import cn.oyzh.easyzk.event.msg.ZKTerminalCloseMsg;
-import cn.oyzh.easyzk.event.msg.ZKTerminalOpenMsg;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
 import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
@@ -18,9 +20,10 @@ import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.util.FXUtil;
+import com.google.common.eventbus.Subscribe;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
@@ -38,7 +41,7 @@ import java.util.function.Consumer;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKTabPane extends DynamicTabPane {
+public class ZKTabPane extends DynamicTabPane implements EventListener {
 
     @Override
     protected void initTabPane() {
@@ -181,9 +184,10 @@ public class ZKTabPane extends DynamicTabPane {
      *
      * @param event 事件
      */
-    @EventReceiver(value = ZKEventTypes.ZK_OPEN_TERMINAL, async = true, verbose = true, fxThread = true)
-    private void openTerminal(Event<ZKTerminalOpenMsg> event) {
-        this.initTerminalTab(event.data().info());
+    // @EventReceiver(value = ZKEventTypes.ZK_OPEN_TERMINAL, async = true, verbose = true, fxThread = true)
+    @Subscribe
+    private void openTerminal(ZKTerminalOpenEvent event) {
+        this.initTerminalTab(event.data());
     }
 
     /**
@@ -191,11 +195,12 @@ public class ZKTabPane extends DynamicTabPane {
      *
      * @param event 事件
      */
-    @EventReceiver(value = ZKEventTypes.ZK_CLOSE_TERMINAL, async = true, verbose = true, fxThread = true)
-    private void closeTerminal(Event<ZKTerminalCloseMsg> event) {
+    // @EventReceiver(value = ZKEventTypes.ZK_CLOSE_TERMINAL, async = true, verbose = true, fxThread = true)
+    @Subscribe
+    private void closeTerminal(ZKTerminalCloseMsg event) {
         try {
             // 寻找节点
-            ZKTerminalTab terminalTab = this.getTerminalTab(event.data().info());
+            ZKTerminalTab terminalTab = this.getTerminalTab(event.data());
             // 移除节点
             if (terminalTab != null) {
                 terminalTab.closeTab();
@@ -210,9 +215,10 @@ public class ZKTabPane extends DynamicTabPane {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = ZKEventTypes.TREE_GRAPHIC_CHANGED, async = true, verbose = true)
+    // @EventReceiver(value = ZKEventTypes.TREE_GRAPHIC_CHANGED, async = true, verbose = true)
+    @Subscribe
     public void graphicChanged(TreeGraphicChangedMsg msg) {
-        ZKNodeTab nodeTab = this.getNodeTab(msg.item());
+        ZKNodeTab nodeTab = this.getNodeTab(msg.data());
         if (nodeTab != null) {
             nodeTab.flushGraphic();
             nodeTab.flushTitle();
@@ -224,9 +230,10 @@ public class ZKTabPane extends DynamicTabPane {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = ZKEventTypes.TREE_GRAPHIC_COLOR_CHANGED, async = true, verbose = true)
+    // @EventReceiver(value = ZKEventTypes.TREE_GRAPHIC_COLOR_CHANGED, async = true, verbose = true)
+    @Subscribe
     public void graphicColorChanged(TreeGraphicColorChangedMsg msg) {
-        ZKNodeTab nodeTab = this.getNodeTab(msg.item());
+        ZKNodeTab nodeTab = this.getNodeTab(msg.data());
         if (nodeTab != null) {
             nodeTab.flushGraphicColor();
         }
@@ -267,10 +274,11 @@ public class ZKTabPane extends DynamicTabPane {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = ZKEventTypes.TREE_CHILD_SELECTED, async = true, verbose = true, fxThread = true)
+    // @EventReceiver(value = ZKEventTypes.TREE_CHILD_SELECTED, async = true, verbose = true, fxThread = true)
+    @Subscribe
     public void initNodeTab(TreeChildSelectedMsg msg) {
-        if (msg != null && msg.item() != null) {
-            ZKNodeTab nodeTab = this.getNodeTab(msg.item());
+        if (msg != null && msg.data() != null) {
+            ZKNodeTab nodeTab = this.getNodeTab(msg.data());
             if (nodeTab == null) {
                 nodeTab = new ZKNodeTab();
                 super.addTab(nodeTab);
@@ -278,7 +286,7 @@ public class ZKTabPane extends DynamicTabPane {
             // 选中节点
             this.select(nodeTab);
             // 初始化节点
-            nodeTab.init(msg.item());
+            nodeTab.init(msg.data());
         }
     }
 
@@ -287,10 +295,11 @@ public class ZKTabPane extends DynamicTabPane {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = ZKEventTypes.ZK_CONNECTION_CLOSED, async = true, verbose = true)
+    // @EventReceiver(value = ZKEventTypes.ZK_CONNECTION_CLOSED, async = true, verbose = true)
+    @Subscribe
     public void connectionClosed(ZKConnectionClosedMsg msg) {
         for (ZKNodeTab nodeTab : this.getNodeTabs()) {
-            if (nodeTab.client() == msg.client()) {
+            if (nodeTab.client() == msg.data()) {
                 nodeTab.closeTab();
             }
         }
@@ -308,8 +317,9 @@ public class ZKTabPane extends DynamicTabPane {
     /**
      * 初始化认证tab
      */
-    @EventReceiver(value = ZKEventTypes.ZK_AUTH_MAIN, async = true, verbose = true)
-    public void initAuthTab() {
+    // @EventReceiver(value = ZKEventTypes.ZK_AUTH_MAIN, async = true, verbose = true)
+    @Subscribe
+    public void initAuthTab(ZKAuthMainMsg event) {
         ZKAuthTab tab = this.getAuthTab();
         if (tab == null) {
             tab = new ZKAuthTab();
@@ -330,8 +340,9 @@ public class ZKTabPane extends DynamicTabPane {
     /**
      * 初始化过滤tab
      */
-    @EventReceiver(value = ZKEventTypes.ZK_FILTER_MAIN, async = true, verbose = true)
-    public void initFilterTab() {
+    // @EventReceiver(value = ZKEventTypes.ZK_FILTER_MAIN, async = true, verbose = true)
+    @Subscribe
+    public void initFilterTab(ZKAuthMainMsg event) {
         ZKFilterTab tab = this.getFilterTab();
         if (tab == null) {
             tab = new ZKFilterTab();

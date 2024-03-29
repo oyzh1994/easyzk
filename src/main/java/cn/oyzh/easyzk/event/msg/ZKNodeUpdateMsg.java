@@ -2,8 +2,9 @@ package cn.oyzh.easyzk.event.msg;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.fx.plus.event.EventMsg;
-import cn.oyzh.fx.plus.event.EventMsgFormatter;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventFormatter;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -12,22 +13,19 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/9/18
  */
-@Getter
+@Data
 @Accessors(fluent = true)
-public class ZKNodeUpdateMsg implements EventMsg, EventMsgFormatter {
+public class ZKNodeUpdateMsg extends Event<String> implements EventFormatter {
 
-    private final String name = ZKEventTypes.ZK_NODE_UPDATE;
+    {
+        super.group(ZKEventGroups.NODE_ACTION);
+        super.type(ZKEventTypes.ZK_NODE_UPDATE);
+    }
 
-    private final String group = ZKEventGroups.NODE_ACTION;
-
-    @Setter
-    private String path;
-
-    @Setter
     private String infoName;
 
     @Override
-    public String formatMsg() {
-        return String.format("[%s] 修改节点:%s", this.infoName, this.path);
+    public String eventFormat() {
+        return String.format("[%s] 修改节点:%s", this.infoName, this.data());
     }
 }

@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.event.msg;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -12,9 +12,10 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKFilterMainMsg implements EventMsg {
+public class ZKFilterMainMsg extends Event<Object> {
 
-    private final String name = ZKEventTypes.ZK_FILTER_MAIN;
-
-    private final String group = ZKEventGroups.FILTER_ACTION;
+    {
+        super.group(ZKEventGroups.FILTER_ACTION);
+        super.type(ZKEventTypes.ZK_FILTER_MAIN);
+    }
 }

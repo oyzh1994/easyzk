@@ -1,51 +1,43 @@
 package cn.oyzh.easyzk.event.msg;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.event.EventMsg;
-import lombok.Getter;
-import lombok.Setter;
+import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.plus.event.Event;
+import lombok.Data;
 import lombok.experimental.Accessors;
-import org.apache.zookeeper.data.Stat;
-
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
 
 /**
  * @author oyzh
  * @since 2023/9/18
  */
-@Getter
+@Data
 @Accessors(fluent = true)
-public class ZKNodeUpdatedMsg implements EventMsg {
+public class ZKNodeUpdatedMsg extends Event<ZKNode> {
 
-    private final String name = ZKEventTypes.ZK_NODE_UPDATED;
+    {
+        super.group(ZKEventGroups.NODE_MSG);
+        super.type(ZKEventTypes.ZK_NODE_UPDATED);
+    }
 
-    private final String group = ZKEventGroups.NODE_MSG;
-
-    @Setter
-    private Stat stat;
-
-    @Setter
-    private String path;
-
-    @Setter
-    private byte[] data;
-
-    @Setter
     private ZKClient client;
 
-    public String decodeNodePath() {
-        if (StrUtil.containsAny(this.path, "%", "+")) {
-            return URLDecoder.decode(this.path, Charset.defaultCharset());
-        }
-        return this.path;
+    public byte[] nodeData() {
+        return this.data().nodeData();
     }
 
-    public ZKInfo info(){
+    public String nodePath() {
+        return this.data().nodePath();
+    }
+
+    public String decodeNodePath() {
+        return this.data().decodeNodePath();
+    }
+
+    public ZKInfo info() {
         return this.client.zkInfo();
     }
+
 }

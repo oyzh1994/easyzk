@@ -3,23 +3,17 @@ package cn.oyzh.easyzk.event.msg;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.search.ZKSearchParam;
-import cn.oyzh.fx.plus.event.EventMsg;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import cn.oyzh.fx.plus.event.Event;
 
 /**
  * @author oyzh
  * @since 2024/03/27
  */
-@Getter
-@Accessors(fluent = true)
-public class ZKSearchCloseMsg implements EventMsg {
+public class ZKSearchCloseMsg extends Event<ZKSearchParam> {
 
-    private final String name = ZKEventTypes.ZK_SEARCH_CLOSE;
+    {
+        super.group(ZKEventGroups.SEARCH_ACTION);
+        super.type(ZKEventTypes.ZK_SEARCH_CLOSE);
+    }
 
-    private final String group = ZKEventGroups.SEARCH_ACTION;
-
-    @Setter
-    private ZKSearchParam searchParam;
 }

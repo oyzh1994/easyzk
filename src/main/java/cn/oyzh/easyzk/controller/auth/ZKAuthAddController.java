@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -69,7 +70,8 @@ public class ZKAuthAddController extends Controller {
             }
             ZKAuth auth = new ZKAuth(user, password);
             if (this.authStore.add(auth)) {
-                ZKAuthUtil.fireAuthAddEvent(auth);
+                // ZKAuthUtil.fireAuthAddEvent(auth);
+                ZKEventUtil.authAdded(auth);
                 MessageBox.okToast("新增认证信息成功！");
                 this.closeStage();
             } else {

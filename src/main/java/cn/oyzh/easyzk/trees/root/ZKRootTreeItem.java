@@ -10,8 +10,8 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKInfoExport;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.msg.ZKInfoAddedMsg;
-import cn.oyzh.easyzk.event.msg.ZKInfoUpdatedMsg;
+import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
+import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
@@ -22,8 +22,6 @@ import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.event.EventReceiver;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
@@ -60,8 +58,8 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     public ZKRootTreeItem(@NonNull ZKTreeView treeView) {
         super(treeView);
         this.setValue(new ZKRootTreeItemValue());
-        // 注册事件处理
-        EventUtil.register(this);
+        // // 注册事件处理
+        // EventUtil.register(this);
         // 初始化子节点
         this.initChildes();
         // 监听节点变化
@@ -220,8 +218,8 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     /**
      * 添加分组
      */
-    @EventReceiver(ZKEventTypes.ZK_ADD_GROUP)
-    private void addGroup() {
+    // @EventReceiver(ZKEventTypes.ZK_ADD_GROUP)
+    public void addGroup() {
         String groupName = MessageBox.prompt("请输入分组名称");
 
         // 名称为null，则忽略
@@ -281,21 +279,16 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     /**
      * 连接新增事件
      *
-     * @param msg 消息
      */
-    @EventReceiver(value = ZKEventTypes.ZK_INFO_ADDED, async = true, verbose = true)
-    private void onInfoAdded(ZKInfoAddedMsg msg) {
-        this.addConnect(msg.info());
+    public void infoAdded(ZKInfo info) {
+        this.addConnect(info);
     }
 
     /**
      * 连接变更事件
      *
-     * @param msg 消息
      */
-    @EventReceiver(value = ZKEventTypes.ZK_INFO_UPDATED, async = true, verbose = true)
-    private void onInfoUpdated(ZKInfoUpdatedMsg msg) {
-        ZKInfo info = msg.info();
+    public void infoUpdated(ZKInfo info) {
         f1:
         for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
@@ -384,13 +377,13 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         return items;
     }
 
-    /**
-     * 添加连接
-     */
-    @EventReceiver(ZKEventTypes.ZK_ADD_CONNECT)
-    private void onAddConnect() {
-        StageUtil.showStage(ZKInfoAddController.class, this.window());
-    }
+    // /**
+    //  * 添加连接
+    //  */
+    // @EventReceiver(ZKEventTypes.ZK_ADD_CONNECT)
+    // private void onAddConnect() {
+    //     StageUtil.showStage(ZKInfoAddController.class, this.window());
+    // }
 
     @Override
     public boolean allowDrop() {

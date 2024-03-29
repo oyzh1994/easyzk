@@ -16,13 +16,13 @@ jlink --verbose --compress=2 --no-header-files --no-man-pages --strip-debug --st
 jpackage --verbose -t app-image -n EasyZK --vendor oyzh --app-version '1.6.3' --description 'EasyZK Desktop Application.' -i D:\Package\EasyZK\runtime --main-jar easyzk-1.0.jar --icon D:\Package\EasyZK\app.ico --runtime-image D:\Package\EasyZK\jre -d D:\Package\EasyZK
 
 ###### 定制JRE(macos)
-./jlink --verbose --compress=2 --no-header-files --no-man-pages --strip-debug --strip-java-debug-attributes --vm=server --add-modules java.xml,java.logging,java.base,java.sql,jdk.unsupported,java.scripting,java.desktop,java.naming,java.security.jgss --output /Users/oyzh/Desktop/Package/EasyZK/jre
+./jlink --verbose --compress=2 --no-header-files --no-man-pages --strip-debug --strip-java-debug-attributes --vm=server --add-modules java.xml,java.logging,java.base,java.sql,jdk.unsupported,java.scripting,java.desktop,java.naming,java.security.jgss --output /Users/oyzh/Desktop/Package/EasyZK/1.6.3/macos_amd64_jre
 
 ###### 打包镜像(macos)(打包的应用无法正常运行，已废弃，交给easypkg来执行)
 ./jpackage --verbose -t app-image -n EasyZK --vendor oyzh --app-version '1.6.3' --description 'EasyZK Desktop Application.' -i /Users/oyzh/Desktop/Package/EasyZK/runtime --main-jar easyzk-1.0.jar --icon /Users/oyzh/Desktop/Package/EasyZK/app.icns --runtime-image /Users/oyzh/Desktop/Package/EasyZK/jre -d /Users/oyzh/Desktop/Package/EasyZK/EasyZK
 
 ###### 定制JRE(linux)
-./jlink --verbose --compress=2 --no-header-files --no-man-pages --strip-debug --strip-java-debug-attributes --vm=server --add-modules java.xml,java.logging,java.base,java.sql,jdk.unsupported,java.scripting,java.desktop,java.naming,java.security.jgss --output /home/oyzh/Desktop/Package/EasyZK/jre
+./jlink --verbose --compress=2 --no-header-files --no-man-pages --strip-debug --strip-java-debug-attributes --vm=server --add-modules java.xml,java.logging,java.base,java.sql,jdk.unsupported,java.scripting,java.desktop,java.naming,java.security.jgss --output /home/oyzh/Desktop/Package/EasyZK/1.6.3/linux_amd64_jre
 
 ##### 打包镜像(linux，已废弃，交给easypkg来执行)
 jpackage --verbose -t app-image -n EasyZK --vendor oyzh --app-version '1.6.3' --description 'EasyZK Desktop Application.' -i /Users/oyzh/Desktop/Package/EasyZK/runtime --main-jar easyzk-1.0.jar --icon /home/oyzh/Desktop/Package/EasyZK/app.png --runtime-image /Users/oyzh/Desktop/Package/EasyZK/jre -d /home/oyzh/Desktop/Package/EasyZK/EasyZK

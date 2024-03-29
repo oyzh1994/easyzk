@@ -59,7 +59,8 @@ public class ZKHomeTabContent extends DynamicTabController {
      */
     @FXML
     private void addConnect() {
-        EventUtil.fire(ZKEventTypes.ZK_ADD_CONNECT);
+        // EventUtil.fire(ZKEventTypes.ZK_ADD_CONNECT);
+        ZKEventUtil.addConnect();
     }
 
     /**
@@ -67,7 +68,8 @@ public class ZKHomeTabContent extends DynamicTabController {
      */
     @FXML
     private void addGroup() {
-        EventUtil.fire(ZKEventTypes.ZK_ADD_GROUP);
+        // EventUtil.fire(ZKEventTypes.ZK_ADD_GROUP);
+        ZKEventUtil.addGroup();
     }
 
     /**

@@ -34,7 +34,6 @@ import java.util.List;
         usePrimary = true,
         title = "EasyZK主页",
         iconUrls = ZKConst.ICON_PATH,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "main.fxml"
 )
 public class MainController extends ParentController {
@@ -88,7 +87,6 @@ public class MainController extends ParentController {
                 // 退出程序
                 TrayManager.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
                     StaticLog.warn("exit app by tray.");
-                    // this.exit();
                     StageUtil.exit();
                 });
                 // 鼠标事件
@@ -147,12 +145,10 @@ public class MainController extends ParentController {
         // 直接退出应用
         if (this.setting.isExitDirectly()) {
             StaticLog.info("exit directly.");
-            // this.exit();
             StageUtil.exit();
         } else if (this.setting.isExitAsk()) { // 总是询问
-            if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
+            if (MessageBox.confirm(STR."确定退出\{this.project.getName()}？")) {
                 StaticLog.info("exit by confirm.");
-                // this.exit();
                 StageUtil.exit();
             } else {
                 StaticLog.info("cancel by confirm.");
@@ -172,21 +168,21 @@ public class MainController extends ParentController {
     @Override
     public void onStageShowing(WindowEvent event) {
         super.onStageShowing(event);
-        this.stage.setTitleExt(this.project.getName() + "-v" + this.project.getVersion());
+        this.stage.setTitleExt(STR."\{this.project.getName()}-v\{this.project.getVersion()}");
     }
 
-    @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
-        // 取消注册事件处理
-        EventUtil.unregister(this);
-    }
+    // @Override
+    // public void onStageHidden(WindowEvent event) {
+    //     super.onStageHidden(event);
+    //     // 取消注册事件处理
+    //     EventUtil.unregister(this);
+    // }
 
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        // 注册事件处理
-        EventUtil.register(this);
+        // // 注册事件处理
+        // EventUtil.register(this);
         try {
             this.initSystemTray();
             TrayManager.show();
@@ -195,14 +191,6 @@ public class MainController extends ParentController {
             ex.printStackTrace();
         }
     }
-
-    // /**
-    //  * 应用退出
-    //  */
-    // @EventReceiver(ZKEventTypes.APP_EXIT)
-    // public void exit() {
-    //     StageUtil.exit();
-    // }
 
     @Override
     public void onSystemExit() {

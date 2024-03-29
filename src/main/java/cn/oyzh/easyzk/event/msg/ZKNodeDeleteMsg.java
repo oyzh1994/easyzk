@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.event.msg;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.fx.plus.event.EventMsg;
-import cn.oyzh.fx.plus.event.EventMsgFormatter;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,14 +14,12 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKNodeDeleteMsg implements EventMsg, EventMsgFormatter {
+public class ZKNodeDeleteMsg extends Event<String> implements EventFormatter {
 
-    private final String name = ZKEventTypes.ZK_NODE_DELETE;
-
-    private final String group = ZKEventGroups.NODE_ACTION;
-
-    @Setter
-    private String path;
+    {
+        super.group(ZKEventGroups.NODE_ACTION);
+        super.type(ZKEventTypes.ZK_NODE_DELETE);
+    }
 
     @Setter
     private String infoName;
@@ -30,10 +28,10 @@ public class ZKNodeDeleteMsg implements EventMsg, EventMsgFormatter {
     private boolean delChildren;
 
     @Override
-    public String formatMsg() {
+    public String eventFormat() {
         if (this.delChildren) {
-            return String.format("[%s] 级联删除节点:%s", this.infoName, this.path);
+            return String.format("[%s] 级联删除节点:%s", this.infoName, this.data());
         }
-        return String.format("[%s] 删除节点:%s", this.infoName, this.path);
+        return String.format("[%s] 删除节点:%s", this.infoName, this.data());
     }
 }

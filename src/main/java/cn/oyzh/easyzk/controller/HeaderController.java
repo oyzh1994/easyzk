@@ -2,19 +2,16 @@ package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +28,7 @@ public class HeaderController extends SubController {
     /**
      * 项目信息
      */
-    @Autowired
-    private Project project;
+    private final Project project = new Project();
 
     /**
      * 搜索
@@ -131,7 +127,8 @@ public class HeaderController extends SubController {
     @FXML
     private void collapseTree() {
         this.treeMutexes.visible(this.expandTree);
-        EventUtil.fire(ZKEventTypes.LEFT_COLLAPSE);
+        // EventUtil.fire(ZKEventTypes.LEFT_COLLAPSE);
+        ZKEventUtil.leftCollapse();
     }
 
     /**
@@ -140,7 +137,8 @@ public class HeaderController extends SubController {
     @FXML
     private void expandTree() {
         this.treeMutexes.visible(this.collapseTree);
-        EventUtil.fire(ZKEventTypes.LEFT_EXTEND);
+        // EventUtil.fire(ZKEventTypes.LEFT_EXTEND);
+        ZKEventUtil.leftExtend();
     }
 
     /**

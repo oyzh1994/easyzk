@@ -1,33 +1,28 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/9/18
  */
-@Data
+@Getter
 @Accessors(fluent = true)
-public class ZKNodeAddMsg extends Event<String> implements EventFormatter {
+public class ZKInfoAddedEvent extends Event<ZKInfo> implements EventFormatter {
 
     {
-        super.group(ZKEventGroups.NODE_ACTION);
-        super.type(ZKEventTypes.ZK_NODE_ADD);
+        super.group(ZKEventGroups.INFO_ACTION);
+        super.type(ZKEventTypes.ZK_INFO_ADDED);
     }
-
-    private ZKInfo info;
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] 新增节点:%s", this.info.getName(), this.data());
+        return String.format("连接[%s] 已新增", this.data().getName());
     }
-
 }

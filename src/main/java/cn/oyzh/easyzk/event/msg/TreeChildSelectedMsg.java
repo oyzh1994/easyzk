@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.event.msg;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,12 +14,11 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeChildSelectedMsg implements EventMsg {
+public class TreeChildSelectedMsg extends Event<ZKNodeTreeItem> {
 
-    private final String name = ZKEventTypes.TREE_CHILD_SELECTED;
+    {
+        super.group(ZKEventGroups.TREE_ACTION);
+        super.type(ZKEventTypes.TREE_CHILD_SELECTED);
+    }
 
-    private final String group = ZKEventGroups.TREE_ACTION;
-
-    @Setter
-    private ZKNodeTreeItem item;
 }

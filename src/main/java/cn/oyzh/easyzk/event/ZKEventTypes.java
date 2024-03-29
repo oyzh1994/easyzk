@@ -29,12 +29,12 @@ public class ZKEventTypes {
     /**
      * zk认证成功事件
      */
-    public static final String ZK_AUTH_SUCCESS = "ZK_AUTH_SUCCESS";
+    public static final String ZK_AUTH_AUTHED = "ZK_AUTH_AUTHED";
 
     /**
      * zk认证启用事件
      */
-    public static final String ZK_AUTH_ENABLE = "ZK_AUTH_ENABLE";
+    public static final String ZK_AUTH_ENABLED = "ZK_AUTH_ENABLED";
 
     /**
      * zk节点新增事件(来源于操作)

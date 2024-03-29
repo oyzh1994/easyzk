@@ -4,7 +4,9 @@ import cn.hutool.core.map.MapUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAddController;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKAuthVO;
+import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
 import cn.oyzh.easyzk.event.ZKEventTypes;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.Paging;
@@ -14,11 +16,11 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import com.google.common.eventbus.Subscribe;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -149,7 +151,8 @@ public class ZKAuthTabContent extends DynamicTabController {
                     toggleSwitch.selectedChanged((abs, o, n) -> {
                         authVO.setEnable(n);
                         if (authStore.update(authVO)) {
-                            ZKAuthUtil.fireAuthEnableEvent(authVO);
+                            // ZKAuthUtil.fireAuthEnableEvent(authVO);
+                            ZKEventUtil.authEnabled(authVO);
                         } else {
                             MessageBox.warn("修改状态失败！");
                         }
@@ -207,21 +210,22 @@ public class ZKAuthTabContent extends DynamicTabController {
     /**
      * 认证新增事件
      */
-    @EventReceiver(ZKEventTypes.ZK_AUTH_ADDED)
-    private void authAdded() {
+    // @EventReceiver(ZKEventTypes.ZK_AUTH_ADDED)
+    @Subscribe
+    private void authAdded(ZKAuthAddedEvent event) {
         this.initDataList(Integer.MAX_VALUE);
     }
 
-    @Override
-    public void onTabClose(Event event) {
-        // 取消注册事件处理
-        EventUtil.unregister(this);
-    }
+    // @Override
+    // public void onTabClose(Event event) {
+    //     // 取消注册事件处理
+    //     EventUtil.unregister(this);
+    // }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 注册事件处理
-        EventUtil.register(this);
+        // // 注册事件处理
+        // EventUtil.register(this);
         this.user.setCellValueFactory(new PropertyValueFactory<>("user"));
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.password.setCellValueFactory(new PropertyValueFactory<>("password"));

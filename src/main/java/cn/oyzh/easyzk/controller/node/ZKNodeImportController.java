@@ -225,7 +225,7 @@ public class ZKNodeImportController extends Controller {
         this.importTask = ThreadUtil.start(() -> {
             try {
                 this.stopImportBtn.enable();
-                EventUtil.fire(ZKEventTypes.ZK_IMPORT_START);
+                // EventUtil.fire(ZKEventTypes.ZK_IMPORT_START);
                 for (Map<String, String> zkNode : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.importTask)) {
@@ -278,7 +278,7 @@ public class ZKNodeImportController extends Controller {
                 this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
-                EventUtil.fire(ZKEventTypes.ZK_IMPORT_FINISH);
+                // EventUtil.fire(ZKEventTypes.ZK_IMPORT_FINISH);
                 SystemUtil.gcLater();
             }
         });

@@ -4,8 +4,8 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.event.EventMsg;
-import cn.oyzh.fx.plus.event.EventMsgFormatter;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -16,21 +16,19 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKConnectionLostMsg implements EventMsg, EventMsgFormatter {
+public class ZKConnectionLostMsg extends Event<ZKClient> implements EventFormatter {
 
-    private final String name = ZKEventTypes.ZK_CONNECTION_LOST;
-
-    private final String group = ZKEventGroups.CONNECTION_ACTION;
-
-    @Setter
-    private ZKClient client;
+    {
+        super.group(ZKEventGroups.CONNECTION_ACTION);
+        super.type(ZKEventTypes.ZK_CONNECTION_LOST);
+    }
 
     @Override
-    public String formatMsg() {
-        return String.format("[%s] 客户端已中断", this.client.infoName());
+    public String eventFormat() {
+        return String.format("[%s] 客户端已中断", this.data().infoName());
     }
 
     public ZKInfo info() {
-        return this.client.zkInfo();
+        return this.data().zkInfo();
     }
 }

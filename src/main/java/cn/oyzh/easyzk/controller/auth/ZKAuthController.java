@@ -4,8 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.event.msg.ZKAuthMsg;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
@@ -17,7 +16,6 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -158,21 +156,24 @@ public class ZKAuthController extends Controller {
         try {
             ZKClient zkClient = this.zkItem.client();
             int result = ZKAuthUtil.authNode(user, password, zkClient, this.zkNode);
-            ZKAuthMsg authMsg = new ZKAuthMsg();
-            authMsg.user(user).password(password).item(this.zkItem);
+            // ZKAuthAuthedEvent authMsg = new ZKAuthAuthedEvent();
+            // authMsg.user(user).password(password).item(this.zkItem);
             if (result == 1) {
                 if (this.saveInfo1.isSelected()) {
                     this.authStore.add(new ZKAuth(user, password));
                 }
-                authMsg.result(true);
-                EventUtil.fire(ZKEventTypes.ZK_AUTH_SUCCESS, authMsg);
+                // authMsg.result(true);
+                // EventUtil.fire(ZKEventTypes.ZK_AUTH_SUCCESS, authMsg);
+                ZKEventUtil.authAuthed(this.zkItem, true, user, password);
                 MessageBox.okToast("认证成功！");
                 this.closeStage();
             } else if (this.zkNode.aclEmpty() || this.zkNode.hasDigestACL()) {
-                EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
+                // EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
+                ZKEventUtil.authAuthed(this.zkItem, false, user, password);
                 MessageBox.warn("认证失败！");
             } else {
-                EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
+                // EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
+                ZKEventUtil.authAuthed(this.zkItem, false, user, password);
                 MessageBox.warn("认证失败或此节点无需认证！");
             }
         } catch (Exception ex) {
@@ -226,7 +227,7 @@ public class ZKAuthController extends Controller {
 
         this.user.addTextChangeListener((observableValue, s, t1) -> {
             // 内容包含“:”，则直接切割字符为用户名密码
-            if (t1 != null && t1.contains(":")){
+            if (t1 != null && t1.contains(":")) {
                 this.user.setText(t1.split(":")[0]);
                 this.password.setText(t1.split(":")[1]);
             }

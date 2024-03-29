@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.dto.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.event.ZkFilterAddedEvent;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
@@ -14,11 +15,11 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import com.google.common.eventbus.Subscribe;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -236,15 +237,16 @@ public class ZKFilterTabContent extends DynamicTabController {
     /**
      * 过滤新增事件
      */
-    @EventReceiver(ZKEventTypes.ZK_FILTER_ADDED)
-    private void filterAdded() {
+    // @EventReceiver(ZKEventTypes.ZK_FILTER_ADDED)
+    @Subscribe
+    private void filterAdded(ZkFilterAddedEvent event) {
         this.initDataList(Integer.MAX_VALUE);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 注册事件处理
-        EventUtil.register(this);
+        // // 注册事件处理
+        // EventUtil.register(this);
         this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
@@ -254,9 +256,9 @@ public class ZKFilterTabContent extends DynamicTabController {
         this.firstPage();
     }
 
-    @Override
-    public void onTabClose(Event event) {
-        // 取消注册事件处理
-        EventUtil.unregister(this);
-    }
+    // @Override
+    // public void onTabClose(Event event) {
+    //     // 取消注册事件处理
+    //     EventUtil.unregister(this);
+    // }
 }

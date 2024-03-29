@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.event.msg;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.search.ZKSearchParam;
-import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,13 +14,11 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKSearchStartMsg implements EventMsg {
+public class ZKSearchStartMsg extends Event<ZKSearchParam> {
 
-    private final String name = ZKEventTypes.ZK_SEARCH_START;
-
-    private final String group = ZKEventGroups.SEARCH_ACTION;
-
-    @Setter
-    private ZKSearchParam searchParam;
+    {
+        super.group(ZKEventGroups.SEARCH_ACTION);
+        super.type(ZKEventTypes.ZK_SEARCH_START);
+    }
 
 }

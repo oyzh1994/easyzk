@@ -76,7 +76,8 @@ public class ZKFilterAddController extends Controller {
             filter.setEnable(this.enable.isSelected());
             filter.setPartMatch(this.partMatch.isSelected());
             if (this.filterStore.add(filter)) {
-                EventUtil.fire(ZKEventTypes.ZK_FILTER_ADDED);
+                // EventUtil.fire(ZKEventTypes.ZK_FILTER_ADDED);
+                ZKEventUtil.filterAdded();
                 ZKEventUtil.treeChildFilter();
                 MessageBox.okToast("新增ZK过滤配置成功!");
                 this.closeStage();

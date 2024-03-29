@@ -5,9 +5,11 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventGroups;
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.msg.ZKInfoUpdatedMsg;
+import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
+import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
+import cn.oyzh.easyzk.event.ZKLeftExtendEvent;
+import cn.oyzh.easyzk.fx.ZKMsgTextArea;
 import cn.oyzh.easyzk.store.ZKPageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
@@ -24,13 +26,10 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventGroup;
-import cn.oyzh.fx.plus.event.EventMsg;
-import cn.oyzh.fx.plus.event.EventMsgFormatter;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeEnhance;
+import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
@@ -124,7 +123,7 @@ public class ZKMainController extends ParentController {
      * 消息文本框
      */
     @FXML
-    private MsgTextArea msgArea;
+    private ZKMsgTextArea msgArea;
 
     /**
      * zk搜索Controller
@@ -195,10 +194,10 @@ public class ZKMainController extends ParentController {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = ZKEventTypes.ZK_INFO_UPDATED, async = true)
-    private void onZKInfoUpdate(ZKInfoUpdatedMsg msg) {
-        if (this.zkInfo == msg.info()) {
-            this.flushViewTitle(msg.info());
+    // @EventReceiver(value = ZKEventTypes.ZK_INFO_UPDATED, async = true)
+    private void onZKInfoUpdate(ZKInfoUpdatedEvent msg) {
+        if (this.zkInfo == msg.data()) {
+            this.flushViewTitle(msg.data());
         }
     }
 
@@ -219,10 +218,11 @@ public class ZKMainController extends ParentController {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        // 注册事件处理
-        EventUtil.register(this);
+        // // 注册事件处理
+        // EventUtil.register(this);
         EventUtil.register(this.tree);
         EventUtil.register(this.tabPane);
+        EventUtil.register(this.msgArea);
         this.filter();
 
         // 设置上次保存的页面拉伸
@@ -234,10 +234,11 @@ public class ZKMainController extends ParentController {
     @Override
     public void onStageHidden(WindowEvent event) {
         super.onStageHidden(event);
-        // 取消注册事件处理
-        EventUtil.unregister(this);
+        // // 取消注册事件处理
+        // EventUtil.unregister(this);
         EventUtil.unregister(this.tree);
         EventUtil.unregister(this.tabPane);
+        EventUtil.unregister(this.msgArea);
         // 关闭连接
         this.tree.closeConnects();
         // 保存页面拉伸
@@ -342,8 +343,9 @@ public class ZKMainController extends ParentController {
     /**
      * 展开左侧
      */
-    @EventReceiver(value = ZKEventTypes.LEFT_EXTEND, async = true, verbose = true)
-    private void leftExtend() {
+    // @EventReceiver(value = ZKEventTypes.LEFT_EXTEND, async = true, verbose = true)
+    @Subscribe
+    private void leftExtend(ZKLeftExtendEvent event) {
         this.tabPaneLeft.display();
         double w = this.tabPaneLeft.getMinWidth();
         this.tabPane.setLayoutX(w);
@@ -355,8 +357,9 @@ public class ZKMainController extends ParentController {
     /**
      * 收缩左侧
      */
-    @EventReceiver(value = ZKEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
-    private void leftCollapse() {
+    @Subscribe
+    // @EventReceiver(value = ZKEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
+    private void leftCollapse(ZKLeftCollapseEvent event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
@@ -389,18 +392,18 @@ public class ZKMainController extends ParentController {
         this.msgArea.clear();
     }
 
-    /**
-     * 处理操作消息
-     */
-    @EventGroup(value = ZKEventGroups.NODE_ACTION, async = true, verbose = true)
-    @EventGroup(value = ZKEventGroups.INFO_ACTION, async = true, verbose = true)
-    @EventGroup(value = ZKEventGroups.CONNECTION_ACTION, async = true, verbose = true)
-    private void onActionMsg(Event<EventMsg> event) {
-        if (event.data() instanceof EventMsgFormatter formatter) {
-            String formatMsg = formatter.formatMsg();
-            if (formatMsg != null) {
-                this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
-            }
-        }
-    }
+    // /**
+    //  * 处理操作消息
+    //  */
+    // @EventGroup(value = ZKEventGroups.NODE_ACTION, async = true, verbose = true)
+    // @EventGroup(value = ZKEventGroups.INFO_ACTION, async = true, verbose = true)
+    // @EventGroup(value = ZKEventGroups.CONNECTION_ACTION, async = true, verbose = true)
+    // private void onActionMsg(Event<EventMsg> event) {
+    //     if (event.data() instanceof EventMsgFormatter formatter) {
+    //         String formatMsg = formatter.formatMsg();
+    //         if (formatMsg != null) {
+    //             this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
+    //         }
+    //     }
+    // }
 }

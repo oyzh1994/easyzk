@@ -1,12 +1,10 @@
-package cn.oyzh.easyzk.event.msg;
+package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -15,11 +13,10 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKTerminalCloseMsg extends Event<ZKInfo> {
+public class ZKTerminalOpenEvent extends Event<ZKInfo> {
 
     {
+        super.type(ZKEventTypes.ZK_OPEN_TERMINAL);
         super.group(ZKEventGroups.TERMINAL_ACTION);
-        super.type(ZKEventTypes.ZK_CLOSE_TERMINAL);
     }
-
 }

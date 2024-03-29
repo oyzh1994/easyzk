@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.event.msg;
 
 import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventTypes;
-import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -12,9 +12,10 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class ZKAuthMainMsg implements EventMsg {
+public class ZKAuthMainMsg extends Event<Object> {
 
-    private final String name = ZKEventTypes.ZK_AUTH_MAIN;
-
-    private final String group = ZKEventGroups.AUTH_ACTION;
+    {
+        super.group(ZKEventGroups.AUTH_ACTION);
+        super.type(ZKEventTypes.ZK_AUTH_MAIN);
+    }
 }

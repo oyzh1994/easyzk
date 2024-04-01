@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,7 +40,8 @@ public class ZKHomeTabContent extends DynamicTabController {
     /**
      * 项目对象
      */
-    private final Project project = new Project();
+    @Resource
+    private Project project;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

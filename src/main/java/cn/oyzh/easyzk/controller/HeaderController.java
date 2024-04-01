@@ -15,6 +15,8 @@ import javafx.stage.WindowEvent;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * 主页头部业务
  *
@@ -28,7 +30,8 @@ public class HeaderController extends SubController {
     /**
      * 项目信息
      */
-    private final Project project = new Project();
+    @Resource
+    private Project project;
 
     /**
      * 搜索

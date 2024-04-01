@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.dto;
 
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
@@ -46,7 +47,7 @@ public class ZKInfoExport {
      */
     public static ZKInfoExport fromConnects(@NonNull List<ZKInfo> zkInfos) {
         ZKInfoExport export = new ZKInfoExport();
-        Project project = new Project();
+        Project project = SpringUtil.getBean(Project.class);
         export.version = project.getVersion();
         export.connects = zkInfos;
         export.platform = System.getProperty("os.name");

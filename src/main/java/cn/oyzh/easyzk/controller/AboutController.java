@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.controller;
 
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -10,6 +11,8 @@ import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
+
+import javax.annotation.Resource;
 
 /**
  * 关于业务
@@ -43,7 +46,8 @@ public class AboutController extends Controller {
     /**
      * 项目信息
      */
-    private final Project project = new Project();
+    @Resource
+    private Project project;
 
     @Override
     public void onStageShown(WindowEvent event) {

@@ -83,7 +83,7 @@ public class ZKExportUtil {
      * @return 数据文本字符串
      */
     public static String nodesToTxt(@NonNull List<ZKNode> zkNodes, String charset, String prefix) {
-        Project project = new Project();
+        Project project = SpringUtil.getBean(Project.class);
         String version = project.getVersion();
         String platform = OSUtil.getOSType();
         StringBuilder builder = new StringBuilder();
@@ -121,7 +121,7 @@ public class ZKExportUtil {
      * @return 数据json字符串
      */
     public static String nodesToJSON(@NonNull List<ZKNode> zkNodes, String charset, boolean prettyFormat) {
-        Project project = new Project();
+        Project project = SpringUtil.getBean(Project.class);
         String version = project.getVersion();
         String platform = OSUtil.getOSType();
         ZKNodeExport export = new ZKNodeExport();

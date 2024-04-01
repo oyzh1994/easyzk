@@ -20,6 +20,7 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
+import javax.annotation.Resource;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +42,8 @@ public class MainController extends ParentController {
     /**
      * 项目信息
      */
-    private final Project project = new Project();
+    @Resource
+    private Project project;
 
     /**
      * 头部页面

@@ -89,7 +89,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         }
         // 初始化连接
         List<ZKInfo> zkInfos = this.infoStore.load();
-        if (CollUtil.isNotEmpty(groups)) {
+        if (CollUtil.isNotEmpty(zkInfos)) {
             this.addConnects(zkInfos);
         }
     }

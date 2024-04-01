@@ -242,7 +242,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     /**
      * 格式监听器
      */
-    private final ChangeListener<String> formatListener = (_, _, _) -> {
+    private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
         if (this.format.isStringFormat()) {
             this.showData((byte) 0);
             this.nodeData.setEditable(true);
@@ -304,9 +304,9 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.charset.select(this.treeItem.getCharset());
 
         // undo监听
-        this.nodeData.undoableProperty().addListener((_, _, t1) -> this.dataUndo.setDisable(!t1));
+        this.nodeData.undoableProperty().addListener((t3, t2, t1) -> this.dataUndo.setDisable(!t1));
         // redo监听
-        this.nodeData.redoableProperty().addListener((_, _, t1) -> this.dataRedo.setDisable(!t1));
+        this.nodeData.redoableProperty().addListener((t3, t2, t1) -> this.dataRedo.setDisable(!t1));
 
         // 加载耗时处理
         FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
@@ -838,7 +838,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.collect.managedProperty().bind(this.collect.visibleProperty());
         this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
         // 切换tab
-        this.root.selectedIndexChanged((_, _, newValue) -> {
+        this.root.selectedIndexChanged((t3, t2, newValue) -> {
             if (newValue.intValue() == 0) {
                 this.showData();
             } else if (newValue.intValue() == 1) {
@@ -854,11 +854,11 @@ public class ZKNodeTabContent extends DynamicTabController {
         // 数据监听
         this.nodeData.addTextChangeListener(this.textListener);
         // 切换显示监听
-        this.aclViewSwitch.selectedChanged((_, _, _) -> this.initAcl());
+        this.aclViewSwitch.selectedChanged((t3, t2, t1) -> this.initAcl());
         // 切换显示监听
-        this.statViewSwitch.selectedChanged((_, _, _) -> this.initStat());
+        this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
         // 字符集选择事件
-        this.charset.selectedItemChanged((_, _, _) -> {
+        this.charset.selectedItemChanged((t3, t2, t1) -> {
             this.treeItem.setCharset(this.charset.getCharset());
             this.showData();
         });

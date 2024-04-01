@@ -370,25 +370,25 @@ public class SearchController extends SubController {
         // 将searchAnalyse的disableProperty绑定到searchNext的disableProperty
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
         // 绑定mode的selectedChanged事件，当mode的值发生变化时调用preSearch()方法
-        this.mode.selectedChanged((_, _, _) -> this.preSearch());
+        this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         // 当fullMatch的值发生变化时调用preSearch()方法
-        this.fullMatch.selectedChanged((_, _, _) -> this.preSearch());
+        this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         // 当searchPath的值发生变化时调用preSearch()方法
-        this.searchPath.selectedChanged((_, _, _) -> this.preSearch());
+        this.searchPath.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         // 当searchData的值发生变化时调用preSearch()方法
-        this.searchData.selectedChanged((_, _, _) -> this.preSearch());
+        this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         // 当compareCase的值发生变化时调用preSearch()方法
-        this.compareCase.selectedChanged((_, _, _) -> this.preSearch());
+        this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         // 当searchKW添加文本时调用preSearch()方法
-        this.searchKW.addTextChangeListener((_, _, _) -> this.preSearch());
+        this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
         // 当replaceKW添加文本时，清空replaceTips的文本并调用searchCheck()方法
-        this.replaceKW.addTextChangeListener((_, _, _) -> {
+        this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {
             this.replaceTips.setText("");
             this.searchCheck();
         });
 
         // 搜索触发事件
-        KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(_ -> {
+        KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(t1 -> {
             if (this.searchMain.isVisible()) {
                 this.searchOpen(null);
             } else {
@@ -399,7 +399,7 @@ public class SearchController extends SubController {
         }));
 
         // 监听搜索组件显示事件
-        this.searchMain.visibleProperty().addListener((_, _, newValue) -> {
+        this.searchMain.visibleProperty().addListener((t1, t2, newValue) -> {
             if (newValue) {
                 this.preSearch();
             } else {

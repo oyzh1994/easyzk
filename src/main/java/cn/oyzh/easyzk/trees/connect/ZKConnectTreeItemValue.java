@@ -22,7 +22,7 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
         this.treeItem = treeItem;
         this.flushGraphic();
         this.flushText();
-        treeItem.stateProperty().addListener((_, _, _) -> this.flushGraphicColor());
+        treeItem.stateProperty().addListener((t3, t2, t1) -> this.flushGraphicColor());
     }
 
     @Override

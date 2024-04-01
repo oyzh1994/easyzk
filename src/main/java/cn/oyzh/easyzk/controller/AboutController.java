@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -28,6 +29,9 @@ public class AboutController extends Controller {
     private FlexText name;
 
     @FXML
+    private FlexText type;
+
+    @FXML
     private FlexText version;
 
     @FXML
@@ -51,6 +55,7 @@ public class AboutController extends Controller {
         this.updateDate.setText(this.project.getUpdateDate());
         // 设置版权文本框的文本为项目的版权信息
         this.copyright.setText(this.project.getCopyright());
+        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? "每日构建版" : "正式发布版");
         // 设置标题
         this.stage.setTitleExt("关于" + this.project.getName());
         this.stage.hideOnEscape();

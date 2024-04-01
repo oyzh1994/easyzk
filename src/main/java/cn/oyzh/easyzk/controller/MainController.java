@@ -74,6 +74,10 @@ public class MainController extends ParentController {
      * 初始化系统托盘
      */
     private void initSystemTray() {
+        if(!TrayManager.supported()){
+            StaticLog.warn("tray is not supported.");
+            return;
+        }
         if (!TrayManager.exist()) {
             try {
                 // 初始化
@@ -147,7 +151,7 @@ public class MainController extends ParentController {
             StaticLog.info("exit directly.");
             StageUtil.exit();
         } else if (this.setting.isExitAsk()) { // 总是询问
-            if (MessageBox.confirm(STR."确定退出\{this.project.getName()}？")) {
+            if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
                 StaticLog.info("exit by confirm.");
                 StageUtil.exit();
             } else {
@@ -168,7 +172,7 @@ public class MainController extends ParentController {
     @Override
     public void onStageShowing(WindowEvent event) {
         super.onStageShowing(event);
-        this.stage.setTitleExt(STR."\{this.project.getName()}-v\{this.project.getVersion()}");
+        this.stage.setTitleExt(this.project.getName() + "-v" + this.project.getVersion());
     }
 
     // @Override

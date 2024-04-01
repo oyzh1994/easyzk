@@ -9,8 +9,4 @@ import cn.oyzh.fx.plus.event.Event;
  */
 public class ZKAuthEnabledEvent extends Event<ZKAuth> {
 
-    {
-        super.group(ZKEventGroups.AUTH_ACTION);
-        super.type( ZKEventTypes.ZK_AUTH_ENABLED);
-    }
 }

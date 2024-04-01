@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk;
 
-import cn.oyzh.fx.plus.FXStyle;
 import lombok.experimental.UtilityClass;
 
 /**

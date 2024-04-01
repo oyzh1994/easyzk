@@ -10,7 +10,6 @@ import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -177,18 +176,9 @@ public class MainController extends ParentController {
         this.stage.setTitleExt(this.project.getName() + "-v" + this.project.getVersion());
     }
 
-    // @Override
-    // public void onStageHidden(WindowEvent event) {
-    //     super.onStageHidden(event);
-    //     // 取消注册事件处理
-    //     EventUtil.unregister(this);
-    // }
-
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        // // 注册事件处理
-        // EventUtil.register(this);
         try {
             this.initSystemTray();
             TrayManager.show();

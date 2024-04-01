@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.fx.plus.domain.PageInfo;
-import lombok.Setter;
 
 /**
  * 页面信息

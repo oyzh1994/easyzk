@@ -412,7 +412,6 @@ public class SearchController extends SubController {
     /**
      * 刷新搜索结果
      */
-    // @EventReceiver(value = ZKEventTypes.TREE_CHILD_CHANGED, async = true, verbose = true)
     @Subscribe
     public void flushSearchResult(TreeChildChangedEvent event) {
         if (this.treeView.searching()) {
@@ -426,7 +425,6 @@ public class SearchController extends SubController {
     /**
      * 搜索打开
      */
-    // @EventReceiver(value = ZKEventTypes.ZK_SEARCH_OPEN, async = true, verbose = true)
     @Subscribe
     public void searchOpen(ZKSearchOpenEvent event) {
         this.searchMain.display();
@@ -437,7 +435,6 @@ public class SearchController extends SubController {
      * 搜索关闭
      */
     @Subscribe
-    // @EventReceiver(value = ZKEventTypes.ZK_SEARCH_CLOSE, async = true, verbose = true)
     public void searchClose(ZKSearchCloseEvent event) {
         this.searchMain.disappear();
         this.treeView.setFlexHeight("100% - 60");
@@ -446,21 +443,12 @@ public class SearchController extends SubController {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        // // 注册事件处理
-        // EventUtil.register(this);
         this.treeView = this.parent().tree;
         // 初始化搜索
         this.searchHandler.init(this.treeView, this.parent().tabPane);
         this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup(1));
         this.replaceKW.setHistoryPopup(new ZKSearchHistoryPopup(2));
     }
-
-    // @Override
-    // public void onStageHidden(WindowEvent event) {
-    //     super.onStageHidden(event);
-    //     // 取消注册事件处理
-    //     EventUtil.unregister(this);
-    // }
 
     @Override
     public ZKMainController parent() {

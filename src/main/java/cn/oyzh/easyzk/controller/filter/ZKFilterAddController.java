@@ -2,15 +2,12 @@ package cn.oyzh.easyzk.controller.filter;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.ZKStyle;
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;

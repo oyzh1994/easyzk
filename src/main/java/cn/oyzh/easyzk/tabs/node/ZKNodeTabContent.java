@@ -833,7 +833,8 @@ public class ZKNodeTabContent extends DynamicTabController {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
         // 收藏处理
         this.collect.managedProperty().bind(this.collect.visibleProperty());
         this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());

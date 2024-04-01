@@ -1,17 +1,14 @@
 package cn.oyzh.easyzk.tabs.home;
 
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -44,7 +41,8 @@ public class ZKHomeTabContent extends DynamicTabController {
     private Project project;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
         this.softInfo.setText("程序信息 v" + this.project.getVersion() + " Powered by oyzh.");
         String jdkInfo = "";
         if (System.getProperty("java.vm.name") != null) {
@@ -61,7 +59,6 @@ public class ZKHomeTabContent extends DynamicTabController {
      */
     @FXML
     private void addConnect() {
-        // EventUtil.fire(ZKEventTypes.ZK_ADD_CONNECT);
         ZKEventUtil.addConnect();
     }
 
@@ -70,7 +67,6 @@ public class ZKHomeTabContent extends DynamicTabController {
      */
     @FXML
     private void addGroup() {
-        // EventUtil.fire(ZKEventTypes.ZK_ADD_GROUP);
         ZKEventUtil.addGroup();
     }
 

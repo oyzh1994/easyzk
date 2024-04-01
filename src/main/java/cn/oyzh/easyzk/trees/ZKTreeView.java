@@ -65,6 +65,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     private final ZKSetting setting = ZKSettingStore.SETTING;
 
     public ZKTreeView() {
+        EventListener.super.register();
         this.dragContent = "zk_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new ZKTreeCell());
         // 初始化根节点
@@ -138,44 +139,28 @@ public class ZKTreeView extends RichTreeView implements EventListener {
         return list;
     }
 
-    // /**
-    //  * zk节点事件
-    //  *
-    //  * @param event 事件
-    //  */
-    // @EventGroup(value = ZKEventGroups.NODE_MSG, async = true, verbose = true)
-    // private void zkNodeMsg(Event<EventMsg> event) {
-    //     EventMsg msg = event.data();
-    //     switch (msg.name()) {
-    //         case ZKEventTypes.ZK_NODE_ADDED -> nodeAdded((ZKNodeAddedMsg) msg);
-    //         case ZKEventTypes.ZK_NODE_DELETED -> nodeDeleted((ZKNodeDeletedMsg) msg);
-    //         case ZKEventTypes.ZK_NODE_UPDATED -> nodeUpdated((ZKNodeUpdatedMsg) msg);
-    //     }
-    // }
-
     /**
      * zk节点新增事件，消息监听
      *
-     * @param msg 消息
+     * @param event 消息
      */
     @Subscribe
-    private void nodeAdded(ZKNodeAddedEvent msg) {
-        if (msg.client().isLastCreate(msg.nodePath())) {
-            msg.client().clearLastCreate();
+    private void nodeAdded(ZKNodeAddedEvent event) {
+        if (event.client().isLastCreate(event.nodePath())) {
+            event.client().clearLastCreate();
         } else {
-            this.nodeAdd(msg.nodePath(), msg.info());
+            this.nodeAdd(event.nodePath(), event.info());
         }
     }
 
     /**
      * zk节点新增事件，手动操作
      *
-     * @param msg 消息
+     * @param event 消息
      */
-    // @EventReceiver(value = ZKEventTypes.ZK_NODE_ADD, async = true, verbose = true)
     @Subscribe
-    private void nodeAdd(ZKNodeAddEvent msg) {
-        this.nodeAdd(msg.data(), msg.info());
+    private void nodeAdd(ZKNodeAddEvent event) {
+        this.nodeAdd(event.data(), event.info());
     }
 
     /**
@@ -220,22 +205,22 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     /**
      * zk节点修改事件
      *
-     * @param msg 消息
+     * @param event 消息
      */
     @Subscribe
-    private void nodeUpdated(ZKNodeUpdatedEvent msg) {
-        if (msg.client().isLastUpdate(msg.nodePath())) {
-            msg.client().clearLastUpdate();
+    private void nodeUpdated(ZKNodeUpdatedEvent event) {
+        if (event.client().isLastUpdate(event.nodePath())) {
+            event.client().clearLastUpdate();
             return;
         }
         try {
             // 寻找节点
-            ZKNodeTreeItem item = this.findNodeItem(msg.nodePath(), msg.info());
+            ZKNodeTreeItem item = this.findNodeItem(event.nodePath(), event.info());
             // 更新信息
             if (item != null) {
-                item.setBeUpdated(msg.nodeData());
+                item.setBeUpdated(event.nodeData());
             } else {
-                StaticLog.warn("{}: 未找到被修改节点，无法处理节点！", msg.decodeNodePath());
+                StaticLog.warn("{}: 未找到被修改节点，无法处理节点！", event.decodeNodePath());
             }
         } catch (Exception ex) {
             StaticLog.warn("修改节点失败！", ex);
@@ -245,22 +230,22 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     /**
      * zk节点删除事件
      *
-     * @param msg 消息
+     * @param event 消息
      */
     @Subscribe
-    private void nodeDeleted(ZKNodeDeletedEvent msg) {
-        if (msg.client().isLastDelete(msg.nodePath())) {
-            msg.client().clearLastDelete();
+    private void nodeDeleted(ZKNodeDeletedEvent event) {
+        if (event.client().isLastDelete(event.nodePath())) {
+            event.client().clearLastDelete();
             return;
         }
         try {
             // 寻找节点
-            ZKNodeTreeItem item = this.findNodeItem(msg.nodePath(), msg.info());
+            ZKNodeTreeItem item = this.findNodeItem(event.nodePath(), event.info());
             // 更新信息
             if (item != null) {
                 item.setBeDeleted();
             } else {
-                StaticLog.warn("{}: 未找到被删除节点，无法处理节点！", msg.decodeNodePath());
+                StaticLog.warn("{}: 未找到被删除节点，无法处理节点！", event.decodeNodePath());
             }
         } catch (Exception ex) {
             StaticLog.warn("删除节点失败！", ex);
@@ -270,11 +255,10 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     /**
      * 认证成功事件
      *
-     * @param authMsg 认证消息
+     * @param event 事件
      */
-    // @EventReceiver(value = ZKEventTypes.ZK_AUTH_SUCCESS, async = true, verbose = true)
-    private void authAuthed(ZKAuthAuthedEvent authMsg) {
-        ZKNodeTreeItem authedItem = authMsg == null ? null : authMsg.data();
+    private void authAuthed(ZKAuthAuthedEvent event) {
+        ZKNodeTreeItem authedItem = event == null ? null : event.data();
         boolean activity = authedItem == this.getSelectedItem();
         // 对所有需要认证执行节点刷新
         for (ZKNodeTreeItem item : this.getAllNodeItem()) {
@@ -308,8 +292,6 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      *
      * @param auth 认证信息
      */
-    // @EventReceiver(value = ZKEventTypes.ZK_AUTH_ADDED, async = true, verbose = true)
-    // @EventReceiver(value = ZKEventTypes.ZK_AUTH_ENABLE, async = true, verbose = true)
     private void authJoined(ZKAuth auth) {
         if (this.setting.isAutoAuth()) {
             try {
@@ -329,20 +311,20 @@ public class ZKTreeView extends RichTreeView implements EventListener {
 
     /**
      * 搜索开始事件
+     * @param event 事件
      */
-    // @EventReceiver(value = ZKEventTypes.ZK_SEARCH_START, async = true, verbose = true)
     @Subscribe
-    private void onSearchStart(ZKSearchStartEvent event) {
+    private void searchStart(ZKSearchStartEvent event) {
         this.searching = true;
         this.filter();
     }
 
     /**
      * 搜索结束事件
+     * @param event 事件
      */
-    // @EventReceiver(value = ZKEventTypes.ZK_SEARCH_FINISH, async = true, verbose = true)
     @Subscribe
-    private void onSearchFinish(ZKSearchFinishEvent event) {
+    private void searchFinish(ZKSearchFinishEvent event) {
         this.searching = false;
         this.filter();
     }
@@ -350,9 +332,8 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     /**
      * 树节点过滤
      */
-    // @EventReceiver(value = ZKEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
     @Subscribe
-    private void onTreeChildFilter(TreeChildFilterEvent event) {
+    private void treeChildFilter(TreeChildFilterEvent event) {
         this.itemFilter().initFilters();
         this.filter();
     }

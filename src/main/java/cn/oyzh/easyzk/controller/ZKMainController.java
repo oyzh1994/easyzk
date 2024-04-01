@@ -4,7 +4,6 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.event.ZKEventGroups;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
@@ -14,18 +13,15 @@ import cn.oyzh.easyzk.store.ZKPageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.ZKTreeView;
-import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.ParentController;
 import cn.oyzh.fx.plus.controller.SubController;
-import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeEnhance;
@@ -192,12 +188,11 @@ public class ZKMainController extends ParentController {
     /**
      * zk信息修改事件
      *
-     * @param msg 消息
+     * @param event 消息
      */
-    // @EventReceiver(value = ZKEventTypes.ZK_INFO_UPDATED, async = true)
-    private void onZKInfoUpdate(ZKInfoUpdatedEvent msg) {
-        if (this.zkInfo == msg.data()) {
-            this.flushViewTitle(msg.data());
+    private void infoUpdate(ZKInfoUpdatedEvent event) {
+        if (this.zkInfo == event.data()) {
+            this.flushViewTitle(event.data());
         }
     }
 
@@ -218,8 +213,6 @@ public class ZKMainController extends ParentController {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        // // 注册事件处理
-        // EventUtil.register(this);
         EventUtil.register(this.tree);
         EventUtil.register(this.tabPane);
         EventUtil.register(this.msgArea);
@@ -234,8 +227,6 @@ public class ZKMainController extends ParentController {
     @Override
     public void onStageHidden(WindowEvent event) {
         super.onStageHidden(event);
-        // // 取消注册事件处理
-        // EventUtil.unregister(this);
         EventUtil.unregister(this.tree);
         EventUtil.unregister(this.tabPane);
         EventUtil.unregister(this.msgArea);
@@ -343,7 +334,6 @@ public class ZKMainController extends ParentController {
     /**
      * 展开左侧
      */
-    // @EventReceiver(value = ZKEventTypes.LEFT_EXTEND, async = true, verbose = true)
     @Subscribe
     private void leftExtend(ZKLeftExtendEvent event) {
         this.tabPaneLeft.display();
@@ -358,7 +348,6 @@ public class ZKMainController extends ParentController {
      * 收缩左侧
      */
     @Subscribe
-    // @EventReceiver(value = ZKEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
     private void leftCollapse(ZKLeftCollapseEvent event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);

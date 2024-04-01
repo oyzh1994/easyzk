@@ -10,11 +10,6 @@ import cn.oyzh.fx.plus.event.EventFormatter;
  */
 public class ZKInfoUpdatedEvent extends Event<ZKInfo> implements EventFormatter {
 
-    {
-        super.group(ZKEventGroups.INFO_ACTION);
-        super.type(ZKEventTypes.ZK_INFO_UPDATED);
-    }
-
     @Override
     public String eventFormat() {
         return String.format("连接[%s] 已修改", this.data().getName());

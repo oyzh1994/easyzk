@@ -27,9 +27,9 @@ public class ZKEventUtil {
      * @param client zk客户端
      */
     public static void connectionLost(ZKClient client) {
-        ZKConnectionLostEvent msg = new ZKConnectionLostEvent();
-        msg.data(client);
-        EventUtil.post(msg);
+        ZKConnectionLostEvent event = new ZKConnectionLostEvent();
+        event.data(client);
+        EventUtil.post(event);
     }
 
     /**
@@ -38,9 +38,9 @@ public class ZKEventUtil {
      * @param client zk客户端
      */
     public static void connectionClosed(ZKClient client) {
-        ZKConnectionClosedEvent msg = new ZKConnectionClosedEvent();
-        msg.data(client);
-        EventUtil.post(msg);
+        ZKConnectionClosedEvent event = new ZKConnectionClosedEvent();
+        event.data(client);
+        EventUtil.post(event);
     }
 
     /**
@@ -49,9 +49,9 @@ public class ZKEventUtil {
      * @param client zk客户端
      */
     public static void connectionConnected(ZKClient client) {
-        ZKConnectionConnectedEvent msg = new ZKConnectionConnectedEvent();
-        msg.data(client);
-        EventUtil.post(msg);
+        ZKConnectionConnectedEvent event = new ZKConnectionConnectedEvent();
+        event.data(client);
+        EventUtil.post(event);
     }
 
     /**
@@ -61,10 +61,10 @@ public class ZKEventUtil {
      * @param path   路径
      */
     public static void nodeAdd(ZKClient client, String path) {
-        ZKNodeAddEvent msg = new ZKNodeAddEvent();
-        msg.data(path);
-        msg.info(client.zkInfo());
-        EventUtil.post(msg);
+        ZKNodeAddEvent event = new ZKNodeAddEvent();
+        event.data(path);
+        event.info(client.zkInfo());
+        EventUtil.post(event);
     }
 
     /**
@@ -76,14 +76,14 @@ public class ZKEventUtil {
      * @param nodePath 路径
      */
     public static void nodeAdded(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
-        ZKNodeAddedEvent msg = new ZKNodeAddedEvent();
+        ZKNodeAddedEvent event = new ZKNodeAddedEvent();
         ZKNode zkNode = new ZKNode();
         zkNode.stat(stat);
         zkNode.nodePath(nodePath);
         zkNode.nodeData(nodeData);
-        msg.data(zkNode);
-        msg.client(client);
-        EventUtil.post(msg);
+        event.data(zkNode);
+        event.client(client);
+        EventUtil.post(event);
     }
 
     /**
@@ -93,10 +93,10 @@ public class ZKEventUtil {
      * @param path   路径
      */
     public static void nodeUpdate(ZKClient client, String path) {
-        ZKNodeUpdateEvent msg = new ZKNodeUpdateEvent();
-        msg.data(path);
-        msg.infoName(client.infoName());
-        EventUtil.post(msg);
+        ZKNodeUpdateEvent event = new ZKNodeUpdateEvent();
+        event.data(path);
+        event.infoName(client.infoName());
+        EventUtil.post(event);
     }
 
     /**
@@ -108,14 +108,14 @@ public class ZKEventUtil {
      * @param nodePath 路径
      */
     public static void nodeUpdated(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
-        ZKNodeUpdatedEvent msg = new ZKNodeUpdatedEvent();
+        ZKNodeUpdatedEvent event = new ZKNodeUpdatedEvent();
         ZKNode zkNode = new ZKNode();
         zkNode.stat(stat);
         zkNode.nodePath(nodePath);
         zkNode.nodeData(nodeData);
-        msg.data(zkNode);
-        msg.client(client);
-        EventUtil.post(msg);
+        event.data(zkNode);
+        event.client(client);
+        EventUtil.post(event);
     }
 
 
@@ -127,11 +127,11 @@ public class ZKEventUtil {
      * @param delChildren 是否删除子节点
      */
     public static void nodeDelete(ZKClient client, String path, boolean delChildren) {
-        ZKNodeDeleteEvent msg = new ZKNodeDeleteEvent();
-        msg.data(path);
-        msg.delChildren(delChildren);
-        msg.infoName(client.infoName());
-        EventUtil.post(msg);
+        ZKNodeDeleteEvent event = new ZKNodeDeleteEvent();
+        event.data(path);
+        event.delChildren(delChildren);
+        event.infoName(client.infoName());
+        EventUtil.post(event);
     }
 
     /**
@@ -142,13 +142,13 @@ public class ZKEventUtil {
      * @param nodePath 路径
      */
     public static void nodeDeleted(ZKClient client, Stat stat, String nodePath) {
-        ZKNodeDeletedEvent msg = new ZKNodeDeletedEvent();
+        ZKNodeDeletedEvent event = new ZKNodeDeletedEvent();
         ZKNode zkNode = new ZKNode();
         zkNode.stat(stat);
         zkNode.nodePath(nodePath);
-        msg.data(zkNode);
-        msg.client(client);
-        EventUtil.post(msg);
+        event.data(zkNode);
+        event.client(client);
+        EventUtil.post(event);
     }
 
     /**
@@ -157,9 +157,9 @@ public class ZKEventUtil {
      * @param info zk信息
      */
     public static void infoAdded(ZKInfo info) {
-        ZKInfoAddedEvent msg = new ZKInfoAddedEvent();
-        msg.data(info);
-        EventUtil.post(msg);
+        ZKInfoAddedEvent event = new ZKInfoAddedEvent();
+        event.data(info);
+        EventUtil.post(event);
     }
 
     /**
@@ -168,9 +168,9 @@ public class ZKEventUtil {
      * @param info zk信息
      */
     public static void infoUpdated(ZKInfo info) {
-        ZKInfoUpdatedEvent msg = new ZKInfoUpdatedEvent();
-        msg.data(info);
-        EventUtil.post(msg);
+        ZKInfoUpdatedEvent event = new ZKInfoUpdatedEvent();
+        event.data(info);
+        EventUtil.post(event);
     }
 
     /**
@@ -179,27 +179,27 @@ public class ZKEventUtil {
      * @param info zk信息
      */
     public static void infoDeleted(ZKInfo info) {
-        ZKInfoDeletedEvent msg = new ZKInfoDeletedEvent();
-        msg.data(info);
-        EventUtil.post(msg);
+        ZKInfoDeletedEvent event = new ZKInfoDeletedEvent();
+        event.data(info);
+        EventUtil.post(event);
     }
 
     /**
      * 图标变化事件
      */
     public static void graphicChanged(TreeItem<?> treeItem) {
-        TreeGraphicChangedEvent msg = new TreeGraphicChangedEvent();
-        msg.data(treeItem);
-        EventUtil.postDelay(msg, 200);
+        TreeGraphicChangedEvent event = new TreeGraphicChangedEvent();
+        event.data(treeItem);
+        EventUtil.postDelay(event, 200);
     }
 
     /**
      * 图标颜色变化事件
      */
     public static void graphicColorChanged(TreeItem<?> treeItem) {
-        TreeGraphicColorChangedEvent msg = new TreeGraphicColorChangedEvent();
-        msg.data(treeItem);
-        EventUtil.postDelay(msg, 200);
+        TreeGraphicColorChangedEvent event = new TreeGraphicColorChangedEvent();
+        event.data(treeItem);
+        EventUtil.postDelay(event, 200);
     }
 
     /**
@@ -220,9 +220,9 @@ public class ZKEventUtil {
      * 树节点选中事件
      */
     public static void treeChildSelected(ZKNodeTreeItem item) {
-        TreeChildSelectedEvent msg = new TreeChildSelectedEvent();
-        msg.data(item);
-        EventUtil.post(msg);
+        TreeChildSelectedEvent event = new TreeChildSelectedEvent();
+        event.data(item);
+        EventUtil.post(event);
     }
 
     /**
@@ -272,18 +272,18 @@ public class ZKEventUtil {
      * 搜索开始事件
      */
     public static void searchStart(ZKSearchParam searchParam) {
-        ZKSearchStartEvent msg = new ZKSearchStartEvent();
-        msg.data(searchParam);
-        EventUtil.post(msg);
+        ZKSearchStartEvent event = new ZKSearchStartEvent();
+        event.data(searchParam);
+        EventUtil.post(event);
     }
 
     /**
      * 搜索结束事件
      */
     public static void searchFinish(ZKSearchParam searchParam) {
-        ZKSearchFinishEvent msg = new ZKSearchFinishEvent();
-        msg.data(searchParam);
-        EventUtil.post(msg);
+        ZKSearchFinishEvent event = new ZKSearchFinishEvent();
+        event.data(searchParam);
+        EventUtil.post(event);
     }
 
     /**

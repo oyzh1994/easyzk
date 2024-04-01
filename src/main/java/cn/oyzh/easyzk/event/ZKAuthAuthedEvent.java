@@ -19,8 +19,4 @@ public class ZKAuthAuthedEvent extends Event<ZKNodeTreeItem> {
 
     private String password;
 
-    {
-        super.type( ZKEventTypes.ZK_AUTH);
-        super.group(ZKEventGroups.AUTH_ACTION);
-    }
 }

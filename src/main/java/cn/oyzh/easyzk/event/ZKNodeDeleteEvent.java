@@ -1,7 +1,5 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.event.ZKEventGroups;
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
@@ -15,11 +13,6 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ZKNodeDeleteEvent extends Event<String> implements EventFormatter {
-
-    {
-        super.group(ZKEventGroups.NODE_ACTION);
-        super.type(ZKEventTypes.ZK_NODE_DELETE);
-    }
 
     @Setter
     private String infoName;

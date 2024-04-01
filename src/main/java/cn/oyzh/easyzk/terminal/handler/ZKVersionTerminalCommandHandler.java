@@ -1,17 +1,10 @@
 package cn.oyzh.easyzk.terminal.handler;
 
-import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import org.apache.zookeeper.Version;
-import org.apache.zookeeper.cli.CliCommand;
-// import org.apache.zookeeper.cli.CommandFactory;
-// import org.apache.zookeeper.cli.VersionCommand;
 import org.springframework.stereotype.Component;
 
 /**

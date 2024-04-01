@@ -4,7 +4,6 @@ import cn.hutool.core.map.MapUtil;
 import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.dto.ZKFilterVO;
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZkFilterAddedEvent;
 import cn.oyzh.easyzk.store.ZKFilterStore;
@@ -15,12 +14,10 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import com.google.common.eventbus.Subscribe;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -237,7 +234,6 @@ public class ZKFilterTabContent extends DynamicTabController {
     /**
      * 过滤新增事件
      */
-    // @EventReceiver(ZKEventTypes.ZK_FILTER_ADDED)
     @Subscribe
     private void filterAdded(ZkFilterAddedEvent event) {
         this.initDataList(Integer.MAX_VALUE);
@@ -245,8 +241,7 @@ public class ZKFilterTabContent extends DynamicTabController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // // 注册事件处理
-        // EventUtil.register(this);
+        super.initialize(url, resourceBundle);
         this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
@@ -255,10 +250,4 @@ public class ZKFilterTabContent extends DynamicTabController {
         // 显示首页
         this.firstPage();
     }
-
-    // @Override
-    // public void onTabClose(Event event) {
-    //     // 取消注册事件处理
-    //     EventUtil.unregister(this);
-    // }
 }

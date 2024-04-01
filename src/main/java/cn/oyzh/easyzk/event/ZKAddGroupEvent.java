@@ -9,7 +9,4 @@ import cn.oyzh.fx.plus.event.Event;
  */
 public class ZKAddGroupEvent extends Event<Object> {
 
-    {
-        super.type(ZKEventTypes.ZK_ADD_GROUP);
-    }
 }

@@ -8,17 +8,14 @@ import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKInfoExport;
-import cn.oyzh.easyzk.event.ZKEventTypes;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
-import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
-import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
+import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
@@ -58,19 +55,11 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     public ZKRootTreeItem(@NonNull ZKTreeView treeView) {
         super(treeView);
         this.setValue(new ZKRootTreeItemValue());
-        // // 注册事件处理
-        // EventUtil.register(this);
         // 初始化子节点
         this.initChildes();
         // 监听节点变化
-//        this.getChildren().addListener((ListChangeListener<? super ZKTreeItem>) c -> {
-//            ZKEventUtil.treeChildChanged();
-//            this.getTreeView().flushLocal();
-//        });
-        // 监听节点变化
         super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             ZKEventUtil.treeChildChanged();
-//            this.flushLocal();
         });
     }
 
@@ -191,9 +180,6 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             List<ZKInfo> zkInfos = export.getConnects();
             if (CollUtil.isNotEmpty(zkInfos)) {
                 for (ZKInfo zkInfo : zkInfos) {
-                    // if (this.infoStore.exist(zkInfo)) {
-                    //     MessageBox.warn("连接[" + zkInfo.getName() + "]已存在");
-                    // } else
                     if (this.infoStore.add(zkInfo)) {
                         this.addConnect(zkInfo);
                     } else {
@@ -218,7 +204,6 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     /**
      * 添加分组
      */
-    // @EventReceiver(ZKEventTypes.ZK_ADD_GROUP)
     public void addGroup() {
         String groupName = MessageBox.prompt("请输入分组名称");
 
@@ -315,7 +300,6 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             this.extend();
         } else {
             groupItem.addConnect(zkInfo);
-            // groupItem.extend();
         }
     }
 
@@ -376,14 +360,6 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         }
         return items;
     }
-
-    // /**
-    //  * 添加连接
-    //  */
-    // @EventReceiver(ZKEventTypes.ZK_ADD_CONNECT)
-    // private void onAddConnect() {
-    //     StageUtil.showStage(ZKInfoAddController.class, this.window());
-    // }
 
     @Override
     public boolean allowDrop() {

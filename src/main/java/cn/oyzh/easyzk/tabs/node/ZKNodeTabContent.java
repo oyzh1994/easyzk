@@ -24,6 +24,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
+import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -84,6 +85,12 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     @FXML
     private FXToggleSwitch statViewSwitch;
+
+    /**
+     * 内容搜索组件
+     */
+    @FXML
+    private ClearableTextField dataSearch;
 
     /**
      * 右侧acl组件
@@ -817,6 +824,8 @@ public class ZKNodeTabContent extends DynamicTabController {
             this.treeItem.setCharset(this.charset.getCharset());
             this.showData();
         });
+        // 节点内容搜索
+        this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setSearchText(newValue));
     }
 
     /**

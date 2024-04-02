@@ -5,22 +5,23 @@
 <?import cn.oyzh.easyzk.fx.ZKRichDataTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <?import cn.oyzh.fx.plus.controls.rich.FlexVirtualizedScrollPane?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.page.PageBox?>
-<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -70,18 +71,6 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <!-- <SVGGlyph tipText="添加子节点" size="16" fx:id="addNode" -->
-                <!--           onMousePrimaryClicked="#addNode" url="/font/add.svg"> -->
-                <!--     <FlowPane.margin> -->
-                <!--         <Insets left="5" top="5"/> -->
-                <!--     </FlowPane.margin> -->
-                <!-- </SVGGlyph> -->
-                <!-- <SVGGlyph tipText="删除节点" size="16" -->
-                <!--           onMousePrimaryClicked="#deleteNode" url="/font/delete.svg"> -->
-                <!--     <FlowPane.margin> -->
-                <!--         <Insets left="5" top="5"/> -->
-                <!--     </FlowPane.margin> -->
-                <!-- </SVGGlyph> -->
                 <SVGGlyph tipText="认证节点" size="15" onMousePrimaryClicked="#authNode" url="/font/unlock.svg">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
@@ -112,7 +101,7 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <ZKFormatComboBox fx:id="format" initIndex="0" fontSize="11" prefWidth="100" style="-fx-padding: 0;">
+                <ZKFormatComboBox fx:id="format" initIndex="0" fontSize="11" prefWidth="80" style="-fx-padding: 0;">
                     <FlowPane.margin>
                         <Insets left="3" top="5"/>
                     </FlowPane.margin>
@@ -122,7 +111,7 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <CharsetComboBox fx:id="charset" fontSize="11" prefWidth="115" style="-fx-padding: 0;">
+                <CharsetComboBox fx:id="charset" fontSize="11" prefWidth="80" style="-fx-padding: 0;">
                     <FlowPane.margin>
                         <Insets left="3" top="5"/>
                     </FlowPane.margin>
@@ -145,11 +134,20 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
+                <FXLabel text="搜索" fontSize="11">
+                    <FlowPane.margin>
+                        <Insets left="5" top="5"/>
+                    </FlowPane.margin>
+                </FXLabel>
+                <ClearableTextField fx:id="dataSearch" promptText="搜索节点内容" fontSize="11" realHeight="22" prefWidth="130">
+                    <FlowPane.margin>
+                        <Insets left="3" top="5"/>
+                    </FlowPane.margin>
+                </ClearableTextField>
             </FlexFlowPane>
             <FlexVirtualizedScrollPane flexWidth="100%" flexHeight="100% - 32">
                 <content>
-                    <ZKRichDataTextArea fontSize="12" fx:id="nodeData"
-                                        onKeyPressed="#onNodeDataKeyPressed"/>
+                    <ZKRichDataTextArea fontSize="12" fx:id="nodeData" onKeyPressed="#onNodeDataKeyPressed"/>
                 </content>
             </FlexVirtualizedScrollPane>
             <!-- <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 32" -->
@@ -230,7 +228,7 @@
                     </FlowPane.margin>
                 </SVGGlyph>
                 <PageBox fx:id="aclPage" realHeight="22"
-                          realWidth="300" onPrevClicked="#prevPage" onNextClicked="#nextPage">
+                         realWidth="300" onPrevClicked="#prevPage" onNextClicked="#nextPage">
                     <FlowPane.margin>
                         <Insets left="5" top="1"/>
                     </FlowPane.margin>

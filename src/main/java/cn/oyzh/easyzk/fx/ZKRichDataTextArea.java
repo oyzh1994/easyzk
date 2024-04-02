@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.fx;
 
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
@@ -148,6 +149,15 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
     }
 
     /**
+     * 搜索正则模式
+     *
+     * @return 搜索正则模式
+     */
+    private Pattern searchPattern() {
+        return Pattern.compile(this.searchText);
+    }
+
+    /**
      * json符号正则模式
      */
     private static Pattern Json_Symbol_Pattern;
@@ -186,8 +196,19 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
     @Override
     public void initTextStyle() {
         FXUtil.runWait(() -> {
-            // json
-            if (this.showType == 1) {
+            this.clearTextStyle();
+            // 搜索
+            if (StrUtil.isNotBlank(this.searchText)) {
+                String text = this.getText();
+                Matcher matcher = this.searchPattern().matcher(text);
+                List<RichTextStyle> styles = new ArrayList<>();
+                while (matcher.find()) {
+                    styles.add(new RichTextStyle(matcher.start(), matcher.end(), "-fx-fill: #FF6600;"));
+                }
+                for (RichTextStyle style : styles) {
+                    this.setStyle(style);
+                }
+            } else if (this.showType == 1) { // json
                 String text = this.getText();
                 Matcher matcher1 = jsonSymbolPattern().matcher(text);
                 List<RichTextStyle> styles = new ArrayList<>();
@@ -210,10 +231,25 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
             } else if (this.showType == 3) {// hex
                 this.setStyle(0, this.getLength(), "-fx-fill: #4682B4;");
             } else {
-                this.clearTextStyle();
+                super.changeTheme(ThemeManager.currentTheme());
             }
             this.forgetHistory();
-            super.changeTheme(ThemeManager.currentTheme());
         });
+    }
+
+    /**
+     * 搜索文本
+     */
+    @Getter
+    private String searchText;
+
+    /**
+     * 设置搜索文本
+     *
+     * @param searchText 搜索文本
+     */
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+        this.initTextStyle();
     }
 }

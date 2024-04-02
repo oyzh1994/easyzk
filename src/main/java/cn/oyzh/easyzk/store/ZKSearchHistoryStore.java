@@ -54,12 +54,21 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
     }
 
     /**
-     * 获取词汇
+     * 获取搜索词
      *
-     * @return 词汇列表
+     * @return 搜索词列表
      */
-    public synchronized List<String> getKw(int type) {
-        return this.load().parallelStream().filter(h -> Objects.equals(h.getType(), type)).map(ZKSearchHistory::getKw).collect(Collectors.toList());
+    public synchronized List<String> getSearchKw() {
+        return this.load().parallelStream().filter(h -> Objects.equals(h.getType(), 1)).map(ZKSearchHistory::getKw).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取替换词
+     *
+     * @return 替换词列表
+     */
+    public synchronized List<String> getReplaceKw() {
+        return this.load().parallelStream().filter(h -> Objects.equals(h.getType(), 2)).map(ZKSearchHistory::getKw).collect(Collectors.toList());
     }
 
     @Override

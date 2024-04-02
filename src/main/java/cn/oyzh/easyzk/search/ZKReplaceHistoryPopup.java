@@ -21,7 +21,7 @@ public class ZKReplaceHistoryPopup extends SearchHistoryPopup {
 
     @Override
     public List<String> getHistories() {
-        List<String> list = this.historyStore.getKw(2);
+        List<String> list = this.historyStore.getReplaceKw();
         if (CollUtil.isNotEmpty(list)) {
             return list.reversed();
         }

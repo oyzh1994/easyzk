@@ -6,6 +6,7 @@ import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.rich.RichTextStyle;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.util.FXUtil;
+import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -33,14 +34,39 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
     private byte showType = 0;
 
     /**
+     * 是否忽略变化
+     */
+    @Getter
+    private boolean ignoreChange;
+
+    @Override
+    public void addTextChangeListener(ChangeListener<String> listener) {
+        this.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!this.ignoreChange) {
+                listener.changed(observable, oldValue, newValue);
+            }
+        });
+    }
+
+    /**
      * 显示数据
      *
      * @param showType 显示类型
      * @param rawData  显示数据
      */
     public void showData(byte showType, Object rawData) {
-        this.showType = showType;
-        this.showData(rawData);
+        String promptText = this.getPromptText();
+        try {
+            this.ignoreChange = true;
+            this.disable();
+            this.setPromptText("数据加载中...");
+            this.showType = showType;
+            this.showData(rawData);
+        } finally {
+            this.ignoreChange = false;
+            this.setPromptText(promptText);
+            this.enable();
+        }
     }
 
     /**
@@ -58,11 +84,20 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
         }
     }
 
+    @Override
+    public void setText(String text) {
+        super.setText(text);
+        if (this.isEmpty()) {
+            this.hideLineNum();
+        } else {
+            this.showLineNum();
+        }
+    }
+
     /**
      * 显示字符串数据
      */
     public void showStringData(Object rawData) {
-        this.hideLineNum();
         String stringData = TextUtil.getStringData(rawData);
         this.setText(stringData);
         this.initTextStyle();
@@ -73,7 +108,6 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
      * 显示json数据
      */
     public void showJsonData(Object rawData) {
-        this.showLineNum();
         String jsonData = TextUtil.getJsonData(rawData);
         this.setText(jsonData);
         this.initTextStyle();
@@ -84,7 +118,6 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
      * 显示二进制数据
      */
     public void showBinaryData(Object rawData) {
-        this.hideLineNum();
         String binaryData = TextUtil.getBinaryData(rawData);
         this.setText(binaryData);
         this.initTextStyle();
@@ -95,7 +128,6 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
      * 显示十六进制数据
      */
     public void showHexData(Object rawData) {
-        this.hideLineNum();
         String hexData = TextUtil.getHexData(rawData);
         this.setText(hexData);
         this.initTextStyle();
@@ -106,7 +138,6 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
      * 显示原始数据
      */
     public void showRawData(Object rawData) {
-        this.hideLineNum();
         if (rawData instanceof CharSequence sequence) {
             this.setText(sequence.toString());
         } else if (rawData instanceof byte[] bytes) {
@@ -154,9 +185,9 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
 
     @Override
     public void initTextStyle() {
-        // json
-        if (this.showType == 1) {
-            FXUtil.runLater(() -> {
+        FXUtil.runWait(() -> {
+            // json
+            if (this.showType == 1) {
                 String text = this.getText();
                 Matcher matcher1 = jsonSymbolPattern().matcher(text);
                 List<RichTextStyle> styles = new ArrayList<>();
@@ -174,21 +205,15 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
                 for (RichTextStyle style : styles) {
                     this.setStyle(style);
                 }
-                this.forgetHistory();
-            });
-        } else if (this.showType == 2) {// binary
-            FXUtil.runLater(() -> {
+            } else if (this.showType == 2) {// binary
                 this.setStyle(0, this.getLength(), "-fx-fill: #32CD32;");
-                this.forgetHistory();
-            });
-        } else if (this.showType == 3) {// hex
-            FXUtil.runLater(() -> {
+            } else if (this.showType == 3) {// hex
                 this.setStyle(0, this.getLength(), "-fx-fill: #4682B4;");
-                this.forgetHistory();
-            });
-        } else {
-            this.clearTextStyle();
+            } else {
+                this.clearTextStyle();
+            }
+            this.forgetHistory();
             super.changeTheme(ThemeManager.currentTheme());
-        }
+        });
     }
 }

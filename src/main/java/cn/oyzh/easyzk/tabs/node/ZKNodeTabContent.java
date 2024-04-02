@@ -131,12 +131,6 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private SVGGlyph unCollect;
 
-    // /**
-    //  * 添加节点
-    //  */
-    // @FXML
-    // private SVGGlyph addNode;
-
     /**
      * 加载耗时
      */
@@ -274,7 +268,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.treeItem = item;
         // 初始化数据
         if (this.root.getSelectedIndex() == 0) {
-            this.showData(item.dataStr());
+            this.showData();
         } else if (this.root.getSelectedIndex() == 1) {
             this.treeItem = item;
             this.initStat();
@@ -293,7 +287,6 @@ public class ZKNodeTabContent extends DynamicTabController {
 
         // 按钮状态处理
         this.saveNodeData.disable();
-        // this.addNode.setDisable(this.treeItem.ephemeral());
         this.node2QRCode.setDisable(!this.treeItem.hasReadPerm());
 
         // 收藏处理
@@ -567,22 +560,6 @@ public class ZKNodeTabContent extends DynamicTabController {
         }
     }
 
-    // /**
-    //  * 添加子节点
-    //  */
-    // @FXML
-    // private void addNode() {
-    //     this.treeItem.addNode();
-    // }
-    //
-    // /**
-    //  * 删除zk节点
-    //  */
-    // @FXML
-    // private void deleteNode() {
-    //     this.treeItem.delete();
-    // }
-
     /**
      * 复制节点路径及数据
      */
@@ -732,7 +709,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 显示数据
      */
     protected void showData() {
-        this.showData(this.nodeData.getShowType(), this.treeItem.dataStr());
+        this.showData(this.nodeData.getShowType());
     }
 
     /**
@@ -741,30 +718,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * @param showType 类型
      */
     protected void showData(byte showType) {
-        this.showData(showType, this.treeItem.dataStr());
-    }
-
-    /**
-     * 显示数据
-     *
-     * @param data 数据
-     */
-    protected void showData(String data) {
-        this.showData(this.nodeData.getShowType(), data);
-    }
-
-    /**
-     * 显示数据
-     *
-     * @param showType 类型
-     * @param data     数据
-     */
-    protected void showData(byte showType, String data) {
-        this.nodeData.disable();
-        this.nodeData.setPromptText("数据加载中...");
-        this.nodeData.showData(showType, data);
-        this.nodeData.setPromptText("");
-        this.nodeData.enable();
+        this.nodeData.showData(showType, this.treeItem.data());
     }
 
     /**

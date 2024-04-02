@@ -233,7 +233,6 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
             } else {
                 super.changeTheme(ThemeManager.currentTheme());
             }
-            this.forgetHistory();
         });
     }
 

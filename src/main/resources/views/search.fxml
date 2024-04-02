@@ -5,7 +5,7 @@
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
-<?import cn.oyzh.fx.plus.controls.textfield.SearchTextField?>
+<?import cn.oyzh.fx.plus.search.SearchTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" fx:id="searchMain" xmlns="http://javafx.com/javafx"

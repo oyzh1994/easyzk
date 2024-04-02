@@ -65,7 +65,6 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     private final ZKSetting setting = ZKSettingStore.SETTING;
 
     public ZKTreeView() {
-        EventListener.super.register();
         this.dragContent = "zk_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new ZKTreeCell());
         // 初始化根节点

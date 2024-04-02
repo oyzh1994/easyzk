@@ -5,7 +5,8 @@ import cn.oyzh.easyzk.event.TreeChildChangedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKSearchCloseEvent;
 import cn.oyzh.easyzk.event.ZKSearchOpenEvent;
-import cn.oyzh.easyzk.fx.ZKSearchHistoryPopup;
+import cn.oyzh.easyzk.search.ZKReplaceHistoryPopup;
+import cn.oyzh.easyzk.search.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
@@ -19,7 +20,7 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.controls.textfield.SearchTextField;
+import cn.oyzh.fx.plus.search.SearchTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -446,8 +447,8 @@ public class SearchController extends SubController {
         this.treeView = this.parent().tree;
         // 初始化搜索
         this.searchHandler.init(this.treeView, this.parent().tabPane);
-        this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup(1));
-        this.replaceKW.setHistoryPopup(new ZKSearchHistoryPopup(2));
+        this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup());
+        this.replaceKW.setHistoryPopup(new ZKReplaceHistoryPopup());
     }
 
     @Override

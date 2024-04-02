@@ -43,7 +43,6 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
 
     @Override
     protected void initTabPane() {
-        EventListener.super.register();
         super.initTabPane();
         this.initHomeTab();
         // 监听tab

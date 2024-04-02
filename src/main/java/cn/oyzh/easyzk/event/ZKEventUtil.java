@@ -370,6 +370,6 @@ public class ZKEventUtil {
      * 添加过滤配置
      */
     public static void filterAdded() {
-        EventUtil.post(new ZkFilterAddedEvent());
+        EventUtil.post(new ZKFilterAddedEvent());
     }
 }

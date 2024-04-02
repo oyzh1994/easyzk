@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.dto.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.ZkFilterAddedEvent;
+import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
@@ -235,7 +235,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      * 过滤新增事件
      */
     @Subscribe
-    private void filterAdded(ZkFilterAddedEvent event) {
+    private void filterAdded(ZKFilterAddedEvent event) {
         this.initDataList(Integer.MAX_VALUE);
     }
 

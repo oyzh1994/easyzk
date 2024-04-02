@@ -34,12 +34,6 @@ public class HeaderController extends SubController {
     private Project project;
 
     /**
-     * 搜索
-     */
-    @FXML
-    private SVGLabel search;
-
-    /**
      * 展开zk树
      */
     @FXML
@@ -149,13 +143,7 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void search() {
-        if (this.search.hasProp("open")) {
-            ZKEventUtil.searchClose();
-            this.search.removeProp("open");
-        } else {
-            ZKEventUtil.searchOpen();
-            this.search.setProp("open", true);
-        }
+        ZKEventUtil.searchFire();
     }
 
     @Override

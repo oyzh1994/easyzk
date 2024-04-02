@@ -23,6 +23,7 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeEnhance;
 import com.google.common.eventbus.Subscribe;
@@ -318,8 +319,11 @@ public class ZKMainController extends ParentController {
         this.tree.setOnMouseMoved(this.resizeEnhance.mouseMoved());
         this.resizeEnhance.initResizeEvent();
 
-        // 监听F5按键
+        // 搜索触发事件
+        KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));
+        // 刷新触发事件
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
+        // 刷新触发事件
         KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
     }
 

@@ -287,17 +287,10 @@ public class ZKEventUtil {
     }
 
     /**
-     * 搜索打开事件
+     * 搜索触发事件
      */
-    public static void searchOpen() {
-        EventUtil.post(new ZKSearchOpenEvent());
-    }
-
-    /**
-     * 搜索关闭事件
-     */
-    public static void searchClose() {
-        EventUtil.post(new ZKSearchCloseEvent());
+    public static void searchFire() {
+        EventUtil.post(new ZKSearchFireEvent());
     }
 
     /**

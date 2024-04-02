@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <SVGLabel text="查找" fx:id="search" onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" url="/font/search.svg" size="14">
+    <SVGLabel text="查找" onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" url="/font/search.svg" size="14">
         <FlowPane.margin>
             <Insets left="8" top="5" bottom="5"/>
         </FlowPane.margin>

@@ -3,11 +3,10 @@ package cn.oyzh.easyzk.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.event.TreeChildChangedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.ZKSearchCloseEvent;
-import cn.oyzh.easyzk.event.ZKSearchOpenEvent;
+import cn.oyzh.easyzk.event.ZKSearchFireEvent;
 import cn.oyzh.easyzk.search.ZKReplaceHistoryPopup;
-import cn.oyzh.easyzk.search.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
+import cn.oyzh.easyzk.search.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -20,11 +19,9 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.search.SearchTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.keyboard.KeyHandler;
-import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.search.SearchResult;
+import cn.oyzh.fx.plus.search.SearchTextField;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
@@ -365,39 +362,20 @@ public class SearchController extends SubController {
 
     @Override
     protected void bindListeners() {
+        // 搜索相关处理
         this.searchMain.managedBindVisible();
-        // 将searchPrev的disableProperty绑定到searchNext的disableProperty
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
-        // 将searchAnalyse的disableProperty绑定到searchNext的disableProperty
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
-        // 绑定mode的selectedChanged事件，当mode的值发生变化时调用preSearch()方法
         this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        // 当fullMatch的值发生变化时调用preSearch()方法
         this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        // 当searchPath的值发生变化时调用preSearch()方法
         this.searchPath.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        // 当searchData的值发生变化时调用preSearch()方法
         this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        // 当compareCase的值发生变化时调用preSearch()方法
         this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        // 当searchKW添加文本时调用preSearch()方法
         this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
-        // 当replaceKW添加文本时，清空replaceTips的文本并调用searchCheck()方法
         this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {
             this.replaceTips.setText("");
             this.searchCheck();
         });
-
-        // 搜索触发事件
-        KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(t1 -> {
-            if (this.searchMain.isVisible()) {
-                this.searchOpen(null);
-            } else {
-                this.searchClose(null);
-                this.searchKW.requestFocus();
-                this.searchKW.selectEnd();
-            }
-        }));
 
         // 监听搜索组件显示事件
         this.searchMain.visibleProperty().addListener((t1, t2, newValue) -> {
@@ -424,21 +402,17 @@ public class SearchController extends SubController {
     }
 
     /**
-     * 搜索打开
+     * 搜索触发
      */
     @Subscribe
-    public void searchOpen(ZKSearchOpenEvent event) {
-        this.searchMain.display();
-        this.treeView.setFlexHeight("100% - 150");
-    }
-
-    /**
-     * 搜索关闭
-     */
-    @Subscribe
-    public void searchClose(ZKSearchCloseEvent event) {
-        this.searchMain.disappear();
-        this.treeView.setFlexHeight("100% - 60");
+    public void searchClose(ZKSearchFireEvent event) {
+        if (this.searchMain.isVisible()) {
+            this.searchMain.disappear();
+            this.treeView.setFlexHeight("100% - 60");
+        } else {
+            this.searchMain.display();
+            this.treeView.setFlexHeight("100% - 150");
+        }
     }
 
     @Override

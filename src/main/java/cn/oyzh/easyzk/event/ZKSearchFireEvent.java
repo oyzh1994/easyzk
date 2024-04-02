@@ -7,6 +7,6 @@ import cn.oyzh.fx.plus.event.Event;
  * @author oyzh
  * @since 2024/03/27
  */
-public class ZKSearchOpenEvent extends Event<ZKSearchParam> {
+public class ZKSearchFireEvent extends Event<ZKSearchParam> {
 
 }

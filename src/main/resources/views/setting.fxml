@@ -140,7 +140,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <DynamicTabStrategyComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
+                    <DynamicTabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
                                                 fx:id="tabStrategy">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -176,7 +176,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ThemeComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种主题"
+                    <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="选择一种主题"
                                                 fx:id="theme">
                         <HBox.margin>
                             <Insets left="10" top="10"/>

@@ -191,7 +191,7 @@ public class SettingController extends Controller {
         }
         this.setting.setLoadMode(loadMode);
         this.setting.setAuthMode(authMode);
-        this.setting.setTheme(this.theme.getValue().name());
+        this.setting.setTheme(this.theme.name());
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
         this.setting.setTabLimit(this.tabLimit.getValue().intValue());
@@ -205,7 +205,7 @@ public class SettingController extends Controller {
             }
             MessageBox.okToast("保存配置成功" + tips);
             this.closeStage();
-            ThemeManager.currentTheme(this.theme.getValue());
+            ThemeManager.changeTheme(this.theme.getValue());
         } else {
             MessageBox.warnToast("保存配置失败！");
         }

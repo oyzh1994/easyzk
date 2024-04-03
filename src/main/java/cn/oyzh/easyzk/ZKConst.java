@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk;
 
+import cn.oyzh.fx.plus.util.FXUtil;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
@@ -33,4 +34,7 @@ public class ZKConst {
      */
     public final static String ICON_PATH = "/image/zoo_no_bg.png";
 
+    static {
+        FXUtil.setAppStorePath(STORE_PATH);
+    }
 }

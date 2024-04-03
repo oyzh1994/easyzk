@@ -18,7 +18,7 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -472,7 +472,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     }
 
     @Override
-    public synchronized void doFilter(RichTreeItemFilter itemFilter) {
+    public void doFilter(RichTreeItemFilter itemFilter) {
         super.doFilter(itemFilter);
         this.flushValue();
     }
@@ -521,9 +521,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             Task task = TaskBuilder.newBuilder()
                     .onStart(() -> this.loadChildes(false))
                     .onSuccess(this::extend)
+                    .onFinish(this::flushLocal)
                     .onError(Throwable::printStackTrace)
                     .build();
-            ThreadUtil.startVirtual(task);
+            TaskManager.start(task);
         }
     }
 

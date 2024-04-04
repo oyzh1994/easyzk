@@ -17,7 +17,7 @@
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
         <FXTab text="连接">
             <graphic>
-                <SVGGlyph initCursor="DEFAULT" url="/font/content.svg" size="13"/>
+                <SVGGlyph initCursor="DEFAULT" url="/font/connections.svg" size="12"/>
             </graphic>
             <FlexVBox flexHeight="100%" flexWidth="100% - 8"
                       style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">

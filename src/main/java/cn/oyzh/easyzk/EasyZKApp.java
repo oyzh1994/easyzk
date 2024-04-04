@@ -50,7 +50,7 @@ public class EasyZKApp extends SpringApplication {
     public void start(Stage primaryStage) {
         try {
             // 初始化主题
-            ThemeManager.changeTheme(ZKSettingStore.SETTING.getTheme());
+            ThemeManager.changeTheme(ZKSettingStore.SETTING.themeConfig());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 开始执行业务

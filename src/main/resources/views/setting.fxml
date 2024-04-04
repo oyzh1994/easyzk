@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.FXToggleGroup?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
+<?import cn.oyzh.fx.plus.controls.button.*?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
+<?import cn.oyzh.fx.plus.controls.tab.*?>
+<?import cn.oyzh.fx.plus.controls.text.*?>
+<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
+<?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="280">
+          fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="350">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="ZK设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
@@ -140,7 +134,8 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <DynamicTabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
+                    <DynamicTabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0"
+                                                tipText="选择一种限制策略"
                                                 fx:id="tabStrategy">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -156,7 +151,8 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140" realHeight="30"
+                    <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140"
+                                     realHeight="30"
                                      tipText="0代表无限制，最大值1000">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -177,11 +173,74 @@
                         </HBox.margin>
                     </FXLabel>
                     <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="选择一种主题"
-                                                fx:id="theme">
+                                   fx:id="theme">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ThemeComboBox>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="fgColorBox" disable="true">
+                    <FXLabel text="前景颜色" realHeight="30" realWidth="65" styleClass="accent">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 200" tipText="选择前景色"
+                                     fx:id="fgColor">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexColorPicker>
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认前景色" onAction="#resetFgColor">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </FlexButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="bgColorBox" disable="true">
+                    <FXLabel text="背景颜色" realHeight="30" realWidth="65" styleClass="accent">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 200" tipText="选择背景色"
+                                     fx:id="bgColor">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexColorPicker>
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认背景色" onAction="#resetBgColor">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </FlexButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="accentColorBox" disable="true">
+                    <FXLabel text="强调颜色" realHeight="30" realWidth="65" styleClass="accent">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 200" tipText="选择强调色"
+                                     fx:id="accentColor">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexColorPicker>
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认强调色" onAction="#resetAccentColor">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </FlexButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>

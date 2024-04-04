@@ -7,8 +7,10 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
+import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
+import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
@@ -126,6 +128,42 @@ public class SettingController extends Controller {
     private ThemeComboBox theme;
 
     /**
+     * 背景色
+     */
+    @FXML
+    private FlexColorPicker bgColor;
+
+    /**
+     * 前景色
+     */
+    @FXML
+    private FlexColorPicker fgColor;
+
+    /**
+     * 强调色
+     */
+    @FXML
+    private FlexColorPicker accentColor;
+
+    /**
+     * 背景色
+     */
+    @FXML
+    private FlexHBox bgColorBox;
+
+    /**
+     * 前景色
+     */
+    @FXML
+    private FlexHBox fgColorBox;
+
+    /**
+     * 强调色
+     */
+    @FXML
+    private FlexHBox accentColorBox;
+
+    /**
      * 配置对象
      */
     private final ZKSetting setting = ZKSettingStore.SETTING;
@@ -172,6 +210,9 @@ public class SettingController extends Controller {
         }
         // 主题相关处理
         this.theme.select(this.setting.getTheme());
+        this.fgColor.setColor(this.setting.getFgColor());
+        this.bgColor.setColor(this.setting.getBgColor());
+        this.accentColor.setColor(this.setting.getAccentColor());
         // 标签相关处理
         this.tabLimit.setValue(this.setting.getTabLimit());
         this.tabStrategy.select(this.setting.getTabStrategy());
@@ -191,7 +232,11 @@ public class SettingController extends Controller {
         }
         this.setting.setLoadMode(loadMode);
         this.setting.setAuthMode(authMode);
+        // 主题相关
         this.setting.setTheme(this.theme.name());
+        this.setting.setBgColor(this.bgColor.getColor());
+        this.setting.setFgColor(this.fgColor.getColor());
+        this.setting.setAccentColor(this.accentColor.getColor());
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
         this.setting.setTabLimit(this.tabLimit.getValue().intValue());
@@ -205,14 +250,55 @@ public class SettingController extends Controller {
             }
             MessageBox.okToast("保存配置成功" + tips);
             this.closeStage();
-            ThemeManager.changeTheme(this.theme.getValue());
+            ThemeManager.changeTheme(this.setting.themeConfig());
         } else {
             MessageBox.warnToast("保存配置失败！");
         }
     }
 
     @Override
+    protected void bindListeners() {
+        super.bindListeners();
+        this.fgColorBox.disableProperty().bind(this.accentColorBox.disabledProperty());
+        this.bgColorBox.disableProperty().bind(this.accentColorBox.disabledProperty());
+        this.theme.selectedItemChanged((observableValue, number, t1) -> {
+            this.accentColorBox.setDisable(this.theme.isSystem());
+            this.fgColor.setValue(t1.getForegroundColor());
+            this.bgColor.setValue(t1.getBackgroundColor());
+            this.accentColor.setValue(t1.getAccentColor());
+        });
+        if (!this.theme.isSystem()) {
+            this.accentColorBox.enable();
+        }
+    }
+
+    @Override
     public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
         this.stage.hideOnEscape();
+    }
+
+    /**
+     * 重置前景色
+     */
+    @FXML
+    private void resetFgColor() {
+        this.fgColor.setValue(this.theme.getValue().getForegroundColor());
+    }
+
+    /**
+     * 重置背景色
+     */
+    @FXML
+    private void resetBgColor() {
+        this.bgColor.setValue(this.theme.getValue().getBackgroundColor());
+    }
+
+    /**
+     * 重置强调色
+     */
+    @FXML
+    private void resetAccentColor() {
+        this.accentColor.setValue(this.theme.getValue().getAccentColor());
     }
 }

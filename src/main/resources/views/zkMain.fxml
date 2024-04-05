@@ -11,7 +11,9 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
 <?import cn.oyzh.easyzk.fx.ZKMsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <FlexPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.ZKMainController" flexWidth="100%" flexHeight="100% - 30">
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
@@ -47,23 +49,23 @@
                         </HBox.margin>
                     </SVGGlyph>
                 </FlexHBox>
-                <FlexHBox realHeight="30" flexWidth="100%">
+                <FlexFlowPane realHeight="30" flexWidth="100%">
                     <FlexCheckBox text="过滤临时节点" fx:id="filterEphemeral" fontSize="11">
-                        <HBox.margin>
+                        <FlowPane.margin>
                             <Insets left="10" top="5"/>
-                        </HBox.margin>
+                        </FlowPane.margin>
                     </FlexCheckBox>
                     <FlexCheckBox text="过滤子节点" fx:id="filterSubNode" fontSize="11">
-                        <HBox.margin>
+                        <FlowPane.margin>
                             <Insets left="8" top="5"/>
-                        </HBox.margin>
+                        </FlowPane.margin>
                     </FlexCheckBox>
                     <FlexCheckBox text="仅查看收藏节点" fx:id="onlyCollect" fontSize="11">
-                        <HBox.margin>
+                        <FlowPane.margin>
                             <Insets left="5" top="5"/>
-                        </HBox.margin>
+                        </FlowPane.margin>
                     </FlexCheckBox>
-                </FlexHBox>
+                </FlexFlowPane>
                 <fx:include visible="false" managed="false" fx:id="search" source="search.fxml" realHeight="90" flexWidth="100%-2"/>
                 <ZKTreeView fx:id="tree" flexHeight="100% - 60" flexWidth="100%"/>
             </FlexVBox>

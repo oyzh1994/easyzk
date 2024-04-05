@@ -9,6 +9,8 @@
 <?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
+<?import cn.oyzh.fx.plus.font.FontNameComboBox?>
+<?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="350">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -158,6 +160,52 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </NumberTextField>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="字体设置">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="字体名称" realHeight="30" realWidth="65" styleClass="accent">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FontNameComboBox realHeight="30" flexWidth="100% - 200" tipText="选择字体名称(编辑器或部分组件除外)"
+                                      fx:id="fontName">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FontNameComboBox>
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认字体名称" onAction="#resetFontName">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </FlexButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="字体大小" realHeight="30" realWidth="65" styleClass="accent">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FontSizeComboBox realHeight="30" flexWidth="100% - 200" tipText="选择字体大小(编辑器或部分组件除外)"
+                                      fx:id="fontSize">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FontSizeComboBox>
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认字体大小" onAction="#resetFontSize">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </FlexButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>

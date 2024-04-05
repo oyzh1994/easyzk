@@ -11,6 +11,9 @@ import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
+import cn.oyzh.fx.plus.font.FontManager;
+import cn.oyzh.fx.plus.font.FontNameComboBox;
+import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
@@ -164,6 +167,18 @@ public class SettingController extends Controller {
     private FlexHBox accentColorBox;
 
     /**
+     * 字体名称
+     */
+    @FXML
+    private FontNameComboBox fontName;
+
+    /**
+     * 字体大小
+     */
+    @FXML
+    private FontSizeComboBox fontSize;
+
+    /**
      * 配置对象
      */
     private final ZKSetting setting = ZKSettingStore.SETTING;
@@ -216,6 +231,9 @@ public class SettingController extends Controller {
         // 标签相关处理
         this.tabLimit.setValue(this.setting.getTabLimit());
         this.tabStrategy.select(this.setting.getTabStrategy());
+        // 字体相关处理
+        this.fontSize.select(this.setting.getFontSize());
+        this.fontName.select(this.setting.getFontName());
     }
 
     /**
@@ -232,11 +250,15 @@ public class SettingController extends Controller {
         }
         this.setting.setLoadMode(loadMode);
         this.setting.setAuthMode(authMode);
+        // 字体相关
+        this.setting.setFontSize(this.fontSize.getValue());
+        this.setting.setFontName(this.fontName.getValue());
         // 主题相关
         this.setting.setTheme(this.theme.name());
         this.setting.setBgColor(this.bgColor.getColor());
         this.setting.setFgColor(this.fgColor.getColor());
         this.setting.setAccentColor(this.accentColor.getColor());
+        // 其他设置
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
         this.setting.setTabLimit(this.tabLimit.getValue().intValue());
@@ -250,7 +272,10 @@ public class SettingController extends Controller {
             }
             MessageBox.okToast("保存配置成功" + tips);
             this.closeStage();
-            ThemeManager.changeTheme(this.setting.themeConfig());
+            // 应用字体配置
+            FontManager.apply(this.setting.fontConfig());
+            // 应用主题配置
+            ThemeManager.apply(this.setting.themeConfig());
         } else {
             MessageBox.warnToast("保存配置失败！");
         }
@@ -300,5 +325,21 @@ public class SettingController extends Controller {
     @FXML
     private void resetAccentColor() {
         this.accentColor.setValue(this.theme.getValue().getAccentColor());
+    }
+
+    /**
+     * 重置字体名称
+     */
+    @FXML
+    private void resetFontName() {
+        this.fontName.select(null);
+    }
+
+    /**
+     * 重置字体大小
+     */
+    @FXML
+    private void resetFontSize() {
+        this.fontSize.select(null);
     }
 }

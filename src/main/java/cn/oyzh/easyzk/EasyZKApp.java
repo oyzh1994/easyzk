@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -49,8 +50,10 @@ public class EasyZKApp extends SpringApplication {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // 初始化主题
-            ThemeManager.changeTheme(ZKSettingStore.SETTING.themeConfig());
+            // 应用字体
+            FontManager.apply(ZKSettingStore.SETTING.fontConfig());
+            // 应用主题
+            ThemeManager.apply(ZKSettingStore.SETTING.themeConfig());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 开始执行业务

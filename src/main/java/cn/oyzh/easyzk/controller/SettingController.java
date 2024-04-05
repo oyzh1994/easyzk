@@ -12,7 +12,8 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
 import cn.oyzh.fx.plus.font.FontManager;
-import cn.oyzh.fx.plus.font.FontNameComboBox;
+import cn.oyzh.fx.plus.font.FontFamilyComboBox;
+import cn.oyzh.fx.plus.font.FontWeightComboBox;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -167,16 +168,23 @@ public class SettingController extends Controller {
     private FlexHBox accentColorBox;
 
     /**
-     * 字体名称
-     */
-    @FXML
-    private FontNameComboBox fontName;
-
-    /**
      * 字体大小
      */
     @FXML
     private FontSizeComboBox fontSize;
+
+    /**
+     * 字体粗细
+     */
+    @FXML
+    private FontWeightComboBox fontWeight;
+
+    /**
+     * 字体名称
+     */
+    @FXML
+    private FontFamilyComboBox fontFamily;
+
 
     /**
      * 配置对象
@@ -233,7 +241,8 @@ public class SettingController extends Controller {
         this.tabStrategy.select(this.setting.getTabStrategy());
         // 字体相关处理
         this.fontSize.select(this.setting.getFontSize());
-        this.fontName.select(this.setting.getFontName());
+        this.fontFamily.select(this.setting.getFontFamily());
+        this.fontWeight.selectWeight(this.setting.getFontWeight());
     }
 
     /**
@@ -252,7 +261,8 @@ public class SettingController extends Controller {
         this.setting.setAuthMode(authMode);
         // 字体相关
         this.setting.setFontSize(this.fontSize.getValue());
-        this.setting.setFontName(this.fontName.getValue());
+        this.setting.setFontWeight(this.fontWeight.getWeight());
+        this.setting.setFontFamily(this.fontFamily.getValue());
         // 主题相关
         this.setting.setTheme(this.theme.name());
         this.setting.setBgColor(this.bgColor.getColor());
@@ -331,8 +341,8 @@ public class SettingController extends Controller {
      * 重置字体名称
      */
     @FXML
-    private void resetFontName() {
-        this.fontName.select(null);
+    private void resetFontFamily() {
+        this.fontFamily.select(null);
     }
 
     /**
@@ -341,5 +351,13 @@ public class SettingController extends Controller {
     @FXML
     private void resetFontSize() {
         this.fontSize.select(null);
+    }
+
+    /**
+     * 重置字体粗细
+     */
+    @FXML
+    private void resetFontWeight() {
+        this.fontWeight.select(null);
     }
 }

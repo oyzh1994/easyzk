@@ -32,4 +32,10 @@
             <SVGGlyph url="/font/code library.svg"/>
         </graphic>
     </IconButton>
+    <IconButton onMousePrimaryClicked="#changelog" layoutX="590" layoutY="260" styleClass="danger"
+                text="更新日志">
+        <graphic>
+            <SVGGlyph url="/font/changelog.svg"/>
+        </graphic>
+    </IconButton>
 </FlexPane>

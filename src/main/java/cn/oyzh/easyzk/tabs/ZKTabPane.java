@@ -12,12 +12,14 @@ import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
+import cn.oyzh.easyzk.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -185,6 +187,23 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
     @Subscribe
     private void terminalOpen(ZKTerminalOpenEvent event) {
         this.initTerminalTab(event.data());
+    }
+
+    /**
+     * 更新日志事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void changelog(ChangelogEvent event) {
+        ChangelogTab tab = this.getTab(ChangelogTab.class);
+        if (tab == null) {
+            tab = new ChangelogTab();
+            super.addTab(tab);
+        }
+        if (!tab.isSelected()) {
+            this.select(tab);
+        }
     }
 
     /**

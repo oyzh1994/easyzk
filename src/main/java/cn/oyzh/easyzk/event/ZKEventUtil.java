@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
@@ -364,5 +365,12 @@ public class ZKEventUtil {
      */
     public static void filterAdded() {
         EventUtil.post(new ZKFilterAddedEvent());
+    }
+
+    /**
+     * 更新日志事件
+     */
+    public static void changelog() {
+        EventUtil.post(new ChangelogEvent());
     }
 }

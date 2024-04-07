@@ -20,7 +20,6 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2022/12/22
  */
-//@Slf4j
 @StageAttribute(
         title = "zk认证信息新增",
         iconUrls = ZKConst.ICON_PATH,

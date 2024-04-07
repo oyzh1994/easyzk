@@ -77,4 +77,12 @@ public class ZKHomeTabContent extends DynamicTabController {
     private void openTerminal() {
         ZKEventUtil.terminalOpen();
     }
+
+    /**
+     * 更新日志
+     */
+    @FXML
+    private void changelog() {
+        ZKEventUtil.changelog();
+    }
 }

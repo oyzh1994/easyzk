@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
 import javax.annotation.Resource;
+import java.util.Locale;
 
 /**
  * 关于业务
@@ -40,6 +42,18 @@ public class AboutController extends Controller {
     private FlexText updateDate;
 
     @FXML
+    private FXLabel nameLabel;
+
+    @FXML
+    private FXLabel typeLabel;
+
+    @FXML
+    private FXLabel versionLabel;
+
+    @FXML
+    private FXLabel updateDateLabel;
+
+    @FXML
     private FlexText copyright;
 
     /**
@@ -58,9 +72,24 @@ public class AboutController extends Controller {
         this.updateDate.setText(this.project.getUpdateDate());
         // 设置版权文本框的文本为项目的版权信息
         this.copyright.setText(this.project.getCopyright());
-        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? "每日构建版" : "正式发布版");
+        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? this.i18nString("buildType1") : this.i18nString("buildType2"));
         // 设置标题
-        this.stage.setTitleExt("关于" + this.project.getName());
+        this.stage.setTitleExt(this.i18nString("title") + this.project.getName());
         this.stage.hideOnEscape();
+    }
+
+    @Override
+    public String i18nResource() {
+        return "/i18n/about.properties";
+    }
+
+    @Override
+    public void changeLocale(Locale locale) {
+        if (this.isEnableI18n()) {
+            this.nameLabel.setText(this.i18nString("name"));
+            this.typeLabel.setText(this.i18nString("type"));
+            this.versionLabel.setText(this.i18nString("version"));
+            this.updateDateLabel.setText(this.i18nString("updateDate"));
+        }
     }
 }

@@ -16,6 +16,8 @@ import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
+import cn.oyzh.fx.plus.i18n.I18nManager;
+import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
@@ -186,6 +188,11 @@ public class SettingController extends Controller {
     @FXML
     private FontFamilyComboBox fontFamily;
 
+    /**
+     * 区域
+     */
+    @FXML
+    private LocaleComboBox locale;
 
     /**
      * 配置对象
@@ -244,6 +251,8 @@ public class SettingController extends Controller {
         this.fontSize.select(this.setting.getFontSize());
         this.fontFamily.select(this.setting.getFontFamily());
         this.fontWeight.selectWeight(this.setting.getFontWeight());
+        // 区域相关处理
+        this.locale.select(this.setting.getLocale());
     }
 
     /**
@@ -269,6 +278,8 @@ public class SettingController extends Controller {
         this.setting.setBgColor(this.bgColor.getColor());
         this.setting.setFgColor(this.fgColor.getColor());
         this.setting.setAccentColor(this.accentColor.getColor());
+        // 区域相关处理
+        this.setting.setLocale(this.locale.name());
         // 其他设置
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
@@ -287,6 +298,8 @@ public class SettingController extends Controller {
             FontManager.apply(this.setting.fontConfig());
             // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
+            // 应用区域配置
+            I18nManager.apply(this.setting.getLocale());
         } else {
             MessageBox.warnToast("保存配置失败！");
         }
@@ -360,5 +373,13 @@ public class SettingController extends Controller {
     @FXML
     private void resetFontWeight() {
         this.fontWeight.select(null);
+    }
+
+    /**
+     * 重置区域
+     */
+    @FXML
+    private void resetLocale() {
+        this.locale.select((String) null);
     }
 }

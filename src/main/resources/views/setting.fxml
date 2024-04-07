@@ -12,6 +12,7 @@
 <?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
 <?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
 <?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
+<?import cn.oyzh.fx.plus.i18n.LocaleComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="350">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -307,6 +308,31 @@
                         </HBox.margin>
                     </FlexColorPicker>
                     <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认强调色" onAction="#resetAccentColor">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </FlexButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="语言设置">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="语言区域" realHeight="30" realWidth="65" styleClass="accent">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <LocaleComboBox realHeight="30" flexWidth="100% - 200" initIndex="0" tipText="选择一种语言或者区域"
+                                   fx:id="locale">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </LocaleComboBox>
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认语言或区域" onAction="#resetLocale">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>

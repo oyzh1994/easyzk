@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
@@ -11,10 +12,10 @@ import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
-import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
-import cn.oyzh.fx.plus.font.FontWeightComboBox;
+import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
+import cn.oyzh.fx.plus.font.FontWeightComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
@@ -233,9 +234,9 @@ public class SettingController extends Controller {
         }
         // 主题相关处理
         this.theme.select(this.setting.getTheme());
-        this.fgColor.setColor(this.setting.getFgColor());
-        this.bgColor.setColor(this.setting.getBgColor());
-        this.accentColor.setColor(this.setting.getAccentColor());
+        this.fgColor.setColor(StrUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
+        this.bgColor.setColor(StrUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
+        this.accentColor.setColor(StrUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
         // 标签相关处理
         this.tabLimit.setValue(this.setting.getTabLimit());
         this.tabStrategy.select(this.setting.getTabStrategy());

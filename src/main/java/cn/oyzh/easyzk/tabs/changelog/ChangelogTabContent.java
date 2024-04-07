@@ -4,7 +4,6 @@ import cn.oyzh.fx.plus.changelog.Changelog;
 import cn.oyzh.fx.plus.changelog.ChangelogListView;
 import cn.oyzh.fx.plus.changelog.ChangelogManager;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.util.ResourceUtil;
 import javafx.fxml.FXML;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -33,7 +32,7 @@ public class ChangelogTabContent extends DynamicTabController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
         // 更新日志列表
-        List<Changelog> changelogs = ChangelogManager.load(ResourceUtil.getResource("/changelog.json"));
+        List<Changelog> changelogs = ChangelogManager.load();
         // 初始化更新日志
         this.changelog.init(changelogs);
     }

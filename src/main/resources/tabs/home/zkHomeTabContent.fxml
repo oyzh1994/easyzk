@@ -1,41 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.button.ChangelogButton?>
+<?import cn.oyzh.fx.plus.controls.button.ConnectButton?>
+<?import cn.oyzh.fx.plus.controls.button.GroupButton?>
+<?import cn.oyzh.fx.plus.controls.button.TerminalButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexPane?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FlexLabel?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.svg.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <FlexPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.tabs.home.ZKHomeTabContent">
     <ImageView fitWidth="200" fitHeight="200" layoutX="50" layoutY="100">
         <Image url="/image/zoo_no_bg.png"/>
     </ImageView>
-    <FXText text="欢迎使用EasyZK！" layoutX="260" layoutY="150" fontSize="30"/>
-    <FXLabel fx:id="softInfo" layoutX="260" layoutY="180"/>
-    <FXLabel fx:id="jdkInfo" layoutX="260" layoutY="220"/>
-    <IconButton onMousePrimaryClicked="#addConnect" layoutX="260" layoutY="260" styleClass="success"
-                text="添加连接">
-        <graphic>
-            <SVGGlyph url="/font/add.svg"/>
-        </graphic>
-    </IconButton>
-    <IconButton onMousePrimaryClicked="#addGroup" layoutX="370" layoutY="260" styleClass="accent"
-                text="添加分组">
-        <graphic>
-            <SVGGlyph url="/font/addGroup.svg"/>
-        </graphic>
-    </IconButton>
-    <IconButton onMousePrimaryClicked="#openTerminal" layoutX="480" layoutY="260" styleClass="default"
-                text="打开终端">
-        <graphic>
-            <SVGGlyph url="/font/code library.svg"/>
-        </graphic>
-    </IconButton>
-    <IconButton onMousePrimaryClicked="#changelog" layoutX="590" layoutY="260" styleClass="danger"
-                text="更新日志">
-        <graphic>
-            <SVGGlyph url="/font/changelog.svg"/>
-        </graphic>
-    </IconButton>
+    <FlexVBox flexWidth="100% - 300" realHeight="210" layoutX="260" layoutY="100">
+        <FlexLabel text="%home.welcome" fontSize="30">
+            <VBox.margin>
+                <Insets top="20"/>
+            </VBox.margin>
+        </FlexLabel>
+        <FlexLabel fx:id="softInfo">
+            <VBox.margin>
+                <Insets top="20"/>
+            </VBox.margin>
+        </FlexLabel>
+        <FlexLabel fx:id="jdkInfo">
+            <VBox.margin>
+                <Insets top="20"/>
+            </VBox.margin>
+        </FlexLabel>
+    </FlexVBox>
+    <FlexHBox flexWidth="100% - 300" realHeight="300" layoutX="260" layoutY="260">
+        <ConnectButton onMousePrimaryClicked="#addConnect"/>
+        <GroupButton onMousePrimaryClicked="#addGroup">
+            <HBox.margin>
+                <Insets left="20"/>
+            </HBox.margin>
+        </GroupButton>
+        <TerminalButton onMousePrimaryClicked="#openTerminal">
+            <HBox.margin>
+                <Insets left="20"/>
+            </HBox.margin>
+        </TerminalButton>
+        <ChangelogButton onMousePrimaryClicked="#changelog">
+            <HBox.margin>
+                <Insets left="20"/>
+            </HBox.margin>
+        </ChangelogButton>
+    </FlexHBox>
 </FlexPane>

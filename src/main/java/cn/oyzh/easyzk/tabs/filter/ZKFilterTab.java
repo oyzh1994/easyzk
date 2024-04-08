@@ -17,10 +17,10 @@ public class ZKFilterTab extends DynamicTab {
         super.flush();
     }
 
-    @Override
-    public void flushTitle() {
-        super.title("过滤配置列表");
-    }
+    // @Override
+    // public void flushTitle() {
+    //     super.setTitle("过滤配置列表");
+    // }
 
     @Override
     public void flushGraphic() {
@@ -36,4 +36,5 @@ public class ZKFilterTab extends DynamicTab {
     protected String url() {
         return "/tabs/filter/zkFilterTabContent.fxml";
     }
+
 }

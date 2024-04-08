@@ -41,9 +41,9 @@ public class ZKHomeTabContent extends DynamicTabController {
     private Project project;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        super.initialize(url, resourceBundle);
-        this.softInfo.setText("程序信息 v" + this.project.getVersion() + " Powered by oyzh.");
+    public void initialize(URL url, ResourceBundle resource) {
+        super.initialize(url, resource);
+        this.softInfo.setText(this.i18nString("softInfo") + " v" + this.project.getVersion() + " Powered by oyzh.");
         String jdkInfo = "";
         if (System.getProperty("java.vm.name") != null) {
             jdkInfo += System.getProperty("java.vm.name");
@@ -51,7 +51,7 @@ public class ZKHomeTabContent extends DynamicTabController {
         if (System.getProperty("java.vm.version") != null) {
             jdkInfo += System.getProperty("java.vm.version");
         }
-        this.jdkInfo.setText("环境信息 " + jdkInfo);
+        this.jdkInfo.setText(this.i18nString("envInfo") + " " + jdkInfo);
     }
 
     /**
@@ -84,5 +84,10 @@ public class ZKHomeTabContent extends DynamicTabController {
     @FXML
     private void changelog() {
         ZKEventUtil.changelog();
+    }
+
+    @Override
+    public String i18nId() {
+        return "home";
     }
 }

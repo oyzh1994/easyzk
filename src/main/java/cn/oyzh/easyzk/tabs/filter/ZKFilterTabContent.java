@@ -75,13 +75,13 @@ public class ZKFilterTabContent extends DynamicTabController {
      * 数据状态列
      */
     @FXML
-    private FlexTableColumn<ZKFilterVO, String> enable;
+    private FlexTableColumn<ZKFilterVO, String> status;
 
     /**
-     * 数据名称列
+     * 匹配模式列
      */
     @FXML
-    private FlexTableColumn<ZKFilterVO, String> partMatch;
+    private FlexTableColumn<ZKFilterVO, String> matchMode;
 
     /**
      * 数据操作列
@@ -134,7 +134,7 @@ public class ZKFilterTabContent extends DynamicTabController {
         });
 
         // 状态栏初始化
-        this.enable.setCellFactory((cell) -> new FXTableCell<>() {
+        this.status.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
             public FXToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();
@@ -159,7 +159,7 @@ public class ZKFilterTabContent extends DynamicTabController {
         });
 
         // 匹配模式栏初始化
-        this.partMatch.setCellFactory((cell) -> new FXTableCell<>() {
+        this.matchMode.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
             public FXToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();
@@ -240,8 +240,8 @@ public class ZKFilterTabContent extends DynamicTabController {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        super.initialize(url, resourceBundle);
+    public void initialize(URL url, ResourceBundle resources) {
+        super.initialize(url, resources);
         this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
@@ -249,5 +249,10 @@ public class ZKFilterTabContent extends DynamicTabController {
         this.initTable();
         // 显示首页
         this.firstPage();
+    }
+
+    @Override
+    public String i18nId() {
+        return "filter.main";
     }
 }

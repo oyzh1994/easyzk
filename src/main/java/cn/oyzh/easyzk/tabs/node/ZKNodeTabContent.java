@@ -28,6 +28,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.thread.RenderService;
@@ -879,11 +880,11 @@ public class ZKNodeTabContent extends DynamicTabController {
     }
 
     @Override
-    public void onTabClose(Event handler) {
+    public void onTabClose(DynamicTab tab, Event event) {
         // 取消当前节点的选中
         if (this.treeItem != null && this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
             this.treeItem.getTreeView().select(this.treeItem.root());
         }
-        super.onTabClose(handler);
+        super.onTabClose(tab, event);
     }
 }

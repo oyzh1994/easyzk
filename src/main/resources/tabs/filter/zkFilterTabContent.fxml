@@ -31,11 +31,11 @@
     </FlexHBox>
     <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable">
         <columns>
-            <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
-            <FlexTableColumn flexWidth="40%" fx:id="kw" text="关键字"/>
-            <FlexTableColumn flexWidth="20%" fx:id="partMatch" text="匹配方式"/>
-            <FlexTableColumn flexWidth="20%" fx:id="enable" text="状态" sortable="false"/>
-            <FlexTableColumn flexWidth="10% - 15" fx:id="action" text="操作" sortable="false"/>
+            <FlexTableColumn flexWidth="10%" fx:id="index" text="%filter.main.table.index"/>
+            <FlexTableColumn flexWidth="40%" fx:id="kw" text="%filter.main.table.kw"/>
+            <FlexTableColumn flexWidth="20%" fx:id="matchMode" text="%filter.main.table.matchMode"/>
+            <FlexTableColumn flexWidth="20%" fx:id="status" text="%filter.main.table.status" sortable="false"/>
+            <FlexTableColumn flexWidth="10% - 15" fx:id="action" text="%filter.main.table.action" sortable="false"/>
         </columns>
     </FlexTableView>
 </FlexVBox>

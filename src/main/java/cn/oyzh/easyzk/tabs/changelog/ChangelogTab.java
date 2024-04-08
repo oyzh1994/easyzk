@@ -19,7 +19,7 @@ public class ChangelogTab extends DynamicTab {
 
     @Override
     public void flushTitle() {
-        super.title("更新日志");
+        super.setTitle("更新日志");
     }
 
     @Override

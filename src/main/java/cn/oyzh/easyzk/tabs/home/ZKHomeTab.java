@@ -22,10 +22,10 @@ public class ZKHomeTab extends DynamicTab {
         return "/tabs/home/zkHomeTabContent.fxml";
     }
 
-    @Override
-    public void flushTitle() {
-        super.title("主页");
-    }
+    // @Override
+    // public void flushTitle() {
+    //     super.setTitle("主页");
+    // }
 
     @Override
     public void flushGraphic() {

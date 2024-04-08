@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.spring.ScopeType;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -58,8 +59,8 @@ public class ZKTerminalTabContent extends DynamicTabController {
     }
 
     @Override
-    public void onTabClose(Event handler) {
+    public void onTabClose(DynamicTab tab, Event event) {
         ZKConnectUtil.close(this.client(), true);
-        super.onTabClose(handler);
+        super.onTabClose(tab, event);
     }
 }

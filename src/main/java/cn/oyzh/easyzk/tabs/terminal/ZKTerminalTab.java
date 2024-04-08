@@ -18,7 +18,7 @@ public class ZKTerminalTab extends DynamicTab {
     public void flushGraphic() {
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         if (glyph == null) {
-            glyph = new SVGGlyph("/font/code library.svg", "12");
+            glyph = new SVGGlyph("/fx-plus/font/code library.svg", "12");
             glyph.setCursor(Cursor.DEFAULT);
             this.graphic(glyph);
         }
@@ -38,7 +38,7 @@ public class ZKTerminalTab extends DynamicTab {
             // 刷新图标
             this.flushGraphic();
             // 设置标题
-            super.title(info.getName());
+            super.setTitle(info.getName());
             // 初始化zk连接
             this.controller().client(new ZKClient(info));
         } catch (Exception ex) {

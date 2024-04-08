@@ -11,6 +11,7 @@
 <?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
 <?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
@@ -27,29 +28,29 @@
         <FXTab text="%setting.tab.zk">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="节点加载" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.zkLoad" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <fx:define>
                         <FXToggleGroup fx:id="loadMode"/>
                     </fx:define>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="加载根节点及根节点的子节点" text="加载一级节点"
+                    <FXRadioButton toggleGroup="$loadMode" tipText="加载根节点及根节点的子节点" text="%setting.load.loadFirst"
                                    realHeight="25" selected="true"
                                    fx:id="loadMode0" userData="0">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="加载所有节点，耗时较长" text="加载所有节点"
+                    <FXRadioButton toggleGroup="$loadMode" tipText="加载所有节点，耗时较长" text="%setting.load.loadAll"
                                    realHeight="25" fx:id="loadMode1"
                                    userData="1">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="只加载根节点数据" text="仅加载根节点"
+                    <FXRadioButton toggleGroup="$loadMode" tipText="只加载根节点数据" text="%setting.load.loadRoot"
                                    realHeight="25" fx:id="loadMode2"
                                    userData="2">
                         <HBox.margin>
@@ -61,12 +62,12 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="节点认证" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.zkAuth" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <FlexCheckBox tipText="自动对已启用的认证信息执行认证" text="自动认证节点" realHeight="25"
+                    </AccentLabel>
+                    <FlexCheckBox tipText="自动对已启用的认证信息执行认证" text="%setting.auth.autoAuth" realHeight="25"
                                   selected="true" fx:id="authMode">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
@@ -81,11 +82,11 @@
         <FXTab text="%setting.tab.window">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="窗口关闭" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.windowClose" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <fx:define>
                         <FXToggleGroup fx:id="exitMode"/>
                     </fx:define>
@@ -112,11 +113,11 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="窗口记忆" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.windowRemember" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexCheckBox text="记住窗口大小" realHeight="25" fx:id="pageSize">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
@@ -141,11 +142,11 @@
         <FXTab text="%setting.tab.label">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="限制策略" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.labelStrategy" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <DynamicTabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0"
                                                 tipText="选择一种限制策略"
                                                 fx:id="tabStrategy">
@@ -158,11 +159,11 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="限制数量" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.labelLimit" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140"
                                      realHeight="30"
                                      tipText="0代表无限制，最大值1000">
@@ -179,11 +180,11 @@
         <FXTab text="%setting.tab.font">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="字体名称" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.fontName" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FontFamilyComboBox realHeight="30" flexWidth="100% - 225"
                                         tipText="选择字体名称(编辑器或部分组件除外)"
                                         fx:id="fontFamily">
@@ -202,11 +203,11 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="字体大小" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.fontSize" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FontSizeComboBox realHeight="30" flexWidth="100% - 225"
                                       tipText="选择字体大小(编辑器或部分组件除外)"
                                       fx:id="fontSize">
@@ -225,11 +226,11 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="字体粗细" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.fontWeight" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FontWeightComboBox realHeight="30" flexWidth="100% - 225"
                                         tipText="选择字体粗细(编辑器或部分组件除外)"
                                         fx:id="fontWeight">
@@ -252,11 +253,11 @@
         <FXTab text="%setting.tab.theme">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="%setting.label.themeName" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.themeName" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="选择一种主题"
                                    fx:id="theme">
                         <HBox.margin>
@@ -268,11 +269,11 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="fgColorBox" disable="true">
-                    <FXLabel text="%setting.label.fgColor" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.fgColor" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="选择前景色"
                                      fx:id="fgColor">
                         <HBox.margin>
@@ -290,11 +291,11 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="bgColorBox" disable="true">
-                    <FXLabel text="%setting.label.bgColor" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.bgColor" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="选择背景色"
                                      fx:id="bgColor">
                         <HBox.margin>
@@ -312,11 +313,11 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="accentColorBox" disable="true">
-                    <FXLabel text="%setting.label.accentColor" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.accentColor" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="选择强调色"
                                      fx:id="accentColor">
                         <HBox.margin>
@@ -338,11 +339,11 @@
         <FXTab text="%setting.tab.locale">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="语言区域" realHeight="30" realWidth="80" styleClass="accent">
+                    <AccentLabel text="%setting.label.languageName" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <LocaleComboBox realHeight="30" flexWidth="100% - 225" initIndex="0" tipText="选择一种语言或者区域"
                                     fx:id="locale">
                         <HBox.margin>

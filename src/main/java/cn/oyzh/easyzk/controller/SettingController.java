@@ -37,7 +37,6 @@ import java.util.Objects;
  * @since 2022/08/26
  */
 @StageAttribute(
-        title = "应用设置",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "setting.fxml"
@@ -381,5 +380,10 @@ public class SettingController extends Controller {
     @FXML
     private void resetLocale() {
         this.locale.select((String) null);
+    }
+
+    @Override
+    public String i18nId() {
+        return "setting";
     }
 }

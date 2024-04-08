@@ -5,7 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -13,7 +12,6 @@ import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
 import javax.annotation.Resource;
-import java.util.Locale;
 
 /**
  * 关于业务
@@ -62,7 +60,7 @@ public class AboutController extends Controller {
         this.copyright.setText(this.project.getCopyright());
         this.type.setText(StrUtil.equals(this.project.getType(), "build") ? this.i18nString("buildType1") : this.i18nString("buildType2"));
         // 设置标题
-        this.stage.setTitleExt(this.i18nString("title") + this.project.getName());
+        this.stage.appendTitle(this.project.getName());
         this.stage.hideOnEscape();
     }
 

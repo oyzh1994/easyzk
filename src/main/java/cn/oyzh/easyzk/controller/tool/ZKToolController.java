@@ -20,10 +20,8 @@ import javafx.stage.WindowEvent;
  * @since 2023/11/09
  */
 @StageAttribute(
-        title = "zk工具箱",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "tool/zkTool.fxml"
 )
 public class ZKToolController extends Controller {
@@ -91,5 +89,10 @@ public class ZKToolController extends Controller {
             }
         });
         this.pwd.addTextChangeListener((observableValue, s, t1) -> this.digest.clear());
+    }
+
+    @Override
+    public String i18nId() {
+        return "tool";
     }
 }

@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.tab.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
+<?import cn.oyzh.fx.plus.controls.button.CopyButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyzk.controller.tool.ZKToolController" realWidth="850" realHeight="600">
-    <FXTab text="摘要认证(digest)">
+    <FXTab text="%tool.tab.digest">
         <FlexVBox flexHeight="100%" flexWidth="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="用户信息" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="%tool.label.userInfo" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 115"
                                     promptText="请输入用户名明文"
                                     tipText="请输入用户名明文">
@@ -32,26 +36,26 @@
                 </ClearableTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="摘要信息" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="%tool.label.digestInfo" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ReadOnlyTextField fx:id="digest" realHeight="30" flexWidth="100% - 220">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ReadOnlyTextField>
-                <FXButton text="复制" onAction="#copyDigest" prefHeight="30">
+                <CopyButton onAction="#copyDigest" prefHeight="30">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </FXButton>
+                </CopyButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#genDigest" text="生成摘要">
+                <SubmitButton onAction="#genDigest" text="%tool.btn.submit">
                     <HBox.margin>
-                        <Insets left="95" top="10"/>
+                        <Insets left="110" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
             </FlexHBox>

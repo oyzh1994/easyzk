@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.button.ResetButton?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
@@ -12,7 +12,6 @@
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
 <?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
 <?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
@@ -36,7 +35,8 @@
                     <fx:define>
                         <FXToggleGroup fx:id="loadMode"/>
                     </fx:define>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="加载根节点及根节点的子节点" text="%setting.load.loadFirst"
+                    <FXRadioButton toggleGroup="$loadMode" tipText="加载根节点及根节点的子节点"
+                                   text="%setting.load.loadFirst"
                                    realHeight="25" selected="true"
                                    fx:id="loadMode0" userData="0">
                         <HBox.margin>
@@ -192,12 +192,12 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontFamilyComboBox>
-                    <FlexButton text="%setting.btn.reset" realWidth="80" realHeight="25" tipText="重置为默认字体名称"
-                                onAction="#resetFontFamily">
+                    <ResetButton realWidth="80" realHeight="25" tipText="重置为默认字体名称"
+                                 onAction="#resetFontFamily">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
-                    </FlexButton>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
@@ -215,12 +215,12 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontSizeComboBox>
-                    <FlexButton text="%setting.btn.reset" realWidth="80" realHeight="25" tipText="重置为默认字体大小"
-                                onAction="#resetFontSize">
+                    <ResetButton realWidth="80" realHeight="25" tipText="重置为默认字体大小"
+                                 onAction="#resetFontSize">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
-                    </FlexButton>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
@@ -238,12 +238,12 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontWeightComboBox>
-                    <FlexButton text="%setting.btn.reset" realWidth="80" realHeight="25" tipText="重置为默认字体粗细"
-                                onAction="#resetFontWeight">
+                    <ResetButton realWidth="80" realHeight="25" tipText="重置为默认字体粗细"
+                                 onAction="#resetFontWeight">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
-                    </FlexButton>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
@@ -280,12 +280,12 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <FlexButton text="%setting.btn.reset" realWidth="80" realHeight="25" tipText="重置为主题默认前景色"
-                                onAction="#resetFgColor">
+                    <ResetButton realWidth="80" realHeight="25" tipText="重置为主题默认前景色"
+                                 onAction="#resetFgColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
-                    </FlexButton>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
@@ -302,12 +302,12 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <FlexButton text="%setting.btn.reset" realWidth="80" realHeight="25" tipText="重置为主题默认背景色"
-                                onAction="#resetBgColor">
+                    <ResetButton realWidth="80" realHeight="25" tipText="重置为主题默认背景色"
+                                 onAction="#resetBgColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
-                    </FlexButton>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
@@ -324,12 +324,12 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <FlexButton text="%setting.btn.reset" realWidth="80" realHeight="25" tipText="重置为主题默认强调色"
-                                onAction="#resetAccentColor">
+                    <ResetButton realWidth="80" realHeight="25" tipText="重置为主题默认强调色"
+                                 onAction="#resetAccentColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
-                    </FlexButton>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
@@ -350,12 +350,12 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </LocaleComboBox>
-                    <FlexButton text="%setting.btn.reset" realWidth="80" realHeight="25" tipText="重置为默认语言或区域"
-                                onAction="#resetLocale">
+                    <ResetButton realWidth="80" realHeight="25" tipText="重置为默认语言或区域"
+                                 onAction="#resetLocale">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
-                    </FlexButton>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>

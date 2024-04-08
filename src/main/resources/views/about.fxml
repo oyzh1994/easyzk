@@ -8,7 +8,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.AboutController" realWidth="330" realHeight="135">
     <FlexHBox flexWidth="100%" realHeight="25">
-        <FXLabel text="程序名称：" fx:id="nameLabel" realWidth="65">
+        <FXLabel text="%about.name" realWidth="65">
             <HBox.margin>
                 <Insets left="15" top="5"/>
             </HBox.margin>
@@ -20,7 +20,7 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="25">
-        <FXLabel text="程序版本：" fx:id="versionLabel" realWidth="65">
+        <FXLabel text="%about.version" realWidth="65">
             <HBox.margin>
                 <Insets left="15" top="5"/>
             </HBox.margin>
@@ -32,7 +32,7 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="25">
-        <FXLabel text="版本类型：" fx:id="typeLabel" realWidth="65">
+        <FXLabel text="%about.type" realWidth="65">
             <HBox.margin>
                 <Insets left="15" top="5"/>
             </HBox.margin>
@@ -44,7 +44,7 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="25">
-        <FXLabel text="更新日期：" fx:id="updateDateLabel" realWidth="65">
+        <FXLabel text="%about.updateDate" realWidth="65">
             <HBox.margin>
                 <Insets left="15" top="5"/>
             </HBox.margin>

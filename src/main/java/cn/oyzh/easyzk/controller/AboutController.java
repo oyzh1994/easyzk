@@ -42,18 +42,6 @@ public class AboutController extends Controller {
     private FlexText updateDate;
 
     @FXML
-    private FXLabel nameLabel;
-
-    @FXML
-    private FXLabel typeLabel;
-
-    @FXML
-    private FXLabel versionLabel;
-
-    @FXML
-    private FXLabel updateDateLabel;
-
-    @FXML
     private FlexText copyright;
 
     /**
@@ -79,17 +67,7 @@ public class AboutController extends Controller {
     }
 
     @Override
-    public String i18nResource() {
-        return "/i18n/about.properties";
-    }
-
-    @Override
-    public void changeLocale(Locale locale) {
-        if (this.isEnableI18n()) {
-            this.nameLabel.setText(this.i18nString("name"));
-            this.typeLabel.setText(this.i18nString("type"));
-            this.versionLabel.setText(this.i18nString("version"));
-            this.updateDateLabel.setText(this.i18nString("updateDate"));
-        }
+    public String i18nId() {
+        return "about";
     }
 }

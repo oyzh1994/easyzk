@@ -7,9 +7,11 @@ import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.font.FontManager;
+import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.theme.ThemeConfig;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -50,6 +52,8 @@ public class EasyZKApp extends SpringApplication {
     @Override
     public void start(Stage primaryStage) {
         try {
+            // 应用区域
+            I18nManager.apply(ZKSettingStore.SETTING.getLocale());
             // 应用字体
             FontManager.apply(ZKSettingStore.SETTING.fontConfig());
             // 应用主题

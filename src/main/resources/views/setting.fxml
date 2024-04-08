@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
-<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXToggleGroup?>
 <?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
-<?import cn.oyzh.fx.plus.controls.tab.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
-<?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
 <?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
 <?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
 <?import cn.oyzh.fx.plus.i18n.LocaleComboBox?>
+<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
+<?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="350">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
-        <FXTab text="ZK设置">
+        <FXTab text="%setting.tab.zk">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel text="节点加载" realHeight="30" realWidth="65" styleClass="accent">
@@ -70,7 +78,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="窗口设置">
+        <FXTab text="%setting.tab.window">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel text="窗口关闭" realHeight="30" realWidth="65" styleClass="accent">
@@ -130,7 +138,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="标签设置">
+        <FXTab text="%setting.tab.label">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel text="限制策略" realHeight="30" realWidth="65" styleClass="accent">
@@ -168,7 +176,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="字体设置">
+        <FXTab text="%setting.tab.font">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel text="字体名称" realHeight="30" realWidth="65" styleClass="accent">
@@ -176,13 +184,15 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 200" tipText="选择字体名称(编辑器或部分组件除外)"
+                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 200"
+                                        tipText="选择字体名称(编辑器或部分组件除外)"
                                         fx:id="fontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontFamilyComboBox>
-                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认字体名称" onAction="#resetFontFamily">
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认字体名称"
+                                onAction="#resetFontFamily">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -197,13 +207,15 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FontSizeComboBox realHeight="30" flexWidth="100% - 200" tipText="选择字体大小(编辑器或部分组件除外)"
+                    <FontSizeComboBox realHeight="30" flexWidth="100% - 200"
+                                      tipText="选择字体大小(编辑器或部分组件除外)"
                                       fx:id="fontSize">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontSizeComboBox>
-                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认字体大小" onAction="#resetFontSize">
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认字体大小"
+                                onAction="#resetFontSize">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -218,13 +230,15 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FontWeightComboBox realHeight="30" flexWidth="100% - 200" tipText="选择字体粗细(编辑器或部分组件除外)"
+                    <FontWeightComboBox realHeight="30" flexWidth="100% - 200"
+                                        tipText="选择字体粗细(编辑器或部分组件除外)"
                                         fx:id="fontWeight">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontWeightComboBox>
-                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认字体粗细" onAction="#resetFontWeight">
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认字体粗细"
+                                onAction="#resetFontWeight">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -235,7 +249,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="主题设置">
+        <FXTab text="%setting.tab.theme">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel text="主题名称" realHeight="30" realWidth="65" styleClass="accent">
@@ -265,7 +279,8 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认前景色" onAction="#resetFgColor">
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认前景色"
+                                onAction="#resetFgColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -286,7 +301,8 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认背景色" onAction="#resetBgColor">
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认背景色"
+                                onAction="#resetBgColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -307,7 +323,8 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认强调色" onAction="#resetAccentColor">
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为主题默认强调色"
+                                onAction="#resetAccentColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -318,7 +335,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="语言设置">
+        <FXTab text="%setting.tab.locale">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel text="语言区域" realHeight="30" realWidth="65" styleClass="accent">
@@ -327,12 +344,13 @@
                         </HBox.margin>
                     </FXLabel>
                     <LocaleComboBox realHeight="30" flexWidth="100% - 200" initIndex="0" tipText="选择一种语言或者区域"
-                                   fx:id="locale">
+                                    fx:id="locale">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </LocaleComboBox>
-                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认语言或区域" onAction="#resetLocale">
+                    <FlexButton text="重置" realWidth="55" realHeight="25" tipText="重置为默认语言或区域"
+                                onAction="#resetLocale">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>

@@ -14,6 +14,7 @@ import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
@@ -41,7 +42,6 @@ import java.util.List;
  * @since 2023/04/07
  */
 @StageAttribute(
-        title = "数据传输",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoTransport.fxml"
@@ -58,13 +58,13 @@ public class ZKInfoTransportController extends Controller {
      * 节点已存在时跳过
      */
     @FXML
-    private FlexCheckBox existHandle;
+    private FXCheckBox existHandle;
 
     /**
      * 适用过滤配置
      */
     @FXML
-    private FlexCheckBox applyFilter;
+    private FXCheckBox applyFilter;
 
     /**
      * 传输按钮
@@ -445,5 +445,10 @@ public class ZKInfoTransportController extends Controller {
             this.counter.setExtraMsg(extraMsg);
         }
         FXUtil.runLater(() -> this.transportStatus.setText(this.counter.unknownFormat()));
+    }
+
+    @Override
+    public String i18nId() {
+        return "info.transport";
     }
 }

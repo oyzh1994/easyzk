@@ -30,7 +30,6 @@ import lombok.NonNull;
  * @since 2020/9/15
  */
 @StageAttribute(
-        title = "zk信息修改",
         modality = Modality.WINDOW_MODAL,
         iconUrls = ZKConst.ICON_PATH,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoUpdate.fxml"
@@ -48,12 +47,6 @@ public class ZKInfoUpdateController extends Controller {
      */
     @FXML
     private FlexCheckBox listen;
-
-    // /**
-    //  * 集群模式
-    //  */
-    // @FXML
-    // private FlexCheckBox cluster;
 
     /**
      * 兼容模式开关
@@ -78,12 +71,6 @@ public class ZKInfoUpdateController extends Controller {
     @FXML
     private ClearableTextField name;
 
-    // /**
-    //  * 连接地址
-    //  */
-    // @FXML
-    // private FlexTextArea host;
-
     /**
      * 连接ip
      */
@@ -95,18 +82,6 @@ public class ZKInfoUpdateController extends Controller {
      */
     @FXML
     private PortTextField hostPort;
-
-    // /**
-    //  * 单节点组件
-    //  */
-    // @FXML
-    // private FlexHBox hostBox1;
-
-    // /**
-    //  * 集群组件
-    //  */
-    // @FXML
-    // private FlexHBox hostBox2;
 
     /**
      * 备注
@@ -192,17 +167,8 @@ public class ZKInfoUpdateController extends Controller {
      */
     private String getHost() {
         String hostText;
-        // String host = this.host.getTextTrim();
         String hostIp = this.hostIp.getTextTrim();
         this.tabPane.select(0);
-        // if (this.cluster.isSelected()) {
-        //     if (host.contains("：")) {
-        //         this.tabPane.select(0);
-        //         MessageBox.tipMsg("集群地址不合法！", this.host);
-        //         return null;
-        //     }
-        //     hostText = host;
-        // } else {
         if (!this.hostPort.validate()) {
             this.tabPane.select(0);
             return null;
@@ -212,7 +178,6 @@ public class ZKInfoUpdateController extends Controller {
             return null;
         }
         hostText = hostIp + ":" + this.hostPort.getValue();
-        // }
         return hostText;
     }
 
@@ -262,13 +227,6 @@ public class ZKInfoUpdateController extends Controller {
         if (host == null) {
             return;
         }
-        // if (this.cluster.isSelected()) {
-        //     // 校验名称是否未填
-        //     if (!this.name.validate()) {
-        //         this.tabPane.select(0);
-        //         return;
-        //     }
-        // } else {
         // 名称未填，则直接以host为名称
         if (StrUtil.isBlank(this.name.getTextTrim())) {
             this.name.setText(host.replace(":", "_"));
@@ -313,14 +271,6 @@ public class ZKInfoUpdateController extends Controller {
                 }
             }
         });
-        // // 集群模式处理
-        // this.cluster.selectedChanged((obs, o, n) -> {
-        //     this.hostBox1.setVisible(!n);
-        //     this.hostBox2.setVisible(n);
-        // });
-        // // host处理
-        // this.hostBox1.managedBindVisible();
-        // this.hostBox2.managedBindVisible();
         // ssh配置
         this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -345,11 +295,9 @@ public class ZKInfoUpdateController extends Controller {
         this.connectTimeOut.setValue(this.zkInfo.getConnectTimeOut());
         this.sessionTimeOut.setValue(this.zkInfo.getSessionTimeOut());
         this.compatibility.setSelected(this.zkInfo.compatibility34());
-        // this.host.setText(this.zkInfo.getHost());
         this.hostIp.setText(this.zkInfo.hostIp());
         this.hostPort.setValue(this.zkInfo.hostPort());
         this.listen.setSelected(this.zkInfo.getListen());
-        // this.cluster.setSelected(this.zkInfo.isCluster());
         // ssh连接信息
         SSHConnectInfo connectInfo = this.zkInfo.getSshInfo();
         if (connectInfo != null) {
@@ -361,5 +309,10 @@ public class ZKInfoUpdateController extends Controller {
         }
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
+    }
+
+    @Override
+    public String i18nId() {
+        return "info.update";
     }
 }

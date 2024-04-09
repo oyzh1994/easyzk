@@ -54,10 +54,8 @@ import java.util.stream.Collectors;
  * @since 2020/10/13
  */
 @StageAttribute(
-        title = "数据导出",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeExport.fxml"
 )
 public class ZKNodeExportController extends Controller {
@@ -115,12 +113,6 @@ public class ZKNodeExportController extends Controller {
      */
     @FXML
     private FlexFlowPane prefixPane;
-
-    // /**
-    //  * 导出字符集
-    //  */
-    // @FXML
-    // private CharsetComboBox charset;
 
     /**
      * 结束导出按钮
@@ -184,8 +176,6 @@ public class ZKNodeExportController extends Controller {
         // 重置参数
         this.counter.reset();
         this.exportMsg.clear();
-        // 执行参数
-//        String path = this.zkItem.nodePath();
         boolean dictSort = this.dictSort.isSelected();
         String properties = ZKNodeUtil.DATA_PROPERTIES + ZKNodeUtil.STAT_PROPERTIES;
         // 开始处理
@@ -250,7 +240,6 @@ public class ZKNodeExportController extends Controller {
                 }
                 // 收尾工作
                 this.updateStatus("处理文件中...");
-                // this.exportMsg.waitTextExpend();
                 File file = FileChooserUtil.save("导出zk数据", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {
@@ -306,7 +295,6 @@ public class ZKNodeExportController extends Controller {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-//        this.dictSort.setSelected(true);
         TreeItem<?> item = this.getStageProp("zkItem");
         if (item instanceof ZKNodeTreeItem treeItem) {
             this.zkClient = this.getStageProp("zkClient");
@@ -318,8 +306,6 @@ public class ZKNodeExportController extends Controller {
             this.exportPath = "/";
             this.nodePathBox.disappear();
         }
-        // // 初始化字符集
-        // this.charset.select(this.zkClient.getCharset());
         this.stage.hideOnEscape();
     }
 
@@ -404,5 +390,10 @@ public class ZKNodeExportController extends Controller {
             this.counter.setExtraMsg(extraMsg);
         }
         FXUtil.runLater(() -> this.exportStatus.setText(this.counter.unknownFormat()));
+    }
+
+    @Override
+    public String i18nId() {
+        return "node.export";
     }
 }

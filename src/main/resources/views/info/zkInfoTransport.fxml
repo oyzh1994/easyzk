@@ -14,17 +14,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.button.StopButton?>
+<?import cn.oyzh.fx.plus.controls.button.CloseButton?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.AccentButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoTransportController" realWidth="850" realHeight="620">
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="来源连接" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%info.transport.label.source" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ConnectComboBox fx:id="formConnect" realHeight="30" flexWidth="100% - 315">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -42,17 +47,17 @@
         </CharsetComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="目标连接" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%info.transport.label.target" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ConnectComboBox stateManager="$stateManager" fx:id="targetConnect" realHeight="30" flexWidth="100% - 315">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ConnectComboBox>
-        <FXLabel text="字符集:" prefWidth="40">
+        <FXLabel text="%info.transport.label.target" prefWidth="40">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>
@@ -64,29 +69,29 @@
         </CharsetComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="传输选项" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%info.transport.label.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
-        <FlexCheckBox stateManager="$stateManager" fx:id="existHandle" text="节点已存在时跳过" selected="true">
+        </AccentLabel>
+        <FXCheckBox stateManager="$stateManager" fx:id="existHandle" text="%info.transport.checkbox.skipByExists" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="适用过滤配置"
+        </FXCheckBox>
+        <FXCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%info.transport.checkbox.applyByFilter"
                       tipText="适用过滤配置列表的数据">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
+        </FXCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="280">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%info.transport.label.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexVBox flexWidth="100% - 140" flexHeight="100%">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -96,33 +101,26 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton stateManager="$stateManager" tipText="开始执行传输" fx:id="transportBtn"
-                    onAction="#doTransport" realHeight="30"
-                    styleClass="accent"
-                    text="传输"
-                    iconSizePercent="0.75">
-            <graphic>
-                <SVGGlyph url="/font/export.svg" color="white"/>
-            </graphic>
+        <AccentButton stateManager="$stateManager" tipText="开始执行传输" fx:id="transportBtn"
+                      onAction="#doTransport" realHeight="30"
+                      iconUrl="/font/export.svg"
+                      text="传输"
+                      iconSizePercent="0.75">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <IconButton disable="true" text="结束" fx:id="stopTransportBtn" tipText="结束传输" onAction="#stopTransport"
-                    styleClass="btn,btn-default"
+        </AccentButton>
+        <StopButton disable="true" fx:id="stopTransportBtn" tipText="结束传输" onAction="#stopTransport"
                     realHeight="30" iconSizePercent="0.9">
-            <graphic>
-                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
-            </graphic>
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <CancelButton text="关闭" iconSizePercent="0.6">
+        </StopButton>
+        <CloseButton>
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </CancelButton>
+        </CloseButton>
     </FlexHBox>
     <FlexVBox flexWidth="100%" fontSize="12">
         <FXLabel text="温馨提示:" textFill="#666">
@@ -146,7 +144,7 @@
             </VBox.margin>
         </Text>
         <VBox.margin>
-            <Insets left="95"/>
+            <Insets left="110"/>
         </VBox.margin>
     </FlexVBox>
 </FlexVBox>

@@ -45,10 +45,8 @@ import java.util.Map;
  * @since 2020/10/14
  */
 @StageAttribute(
-        title = "数据导入",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeImport.fxml"
 )
 public class ZKNodeImportController extends Controller {
@@ -356,5 +354,10 @@ public class ZKNodeImportController extends Controller {
             this.counter.setExtraMsg(extraMsg);
         }
         FXUtil.runLater(() -> this.importStatus.setText(this.counter.knownFormat()));
+    }
+
+    @Override
+    public String i18nId() {
+        return "node.import";
     }
 }

@@ -39,10 +39,8 @@ import java.util.List;
  * @since 2020/10/09
  */
 @StageAttribute(
-        title = "zk子节点添加",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeAdd.fxml"
 )
 public class ZKNodeAddController extends Controller {
@@ -365,5 +363,10 @@ public class ZKNodeAddController extends Controller {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);
+    }
+
+    @Override
+    public String i18nId() {
+        return "node.add";
     }
 }

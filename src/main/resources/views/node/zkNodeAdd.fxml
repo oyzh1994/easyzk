@@ -16,14 +16,14 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="550">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
-        <FXTab text="数据" fx:id="dataTab">
+        <FXTab text="%node.add.tab.data" fx:id="dataTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="parentNodeBox">
-                    <FXLabel text="上级节点" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%node.add.label.parent" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <DisabledTextField fx:id="parentNode" realHeight="30" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -31,11 +31,11 @@
                     </DisabledTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="节点类型" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%node.add.label.type" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexComboBox initIndex="0" fx:id="createMode" realHeight="30.0" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -52,11 +52,11 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%node.add.label.path" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ClearableTextField fx:id="nodePath" realHeight="30.0" flexWidth="100% - 140"
                                         promptText="请输入节点路径" tipText="请输入节点路径" require="true">
                         <HBox.margin>
@@ -65,11 +65,11 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathPreviewBox" visible="false" managed="false">
-                    <FXLabel text="路径预览" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%node.add.label.preview" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <DisabledTextField fx:id="nodePathPreview" flexWidth="100% - 140" style="-fx-text-fill: #808080"
                                        realHeight="30.0">
                         <HBox.margin>
@@ -78,11 +78,11 @@
                     </DisabledTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" flexHeight="100% - 195">
-                    <FXLabel text="节点数据" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%node.add.label.data" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexTextArea fx:id="nodeData" flexHeight="100% - 25"
                                   promptText="请输入节点数据(可选)"
                                   tipText="请输入节点数据(可选)"
@@ -113,14 +113,14 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="权限" fx:id="aclTab">
+        <FXTab text="%node.add.tab.acl" fx:id="aclTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="accent">
+                    <AccentLabel text="%node.add.label.aclType" realWidth="80" realHeight="30">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexComboBox fx:id="aclType" realHeight="30" flexWidth="100% - 140" initIndex="0" require="true">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
@@ -135,11 +135,11 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="权限范围" realWidth="65" realHeight="30" styleClass="accent">
+                    <AccentLabel text="%node.add.label.aclScope" realWidth="80" realHeight="30">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexHBox realHeight="30" flexWidth="100% - 140" fx:id="perms">
                         <padding>
                             <Insets left="10" top="20"/>
@@ -169,11 +169,11 @@
                 </FlexHBox>
                 <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digestACL">
                     <FlexHBox realHeight="50" flexWidth="100%">
-                        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="accent">
+                        <AccentLabel text="%node.add.label.authInfo" realWidth="80" realHeight="30">
                             <HBox.margin>
                                 <Insets left="20" top="10"/>
                             </HBox.margin>
-                        </FXLabel>
+                        </AccentLabel>
                         <ClearableTextField promptText="用户名" tipText="用户名" fx:id="digestUser" realHeight="30" flexWidth="50% - 115">
                             <HBox.margin>
                                 <Insets left="10" top="10"/>
@@ -194,11 +194,11 @@
                     </FlexHBox>
                 </FlexVBox>
                 <FlexHBox flexWidth="100%" realHeight="50" managed="false" visible="false" fx:id="ipACL">
-                    <FXLabel text="IP地址" realWidth="65" realHeight="30" styleClass="accent">
+                    <AccentLabel text="%node.add.label.ipAddr" realWidth="80" realHeight="30">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ClearableTextField fx:id="ipContent" realHeight="30" flexWidth="100% - 335" promptText="请输入ip地址" tipText="请输入ip地址">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -211,7 +211,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addZKNode">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

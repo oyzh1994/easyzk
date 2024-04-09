@@ -33,7 +33,6 @@ import java.io.ByteArrayInputStream;
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         stageStyle = StageStyle.DECORATED,
-        title = "可使用微信、QQ或其他工具扫描二维码获取节点信息",
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeQRCode.fxml"
 )
 public class ZKNodeQRCodeController extends Controller {
@@ -55,7 +54,6 @@ public class ZKNodeQRCodeController extends Controller {
      */
     private void initQRCode() {
         ByteArrayInputStream bais = null;
-//        ByteArrayOutputStream baos = null;
         try {
             StaticLog.info("read icon begin.");
             // icon图片
@@ -77,11 +75,6 @@ public class ZKNodeQRCodeController extends Controller {
             QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
             config.setImg(icon);
             byte[] bytes = QrCodeUtil.generatePng(builder.toString(), config);
-//            BufferedImage source = QRCodeUtil.createImage(builder.toString(), (int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
-//            QRCodeUtil.insertImage(source, icon);
-//            baos = new ByteArrayOutputStream();
-//            ImageIO.write(source, "png", baos);
-//            bais = new ByteArrayInputStream(baos.toByteArray());
             bais = new ByteArrayInputStream(bytes);
             this.qrcode.setImage(new Image(bais));
             StaticLog.info("generate qrcode finish size:{}", bais.available());
@@ -96,7 +89,11 @@ public class ZKNodeQRCodeController extends Controller {
             }
         } finally {
             IoUtil.close(bais);
-//            IoUtil.close(baos);
         }
+    }
+
+    @Override
+    public String i18nId() {
+        return "node.qrcode";
     }
 }

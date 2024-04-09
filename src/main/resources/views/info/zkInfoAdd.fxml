@@ -19,7 +19,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoAddController" realWidth="750" realHeight="320">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
-        <FXTab text="基础设置">
+        <FXTab text="%info.add.tab.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="accent">
@@ -92,7 +92,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="高级设置">
+        <FXTab text="%info.add.tab.extra">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="accent">
@@ -153,7 +153,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="SSH通道">
+        <FXTab text="%info.add.tab.ssh">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <FXLabel realHeight="30" realWidth="65" text="启用通道" styleClass="accent">

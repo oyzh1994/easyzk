@@ -29,11 +29,9 @@ import java.util.List;
  * @since 2022/08/25
  */
 @StageAttribute(
-        title = "zk服务信息",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         stageStyle = StageStyle.DECORATED,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "node/zkService.fxml"
 )
 public class ZKServiceController extends Controller {
@@ -146,5 +144,10 @@ public class ZKServiceController extends Controller {
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(this.pageData.first());
         this.stage.hideOnEscape();
+    }
+
+    @Override
+    public String i18nId() {
+        return "node.service";
     }
 }

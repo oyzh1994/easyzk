@@ -20,11 +20,11 @@
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox">
-        <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%node.export.label.path" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <DisabledTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 160">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -32,11 +32,11 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="导出格式" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%node.export.label.format" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="选择一种导出方式"
                       fx:id="format">
             <items>
@@ -88,11 +88,11 @@
         </FlexFlowPane>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="导出配置" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%node.export.label.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="按字典排序"
                       tipText="节点路径按字典排序">
             <HBox.margin>
@@ -107,11 +107,11 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%node.export.label.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexVBox flexWidth="100% - 140" flexHeight="100%">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -121,20 +121,18 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton stateManager="$stateManager" tipText="开始执行导出" onAction="#doExport"
+        <AccentButton stateManager="$stateManager" tipText="开始执行导出" onAction="#doExport"
                     realHeight="30"
-                    styleClass="accent"
                     text="导出"
                     iconSizePercent="0.75">
             <graphic>
                 <SVGGlyph url="/font/export.svg" color="white"/>
             </graphic>
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <IconButton disable="true" text="结束" fx:id="stopExportBtn" tipText="结束导出" onAction="#stopExport"
-                    styleClass="default"
+        </AccentButton>
+        <StopButton disable="true" fx:id="stopExportBtn" tipText="结束导出" onAction="#stopExport"
                     realHeight="30" iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
@@ -142,20 +140,20 @@
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <CancelButton text="关闭" iconSizePercent="0.6">
+        </StopButton>
+        <CloseButton iconSizePercent="0.6">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </CancelButton>
+        </CloseButton>
     </FlexHBox>
     <FlexVBox flexWidth="100%" fontSize="12">
         <FXLabel text="温馨提示:" textFill="#666">
             <VBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </VBox.margin>
         </FXLabel>
-        <Text fill="#666" layoutY="65.0" text="1. 临时节点默认不执行导出">
+        <Text fill="#666" layoutY="80.0" text="1. 临时节点默认不执行导出">
             <VBox.margin>
                 <Insets left="95" top="10"/>
             </VBox.margin>

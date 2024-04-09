@@ -17,10 +17,10 @@ public class ZKAuthTab extends DynamicTab {
         super.flush();
     }
 
-    @Override
-    public void flushTitle() {
-        super.setTitle("认证信息列表");
-    }
+    // @Override
+    // public void flushTitle() {
+    //     super.setTitle("认证信息列表");
+    // }
 
     @Override
     public void flushGraphic() {

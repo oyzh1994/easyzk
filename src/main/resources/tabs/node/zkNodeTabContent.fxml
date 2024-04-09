@@ -3,7 +3,8 @@
 <?import cn.oyzh.easyzk.fx.ZKACLVBox?>
 <?import cn.oyzh.easyzk.fx.ZKFormatComboBox?>
 <?import cn.oyzh.easyzk.fx.ZKRichDataTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.button.ClearButton?>
+<?import cn.oyzh.fx.plus.controls.button.SaveButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
@@ -17,6 +18,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.text.SuccessLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
@@ -26,7 +28,7 @@
              flexHeight="100%"
              rotateGraphic="true"
              xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabContent">
-    <FXTab text="数据">
+    <FXTab text="%node.main.tab.data">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
         </graphic>
@@ -139,7 +141,8 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <ClearableTextField fx:id="dataSearch" promptText="搜索节点内容" fontSize="11" realHeight="22" prefWidth="130">
+                <ClearableTextField fx:id="dataSearch" promptText="搜索节点内容" fontSize="11" realHeight="22"
+                                    prefWidth="130">
                     <FlowPane.margin>
                         <Insets left="3" top="5"/>
                     </FlowPane.margin>
@@ -155,14 +158,14 @@
             <!--                 text="数据加载中..."/> -->
         </FlexVBox>
     </FXTab>
-    <FXTab text="状态">
+    <FXTab text="%node.main.tab.status">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
-                <FXToggleSwitch fx:id="statViewSwitch" unselectedText="专业视图"
-                                selectedText="友好视图"
+                <FXToggleSwitch fx:id="statViewSwitch" unselectedText="%node.main.toggle.normal"
+                                selectedText="%node.main.toggle.friendly"
                                 selected="true">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -202,14 +205,14 @@
             </FlexVBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="权限">
+    <FXTab text="%node.main.tab.acl">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/lock.svg" size="13"/>
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
-                <FXToggleSwitch fx:id="aclViewSwitch" unselectedText="专业视图"
-                                selectedText="友好视图"
+                <FXToggleSwitch fx:id="aclViewSwitch" unselectedText="%node.main.toggle.normal"
+                                selectedText="%node.main.toggle.friendly"
                                 selected="true">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -406,7 +409,7 @@
             </FlexVBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="配额" fx:id="quotaTab">
+    <FXTab text="%node.main.tab.quota" fx:id="quotaTab">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/quota.svg" size="13"/>
         </graphic>
@@ -427,11 +430,11 @@
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <FXLabel realWidth="135" text="子节点数量" maxHeight="24" styleClass="success">
+                    <SuccessLabel realWidth="135" text="%node.main.label.quotaChildNum" maxHeight="24">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </SuccessLabel>
                     <NumberTextField fx:id="quotaNum" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
                                      promptText="设置节点配额子节点数量，-1代表无限制"
                                      tipText="设置节点配额子节点数量，-1代表无限制">
@@ -439,22 +442,22 @@
                             <Insets right="5"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <FXButton text="保存" onAction="#saveQuota" styleClass="accent">
+                    <SaveButton onAction="#saveQuota">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
-                    </FXButton>
-                    <FXButton text="清除" onAction="#clearQuotaNum" styleClass="danger"/>
+                    </SaveButton>
+                    <ClearButton onAction="#clearQuotaNum"/>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="24">
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <FXLabel realWidth="135" text="总数据大小" maxHeight="24" styleClass="success">
+                    <SuccessLabel realWidth="135" text="%node.main.label.quotaDataSize" maxHeight="24">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </SuccessLabel>
                     <NumberTextField fx:id="quotaBytes" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
                                      promptText="设置节点配额总数据大小，单位字节，-1代表无限制"
                                      tipText="设置节点配额总数据大小，单位字节，-1代表无限制">
@@ -462,12 +465,12 @@
                             <Insets right="5"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <FXButton text="保存" onAction="#saveQuota" styleClass="accent">
+                    <SaveButton onAction="#saveQuota">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
-                    </FXButton>
-                    <FXButton text="清除" onAction="#clearQuotaBytes" styleClass="danger"/>
+                    </SaveButton>
+                    <ClearButton onAction="#clearQuotaBytes"/>
                 </FlexHBox>
             </FlexVBox>
         </FlexVBox>

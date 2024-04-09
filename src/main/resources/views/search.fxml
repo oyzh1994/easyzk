@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
@@ -67,30 +67,30 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox realHeight="30" flexWidth="100%" fontSize="10">
-        <FlexCheckBox selected="true" fx:id="mode" text="过滤模式" realWidth="65">
+        <FXCheckBox text="%main.zk.checkbox.filterMode" selected="true" fx:id="filterMode">
             <HBox.margin>
                 <Insets left="10" top="3"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox text="搜索路径" selected="true" fx:id="searchPath" realWidth="65">
+        </FXCheckBox>
+        <FXCheckBox text="%main.zk.checkbox.searchPath" selected="true" fx:id="searchPath">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox text="搜索值" selected="true" fx:id="searchData" realWidth="60">
+        </FXCheckBox>
+        <FXCheckBox text="%main.zk.checkbox.searchData" selected="true" fx:id="searchData">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox text="匹配大小写" fx:id="compareCase" realWidth="75">
+        </FXCheckBox>
+        <FXCheckBox text="%main.zk.checkbox.matchCase" fx:id="matchCase">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox text="匹配全文" fx:id="fullMatch" realWidth="65">
+        </FXCheckBox>
+        <FXCheckBox text="%main.zk.checkbox.matchFull" fx:id="matchFull">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>
-        </FlexCheckBox>
+        </FXCheckBox>
     </FlexHBox>
 </FlexVBox>

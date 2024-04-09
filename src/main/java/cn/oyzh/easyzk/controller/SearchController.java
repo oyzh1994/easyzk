@@ -16,6 +16,7 @@ import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.FlexVBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
@@ -96,34 +97,34 @@ public class SearchController extends SubController {
     private SVGGlyph searchAnalyse;
 
     /**
-     * 搜索-搜索模式
+     * 搜索-过滤模式
      */
     @FXML
-    private FlexCheckBox mode;
+    private FXCheckBox filterMode;
 
     /**
      * 搜索-搜索值
      */
     @FXML
-    private FlexCheckBox searchData;
+    private FXCheckBox searchData;
 
     /**
-     * 搜索-全文匹配
+     * 搜索-匹配全文
      */
     @FXML
-    private FlexCheckBox fullMatch;
+    private FXCheckBox matchFull;
 
     /**
      * 搜索-匹配大小写
      */
     @FXML
-    private FlexCheckBox compareCase;
+    private FXCheckBox matchCase;
 
     /**
      * 搜索-搜索路径
      */
     @FXML
-    private FlexCheckBox searchPath;
+    private FXCheckBox searchPath;
 
     /**
      * 搜索-搜索结果
@@ -303,13 +304,14 @@ public class SearchController extends SubController {
      */
     private ZKSearchParam getSearchParam() {
         ZKSearchParam searchParam = new ZKSearchParam();
-        searchParam.setMode(this.mode.isSelected() ? 1 : 0);  // 设置搜索模式
+        searchParam.setMode(this.filterMode.isSelected() ? 1 : 0);  // 设置搜索模式
         searchParam.setKw(this.searchKW.getTextTrim());  // 设置搜索关键字
-        searchParam.setFullMatch(this.fullMatch.isSelected());  // 设置是否全匹配
+        searchParam.setFullMatch(this.matchFull.isSelected());  // 设置是否全匹配
         searchParam.setSearchData(this.searchData.isSelected());  // 设置是否搜索数据
         searchParam.setSearchPath(this.searchPath.isSelected());  // 设置是否搜索路径
-        searchParam.setCompareCase(this.compareCase.isSelected());  // 设置是否区分大小写
-        return searchParam;  // 返回搜索参数
+        searchParam.setCompareCase(this.matchCase.isSelected());  // 设置是否区分大小写
+        // 返回搜索参数
+        return searchParam;
     }
 
     /**
@@ -319,11 +321,11 @@ public class SearchController extends SubController {
         try {
             // 搜索值、名称均未选择
             if (!this.searchData.isSelected() && !this.searchPath.isSelected()) {
-                this.mode.disable();
                 this.replace.disable();
                 this.replaceKW.disable();
                 this.searchKW.disable();
                 this.searchNext.disable();
+                this.filterMode.disable();
                 return;
             }
 
@@ -366,11 +368,11 @@ public class SearchController extends SubController {
         this.searchMain.managedBindVisible();
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
-        this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.matchCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.matchFull.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchPath.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.filterMode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
         this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {
             this.replaceTips.setText("");

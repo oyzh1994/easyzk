@@ -13,7 +13,6 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.spring.ScopeType;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
@@ -25,6 +24,7 @@ import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -223,23 +223,17 @@ public class ZKNodeTabContent extends DynamicTabController {
     /**
      * 状态监听器
      */
-    private final ChangeListener<Stat> statListener = (observable, oldValue, newValue) -> {
-        this.initStat();
-    };
+    private final ChangeListener<Stat> statListener = (observable, oldValue, newValue) -> this.initStat();
 
     /**
      * 权限监听器
      */
-    private final ChangeListener<List<ZKACL>> aclListener = (observable, oldValue, newValue) -> {
-        this.initAcl();
-    };
+    private final ChangeListener<List<ZKACL>> aclListener = (observable, oldValue, newValue) -> this.initAcl();
 
     /**
      * 配额监听器
      */
-    private final ChangeListener<StatsTrack> quotaListener = (observable, oldValue, newValue) -> {
-        this.initQuota();
-    };
+    private final ChangeListener<StatsTrack> quotaListener = (observable, oldValue, newValue) -> this.initQuota();
 
     /**
      * 格式监听器
@@ -277,6 +271,8 @@ public class ZKNodeTabContent extends DynamicTabController {
         // 初始化数据
         if (this.root.getSelectedIndex() == 0) {
             this.showData();
+            // 首次设置数据要清除历史
+            this.nodeData.forgetHistory();
         } else if (this.root.getSelectedIndex() == 1) {
             this.treeItem = item;
             this.initStat();
@@ -303,11 +299,6 @@ public class ZKNodeTabContent extends DynamicTabController {
 
         // 字符集处理
         this.charset.select(this.treeItem.getCharset());
-
-        // undo监听
-        this.nodeData.undoableProperty().addListener((t3, t2, t1) -> this.dataUndo.setDisable(!t1));
-        // redo监听
-        this.nodeData.redoableProperty().addListener((t3, t2, t1) -> this.dataRedo.setDisable(!t1));
 
         // 加载耗时处理
         FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
@@ -779,11 +770,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         if (this.treeItem == null) {
             return;
         }
-        if (this.treeItem.value().rootNode()) {
-            this.quotaTab.getContent().setDisable(true);
-        } else {
-            this.quotaTab.getContent().setDisable(false);
-        }
+        this.quotaTab.getContent().setDisable(this.treeItem.value().rootNode());
         StatsTrack quota = this.treeItem.quota();
         if (quota != null) {
             this.quotaNum.setValue(quota.getCount());
@@ -816,6 +803,10 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.format.selectedItemChanged(this.formatListener);
         // 数据监听
         this.nodeData.addTextChangeListener(this.textListener);
+        // undo监听
+        this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+        // redo监听
+        this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         // 切换显示监听
         this.aclViewSwitch.selectedChanged((t3, t2, t1) -> this.initAcl());
         // 切换显示监听

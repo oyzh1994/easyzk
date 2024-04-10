@@ -16,7 +16,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthController" realWidth="600" realHeight="240">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%zk.path" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.path" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

@@ -17,7 +17,7 @@
 <FlexPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.ZKMainController" flexWidth="100%" flexHeight="100% - 30">
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
-        <FXTab text="%main.zk.tab.connection">
+        <FXTab text="%base.connection">
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/connections.svg" size="12"/>
             </graphic>
@@ -60,7 +60,7 @@
                             <Insets left="8" top="5"/>
                         </FlowPane.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="%main.zk.checkbox.onlyCollect" fx:id="onlyCollect" fontSize="11">
+                    <FlexCheckBox text="%base.onlyCollect" fx:id="onlyCollect" fontSize="11">
                         <FlowPane.margin>
                             <Insets left="5" top="5"/>
                         </FlowPane.margin>
@@ -70,7 +70,7 @@
                 <ZKTreeView fx:id="tree" flexHeight="100% - 60" flexWidth="100%"/>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%main.zk.tab.msg">
+        <FXTab text="%base.msg">
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/message.svg" size="13"/>
             </graphic>

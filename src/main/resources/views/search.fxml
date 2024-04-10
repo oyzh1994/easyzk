@@ -67,7 +67,7 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox realHeight="30" flexWidth="100%" fontSize="10">
-        <FXCheckBox text="%main.zk.checkbox.filterMode" selected="true" fx:id="filterMode">
+        <FXCheckBox text="%base.filterMode" selected="true" fx:id="filterMode">
             <HBox.margin>
                 <Insets left="10" top="3"/>
             </HBox.margin>
@@ -82,12 +82,12 @@
                 <Insets left="5" top="3"/>
             </HBox.margin>
         </FXCheckBox>
-        <FXCheckBox text="%main.zk.checkbox.matchCase" fx:id="matchCase">
+        <FXCheckBox text="%base.matchCase" fx:id="matchCase">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>
         </FXCheckBox>
-        <FXCheckBox text="%main.zk.checkbox.matchFull" fx:id="matchFull">
+        <FXCheckBox text="%base.matchFull" fx:id="matchFull">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>

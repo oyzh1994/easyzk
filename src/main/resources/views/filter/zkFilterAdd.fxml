@@ -30,7 +30,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FXToggleSwitch fx:id="matchMode" selectedText="%filter.add.toggle.match1" unselectedText="%filter.add.toggle.match2" selected="true">
+        <FXToggleSwitch fx:id="matchMode" selectedText="%base.matchFuzzy" unselectedText="%base.matchFull" selected="true">
             <HBox.margin>
                 <Insets left="15" top="16"/>
             </HBox.margin>

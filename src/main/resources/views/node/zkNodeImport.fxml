@@ -50,7 +50,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" fx:id="ignoreExist" text="%node.import.checkbox.skipByExists" selected="true">
+        <FlexCheckBox stateManager="$stateManager" fx:id="ignoreExist" text="%zk.skipByExists" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -68,7 +68,7 @@
         </CharsetComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
-        <AccentLabel text="%node.import.label.process" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

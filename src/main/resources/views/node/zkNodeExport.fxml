@@ -107,7 +107,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
-        <AccentLabel text="%node.export.label.process" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

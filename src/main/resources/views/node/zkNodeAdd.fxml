@@ -16,7 +16,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="550">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
-        <FXTab text="%node.add.tab.data" fx:id="dataTab">
+        <FXTab text="%base.data" fx:id="dataTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="parentNodeBox">
                     <AccentLabel text="%node.add.label.parent" realHeight="30" realWidth="80">
@@ -113,10 +113,10 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%node.add.tab.acl" fx:id="aclTab">
+        <FXTab text="%zk.acl" fx:id="aclTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%node.add.label.aclType" realWidth="80" realHeight="30">
+                    <AccentLabel text="%zk.aclType" realWidth="80" realHeight="30">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -135,7 +135,7 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%node.add.label.aclScope" realWidth="80" realHeight="30">
+                    <AccentLabel text="%zk.aclScope" realWidth="80" realHeight="30">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -169,7 +169,7 @@
                 </FlexHBox>
                 <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digestACL">
                     <FlexHBox realHeight="50" flexWidth="100%">
-                        <AccentLabel text="%node.add.label.authInfo" realWidth="80" realHeight="30">
+                        <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
                             <HBox.margin>
                                 <Insets left="20" top="10"/>
                             </HBox.margin>

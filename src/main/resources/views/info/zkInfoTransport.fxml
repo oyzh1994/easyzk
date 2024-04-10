@@ -21,7 +21,7 @@
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%info.transport.label.source" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.source" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -43,7 +43,7 @@
         </CharsetComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%info.transport.label.target" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.target" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -53,7 +53,7 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ConnectComboBox>
-        <FXLabel text="%info.transport.label.target" prefWidth="40">
+        <FXLabel text="%base.charset" prefWidth="40">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>
@@ -65,17 +65,17 @@
         </CharsetComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%info.transport.label.options" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FXCheckBox stateManager="$stateManager" fx:id="existHandle" text="%info.transport.checkbox.skipByExists" selected="true">
+        <FXCheckBox stateManager="$stateManager" fx:id="existHandle" text="%zk.skipByExists" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXCheckBox>
-        <FXCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%info.transport.checkbox.applyByFilter"
+        <FXCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%zk.applyByFilter"
                       tipText="适用过滤配置列表的数据">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -83,7 +83,7 @@
         </FXCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="280">
-        <AccentLabel text="%info.transport.label.process" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

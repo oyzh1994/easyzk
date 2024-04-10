@@ -16,7 +16,7 @@
         </VBox.margin>
     </FXSeparator>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%node.service.label.connectName" realHeight="30" realWidth="85">
+        <AccentLabel text="%base.connectionName" realHeight="30" realWidth="85">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -67,7 +67,7 @@
         </VBox.margin>
         <columns>
             <FlexTableColumn flexWidth="8%" fx:id="id" text="%base.No"/>
-            <FlexTableColumn flexWidth="8%" fx:id="weight" text="%node.service.tableCol.weight"/>
+            <FlexTableColumn flexWidth="8%" fx:id="weight" text="%base.weight"/>
             <FlexTableColumn flexWidth="16%" fx:id="type" text="%base.type"/>
             <FlexTableColumn flexWidth="20%" fx:id="clientAddr" text="%node.service.tableCol.clientAddr" sortable="false"/>
             <FlexTableColumn flexWidth="22%" fx:id="addr" text="%node.service.tableCol.addr" sortable="false"/>

@@ -26,7 +26,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="权限类型" realWidth="80" realHeight="30">
+        <AccentLabel text="%zk.aclType" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -48,7 +48,7 @@
         </FlexComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="permsBox">
-        <AccentLabel text="权限范围" realWidth="80" realHeight="30">
+        <AccentLabel text="%zk.aclScope" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

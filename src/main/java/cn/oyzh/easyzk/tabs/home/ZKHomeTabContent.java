@@ -43,7 +43,7 @@ public class ZKHomeTabContent extends DynamicTabController {
     @Override
     public void initialize(URL url, ResourceBundle resource) {
         super.initialize(url, resource);
-        this.softInfo.setText(this.i18nString("softInfo") + " v" + this.project.getVersion() + " Powered by oyzh.");
+        this.softInfo.setText(this.i18nString("soft") + ": v" + this.project.getVersion() + " Powered by oyzh.");
         String jdkInfo = "";
         if (System.getProperty("java.vm.name") != null) {
             jdkInfo += System.getProperty("java.vm.name");
@@ -51,7 +51,7 @@ public class ZKHomeTabContent extends DynamicTabController {
         if (System.getProperty("java.vm.version") != null) {
             jdkInfo += System.getProperty("java.vm.version");
         }
-        this.jdkInfo.setText(this.i18nString("envInfo") + " " + jdkInfo);
+        this.jdkInfo.setText(this.i18nString("env") + ": " + jdkInfo);
     }
 
     /**

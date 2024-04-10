@@ -15,7 +15,7 @@
     <FXTab text="%tool.tab.digest">
         <FlexVBox flexHeight="100%" flexWidth="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%tool.label.userInfo" realHeight="30" realWidth="80">
+                <AccentLabel text="%zk.userInfo" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -36,7 +36,7 @@
                 </ClearableTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%tool.label.digestInfo" realHeight="30" realWidth="80">
+                <AccentLabel text="%zk.digestInfo" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>

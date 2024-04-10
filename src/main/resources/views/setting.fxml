@@ -79,10 +79,10 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%setting.tab.window">
+        <FXTab text="%base.window">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.windowClose" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.close" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -113,7 +113,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.windowRemember" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.remember" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -139,10 +139,10 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%setting.tab.label">
+        <FXTab text="%base.label">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.labelStrategy" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.strategy" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -159,7 +159,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.labelLimit" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.limit" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -177,10 +177,10 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%setting.tab.font">
+        <FXTab text="%base.font">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.fontName" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.fontName" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -203,7 +203,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.fontSize" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.fontSize" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -226,7 +226,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.fontWeight" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.fontWeight" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -250,10 +250,10 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%setting.tab.theme">
+        <FXTab text="%base.theme">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.themeName" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.themeName" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -269,7 +269,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="fgColorBox" disable="true">
-                    <AccentLabel text="%setting.label.fgColor" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.fgColor" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -291,7 +291,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="bgColorBox" disable="true">
-                    <AccentLabel text="%setting.label.bgColor" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.bgColor" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -313,7 +313,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="accentColorBox" disable="true">
-                    <AccentLabel text="%setting.label.accentColor" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.accentColor" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -336,10 +336,10 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%setting.tab.locale">
+        <FXTab text="%base.locale">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.languageName" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.language" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>

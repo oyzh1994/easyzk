@@ -28,7 +28,7 @@
              flexHeight="100%"
              rotateGraphic="true"
              xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabContent">
-    <FXTab text="%node.main.tab.data">
+    <FXTab text="%base.data">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
         </graphic>
@@ -158,7 +158,7 @@
             <!--                 text="数据加载中..."/> -->
         </FlexVBox>
     </FXTab>
-    <FXTab text="%node.main.tab.status">
+    <FXTab text="%base.status">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
         </graphic>
@@ -205,7 +205,7 @@
             </FlexVBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="%node.main.tab.acl">
+    <FXTab text="%zk.acl">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/lock.svg" size="13"/>
         </graphic>

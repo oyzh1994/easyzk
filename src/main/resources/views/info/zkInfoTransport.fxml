@@ -26,12 +26,12 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ConnectComboBox fx:id="formConnect" realHeight="30" flexWidth="100% - 315">
+        <ConnectComboBox fx:id="formConnect" realHeight="30" flexWidth="100% - 325">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ConnectComboBox>
-        <FXLabel text="字符集:" prefWidth="40">
+        <FXLabel text="%base.charset">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>
@@ -48,12 +48,12 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ConnectComboBox stateManager="$stateManager" fx:id="targetConnect" realHeight="30" flexWidth="100% - 315">
+        <ConnectComboBox stateManager="$stateManager" fx:id="targetConnect" realHeight="30" flexWidth="100% - 325">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ConnectComboBox>
-        <FXLabel text="%base.charset" prefWidth="40">
+        <FXLabel text="%base.charset">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>

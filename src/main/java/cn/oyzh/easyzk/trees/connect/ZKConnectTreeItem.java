@@ -113,7 +113,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             MenuItemExt server = MenuItemExt.newItem("服务信息", new SVGGlyph("/font/sever.svg", "12"), "查看连接服务信息", this::serverInfo);
             MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出zk数据", () -> this.firstChild().exportNode());
             MenuItemExt importData = MenuItemExt.newItem("导入数据", new SVGGlyph("/font/Import.svg", "12"), "导入zk数据", this::importNode);
-            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
+            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/fx-plus/font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
             server.setDisable(!this.client.initialized());
 
             items.add(closeConnect);
@@ -143,7 +143,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             MenuItemExt deleteConnect = MenuItemExt.newItem("删除连接", new SVGGlyph("/font/delete.svg", "12"), "删除zk连接(快捷键delete)", this::delete);
             MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
             MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出zk数据", this::exportNode);
-            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
+            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/fx-plus//font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
             MenuItemExt openTerminal = MenuItemExt.newItem("打开终端", new SVGGlyph("/fx-plus/font/code library.svg", "12"), "打开终端窗口", this::openTerminal);
 
             items.add(connect);

@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthAddController" realWidth="750" realHeight="240">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="用 户 名" realWidth="65" realHeight="30" styleClass="accent">
+        <AccentLabel text="%base.userName" realWidth="65" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ClearableTextField fx:id="user" realHeight="30" flexWidth="100% - 140" require="true"
-                            promptText="认证用户名"
-                            tipText="认证用户名">
+                            promptText="%base.userName"
+                            tipText="%base.userName">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="密    码" realWidth="65" realHeight="30" styleClass="accent">
+        <AccentLabel text="%base.password" realWidth="65" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ClearableTextField fx:id="password" realHeight="30" flexWidth="100% - 140" require="true"
                             promptText="认证密码(明文)" tipText="认证密码(明文)">
             <HBox.margin>
@@ -36,7 +38,7 @@
         </ClearableTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#addAuth" text="添加">
+        <SubmitButton onAction="#addAuth" >
             <HBox.margin>
                 <Insets left="95" top="10"/>
             </HBox.margin>

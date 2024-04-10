@@ -67,7 +67,6 @@ public class ZKAuthAddController extends Controller {
             }
             ZKAuth auth = new ZKAuth(user, password);
             if (this.authStore.add(auth)) {
-                // ZKAuthUtil.fireAuthAddEvent(auth);
                 ZKEventUtil.authAdded(auth);
                 MessageBox.okToast("新增认证信息成功！");
                 this.closeStage();
@@ -84,5 +83,10 @@ public class ZKAuthAddController extends Controller {
     public void onStageShown(WindowEvent event) {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
+    }
+
+    @Override
+    public String i18nId() {
+        return "auth.add";
     }
 }

@@ -48,12 +48,9 @@ import java.util.List;
  * @author oyzh
  * @since 2022/12/19
  */
-//@Slf4j
 @StageAttribute(
-        title = "zk节点权限新增",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLAdd.fxml"
 )
 public class ZKACLAddController extends Controller {
@@ -554,5 +551,10 @@ public class ZKACLAddController extends Controller {
             builder.append("c");
         }
         return builder.toString();
+    }
+
+    @Override
+    public String i18nId() {
+        return "acl.add";
     }
 }

@@ -31,7 +31,7 @@
                     </DisabledTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%node.add.label.type" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.type" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -52,7 +52,7 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%node.add.label.path" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.path" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -65,7 +65,7 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathPreviewBox" visible="false" managed="false">
-                    <AccentLabel text="%node.add.label.preview" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.preview" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -78,7 +78,7 @@
                     </DisabledTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" flexHeight="100% - 195">
-                    <AccentLabel text="%node.add.label.data" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.data" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -174,7 +174,7 @@
                                 <Insets left="20" top="10"/>
                             </HBox.margin>
                         </AccentLabel>
-                        <ClearableTextField promptText="用户名" tipText="用户名" fx:id="digestUser" realHeight="30" flexWidth="50% - 115">
+                        <ClearableTextField promptText="%base.userName" tipText="%base.userName" fx:id="digestUser" realHeight="30" flexWidth="50% - 115">
                             <HBox.margin>
                                 <Insets left="10" top="10"/>
                             </HBox.margin>
@@ -188,13 +188,13 @@
                     </FlexHBox>
                     <FlexHBox flexWidth="100%" realHeight="15">
                         <VBox.margin>
-                            <Insets left="95"/>
+                            <Insets left="110"/>
                         </VBox.margin>
                         <FXLabel fx:id="digestText"/>
                     </FlexHBox>
                 </FlexVBox>
                 <FlexHBox flexWidth="100%" realHeight="50" managed="false" visible="false" fx:id="ipACL">
-                    <AccentLabel text="%node.add.label.ipAddr" realWidth="80" realHeight="30">
+                    <AccentLabel text="%base.ipAddr" realWidth="80" realHeight="30">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>

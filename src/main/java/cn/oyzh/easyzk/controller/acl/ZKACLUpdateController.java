@@ -30,13 +30,10 @@ import java.util.List;
  * @since 2022/12/20
  */
 @StageAttribute(
-        title = "zk节点权限修改",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = ZKStyle.COMMON,
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLUpdate.fxml"
 )
-//@Slf4j
 public class ZKACLUpdateController extends Controller {
 
     /**
@@ -207,5 +204,10 @@ public class ZKACLUpdateController extends Controller {
             builder.append("c");
         }
         return builder.toString();
+    }
+
+    @Override
+    public String i18nId() {
+        return "acl.update";
     }
 }

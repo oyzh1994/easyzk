@@ -233,4 +233,9 @@ public class ZKAuthController extends Controller {
             }
         });
     }
+
+    @Override
+    public String i18nId() {
+        return "auth.auth";
+    }
 }

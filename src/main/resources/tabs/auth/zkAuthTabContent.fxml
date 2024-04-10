@@ -34,11 +34,11 @@
     </FlexHBox>
     <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable">
         <columns>
-            <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
-            <FlexTableColumn flexWidth="20%" fx:id="user" text="用户名"/>
-            <FlexTableColumn flexWidth="40%" fx:id="password" text="密码" sortable="false"/>
-            <FlexTableColumn flexWidth="20%" fx:id="enable" text="状态" sortable="false"/>
-            <FlexTableColumn flexWidth="10% - 15" fx:id="action" text="操作" sortable="false"/>
+            <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
+            <FlexTableColumn flexWidth="20%" fx:id="user" text="%base.userName"/>
+            <FlexTableColumn flexWidth="40%" fx:id="password" text="%base.password" sortable="false"/>
+            <FlexTableColumn flexWidth="20%" fx:id="enable" text="%base.status" sortable="false"/>
+            <FlexTableColumn flexWidth="10% - 15" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
 </FlexVBox>

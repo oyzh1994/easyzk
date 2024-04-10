@@ -10,17 +10,17 @@
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKServiceController" realHeight="600" realWidth="900">
-    <FXSeparator flexWidth="100% - 24" text="服务信息">
+    <FXSeparator flexWidth="100% - 24" text="%node.service.separator.serverInfo">
         <VBox.margin>
             <Insets left="12" top="5" bottom="5"/>
         </VBox.margin>
     </FXSeparator>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="节点名称" realHeight="30" realWidth="85" styleClass="accent">
+        <AccentLabel text="%node.service.label.connectName" realHeight="30" realWidth="85">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ReadOnlyTextField fx:id="zkInfoName" realHeight="30" flexWidth="100% - 160">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -28,11 +28,11 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="sdk版本" realHeight="30" realWidth="85" styleClass="accent">
+        <AccentLabel text="%node.service.label.sdkVer" realHeight="30" realWidth="85">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ReadOnlyTextField fx:id="sdkVersion" realHeight="30" flexWidth="100% - 160">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -40,43 +40,38 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="80">
-        <FXLabel text="连接地址" realHeight="30" realWidth="85" styleClass="accent">
+        <AccentLabel text="%node.service.label.connectAddr" realHeight="30" realWidth="85">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ReadOnlyTextArea fx:id="zkInfoHost" realHeight="80" flexWidth="100% - 160">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ReadOnlyTextArea>
     </FlexHBox>
-    <FXSeparator flexWidth="100% - 24" text="集群信息">
+    <FXSeparator flexWidth="100% - 24" text="%node.service.separator.clusterInfo">
         <VBox.margin>
             <Insets left="12" top="5" bottom="5"/>
         </VBox.margin>
     </FXSeparator>
-    <!--<Splitter titleText="集群信息" flexWidth="100% - 24">-->
-    <!--    <VBox.margin>-->
-    <!--        <Insets left="12" top="5" bottom="5"/>-->
-    <!--    </VBox.margin>-->
-    <!--</Splitter>-->
     <PageBox onNextClicked="#nextPage" onPrevClicked="#prevPage" fx:id="pagePane" realHeight="22" realWidth="350">
         <VBox.margin>
             <Insets left="12" bottom="5"/>
         </VBox.margin>
     </PageBox>
-    <FlexTableView flexWidth="100% - 28" fx:id="listTable" styleClass="fx-table-left">
+    <FlexTableView flexWidth="100% - 28" fx:id="listTable">
         <VBox.margin>
             <Insets left="12" top="5"/>
         </VBox.margin>
         <columns>
-            <FlexTableColumn flexWidth="8%" fx:id="id" text="ID"/>
-            <FlexTableColumn flexWidth="8%" fx:id="weight" text="权重"/>
-            <FlexTableColumn flexWidth="16%" fx:id="type" text="类型"/>
-            <FlexTableColumn flexWidth="20%" fx:id="clientAddr" text="连接地址" sortable="false"/>
-            <FlexTableColumn flexWidth="22%" fx:id="addr" text="交互地址" sortable="false"/>
-            <FlexTableColumn flexWidth="22% - 6" fx:id="electionAddr" text="选举地址" sortable="false"/>
+            <FlexTableColumn flexWidth="8%" fx:id="id" text="%base.No"/>
+            <FlexTableColumn flexWidth="8%" fx:id="weight" text="%node.service.tableCol.weight"/>
+            <FlexTableColumn flexWidth="16%" fx:id="type" text="%base.type"/>
+            <FlexTableColumn flexWidth="20%" fx:id="clientAddr" text="%node.service.tableCol.clientAddr" sortable="false"/>
+            <FlexTableColumn flexWidth="22%" fx:id="addr" text="%node.service.tableCol.addr" sortable="false"/>
+            <FlexTableColumn flexWidth="22% - 6" fx:id="electionAddr" text="%node.service.tableCol.electionAddr" sortable="false"/>
         </columns>
     </FlexTableView>
 </FlexVBox>

@@ -20,7 +20,7 @@
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox">
-        <AccentLabel text="%node.export.label.path" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.path" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -32,7 +32,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%node.export.label.format" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.format" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -88,7 +88,7 @@
         </FlexFlowPane>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%node.export.label.options" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

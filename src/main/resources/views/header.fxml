@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <SVGLabel text="%main.head.label.search" onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" url="/font/search.svg" size="14">
+    <SVGLabel text="%base.search" onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" url="/font/search.svg" size="14">
         <FlowPane.margin>
             <Insets left="8" top="5" bottom="5"/>
         </FlowPane.margin>
@@ -15,47 +15,47 @@
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%main.head.label.filter" onMousePrimaryClicked="#filter" tipText="节点过滤配置" url="/font/filter.svg" size="12">
+    <SVGLabel text="%base.filter" onMousePrimaryClicked="#filter" tipText="节点过滤配置" url="/font/filter.svg" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%main.head.label.transport" onMousePrimaryClicked="#transport" tipText="传输数据"
+    <SVGLabel text="%base.transport" onMousePrimaryClicked="#transport" tipText="传输数据"
               url="/font/arrow-left-right-line.svg" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%main.head.label.tool" onMousePrimaryClicked="#tool" tipText="打开工具箱"
+    <SVGLabel text="%base.tool" onMousePrimaryClicked="#tool" tipText="打开工具箱"
               url="/font/Tool.svg" size="13">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%main.head.label.setting" onMousePrimaryClicked="#setting" tipText="程序设置" url="/font/setting.svg" size="14">
+    <SVGLabel text="%base.setting" onMousePrimaryClicked="#setting" tipText="程序设置" url="/font/setting.svg" size="14">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%main.head.label.about" onMousePrimaryClicked="#about" tipText="关于程序" url="/font/info-circle.svg" size="14">
+    <SVGLabel text="%base.about" onMousePrimaryClicked="#about" tipText="关于程序" url="/font/info-circle.svg" size="14">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%main.head.label.collapse" fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" tipText="收缩zk树"
+    <SVGLabel text="%base.collapse" fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" tipText="收缩zk树"
               url="/font/left-arrow-to-left.svg" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel visible="false" managed="false" fx:id="expandTree" text="%main.head.label.expand" onMousePrimaryClicked="#expandTree"
+    <SVGLabel visible="false" managed="false" fx:id="expandTree" text="%base.expand" onMousePrimaryClicked="#expandTree"
               url="/font/arrow-to-right.svg" size="12"
               tipText="展开zk树">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%main.head.label.quit" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="12">
+    <SVGLabel text="%base.quit" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLUpdateController" realWidth="600" realHeight="300">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="节点路径" realWidth="65" realHeight="30" styleClass="accent">
+        <AccentLabel text="%base.path" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <DisabledTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -21,11 +24,11 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="权限类型" realWidth="65" realHeight="30" styleClass="accent">
+        <AccentLabel text="权限类型" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <DisabledTextField realHeight="30" flexWidth="100% - 140" fx:id="aclType">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -33,11 +36,11 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="权限范围" realWidth="65" realHeight="30" styleClass="accent">
+        <AccentLabel text="权限范围" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexHBox realHeight="30" flexWidth="100% - 140" fx:id="perms">
             <padding>
                 <Insets left="10" top="20"/>
@@ -66,11 +69,11 @@
         </FlexHBox>
     </FlexHBox>
     <FlexHBox fx:id="digestACL" flexWidth="100%" realHeight="50" managed="false" visible="false">
-        <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="accent">
+        <AccentLabel text="认证信息" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <DisabledTextField fx:id="digest" realHeight="30" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -78,11 +81,11 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox fx:id="ipACL" flexWidth="100%" realHeight="50" managed="false" visible="false">
-        <FXLabel text="IP地址" realWidth="65" realHeight="30" styleClass="accent">
+        <AccentLabel text="%base.ipAddr" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <DisabledTextField fx:id="ip" realHeight="30" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>

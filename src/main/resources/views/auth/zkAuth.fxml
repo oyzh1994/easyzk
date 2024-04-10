@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <?import java.lang.String?>
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.combo.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthController" realWidth="600" realHeight="240">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="节点路径" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%zk.path" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <DisabledTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 200">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -24,11 +28,11 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="认证方式" realWidth="65" realHeight="30" styleClass="accent">
+        <AccentLabel text="认证方式" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexComboBox initIndex="0" fx:id="authType" tipText="认证方式" realHeight="30" flexWidth="100% - 200">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -43,17 +47,19 @@
     </FlexHBox>
     <FlexVBox fx:id="authType1" flexWidth="100%" realHeight="50">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="accent">
+            <AccentLabel text="认证信息" realWidth="80" realHeight="30">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
-            </FXLabel>
-            <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 105" promptText="认证用户名" tipText="认证用户名" >
+            </AccentLabel>
+            <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 105" promptText="认证用户名"
+                                tipText="认证用户名">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <ClearableTextField fx:id="password" realHeight="30" flexWidth="50% - 105" promptText="认证密码(明文)" tipText="认证密码(明文)" >
+            <ClearableTextField fx:id="password" realHeight="30" flexWidth="50% - 105" promptText="认证密码(明文)"
+                                tipText="认证密码(明文)">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
@@ -67,11 +73,11 @@
     </FlexVBox>
     <FlexVBox flexWidth="100%" realHeight="50" fx:id="authType2" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <FXLabel text="认证信息" realWidth="65" realHeight="30" styleClass="accent">
+            <AccentLabel text="认证信息" realWidth="80" realHeight="30">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
-            </FXLabel>
+            </AccentLabel>
             <FlexComboBox tipText="请选择认证信息" fx:id="authList" realHeight="30" flexWidth="100% - 200">
                 <HBox.margin>
                     <Insets left="10" top="10"/>

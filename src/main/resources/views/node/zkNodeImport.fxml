@@ -45,7 +45,7 @@
         </VBox.margin>
     </FlexText>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%node.import.label.options" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -55,7 +55,7 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FXLabel text="%node.import.label.charset">
+        <FXLabel text="%base.charset">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>

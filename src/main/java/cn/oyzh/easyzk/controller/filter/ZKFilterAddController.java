@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.FXToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -22,7 +22,6 @@ import javafx.stage.WindowEvent;
  * @since 2022/12/20
  */
 @StageAttribute(
-        title = "zk过滤配置新增",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "filter/zkFilterAdd.fxml"
@@ -42,10 +41,10 @@ public class ZKFilterAddController extends Controller {
     private FXToggleSwitch enable;
 
     /**
-     * 模糊匹配
+     * 匹配方式
      */
     @FXML
-    private FXToggleSwitch partMatch;
+    private FXToggleSwitch matchMode;
 
     /**
      * zk过滤配置储存
@@ -71,9 +70,8 @@ public class ZKFilterAddController extends Controller {
             ZKFilter filter = new ZKFilter();
             filter.setKw(kw);
             filter.setEnable(this.enable.isSelected());
-            filter.setPartMatch(this.partMatch.isSelected());
+            filter.setPartMatch(this.matchMode.isSelected());
             if (this.filterStore.add(filter)) {
-                // EventUtil.fire(ZKEventTypes.ZK_FILTER_ADDED);
                 ZKEventUtil.filterAdded();
                 ZKEventUtil.treeChildFilter();
                 MessageBox.okToast("新增ZK过滤配置成功!");
@@ -91,5 +89,10 @@ public class ZKFilterAddController extends Controller {
     public void onStageShown(WindowEvent event) {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
+    }
+
+    @Override
+    public String i18nId() {
+        return "filter.add";
     }
 }

@@ -31,11 +31,11 @@
     </FlexHBox>
     <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable">
         <columns>
-            <FlexTableColumn flexWidth="10%" fx:id="index" text="%filter.main.table.index"/>
-            <FlexTableColumn flexWidth="40%" fx:id="kw" text="%filter.main.table.kw"/>
-            <FlexTableColumn flexWidth="20%" fx:id="matchMode" text="%filter.main.table.matchMode"/>
-            <FlexTableColumn flexWidth="20%" fx:id="status" text="%filter.main.table.status" sortable="false"/>
-            <FlexTableColumn flexWidth="10% - 15" fx:id="action" text="%filter.main.table.action" sortable="false"/>
+            <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
+            <FlexTableColumn flexWidth="40%" fx:id="kw" text="%base.kw"/>
+            <FlexTableColumn flexWidth="20%" fx:id="matchMode" text="%base.matchMode"/>
+            <FlexTableColumn flexWidth="20%" fx:id="status" text="%base.status" sortable="false"/>
+            <FlexTableColumn flexWidth="10% - 15" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
 </FlexVBox>

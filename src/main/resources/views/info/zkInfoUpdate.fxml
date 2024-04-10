@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.IconButton?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.button.IconButton?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.button.TestButton?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.digital.PortTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.toggle.SwitchToggleSwitch?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoUpdateController" realWidth="750" realHeight="320">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="%info.update.tab.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.name">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ClearableTextField fx:id="name" promptText="请输入名称" tipText="请输入名称" maxLen="20"
                                         require="true"
                                         realHeight="30" flexWidth="100% - 140">
@@ -44,11 +36,11 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.host">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ClearableTextField fx:id="hostIp"
                                         tipText="连接地址，例如192.168.2.100"
                                         require="true"
@@ -60,11 +52,11 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接端口" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.port" >
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <PortTextField flexWidth="100% - 140" fx:id="hostPort"
                                    tipText="端口号(1-65535)"
                                    realHeight="30"
@@ -75,11 +67,11 @@
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接设置" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.options" >
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexCheckBox text="只读模式" tipText="开启只读模式，防止误操作数据" fx:id="readonly">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
@@ -103,11 +95,11 @@
         <FXTab text="%info.update.tab.extra">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.connectTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <NumberTextField realHeight="30" flexWidth="100% - 140" min="3" max="30" fx:id="connectTimeOut"
                                      promptText="超时时间(3-30)，单位秒，默认5秒"
                                      tipText="超时时间(3-30)，单位秒，默认5秒"
@@ -124,11 +116,11 @@
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="会话超时" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.sessionTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <NumberTextField realHeight="30" flexWidth="100% - 140" min="5" max="120" fx:id="sessionTimeOut"
                                      promptText="超时时间(5-120)，单位分钟，默认30分钟"
                                      tipText="超时时间(5-120)，单位分钟，默认30分钟"
@@ -145,11 +137,11 @@
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="100">
-                    <FXLabel realHeight="30" realWidth="65" text="备      注" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.remark">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140"
                                    promptText="请输入备注信息"
                                    tipText="请输入备注信息"
@@ -164,23 +156,23 @@
         <FXTab text="%info.update.tab.ssh">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="启用通道" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%info.update.label.enableChannel">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <FXToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭">
+                    </AccentLabel>
+                    <SwitchToggleSwitch fx:id="sshForward" tipText="开启ssh通道">
                         <HBox.margin>
                             <Insets left="10" top="15"/>
                         </HBox.margin>
-                    </FXToggleSwitch>
+                    </SwitchToggleSwitch>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshHostBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="主机信息" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.host">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ClearableTextField fx:id="sshHost"
                                         tipText="主机地址，例如192.168.2.100"
                                         require="true"
@@ -200,11 +192,11 @@
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshTimeoutBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.connectTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout"
                                      tipText="ssh连接超时，单位毫秒"
                                      realHeight="30"
@@ -215,11 +207,11 @@
                     </NumberTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshAuthBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="用户信息" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="%base.sshInfo">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ClearableTextField fx:id="sshUser" tipText="主机的ssh用户名"
                                         require="true"
                                         realHeight="30" flexWidth="50% - 73" text="root">
@@ -239,15 +231,12 @@
         </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton onAction="#testConnect" text="测试" styleClass="success" iconSizePercent="0.8">
-            <graphic>
-                <SVGGlyph url="/font/link.svg"/>
-            </graphic>
+        <TestButton onAction="#testConnect" iconSizePercent="0.8">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <SubmitButton onAction="#update" text="确定">
+        </TestButton>
+        <SubmitButton onAction="#update">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>

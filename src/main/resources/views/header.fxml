@@ -1,63 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.svg.AboutSVGLabel?>
+<?import cn.oyzh.fx.plus.controls.svg.CollapseSVGLabel?>
+<?import cn.oyzh.fx.plus.controls.svg.ExpandSVGLabel?>
+<?import cn.oyzh.fx.plus.controls.svg.FilterSVGLabel?>
+<?import cn.oyzh.fx.plus.controls.svg.QuitSVGLabel?>
+<?import cn.oyzh.fx.plus.controls.svg.SearchSVGLabel?>
+<?import cn.oyzh.fx.plus.controls.svg.SettingSVGLabel?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
+<?import cn.oyzh.fx.plus.controls.svg.TransportSVGLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <SVGLabel text="%base.search" onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" url="/font/search.svg" size="14">
+    <SearchSVGLabel onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" size="14">
         <FlowPane.margin>
             <Insets left="8" top="5" bottom="5"/>
         </FlowPane.margin>
-    </SVGLabel>
-    <SVGLabel text="%main.head.label.auth" onMousePrimaryClicked="#auth" tipText="节点认证配置" url="/font/audit.svg" size="12">
+    </SearchSVGLabel>
+    <SVGLabel text="%main.head.label.auth" onMousePrimaryClicked="#auth" url="/font/audit.svg"
+              size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%base.filter" onMousePrimaryClicked="#filter" tipText="节点过滤配置" url="/font/filter.svg" size="12">
+    <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
-    </SVGLabel>
-    <SVGLabel text="%base.transport" onMousePrimaryClicked="#transport" tipText="传输数据"
-              url="/font/arrow-left-right-line.svg" size="12">
+    </FilterSVGLabel>
+    <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
-    </SVGLabel>
-    <SVGLabel text="%base.tool" onMousePrimaryClicked="#tool" tipText="打开工具箱"
+    </TransportSVGLabel>
+    <SVGLabel text="%base.tool" onMousePrimaryClicked="#tool"
               url="/font/Tool.svg" size="13">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="%base.setting" onMousePrimaryClicked="#setting" tipText="程序设置" url="/font/setting.svg" size="14">
+    <SettingSVGLabel onMousePrimaryClicked="#setting" size="14">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
-    </SVGLabel>
-    <SVGLabel text="%base.about" onMousePrimaryClicked="#about" tipText="关于程序" url="/font/info-circle.svg" size="14">
+    </SettingSVGLabel>
+    <AboutSVGLabel onMousePrimaryClicked="#about" size="14">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
-    </SVGLabel>
-    <SVGLabel text="%base.collapse" fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" tipText="收缩zk树"
-              url="/font/left-arrow-to-left.svg" size="12">
+    </AboutSVGLabel>
+    <CollapseSVGLabel fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
-    </SVGLabel>
-    <SVGLabel visible="false" managed="false" fx:id="expandTree" text="%base.expand" onMousePrimaryClicked="#expandTree"
-              url="/font/arrow-to-right.svg" size="12"
-              tipText="展开zk树">
+    </CollapseSVGLabel>
+    <ExpandSVGLabel visible="false" managed="false" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
-    </SVGLabel>
-    <SVGLabel text="%base.quit" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="12">
+    </ExpandSVGLabel>
+    <QuitSVGLabel onMousePrimaryClicked="#quit" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
         </FlowPane.margin>
-    </SVGLabel>
+    </QuitSVGLabel>
 </FlexFlowPane>

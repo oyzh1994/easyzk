@@ -2,19 +2,22 @@
 <?import cn.oyzh.easyzk.fx.ZKMsgTextArea?>
 <?import cn.oyzh.easyzk.tabs.ZKTabPane?>
 <?import cn.oyzh.easyzk.trees.ZKTreeView?>
-<?import cn.oyzh.fx.plus.controls.button.ClearButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PositioningSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SortAscSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SortDescSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
 <FlexPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.ZKMainController" flexWidth="100%" flexHeight="100% - 30">
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
@@ -25,30 +28,27 @@
             <FlexVBox flexHeight="100%" flexWidth="100% - 8"
                       style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
                 <FlexHBox realHeight="30" flexWidth="100%">
-                    <SVGGlyph tipText="打开终端" size="15"
-                              onMousePrimaryClicked="#openTerminal" url="/fx-plus/font/code library.svg">
+                    <TerminalSVGGlyph size="15" onMousePrimaryClicked="#openTerminal" url="/fx-plus/font/code library.svg">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </SVGGlyph>
-                    <SVGGlyph fx:id="sortAsc" tipText="%base.sortAsc" size="15"
-                              onMousePrimaryClicked="#sortAsc" url="/font/sort-ascending.svg">
+                    </TerminalSVGGlyph>
+                    <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
-                    </SVGGlyph>
-                    <SVGGlyph fx:id="sortDesc" tipText="%base.sortDesc" size="15" visible="false" managed="false"
-                              onMousePrimaryClicked="#sortDesc" url="/font/sort-descending.svg">
+                    </SortAscSVGGlyph>
+                    <SortDescSVGGlyph fx:id="sortDesc" size="15" visible="false" managed="false"
+                                      onMousePrimaryClicked="#sortDesc">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
-                    </SVGGlyph>
-                    <SVGGlyph tipText="定位节点" size="17" onMousePrimaryClicked="#positionNode"
-                              url="/font/positioning.svg">
+                    </SortDescSVGGlyph>
+                    <PositioningSVGGlyph size="17" onMousePrimaryClicked="#positionNode">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
-                    </SVGGlyph>
+                    </PositioningSVGGlyph>
                 </FlexHBox>
                 <FlexFlowPane realHeight="30" flexWidth="100%">
                     <FlexCheckBox text="%main.zk.checkbox.filterEphemeral" fx:id="filterEphemeral" fontSize="11">

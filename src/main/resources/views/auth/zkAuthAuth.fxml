@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import java.lang.String?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthController" realWidth="600" realHeight="240">
+          fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthAuthController" realWidth="600" realHeight="240">
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.path" realHeight="30" realWidth="80">
             <HBox.margin>
@@ -28,7 +28,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="认证方式" realWidth="80" realHeight="30">
+        <AccentLabel text="%zk.authMethod" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -47,7 +47,7 @@
     </FlexHBox>
     <FlexVBox fx:id="authType1" flexWidth="100%" realHeight="50">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <AccentLabel text="认证信息" realWidth="80" realHeight="30">
+            <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -64,7 +64,7 @@
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <FlexCheckBox text="保存认证" fx:id="saveInfo1" tipText="保存认证信息" selected="true">
+            <FlexCheckBox text="%base.save" fx:id="saveInfo1" tipText="保存认证信息" selected="true">
                 <HBox.margin>
                     <Insets left="10" top="18"/>
                 </HBox.margin>
@@ -73,7 +73,7 @@
     </FlexVBox>
     <FlexVBox flexWidth="100%" realHeight="50" fx:id="authType2" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <AccentLabel text="认证信息" realWidth="80" realHeight="30">
+            <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -86,9 +86,9 @@
         </FlexHBox>
     </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#auth" text="认证">
+        <SubmitButton onAction="#auth" text="%base.auth">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

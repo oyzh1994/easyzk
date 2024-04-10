@@ -34,12 +34,11 @@ import java.util.List;
  * @since 2022/06/07
  */
 @StageAttribute(
-        title = "zk节点认证",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "auth/zkAuth.fxml"
+        value = ZKConst.FXML_BASE_PATH + "auth/zkAuthAuth.fxml"
 )
-public class ZKAuthController extends Controller {
+public class ZKAuthAuthController extends Controller {
 
     /**
      * 用户名
@@ -156,23 +155,17 @@ public class ZKAuthController extends Controller {
         try {
             ZKClient zkClient = this.zkItem.client();
             int result = ZKAuthUtil.authNode(user, password, zkClient, this.zkNode);
-            // ZKAuthAuthedEvent authMsg = new ZKAuthAuthedEvent();
-            // authMsg.user(user).password(password).item(this.zkItem);
             if (result == 1) {
                 if (this.saveInfo1.isSelected()) {
                     this.authStore.add(new ZKAuth(user, password));
                 }
-                // authMsg.result(true);
-                // EventUtil.fire(ZKEventTypes.ZK_AUTH_SUCCESS, authMsg);
                 ZKEventUtil.authAuthed(this.zkItem, true, user, password);
                 MessageBox.okToast("认证成功！");
                 this.closeStage();
             } else if (this.zkNode.aclEmpty() || this.zkNode.hasDigestACL()) {
-                // EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
                 MessageBox.warn("认证失败！");
             } else {
-                // EventUtil.fire(ZKEventTypes.ZK_AUTH_FAIL, authMsg);
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
                 MessageBox.warn("认证失败或此节点无需认证！");
             }

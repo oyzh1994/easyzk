@@ -15,6 +15,7 @@ import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.button.CopyButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -153,7 +154,7 @@ public class ZKACLAddController extends Controller {
      * 复制摘要信息
      */
     @FXML
-    private SVGGlyph copyDigestText;
+    private CopyButton copyDigestText;
 
     /**
      * 摘要保存

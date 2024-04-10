@@ -82,7 +82,7 @@
     </FlexHBox>
     <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digest1ACL">
         <FlexHBox realHeight="50" flexWidth="100%">
-            <AccentLabel text="认证信息" realWidth="80" realHeight="30">
+            <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -108,16 +108,15 @@
                 <Insets left="95"/>
             </VBox.margin>
             <FXLabel fx:id="digestText"/>
-            <SVGGlyph fx:id="copyDigestText" tipText="复制摘要信息" size="16" visible="false"
-                      onMousePrimaryClicked="#copyDigestText" url="/font/file-copy.svg">
+            <CopyButton fx:id="copyDigestText" tipText="复制摘要信息"  visible="false" onMousePrimaryClicked="#copyDigestText">
                 <HBox.margin>
                     <Insets left="15"/>
                 </HBox.margin>
-            </SVGGlyph>
+            </CopyButton>
         </FlexHBox>
     </FlexVBox>
     <FlexHBox flexWidth="100%" managed="false" realHeight="50" visible="false" fx:id="digest2ACL">
-        <AccentLabel text="认证信息" realWidth="80" realHeight="30">
+        <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -129,7 +128,7 @@
         </ClearableTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" managed="false" realHeight="50" visible="false" fx:id="digest3ACL">
-        <AccentLabel text="认证信息" realWidth="80" realHeight="30">
+        <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -175,7 +174,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addACL">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

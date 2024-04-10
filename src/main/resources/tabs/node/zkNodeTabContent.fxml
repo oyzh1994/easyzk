@@ -98,7 +98,7 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <FXLabel text="格式" fontSize="11">
+                <FXLabel text="%base.format" fontSize="11">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
@@ -108,7 +108,7 @@
                         <Insets left="3" top="5"/>
                     </FlowPane.margin>
                 </ZKFormatComboBox>
-                <FXLabel text="字符" fontSize="11">
+                <FXLabel text="%base.charset" fontSize="11">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
@@ -136,7 +136,7 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <FXLabel text="搜索" fontSize="11">
+                <FXLabel text="%base.search" fontSize="11">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>

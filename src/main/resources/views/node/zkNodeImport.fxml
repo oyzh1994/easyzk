@@ -83,10 +83,9 @@
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
         <AccentButton tipText="开始执行导入" onAction="#doImport"
-                      text="导入" fx:id="importBtn" disable="true" iconSizePercent="0.75">
-            <graphic>
-                <SVGGlyph url="/font/Import.svg" color="white"/>
-            </graphic>
+                      text="导入" fx:id="importBtn" disable="true"
+                      iconUrl="/font/Import.svg"
+                      iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>

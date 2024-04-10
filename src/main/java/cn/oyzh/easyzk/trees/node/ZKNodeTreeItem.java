@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees.node;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
-import cn.oyzh.easyzk.controller.auth.ZKAuthController;
+import cn.oyzh.easyzk.controller.auth.ZKAuthAuthController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -609,7 +609,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 认证zk节点
      */
     public void authNode() {
-        StageWrapper fxView = StageUtil.parseStage(ZKAuthController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(ZKAuthAuthController.class, this.window());
         fxView.setProp("zkClient", this.client());
         fxView.setProp("zkItem", this);
         fxView.display();

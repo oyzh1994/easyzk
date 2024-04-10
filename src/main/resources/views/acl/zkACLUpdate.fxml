@@ -24,7 +24,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="权限类型" realWidth="80" realHeight="30">
+        <AccentLabel text="%zk.aclType" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -36,7 +36,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="权限范围" realWidth="80" realHeight="30">
+        <AccentLabel text="%zk.aclScope" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -69,7 +69,7 @@
         </FlexHBox>
     </FlexHBox>
     <FlexHBox fx:id="digestACL" flexWidth="100%" realHeight="50" managed="false" visible="false">
-        <AccentLabel text="认证信息" realWidth="80" realHeight="30">
+        <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -95,7 +95,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#updateACL">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

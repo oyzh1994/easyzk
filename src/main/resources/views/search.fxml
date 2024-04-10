@@ -8,6 +8,8 @@
 <?import cn.oyzh.fx.plus.search.SearchTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.svg.NextSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PrevSVGGlyph?>
 <FlexVBox styleClass="root" fx:id="searchMain" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.controller.SearchController">
@@ -20,18 +22,18 @@
                 <Insets left="10" top="3"/>
             </HBox.margin>
         </SearchTextField>
-        <SVGGlyph fx:id="searchNext" disable="true" url="/font/direction-down.svg" tipText="查找下一个(快捷键Enter)"
+        <NextSVGGlyph fx:id="searchNext" disable="true" tipText="查找下一个(快捷键Enter)"
                   onMousePrimaryClicked="#searchNext" size="12">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>
-        </SVGGlyph>
-        <SVGGlyph fx:id="searchPrev" disable="true" url="/font/direction-up.svg" tipText="查找上一个"
+        </NextSVGGlyph>
+        <PrevSVGGlyph fx:id="searchPrev" disable="true" tipText="查找上一个"
                   onMousePrimaryClicked="#searchPrev" size="12">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>
-        </SVGGlyph>
+        </PrevSVGGlyph>
         <SVGGlyph fx:id="searchAnalyse" disable="true" url="/font/NLP_text.svg" tipText="分析搜索词"
                   onMousePrimaryClicked="#searchAnalyse" size="12">
             <HBox.margin>

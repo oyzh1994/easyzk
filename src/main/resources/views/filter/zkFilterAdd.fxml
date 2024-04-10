@@ -17,8 +17,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ClearableTextField fx:id="kw" realHeight="30" flexWidth="100% - 140" require="true" promptText="输入过滤关键字"
-                            tipText="输入过滤关键字">
+        <ClearableTextField fx:id="kw" realHeight="30" flexWidth="100% - 140" require="true" tipText="%base.searchKWTip">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>

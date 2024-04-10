@@ -83,14 +83,14 @@
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
         <AccentButton tipText="开始执行导入" onAction="#doImport"
-                      text="导入" fx:id="importBtn" disable="true"
+                      text="%base.import" fx:id="importBtn" disable="true"
                       iconUrl="/font/Import.svg"
                       iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>
         </AccentButton>
-        <StopButton disable="true" fx:id="stopImportBtn" tipText="结束导入" onAction="#stopImport"
+        <StopButton disable="true" fx:id="stopImportBtn" onAction="#stopImport"
                     realHeight="30" iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>

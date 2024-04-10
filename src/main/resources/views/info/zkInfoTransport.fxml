@@ -75,8 +75,7 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXCheckBox>
-        <FXCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%zk.applyByFilter"
-                      tipText="适用过滤配置列表的数据">
+        <FXCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%zk.applyByFilter">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -100,13 +99,13 @@
         <AccentButton stateManager="$stateManager" tipText="开始执行传输" fx:id="transportBtn"
                       onAction="#doTransport" realHeight="30"
                       iconUrl="/font/export.svg"
-                      text="传输"
+                      text="%base.transport"
                       iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>
         </AccentButton>
-        <StopButton disable="true" fx:id="stopTransportBtn" tipText="结束传输" onAction="#stopTransport"
+        <StopButton disable="true" fx:id="stopTransportBtn" onAction="#stopTransport"
                     realHeight="30" iconSizePercent="0.9">
             <HBox.margin>
                 <Insets left="15" top="10"/>

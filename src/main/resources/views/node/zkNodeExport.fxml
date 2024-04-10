@@ -129,14 +129,14 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentButton stateManager="$stateManager" tipText="开始执行导出" onAction="#doExport"
                       realHeight="30"
-                      text="导出"
+                      text="%base.export"
                       iconUrl="/font/export.svg"
                       iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>
         </AccentButton>
-        <StopButton disable="true" fx:id="stopExportBtn" tipText="结束导出" onAction="#stopExport"
+        <StopButton disable="true" fx:id="stopExportBtn" onAction="#stopExport"
                     realHeight="30" iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>

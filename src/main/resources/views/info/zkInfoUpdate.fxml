@@ -27,7 +27,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="name" promptText="请输入名称" tipText="请输入名称" maxLen="20"
+                    <ClearableTextField fx:id="name" tipText="请输入名称" maxLen="20"
                                         require="true"
                                         realHeight="30" flexWidth="100% - 140">
                         <HBox.margin>
@@ -143,8 +143,7 @@
                         </HBox.margin>
                     </AccentLabel>
                     <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140"
-                                   promptText="请输入备注信息"
-                                   tipText="请输入备注信息"
+                                   tipText="%base.remarkTip"
                                    maxLen="100">
                         <HBox.margin>
                             <Insets left="10" top="10"/>

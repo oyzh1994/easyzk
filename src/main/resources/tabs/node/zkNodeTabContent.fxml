@@ -10,16 +10,21 @@
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <?import cn.oyzh.fx.plus.controls.rich.FlexVirtualizedScrollPane?>
+<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.SuccessLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
@@ -55,17 +60,17 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴(Ctrl+V)">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData"
+                               tipText="粘贴(Ctrl+V)">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData" tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
+                </ClearSVGGlyph>
                 <SVGGlyph disable="true" tipText="节点转二维码" fx:id="node2QRCode" size="16"
                           onMousePrimaryClicked="#node2QRCode"
                           url="/font/qrcode.svg">
@@ -78,26 +83,22 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph fx:id="collect" tipText="收藏节点" size="15"
-                          onMousePrimaryClicked="#collect"
-                          url="/font/star-l.svg">
+                <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
-                <SVGGlyph visible="false" managed="false" fx:id="unCollect" tipText="取消收藏节点" size="15"
-                          onMousePrimaryClicked="#unCollect"
-                          url="/font/star.svg">
+                </CollectSVGGlyph>
+                <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15"
+                                   onMousePrimaryClicked="#unCollect">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
-                <SVGGlyph tipText="刷新节点(F5)" size="15" onMousePrimaryClicked="#reloadData"
-                          url="/font/reload.svg">
+                </UnCollectSVGGlyph>
+                <RefreshSVGGlyph tipText="刷新节点(F5)" size="15" onMousePrimaryClicked="#reloadData">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
+                </RefreshSVGGlyph>
                 <FXLabel text="%base.format" fontSize="11">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
@@ -141,7 +142,7 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <ClearableTextField fx:id="dataSearch" promptText="搜索节点内容" fontSize="11" realHeight="22"
+                <ClearableTextField fx:id="dataSearch" tipText="%base.searchKWTip" fontSize="11" realHeight="22"
                                     prefWidth="130">
                     <FlowPane.margin>
                         <Insets left="3" top="5"/>
@@ -171,18 +172,17 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXToggleSwitch>
-                <SVGGlyph tipText="复制节点状态" size="16" onMousePrimaryClicked="#copyStat"
+                <SVGGlyph tipText="%base.copy" size="16" onMousePrimaryClicked="#copyStat"
                           url="/font/file-copy.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="刷新节点状态" size="15" onMousePrimaryClicked="#reloadStat"
-                          url="/font/reload.svg">
+                <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadStat">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
+                </RefreshSVGGlyph>
                 <padding>
                     <Insets top="9"/>
                 </padding>
@@ -218,18 +218,17 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXToggleSwitch>
-                <SVGGlyph tipText="添加节点权限" size="16" onMousePrimaryClicked="#toAddACL"
+                <SVGGlyph tipText="%base.add" size="16" onMousePrimaryClicked="#toAddACL"
                           url="/font/add.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="刷新节点权限" size="15" onMousePrimaryClicked="#reloadACL"
-                          url="/font/reload.svg">
+                <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadACL">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
+                </RefreshSVGGlyph>
                 <PageBox fx:id="aclPage" realHeight="22"
                          realWidth="300" onPrevClicked="#prevPage" onNextClicked="#nextPage">
                     <FlowPane.margin>
@@ -246,19 +245,19 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
                                   onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
                                   onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
                                   onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -279,19 +278,19 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
                                   onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
                                   onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
                                   onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -312,19 +311,19 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
                                   onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
                                   onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
                                   onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -345,19 +344,19 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
                                   onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
                                   onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
                                   onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -378,19 +377,19 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="复制权限" url="/font/copy.svg" size="14"
+                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
                                   onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="编辑权限" url="/font/edit.svg" size="14"
+                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
                                   onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
                         </SVGGlyph>
-                        <SVGGlyph tipText="删除权限" url="/font/delete.svg" size="14"
+                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
                                   onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -415,12 +414,11 @@
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
-                <SVGGlyph tipText="刷新节点配额" size="15" onMousePrimaryClicked="#reloadQuota"
-                          url="/font/reload.svg">
+                <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadQuota">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
+                </RefreshSVGGlyph>
                 <padding>
                     <Insets top="9"/>
                 </padding>

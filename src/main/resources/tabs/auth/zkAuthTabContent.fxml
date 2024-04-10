@@ -12,13 +12,13 @@
 <FlexVBox styleClass="root" flexWidth="100%" flexHeight="100%"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.oyzh.easyzk.tabs.auth.ZKAuthTabContent">
     <FlexHBox realHeight="50" flexWidth="100%">
-        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" promptText="搜索关键字"
-                            tipText="搜索关键字">
+        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280"
+                            tipText="%base.searchKWTip">
             <HBox.margin>
                 <Insets left="5" top="-4"/>
             </HBox.margin>
         </ClearableTextField>
-        <SVGGlyph size="14" onMousePrimaryClicked="#toAdd" tipText="添加" url="/font/add-fill.svg">
+        <SVGGlyph size="14" onMousePrimaryClicked="#toAdd" tipText="%base.add" url="/font/add-fill.svg">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>

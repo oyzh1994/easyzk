@@ -566,7 +566,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 MenuItem delete = MenuItemExt.newItem("删除节点", new SVGGlyph("/font/delete.svg", "12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
                 items.add(delete);
             }
-            MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载节点数据", this::reloadChild);
+            MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/fx-plus/font/reload.svg", "12"), "重新加载节点数据", this::reloadChild);
             items.add(reload);
             if (this.value.parentNode()) {
                 MenuItem unload = MenuItemExt.newItem("取消加载", new SVGGlyph("/font/stop.svg", "12"), "取消加载子节点", this::unloadChild);

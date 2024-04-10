@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.JSONSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.String?>
-<?import cn.oyzh.fx.plus.controls.tab.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.combo.*?>
-<?import cn.oyzh.fx.plus.controls.area.*?>
-<?import cn.oyzh.fx.plus.controls.svg.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="550">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -92,23 +100,21 @@
                         </HBox.margin>
                     </FlexTextArea>
                     <FlexVBox>
-                        <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                                  tipText="粘贴数据">
+                        <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                             <VBox.margin>
                                 <Insets left="5" top="10"/>
                             </VBox.margin>
-                        </SVGGlyph>
-                        <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                                  tipText="清空数据">
+                        </PasteSVGGlyph>
+                        <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                             <VBox.margin>
                                 <Insets left="5" top="10"/>
                             </VBox.margin>
-                        </SVGGlyph>
-                        <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                        </ClearSVGGlyph>
+                        <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                             <VBox.margin>
                                 <Insets left="5" top="10"/>
                             </VBox.margin>
-                        </SVGGlyph>
+                        </JSONSVGGlyph>
                     </FlexVBox>
                 </FlexHBox>
             </FlexVBox>
@@ -174,12 +180,14 @@
                                 <Insets left="20" top="10"/>
                             </HBox.margin>
                         </AccentLabel>
-                        <ClearableTextField promptText="%base.userName" tipText="%base.userName" fx:id="digestUser" realHeight="30" flexWidth="50% - 115">
+                        <ClearableTextField tipText="%base.userName" fx:id="digestUser"
+                                            realHeight="30" flexWidth="50% - 115">
                             <HBox.margin>
                                 <Insets left="10" top="10"/>
                             </HBox.margin>
                         </ClearableTextField>
-                        <ClearableTextField promptText="密码(明文)" tipText="密码(明文)" fx:id="digestPassword" realHeight="30"
+                        <ClearableTextField tipText="%base.password" fx:id="digestPassword"
+                                            realHeight="30"
                                             flexWidth="50% - 115">
                             <HBox.margin>
                                 <Insets left="5" top="10"/>
@@ -199,7 +207,8 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="ipContent" realHeight="30" flexWidth="100% - 335" promptText="请输入ip地址" tipText="请输入ip地址">
+                    <ClearableTextField fx:id="ipContent" realHeight="30" flexWidth="100% - 335"
+                                        promptText="请输入ip地址" tipText="请输入ip地址">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

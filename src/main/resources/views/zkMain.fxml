@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyzk.fx.ZKMsgTextArea?>
 <?import cn.oyzh.easyzk.tabs.ZKTabPane?>
 <?import cn.oyzh.easyzk.trees.ZKTreeView?>
-<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.ClearButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
@@ -10,10 +12,9 @@
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.FlowPane?>
-<?import cn.oyzh.easyzk.fx.ZKMsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
 <FlexPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.ZKMainController" flexWidth="100%" flexHeight="100% - 30">
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
@@ -30,13 +31,13 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </SVGGlyph>
-                    <SVGGlyph fx:id="sortAsc" tipText="对选中节点进行排序" size="15"
+                    <SVGGlyph fx:id="sortAsc" tipText="%base.sortAsc" size="15"
                               onMousePrimaryClicked="#sortAsc" url="/font/sort-ascending.svg">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
                     </SVGGlyph>
-                    <SVGGlyph fx:id="sortDesc" tipText="对选中节点进行排序" size="15" visible="false" managed="false"
+                    <SVGGlyph fx:id="sortDesc" tipText="%base.sortDesc" size="15" visible="false" managed="false"
                               onMousePrimaryClicked="#sortDesc" url="/font/sort-descending.svg">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
@@ -66,7 +67,8 @@
                         </FlowPane.margin>
                     </FlexCheckBox>
                 </FlexFlowPane>
-                <fx:include visible="false" managed="false" fx:id="search" source="search.fxml" realHeight="90" flexWidth="100%-2"/>
+                <fx:include visible="false" managed="false" fx:id="search" source="search.fxml" realHeight="90"
+                            flexWidth="100%-2"/>
                 <ZKTreeView fx:id="tree" flexHeight="100% - 60" flexWidth="100%"/>
             </FlexVBox>
         </FXTab>
@@ -77,12 +79,11 @@
             <FlexVBox flexHeight="100%" flexWidth="100% - 8"
                       style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
                 <FlexHBox realHeight="30">
-                    <SVGGlyph tipText="清空消息" size="16" onMousePrimaryClicked="#clearMsg"
-                              url="/font/clear.svg">
+                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearMsg">
                         <HBox.margin>
                             <Insets left="10" top="9"/>
                         </HBox.margin>
-                    </SVGGlyph>
+                    </ClearSVGGlyph>
                 </FlexHBox>
                 <ZKMsgTextArea fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%"
                                maxLine="1000"/>

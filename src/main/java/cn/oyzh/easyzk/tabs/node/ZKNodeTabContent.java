@@ -301,7 +301,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.charset.select(this.treeItem.getCharset());
 
         // 加载耗时处理
-        FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
+        FXUtil.runWait(() -> this.loadTime.setText(this.i18nString("cost") + ":" + this.treeItem.loadTime() + "ms"));
     }
 
     /**

@@ -16,7 +16,7 @@
 <?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
 <?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
 <?import cn.oyzh.fx.plus.i18n.LocaleComboBox?>
-<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
+<?import cn.oyzh.fx.plus.tabs.TabStrategyComboBox?>
 <?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -86,20 +86,17 @@
                     <fx:define>
                         <FXToggleGroup fx:id="exitMode"/>
                     </fx:define>
-                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode3" realHeight="25" selected="true"
-                                   fx:id="exitMode0" userData="0">
+                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode3" realHeight="25" selected="true" fx:id="exitMode0" userData="0">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode1" realHeight="25" fx:id="exitMode1"
-                                   userData="1">
+                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode1" realHeight="25" fx:id="exitMode1" userData="1">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode2" realHeight="25" fx:id="exitMode2"
-                                   userData="2">
+                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode2" realHeight="25" fx:id="exitMode2" userData="2">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
@@ -143,11 +140,11 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <DynamicTabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" fx:id="tabStrategy">
+                    <TabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" fx:id="tabStrategy">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </DynamicTabStrategyComboBox>
+                    </TabStrategyComboBox>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>

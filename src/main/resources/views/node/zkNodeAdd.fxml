@@ -21,6 +21,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.String?>
+<?import cn.oyzh.easyzk.fx.ZKCreateModeComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="550">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -44,20 +45,11 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexComboBox initIndex="0" fx:id="createMode" realHeight="30.0" flexWidth="100% - 140">
+                    <ZKCreateModeComboBox initIndex="0" fx:id="createMode" realHeight="30.0" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                        <items>
-                            <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="持久节点(PERSISTENT)"/>
-                                <String fx:value="临时节点(EPHEMERAL)"/>
-                                <String fx:value="持久顺序节点(PERSISTENT_SEQUENTIAL)"/>
-                                <String fx:value="临时顺序节点(EPHEMERAL_SEQUENTIAL)"/>
-                                <String fx:value="容器节点(CONTAINER)"/>
-                            </FXCollections>
-                        </items>
-                    </FlexComboBox>
+                    </ZKCreateModeComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <AccentLabel text="%base.path" realHeight="30" realWidth="80">

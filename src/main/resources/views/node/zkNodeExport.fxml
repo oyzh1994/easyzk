@@ -19,6 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
+<?import cn.oyzh.easyzk.fx.ZKPrettyComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="680">
     <fx:define>
@@ -54,33 +55,26 @@
             </HBox.margin>
         </FlexComboBox>
         <FlexFlowPane fx:id="prettyPane">
-            <FXLabel text="%base.pretty" realWidth="30">
+            <FXLabel text="%base.pretty" maxWidth="100">
                 <FlowPane.margin>
                     <Insets left="10" top="20"/>
                 </FlowPane.margin>
             </FXLabel>
-            <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="pretty">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="开启"/>
-                        <String fx:value="关闭"/>
-                    </FXCollections>
-                </items>
+            <ZKPrettyComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="pretty">
                 <FlowPane.margin>
                     <Insets left="5" top="12"/>
                 </FlowPane.margin>
-            </FlexComboBox>
+            </ZKPrettyComboBox>
         </FlexFlowPane>
         <FlexFlowPane fx:id="prefixPane" visible="false">
-            <FXLabel text="%base.prefix" realWidth="30">
+            <FXLabel text="%base.prefix" maxWidth="100">
                 <FlowPane.margin>
                     <Insets left="10" top="20"/>
                 </FlowPane.margin>
             </FXLabel>
-            <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="prefix">
+            <FlexComboBox stateManager="$stateManager" prefWidth="100" fx:id="prefix">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="不设置"/>
                         <String fx:value="create"/>
                         <String fx:value="set"/>
                     </FXCollections>

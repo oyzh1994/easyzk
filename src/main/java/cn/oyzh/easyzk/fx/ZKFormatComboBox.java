@@ -2,6 +2,11 @@ package cn.oyzh.easyzk.fx;
 
 
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
+import cn.oyzh.fx.plus.node.NodeManager;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * zk格式下拉框
@@ -9,14 +14,10 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
  * @author oyzh
  * @since 2023/9/18
  */
-public class ZKFormatComboBox extends FlexComboBox<String> {
+public class ZKFormatComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
 
     {
-        this.getItems().add("字符串");
-        this.getItems().add("JSON串");
-        this.getItems().add("二进制");
-        this.getItems().add("十六进制");
-        this.getItems().add("原始内容");
+        NodeManager.init(this);
     }
 
     /**
@@ -106,5 +107,30 @@ public class ZKFormatComboBox extends FlexComboBox<String> {
      */
     public void selectJson() {
         this.select(1);
+    }
+
+    @Override
+    public List<String> values(Locale locale) {
+        this.clearItems();
+        if (locale == Locale.TRADITIONAL_CHINESE) {
+            this.addItem("字符串");
+            this.addItem("JSON串");
+            this.addItem("二進制");
+            this.addItem("十六進制");
+            this.addItem("原始内容");
+        } else if (locale == Locale.SIMPLIFIED_CHINESE) {
+            this.addItem("字符串");
+            this.addItem("JSON串");
+            this.addItem("二进制");
+            this.addItem("十六进制");
+            this.addItem("原始内容");
+        } else {
+            this.addItem("STRING");
+            this.addItem("JSON");
+            this.addItem("BINARY");
+            this.addItem("HEX");
+            this.addItem("RAW");
+        }
+        return this.getItems();
     }
 }

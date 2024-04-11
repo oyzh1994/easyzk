@@ -23,7 +23,7 @@
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox realHeight="50" flexWidth="100%">
-        <AccentLabel text="%node.import.label.file" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.file" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

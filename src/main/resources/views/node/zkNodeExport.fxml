@@ -46,8 +46,8 @@
                       fx:id="format">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="json格式(推荐)"/>
-                    <String fx:value="txt格式"/>
+                    <String fx:value="json"/>
+                    <String fx:value="text"/>
                 </FXCollections>
             </items>
             <HBox.margin>
@@ -55,12 +55,12 @@
             </HBox.margin>
         </FlexComboBox>
         <FlexFlowPane fx:id="prettyPane">
-            <FXLabel text="美化:" realWidth="30">
+            <FXLabel text="%base.pretty" realWidth="30">
                 <FlowPane.margin>
                     <Insets left="10" top="20"/>
                 </FlowPane.margin>
             </FXLabel>
-            <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" tipText="美化json" fx:id="pretty">
+            <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="pretty">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="开启"/>
@@ -73,12 +73,12 @@
             </FlexComboBox>
         </FlexFlowPane>
         <FlexFlowPane fx:id="prefixPane" visible="false">
-            <FXLabel text="前缀:" realWidth="30">
+            <FXLabel text="%base.prefix" realWidth="30">
                 <FlowPane.margin>
                     <Insets left="10" top="20"/>
                 </FlowPane.margin>
             </FXLabel>
-            <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" tipText="设置前缀" fx:id="prefix">
+            <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="prefix">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="不设置"/>
@@ -98,14 +98,12 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="按字典排序"
-                      tipText="节点路径按字典排序">
+        <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="%base.sortDict">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="适用过滤配置"
-                      tipText="适用过滤配置列表的数据">
+        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%base.applyFilter">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>

@@ -74,12 +74,12 @@
                 <Insets left="10" top="3"/>
             </HBox.margin>
         </FXCheckBox>
-        <FXCheckBox text="%main.zk.checkbox.searchPath" selected="true" fx:id="searchPath">
+        <FXCheckBox text="%base.path" selected="true" fx:id="searchPath">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>
         </FXCheckBox>
-        <FXCheckBox text="%main.zk.checkbox.searchData" selected="true" fx:id="searchData">
+        <FXCheckBox text="%base.data" selected="true" fx:id="searchData">
             <HBox.margin>
                 <Insets left="5" top="3"/>
             </HBox.margin>

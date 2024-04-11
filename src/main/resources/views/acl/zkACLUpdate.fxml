@@ -45,23 +45,23 @@
             <padding>
                 <Insets left="10" top="20"/>
             </padding>
-            <FlexCheckBox text="特权" realWidth="60"/>
-            <FlexCheckBox text="写入" realWidth="60">
+            <FlexCheckBox text="%zk.acl.a" realWidth="60"/>
+            <FlexCheckBox text="%zk.acl.w" realWidth="60">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>
             </FlexCheckBox>
-            <FlexCheckBox text="读取" realWidth="60">
+            <FlexCheckBox text="%zk.acl.r" realWidth="60">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>
             </FlexCheckBox>
-            <FlexCheckBox text="删除子节点" realWidth="90">
+            <FlexCheckBox text="%zk.acl.d" realWidth="90">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>
             </FlexCheckBox>
-            <FlexCheckBox text="创建子节点" realWidth="90">
+            <FlexCheckBox text="%zk.acl.c" realWidth="90">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>

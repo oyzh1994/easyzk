@@ -3,7 +3,7 @@
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.button.ResetButton?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.button.SaveButton?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
@@ -27,7 +27,7 @@
         <FXTab text="%setting.tab.zk">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.zkLoad" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.load" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -35,24 +35,20 @@
                     <fx:define>
                         <FXToggleGroup fx:id="loadMode"/>
                     </fx:define>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="加载根节点及根节点的子节点"
-                                   text="%setting.load.loadFirst"
-                                   realHeight="25" selected="true"
-                                   fx:id="loadMode0" userData="0">
+                    <FXRadioButton toggleGroup="$loadMode" text="%setting.loadFirst"
+                                   realHeight="25" selected="true" fx:id="loadMode0" userData="0">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="加载所有节点，耗时较长" text="%setting.load.loadAll"
-                                   realHeight="25" fx:id="loadMode1"
-                                   userData="1">
+                    <FXRadioButton toggleGroup="$loadMode" text="%setting.loadAll"
+                                   realHeight="25" fx:id="loadMode1" userData="1">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$loadMode" tipText="只加载根节点数据" text="%setting.load.loadRoot"
-                                   realHeight="25" fx:id="loadMode2"
-                                   userData="2">
+                    <FXRadioButton toggleGroup="$loadMode" text="%setting.loadRoot"
+                                   realHeight="25" fx:id="loadMode2" userData="2">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
@@ -62,7 +58,7 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%setting.label.zkAuth" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.auth" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -354,11 +350,11 @@
         </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#saveSetting" text="%setting.btn.submit">
+        <SaveButton onAction="#saveSetting">
             <HBox.margin>
                 <Insets left="95" top="10"/>
             </HBox.margin>
-        </SubmitButton>
+        </SaveButton>
         <CancelButton>
             <HBox.margin>
                 <Insets left="15" top="10"/>

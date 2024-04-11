@@ -64,23 +64,23 @@
             <padding>
                 <Insets left="10" top="20"/>
             </padding>
-            <FlexCheckBox text="特权" selected="true" realWidth="60"/>
-            <FlexCheckBox text="写入" selected="true" realWidth="60">
+            <FlexCheckBox text="%zk.acl.a" selected="true" realWidth="60"/>
+            <FlexCheckBox text="%zk.acl.w" selected="true" realWidth="60">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>
             </FlexCheckBox>
-            <FlexCheckBox text="读取" selected="true" realWidth="60">
+            <FlexCheckBox text="%zk.acl.r" selected="true" realWidth="60">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>
             </FlexCheckBox>
-            <FlexCheckBox text="删除子节点" selected="true" realWidth="90">
+            <FlexCheckBox text="%zk.acl.d" selected="true" realWidth="90">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>
             </FlexCheckBox>
-            <FlexCheckBox text="创建子节点" selected="true" realWidth="90">
+            <FlexCheckBox text="%zk.acl.c" selected="true" realWidth="90">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>
@@ -173,7 +173,6 @@
             </HBox.margin>
         </AccentLabel>
         <FlexTextArea
-                promptText="请输入内容，格式ip/网段:权限，多个ip/网段以英文分号分隔，例如192.168.2.19:crdwa;192.169.3.0/16:crdwa"
                 tipText="请输入内容，格式ip/网段:权限，多个ip/网段以英文分号分隔，例如192.168.2.19:crdwa;192.169.3.0/16:crdwa"
                 fx:id="ipContent2" realHeight="240" flexWidth="100% - 140">
             <HBox.margin>

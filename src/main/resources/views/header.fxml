@@ -18,7 +18,7 @@
             <Insets left="8" top="5" bottom="5"/>
         </FlowPane.margin>
     </SearchSVGLabel>
-    <SVGLabel text="%main.head.label.auth" onMousePrimaryClicked="#auth" url="/font/audit.svg"
+    <SVGLabel text="%base.auth" onMousePrimaryClicked="#auth" url="/font/audit.svg"
               size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>

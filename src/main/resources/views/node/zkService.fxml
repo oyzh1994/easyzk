@@ -28,7 +28,7 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%node.service.label.sdkVer" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.sdkVer" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -40,7 +40,7 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="80">
-        <AccentLabel text="%node.service.label.connectAddr" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.connectAddr" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

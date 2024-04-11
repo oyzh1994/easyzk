@@ -27,9 +27,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="name" promptText="请输入名称" tipText="请输入名称" maxLen="20"
-                                        require="true"
-                                        realHeight="30" flexWidth="100% - 140">
+                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="20" require="true" realHeight="30" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -42,7 +40,7 @@
                         </HBox.margin>
                     </AccentLabel>
                     <ClearableTextField fx:id="hostIp"
-                                        tipText="连接地址，例如192.168.2.100"
+                                        tipText="%base.hostTip"
                                         require="true"
                                         realHeight="30"
                                         flexWidth="100% - 140" maxLen="1024">
@@ -72,7 +70,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexCheckBox text="只读模式" tipText="开启只读模式，防止误操作数据" fx:id="readonly">
+                    <FlexCheckBox text="%base.readonly" tipText="开启只读模式，防止误操作数据" fx:id="readonly">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
@@ -101,7 +99,6 @@
                         </HBox.margin>
                     </AccentLabel>
                     <NumberTextField realHeight="30" flexWidth="100% - 140" min="3" max="30" fx:id="connectTimeOut"
-                                     promptText="超时时间(3-30)，单位秒，默认5秒"
                                      tipText="超时时间(3-30)，单位秒，默认5秒"
                                      value="5"
                                      require="true">
@@ -122,7 +119,6 @@
                         </HBox.margin>
                     </AccentLabel>
                     <NumberTextField realHeight="30" flexWidth="100% - 140" min="5" max="120" fx:id="sessionTimeOut"
-                                     promptText="超时时间(5-120)，单位分钟，默认30分钟"
                                      tipText="超时时间(5-120)，单位分钟，默认30分钟"
                                      value="30"
                                      require="true" step="5">
@@ -160,7 +156,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <SwitchToggleSwitch fx:id="sshForward" tipText="开启ssh通道">
+                    <SwitchToggleSwitch fx:id="sshForward">
                         <HBox.margin>
                             <Insets left="10" top="15"/>
                         </HBox.margin>
@@ -172,19 +168,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="sshHost"
-                                        tipText="主机地址，例如192.168.2.100"
-                                        require="true"
-                                        realHeight="30"
-                                        flexWidth="100% - 245" maxLen="1024">
+                    <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 245" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <PortTextField realWidth="100" fx:id="sshPort"
-                                   tipText="ssh连接端口"
-                                   realHeight="30"
-                                   value="22">
+                    <PortTextField realWidth="100" fx:id="sshPort" realHeight="30" value="22">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
@@ -197,7 +186,7 @@
                         </HBox.margin>
                     </AccentLabel>
                     <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout"
-                                     tipText="ssh连接超时，单位毫秒"
+                                     tipText="%info.sshTimeoutTip"
                                      realHeight="30"
                                      value="3000">
                         <HBox.margin>
@@ -211,16 +200,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="sshUser" tipText="主机的ssh用户名"
-                                        require="true"
-                                        realHeight="30" flexWidth="50% - 73" text="root">
+                    <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30" flexWidth="50% - 73" text="root">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <ClearableTextField fx:id="sshPassword" tipText="主机的ssh密码"
-                                        require="true"
-                                        realHeight="30" flexWidth="50% - 72">
+                    <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30" flexWidth="50% - 72">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>

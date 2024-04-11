@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.HBox?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyzk.controller.tool.ZKToolController" realWidth="850" realHeight="600">
-    <FXTab text="%tool.tab.digest">
+    <FXTab text="%base.digest">
         <FlexVBox flexHeight="100%" flexWidth="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%zk.userInfo" realHeight="30" realWidth="80">
+                <AccentLabel text="%base.userInfo" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -49,7 +49,7 @@
                 </CopyButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#genDigest" text="%tool.btn.submit">
+                <SubmitButton onAction="#genDigest" text="%base.generate">
                     <HBox.margin>
                         <Insets left="110" top="10"/>
                     </HBox.margin>

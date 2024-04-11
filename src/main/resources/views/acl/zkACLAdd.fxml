@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.svg.*?>
-<?import cn.oyzh.fx.plus.controls.text.*?>
-<?import cn.oyzh.fx.plus.controls.area.*?>
-<?import cn.oyzh.fx.plus.controls.combo.*?>
-<?import cn.oyzh.fx.plus.controls.button.*?>
-<?import cn.oyzh.fx.plus.controls.textfield.*?>
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.CopyButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.button.SuccessButton?>
+<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
-<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLAddController" realWidth="600" realHeight="420">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.path" realWidth="80" realHeight="30" >
+        <AccentLabel text="%base.path" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -87,17 +94,20 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <ClearableTextField promptText="%base.userName" tipText="%base.userName" fx:id="digestInfo1User" realHeight="30" flexWidth="50% - 115" >
+            <ClearableTextField tipText="%base.userNameTip" fx:id="digestInfo1User"
+                                realHeight="30" flexWidth="50% - 115">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <ClearableTextField promptText="密码(明文)" tipText="密码(明文)" fx:id="digestInfo1Password" realHeight="30" flexWidth="50% - 115" >
+            <ClearableTextField tipText="%base.passwordTip" fx:id="digestInfo1Password" realHeight="30"
+                                flexWidth="50% - 115">
                 <HBox.margin>
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <FlexCheckBox text="%base.save" realWidth="80" fx:id="digestSaveInfo" tipText="保存认证信息" selected="true">
+            <FlexCheckBox text="%base.save" realWidth="80" fx:id="digestSaveInfo" tipText="保存认证信息"
+                          selected="true">
                 <HBox.margin>
                     <Insets left="10" top="15"/>
                 </HBox.margin>
@@ -108,7 +118,7 @@
                 <Insets left="95"/>
             </VBox.margin>
             <FXLabel fx:id="digestText"/>
-            <CopyButton fx:id="copyDigestText" tipText="复制摘要信息"  visible="false" onMousePrimaryClicked="#copyDigestText">
+            <CopyButton fx:id="copyDigestText" visible="false" onMousePrimaryClicked="#copyDigestText">
                 <HBox.margin>
                     <Insets left="15"/>
                 </HBox.margin>
@@ -121,7 +131,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ClearableTextField promptText="格式user:digest" tipText="格式user:digest" fx:id="digestInfo2" realHeight="30" flexWidth="100% - 140" >
+        <ClearableTextField tipText="格式user:digest" fx:id="digestInfo2" realHeight="30" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -145,7 +155,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ClearableTextField fx:id="ipContent1" realHeight="30" flexWidth="100% - 335" promptText="请输入ip地址" tipText="请输入ip地址" >
+        <ClearableTextField fx:id="ipContent1" realHeight="30" flexWidth="100% - 335" tipText="%base.ipAddrTip">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -165,7 +175,7 @@
         <FlexTextArea
                 promptText="请输入内容，格式ip/网段:权限，多个ip/网段以英文分号分隔，例如192.168.2.19:crdwa;192.169.3.0/16:crdwa"
                 tipText="请输入内容，格式ip/网段:权限，多个ip/网段以英文分号分隔，例如192.168.2.19:crdwa;192.169.3.0/16:crdwa"
-                      fx:id="ipContent2" realHeight="240" flexWidth="100% - 140">
+                fx:id="ipContent2" realHeight="240" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>

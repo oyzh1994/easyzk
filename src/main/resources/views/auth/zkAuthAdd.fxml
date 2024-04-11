@@ -17,8 +17,7 @@
             </HBox.margin>
         </AccentLabel>
         <ClearableTextField fx:id="user" realHeight="30" flexWidth="100% - 140" require="true"
-                            promptText="%base.userName"
-                            tipText="%base.userName">
+                            tipText="%base.userNameTip">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -31,14 +30,14 @@
             </HBox.margin>
         </AccentLabel>
         <ClearableTextField fx:id="password" realHeight="30" flexWidth="100% - 140" require="true"
-                            promptText="认证密码(明文)" tipText="认证密码(明文)">
+                            tipText="%base.passwordTip">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#addAuth" >
+        <SubmitButton onAction="#addAuth">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>

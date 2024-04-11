@@ -180,14 +180,13 @@
                                 <Insets left="20" top="10"/>
                             </HBox.margin>
                         </AccentLabel>
-                        <ClearableTextField tipText="%base.userName" fx:id="digestUser"
-                                            realHeight="30" flexWidth="50% - 115">
+                        <ClearableTextField tipText="%base.userName" fx:id="digestUser" realHeight="30"
+                                            flexWidth="50% - 115">
                             <HBox.margin>
                                 <Insets left="10" top="10"/>
                             </HBox.margin>
                         </ClearableTextField>
-                        <ClearableTextField tipText="%base.password" fx:id="digestPassword"
-                                            realHeight="30"
+                        <ClearableTextField tipText="%base.password" fx:id="digestPassword" realHeight="30"
                                             flexWidth="50% - 115">
                             <HBox.margin>
                                 <Insets left="5" top="10"/>
@@ -207,8 +206,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="ipContent" realHeight="30" flexWidth="100% - 335"
-                                        promptText="请输入ip地址" tipText="请输入ip地址">
+                    <ClearableTextField fx:id="ipContent" realHeight="30" flexWidth="100% - 335" tipText="请输入ip地址">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

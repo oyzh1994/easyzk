@@ -185,15 +185,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225"
-                                        tipText="选择字体名称(编辑器或部分组件除外)"
-                                        fx:id="fontFamily">
+                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontFamilyComboBox>
-                    <ResetButton realWidth="80" realHeight="25" tipText="重置为默认字体名称"
-                                 onAction="#resetFontFamily">
+                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontFamily">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -208,15 +205,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FontSizeComboBox realHeight="30" flexWidth="100% - 225"
-                                      tipText="选择字体大小(编辑器或部分组件除外)"
-                                      fx:id="fontSize">
+                    <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontSize">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontSizeComboBox>
-                    <ResetButton realWidth="80" realHeight="25" tipText="重置为默认字体大小"
-                                 onAction="#resetFontSize">
+                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontSize">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -231,15 +225,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FontWeightComboBox realHeight="30" flexWidth="100% - 225"
-                                        tipText="选择字体粗细(编辑器或部分组件除外)"
-                                        fx:id="fontWeight">
+                    <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontWeight">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontWeightComboBox>
-                    <ResetButton realWidth="80" realHeight="25" tipText="重置为默认字体粗细"
-                                 onAction="#resetFontWeight">
+                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontWeight">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -258,7 +249,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="选择一种主题"
+                    <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="%base.themeTip"
                                    fx:id="theme">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -274,7 +265,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="选择前景色"
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.fgColorTip"
                                      fx:id="fgColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -296,7 +287,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="选择背景色"
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.bgColorTip"
                                      fx:id="bgColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -318,7 +309,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="选择强调色"
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.accentColorTip"
                                      fx:id="accentColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -344,8 +335,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <LocaleComboBox realHeight="30" flexWidth="100% - 225" initIndex="0" tipText="选择一种语言或者区域"
-                                    fx:id="locale">
+                    <LocaleComboBox realHeight="30" flexWidth="100% - 225" initIndex="0" fx:id="locale">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

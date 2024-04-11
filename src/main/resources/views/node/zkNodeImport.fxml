@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.AccentButton?>
 <?import cn.oyzh.fx.plus.controls.button.CloseButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.ImportButton?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <?import cn.oyzh.fx.plus.controls.button.SuccessButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
@@ -82,19 +82,12 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
-        <AccentButton tipText="开始执行导入" onAction="#doImport"
-                      text="%base.import" fx:id="importBtn" disable="true"
-                      iconUrl="/font/Import.svg"
-                      iconSizePercent="0.75">
+        <ImportButton onAction="#doImport" fx:id="importBtn" disable="true" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>
-        </AccentButton>
-        <StopButton disable="true" fx:id="stopImportBtn" onAction="#stopImport"
-                    realHeight="30" iconSizePercent="0.9">
-            <graphic>
-                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
-            </graphic>
+        </ImportButton>
+        <StopButton disable="true" fx:id="stopImportBtn" onAction="#stopImport" realHeight="30" iconSizePercent="0.9">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>

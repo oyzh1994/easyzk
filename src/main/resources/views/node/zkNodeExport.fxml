@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.AccentButton?>
 <?import cn.oyzh.fx.plus.controls.button.CloseButton?>
+<?import cn.oyzh.fx.plus.controls.button.ExportButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
@@ -127,20 +126,14 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentButton stateManager="$stateManager" tipText="开始执行导出" onAction="#doExport"
-                      realHeight="30"
-                      text="%base.export"
-                      iconUrl="/font/export.svg"
-                      iconSizePercent="0.75">
+        <ExportButton stateManager="$stateManager" onAction="#doExport"
+                      realHeight="30" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>
-        </AccentButton>
+        </ExportButton>
         <StopButton disable="true" fx:id="stopExportBtn" onAction="#stopExport"
                     realHeight="30" iconSizePercent="0.9">
-            <graphic>
-                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
-            </graphic>
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>

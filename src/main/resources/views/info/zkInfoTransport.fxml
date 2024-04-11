@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.fx.ConnectComboBox?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.AccentButton?>
 <?import cn.oyzh.fx.plus.controls.button.CloseButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
+<?import cn.oyzh.fx.plus.controls.button.TransportButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
@@ -96,17 +96,12 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentButton stateManager="$stateManager" tipText="开始执行传输" fx:id="transportBtn"
-                      onAction="#doTransport" realHeight="30"
-                      iconUrl="/font/export.svg"
-                      text="%base.transport"
-                      iconSizePercent="0.75">
+        <TransportButton stateManager="$stateManager" fx:id="transportBtn" onAction="#doTransport" realHeight="30" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>
-        </AccentButton>
-        <StopButton disable="true" fx:id="stopTransportBtn" onAction="#stopTransport"
-                    realHeight="30" iconSizePercent="0.9">
+        </TransportButton>
+        <StopButton disable="true" fx:id="stopTransportBtn" onAction="#stopTransport" realHeight="30" iconSizePercent="0.9">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>

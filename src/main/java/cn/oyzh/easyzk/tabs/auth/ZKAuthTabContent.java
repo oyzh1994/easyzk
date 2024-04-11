@@ -13,6 +13,7 @@ import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -124,7 +125,6 @@ public class ZKAuthTabContent extends DynamicTabController {
                 if (this.hBox == null) {
                     // 删除按钮
                     DeleteSVGGlyph del = new DeleteSVGGlyph("14");
-                    del.setTipText("删除");
                     del.setOnMousePrimaryClicked((event) -> delInfo(this.getTableItem()));
                     this.hBox = new HBox(del);
                     HBox.setMargin(del, new Insets(7, 0, 0, 5));
@@ -139,15 +139,12 @@ public class ZKAuthTabContent extends DynamicTabController {
             public FXToggleSwitch initGraphic() {
                 ZKAuthVO authVO = this.getTableItem();
                 if (authVO != null) {
-                    FXToggleSwitch toggleSwitch = new FXToggleSwitch();
+                    EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
                     toggleSwitch.setFontSize(11);
-                    toggleSwitch.setSelectedText("已启用");
-                    toggleSwitch.setUnselectedText("已禁用");
                     toggleSwitch.setSelected(authVO.getEnable());
                     toggleSwitch.selectedChanged((abs, o, n) -> {
                         authVO.setEnable(n);
                         if (authStore.update(authVO)) {
-                            // ZKAuthUtil.fireAuthEnableEvent(authVO);
                             ZKEventUtil.authEnabled(authVO);
                         } else {
                             MessageBox.warn("修改状态失败！");

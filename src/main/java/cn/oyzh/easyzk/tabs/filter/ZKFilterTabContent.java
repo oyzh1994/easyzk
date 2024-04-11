@@ -13,7 +13,9 @@ import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
@@ -123,9 +125,7 @@ public class ZKFilterTabContent extends DynamicTabController {
             public Node initGraphic() {
                 if (this.hBox == null) {
                     // 删除按钮
-                    DeleteSVGGlyph del = new DeleteSVGGlyph();
-                    del.setSize(14);
-                    del.setTipText("删除");
+                    DeleteSVGGlyph del = new DeleteSVGGlyph("14");
                     del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
                     this.hBox = new HBox(del);
                     HBox.setMargin(del, new Insets(7, 0, 0, 5));
@@ -140,10 +140,8 @@ public class ZKFilterTabContent extends DynamicTabController {
             public FXToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();
                 if (filterVO != null) {
-                    FXToggleSwitch toggleSwitch = new FXToggleSwitch();
+                    EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
                     toggleSwitch.setFontSize(11);
-                    toggleSwitch.setSelectedText("已启用");
-                    toggleSwitch.setUnselectedText("已禁用");
                     toggleSwitch.setSelected(filterVO.isEnable());
                     toggleSwitch.selectedChanged((abs, o, n) -> {
                         filterVO.setEnable(n);
@@ -165,10 +163,8 @@ public class ZKFilterTabContent extends DynamicTabController {
             public FXToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();
                 if (filterVO != null) {
-                    FXToggleSwitch toggleSwitch = new FXToggleSwitch();
+                    MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
                     toggleSwitch.fontSize(11);
-                    toggleSwitch.setSelectedText("模糊匹配");
-                    toggleSwitch.setUnselectedText("完全匹配");
                     toggleSwitch.setSelected(filterVO.isPartMatch());
                     toggleSwitch.selectedChanged((obs, o, n) -> {
                         filterVO.setPartMatch(n);

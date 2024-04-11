@@ -22,7 +22,7 @@
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.name">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.name">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -34,7 +34,7 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.host">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.host">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -46,7 +46,7 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.port" >
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.port" >
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -58,7 +58,7 @@
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.options" >
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.options" >
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -84,7 +84,7 @@
         <FXTab text="%base.extra">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.connectTimeout">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.connectTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -101,7 +101,7 @@
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.sessionTimeout">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.sessionTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -118,7 +118,7 @@
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="100">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.remark">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.remark">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -134,7 +134,7 @@
         <FXTab text="%base.ssh">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.enableSSHChannel">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.enableSSHChannel">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -146,7 +146,7 @@
                     </SwitchToggleSwitch>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshHostBox" disable="true">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.host">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.host">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -163,7 +163,7 @@
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshTimeoutBox" disable="true">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.connectTimeout">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.connectTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -175,7 +175,7 @@
                     </NumberTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshAuthBox" disable="true">
-                    <AccentLabel realHeight="30" realWidth="80" text="%base.sshInfo">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.sshInfo">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -197,7 +197,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <TestButton onAction="#testConnect" iconSizePercent="0.8">
             <HBox.margin>
-                <Insets left="110" top="10"/>
+                <Insets left="130" top="10"/>
             </HBox.margin>
         </TestButton>
         <SubmitButton onAction="#update">

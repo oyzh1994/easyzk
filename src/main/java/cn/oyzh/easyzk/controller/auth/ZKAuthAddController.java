@@ -21,7 +21,6 @@ import javafx.stage.WindowEvent;
  * @since 2022/12/22
  */
 @StageAttribute(
-        title = "zk认证信息新增",
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuthAdd.fxml"

@@ -20,12 +20,15 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.controls.svg.AddSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.CloseSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.ExportSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.RenameSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.StopSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.UnLockSVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -558,13 +561,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             MenuItem cancel = MenuItemExt.newItem("取消操作", new CloseSVGGlyph("11"), "取消操作", this::cancel);
             items.add(cancel);
         } else {
-            MenuItem auth = MenuItemExt.newItem("认证节点", new SVGGlyph("/font/unlock.svg", "12"), "对zk节点进行认证", this::authNode);
+            MenuItem auth = MenuItemExt.newItem("认证节点", new UnLockSVGGlyph("12"), "对zk节点进行认证", this::authNode);
             if (!this.ephemeral()) {
-                MenuItem add = MenuItemExt.newItem("添加节点", new SVGGlyph("/font/add.svg", "12"), "添加zk子节点", this::addNode);
+                MenuItem add = MenuItemExt.newItem("添加节点", new AddSVGGlyph("12"), "添加zk子节点", this::addNode);
                 items.add(add);
             }
             if (!this.value.rootNode() && this.value.subNode() && !this.ephemeral()) {
-                MenuItem rename = MenuItemExt.newItem("节点更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改节点名称(快捷键f2)", this::rename);
+                MenuItem rename = MenuItemExt.newItem("节点更名", new RenameSVGGlyph("12"), "更改节点名称(快捷键f2)", this::rename);
                 items.add(rename);
             }
             if (!this.value.rootNode()) {

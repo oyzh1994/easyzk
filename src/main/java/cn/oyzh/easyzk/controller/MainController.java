@@ -9,8 +9,8 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
+import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.QuitSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SettingSVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -88,7 +88,7 @@ public class MainController extends ParentController {
                 // 设置标题
                 TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
                 // 打开主页
-                TrayManager.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), this::showMain);
+                TrayManager.addMenuItem("打开", new DeleteSVGGlyph("12"), this::showMain);
                 // 打开设置
                 TrayManager.addMenuItem("设置", new SettingSVGGlyph("12"), this::showSetting);
                 // 退出程序

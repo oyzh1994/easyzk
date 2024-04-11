@@ -105,7 +105,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         ZKNode value = this.item.value();
         // 需要认证
         if (ZKAuthUtil.isNeedAuth(value, this.item.client())) {
-            return "/font/lock.svg";
+            return "/fx-plus/font/lock.svg";
         }
         // 临时节点
         if (value.ephemeral()) {

@@ -8,10 +8,11 @@
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.ConnectionSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.MessageSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PositioningSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SortAscSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SortDescSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
@@ -23,12 +24,12 @@
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
         <FXTab text="%base.connection">
             <graphic>
-                <SVGGlyph initCursor="DEFAULT" url="/font/connections.svg" size="12"/>
+                <ConnectionSVGGlyph initCursor="DEFAULT" size="12"/>
             </graphic>
             <FlexVBox flexHeight="100%" flexWidth="100% - 8"
                       style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
                 <FlexHBox realHeight="30" flexWidth="100%">
-                    <TerminalSVGGlyph size="15" onMousePrimaryClicked="#openTerminal" url="/fx-plus/font/code library.svg">
+                    <TerminalSVGGlyph size="15" onMousePrimaryClicked="#openTerminal">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -74,7 +75,7 @@
         </FXTab>
         <FXTab text="%base.msg">
             <graphic>
-                <SVGGlyph initCursor="DEFAULT" url="/font/message.svg" size="13"/>
+                <MessageSVGGlyph initCursor="DEFAULT" size="13"/>
             </graphic>
             <FlexVBox flexHeight="100%" flexWidth="100% - 8"
                       style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">

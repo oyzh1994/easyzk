@@ -3,40 +3,42 @@
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.AnalyseSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.NextSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PrevSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.ReplaceSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.search.SearchTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.svg.NextSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.PrevSVGGlyph?>
 <FlexVBox styleClass="root" fx:id="searchMain" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.controller.SearchController">
     <FlexHBox realHeight="30" flexWidth="100%">
-        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30" promptText="%base.searchTip4" tipText="%base.searchTip3" onKeyPressed="#onSearchKeyPressed">
+        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30"
+                         promptText="%base.searchTip4" tipText="%base.searchTip3" onKeyPressed="#onSearchKeyPressed">
             <HBox.margin>
                 <Insets left="10" top="3"/>
             </HBox.margin>
         </SearchTextField>
         <NextSVGGlyph fx:id="searchNext" disable="true" tipText="%base.searchTip1"
-                  onMousePrimaryClicked="#searchNext" size="12">
+                      onMousePrimaryClicked="#searchNext" size="12">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </NextSVGGlyph>
         <PrevSVGGlyph fx:id="searchPrev" disable="true" tipText="%base.searchTip2"
-                  onMousePrimaryClicked="#searchPrev" size="12">
+                      onMousePrimaryClicked="#searchPrev" size="12">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </PrevSVGGlyph>
-        <SVGGlyph fx:id="searchAnalyse" disable="true" url="/font/NLP_text.svg" tipText="%base.searchAnalyse"
-                  onMousePrimaryClicked="#searchAnalyse" size="12">
+        <AnalyseSVGGlyph fx:id="searchAnalyse" disable="true" tipText="%base.searchAnalyse"
+                         onMousePrimaryClicked="#searchAnalyse" size="12">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>
-        </SVGGlyph>
+        </AnalyseSVGGlyph>
         <FlexText fx:id="searchResult" fontSize="11">
             <HBox.margin>
                 <Insets left="5" top="9"/>
@@ -44,16 +46,18 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox realHeight="30" flexWidth="100%">
-        <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="30" promptText="%base.replaceTip1" tipText="%base.replaceTip2" onKeyPressed="#onReplaceKeyPressed">
+        <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="30"
+                         promptText="%base.replaceTip1" tipText="%base.replaceTip2" onKeyPressed="#onReplaceKeyPressed">
             <HBox.margin>
                 <Insets left="10" top="3"/>
             </HBox.margin>
         </SearchTextField>
-        <SVGGlyph fx:id="replace" disable="true" url="/font/financial_replace.svg" tipText="%base.replaceTip3" size="12" onMousePrimaryClicked="#replace">
+        <ReplaceSVGGlyph fx:id="replace" disable="true" tipText="%base.replaceTip3" size="12"
+                         onMousePrimaryClicked="#replace">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>
-        </SVGGlyph>
+        </ReplaceSVGGlyph>
         <FlexText fx:id="replaceTips" fill="tomato" fontSize="11">
             <HBox.margin>
                 <Insets left="5" top="9"/>

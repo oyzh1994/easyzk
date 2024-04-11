@@ -9,20 +9,20 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.svg.AddFillSVGGlyph?>
 <FlexVBox styleClass="root" flexWidth="100%" flexHeight="100%"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.oyzh.easyzk.tabs.auth.ZKAuthTabContent">
     <FlexHBox realHeight="50" flexWidth="100%">
-        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280"
-                            tipText="%base.searchKWTip">
+        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" tipText="%base.searchKWTip">
             <HBox.margin>
                 <Insets left="5" top="-4"/>
             </HBox.margin>
         </ClearableTextField>
-        <SVGGlyph size="14" onMousePrimaryClicked="#toAdd" tipText="%base.add" url="/font/add-fill.svg">
+        <AddFillSVGGlyph size="14" onMousePrimaryClicked="#toAdd">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
-        </SVGGlyph>
+        </AddFillSVGGlyph>
         <PageBox onNextClicked="#nextPage" onPrevClicked="#prevPage" fx:id="pagePane" realHeight="22" realWidth="300">
             <HBox.margin>
                 <Insets left="5" top="-3"/>

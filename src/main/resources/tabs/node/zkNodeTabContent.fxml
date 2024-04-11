@@ -12,10 +12,13 @@
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <?import cn.oyzh.fx.plus.controls.rich.FlexVirtualizedScrollPane?>
+<?import cn.oyzh.fx.plus.controls.svg.AddSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CopySVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.EditSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.LockSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
@@ -23,6 +26,7 @@
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.UnLockSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
@@ -34,7 +38,6 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph?>
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -80,11 +83,11 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="%base.auth" size="15" onMousePrimaryClicked="#authNode" url="/font/unlock.svg">
+                <UnLockSVGGlyph tipText="%base.auth" size="15" onMousePrimaryClicked="#authNode">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
+                </UnLockSVGGlyph>
                 <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
@@ -132,7 +135,8 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </CopySVGGlyph>
-                <SVGGlyph tipText="%node.main.copy2" size="16" onMousePrimaryClicked="#copyNodePath" url="/font/copy-path.svg">
+                <SVGGlyph tipText="%node.main.copy2" size="16" onMousePrimaryClicked="#copyNodePath"
+                          url="/font/copy-path.svg">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
@@ -207,7 +211,7 @@
     </FXTab>
     <FXTab text="%zk.acl">
         <graphic>
-            <SVGGlyph initCursor="DEFAULT" url="/font/lock.svg" size="13"/>
+            <LockSVGGlyph initCursor="DEFAULT" size="13"/>
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
@@ -218,12 +222,11 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXToggleSwitch>
-                <SVGGlyph tipText="%base.add" size="16" onMousePrimaryClicked="#toAddACL"
-                          url="/font/add.svg">
+                <AddSVGGlyph size="16" onMousePrimaryClicked="#toAddACL">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
+                </AddSVGGlyph>
                 <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadACL">
                     <FlowPane.margin>
                         <Insets left="5"/>

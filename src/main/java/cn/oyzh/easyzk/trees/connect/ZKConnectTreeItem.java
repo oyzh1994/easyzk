@@ -24,7 +24,15 @@ import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.controls.svg.CloseSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.EditSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.ExportSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.ImportSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.QuitSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.TransportSVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -104,16 +112,16 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.isConnecting()) {
-            MenuItem cancelConnect = MenuItemExt.newItem("取消连接", new SVGGlyph("/font/close.svg", "11"), "取消zk连接", this::cancelConnect);
+            MenuItem cancelConnect = MenuItemExt.newItem("取消连接", new CloseSVGGlyph("11"), "取消zk连接", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
-            MenuItemExt closeConnect = MenuItemExt.newItem("关闭连接", new SVGGlyph("/font/poweroff.svg", "12"), "关闭zk连接(快捷键pause)", this::closeConnect);
-            MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑zk连接", this::editConnect);
+            MenuItemExt closeConnect = MenuItemExt.newItem("关闭连接", new QuitSVGGlyph("12"), "关闭zk连接(快捷键pause)", this::closeConnect);
+            MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new EditSVGGlyph("12"), "编辑zk连接", this::editConnect);
             MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
             MenuItemExt server = MenuItemExt.newItem("服务信息", new SVGGlyph("/font/sever.svg", "12"), "查看连接服务信息", this::serverInfo);
-            MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出zk数据", () -> this.firstChild().exportNode());
-            MenuItemExt importData = MenuItemExt.newItem("导入数据", new SVGGlyph("/font/Import.svg", "12"), "导入zk数据", this::importNode);
-            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/fx-plus/font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
+            MenuItemExt exportData = MenuItemExt.newItem("导出数据", new ExportSVGGlyph("12"), "导出zk数据", () -> this.firstChild().exportNode());
+            MenuItemExt importData = MenuItemExt.newItem("导入数据", new ImportSVGGlyph("12"), "导入zk数据", this::importNode);
+            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new TransportSVGGlyph("12"), "传输zk数据到其他连接", this::transportData);
             server.setDisable(!this.client.initialized());
 
             items.add(closeConnect);
@@ -134,17 +142,17 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                 items.add(expandAll);
                 items.add(collapseAll);
             }
-            MenuItemExt openTerminal = MenuItemExt.newItem("打开终端", new SVGGlyph("/fx-plus/font/code library.svg", "12"), "打开终端窗口", this::openTerminal);
+            MenuItemExt openTerminal = MenuItemExt.newItem("打开终端", new TerminalSVGGlyph("12"), "打开终端窗口", this::openTerminal);
             items.add(openTerminal);
         } else {
             MenuItemExt connect = MenuItemExt.newItem("开始连接", new SVGGlyph("/font/play-circle.svg", "12"), "开始连接zk(鼠标左键双击)", this::connect);
-            MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑zk连接", this::editConnect);
+            MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new EditSVGGlyph("12"), "编辑zk连接", this::editConnect);
             MenuItemExt renameConnect = MenuItemExt.newItem("连接更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改连接名称(快捷键f2)", this::rename);
-            MenuItemExt deleteConnect = MenuItemExt.newItem("删除连接", new SVGGlyph("/font/delete.svg", "12"), "删除zk连接(快捷键delete)", this::delete);
+            MenuItemExt deleteConnect = MenuItemExt.newItem("删除连接", new DeleteSVGGlyph("12"), "删除zk连接(快捷键delete)", this::delete);
             MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
-            MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出zk数据", this::exportNode);
-            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/fx-plus//font/arrow-left-right-line.svg", "12"), "传输zk数据到其他连接", this::transportData);
-            MenuItemExt openTerminal = MenuItemExt.newItem("打开终端", new SVGGlyph("/fx-plus/font/code library.svg", "12"), "打开终端窗口", this::openTerminal);
+            MenuItemExt exportData = MenuItemExt.newItem("导出数据", new ExportSVGGlyph("12"), "导出zk数据", this::exportNode);
+            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new TransportSVGGlyph("12"), "传输zk数据到其他连接", this::transportData);
+            MenuItemExt openTerminal = MenuItemExt.newItem("打开终端", new TerminalSVGGlyph("12"), "打开终端窗口", this::openTerminal);
 
             items.add(connect);
             items.add(editConnect);

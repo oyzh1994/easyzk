@@ -9,7 +9,9 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
+import cn.oyzh.fx.plus.controls.svg.QuitSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.SettingSVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -75,7 +77,7 @@ public class MainController extends ParentController {
      * 初始化系统托盘
      */
     private void initSystemTray() {
-        if(!TrayManager.supported()){
+        if (!TrayManager.supported()) {
             StaticLog.warn("tray is not supported.");
             return;
         }
@@ -88,9 +90,9 @@ public class MainController extends ParentController {
                 // 打开主页
                 TrayManager.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), this::showMain);
                 // 打开设置
-                TrayManager.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), this::showSetting);
+                TrayManager.addMenuItem("设置", new SettingSVGGlyph("12"), this::showSetting);
                 // 退出程序
-                TrayManager.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
+                TrayManager.addMenuItem("退出", new QuitSVGGlyph("12"), () -> {
                     StaticLog.warn("exit app by tray.");
                     StageUtil.exit();
                 });

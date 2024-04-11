@@ -20,7 +20,12 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.controls.svg.CloseSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.ExportSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.StopSVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -468,7 +473,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 刷新值
      */
     private void flushValue() {
-         this.getValue().flush();
+        this.getValue().flush();
     }
 
     @Override
@@ -550,7 +555,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.loading) {
-            MenuItem cancel = MenuItemExt.newItem("取消操作", new SVGGlyph("/font/close.svg", "11"), "取消操作", this::cancel);
+            MenuItem cancel = MenuItemExt.newItem("取消操作", new CloseSVGGlyph("11"), "取消操作", this::cancel);
             items.add(cancel);
         } else {
             MenuItem auth = MenuItemExt.newItem("认证节点", new SVGGlyph("/font/unlock.svg", "12"), "对zk节点进行认证", this::authNode);
@@ -563,13 +568,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 items.add(rename);
             }
             if (!this.value.rootNode()) {
-                MenuItem delete = MenuItemExt.newItem("删除节点", new SVGGlyph("/font/delete.svg", "12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
+                MenuItem delete = MenuItemExt.newItem("删除节点", new DeleteSVGGlyph("12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
                 items.add(delete);
             }
-            MenuItem reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/fx-plus/font/reload.svg", "12"), "重新加载节点数据", this::reloadChild);
+            MenuItem reload = MenuItemExt.newItem("重新载入", new RefreshSVGGlyph("12"), "重新加载节点数据", this::reloadChild);
             items.add(reload);
             if (this.value.parentNode()) {
-                MenuItem unload = MenuItemExt.newItem("取消加载", new SVGGlyph("/font/stop.svg", "12"), "取消加载子节点", this::unloadChild);
+                MenuItem unload = MenuItemExt.newItem("取消加载", new StopSVGGlyph("12"), "取消加载子节点", this::unloadChild);
                 MenuItem loadAll = MenuItemExt.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载全部子节点", this::loadChildAll);
                 MenuItem expandAll = MenuItemExt.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开全部子节点", this::expandAll);
                 MenuItem collapseAll = MenuItemExt.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩全部子节点", this::collapseAll);
@@ -579,7 +584,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 items.add(collapseAll);
             }
             if (this.value.hasReadPerm()) {
-                MenuItem export = MenuItemExt.newItem("导出节点", new SVGGlyph("/font/export.svg", "12"), "导出此zk节点及子节点数据", this::exportNode);
+                MenuItem export = MenuItemExt.newItem("导出节点", new ExportSVGGlyph("12"), "导出此zk节点及子节点数据", this::exportNode);
                 items.add(export);
             }
             items.add(auth);

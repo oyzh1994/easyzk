@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.tabs.changelog;
 
+import cn.oyzh.fx.plus.controls.svg.ChangelogSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
@@ -12,7 +13,7 @@ import javafx.scene.Cursor;
  */
 public class ChangelogTab extends DynamicTab {
 
-    public ChangelogTab(){
+    public ChangelogTab() {
         super();
         super.flush();
     }
@@ -24,9 +25,9 @@ public class ChangelogTab extends DynamicTab {
 
     @Override
     public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        ChangelogSVGGlyph glyph = (ChangelogSVGGlyph) this.getGraphic();
         if (glyph == null) {
-            glyph = new SVGGlyph("/font/changelog.svg", "12");
+            glyph = new ChangelogSVGGlyph("12");
             glyph.setCursor(Cursor.DEFAULT);
             this.graphic(glyph);
         }

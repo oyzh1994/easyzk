@@ -16,8 +16,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ClearableTextField fx:id="user" realHeight="30" flexWidth="100% - 140" require="true"
-                            tipText="%base.userNameTip">
+        <ClearableTextField fx:id="user" realHeight="30" flexWidth="100% - 140" require="true" tipText="%base.userNameTip">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -29,8 +28,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ClearableTextField fx:id="password" realHeight="30" flexWidth="100% - 140" require="true"
-                            tipText="%base.passwordTip">
+        <ClearableTextField fx:id="password" realHeight="30" flexWidth="100% - 140" require="true" tipText="%base.passwordTip">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>

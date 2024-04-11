@@ -76,8 +76,7 @@
                             <Insets left="10" top="16"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11"
-                                  tipText="%info.compatibilityTip">
+                    <FlexCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11" tipText="%info.compatibilityTip">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
@@ -127,9 +126,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140"
-                                   tipText="%base.remarkTip"
-                                   maxLen="100">
+                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140" tipText="%base.remarkTip" maxLen="100">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -174,10 +171,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout"
-                                     tipText="%info.sshTimeoutTip"
-                                     realHeight="30"
-                                     value="3000">
+                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout" tipText="%info.sshTimeoutTip" realHeight="30" value="3000">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

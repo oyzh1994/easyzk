@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.tabs.terminal;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
@@ -16,9 +17,9 @@ public class ZKTerminalTab extends DynamicTab {
 
     @Override
     public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        TerminalSVGGlyph glyph = (TerminalSVGGlyph) this.getGraphic();
         if (glyph == null) {
-            glyph = new SVGGlyph("/fx-plus/font/code library.svg", "12");
+            glyph = new TerminalSVGGlyph("12");
             glyph.setCursor(Cursor.DEFAULT);
             this.graphic(glyph);
         }

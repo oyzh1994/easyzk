@@ -76,7 +76,7 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexComboBox tipText="请选择认证信息" fx:id="authList" realHeight="30" flexWidth="100% - 200">
+            <FlexComboBox fx:id="authList" realHeight="30" flexWidth="100% - 200">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>

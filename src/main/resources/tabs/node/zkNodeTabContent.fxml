@@ -14,10 +14,15 @@
 <?import cn.oyzh.fx.plus.controls.rich.FlexVirtualizedScrollPane?>
 <?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.CopySVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.EditSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
@@ -29,9 +34,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph?>
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -42,17 +45,20 @@
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
-                <SaveSVGGlyph fx:id="saveNodeData" disable="true" size="16" tipText="%base.pasteTip1" onMousePrimaryClicked="#saveNodeData">
+                <SaveSVGGlyph fx:id="saveNodeData" disable="true" size="16" tipText="%base.pasteTip1"
+                              onMousePrimaryClicked="#saveNodeData">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SaveSVGGlyph>
-                <UndoSVGGlyph disable="true" fx:id="dataUndo" size="16" onMousePrimaryClicked="#dataUndo" tipText="%base.undoTip1">
+                <UndoSVGGlyph disable="true" fx:id="dataUndo" size="16" onMousePrimaryClicked="#dataUndo"
+                              tipText="%base.undoTip1">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </UndoSVGGlyph>
-                <RedoSVGGlyph disable="true" fx:id="dataRedo"  size="16" onMousePrimaryClicked="#dataRedo" tipText="%base.redoTip1">
+                <RedoSVGGlyph disable="true" fx:id="dataRedo" size="16" onMousePrimaryClicked="#dataRedo"
+                              tipText="%base.redoTip1">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
@@ -121,14 +127,12 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <SVGGlyph tipText="%node.main.copy1" size="16"
-                          onMousePrimaryClicked="#copyNode" url="/font/copy.svg">
+                <CopySVGGlyph tipText="%node.main.copy1" size="16" onMousePrimaryClicked="#copyNode">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
-                <SVGGlyph tipText="%node.main.copy2" size="16"
-                          onMousePrimaryClicked="#copyNodePath" url="/font/copy-path.svg">
+                </CopySVGGlyph>
+                <SVGGlyph tipText="%node.main.copy2" size="16" onMousePrimaryClicked="#copyNodePath" url="/font/copy-path.svg">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
@@ -241,24 +245,21 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
-                                  onMousePrimaryClicked="#copyACL">
+                        <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
-                                  onMousePrimaryClicked="#updateACL">
+                        </CopySVGGlyph>
+                        <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
-                                  onMousePrimaryClicked="#deleteACL">
+                        </EditSVGGlyph>
+                        <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
+                        </DeleteSVGGlyph>
                         <FlexText fill="forestgreen" styleClass="acl-status">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -274,24 +275,21 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
-                                  onMousePrimaryClicked="#copyACL">
+                        <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
-                                  onMousePrimaryClicked="#updateACL">
+                        </CopySVGGlyph>
+                        <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
-                                  onMousePrimaryClicked="#deleteACL">
+                        </EditSVGGlyph>
+                        <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
+                        </DeleteSVGGlyph>
                         <FlexText fill="forestgreen" styleClass="acl-status">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -307,24 +305,21 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
-                                  onMousePrimaryClicked="#copyACL">
+                        <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
-                                  onMousePrimaryClicked="#updateACL">
+                        </CopySVGGlyph>
+                        <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
-                                  onMousePrimaryClicked="#deleteACL">
+                        </EditSVGGlyph>
+                        <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
+                        </DeleteSVGGlyph>
                         <FlexText fill="forestgreen" styleClass="acl-status">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -340,24 +335,21 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
-                                  onMousePrimaryClicked="#copyACL">
+                        <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
-                                  onMousePrimaryClicked="#updateACL">
+                        </CopySVGGlyph>
+                        <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
-                                  onMousePrimaryClicked="#deleteACL">
+                        </EditSVGGlyph>
+                        <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
+                        </DeleteSVGGlyph>
                         <FlexText fill="forestgreen" styleClass="acl-status">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -373,24 +365,21 @@
                         <Insets top="5" left="5"/>
                     </VBox.margin>
                     <FlexFlowPane flexWidth="100%" realHeight="24">
-                        <SVGGlyph tipText="%base.copy" url="/font/copy.svg" size="14"
-                                  onMousePrimaryClicked="#copyACL">
+                        <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
                             <FlowPane.margin>
                                 <Insets top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.edit" url="/font/edit.svg" size="14"
-                                  onMousePrimaryClicked="#updateACL">
+                        </CopySVGGlyph>
+                        <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
-                        <SVGGlyph tipText="%base.delete" url="/font/delete.svg" size="14"
-                                  onMousePrimaryClicked="#deleteACL">
+                        </EditSVGGlyph>
+                        <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
-                        </SVGGlyph>
+                        </DeleteSVGGlyph>
                         <FlexText fill="forestgreen" styleClass="acl-status">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -429,7 +418,8 @@
                             <Insets right="5"/>
                         </HBox.margin>
                     </SuccessLabel>
-                    <NumberTextField fx:id="quotaNum" realHeight="24" flexWidth="100% - 300" min="-1" value="-1" tipText="%node.main.quotaChildNumTip">
+                    <NumberTextField fx:id="quotaNum" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
+                                     tipText="%node.main.quotaChildNumTip">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
@@ -450,7 +440,8 @@
                             <Insets right="5"/>
                         </HBox.margin>
                     </SuccessLabel>
-                    <NumberTextField fx:id="quotaBytes" realHeight="24" flexWidth="100% - 300" min="-1" value="-1" tipText="%node.main.quotaChildNumTip">
+                    <NumberTextField fx:id="quotaBytes" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
+                                     tipText="%node.main.quotaChildNumTip">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>

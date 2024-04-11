@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <SearchSVGLabel onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" size="14">
+    <SearchSVGLabel onMousePrimaryClicked="#search" tipText="%base.searchTip5" size="14">
         <FlowPane.margin>
             <Insets left="8" top="5" bottom="5"/>
         </FlowPane.margin>

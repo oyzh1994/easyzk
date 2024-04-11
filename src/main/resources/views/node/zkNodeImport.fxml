@@ -96,17 +96,17 @@
         </CloseButton>
     </FlexHBox>
     <FlexVBox flexWidth="100%" fontSize="12">
-        <FXLabel text="温馨提示:" textFill="#666">
+        <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <FlexText fill="#666" text="1. 节点不存在时将创建节点">
+        <FlexText fill="#666" text="%node.import.tip1">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </FlexText>
-        <FlexText fill="#666" text="2. 节点存在时将更新节点数据（'节点已存在时跳过'选项勾选时除外）">
+        <FlexText fill="#666" text="%node.import.tip2">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

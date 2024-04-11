@@ -14,6 +14,8 @@ import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.EditSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -80,8 +82,8 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         MenuItem addConnect = MenuItemExt.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加zk连接", this::addConnect);
-        MenuItem renameGroup = MenuItemExt.newItem("分组更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改分组名称(快捷键f2)", this::rename);
-        MenuItem delGroup = MenuItemExt.newItem("删除分组", new SVGGlyph("/font/delete.svg", "12"), "删除此分组", this::delete);
+        MenuItem renameGroup = MenuItemExt.newItem("分组更名", new EditSVGGlyph("12"), "更改分组名称(快捷键f2)", this::rename);
+        MenuItem delGroup = MenuItemExt.newItem("删除分组", new DeleteSVGGlyph("12"), "删除此分组", this::delete);
         items.add(addConnect);
         items.add(renameGroup);
         items.add(delGroup);

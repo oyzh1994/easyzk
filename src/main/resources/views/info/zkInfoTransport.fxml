@@ -113,22 +113,22 @@
         </CloseButton>
     </FlexHBox>
     <FlexVBox flexWidth="100%" fontSize="12">
-        <FXLabel text="温馨提示:" textFill="#666">
+        <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <Text fill="#666" text="1. 临时节点不支持传输">
+        <Text fill="#666" text="%info.transport.tip1">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </Text>
-        <Text fill="#666" text="2. 节点无读取权限无法传输">
+        <Text fill="#666" text="%info.transport.tip2">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </Text>
-        <Text fill="#666" text="3. 连接相同时无法传输">
+        <Text fill="#666" text="%info.transport.tip3">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

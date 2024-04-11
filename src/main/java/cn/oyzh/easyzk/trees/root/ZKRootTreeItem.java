@@ -17,6 +17,8 @@ import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.controls.svg.ExportSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.ImportSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -87,8 +89,8 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         MenuItem addConnect = MenuItemExt.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加zk连接", this::addConnect);
-        MenuItem exportConnect = MenuItemExt.newItem("导出连接", new SVGGlyph("/font/export.svg", "12"), "导出zk连接", this::exportConnect);
-        MenuItem importConnect = MenuItemExt.newItem("导入连接", new SVGGlyph("/font/Import.svg", "12"), "选择文件，导入zk连接，也可拖拽文件到窗口进行导入", this::importConnect);
+        MenuItem exportConnect = MenuItemExt.newItem("导出连接", new ExportSVGGlyph("12"), "导出zk连接", this::exportConnect);
+        MenuItem importConnect = MenuItemExt.newItem("导入连接", new ImportSVGGlyph("12"), "选择文件，导入zk连接，也可拖拽文件到窗口进行导入", this::importConnect);
         MenuItem addGroup = MenuItemExt.newItem("添加分组", new SVGGlyph("/font/addGroup.svg", "12"), "添加分组", this::addGroup);
 
         exportConnect.setDisable(this.isChildEmpty());
@@ -263,7 +265,6 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
     /**
      * 连接新增事件
-     *
      */
     public void infoAdded(ZKInfo info) {
         this.addConnect(info);
@@ -271,7 +272,6 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
     /**
      * 连接变更事件
-     *
      */
     public void infoUpdated(ZKInfo info) {
         f1:

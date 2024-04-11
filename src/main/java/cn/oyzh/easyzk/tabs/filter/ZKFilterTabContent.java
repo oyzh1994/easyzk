@@ -8,12 +8,12 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.page.PageBox;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
@@ -123,7 +123,8 @@ public class ZKFilterTabContent extends DynamicTabController {
             public Node initGraphic() {
                 if (this.hBox == null) {
                     // 删除按钮
-                    SVGGlyph del = new SVGGlyph("/font/delete.svg", 14.d);
+                    DeleteSVGGlyph del = new DeleteSVGGlyph();
+                    del.setSize(14);
                     del.setTipText("删除");
                     del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
                     this.hBox = new HBox(del);

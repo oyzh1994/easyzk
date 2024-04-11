@@ -63,7 +63,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexCheckBox tipText="自动对已启用的认证信息执行认证" text="%setting.auth.autoAuth" realHeight="25"
+                    <FlexCheckBox tipText="%info.autoAuthTip" text="%setting.auth.autoAuth" realHeight="25"
                                   selected="true" fx:id="authMode">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
@@ -143,9 +143,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <DynamicTabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0"
-                                                tipText="选择一种限制策略"
-                                                fx:id="tabStrategy">
+                    <DynamicTabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" fx:id="tabStrategy">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -162,7 +160,7 @@
                     </AccentLabel>
                     <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140"
                                      realHeight="30"
-                                     tipText="0代表无限制，最大值1000">
+                                     tipText="%base.tabLimitTip">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

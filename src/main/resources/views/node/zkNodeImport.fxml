@@ -28,9 +28,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <SuccessButton stateManager="$stateManager"
-                       tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
-                       text="选择" iconSizePercent="0.75">
+        <SuccessButton stateManager="$stateManager" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose" iconSizePercent="0.75">
             <graphic>
                 <SVGGlyph url="/font/file.svg"/>
             </graphic>
@@ -60,8 +58,7 @@
                 <Insets left="10" top="20"/>
             </HBox.margin>
         </FXLabel>
-        <CharsetComboBox stateManager="$stateManager" prefWidth="120" fx:id="charset" promptText="导入字符集"
-                         tipText="默认是源信息的字符集">
+        <CharsetComboBox stateManager="$stateManager" prefWidth="120" fx:id="charset" tipText="%base.charset">
             <HBox.margin>
                 <Insets left="5" top="15"/>
             </HBox.margin>

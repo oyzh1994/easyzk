@@ -106,8 +106,7 @@
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <FlexCheckBox text="%base.save" realWidth="80" fx:id="digestSaveInfo" tipText="保存认证信息"
-                          selected="true">
+            <FlexCheckBox text="%base.save" realWidth="80" fx:id="digestSaveInfo" selected="true">
                 <HBox.margin>
                     <Insets left="10" top="15"/>
                 </HBox.margin>
@@ -131,7 +130,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ClearableTextField tipText="格式user:digest" fx:id="digestInfo2" realHeight="30" flexWidth="100% - 140">
+        <ClearableTextField tipText="user:digest" fx:id="digestInfo2" realHeight="30" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -143,7 +142,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexComboBox tipText="请选择认证信息" fx:id="digestInfo3" realHeight="30" flexWidth="100% - 140">
+        <FlexComboBox fx:id="digestInfo3" realHeight="30" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -160,20 +159,20 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
-        <SuccessButton realHeight="30" realWidth="80" text="网段模式" onMousePrimaryClicked="#segmentModel">
+        <SuccessButton realHeight="30" realWidth="80" text="%base.segmentMode" onMousePrimaryClicked="#segmentModel">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </SuccessButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" managed="false" realHeight="260" visible="false" fx:id="ip2ACL">
-        <AccentLabel text="IP内容" realWidth="80" realHeight="30">
+        <AccentLabel text="%base.ipContent" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
         <FlexTextArea
-                tipText="请输入内容，格式ip/网段:权限，多个ip/网段以英文分号分隔，例如192.168.2.19:crdwa;192.169.3.0/16:crdwa"
+                tipText="%acl.add.ipContentTip"
                 fx:id="ipContent2" realHeight="240" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>

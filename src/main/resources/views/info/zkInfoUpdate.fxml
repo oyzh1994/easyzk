@@ -39,11 +39,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="hostIp"
-                                        tipText="%base.hostTip"
-                                        require="true"
-                                        realHeight="30"
-                                        flexWidth="100% - 140" maxLen="1024">
+                    <ClearableTextField fx:id="hostIp" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 140" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -67,19 +63,17 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexCheckBox text="%base.readonly" tipText="开启只读模式，防止误操作数据" fx:id="readonly">
+                    <FlexCheckBox text="%base.readonlyMode" tipText="%base.readonlyModeTip" fx:id="readonly">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox fx:id="listen" text="监听节点" fontSize="11" selected="true"
-                                  tipText="监听节点变化，可看到其他客户端的操作，关闭后仅能看到当前客户端的操作，数据更新可能不及时">
+                    <FlexCheckBox fx:id="listen" text="%info.listenNode" fontSize="11" selected="true" tipText="%info.listenNodeTip">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox fx:id="compatibility" text="兼容模式" fontSize="11"
-                                  tipText="如果zk服务端是3.4.x版本或更早、添加节点时出现未实现提示，无法连接、连接异常等，可尝试开启此选项">
+                    <FlexCheckBox fx:id="compatibility" text="兼容模式" fontSize="11" tipText="%info.compatibilityTip">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
@@ -95,10 +89,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 140" min="3" max="30" fx:id="connectTimeOut"
-                                     tipText="超时时间(3-30)，单位秒，默认5秒"
-                                     value="5"
-                                     require="true">
+                    <NumberTextField realHeight="30" flexWidth="100% - 140" min="3" max="30" fx:id="connectTimeOut" tipText="%info.connectTimoutTip" value="5" require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -115,10 +106,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 140" min="5" max="120" fx:id="sessionTimeOut"
-                                     tipText="超时时间(5-120)，单位分钟，默认30分钟"
-                                     value="30"
-                                     require="true" step="5">
+                    <NumberTextField realHeight="30" flexWidth="100% - 140" min="5" max="120" fx:id="sessionTimeOut" tipText="%info.sessionTimoutTip" value="30" require="true" step="5">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -135,9 +123,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140"
-                                   tipText="%base.remarkTip"
-                                   maxLen="100">
+                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140" tipText="%base.remarkTip" maxLen="100">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

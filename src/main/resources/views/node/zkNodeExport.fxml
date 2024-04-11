@@ -42,8 +42,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="选择一种导出方式"
-                      fx:id="format">
+        <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="%base.formatTip" fx:id="format">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="json"/>

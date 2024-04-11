@@ -33,7 +33,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexComboBox initIndex="0" fx:id="authType" tipText="认证方式" realHeight="30" flexWidth="100% - 200">
+        <FlexComboBox initIndex="0" fx:id="authType" realHeight="30" flexWidth="100% - 200">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="用户密码明文"/>
@@ -62,7 +62,7 @@
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <FlexCheckBox text="%base.save" fx:id="saveInfo1" tipText="保存认证信息" selected="true">
+            <FlexCheckBox text="%base.save" fx:id="saveInfo1" selected="true">
                 <HBox.margin>
                     <Insets left="10" top="18"/>
                 </HBox.margin>

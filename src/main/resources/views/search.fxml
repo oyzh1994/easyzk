@@ -14,27 +14,24 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.controller.SearchController">
     <FlexHBox realHeight="30" flexWidth="100%">
-        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30"
-                         promptText="搜索(↑↓切换，回车执行)"
-                         tipText="使用Ctrl+F聚焦，使用↑↓切换历史，使用回车执行搜索"
-                         onKeyPressed="#onSearchKeyPressed">
+        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30" promptText="%base.searchTip4" tipText="%base.searchTip3" onKeyPressed="#onSearchKeyPressed">
             <HBox.margin>
                 <Insets left="10" top="3"/>
             </HBox.margin>
         </SearchTextField>
-        <NextSVGGlyph fx:id="searchNext" disable="true" tipText="查找下一个(快捷键Enter)"
+        <NextSVGGlyph fx:id="searchNext" disable="true" tipText="%base.searchTip1"
                   onMousePrimaryClicked="#searchNext" size="12">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </NextSVGGlyph>
-        <PrevSVGGlyph fx:id="searchPrev" disable="true" tipText="查找上一个"
+        <PrevSVGGlyph fx:id="searchPrev" disable="true" tipText="%base.searchTip2"
                   onMousePrimaryClicked="#searchPrev" size="12">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </PrevSVGGlyph>
-        <SVGGlyph fx:id="searchAnalyse" disable="true" url="/font/NLP_text.svg" tipText="分析搜索词"
+        <SVGGlyph fx:id="searchAnalyse" disable="true" url="/font/NLP_text.svg" tipText="%base.searchAnalyse"
                   onMousePrimaryClicked="#searchAnalyse" size="12">
             <HBox.margin>
                 <Insets left="5" top="9"/>
@@ -47,17 +44,12 @@
         </FlexText>
     </FlexHBox>
     <FlexHBox realHeight="30" flexWidth="100%">
-        <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="30"
-                         promptText="替换(↑↓切换，回车执行)"
-                         tipText="使用↑↓切换历史，使用回车执行搜索"
-                         onKeyPressed="#onReplaceKeyPressed">
+        <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="30" promptText="%base.replaceTip1" tipText="%base.replaceTip2" onKeyPressed="#onReplaceKeyPressed">
             <HBox.margin>
                 <Insets left="10" top="3"/>
             </HBox.margin>
         </SearchTextField>
-        <SVGGlyph fx:id="replace" disable="true" url="/font/financial_replace.svg"
-                  tipText="替换下一个(快捷键Enter)" size="12"
-                  onMousePrimaryClicked="#replace">
+        <SVGGlyph fx:id="replace" disable="true" url="/font/financial_replace.svg" tipText="%base.replaceTip3" size="12" onMousePrimaryClicked="#replace">
             <HBox.margin>
                 <Insets left="5" top="9"/>
             </HBox.margin>

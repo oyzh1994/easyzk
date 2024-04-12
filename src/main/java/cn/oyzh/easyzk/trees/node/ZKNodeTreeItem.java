@@ -19,17 +19,19 @@ import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.controls.svg.AddSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.CloseSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.ExportSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.RenameSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.StopSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.UnLockSVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.AddNodeMenuItem;
+import cn.oyzh.fx.plus.menu.AuthNodeMenuItem;
+import cn.oyzh.fx.plus.menu.CancelActionMenuItem;
+import cn.oyzh.fx.plus.menu.CollapseAllMenuItem;
+import cn.oyzh.fx.plus.menu.DeleteNodeMenuItem;
+import cn.oyzh.fx.plus.menu.ExpandAllMenuItem;
+import cn.oyzh.fx.plus.menu.ExportNodeMenuItem;
+import cn.oyzh.fx.plus.menu.LoadAllMenuItem;
+import cn.oyzh.fx.plus.menu.ReloadDataMenuItem;
+import cn.oyzh.fx.plus.menu.RenameNodeMenuItem;
+import cn.oyzh.fx.plus.menu.UnLoadMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
@@ -558,36 +560,36 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.loading) {
-            MenuItem cancel = FXMenuItem.newItem("取消操作", new CloseSVGGlyph("11"), "取消操作", this::cancel);
+            CancelActionMenuItem cancel = new CancelActionMenuItem("11", this::cancel);
             items.add(cancel);
         } else {
-            MenuItem auth = FXMenuItem.newItem("认证节点", new UnLockSVGGlyph("12"), "对zk节点进行认证", this::authNode);
+            AuthNodeMenuItem auth = new AuthNodeMenuItem("12", this::authNode);
             if (!this.ephemeral()) {
-                MenuItem add = FXMenuItem.newItem("添加节点", new AddSVGGlyph("12"), "添加zk子节点", this::addNode);
+                AddNodeMenuItem add = new AddNodeMenuItem("12", this::addNode);
                 items.add(add);
             }
             if (!this.value.rootNode() && this.value.subNode() && !this.ephemeral()) {
-                MenuItem rename = FXMenuItem.newItem("节点更名", new RenameSVGGlyph("12"), "更改节点名称(快捷键f2)", this::rename);
+                RenameNodeMenuItem rename = new RenameNodeMenuItem("12", this::rename);
                 items.add(rename);
             }
             if (!this.value.rootNode()) {
-                MenuItem delete = FXMenuItem.newItem("删除节点", new DeleteSVGGlyph("12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
+                DeleteNodeMenuItem delete = new DeleteNodeMenuItem("12", this::delete);
                 items.add(delete);
             }
-            MenuItem reload = FXMenuItem.newItem("重新载入", new RefreshSVGGlyph("12"), "重新加载节点数据", this::reloadChild);
+            ReloadDataMenuItem reload = new ReloadDataMenuItem("12", this::reloadChild);
             items.add(reload);
             if (this.value.parentNode()) {
-                MenuItem unload = FXMenuItem.newItem("取消加载", new StopSVGGlyph("12"), "取消加载子节点", this::unloadChild);
-                MenuItem loadAll = FXMenuItem.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载全部子节点", this::loadChildAll);
-                MenuItem expandAll = FXMenuItem.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开全部子节点", this::expandAll);
-                MenuItem collapseAll = FXMenuItem.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩全部子节点", this::collapseAll);
+                UnLoadMenuItem unload = new UnLoadMenuItem("12", this::unloadChild);
+                LoadAllMenuItem loadAll = new LoadAllMenuItem("12", this::loadChildAll);
+                ExpandAllMenuItem expandAll = new ExpandAllMenuItem("12", this::expandAll);
+                CollapseAllMenuItem collapseAll = new CollapseAllMenuItem("12", this::collapseAll);
                 items.add(unload);
                 items.add(loadAll);
                 items.add(expandAll);
                 items.add(collapseAll);
             }
             if (this.value.hasReadPerm()) {
-                MenuItem export = FXMenuItem.newItem("导出节点", new ExportSVGGlyph("12"), "导出此zk节点及子节点数据", this::exportNode);
+                ExportNodeMenuItem export = new ExportNodeMenuItem("12", this::exportNode);
                 items.add(export);
             }
             items.add(auth);

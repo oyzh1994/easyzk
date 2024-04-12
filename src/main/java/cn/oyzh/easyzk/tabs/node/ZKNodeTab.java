@@ -3,10 +3,11 @@ package cn.oyzh.easyzk.tabs.node;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.CloseCurrConnectTabMenuItem;
+import cn.oyzh.fx.plus.menu.CloseOtherConnectTabMenuItem;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.Cursor;
@@ -165,8 +166,8 @@ public class ZKNodeTab extends DynamicTab {
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = super.getMenuItems();
-        MenuItem closeConnectTab = FXMenuItem.newItem("关闭当前连接", "关闭当前连接标签页", this::closeConnectTab);
-        MenuItem closeOtherConnectTab = FXMenuItem.newItem("关闭其他连接", "关闭其他连接标签页", this::closeOtherConnectTab);
+        CloseCurrConnectTabMenuItem closeConnectTab = new CloseCurrConnectTabMenuItem(this::closeConnectTab);
+        CloseOtherConnectTabMenuItem closeOtherConnectTab = new CloseOtherConnectTabMenuItem(this::closeOtherConnectTab);
         items.add(4, closeConnectTab);
         items.add(5, closeOtherConnectTab);
         return items;

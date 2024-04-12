@@ -23,18 +23,20 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
 import cn.oyzh.fx.plus.menu.CloseConnectMenuItem;
+import cn.oyzh.fx.plus.menu.CollapseAllMenuItem;
 import cn.oyzh.fx.plus.menu.DeleteConnectMenuItem;
 import cn.oyzh.fx.plus.menu.EditConnectMenuItem;
+import cn.oyzh.fx.plus.menu.ExpandAllMenuItem;
 import cn.oyzh.fx.plus.menu.ExportDataMenuItem;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.ImportDataMenuItem;
+import cn.oyzh.fx.plus.menu.LoadAllMenuItem;
 import cn.oyzh.fx.plus.menu.OpenTerminalMenuItem;
 import cn.oyzh.fx.plus.menu.RenameConnectMenuItem;
 import cn.oyzh.fx.plus.menu.RepeatConnectMenuItem;
+import cn.oyzh.fx.plus.menu.ServerInfoMenuItem;
 import cn.oyzh.fx.plus.menu.StartConnectMenuItem;
 import cn.oyzh.fx.plus.menu.TransportDataMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -121,7 +123,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             CloseConnectMenuItem closeConnect = new CloseConnectMenuItem("12", this::closeConnect);
             EditConnectMenuItem editConnect = new EditConnectMenuItem("12", this::editConnect);
             RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
-            FXMenuItem server = FXMenuItem.newItem("服务信息", new SVGGlyph("/font/sever.svg", "12"), "查看连接服务信息", this::serverInfo);
+            ServerInfoMenuItem server = new ServerInfoMenuItem("12", this::serverInfo);
             ExportDataMenuItem exportData = new ExportDataMenuItem("12", () -> this.firstChild().exportNode());
             ImportDataMenuItem importData = new ImportDataMenuItem("12", this::importNode);
             TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
@@ -138,9 +140,9 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             ZKNodeTreeItem firstChild = this.firstChild();
             // 根节点不为空，加载全部，收缩全部，展开全部菜单启用
             if (firstChild != null && firstChild.value().parentNode()) {
-                FXMenuItem expandAll = FXMenuItem.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开全部zk子节点", firstChild::expandAll);
-                FXMenuItem loadAll = FXMenuItem.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载全部zk子节点", firstChild::loadChildAll);
-                FXMenuItem collapseAll = FXMenuItem.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩全部zk子节点", firstChild::collapseAll);
+                LoadAllMenuItem loadAll = new LoadAllMenuItem("12", firstChild::loadChildAll);
+                ExpandAllMenuItem expandAll = new ExpandAllMenuItem("12", firstChild::expandAll);
+                CollapseAllMenuItem collapseAll = new CollapseAllMenuItem("12", firstChild::collapseAll);
                 items.add(loadAll);
                 items.add(expandAll);
                 items.add(collapseAll);

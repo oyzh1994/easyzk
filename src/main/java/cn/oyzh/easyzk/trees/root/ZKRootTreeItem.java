@@ -16,13 +16,12 @@ import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.controls.svg.AddGroupSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.AddSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.ExportSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.ImportSVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
+import cn.oyzh.fx.plus.menu.AddGroupMenuItem;
+import cn.oyzh.fx.plus.menu.ExportConnectMenuItem;
+import cn.oyzh.fx.plus.menu.ImportConnectMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.event.EventHandler;
@@ -89,10 +88,10 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItem addConnect = FXMenuItem.newItem("添加连接", new AddSVGGlyph("12"), "添加zk连接", this::addConnect);
-        MenuItem exportConnect = FXMenuItem.newItem("导出连接", new ExportSVGGlyph("12"), "导出zk连接", this::exportConnect);
-        MenuItem importConnect = FXMenuItem.newItem("导入连接", new ImportSVGGlyph("12"), "选择文件，导入zk连接，也可拖拽文件到窗口进行导入", this::importConnect);
-        MenuItem addGroup = FXMenuItem.newItem("添加分组", new AddGroupSVGGlyph("12"), "添加分组", this::addGroup);
+        AddConnectMenuItem addConnect = new AddConnectMenuItem("12", this::addConnect);
+        ExportConnectMenuItem exportConnect = new ExportConnectMenuItem("12", this::exportConnect);
+        ImportConnectMenuItem importConnect = new ImportConnectMenuItem("12", this::importConnect);
+        AddGroupMenuItem addGroup = new AddGroupMenuItem("12", this::addGroup);
 
         exportConnect.setDisable(this.isChildEmpty());
 

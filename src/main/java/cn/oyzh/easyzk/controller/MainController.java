@@ -9,13 +9,13 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
-import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.QuitSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.SettingSVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.tray.DesktopTrayItem;
+import cn.oyzh.fx.plus.tray.QuitTrayItem;
+import cn.oyzh.fx.plus.tray.SettingTrayItem;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
@@ -88,14 +88,14 @@ public class MainController extends ParentController {
                 // 设置标题
                 TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
                 // 打开主页
-                TrayManager.addMenuItem("打开", new DeleteSVGGlyph("12"), this::showMain);
+                TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
                 // 打开设置
-                TrayManager.addMenuItem("设置", new SettingSVGGlyph("12"), this::showSetting);
+                TrayManager.addMenuItem(new SettingTrayItem("12", this::showSetting));
                 // 退出程序
-                TrayManager.addMenuItem("退出", new QuitSVGGlyph("12"), () -> {
+                TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
                     StaticLog.warn("exit app by tray.");
                     StageUtil.exit();
-                });
+                }));
                 // 鼠标事件
                 TrayManager.onMouseClicked(e -> {
                     // 单击鼠标主键，显示主页

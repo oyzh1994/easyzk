@@ -19,7 +19,7 @@ import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.AddSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.CloseSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
@@ -558,36 +558,36 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.loading) {
-            MenuItem cancel = MenuItemExt.newItem("取消操作", new CloseSVGGlyph("11"), "取消操作", this::cancel);
+            MenuItem cancel = FXMenuItem.newItem("取消操作", new CloseSVGGlyph("11"), "取消操作", this::cancel);
             items.add(cancel);
         } else {
-            MenuItem auth = MenuItemExt.newItem("认证节点", new UnLockSVGGlyph("12"), "对zk节点进行认证", this::authNode);
+            MenuItem auth = FXMenuItem.newItem("认证节点", new UnLockSVGGlyph("12"), "对zk节点进行认证", this::authNode);
             if (!this.ephemeral()) {
-                MenuItem add = MenuItemExt.newItem("添加节点", new AddSVGGlyph("12"), "添加zk子节点", this::addNode);
+                MenuItem add = FXMenuItem.newItem("添加节点", new AddSVGGlyph("12"), "添加zk子节点", this::addNode);
                 items.add(add);
             }
             if (!this.value.rootNode() && this.value.subNode() && !this.ephemeral()) {
-                MenuItem rename = MenuItemExt.newItem("节点更名", new RenameSVGGlyph("12"), "更改节点名称(快捷键f2)", this::rename);
+                MenuItem rename = FXMenuItem.newItem("节点更名", new RenameSVGGlyph("12"), "更改节点名称(快捷键f2)", this::rename);
                 items.add(rename);
             }
             if (!this.value.rootNode()) {
-                MenuItem delete = MenuItemExt.newItem("删除节点", new DeleteSVGGlyph("12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
+                MenuItem delete = FXMenuItem.newItem("删除节点", new DeleteSVGGlyph("12"), "删除此zk节点及子节点(快捷键delete)", this::delete);
                 items.add(delete);
             }
-            MenuItem reload = MenuItemExt.newItem("重新载入", new RefreshSVGGlyph("12"), "重新加载节点数据", this::reloadChild);
+            MenuItem reload = FXMenuItem.newItem("重新载入", new RefreshSVGGlyph("12"), "重新加载节点数据", this::reloadChild);
             items.add(reload);
             if (this.value.parentNode()) {
-                MenuItem unload = MenuItemExt.newItem("取消加载", new StopSVGGlyph("12"), "取消加载子节点", this::unloadChild);
-                MenuItem loadAll = MenuItemExt.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载全部子节点", this::loadChildAll);
-                MenuItem expandAll = MenuItemExt.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开全部子节点", this::expandAll);
-                MenuItem collapseAll = MenuItemExt.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩全部子节点", this::collapseAll);
+                MenuItem unload = FXMenuItem.newItem("取消加载", new StopSVGGlyph("12"), "取消加载子节点", this::unloadChild);
+                MenuItem loadAll = FXMenuItem.newItem("加载全部", new SVGGlyph("/font/reload time.svg", "12"), "加载全部子节点", this::loadChildAll);
+                MenuItem expandAll = FXMenuItem.newItem("展开全部", new SVGGlyph("/font/colum-height.svg", "12"), "展开全部子节点", this::expandAll);
+                MenuItem collapseAll = FXMenuItem.newItem("收缩全部", new SVGGlyph("/font/vertical-align-middl.svg", "12"), "收缩全部子节点", this::collapseAll);
                 items.add(unload);
                 items.add(loadAll);
                 items.add(expandAll);
                 items.add(collapseAll);
             }
             if (this.value.hasReadPerm()) {
-                MenuItem export = MenuItemExt.newItem("导出节点", new ExportSVGGlyph("12"), "导出此zk节点及子节点数据", this::exportNode);
+                MenuItem export = FXMenuItem.newItem("导出节点", new ExportSVGGlyph("12"), "导出此zk节点及子节点数据", this::exportNode);
                 items.add(export);
             }
             items.add(auth);

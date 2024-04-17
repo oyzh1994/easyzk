@@ -276,12 +276,12 @@ public class ZKNodeAddController extends Controller {
             // 获取内容
             String user = this.digestUser.getText().trim();
             if (StrUtil.isBlank(user)) {
-                MessageBox.tipMsg("用户名不能为空！", this.digestUser);
+                MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.digestUser);
                 return null;
             }
             String password = this.digestPassword.getText().trim();
             if (StrUtil.isBlank(password)) {
-                MessageBox.tipMsg("密码不能为空！", this.digestPassword);
+                MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.digestPassword);
                 return null;
             }
             String digest = ZKAuthUtil.digest(user, password);

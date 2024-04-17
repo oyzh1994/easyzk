@@ -20,6 +20,7 @@ import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -221,7 +222,6 @@ public class ZKNodeImportController extends Controller {
         this.importTask = ThreadUtil.start(() -> {
             try {
                 this.stopImportBtn.enable();
-                // EventUtil.fire(ZKEventTypes.ZK_IMPORT_START);
                 for (Map<String, String> zkNode : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.importTask)) {
@@ -256,17 +256,17 @@ public class ZKNodeImportController extends Controller {
                 }
                 // 收尾工作
                 this.updateStatus("数据导入收尾中...");
-                // this.importMsg.waitTextExpend();
                 this.updateStatus("数据导入结束");
-                MessageBox.okToast("导入数据结束！");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据导入取消");
-                    MessageBox.okToast("导入数据取消！");
+                    MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionCancel"));
                 } else {
                     ex.printStackTrace();
                     this.updateStatus("数据导入失败");
-                    MessageBox.warn("导入数据失败！");
+                    MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
                 }
             } finally {
                 // 结束处理
@@ -274,7 +274,6 @@ public class ZKNodeImportController extends Controller {
                 this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
-                // EventUtil.fire(ZKEventTypes.ZK_IMPORT_FINISH);
                 SystemUtil.gcLater();
             }
         });

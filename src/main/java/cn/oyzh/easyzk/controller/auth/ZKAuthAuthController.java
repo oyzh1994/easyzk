@@ -161,11 +161,11 @@ public class ZKAuthAuthController extends Controller {
                     this.authStore.add(new ZKAuth(user, password));
                 }
                 ZKEventUtil.authAuthed(this.zkItem, true, user, password);
-                MessageBox.okToast("认证成功！");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 this.closeStage();
             } else if (this.zkNode.aclEmpty() || this.zkNode.hasDigestACL()) {
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
-                MessageBox.warn("认证失败！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
             } else {
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
                 MessageBox.warn("认证失败或此节点无需认证！");

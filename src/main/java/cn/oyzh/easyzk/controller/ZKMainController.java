@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
@@ -344,7 +343,6 @@ public class ZKMainController extends ParentController {
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
         this.tabPaneLeft.parentAutosize();
-        StaticLog.info("LEFT_EXTEND.");
     }
 
     /**
@@ -356,7 +354,6 @@ public class ZKMainController extends ParentController {
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
         this.tabPaneLeft.parentAutosize();
-        StaticLog.info("LEFT_COLLAPSE.");
     }
 
     @Override
@@ -383,19 +380,4 @@ public class ZKMainController extends ParentController {
     private void clearMsg() {
         this.msgArea.clear();
     }
-
-    // /**
-    //  * 处理操作消息
-    //  */
-    // @EventGroup(value = ZKEventGroups.NODE_ACTION, async = true, verbose = true)
-    // @EventGroup(value = ZKEventGroups.INFO_ACTION, async = true, verbose = true)
-    // @EventGroup(value = ZKEventGroups.CONNECTION_ACTION, async = true, verbose = true)
-    // private void onActionMsg(Event<EventMsg> event) {
-    //     if (event.data() instanceof EventMsgFormatter formatter) {
-    //         String formatMsg = formatter.formatMsg();
-    //         if (formatMsg != null) {
-    //             this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
-    //         }
-    //     }
-    // }
 }

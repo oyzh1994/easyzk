@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.ResourceUtil;
@@ -85,7 +86,7 @@ public class ZKNodeQRCodeController extends Controller {
             if (ex.getMessage().contains("Data too big")) {
                 MessageBox.warn("节点数据太大，不支持生成二维码！");
             } else {
-                MessageBox.exception(ex, "生成二维码异常");
+                MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail"));
             }
         } finally {
             IoUtil.close(bais);

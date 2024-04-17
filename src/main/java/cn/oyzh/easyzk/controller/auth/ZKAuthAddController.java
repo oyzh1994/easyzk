@@ -62,7 +62,7 @@ public class ZKAuthAddController extends Controller {
                 return;
             }
             if (this.authStore.exist(user, password)) {
-                MessageBox.warn("此认证用户名、认证密码信息已存在！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
                 return;
             }
             ZKAuth auth = new ZKAuth(user, password);

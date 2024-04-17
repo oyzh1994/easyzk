@@ -341,7 +341,7 @@ public class ZKACLAddController extends Controller {
      */
     private void addWorldACL() {
         if (this.zkItem.hasWorldACL()) {
-            MessageBox.warn("World(开放认证)权限已存在！");
+            MessageBox.warn("World " + BaseResourceBundle.getBaseString("base.perms") + BaseResourceBundle.getBaseString("base.alreadyExists"));
             return;
         }
         ACL acl = new ACL();
@@ -363,7 +363,7 @@ public class ZKACLAddController extends Controller {
         acl.setId(new Id("ip", ip));
         acl.setPerms(perms);
         if (this.zkItem.existIPACL(acl.idVal())) {
-            MessageBox.warnToast("IP" + ip + "已存在！");
+            MessageBox.warnToast(ip + BaseResourceBundle.getBaseString("base.alreadyExists"));
         } else {
             this.addACL(acl);
         }
@@ -378,7 +378,7 @@ public class ZKACLAddController extends Controller {
         for (String s : ipList) {
             String[] strArr = s.split(":");
             if (strArr.length < 1) {
-                throw new ZKException(s + "无效的数据");
+                throw new ZKException(s + BaseResourceBundle.getBaseString("base.invalidData"));
             }
             if (strArr.length < 2) {
                 throw new ZKException(s + "权限无效");

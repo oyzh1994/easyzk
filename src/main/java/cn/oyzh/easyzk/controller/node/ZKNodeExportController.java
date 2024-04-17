@@ -27,6 +27,7 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -245,18 +246,18 @@ public class ZKNodeExportController extends Controller {
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);
                     this.updateStatus("文件保存成功");
-                    MessageBox.okToast("导出数据成功！");
+                    MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 } else {
                     this.updateStatus("文件保存取消");
                 }
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据导出取消");
-                    MessageBox.okToast("导出数据取消！");
+                    MessageBox.warn(BaseResourceBundle.getBaseString("base.actionCancel"));
                 } else {
                     e.printStackTrace();
                     this.updateStatus("数据导出失败");
-                    MessageBox.warn("导出数据失败！");
+                    MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
                 }
             } finally {
                 // 结束处理

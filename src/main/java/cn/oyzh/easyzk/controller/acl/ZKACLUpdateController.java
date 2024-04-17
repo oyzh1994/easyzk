@@ -118,7 +118,7 @@ public class ZKACLUpdateController extends Controller {
             if (updateFlag) {
                 this.updateACL(aclList);
             } else {
-                MessageBox.warn("修改节点权限失败，未找到对应的权限！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

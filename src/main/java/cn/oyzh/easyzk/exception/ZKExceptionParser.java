@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.exception;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.fx.common.ssh.SSHException;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import org.apache.zookeeper.KeeperException;
 
 import java.util.function.Function;
@@ -75,7 +76,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.OperationTimeoutException) {
-            return "操作超时！";
+            return BaseResourceBundle.getBaseString("base.actionTimeout");
         }
 
         if (e instanceof KeeperException.NoNodeException) {
@@ -91,15 +92,15 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.BadArgumentsException) {
-            return "参数错误或操作不支持！";
+            return BaseResourceBundle.getBaseString("base.badArg");
         }
 
         if (e instanceof KeeperException.BadVersionException) {
-            return "版本错误！";
+            return BaseResourceBundle.getBaseString("base.badVersion");
         }
 
         if (e instanceof KeeperException.UnimplementedException) {
-            return "未实现的功能！";
+            return BaseResourceBundle.getBaseString("base.unimplemented");
         }
 
         if (e instanceof KeeperException.DataInconsistencyException) {
@@ -135,7 +136,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.SystemErrorException) {
-            return "系统异常！";
+            return BaseResourceBundle.getBaseString("base.systemError");
         }
 
         if (e instanceof KeeperException.SessionExpiredException) {
@@ -147,7 +148,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.ConnectionLossException) {
-            return "连接丢失！";
+            return BaseResourceBundle.getBaseString("base.connectionLoss");
         }
 
         String message = e.getMessage();

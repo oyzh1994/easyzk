@@ -6,8 +6,8 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -60,11 +60,11 @@ public class ZKFilterAddController extends Controller {
         // 获取节点值
         String kw = this.kw.getText().trim();
         if (StrUtil.isBlank(kw)) {
-            MessageBox.tipMsg("请输入过滤关键字！", this.kw);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.contentNotEmpty"), this.kw);
             return;
         }
         if (this.filterStore.exist(kw)) {
-            MessageBox.tipMsg("此关键字已存在！", this.kw);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.contentAlreadyExists"), this.kw);
             return;
         }
         try {

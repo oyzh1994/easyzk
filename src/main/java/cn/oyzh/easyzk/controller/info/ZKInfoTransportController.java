@@ -20,6 +20,7 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -229,15 +230,15 @@ public class ZKInfoTransportController extends Controller {
                 this.transport("/");
                 this.updateStatus("数据传输收尾中....");
                 this.updateStatus("数据传输结束");
-                MessageBox.okToast("传输数据结束！");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据传输取消");
-                    MessageBox.okToast("传输数据取消！");
+                    MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionCancel"));
                 } else {
                     ex.printStackTrace();
                     this.updateStatus("数据传输失败");
-                    MessageBox.exception(ex, "传输数据失败！");
+                    MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail"));
                 }
             } finally {
                 // 结束传输
@@ -253,12 +254,6 @@ public class ZKInfoTransportController extends Controller {
     private void transportStart() {
         this.stateManager.disable();
         this.transportMsg.clear();
-        // this.existHandle.disable();
-        // this.transportBtn.disable();
-        // this.applyFilter.disable();
-        // this.formCharset.disable();
-        // this.targetCharset.disable();
-        // this.targetConnect.disable();
         this.formConnect.disable();
     }
 
@@ -267,12 +262,6 @@ public class ZKInfoTransportController extends Controller {
      */
     private void transportEnd() {
         this.stateManager.enable();
-        // this.existHandle.enable();
-        // this.transportBtn.enable();
-        // this.applyFilter.enable();
-        // this.formCharset.enable();
-        // this.targetCharset.enable();
-        // this.targetConnect.enable();
         this.stopTransportBtn.disable();
         this.stage.restoreTitle();
         SystemUtil.gcLater();
@@ -287,11 +276,9 @@ public class ZKInfoTransportController extends Controller {
     private void closeZKClient() {
         if (this.formClient != null) {
             this.formClient.close();
-            // this.formClient = null;
         }
         if (this.targetClient != null) {
             this.targetClient.close();
-            // this.targetClient = null;
         }
     }
 
@@ -318,9 +305,6 @@ public class ZKInfoTransportController extends Controller {
                 } else if (this.targetConnect.getValue() != null && this.targetConnect.getValue() != t1) {
                     this.transportBtn.enable();
                 }
-                // if (t1 != null) {
-                //     this.formCharset.select(t1.getCharset());
-                // }
             });
         }
         this.targetConnect.selectedItemChanged((observableValue, zkInfo, t1) -> {
@@ -329,9 +313,6 @@ public class ZKInfoTransportController extends Controller {
             } else if (this.formConnect.getValue() != null && this.formConnect.getValue() != t1) {
                 this.transportBtn.enable();
             }
-            // if (t1 != null) {
-            //     this.targetCharset.select(t1.getCharset());
-            // }
         });
         this.stage.hideOnEscape();
     }

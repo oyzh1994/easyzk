@@ -168,7 +168,7 @@ public class MainController extends ParentController {
                 TrayManager.show();
             } else {
                 StaticLog.error("tray not support!");
-                MessageBox.warn("不支持系统托盘！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.trayNotSupport"));
             }
         }
     }

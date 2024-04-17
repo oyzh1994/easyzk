@@ -206,7 +206,7 @@ public class ZKInfoAddController extends Controller {
         // 检查连接地址
         String host = this.getHost();
         if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
-            MessageBox.warn("请填写地址");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentNotEmpty"));
         } else {
             // 创建zk信息
             ZKInfo zkInfo = new ZKInfo();

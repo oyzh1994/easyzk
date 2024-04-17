@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.digital.PortTextField;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -253,10 +254,10 @@ public class ZKInfoAddController extends Controller {
             boolean result = this.infoStore.add(zkInfo);
             if (result) {
                 ZKEventUtil.infoAdded(zkInfo);
-                MessageBox.okToast("新增zk信息成功!");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 this.closeStage();
             } else {
-                MessageBox.warn("新增zk信息失败！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

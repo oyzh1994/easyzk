@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -74,10 +75,10 @@ public class ZKFilterAddController extends Controller {
             if (this.filterStore.add(filter)) {
                 ZKEventUtil.filterAdded();
                 ZKEventUtil.treeChildFilter();
-                MessageBox.okToast("新增ZK过滤配置成功!");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 this.closeStage();
             } else {
-                MessageBox.warn("新增ZK过滤配置失败！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -134,7 +134,7 @@ public class ZKNodeImportController extends Controller {
             MessageBox.warn("仅支持单个文件！");
             return;
         }
-        File file = files.get(0);
+        File file = files.getFirst();
         // 解析文件
         this.parseFile(file);
     }

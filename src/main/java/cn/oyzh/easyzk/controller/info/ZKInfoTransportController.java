@@ -228,7 +228,6 @@ public class ZKInfoTransportController extends Controller {
                 }
                 this.transport("/");
                 this.updateStatus("数据传输收尾中....");
-                // this.transportMsg.waitTextExpend();
                 this.updateStatus("数据传输结束");
                 MessageBox.okToast("传输数据结束！");
             } catch (Exception ex) {

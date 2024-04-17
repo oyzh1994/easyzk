@@ -18,8 +18,8 @@ import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.CopyButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -248,12 +248,12 @@ public class ZKACLAddController extends Controller {
         // 获取内容
         String user = this.digestInfo1User.getText().trim();
         if (StrUtil.isBlank(user)) {
-            MessageBox.tipMsg("用户名不能为空！", this.digestInfo1User);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.digestInfo1User);
             return;
         }
         String password = this.digestInfo1Password.getText().trim();
         if (StrUtil.isBlank(password)) {
-            MessageBox.tipMsg("密码不能为空！", this.digestInfo1Password);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.digestInfo1Password);
             return;
         }
         String digest = ZKAuthUtil.digest(user, password);
@@ -262,7 +262,7 @@ public class ZKACLAddController extends Controller {
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn("此摘要认证信息(Digest)已存在！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
             return;
         }
         ACL acl = new ACL();
@@ -284,25 +284,25 @@ public class ZKACLAddController extends Controller {
         String digest = this.digestInfo2.getText().trim();
         String[] text = digest.split(":");
         if (text.length != 2) {
-            MessageBox.tipMsg("数据格式异常！", this.digestInfo2);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.format"), this.digestInfo2);
             return;
         }
         String user = text[0];
         String password = text[1];
         if (StrUtil.isBlank(user)) {
-            MessageBox.tipMsg("用户名不能为空！", this.digestInfo2);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.digestInfo2);
             return;
         }
         if (StrUtil.isBlank(password)) {
-            MessageBox.tipMsg("密码摘要不能为空！", this.digestInfo2);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.digestInfo2);
             return;
         }
         if (password.length() < 28) {
-            MessageBox.tipMsg("密码摘要格式异常！", this.digestInfo2);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.format"), this.digestInfo2);
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn("此摘要认证信息(Digest)已存在！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
             return;
         }
         ACL acl = new ACL();
@@ -320,12 +320,12 @@ public class ZKACLAddController extends Controller {
         // 获取内容
         ZKAuth zkAuth = this.digestInfo3.getValue();
         if (zkAuth == null) {
-            MessageBox.tipMsg("未选择数据或无数据！", this.digestInfo3);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.contentNotEmpty"), this.digestInfo3);
             return;
         }
         String digest = zkAuth.digest();
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn("此摘要认证信息(Digest)已存在！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
             return;
         }
         ACL acl = new ACL();
@@ -419,11 +419,11 @@ public class ZKACLAddController extends Controller {
             Stat stat = this.zkClient.addACL(this.zkItem.nodePath(), list);
             if (stat != null) {
                 this.zkItem.refreshACL();
-                MessageBox.okToast("添加权限成功！");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 this.closeStage();
                 return true;
             }
-            MessageBox.warn("添加权限失败！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

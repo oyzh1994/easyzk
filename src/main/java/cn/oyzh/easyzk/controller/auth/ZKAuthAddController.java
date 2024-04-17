@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -53,11 +54,11 @@ public class ZKAuthAddController extends Controller {
             String user = this.user.getText().trim();
             String password = this.password.getText().trim();
             if (StrUtil.isBlank(user)) {
-                MessageBox.tipMsg("用户名不能为空！", this.user);
+                MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.user);
                 return;
             }
             if (StrUtil.isBlank(password)) {
-                MessageBox.tipMsg("密码不能为空！", this.password);
+                MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.password);
                 return;
             }
             if (this.authStore.exist(user, password)) {
@@ -67,10 +68,10 @@ public class ZKAuthAddController extends Controller {
             ZKAuth auth = new ZKAuth(user, password);
             if (this.authStore.add(auth)) {
                 ZKEventUtil.authAdded(auth);
-                MessageBox.okToast("新增认证信息成功！");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 this.closeStage();
             } else {
-                MessageBox.warn("新增认证信息失败！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -58,7 +58,7 @@ public class AboutController extends Controller {
         this.updateDate.setText(this.project.getUpdateDate());
         // 设置版权文本框的文本为项目的版权信息
         this.copyright.setText(this.project.getCopyright());
-        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? this.i18nString("buildType1") : this.i18nString("buildType2"));
+        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? this.i18nString("base.buildType1") : this.i18nString("base.buildType2"));
         // 设置标题
         this.stage.appendTitle(this.project.getName());
         this.stage.hideOnEscape();

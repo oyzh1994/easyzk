@@ -25,6 +25,7 @@ import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -506,7 +507,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     private void handleACLState(ZKACL acl, Text text) {
         Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.client());
         if (CollUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
-            text.setText("(已认证)");
+            text.setText("(" + BaseResourceBundle.getBaseString("base.authed") + ")");
         } else {
             text.setText("");
         }

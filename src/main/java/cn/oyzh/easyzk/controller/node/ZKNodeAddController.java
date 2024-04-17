@@ -16,6 +16,7 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.beans.value.ChangeListener;
@@ -180,9 +181,9 @@ public class ZKNodeAddController extends Controller {
             // 新增节点
             String node = this.zkClient.create(this.nodePathText, nodeData.getBytes(), List.of(acl), null, createMode, true);
             if (node == null) {
-                MessageBox.warnToast("新增子节点失败！");
+                MessageBox.warnToast(BaseResourceBundle.getBaseString("base.actionFail"));
             } else {
-                MessageBox.okToast("新增子节点成功！");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 this.closeStage();
             }
         } catch (Exception ex) {

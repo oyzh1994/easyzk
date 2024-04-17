@@ -16,6 +16,7 @@ import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.digital.PortTextField;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -250,10 +251,10 @@ public class ZKInfoUpdateController extends Controller {
         // 保存数据
         if (this.infoStore.update(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
-            MessageBox.okToast("修改ZK信息成功!");
+            MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
             this.closeStage();
         } else {
-            MessageBox.warn("修改失败！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
         }
     }
 

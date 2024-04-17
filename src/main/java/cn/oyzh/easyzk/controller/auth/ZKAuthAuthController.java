@@ -16,6 +16,7 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -119,11 +120,11 @@ public class ZKAuthAuthController extends Controller {
                 user = this.user.getText().trim();
                 password = this.password.getText().trim();
                 if (StrUtil.isBlank(user)) {
-                    MessageBox.tipMsg("用户名不能为空！", this.user);
+                    MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.user);
                     return;
                 }
                 if (StrUtil.isBlank(password)) {
-                    MessageBox.tipMsg("密码不能为空！", this.password);
+                    MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.password);
                     return;
                 }
             } else if (this.authType2.isVisible()) {
@@ -201,7 +202,7 @@ public class ZKAuthAuthController extends Controller {
                     if (auth != null) {
                         text = auth.getUser() + ":" + auth.getPassword();
                         if (ZKAuthUtil.isAuthed(client, auth)) {
-                            text += " (已认证)";
+                            text += " (" + BaseResourceBundle.getBaseString("base.authed") + ")";
                         }
                     }
                     return text;
@@ -211,7 +212,7 @@ public class ZKAuthAuthController extends Controller {
         }
         // 设置一个摘要用户名
         if (this.zkNode.getDigestACLs().size() == 1) {
-            this.user.setText(this.zkNode.getDigestACLs().get(0).digestUser());
+            this.user.setText(this.zkNode.getDigestACLs().getFirst().digestUser());
         } else if (this.zkNode.aclEmpty() && !authList.isEmpty()) {// 选中摘要列表认证
             this.authType.select(1);
         }

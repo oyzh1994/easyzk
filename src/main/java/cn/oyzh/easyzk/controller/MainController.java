@@ -9,6 +9,7 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -154,7 +155,7 @@ public class MainController extends ParentController {
             StaticLog.info("exit directly.");
             StageUtil.exit();
         } else if (this.setting.isExitAsk()) { // 总是询问
-            if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
+            if (MessageBox.confirm(BaseResourceBundle.getBaseString("base.quit") + this.project.getName() + "？")) {
                 StaticLog.info("exit by confirm.");
                 StageUtil.exit();
             } else {

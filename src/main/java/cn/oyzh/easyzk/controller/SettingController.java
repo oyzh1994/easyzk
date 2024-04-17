@@ -16,6 +16,7 @@ import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -300,7 +301,7 @@ public class SettingController extends Controller {
             // 应用区域配置
             I18nManager.apply(this.setting.getLocale());
         } else {
-            MessageBox.warnToast("保存配置失败！");
+            MessageBox.warnToast(BaseResourceBundle.getBaseString("base.actionFail"));
         }
     }
 

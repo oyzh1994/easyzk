@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -134,10 +135,10 @@ public class ZKACLUpdateController extends Controller {
         Stat stat = this.zkClient.setACL(this.zkItem.nodePath(), aclList);
         if (stat != null) {
             this.zkItem.refreshACL();
-            MessageBox.okToast("修改节点权限成功！");
+            MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
             this.closeStage();
         } else {
-            MessageBox.warn("修改节点权限失败！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
         }
     }
 

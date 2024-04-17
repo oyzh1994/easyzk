@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -92,7 +93,7 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void quit() {
-        if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
+        if (MessageBox.confirm(BaseResourceBundle.getBaseString("base.quit") + this.project.getName() + "？")) {
             StageUtil.exit();
         }
     }
@@ -124,7 +125,6 @@ public class HeaderController extends SubController {
     @FXML
     private void collapseTree() {
         this.treeMutexes.visible(this.expandTree);
-        // EventUtil.fire(ZKEventTypes.LEFT_COLLAPSE);
         ZKEventUtil.leftCollapse();
     }
 
@@ -134,7 +134,6 @@ public class HeaderController extends SubController {
     @FXML
     private void expandTree() {
         this.treeMutexes.visible(this.collapseTree);
-        // EventUtil.fire(ZKEventTypes.LEFT_EXTEND);
         ZKEventUtil.leftExtend();
     }
 

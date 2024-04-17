@@ -49,7 +49,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" fx:id="ignoreExist" text="%zk.skipByExists" selected="true">
+        <FlexCheckBox stateManager="$stateManager" fx:id="ignoreExist" text="%base.skipByExists" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>

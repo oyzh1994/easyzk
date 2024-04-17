@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -72,7 +73,7 @@ public class ZKToolController extends Controller {
     @FXML
     private void copyDigest() {
         this.digest.copy();
-        MessageBox.info("已复制到剪贴板");
+        MessageBox.info(BaseResourceBundle.getBaseString("base.copySuccess"));
     }
 
     @Override

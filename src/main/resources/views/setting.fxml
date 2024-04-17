@@ -24,7 +24,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="350">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
-        <FXTab text="%setting.tab.zk">
+        <FXTab text="%base.zk">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <AccentLabel text="%base.load" realHeight="30" realWidth="80">

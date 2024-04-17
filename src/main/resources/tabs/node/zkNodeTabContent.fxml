@@ -93,7 +93,8 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </CollectSVGGlyph>
-                <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15" onMousePrimaryClicked="#unCollect">
+                <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15"
+                                   onMousePrimaryClicked="#unCollect">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
@@ -124,7 +125,8 @@
                     </FlowPane.margin>
                 </CharsetComboBox>
                 <FXLabel tipText="%base.loadCost" fx:id="loadTime"
-                         style="-fx-cursor: HAND;-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="120" realHeight="15">
+                         style="-fx-cursor: HAND;-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="120"
+                         realHeight="15">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
@@ -175,12 +177,11 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXToggleSwitch>
-                <SVGGlyph tipText="%base.copy" size="16" onMousePrimaryClicked="#copyStat"
-                          url="/font/file-copy.svg">
+                <CopySVGGlyph size="16" onMousePrimaryClicked="#copyStat">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </SVGGlyph>
+                </CopySVGGlyph>
                 <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadStat">
                     <FlowPane.margin>
                         <Insets left="5"/>

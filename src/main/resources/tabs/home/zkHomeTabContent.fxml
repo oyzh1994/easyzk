@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.button.ChangelogButton?>
-<?import cn.oyzh.fx.plus.controls.button.ConnectButton?>
-<?import cn.oyzh.fx.plus.controls.button.GroupButton?>
-<?import cn.oyzh.fx.plus.controls.button.TerminalButton?>
+<?import cn.oyzh.fx.plus.controls.button.AddConnectButton?>
+<?import cn.oyzh.fx.plus.controls.button.AddGroupButton?>
+<?import cn.oyzh.fx.plus.controls.button.OpenTerminalButton?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
@@ -36,17 +36,17 @@
         </FlexLabel>
     </FlexVBox>
     <FlexHBox flexWidth="100% - 300" realHeight="300" layoutX="260" layoutY="260">
-        <ConnectButton onMousePrimaryClicked="#addConnect"/>
-        <GroupButton onMousePrimaryClicked="#addGroup">
+        <AddConnectButton onMousePrimaryClicked="#addConnect"/>
+        <AddGroupButton onMousePrimaryClicked="#addGroup">
             <HBox.margin>
                 <Insets left="20"/>
             </HBox.margin>
-        </GroupButton>
-        <TerminalButton onMousePrimaryClicked="#openTerminal">
+        </AddGroupButton>
+        <OpenTerminalButton onMousePrimaryClicked="#openTerminal">
             <HBox.margin>
                 <Insets left="20"/>
             </HBox.margin>
-        </TerminalButton>
+        </OpenTerminalButton>
         <ChangelogButton onMousePrimaryClicked="#changelog">
             <HBox.margin>
                 <Insets left="20"/>

@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.trees.root;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 
 
 /**
@@ -19,7 +20,7 @@ public class ZKRootTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public String name() {
-        return "Zookeeper连接列表";
+        return BaseResourceBundle.getBaseString("base.zk");
     }
 
     @Override

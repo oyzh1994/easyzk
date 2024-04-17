@@ -117,10 +117,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.isConnecting()) {
-            CancelConnectMenuItem cancelConnect = new CancelConnectMenuItem("11", this::cancelConnect);
+            CancelConnectMenuItem cancelConnect = new CancelConnectMenuItem("10", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
-            CloseConnectMenuItem closeConnect = new CloseConnectMenuItem("12", this::closeConnect);
+            CloseConnectMenuItem closeConnect = new CloseConnectMenuItem("10", this::closeConnect);
             EditConnectMenuItem editConnect = new EditConnectMenuItem("12", this::editConnect);
             RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
             ServerInfoMenuItem server = new ServerInfoMenuItem("12", this::serverInfo);

@@ -28,7 +28,7 @@
         <FXTab text="%base.data" fx:id="dataTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="parentNodeBox">
-                    <AccentLabel text="%node.add.label.parent" realHeight="30" realWidth="80">
+                    <AccentLabel text="%base.parentNode" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>

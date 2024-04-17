@@ -4,6 +4,7 @@ import cn.hutool.core.util.NumberUtil;
 import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.util.RegexUtil;
+import cn.oyzh.fx.plus.i18n.I18nManager;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.ZooDefs;
@@ -12,6 +13,7 @@ import org.apache.zookeeper.data.Id;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -56,10 +58,22 @@ public class ZKACLUtil {
     public static FriendlyInfo<ACL> parseId(@NonNull Id idVal) {
         FriendlyInfo<ACL> idInfo = new FriendlyInfo<>();
         idInfo.name("id");
-        idInfo.friendlyName("标识");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            idInfo.friendlyName("标识");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            idInfo.friendlyName("標識");
+        } else {
+            idInfo.friendlyName("id");
+        }
         idInfo.value(idVal.getId());
         if (idVal.getScheme().equalsIgnoreCase("WORLD")) {
-            idInfo.friendlyValue("所有人");
+            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                idInfo.friendlyValue("任何人");
+            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                idInfo.friendlyValue("任何人");
+            } else {
+                idInfo.friendlyValue("anyone");
+            }
         } else {
             idInfo.friendlyValue(idVal.getId());
         }
@@ -75,13 +89,51 @@ public class ZKACLUtil {
     public static FriendlyInfo<ACL> parseScheme(@NonNull String schemeStr) {
         FriendlyInfo<ACL> scheme = new FriendlyInfo<>();
         scheme.name("scheme");
-        scheme.friendlyName("认证");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            scheme.friendlyName("认证");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            scheme.friendlyName("認證");
+        } else {
+            scheme.friendlyName("scheme");
+        }
         scheme.value(schemeStr);
         switch (schemeStr.toUpperCase()) {
-            case "IP" -> scheme.friendlyValue("IP认证");
-            case "WORLD" -> scheme.friendlyValue("开放认证");
-            case "DIGEST" -> scheme.friendlyValue("摘要认证");
-            default -> scheme.friendlyValue("未知");
+            case "IP" -> {
+                if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                    scheme.friendlyValue("ip认证");
+                } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                    scheme.friendlyValue("ip認證");
+                } else {
+                    scheme.friendlyValue("ip");
+                }
+            }
+            case "WORLD" -> {
+                if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                    scheme.friendlyValue("开放认证");
+                } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                    scheme.friendlyValue("開放認證");
+                } else {
+                    scheme.friendlyValue("world");
+                }
+            }
+            case "DIGEST" -> {
+                if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                    scheme.friendlyValue("摘要认证");
+                } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                    scheme.friendlyValue("摘要認證");
+                } else {
+                    scheme.friendlyValue("digest");
+                }
+            }
+            default -> {
+                if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                    scheme.friendlyValue("未知");
+                } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                    scheme.friendlyValue("未知");
+                } else {
+                    scheme.friendlyValue("unknown");
+                }
+            }
         }
         return scheme;
     }
@@ -98,28 +150,64 @@ public class ZKACLUtil {
         StringBuilder friendlyValueBuilder = new StringBuilder();
         if (permsString.contains("a")) {
             valueBuilder.append("a");
-            friendlyValueBuilder.append(",特权");
+            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                friendlyValueBuilder.append(",特权");
+            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                friendlyValueBuilder.append(",特權");
+            } else {
+                friendlyValueBuilder.append(",admin");
+            }
         }
         if (permsString.contains("w")) {
             valueBuilder.append("w");
-            friendlyValueBuilder.append(",写入");
+            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                friendlyValueBuilder.append(",写入");
+            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                friendlyValueBuilder.append(",写入");
+            } else {
+                friendlyValueBuilder.append(",write");
+            }
         }
         if (permsString.contains("r")) {
             valueBuilder.append("r");
-            friendlyValueBuilder.append(",读取");
+            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                friendlyValueBuilder.append(",读取");
+            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                friendlyValueBuilder.append(",讀取");
+            } else {
+                friendlyValueBuilder.append(",read");
+            }
         }
         if (permsString.contains("d")) {
             valueBuilder.append("d");
-            friendlyValueBuilder.append(",删除子节点");
+            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                friendlyValueBuilder.append(",删除子节点");
+            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                friendlyValueBuilder.append(",刪除子節點");
+            } else {
+                friendlyValueBuilder.append(",deleteChild");
+            }
         }
         if (permsString.contains("c")) {
             valueBuilder.append("c");
-            friendlyValueBuilder.append(",创建子节点");
+            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+                friendlyValueBuilder.append(",创建子节点");
+            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+                friendlyValueBuilder.append(",創建子節點");
+            } else {
+                friendlyValueBuilder.append(",createChild");
+            }
         }
 
         FriendlyInfo<ACL> perms = new FriendlyInfo<>();
         perms.name("perms");
-        perms.friendlyName("权限");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            perms.friendlyName("权限");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            perms.friendlyName("權限");
+        } else {
+            perms.friendlyName("perms");
+        }
         perms.value(valueBuilder.toString());
         if (friendlyValueBuilder.toString().startsWith(",")) {
             perms.friendlyValue(friendlyValueBuilder.substring(1));

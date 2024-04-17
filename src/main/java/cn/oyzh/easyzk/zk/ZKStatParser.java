@@ -2,11 +2,13 @@ package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
+import cn.oyzh.fx.plus.i18n.I18nManager;
 import lombok.NonNull;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Function;
 
 /**
@@ -36,30 +38,54 @@ public class ZKStatParser implements Function<Stat, List<FriendlyInfo<Stat>>> {
         FriendlyInfo<Stat> czxid = new FriendlyInfo<>();
         czxid.name("czxid");
         czxid.value(stat.getCzxid());
-        czxid.friendlyName("创建节点事务ID");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            czxid.friendlyName("创建节点事务ID");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            czxid.friendlyName("創建節點事務ID");
+        } else {
+            czxid.friendlyName("czxid");
+        }
         czxid.friendlyValue(czxid.value());
 
         // 最后修改节点事务ID
         FriendlyInfo<Stat> mzxid = new FriendlyInfo<>();
         mzxid.name("mzxid");
         mzxid.value(stat.getMzxid());
-        mzxid.friendlyName("最后修改节点事务ID");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            mzxid.friendlyName("最后修改节点事务ID");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            mzxid.friendlyName("最後修改節點事務ID");
+        } else {
+            mzxid.friendlyName("mzxid");
+        }
         mzxid.friendlyValue(mzxid.value());
 
         // 最后修改子节点事务ID
         FriendlyInfo<Stat> pzxid = new FriendlyInfo<>();
         pzxid.name("pzxid");
         pzxid.value(stat.getPzxid());
-        pzxid.friendlyName("最后修改子节点事务ID");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            pzxid.friendlyName("最后修改子节点事务ID");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            pzxid.friendlyName("最後修改子節點事務ID");
+        } else {
+            pzxid.friendlyName("pzxid");
+        }
         pzxid.friendlyValue(pzxid.value());
 
         // 创建时间
         FriendlyInfo<Stat> ctime = new FriendlyInfo<>();
         ctime.name("ctime");
         ctime.value(stat.getCtime());
-        ctime.friendlyName("创建时间");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            ctime.friendlyName("创建时间");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            ctime.friendlyName("創建時間");
+        } else {
+            ctime.friendlyName("ctime");
+        }
         if (ctime.value().equals(0L)) {
-            ctime.friendlyValue("无");
+            ctime.friendlyValue("");
         } else {
             ctime.friendlyValue(Const.DATE_FORMAT.format(ctime.value()));
         }
@@ -68,9 +94,15 @@ public class ZKStatParser implements Function<Stat, List<FriendlyInfo<Stat>>> {
         FriendlyInfo<Stat> mtime = new FriendlyInfo<>();
         mtime.name("mtime");
         mtime.value(stat.getMtime());
-        mtime.friendlyName("最后修改时间");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            mtime.friendlyName("最后修改时间");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            mtime.friendlyName("最後修改時間");
+        } else {
+            mtime.friendlyName("mtime");
+        }
         if (mtime.value().equals(0L)) {
-            mtime.friendlyValue("无");
+            mtime.friendlyValue("");
         } else {
             mtime.friendlyValue(Const.DATE_FORMAT.format(mtime.value()));
         }
@@ -79,42 +111,78 @@ public class ZKStatParser implements Function<Stat, List<FriendlyInfo<Stat>>> {
         FriendlyInfo<Stat> version = new FriendlyInfo<>();
         version.name("version");
         version.value(stat.getVersion());
-        version.friendlyName("数据版本号");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            version.friendlyName("数据版本号");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            version.friendlyName("數據版本號");
+        } else {
+            version.friendlyName("version");
+        }
         version.friendlyValue(version.value());
 
         // 权限版本号
         FriendlyInfo<Stat> aversion = new FriendlyInfo<>();
         aversion.name("aversion");
         aversion.value(stat.getAversion());
-        aversion.friendlyName("权限版本号");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            aversion.friendlyName("权限版本号");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            aversion.friendlyName("權限版本號");
+        } else {
+            aversion.friendlyName("aversion");
+        }
         aversion.friendlyValue(aversion.value());
 
         // 子节点版本号
         FriendlyInfo<Stat> cversion = new FriendlyInfo<>();
         cversion.name("cversion");
         cversion.value(stat.getCversion());
-        cversion.friendlyName("子节点版本号");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            cversion.friendlyName("子节点版本号");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            cversion.friendlyName("子節點版本號");
+        } else {
+            cversion.friendlyName("cversion");
+        }
         cversion.friendlyValue(cversion.value());
 
         // 子节点数量
         FriendlyInfo<Stat> numChildren = new FriendlyInfo<>();
         numChildren.name("numChildren");
         numChildren.value(stat.getNumChildren());
-        numChildren.friendlyName("子节点数量");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            numChildren.friendlyName("子节点数量");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            numChildren.friendlyName("子節點數量");
+        } else {
+            numChildren.friendlyName("numChildren");
+        }
         numChildren.friendlyValue(numChildren.value());
 
         // 数据长度
         FriendlyInfo<Stat> dataLength = new FriendlyInfo<>();
         dataLength.name("dataLength");
         dataLength.value(stat.getDataLength());
-        dataLength.friendlyName("数据长度");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            dataLength.friendlyName("数据长度");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            dataLength.friendlyName("數據長度");
+        } else {
+            dataLength.friendlyName("dataLength");
+        }
         dataLength.friendlyValue(dataLength.value());
 
         // 会话ID
         FriendlyInfo<Stat> ephemeralOwner = new FriendlyInfo<>();
         ephemeralOwner.name("ephemeralOwner");
         ephemeralOwner.value(stat.getEphemeralOwner());
-        ephemeralOwner.friendlyName("会话ID");
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            ephemeralOwner.friendlyName("会话ID");
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            ephemeralOwner.friendlyName("會話ID");
+        } else {
+            ephemeralOwner.friendlyName("ephemeralOwner");
+        }
         ephemeralOwner.friendlyValue(ephemeralOwner.value());
 
         // 将各个属性的FriendlyInfo添加到statInfos列表中

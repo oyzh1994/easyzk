@@ -163,43 +163,43 @@ public class ZKNodeTab extends DynamicTab {
         return "/tabs/node/zkNodeTabContent.fxml";
     }
 
-    @Override
-    public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = super.getMenuItems();
-        CloseCurrConnectTabMenuItem closeConnectTab = new CloseCurrConnectTabMenuItem(this::closeConnectTab);
-        CloseOtherConnectTabMenuItem closeOtherConnectTab = new CloseOtherConnectTabMenuItem(this::closeOtherConnectTab);
-        items.add(4, closeConnectTab);
-        items.add(5, closeOtherConnectTab);
-        return items;
-    }
+    // @Override
+    // public List<MenuItem> getMenuItems() {
+    //     List<MenuItem> items = super.getMenuItems();
+    //     CloseCurrConnectTabMenuItem closeConnectTab = new CloseCurrConnectTabMenuItem(this::closeConnectTab);
+    //     CloseOtherConnectTabMenuItem closeOtherConnectTab = new CloseOtherConnectTabMenuItem(this::closeOtherConnectTab);
+    //     items.add(4, closeConnectTab);
+    //     items.add(5, closeOtherConnectTab);
+    //     return items;
+    // }
 
-    /**
-     * 关闭当前连接tab
-     */
-    private void closeConnectTab() {
-        FXUtil.runLater(() -> {
-            List<Tab> list = new ArrayList<>();
-            for (Tab tab : this.tabs()) {
-                if (tab instanceof ZKNodeTab nodeTab && nodeTab.client() == this.treeItem.client()) {
-                    list.add(tab);
-                }
-            }
-            this.tabs().removeAll(list);
-        });
-    }
-
-    /**
-     * 关闭其他连接tab
-     */
-    private void closeOtherConnectTab() {
-        FXUtil.runLater(() -> {
-            List<Tab> list = new ArrayList<>();
-            for (Tab tab : this.tabs()) {
-                if (tab instanceof ZKNodeTab nodeTab && nodeTab.client() != this.treeItem.client()) {
-                    list.add(tab);
-                }
-            }
-            this.tabs().removeAll(list);
-        });
-    }
+    // /**
+    //  * 关闭当前连接tab
+    //  */
+    // private void closeConnectTab() {
+    //     FXUtil.runLater(() -> {
+    //         List<Tab> list = new ArrayList<>();
+    //         for (Tab tab : this.tabs()) {
+    //             if (tab instanceof ZKNodeTab nodeTab && nodeTab.client() == this.treeItem.client()) {
+    //                 list.add(tab);
+    //             }
+    //         }
+    //         this.tabs().removeAll(list);
+    //     });
+    // }
+    //
+    // /**
+    //  * 关闭其他连接tab
+    //  */
+    // private void closeOtherConnectTab() {
+    //     FXUtil.runLater(() -> {
+    //         List<Tab> list = new ArrayList<>();
+    //         for (Tab tab : this.tabs()) {
+    //             if (tab instanceof ZKNodeTab nodeTab && nodeTab.client() != this.treeItem.client()) {
+    //                 list.add(tab);
+    //             }
+    //         }
+    //         this.tabs().removeAll(list);
+    //     });
+    // }
 }

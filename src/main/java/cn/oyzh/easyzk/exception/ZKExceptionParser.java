@@ -171,7 +171,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.ConnectionLossException) {
-            return I18nResourceBundle.i18nString("base.connectionLoss");
+            return I18nResourceBundle.i18nString("base.connectLoss");
         }
 
         String message = e.getMessage();

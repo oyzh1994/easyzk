@@ -220,7 +220,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         this.client.startWithListener();
                         if (!this.isConnected()) {
                             if (!this.canceled) {
-                                MessageBox.warn(this.value.getName() + I18nResourceBundle.i18nString("base.connectionFail"));
+                                MessageBox.warn(this.value.getName() + I18nResourceBundle.i18nString("base.connectFail"));
                             }
                             this.canceled = false;
                         } else {
@@ -399,7 +399,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             // 连接中断事件
             if (n == ZKConnState.SUSPENDED) {
                 this.client.close();
-                MessageBox.warn(this.value().getName() + I18nResourceBundle.i18nString("base.connectionSuspended"));
+                MessageBox.warn(this.value().getName() + I18nResourceBundle.i18nString("base.connectSuspended"));
             }
         });
         super.setValue(new ZKConnectTreeItemValue(this));

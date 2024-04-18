@@ -219,7 +219,7 @@ public class ZKACLAddController extends Controller {
             }
             String perms = this.getPerms();
             if (StrUtil.isBlank(perms)) {
-                MessageBox.warn("请最少勾选一项权限！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.contentNotEmpty"));
                 return;
             }
             if (this.aclType.getSelectedIndex() == 0) {
@@ -258,7 +258,7 @@ public class ZKACLAddController extends Controller {
         }
         String digest = ZKAuthUtil.digest(user, password);
         if (digest == null) {
-            MessageBox.warn("认证信息处理异常！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
@@ -381,7 +381,7 @@ public class ZKACLAddController extends Controller {
                 throw new ZKException(s + BaseResourceBundle.getBaseString("base.invalidData"));
             }
             if (strArr.length < 2) {
-                throw new ZKException(s + "权限无效");
+                throw new ZKException(s + BaseResourceBundle.getBaseString("base.perms") + BaseResourceBundle.getBaseString("base.invalid"));
             }
             String ip = strArr[0];
             String perms = strArr[1];
@@ -390,7 +390,7 @@ public class ZKACLAddController extends Controller {
             acl.setId(new Id("ip", ip));
             acl.setPerms(perms);
             if (this.zkItem.existIPACL(acl.idVal())) {
-                MessageBox.warnToast("IP" + ip + "已存在！");
+                MessageBox.warnToast(ip + BaseResourceBundle.getBaseString("base.alreadyExists"));
                 return;
             }
             aclList.add(acl);

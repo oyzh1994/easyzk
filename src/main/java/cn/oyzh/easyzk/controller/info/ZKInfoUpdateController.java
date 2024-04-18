@@ -191,8 +191,8 @@ public class ZKInfoUpdateController extends Controller {
         SSHConnectInfo sshConnectInfo = new SSHConnectInfo();
         sshConnectInfo.setHost(this.sshHost.getText());
         sshConnectInfo.setUser(this.sshUser.getText());
-        sshConnectInfo.setPassword(this.sshPassword.getText());
         sshConnectInfo.setPort(this.sshPort.getIntValue());
+        sshConnectInfo.setPassword(this.sshPassword.getText());
         sshConnectInfo.setTimeout(this.sshTimeout.getIntValue());
         return sshConnectInfo;
     }

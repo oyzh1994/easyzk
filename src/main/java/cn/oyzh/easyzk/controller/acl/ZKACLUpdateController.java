@@ -102,7 +102,7 @@ public class ZKACLUpdateController extends Controller {
         try {
             String perms = this.getPerms();
             if (StrUtil.isBlank(perms)) {
-                MessageBox.warn("请最少勾选一项权限！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.contentNotEmpty"));
                 return;
             }
             List<ACL> aclList = this.zkClient.getACL(this.zkItem.nodePath());

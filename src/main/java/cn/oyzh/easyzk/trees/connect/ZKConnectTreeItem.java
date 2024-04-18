@@ -23,6 +23,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
 import cn.oyzh.fx.plus.menu.CloseConnectMenuItem;
@@ -219,7 +220,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         this.client.startWithListener();
                         if (!this.isConnected()) {
                             if (!this.canceled) {
-                                MessageBox.warn(this.value.getName() + "连接失败");
+                                MessageBox.warn(this.value.getName() + BaseResourceBundle.getBaseString("base.connectionFail"));
                             }
                             this.canceled = false;
                         } else {
@@ -263,7 +264,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     public void closeConnect() {
         if (this.isConnected()) {
-            if (this.hasUnsavedNode() && !MessageBox.confirm("发现节点数据未保存，确定关闭连接？")) {
+            if (this.hasUnsavedNode() && !MessageBox.confirm(BaseResourceBundle.getBaseString("base.unsavedAndContinue"))) {
                 return;
             }
             this.closeConnect(true);
@@ -323,7 +324,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     private void editConnect() {
         if (this.isConnected()) {
-            if (!MessageBox.confirm("需要关闭连接，继续么？")) {
+            if (!MessageBox.confirm(BaseResourceBundle.getBaseString("base.closeAndContinue"))) {
                 return;
             }
             this.closeConnect();
@@ -339,37 +340,37 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     private void repeatConnect() {
         ZKInfo zkInfo = new ZKInfo();
         zkInfo.copy(this.value);
-        zkInfo.setName(this.value.getName() + "-复制");
+        zkInfo.setName(this.value.getName() + "-" + BaseResourceBundle.getBaseString("base.repeat"));
         zkInfo.setCollects(Collections.emptyList());
         if (this.infoStore.add(zkInfo)) {
             this.parent().addConnect(zkInfo);
         } else {
-            MessageBox.warn("复制连接失败！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
         }
     }
 
     @Override
     public void delete() {
-        if (MessageBox.confirm("删除" + this.value().getName(), "确定删除连接？")) {
+        if (MessageBox.confirm(BaseResourceBundle.getBaseString("base.delete") + this.value().getName())) {
             this.closeConnect(false);
             if (this.parent().delConnectItem(this)) {
                 ZKEventUtil.infoDeleted(this.value);
             } else {
-                MessageBox.warn("删除连接失败！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
             }
         }
     }
 
     @Override
     public void rename() {
-        String connectName = MessageBox.prompt("请输入新的连接名称", this.value.getName());
+        String connectName = MessageBox.prompt(BaseResourceBundle.getBaseString("base.contentTip1"), this.value.getName());
         // 名称为null或者跟当前名称相同，则忽略
         if (connectName == null || Objects.equals(connectName, this.value.getName())) {
             return;
         }
         // 检查名称
         if (StrUtil.isBlank(connectName)) {
-            MessageBox.warn("连接名称不能为空！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentNotEmpty"));
             return;
         }
         this.value.setName(connectName);
@@ -377,7 +378,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         if (this.infoStore.update(this.value)) {
             this.setValue(new ZKConnectTreeItemValue(this));
         } else {
-            MessageBox.warn("修改连接名称失败！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
         }
     }
 
@@ -398,7 +399,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             // 连接中断事件
             if (n == ZKConnState.SUSPENDED) {
                 this.client.close();
-                MessageBox.warn(this.value().getName() + "连接中断");
+                MessageBox.warn(this.value().getName() + BaseResourceBundle.getBaseString("base.connectionSuspended"));
             }
         });
         super.setValue(new ZKConnectTreeItemValue(this));
@@ -445,7 +446,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             }
             SystemUtil.gcLater();
         } else {
-            MessageBox.warn(this.value().getName() + "加载根节点失败");
+            MessageBox.warn(this.value().getName() + BaseResourceBundle.getBaseString("base.loadFail"));
         }
     }
 

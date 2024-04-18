@@ -132,7 +132,7 @@ public class ZKNodeImportController extends Controller {
             return;
         }
         if (files.size() != 1) {
-            MessageBox.warn("仅支持单个文件！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.onlySupport", "base.single", "base.file"));
             return;
         }
         File file = files.getFirst();
@@ -147,7 +147,7 @@ public class ZKNodeImportController extends Controller {
     private void chooseFile() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files|TXT files", "*.json", "*.txt");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FileChooserUtil.choose("选择zk脚本", new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose(BaseResourceBundle.getBaseString("base.choose", "base.file"), new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseFile(file);
     }
@@ -162,19 +162,19 @@ public class ZKNodeImportController extends Controller {
             return;
         }
         if (!file.exists()) {
-            MessageBox.warn("文件不存在！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.file", "base.notExists"));
             return;
         }
         if (file.isDirectory()) {
-            MessageBox.warn("不支持文件夹！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.notSupport", "base.folder"));
             return;
         }
-        if (!FileNameUtil.isType(file.getName(), "txt", "json")) {
-            MessageBox.warn("仅支持txt或json文件！");
+        if (!FileNameUtil.isType(file.getName(), "txt", "text", "json")) {
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.invalid", "base.format"));
             return;
         }
         if (file.length() == 0) {
-            MessageBox.warn("文件内容为空！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentNotEmpty"));
             return;
         }
         try {
@@ -184,14 +184,14 @@ public class ZKNodeImportController extends Controller {
             this.importMsg.clear();
             this.importBtn.enable();
             // 脚本信息
-            String info = "文件名：" + file.getName() + "，" +
-                    "共：" + this.nodeExport.counts() + "行，" +
-                    "大小：" + Math.max(1, file.length() / 1024) + "Kb，" +
-                    "源版本：" + this.nodeExport.version() + "，" +
-                    "源平台：" + this.nodeExport.platform() + "，" +
-                    "字符集：" + this.nodeExport.charset();
+            String info = BaseResourceBundle.getBaseString("base.fileName") + " " + file.getName() + "，" +
+                    BaseResourceBundle.getBaseString("base.total") + " " + this.nodeExport.counts() + BaseResourceBundle.getBaseString("base.line") + "，" +
+                    BaseResourceBundle.getBaseString("base.size") + " " + Math.max(1, file.length() / 1024) + "Kb，" +
+                    BaseResourceBundle.getBaseString("base.version") + " " + this.nodeExport.version() + "，" +
+                    BaseResourceBundle.getBaseString("base.platform") + " " + this.nodeExport.platform() + "，" +
+                    BaseResourceBundle.getBaseString("base.charset") + " " + this.nodeExport.charset();
             if (this.nodeExport.hasPrefix()) {
-                info += "，脚本前缀：" + this.nodeExport.getPrefix();
+                info += "，" + BaseResourceBundle.getBaseString("base.prefix") + this.nodeExport.getPrefix();
             }
             this.scriptInfo.setText(info);
             this.charset.select(this.nodeExport.getCharset());
@@ -199,7 +199,7 @@ public class ZKNodeImportController extends Controller {
             ex.printStackTrace();
             this.nodeExport = null;
             this.importBtn.disable();
-            MessageBox.exception(ex, "解析脚本失败");
+            MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.parseFail"));
         }
     }
 
@@ -215,7 +215,7 @@ public class ZKNodeImportController extends Controller {
         // 开始处理
         this.importBtn.disable();
         this.stateManager.disable();
-        this.stage.appendTitle("===导入执行中===");
+        this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.import") + BaseResourceBundle.getBaseString("base.processing") + "===");
         // 忽略已存在节点
         boolean ignoreExist = this.ignoreExist.isSelected();
         // 执行导入
@@ -255,17 +255,17 @@ public class ZKNodeImportController extends Controller {
                     this.updateStatus(path, status, exception);
                 }
                 // 收尾工作
-                this.updateStatus("数据导入收尾中...");
-                this.updateStatus("数据导入结束");
+                this.updateStatus(BaseResourceBundle.getBaseString("base.processing"));
+                this.updateStatus(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
 
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus("数据导入取消");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionCancel"));
                     MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionCancel"));
                 } else {
                     ex.printStackTrace();
-                    this.updateStatus("数据导入失败");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionFail"));
                     MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
                 }
             } finally {
@@ -297,7 +297,7 @@ public class ZKNodeImportController extends Controller {
         // 文件拖拽相关
         this.stage.scene().setOnDragOver(event1 -> {
             this.stage.disable();
-            this.stage.appendTitle("===松开鼠标以释放文件===");
+            this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.dragTip1") + "===");
             event1.acceptTransferModes(TransferMode.ANY);
             event1.consume();
         });
@@ -330,13 +330,13 @@ public class ZKNodeImportController extends Controller {
         this.counter.update(status);
         String msg;
         if (status == 1) {
-            msg = "导入节点：" + path + " 成功";
+            msg = BaseResourceBundle.getBaseString("base.importNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.success");
         } else if (status == 2) {
-            msg = "导入节点：" + path + " 已忽略，此节点已存在";
+            msg = BaseResourceBundle.getBaseString("base.importNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.nodeTip1");
         } else {
-            msg = "导入节点：" + path + " 失败";
+            msg = BaseResourceBundle.getBaseString("base.importNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.fail");
             if (ex != null) {
-                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + BaseResourceBundle.getBaseString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
             }
         }
         this.importMsg.appendLine(msg);

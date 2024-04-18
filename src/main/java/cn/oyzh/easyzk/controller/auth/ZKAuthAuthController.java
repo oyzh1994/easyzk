@@ -131,7 +131,7 @@ public class ZKAuthAuthController extends Controller {
                 // 获取内容
                 ZKAuth zkAuth = this.authList.getValue();
                 if (zkAuth == null) {
-                    MessageBox.tipMsg("未选择数据或无数据！", this.authList);
+                    MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.contentNotEmpty"), this.authList);
                     return;
                 }
                 user = zkAuth.getUser();
@@ -168,11 +168,11 @@ public class ZKAuthAuthController extends Controller {
                 MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
             } else {
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
-                MessageBox.warn("认证失败或此节点无需认证！");
+                MessageBox.warn(BaseResourceBundle.getBaseString("base.authFailTip1"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, "认证失败");
+            MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail"));
         }
     }
 

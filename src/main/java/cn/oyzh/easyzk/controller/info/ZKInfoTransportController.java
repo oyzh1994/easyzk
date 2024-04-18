@@ -16,7 +16,6 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.handler.StateManager;
@@ -157,17 +156,17 @@ public class ZKInfoTransportController extends Controller {
     private void doTransport() {
         // 检查连接
         if (this.formConnect.getValue() == null) {
-            MessageBox.tipMsg("请选择一个传输连接", this.formConnect);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.choose", "base.transport", "base.connect"), this.formConnect);
             return;
         }
         if (this.targetConnect.getValue() == null) {
-            MessageBox.tipMsg("请选择一个目标连接", this.formConnect);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.choose", "base.target", "base.connect"), this.formConnect);
             return;
         }
         ZKInfo formInfo = this.formConnect.getValue();
         ZKInfo targetInfo = this.targetConnect.getValue();
         if (formInfo == targetInfo) {
-            MessageBox.tipMsg("传输目标不能是自己", this.formConnect);
+            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.invalid", "base.action"), this.formConnect);
             return;
         }
 
@@ -176,16 +175,16 @@ public class ZKInfoTransportController extends Controller {
         // 检查传输连接
         if (this.formClient == null || !this.formClient.isConnected() || this.formClient.zkInfo() != formInfo) {
             try {
-                this.transportMsg.appendLine("传输连接初始化中...");
+                this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.transport", "base.connect", "base.initing") + "...");
                 if (this.formClient != null) {
                     this.formClient.close();
                 }
                 this.formClient = new ZKClient(formInfo);
-                this.stage.appendTitle("===传输连接初始化===");
+                this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.transport", "base.connect", "base.initing") + "===");
                 this.formClient.start();
                 if (!this.formClient.isConnected()) {
                     this.formConnect.requestFocus();
-                    MessageBox.warn("传输连接[" + formInfo.getName() + "]初始化失败，连接异常");
+                    MessageBox.warn(BaseResourceBundle.getBaseString("base.transport", "base.connect") + "[" + formInfo.getName() + "]" + BaseResourceBundle.getBaseString("base.initfail"));
                     return;
                 }
             } finally {
@@ -196,16 +195,16 @@ public class ZKInfoTransportController extends Controller {
         // 检查目标连接
         if (this.targetClient == null || !this.targetClient.isConnected() || this.targetClient.zkInfo() != formInfo) {
             try {
-                this.transportMsg.appendLine("目标连接初始化中...");
+                this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.target", "base.connect", "base.initing") + "...");
                 if (this.targetClient != null) {
                     this.targetClient.close();
                 }
                 this.targetClient = new ZKClient(targetInfo);
-                this.stage.appendTitle("===目标连接初始化===");
+                this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.target", "base.connect", "base.initing") + "===");
                 this.targetClient.start();
                 if (!this.targetClient.isConnected()) {
                     this.targetConnect.requestFocus();
-                    MessageBox.warn("目标连接[" + targetInfo.getName() + "]初始化失败，连接异常");
+                    MessageBox.warn(BaseResourceBundle.getBaseString("base.target", "base.connect") + "[" + targetInfo.getName() + "]" + BaseResourceBundle.getBaseString("base.initfail"));
                     return;
                 }
             } finally {
@@ -217,8 +216,8 @@ public class ZKInfoTransportController extends Controller {
         this.counter.reset();
         // 开始传输
         this.transportStart();
-        this.stage.appendTitle("===传输执行中===");
-        this.transportMsg.appendLine("传输即将开始...");
+        this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.transport", "base.processing") + "===");
+        this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.starting"));
         // 执行传输
         this.exportTask = ThreadUtil.start(() -> {
             this.stopTransportBtn.enable();
@@ -228,16 +227,15 @@ public class ZKInfoTransportController extends Controller {
                     this.filters = this.filterStore.loadEnable();
                 }
                 this.transport("/");
-                this.updateStatus("数据传输收尾中....");
-                this.updateStatus("数据传输结束");
+                this.updateStatus(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus("数据传输取消");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionCancel"));
                     MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionCancel"));
                 } else {
                     ex.printStackTrace();
-                    this.updateStatus("数据传输失败");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionFail"));
                     MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail"));
                 }
             } finally {
@@ -397,18 +395,18 @@ public class ZKInfoTransportController extends Controller {
         path = URLDecoder.decode(path, StandardCharsets.UTF_8);
         if (status == 1) {
             this.counter.update(1);
-            this.transportMsg.appendLine("传输节点：" + path + " 成功");
+            this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.transportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.success"));
         } else if (status == 2) {
             this.counter.update(2);
-            this.transportMsg.appendLine("传输节点：" + path + " 已忽略，此节点已存在");
+            this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.transportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.nodeTip1"));
         } else if (status == 3) {
             this.counter.update(2);
-            this.transportMsg.appendLine("传输节点：" + path + " 已忽略，此节点适用过滤配置");
+            this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.transportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.nodeTip2"));
         } else {
             this.counter.update(0);
-            String msg = "传输节点：" + path + " 失败";
+            String msg = BaseResourceBundle.getBaseString("base.transportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.fail");
             if (ex != null) {
-                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + BaseResourceBundle.getBaseString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
             }
             this.transportMsg.appendLine(msg);
         }

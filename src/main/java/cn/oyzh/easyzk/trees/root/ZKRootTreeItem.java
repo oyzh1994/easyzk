@@ -17,6 +17,7 @@ import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
 import cn.oyzh.fx.plus.menu.AddGroupMenuItem;
@@ -116,9 +117,9 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         File file = FileChooserUtil.save("保存zk连接列表", "zk连接列表.json", new FileChooser.ExtensionFilter[]{extensionFilter});
         try {
             FileUtil.writeUtf8String(export.toJSONString(), file);
-            MessageBox.okToast("保存zk连接列表成功！");
+            MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
         } catch (Exception ex) {
-            MessageBox.warn("保存zk连接列表失败！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
         }
     }
 
@@ -173,7 +174,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             return;
         }
         if (file.length() == 0) {
-            MessageBox.warn("文件内容为空！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentNotEmpty"));
             return;
         }
         try {
@@ -185,14 +186,14 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
                     if (this.infoStore.add(zkInfo)) {
                         this.addConnect(zkInfo);
                     } else {
-                        MessageBox.warn("连接[" + zkInfo.getName() + "]导入失败");
+                        MessageBox.warn(BaseResourceBundle.getBaseString("base.connect") + "[" + zkInfo.getName() + "]" + BaseResourceBundle.getBaseString("base.importFail"));
                     }
                 }
-                MessageBox.okToast("导入zk连接列表成功！");
+                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, "解析zk连接列表失败！");
+            MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionException"));
         }
     }
 
@@ -207,7 +208,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * 添加分组
      */
     public void addGroup() {
-        String groupName = MessageBox.prompt("请输入分组名称");
+        String groupName = MessageBox.prompt(BaseResourceBundle.getBaseString("base.contentTip1"));
 
         // 名称为null，则忽略
         if (groupName == null) {
@@ -216,21 +217,21 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
         // 不能为空
         if (StrUtil.isBlank(groupName)) {
-            MessageBox.warn("名称不能为空！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.nameNotEmpty"));
             return;
         }
 
         ZKGroup group = new ZKGroup();
         group.setName(groupName);
         if (this.groupStore.exist(group)) {
-            MessageBox.warn("此分组已存在！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
             return;
         }
         group = this.groupStore.add(groupName);
         if (group != null) {
             this.addChild(new ZKGroupTreeItem(group, this.getTreeView()));
         } else {
-            MessageBox.warn("添加分组失败！");
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
         }
     }
 

@@ -8,7 +8,6 @@ import cn.oyzh.fx.plus.trees.RichTreeItem;
  * @author oyzh
  * @since 2023/2/7
  */
-//@Slf4j
 public abstract class ZKTreeItem<V extends ZKTreeItemValue> extends RichTreeItem<V>   {
 
     public ZKTreeItem(ZKTreeView treeView) {

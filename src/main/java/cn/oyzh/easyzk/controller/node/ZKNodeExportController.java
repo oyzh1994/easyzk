@@ -182,7 +182,7 @@ public class ZKNodeExportController extends Controller {
         // 开始处理
         this.exportMsg.clear();
         this.stateManager.disable();
-        this.stage.appendTitle("===导出执行中===");
+        this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.export") + BaseResourceBundle.getBaseString("base.processing") + "===");
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.filters = this.filterStore.loadEnable();
@@ -193,13 +193,13 @@ public class ZKNodeExportController extends Controller {
                 this.stopExportBtn.enable();
                 // 初始化连接
                 if (!this.zkClient.isConnected()) {
-                    this.updateStatus("连接初始化...");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.connect", "base.initing") + "...");
                     this.zkClient.start();
                     if (!this.zkClient.isConnected()) {
-                        MessageBox.okToast("连接初始化失败！");
+                        MessageBox.okToast(BaseResourceBundle.getBaseString("base.connect", "base.init", "base.fail"));
                         return;
                     }
-                    this.updateStatus("导出执行中...");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.export") + BaseResourceBundle.getBaseString("base.processing"));
                 }
                 // 获取节点
                 List<ZKNode> zkNodes = new ArrayList<>();
@@ -212,7 +212,7 @@ public class ZKNodeExportController extends Controller {
                 // 排除临时节点
                 zkNodes = zkNodes.parallelStream().filter(ZKNode::persistent).collect(Collectors.toList());
                 if (CollUtil.isEmpty(zkNodes)) {
-                    MessageBox.okToast("获取数据失败或数据为空！");
+                    MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionFail"));
                     return;
                 }
                 // 节点按词典顺序排序
@@ -226,7 +226,7 @@ public class ZKNodeExportController extends Controller {
                 // 文件格式
                 FileChooser.ExtensionFilter extensionFilter;
                 // 处理名称
-                String fileName = "ZK连接-" + this.zkClient.zkInfo().getName() + "-导出数据";
+                String fileName = "ZK-" + BaseResourceBundle.getBaseString("base.connect") + this.zkClient.zkInfo().getName() + "-" + BaseResourceBundle.getBaseString("base.exportData");
                 if (isJSON) {
                     boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
                     exportData = ZKExportUtil.nodesToJSON(zkNodes, CharsetUtil.defaultCharsetName(), prettyFormat);
@@ -240,23 +240,23 @@ public class ZKNodeExportController extends Controller {
                     fileName += ".txt";
                 }
                 // 收尾工作
-                this.updateStatus("处理文件中...");
-                File file = FileChooserUtil.save("导出zk数据", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
+                this.updateStatus(BaseResourceBundle.getBaseString("base.processing"));
+                File file = FileChooserUtil.save(BaseResourceBundle.getBaseString("base.exportData"), fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);
-                    this.updateStatus("文件保存成功");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionSuccess"));
                     MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
                 } else {
-                    this.updateStatus("文件保存取消");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionCancel"));
                 }
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus("数据导出取消");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionCancel"));
                     MessageBox.warn(BaseResourceBundle.getBaseString("base.actionCancel"));
                 } else {
                     e.printStackTrace();
-                    this.updateStatus("数据导出失败");
+                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionFail"));
                     MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
                 }
             } finally {
@@ -368,13 +368,13 @@ public class ZKNodeExportController extends Controller {
         this.counter.update(status);
         String msg;
         if (status == 1) {
-            msg = "导出节点：" + path + " 成功";
+            msg = BaseResourceBundle.getBaseString("base.exportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.success");
         } else if (status == 2) {
-            msg = "导出节点：" + path + " 已忽略，此节点适用过滤配置";
+            msg = BaseResourceBundle.getBaseString("base.exportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.nodeTip2");
         } else {
-            msg = "导出节点：" + path + " 失败";
+            msg = BaseResourceBundle.getBaseString("base.exportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.fail");
             if (ex != null) {
-                msg += "，错误信息：" + ZKExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + BaseResourceBundle.getBaseString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
             }
         }
         this.exportMsg.appendLine(msg);

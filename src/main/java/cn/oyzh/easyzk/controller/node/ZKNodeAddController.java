@@ -259,7 +259,8 @@ public class ZKNodeAddController extends Controller {
         }
 
         if (builder.isEmpty()) {
-            MessageBox.warn("请最少选择一项权限！");
+            this.perms.requestFocus();
+            MessageBox.warn(BaseResourceBundle.getBaseString("base.invalid", "base.data"));
             return null;
         }
 

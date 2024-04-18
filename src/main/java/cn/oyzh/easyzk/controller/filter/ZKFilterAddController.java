@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -60,11 +60,11 @@ public class ZKFilterAddController extends Controller {
         // 获取节点值
         String kw = this.kw.getText().trim();
         if (StrUtil.isBlank(kw)) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.contentNotEmpty"), this.kw);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.contentNotEmpty"), this.kw);
             return;
         }
         if (this.filterStore.exist(kw)) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.contentAlreadyExists"), this.kw);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.contentAlreadyExists"), this.kw);
             return;
         }
         try {
@@ -75,10 +75,10 @@ public class ZKFilterAddController extends Controller {
             if (this.filterStore.add(filter)) {
                 ZKEventUtil.filterAdded();
                 ZKEventUtil.treeChildFilter();
-                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
                 this.closeStage();
             } else {
-                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

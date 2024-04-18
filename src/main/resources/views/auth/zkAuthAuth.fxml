@@ -47,7 +47,7 @@
     </FlexHBox>
     <FlexVBox fx:id="authType1" flexWidth="100%" realHeight="50">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
+            <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -71,7 +71,7 @@
     </FlexVBox>
     <FlexVBox flexWidth="100%" realHeight="50" fx:id="authType2" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
+            <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>

@@ -20,7 +20,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddNodeMenuItem;
 import cn.oyzh.fx.plus.menu.AuthNodeMenuItem;
@@ -642,7 +642,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.value.rootNode() || this.value.parentNode() || this.value.ephemeral()) {
             return;
         }
-        String nodeName = MessageBox.prompt(BaseResourceBundle.getBaseString("base.contentTip1"), this.value.nodeName());
+        String nodeName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.nodeName());
         // 名称为空或名称跟当前名称相同，则忽略
         if (StrUtil.isBlank(nodeName) || Objects.equals(nodeName, this.value.nodeName())) {
             return;
@@ -652,7 +652,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         String newNodePath = ZKNodeUtil.concatPath(parentPath, nodeName);
         try {
             if (this.client().exists(newNodePath)) {
-                MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
+                MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
                 return;
             }
             CreateMode createMode = this.value.ephemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
@@ -665,11 +665,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 // 删除旧节点
                 this._delete();
             } else {
-                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
+            MessageBox.exception(ex, I18nResourceBundle.i18nString("base.contentAlreadyExists"));
         }
     }
 
@@ -680,11 +680,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             return;
         }
         // 父节点删除提示
-        if (this.value.parentNode() && !MessageBox.confirm(BaseResourceBundle.getBaseString("base.delete") + this.value.decodeNodePath(), BaseResourceBundle.getBaseString("base.deleteNodeTip2"))) {
+        if (this.value.parentNode() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.delete") + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip2"))) {
             return;
         }
         // 子节点删除提示
-        if (this.value.subNode() && !MessageBox.confirm(BaseResourceBundle.getBaseString("base.delete") + this.value.decodeNodePath(), BaseResourceBundle.getBaseString("base.deleteNodeTip1"))) {
+        if (this.value.subNode() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.delete") + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip1"))) {
             return;
         }
         // 创建任务
@@ -692,7 +692,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onStart(this::_delete)
                 .onFinish(this::stopWaiting)
                 .onError(MessageBox::exception)
-                .onSuccess(() -> MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess")))
+                .onSuccess(() -> MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess")))
                 .build();
         this.startWaiting(task);
     }
@@ -740,7 +740,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onFinish(this::stopWaiting)
                 .onSuccess(this::flushValue)
                 .onStart(() -> this.loadChildes(true))
-                .onError(ex -> MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail")))
+                .onError(ex -> MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail")))
                 .build();
         this.startWaiting(task);
     }
@@ -753,7 +753,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onFinish(this::stopWaiting)
                 .onStart(() -> this.collapseAll(this))
                 .onSuccess(() -> this.getTreeView().select(this))
-                .onError(ex -> MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail")))
+                .onError(ex -> MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail")))
                 .build();
         this.startWaiting(task);
     }
@@ -766,7 +766,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onFinish(this::stopWaiting)
                 .onStart(() -> this.expandAll(this))
                 .onSuccess(() -> this.getTreeView().select(this))
-                .onError(ex -> MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail")))
+                .onError(ex -> MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail")))
                 .build();
         this.startWaiting(task);
     }

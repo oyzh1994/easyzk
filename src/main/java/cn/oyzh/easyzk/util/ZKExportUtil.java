@@ -253,7 +253,7 @@ public class ZKExportUtil {
         // 数据行处理方式
         Runnable func = () -> {
             try {
-                if (lineData.length() > 0) {
+                if (!lineData.isEmpty()) {
                     String t = lineData.toString();
                     // 处理前缀
                     if (export.hasPrefix()) {

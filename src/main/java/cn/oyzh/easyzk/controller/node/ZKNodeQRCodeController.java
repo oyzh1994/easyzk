@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.ResourceUtil;
@@ -64,13 +64,16 @@ public class ZKNodeQRCodeController extends Controller {
             ZKNode zkNode = this.getStageProp("zkNode");
             String nodeData = this.getStageProp("nodeData");
             StringBuilder builder = new StringBuilder();
-            builder.append("节点路径: ").append(zkNode.decodeNodePath()).append("\n")
-                    .append("节点数据: ").append(nodeData).append("\n")
-                    .append("节点类型: ").append(zkNode.ephemeral() ? "临时节点" : "持久节点");
+            builder.append(I18nResourceBundle.i18nString("base.node", "base.path")).append(": ")
+                    .append(zkNode.decodeNodePath()).append("\n")
+                    .append(I18nResourceBundle.i18nString("base.node", "base.data")).append(": ")
+                    .append(nodeData).append("\n")
+                    .append(I18nResourceBundle.i18nString("base.node", "base.type")).append(": ")
+                    .append(zkNode.ephemeral() ? I18nResourceBundle.i18nString("base.ephemeralNode") : I18nResourceBundle.i18nString("base.base.persistentNode"));
             if (zkNode.stat() != null) {
                 builder.append("\n")
-                        .append("创建时间: ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
-                        .append("修改时间: ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
+                        .append(I18nResourceBundle.i18nString("base.createTime")).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
+                        .append(I18nResourceBundle.i18nString("base.updateTime")).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
             }
             StaticLog.info("generate qrcode begin.");
             QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
@@ -84,9 +87,9 @@ public class ZKNodeQRCodeController extends Controller {
             ex.printStackTrace();
             StaticLog.warn("initQRCode error, ex:{}", ex.getMessage());
             if (ex.getMessage().contains("Data too big")) {
-                MessageBox.warn("节点数据太大，不支持生成二维码！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.dataTooLarge"));
             } else {
-                MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail"));
+                MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail"));
             }
         } finally {
             IoUtil.close(bais);

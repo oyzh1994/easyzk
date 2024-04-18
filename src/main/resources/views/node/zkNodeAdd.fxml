@@ -166,7 +166,7 @@
                 </FlexHBox>
                 <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digestACL">
                     <FlexHBox realHeight="50" flexWidth="100%">
-                        <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
+                        <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
                             <HBox.margin>
                                 <Insets left="20" top="10"/>
                             </HBox.margin>

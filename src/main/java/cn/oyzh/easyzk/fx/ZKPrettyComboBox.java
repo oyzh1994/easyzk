@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 import cn.oyzh.fx.plus.node.NodeManager;
 
@@ -21,8 +21,8 @@ public class ZKPrettyComboBox extends FlexComboBox<String> implements I18nSelect
     @Override
     public List<String> values(Locale locale) {
         this.clearItems();
-        this.addItem(BaseResourceBundle.getBaseString("base.enable"));
-        this.addItem(BaseResourceBundle.getBaseString("base.close"));
+        this.addItem(I18nResourceBundle.i18nString("base.enable"));
+        this.addItem(I18nResourceBundle.i18nString("base.close"));
         return this.getItems();
     }
 }

@@ -5,6 +5,7 @@ import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.rich.RichTextStyle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.beans.value.ChangeListener;
@@ -60,7 +61,7 @@ public class ZKRichDataTextArea extends FlexRichTextArea {
         try {
             this.ignoreChange = true;
             this.disable();
-            this.setPromptText("数据加载中...");
+            this.setPromptText(I18nResourceBundle.i18nString("base.data", "base.loading") + "...");
             this.showType = showType;
             this.showData(rawData);
         } finally {

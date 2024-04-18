@@ -16,6 +16,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
@@ -145,10 +146,10 @@ public class ZKFilterTabContent extends DynamicTabController {
                     toggleSwitch.setSelected(filterVO.isEnable());
                     toggleSwitch.selectedChanged((abs, o, n) -> {
                         filterVO.setEnable(n);
-                        if (!filterStore.update(filterVO)) {
-                            MessageBox.warn("修改状态失败！");
-                        } else {
+                        if (filterStore.update(filterVO)) {
                             ZKEventUtil.treeChildFilter();
+                        } else {
+                            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
                         }
                     });
                     return toggleSwitch;
@@ -168,10 +169,10 @@ public class ZKFilterTabContent extends DynamicTabController {
                     toggleSwitch.setSelected(filterVO.isPartMatch());
                     toggleSwitch.selectedChanged((obs, o, n) -> {
                         filterVO.setPartMatch(n);
-                        if (!filterStore.update(filterVO)) {
-                            MessageBox.warn("修改匹配方式失败！");
-                        } else if (filterVO.isEnable()) {
+                        if (filterStore.update(filterVO)) {
                             ZKEventUtil.treeChildFilter();
+                        } else if (filterVO.isEnable()) {
+                            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
                         }
                     });
                     return toggleSwitch;
@@ -187,12 +188,12 @@ public class ZKFilterTabContent extends DynamicTabController {
      * @param info zk信息
      */
     private void deleteInfo(ZKFilter info) {
-        if (MessageBox.confirm("确定删除此过滤配置？")) {
+        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
             if (this.filterStore.delete(info)) {
                 ZKEventUtil.treeChildFilter();
                 this.firstPage();
             } else {
-                MessageBox.warn("删除过滤配置失败！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         }
     }

@@ -18,7 +18,6 @@ import org.apache.zookeeper.data.Stat;
  * @author oyzh
  * @since 2020/4/17
  */
-//@Slf4j
 @Accessors(fluent = true, chain = true)
 public class ZKTreeListener implements TreeCacheListener {
 

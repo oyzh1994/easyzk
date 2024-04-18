@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.exception;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.fx.common.ssh.SSHException;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import org.apache.zookeeper.KeeperException;
 
 import java.util.function.Function;
@@ -76,7 +76,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.OperationTimeoutException) {
-            return BaseResourceBundle.getBaseString("base.actionTimeout");
+            return I18nResourceBundle.i18nString("base.actionTimeout");
         }
 
         if (e instanceof KeeperException.NoNodeException) {
@@ -92,15 +92,15 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.BadArgumentsException) {
-            return BaseResourceBundle.getBaseString("base.badArg");
+            return I18nResourceBundle.i18nString("base.badArg");
         }
 
         if (e instanceof KeeperException.BadVersionException) {
-            return BaseResourceBundle.getBaseString("base.badVersion");
+            return I18nResourceBundle.i18nString("base.badVersion");
         }
 
         if (e instanceof KeeperException.UnimplementedException) {
-            return BaseResourceBundle.getBaseString("base.unimplemented");
+            return I18nResourceBundle.i18nString("base.unimplemented");
         }
 
         if (e instanceof KeeperException.DataInconsistencyException) {
@@ -136,7 +136,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.SystemErrorException) {
-            return BaseResourceBundle.getBaseString("base.systemError");
+            return I18nResourceBundle.i18nString("base.systemError");
         }
 
         if (e instanceof KeeperException.SessionExpiredException) {
@@ -148,7 +148,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof KeeperException.ConnectionLossException) {
-            return BaseResourceBundle.getBaseString("base.connectionLoss");
+            return I18nResourceBundle.i18nString("base.connectionLoss");
         }
 
         String message = e.getMessage();

@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.handler.StateManager;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -156,17 +156,17 @@ public class ZKInfoTransportController extends Controller {
     private void doTransport() {
         // 检查连接
         if (this.formConnect.getValue() == null) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.choose", "base.transport", "base.connect"), this.formConnect);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.choose", "base.transport", "base.connect"), this.formConnect);
             return;
         }
         if (this.targetConnect.getValue() == null) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.choose", "base.target", "base.connect"), this.formConnect);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.choose", "base.target", "base.connect"), this.formConnect);
             return;
         }
         ZKInfo formInfo = this.formConnect.getValue();
         ZKInfo targetInfo = this.targetConnect.getValue();
         if (formInfo == targetInfo) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.invalid", "base.action"), this.formConnect);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.invalid", "base.action"), this.formConnect);
             return;
         }
 
@@ -175,16 +175,16 @@ public class ZKInfoTransportController extends Controller {
         // 检查传输连接
         if (this.formClient == null || !this.formClient.isConnected() || this.formClient.zkInfo() != formInfo) {
             try {
-                this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.transport", "base.connect", "base.initing") + "...");
+                this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transport", "base.connect", "base.initing") + "...");
                 if (this.formClient != null) {
                     this.formClient.close();
                 }
                 this.formClient = new ZKClient(formInfo);
-                this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.transport", "base.connect", "base.initing") + "===");
+                this.stage.appendTitle("===" + I18nResourceBundle.i18nString("base.transport", "base.connect", "base.initing") + "===");
                 this.formClient.start();
                 if (!this.formClient.isConnected()) {
                     this.formConnect.requestFocus();
-                    MessageBox.warn(BaseResourceBundle.getBaseString("base.transport", "base.connect") + "[" + formInfo.getName() + "]" + BaseResourceBundle.getBaseString("base.initfail"));
+                    MessageBox.warn(I18nResourceBundle.i18nString("base.transport", "base.connect") + "[" + formInfo.getName() + "]" + I18nResourceBundle.i18nString("base.initfail"));
                     return;
                 }
             } finally {
@@ -195,16 +195,16 @@ public class ZKInfoTransportController extends Controller {
         // 检查目标连接
         if (this.targetClient == null || !this.targetClient.isConnected() || this.targetClient.zkInfo() != formInfo) {
             try {
-                this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.target", "base.connect", "base.initing") + "...");
+                this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.target", "base.connect", "base.initing") + "...");
                 if (this.targetClient != null) {
                     this.targetClient.close();
                 }
                 this.targetClient = new ZKClient(targetInfo);
-                this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.target", "base.connect", "base.initing") + "===");
+                this.stage.appendTitle("===" + I18nResourceBundle.i18nString("base.target", "base.connect", "base.initing") + "===");
                 this.targetClient.start();
                 if (!this.targetClient.isConnected()) {
                     this.targetConnect.requestFocus();
-                    MessageBox.warn(BaseResourceBundle.getBaseString("base.target", "base.connect") + "[" + targetInfo.getName() + "]" + BaseResourceBundle.getBaseString("base.initfail"));
+                    MessageBox.warn(I18nResourceBundle.i18nString("base.target", "base.connect") + "[" + targetInfo.getName() + "]" + I18nResourceBundle.i18nString("base.initfail"));
                     return;
                 }
             } finally {
@@ -216,8 +216,8 @@ public class ZKInfoTransportController extends Controller {
         this.counter.reset();
         // 开始传输
         this.transportStart();
-        this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.transport", "base.processing") + "===");
-        this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.starting"));
+        this.stage.appendTitle("===" + I18nResourceBundle.i18nString("base.transport", "base.processing") + "===");
+        this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transport", "base.starting") + "...");
         // 执行传输
         this.exportTask = ThreadUtil.start(() -> {
             this.stopTransportBtn.enable();
@@ -227,16 +227,16 @@ public class ZKInfoTransportController extends Controller {
                     this.filters = this.filterStore.loadEnable();
                 }
                 this.transport("/");
-                this.updateStatus(BaseResourceBundle.getBaseString("base.actionSuccess"));
-                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+                this.updateStatus(I18nResourceBundle.i18nString("base.actionSuccess"));
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionCancel"));
-                    MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionCancel"));
+                    this.updateStatus(I18nResourceBundle.i18nString("base.actionCancel"));
+                    MessageBox.okToast(I18nResourceBundle.i18nString("base.actionCancel"));
                 } else {
                     ex.printStackTrace();
-                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionFail"));
-                    MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail"));
+                    this.updateStatus(I18nResourceBundle.i18nString("base.actionFail"));
+                    MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail"));
                 }
             } finally {
                 // 结束传输
@@ -395,18 +395,18 @@ public class ZKInfoTransportController extends Controller {
         path = URLDecoder.decode(path, StandardCharsets.UTF_8);
         if (status == 1) {
             this.counter.update(1);
-            this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.transportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.success"));
+            this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.success"));
         } else if (status == 2) {
             this.counter.update(2);
-            this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.transportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.nodeTip1"));
+            this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip1"));
         } else if (status == 3) {
             this.counter.update(2);
-            this.transportMsg.appendLine(BaseResourceBundle.getBaseString("base.transportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.nodeTip2"));
+            this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip2"));
         } else {
             this.counter.update(0);
-            String msg = BaseResourceBundle.getBaseString("base.transportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.fail");
+            String msg = I18nResourceBundle.i18nString("base.transportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.fail");
             if (ex != null) {
-                msg += "，" + BaseResourceBundle.getBaseString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + I18nResourceBundle.i18nString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
             }
             this.transportMsg.appendLine(msg);
         }

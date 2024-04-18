@@ -66,7 +66,7 @@ public class ZKNodeTab extends DynamicTab {
         // 节点被移除
         if (this.treeItem.isBeDeleted()) {
             if (!this.treeItem.isIgnoreDeleted()) {
-                if (MessageBox.confirm("此节点已被其他连接删除，是否移除此节点？")) {
+                if (MessageBox.confirm(this.controller().i18nString("zk.nodeTip2"))) {
                     this.treeItem.remove();
                     this.closeTab();
                 } else {
@@ -75,7 +75,7 @@ public class ZKNodeTab extends DynamicTab {
             }
         } else if (this.treeItem.isBeUpdated()) { // 节点被更新
             if (!this.treeItem.isIgnoreUpdated()) {
-                if (MessageBox.confirm("此节点数据已被其他连接修改，是否更新数据？")) {
+                if (MessageBox.confirm(this.controller().i18nString("zk.nodeTip1"))) {
                     this.treeItem.applyUpdate();
                     this.controller().init(this.treeItem);
                     this.treeItem.flushGraphic();

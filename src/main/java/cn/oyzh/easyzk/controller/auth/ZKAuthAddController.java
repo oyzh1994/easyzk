@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -54,24 +54,24 @@ public class ZKAuthAddController extends Controller {
             String user = this.user.getText().trim();
             String password = this.password.getText().trim();
             if (StrUtil.isBlank(user)) {
-                MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.user);
+                MessageBox.tipMsg(I18nResourceBundle.i18nString("base.userNameNotEmpty"), this.user);
                 return;
             }
             if (StrUtil.isBlank(password)) {
-                MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.password);
+                MessageBox.tipMsg(I18nResourceBundle.i18nString("base.passwordNotEmpty"), this.password);
                 return;
             }
             if (this.authStore.exist(user, password)) {
-                MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
+                MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
                 return;
             }
             ZKAuth auth = new ZKAuth(user, password);
             if (this.authStore.add(auth)) {
                 ZKEventUtil.authAdded(auth);
-                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
                 this.closeStage();
             } else {
-                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

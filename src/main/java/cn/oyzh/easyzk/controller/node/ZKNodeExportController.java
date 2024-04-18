@@ -27,7 +27,7 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.handler.StateManager;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -182,7 +182,7 @@ public class ZKNodeExportController extends Controller {
         // 开始处理
         this.exportMsg.clear();
         this.stateManager.disable();
-        this.stage.appendTitle("===" + BaseResourceBundle.getBaseString("base.export") + BaseResourceBundle.getBaseString("base.processing") + "===");
+        this.stage.appendTitle("===" + I18nResourceBundle.i18nString("base.export", "base.processing") + "===");
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.filters = this.filterStore.loadEnable();
@@ -193,13 +193,13 @@ public class ZKNodeExportController extends Controller {
                 this.stopExportBtn.enable();
                 // 初始化连接
                 if (!this.zkClient.isConnected()) {
-                    this.updateStatus(BaseResourceBundle.getBaseString("base.connect", "base.initing") + "...");
+                    this.updateStatus(I18nResourceBundle.i18nString("base.connect", "base.initing") + "...");
                     this.zkClient.start();
                     if (!this.zkClient.isConnected()) {
-                        MessageBox.okToast(BaseResourceBundle.getBaseString("base.connect", "base.init", "base.fail"));
+                        MessageBox.okToast(I18nResourceBundle.i18nString("base.connect", "base.init", "base.fail"));
                         return;
                     }
-                    this.updateStatus(BaseResourceBundle.getBaseString("base.export") + BaseResourceBundle.getBaseString("base.processing"));
+                    this.updateStatus(I18nResourceBundle.i18nString("base.export", "base.processing"));
                 }
                 // 获取节点
                 List<ZKNode> zkNodes = new ArrayList<>();
@@ -212,7 +212,7 @@ public class ZKNodeExportController extends Controller {
                 // 排除临时节点
                 zkNodes = zkNodes.parallelStream().filter(ZKNode::persistent).collect(Collectors.toList());
                 if (CollUtil.isEmpty(zkNodes)) {
-                    MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionFail"));
+                    MessageBox.okToast(I18nResourceBundle.i18nString("base.actionFail"));
                     return;
                 }
                 // 节点按词典顺序排序
@@ -226,7 +226,7 @@ public class ZKNodeExportController extends Controller {
                 // 文件格式
                 FileChooser.ExtensionFilter extensionFilter;
                 // 处理名称
-                String fileName = "ZK-" + BaseResourceBundle.getBaseString("base.connect") + this.zkClient.zkInfo().getName() + "-" + BaseResourceBundle.getBaseString("base.exportData");
+                String fileName = "ZK-" + I18nResourceBundle.i18nString("base.connect") + this.zkClient.zkInfo().getName() + "-" + I18nResourceBundle.i18nString("base.exportData");
                 if (isJSON) {
                     boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
                     exportData = ZKExportUtil.nodesToJSON(zkNodes, CharsetUtil.defaultCharsetName(), prettyFormat);
@@ -240,24 +240,24 @@ public class ZKNodeExportController extends Controller {
                     fileName += ".txt";
                 }
                 // 收尾工作
-                this.updateStatus(BaseResourceBundle.getBaseString("base.processing"));
-                File file = FileChooserUtil.save(BaseResourceBundle.getBaseString("base.exportData"), fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
+                this.updateStatus(I18nResourceBundle.i18nString("base.processing"));
+                File file = FileChooserUtil.save(I18nResourceBundle.i18nString("base.exportData"), fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);
-                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionSuccess"));
-                    MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+                    this.updateStatus(I18nResourceBundle.i18nString("base.actionSuccess"));
+                    MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
                 } else {
-                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionCancel"));
+                    this.updateStatus(I18nResourceBundle.i18nString("base.actionCancel"));
                 }
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionCancel"));
-                    MessageBox.warn(BaseResourceBundle.getBaseString("base.actionCancel"));
+                    this.updateStatus(I18nResourceBundle.i18nString("base.actionCancel"));
+                    MessageBox.warn(I18nResourceBundle.i18nString("base.actionCancel"));
                 } else {
                     e.printStackTrace();
-                    this.updateStatus(BaseResourceBundle.getBaseString("base.actionFail"));
-                    MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+                    this.updateStatus(I18nResourceBundle.i18nString("base.actionFail"));
+                    MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
                 }
             } finally {
                 // 结束处理
@@ -368,13 +368,13 @@ public class ZKNodeExportController extends Controller {
         this.counter.update(status);
         String msg;
         if (status == 1) {
-            msg = BaseResourceBundle.getBaseString("base.exportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.success");
+            msg = I18nResourceBundle.i18nString("base.exportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.success");
         } else if (status == 2) {
-            msg = BaseResourceBundle.getBaseString("base.exportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.nodeTip2");
+            msg = I18nResourceBundle.i18nString("base.exportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip2");
         } else {
-            msg = BaseResourceBundle.getBaseString("base.exportNode") + " " + path + " " + BaseResourceBundle.getBaseString("base.fail");
+            msg = I18nResourceBundle.i18nString("base.exportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.fail");
             if (ex != null) {
-                msg += "，" + BaseResourceBundle.getBaseString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + I18nResourceBundle.i18nString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
             }
         }
         this.exportMsg.appendLine(msg);

@@ -139,11 +139,7 @@ public class ZKAuthUtil {
      */
     public static void setAuthed(@NonNull ZKClient client, String user, String password) {
         if (user != null && password != null) {
-            Set<String> set = AUTHED_INFOS.get(client);
-            if (set == null) {
-                set = new CopyOnWriteArraySet<>();
-                AUTHED_INFOS.put(client, set);
-            }
+            Set<String> set = AUTHED_INFOS.computeIfAbsent(client, k -> new CopyOnWriteArraySet<>());
             set.add(user + ":" + password);
         }
     }

@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.search.SearchResult;
 import cn.oyzh.fx.plus.search.SearchTextField;
@@ -165,7 +165,7 @@ public class SearchController extends SubController {
         }
         // 检查选项
         if (!this.searchPath.isSelected() && !this.searchData.isSelected()) {
-            MessageBox.warn("路径和值请勾选一项！");
+            MessageBox.warn(this.i18nString("search.tip1"));
             return;
         }
         this.searching = true;
@@ -194,7 +194,7 @@ public class SearchController extends SubController {
             return;
         }
         if (!this.searchPath.isSelected() && !this.searchData.isSelected()) {
-            MessageBox.warn("搜索名称和值请最少勾选一项！");
+            MessageBox.warn(this.i18nString("search.tip1"));
             return;
         }
         this.searching = true;
@@ -224,12 +224,12 @@ public class SearchController extends SubController {
         }
         // 无需替换
         if (this.searchKW.getText().equals(this.replaceKW.getText())) {
-            this.replaceTips.setText("替换词、搜索词相同");
+            this.replaceTips.setText(this.i18nString("search.tip2"));
             return;
         }
         // 检查搜索参数
         if (this.searchHandler.searchParam() == null) {
-            this.replaceTips.setText("请初始化搜索参数");
+            this.replaceTips.setText(this.i18nString("search.tip3"));
             return;
         }
         this.replacing = true;
@@ -240,7 +240,7 @@ public class SearchController extends SubController {
                         this.replaceTips.setText("");
                         ZKNodeTreeItem item = this.parent().activeItem();
                         if (item.isDataTooLong()) {
-                            MessageBox.warn("数据太大，无法替换！");
+                            MessageBox.warn(I18nResourceBundle.i18nString("base.dataTooLarge"));
                         } else if (item.saveData()) {
                             // 更新搜索结果
                             this.updateSearchResult();
@@ -251,7 +251,7 @@ public class SearchController extends SubController {
                     } else { // 未找到匹配项
                         // 更新搜索结果
                         this.updateSearchResult();
-                        this.replaceTips.setText(BaseResourceBundle.getBaseString("base.noMoreResult"));
+                        this.replaceTips.setText(I18nResourceBundle.i18nString("base.noMoreResult"));
                     }
                 })
                 .onFinish(() -> this.replacing = false)
@@ -271,7 +271,7 @@ public class SearchController extends SubController {
                 ZKSearchParam param = this.getSearchParam();
                 if (!this.searchNext.isDisable()) {
                     // 执行预搜索
-                    this.searchResult.setText(BaseResourceBundle.getBaseString("base.searching"));
+                    this.searchResult.setText(I18nResourceBundle.i18nString("base.searching"));
                     this.searchHandler.preSearch(param);
                     // 搜索开始
                     ZKEventUtil.searchStart(param);

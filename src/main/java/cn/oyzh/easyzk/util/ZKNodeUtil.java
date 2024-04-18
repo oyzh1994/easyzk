@@ -13,6 +13,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.ArrUtil;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.KeeperException;
@@ -30,7 +31,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author oyzh
  * @since 2020/11/10
  */
-//@Slf4j
 @UtilityClass
 public class ZKNodeUtil {
 
@@ -79,7 +79,7 @@ public class ZKNodeUtil {
      */
     public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path, @NonNull String properties) {
         if (!path.contains("/")) {
-            throw new ZKException("path:" + path + "是不合法的路径！");
+            throw new ZKException("path:" + path + I18nResourceBundle.i18nString("base.invalid"));
         }
         try {
             long start = System.currentTimeMillis();

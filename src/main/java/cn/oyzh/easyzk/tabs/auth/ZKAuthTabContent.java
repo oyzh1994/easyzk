@@ -15,6 +15,7 @@ import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
@@ -147,7 +148,7 @@ public class ZKAuthTabContent extends DynamicTabController {
                         if (authStore.update(authVO)) {
                             ZKEventUtil.authEnabled(authVO);
                         } else {
-                            MessageBox.warn("修改状态失败！");
+                            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
                         }
                     });
                     return toggleSwitch;
@@ -163,7 +164,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      * @param auth 认证信息
      */
     private void delInfo(ZKAuth auth) {
-        if (MessageBox.confirm("确定删除此认证信息？")) {
+        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
             this.authStore.delete(auth);
             this.firstPage();
         }

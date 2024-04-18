@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
@@ -34,7 +34,7 @@ public class ZKTerminalTab extends DynamicTab {
         try {
             if (info == null) {
                 info = new ZKInfo();
-                info.setName("未命名连接");
+                info.setName(I18nResourceBundle.i18nString("base.unnamed", "base.connect"));
             }
             // 刷新图标
             this.flushGraphic();

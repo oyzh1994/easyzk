@@ -7,16 +7,16 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -260,17 +260,18 @@ public class SettingController extends Controller {
      */
     @FXML
     private void saveSetting() {
-        String tips = "";
         byte authMode = (byte) (this.authMode.isSelected() ? 0 : 1);
         byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
-        // 设置参数
-        if (!Objects.equals(this.setting.getLoadMode(), loadMode) || !Objects.equals(this.setting.getAuthMode(), authMode)) {
-            tips = "（重新打开连接生效）";
-        }
+        String locale = this.locale.name();
+        Integer fontSize = this.fontSize.getValue();
+
+        // 提示文字
+        String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, locale);
+
         this.setting.setLoadMode(loadMode);
         this.setting.setAuthMode(authMode);
         // 字体相关
-        this.setting.setFontSize(this.fontSize.getValue());
+        this.setting.setFontSize(fontSize);
         this.setting.setFontWeight(this.fontWeight.getWeight());
         this.setting.setFontFamily(this.fontFamily.getValue());
         // 主题相关
@@ -279,7 +280,7 @@ public class SettingController extends Controller {
         this.setting.setFgColor(this.fgColor.getColor());
         this.setting.setAccentColor(this.accentColor.getColor());
         // 区域相关处理
-        this.setting.setLocale(this.locale.name());
+        this.setting.setLocale(locale);
         // 其他设置
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
@@ -292,7 +293,7 @@ public class SettingController extends Controller {
             if (!this.setting.isAutoAuth()) {
                 ZKAuthUtil.clearAuthed();
             }
-            MessageBox.okToast("保存配置成功" + tips);
+            MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess") + tips);
             this.closeStage();
             // 应用字体配置
             FontManager.apply(this.setting.fontConfig());
@@ -301,8 +302,25 @@ public class SettingController extends Controller {
             // 应用区域配置
             I18nManager.apply(this.setting.getLocale());
         } else {
-            MessageBox.warnToast(BaseResourceBundle.getBaseString("base.actionFail"));
+            MessageBox.warnToast(I18nResourceBundle.i18nString("base.actionFail"));
         }
+    }
+
+    /**
+     * 检查重启软件配置
+     *
+     * @param loadMode 加载模式
+     * @param authMode 认证模式
+     * @param fontSize 字体大小
+     * @param locale   区域
+     * @return 结果
+     */
+    private String checkConfigForRestart(byte loadMode, byte authMode, Integer fontSize, String locale) {
+        if (!Objects.equals(this.setting.getLoadMode(), loadMode) || !Objects.equals(this.setting.getAuthMode(), authMode)
+                || !Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)) {
+            return I18nResourceBundle.i18nString("base.restartTip1");
+        }
+        return "";
     }
 
     @Override

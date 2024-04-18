@@ -16,7 +16,7 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.beans.value.ChangeListener;
@@ -181,9 +181,9 @@ public class ZKNodeAddController extends Controller {
             // 新增节点
             String node = this.zkClient.create(this.nodePathText, nodeData.getBytes(), List.of(acl), null, createMode, true);
             if (node == null) {
-                MessageBox.warnToast(BaseResourceBundle.getBaseString("base.actionFail"));
+                MessageBox.warnToast(I18nResourceBundle.i18nString("base.actionFail"));
             } else {
-                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
                 this.closeStage();
             }
         } catch (Exception ex) {
@@ -260,7 +260,7 @@ public class ZKNodeAddController extends Controller {
 
         if (builder.isEmpty()) {
             this.perms.requestFocus();
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.invalid", "base.data"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.invalidData"));
             return null;
         }
 
@@ -277,12 +277,12 @@ public class ZKNodeAddController extends Controller {
             // 获取内容
             String user = this.digestUser.getText().trim();
             if (StrUtil.isBlank(user)) {
-                MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.digestUser);
+                MessageBox.tipMsg(I18nResourceBundle.i18nString("base.userNameNotEmpty"), this.digestUser);
                 return null;
             }
             String password = this.digestPassword.getText().trim();
             if (StrUtil.isBlank(password)) {
-                MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.digestPassword);
+                MessageBox.tipMsg(I18nResourceBundle.i18nString("base.passwordNotEmpty"), this.digestPassword);
                 return null;
             }
             String digest = ZKAuthUtil.digest(user, password);

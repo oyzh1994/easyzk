@@ -17,7 +17,7 @@ import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
 import cn.oyzh.fx.plus.menu.AddGroupMenuItem;
@@ -117,9 +117,9 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         File file = FileChooserUtil.save("保存zk连接列表", "zk连接列表.json", new FileChooser.ExtensionFilter[]{extensionFilter});
         try {
             FileUtil.writeUtf8String(export.toJSONString(), file);
-            MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+            MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
         } catch (Exception ex) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
         }
     }
 
@@ -162,19 +162,19 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             return;
         }
         if (!file.exists()) {
-            MessageBox.warn("文件不存在！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.file", "base.notExists"));
             return;
         }
         if (file.isDirectory()) {
-            MessageBox.warn("不支持文件夹！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.notSupport", "base.folder"));
             return;
         }
         if (!FileNameUtil.isType(file.getName(), "json")) {
-            MessageBox.warn("仅支持json文件！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.invalid", "base.format"));
             return;
         }
         if (file.length() == 0) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentNotEmpty"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
             return;
         }
         try {
@@ -186,14 +186,14 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
                     if (this.infoStore.add(zkInfo)) {
                         this.addConnect(zkInfo);
                     } else {
-                        MessageBox.warn(BaseResourceBundle.getBaseString("base.connect") + "[" + zkInfo.getName() + "]" + BaseResourceBundle.getBaseString("base.importFail"));
+                        MessageBox.warn(I18nResourceBundle.i18nString("base.connect") + "[" + zkInfo.getName() + "]" + I18nResourceBundle.i18nString("base.importFail"));
                     }
                 }
-                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionException"));
+            MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionException"));
         }
     }
 
@@ -208,7 +208,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * 添加分组
      */
     public void addGroup() {
-        String groupName = MessageBox.prompt(BaseResourceBundle.getBaseString("base.contentTip1"));
+        String groupName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"));
 
         // 名称为null，则忽略
         if (groupName == null) {
@@ -217,21 +217,21 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
         // 不能为空
         if (StrUtil.isBlank(groupName)) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.nameNotEmpty"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.nameNotEmpty"));
             return;
         }
 
         ZKGroup group = new ZKGroup();
         group.setName(groupName);
         if (this.groupStore.exist(group)) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
             return;
         }
         group = this.groupStore.add(groupName);
         if (group != null) {
             this.addChild(new ZKGroupTreeItem(group, this.getTreeView()));
         } else {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
         }
     }
 

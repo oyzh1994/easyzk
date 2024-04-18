@@ -34,16 +34,12 @@ public class ZKSearchParam extends SearchParam {
      */
     @Override
     public boolean equalsTo(Object param) {
-        // 如果super.equalsTo(param)返回true，并且param是ZKSearchParam类型的对象，则继续判断
         if (super.equalsTo(param) && param instanceof ZKSearchParam param1) {
-            // 如果this.searchData与param1.searchData不相等，则返回false
             if (!Objects.equals(this.searchData, param1.searchData)) {
                 return false;
             }
-            // 返回this.searchPath与param1.searchPath是否相等
             return Objects.equals(this.searchPath, param1.searchPath);
         }
-        // 如果不满足上述条件，则返回false
         return false;
     }
 }

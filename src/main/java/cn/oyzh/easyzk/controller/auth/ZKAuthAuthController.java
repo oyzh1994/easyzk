@@ -16,7 +16,7 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -120,18 +120,18 @@ public class ZKAuthAuthController extends Controller {
                 user = this.user.getText().trim();
                 password = this.password.getText().trim();
                 if (StrUtil.isBlank(user)) {
-                    MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.user);
+                    MessageBox.tipMsg(I18nResourceBundle.i18nString("base.userNameNotEmpty"), this.user);
                     return;
                 }
                 if (StrUtil.isBlank(password)) {
-                    MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.password);
+                    MessageBox.tipMsg(I18nResourceBundle.i18nString("base.passwordNotEmpty"), this.password);
                     return;
                 }
             } else if (this.authType2.isVisible()) {
                 // 获取内容
                 ZKAuth zkAuth = this.authList.getValue();
                 if (zkAuth == null) {
-                    MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.contentNotEmpty"), this.authList);
+                    MessageBox.tipMsg(I18nResourceBundle.i18nString("base.contentNotEmpty"), this.authList);
                     return;
                 }
                 user = zkAuth.getUser();
@@ -161,18 +161,18 @@ public class ZKAuthAuthController extends Controller {
                     this.authStore.add(new ZKAuth(user, password));
                 }
                 ZKEventUtil.authAuthed(this.zkItem, true, user, password);
-                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
                 this.closeStage();
             } else if (this.zkNode.aclEmpty() || this.zkNode.hasDigestACL()) {
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
-                MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             } else {
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
-                MessageBox.warn(BaseResourceBundle.getBaseString("base.authFailTip1"));
+                MessageBox.warn(I18nResourceBundle.i18nString("base.authFailTip1"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, BaseResourceBundle.getBaseString("base.actionFail"));
+            MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail"));
         }
     }
 
@@ -202,7 +202,7 @@ public class ZKAuthAuthController extends Controller {
                     if (auth != null) {
                         text = auth.getUser() + ":" + auth.getPassword();
                         if (ZKAuthUtil.isAuthed(client, auth)) {
-                            text += " (" + BaseResourceBundle.getBaseString("base.authed") + ")";
+                            text += " (" + I18nResourceBundle.i18nString("base.authed") + ")";
                         }
                     }
                     return text;

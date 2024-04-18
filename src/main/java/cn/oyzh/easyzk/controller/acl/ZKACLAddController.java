@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controls.button.CopyButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -219,7 +219,7 @@ public class ZKACLAddController extends Controller {
             }
             String perms = this.getPerms();
             if (StrUtil.isBlank(perms)) {
-                MessageBox.warn(BaseResourceBundle.getBaseString("base.contentNotEmpty"));
+                MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
                 return;
             }
             if (this.aclType.getSelectedIndex() == 0) {
@@ -248,21 +248,21 @@ public class ZKACLAddController extends Controller {
         // 获取内容
         String user = this.digestInfo1User.getText().trim();
         if (StrUtil.isBlank(user)) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.digestInfo1User);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.userNameNotEmpty"), this.digestInfo1User);
             return;
         }
         String password = this.digestInfo1Password.getText().trim();
         if (StrUtil.isBlank(password)) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.digestInfo1Password);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.passwordNotEmpty"), this.digestInfo1Password);
             return;
         }
         String digest = ZKAuthUtil.digest(user, password);
         if (digest == null) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
             return;
         }
         ACL acl = new ACL();
@@ -284,25 +284,25 @@ public class ZKACLAddController extends Controller {
         String digest = this.digestInfo2.getText().trim();
         String[] text = digest.split(":");
         if (text.length != 2) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.format"), this.digestInfo2);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.invalidData"), this.digestInfo2);
             return;
         }
         String user = text[0];
         String password = text[1];
         if (StrUtil.isBlank(user)) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.userNameNotEmpty"), this.digestInfo2);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.userNameNotEmpty"), this.digestInfo2);
             return;
         }
         if (StrUtil.isBlank(password)) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.passwordNotEmpty"), this.digestInfo2);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.passwordNotEmpty"), this.digestInfo2);
             return;
         }
         if (password.length() < 28) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.format"), this.digestInfo2);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.invalidData"), this.digestInfo2);
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
             return;
         }
         ACL acl = new ACL();
@@ -320,12 +320,12 @@ public class ZKACLAddController extends Controller {
         // 获取内容
         ZKAuth zkAuth = this.digestInfo3.getValue();
         if (zkAuth == null) {
-            MessageBox.tipMsg(BaseResourceBundle.getBaseString("base.contentNotEmpty"), this.digestInfo3);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.contentNotEmpty"), this.digestInfo3);
             return;
         }
         String digest = zkAuth.digest();
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
             return;
         }
         ACL acl = new ACL();
@@ -341,7 +341,7 @@ public class ZKACLAddController extends Controller {
      */
     private void addWorldACL() {
         if (this.zkItem.hasWorldACL()) {
-            MessageBox.warn("World " + BaseResourceBundle.getBaseString("base.perms") + BaseResourceBundle.getBaseString("base.alreadyExists"));
+            MessageBox.warn("World " + I18nResourceBundle.i18nString("base.perms", "base.alreadyExists"));
             return;
         }
         ACL acl = new ACL();
@@ -363,7 +363,7 @@ public class ZKACLAddController extends Controller {
         acl.setId(new Id("ip", ip));
         acl.setPerms(perms);
         if (this.zkItem.existIPACL(acl.idVal())) {
-            MessageBox.warnToast(ip + BaseResourceBundle.getBaseString("base.alreadyExists"));
+            MessageBox.warnToast(ip + I18nResourceBundle.i18nString("base.alreadyExists"));
         } else {
             this.addACL(acl);
         }
@@ -378,10 +378,10 @@ public class ZKACLAddController extends Controller {
         for (String s : ipList) {
             String[] strArr = s.split(":");
             if (strArr.length < 1) {
-                throw new ZKException(s + BaseResourceBundle.getBaseString("base.invalidData"));
+                throw new ZKException(s + I18nResourceBundle.i18nString("base.invalidData"));
             }
             if (strArr.length < 2) {
-                throw new ZKException(s + BaseResourceBundle.getBaseString("base.perms") + BaseResourceBundle.getBaseString("base.invalid"));
+                throw new ZKException(s + I18nResourceBundle.i18nString("base.invalid", "base.perms"));
             }
             String ip = strArr[0];
             String perms = strArr[1];
@@ -390,7 +390,7 @@ public class ZKACLAddController extends Controller {
             acl.setId(new Id("ip", ip));
             acl.setPerms(perms);
             if (this.zkItem.existIPACL(acl.idVal())) {
-                MessageBox.warnToast(ip + BaseResourceBundle.getBaseString("base.alreadyExists"));
+                MessageBox.warnToast(ip + I18nResourceBundle.i18nString("base.alreadyExists"));
                 return;
             }
             aclList.add(acl);
@@ -419,11 +419,11 @@ public class ZKACLAddController extends Controller {
             Stat stat = this.zkClient.addACL(this.zkItem.nodePath(), list);
             if (stat != null) {
                 this.zkItem.refreshACL();
-                MessageBox.okToast(BaseResourceBundle.getBaseString("base.actionSuccess"));
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
                 this.closeStage();
                 return true;
             }
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

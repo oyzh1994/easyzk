@@ -69,7 +69,7 @@
         </FlexHBox>
     </FlexHBox>
     <FlexHBox fx:id="digestACL" flexWidth="100%" realHeight="50" managed="false" visible="false">
-        <AccentLabel text="%zk.authInfo" realWidth="80" realHeight="30">
+        <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

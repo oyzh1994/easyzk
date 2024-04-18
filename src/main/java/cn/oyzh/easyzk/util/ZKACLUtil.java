@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.util.RegexUtil;
 import cn.oyzh.fx.plus.i18n.I18nManager;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.ZooDefs;
@@ -259,7 +260,7 @@ public class ZKACLUtil {
     public static int toPermInt(@NonNull String perms) {
         perms = perms.trim().toLowerCase();
         if (perms.isEmpty() || perms.length() > 5) {
-            throw new ZKException("无效的ACL权限数据！");
+            throw new ZKException(I18nResourceBundle.i18nString("base.invalid", "base.perms"));
         }
         int permsInt = 0;
         for (char c : perms.toCharArray()) {
@@ -274,7 +275,7 @@ public class ZKACLUtil {
             } else if (c == 'd') {
                 permsInt += ZooDefs.Perms.DELETE;
             } else {
-                throw new ZKException("[" + c + "]是无效的Acl权限！");
+                throw new ZKException("[" + c + "]" + I18nResourceBundle.i18nString("base.invalid"));
             }
         }
         return permsInt;
@@ -290,7 +291,7 @@ public class ZKACLUtil {
         StringBuilder permStr = new StringBuilder(NumberUtil.getBinaryStr(permInt));
         int i = 5 - permStr.length();
         if (i > 5 || i < 0) {
-            throw new ZKException("无效的Acl权限值！");
+            throw new ZKException(I18nResourceBundle.i18nString("base.invalid", "base.perms"));
         }
         while (i-- > 0) {
             permStr.insert(0, "0");
@@ -322,10 +323,10 @@ public class ZKACLUtil {
     public static void checkIP(@NonNull String ip) {
         String[] segments = ip.split("/");
         if (!RegexUtil.isIPV4(segments[0])) {
-            throw new ZKException(segments[0] + "是无效的IPV4地址，格式应为a.x.x.x（a范围1~255，x范围0~255）");
+            throw new ZKException(segments[0] + I18nResourceBundle.i18nString("zk.aclTip2"));
         }
         if (segments.length == 2 && !segments[0].endsWith("0")) {
-            throw new ZKException(segments[0] + "是无效的IPv4网段，格式应为a.x.x.0（a范围1~255，x范围0~255）");
+            throw new ZKException(segments[0] + I18nResourceBundle.i18nString("zk.aclTip3"));
         }
     }
 }

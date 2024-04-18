@@ -14,7 +14,7 @@ import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
 import cn.oyzh.fx.plus.menu.DeleteGroupMenuItem;
@@ -91,7 +91,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
 
     @Override
     public void rename() {
-        String groupName = MessageBox.prompt(BaseResourceBundle.getBaseString("base.contentTip1"), this.value.getName());
+        String groupName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.getName());
         // 名称为null或者跟当前名称相同，则忽略
         if (groupName == null || Objects.equals(groupName, this.value.getName())) {
             return;
@@ -105,28 +105,28 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         this.value.setName(groupName);
         if (this.groupStore.exist(this.value)) {
             this.value.setName(name);
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
             return;
         }
         // 修改名称
         if (this.groupStore.update(this.value)) {
             this.getValue().flushText();
         } else {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
         }
     }
 
     @Override
     public void delete() {
-        if (this.isChildEmpty() && !MessageBox.confirm(BaseResourceBundle.getBaseString("base.deleteGroupTip1"))) {
+        if (this.isChildEmpty() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.deleteGroupTip1"))) {
             return;
         }
-        if (!this.isChildEmpty() && !MessageBox.confirm(BaseResourceBundle.getBaseString("base.deleteGroupTip2"))) {
+        if (!this.isChildEmpty() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.deleteGroupTip2"))) {
             return;
         }
         // 删除失败
         if (!this.groupStore.delete(this.value)) {
-            MessageBox.warn(BaseResourceBundle.getBaseString("base.actionFail"));
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             return;
         }
         // 处理连接

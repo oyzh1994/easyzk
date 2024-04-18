@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import lombok.experimental.UtilityClass;
@@ -14,7 +15,6 @@ import lombok.experimental.UtilityClass;
  * @author oyzh
  * @since 2022/8/26
  */
-//@Slf4j
 @UtilityClass
 public class ZKConnectUtil {
 
@@ -29,7 +29,7 @@ public class ZKConnectUtil {
             try {
                 view.disable();
                 view.waitCursor();
-                view.appendTitle("==连接测试中...");
+                view.appendTitle("==" + I18nResourceBundle.i18nString("base.connect", "base.testing") + "...");
                 ZKClient client = new ZKClient(info);
                 // 开始连接
                 client.start();
@@ -38,9 +38,9 @@ public class ZKConnectUtil {
                 view.restoreTitle();
                 if (client.isConnected()) {
                     client.close();
-                    MessageBox.okToast("连接成功！");
+                    MessageBox.okToast(I18nResourceBundle.i18nString("base.connect", "base.success"));
                 } else {
-                    MessageBox.warn("连接失败，请检查地址是否有效！");
+                    MessageBox.warn(I18nResourceBundle.i18nString("base.connect", "base.fail"));
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -52,41 +52,6 @@ public class ZKConnectUtil {
             }
         });
     }
-
-    // /**
-    //  * 测试连接
-    //  *
-    //  * @param view    页面
-    //  * @param host    地址
-    //  * @param timeout 超时事件
-    //  */
-    // public static void testConnect(StageWrapper view, String host, int timeout) {
-    //     try {
-    //         ThreadUtil.startVirtual(() -> {
-    //             view.disable();
-    //             view.waitCursor();
-    //             view.appendTitle("==连接测试中...");
-    //             // 创建zk信息
-    //             ZKInfo zkInfo = new ZKInfo();
-    //             zkInfo.setHost(host);
-    //             zkInfo.setConnectTimeOut(timeout);
-    //             ZKClient client = new ZKClient(zkInfo);
-    //             // 开始连接
-    //             client.start();
-    //             view.enable();
-    //             view.defaultCursor();
-    //             view.restoreTitle();
-    //             if (client.isConnected()) {
-    //                 client.close();
-    //                 MessageBox.okToast("连接成功！");
-    //             } else {
-    //                 MessageBox.warn("连接失败，请检查地址是否有效！");
-    //             }
-    //         });
-    //     } catch (Exception ex) {
-    //         MessageBox.exception(ex, "连接失败！");
-    //     }
-    // }
 
     /**
      * 关闭zk客户端

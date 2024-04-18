@@ -25,7 +25,7 @@ import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.i18n.BaseResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -389,7 +389,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             ClipboardUtil.setStringAndTip(builder, "权限信息");
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, "复制权限信息异常");
+            MessageBox.exception(ex, this.i18nString("base.actionException"));
         }
     }
 
@@ -409,7 +409,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             fxView.display();
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, "操作出现异常");
+            MessageBox.exception(ex, this.i18nString("base.actionException"));
         }
     }
 
@@ -418,23 +418,23 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     @FXML
     private void deleteACL(MouseEvent event) {
-        if (!MessageBox.confirm("确定删除此权限控制？")) {
+        if (!MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
             return;
         }
         SVGGlyph glyph = (SVGGlyph) event.getTarget();
         ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
         ZKACL acl = aclVBox.acl();
         if (this.treeItem.acl().size() == 1) {
-            MessageBox.warn("请最少保留一个权限控制！");
+            MessageBox.warn(this.i18nString("zk.aclTip1"));
             return;
         }
         try {
             Stat stat = this.treeItem.deleteACL(acl);
             if (stat != null) {
                 this.reloadACL();
-                MessageBox.okToast("删除权限控制成功！");
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
             } else {
-                MessageBox.warn("删除权限控制失败！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -507,7 +507,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     private void handleACLState(ZKACL acl, Text text) {
         Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.client());
         if (CollUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
-            text.setText("(" + BaseResourceBundle.getBaseString("base.authed") + ")");
+            text.setText("(" + I18nResourceBundle.i18nString("base.authed") + ")");
         } else {
             text.setText("");
         }
@@ -583,7 +583,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     public void reloadData() {
         // 放弃保存
-        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.unsavedAndContinue"))) {
             return;
         }
         // 刷新数据
@@ -623,7 +623,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private void saveNodeData() {
         if (this.treeItem.isDataTooLong()) {
-            MessageBox.warn("数据太大，无法保存！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.dataTooLarge"));
             return;
         }
         // 保存数据
@@ -837,7 +837,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     private void saveQuota() {
         try {
             this.treeItem.saveQuota(this.quotaBytes.getValue(), this.quotaNum.getValue().intValue());
-            MessageBox.info("配额已保存");
+            MessageBox.info(I18nResourceBundle.i18nString("base.actionSuccess"));
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -851,7 +851,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         try {
             this.treeItem.clearQuotaNum();
             this.quotaNum.setValue(-1);
-            MessageBox.info("节点数量配额已清除");
+            MessageBox.info(I18nResourceBundle.i18nString("base.actionSuccess"));
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -865,7 +865,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         try {
             this.treeItem.clearQuotaBytes();
             this.quotaBytes.setValue(-1);
-            MessageBox.info("数据大小配额已清除");
+            MessageBox.info(I18nResourceBundle.i18nString("base.actionSuccess"));
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }

@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.terminal.handler;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import lombok.AccessLevel;
@@ -31,7 +32,8 @@ public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<T
 
     @Override
     public String commandDesc() {
-        return "关闭连接";
+        // return "关闭连接";
+        return I18nResourceBundle.i18nString("base.close", "base.connect");
     }
 
     @Override

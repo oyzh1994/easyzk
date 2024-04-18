@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,9 +34,9 @@ public class ZKRemoveWatchesTerminalCommandHandler extends ZKCliTerminalCommandH
 
     @Override
     public String commandDesc() {
-        return "移除订阅";
+        // return "移除订阅";
+        return I18nResourceBundle.i18nString("base.remove", "base.watch");
     }
-
 
     @Override
     public String commandHelp() {

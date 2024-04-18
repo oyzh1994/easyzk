@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,7 +34,8 @@ public class ZKGetConfigTerminalCommandHandler extends ZKCliTerminalCommandHandl
 
     @Override
     public String commandDesc() {
-        return "获取配置";
+        // return "获取配置";
+        return I18nResourceBundle.i18nString("base.get", "base.config");
     }
 
     @Override

@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,8 @@ public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<Te
 
     @Override
     public String commandDesc() {
-        return "开始连接";
+        // return "开始连接";
+        return I18nResourceBundle.i18nString("base.startConnect");
     }
 
     @Override

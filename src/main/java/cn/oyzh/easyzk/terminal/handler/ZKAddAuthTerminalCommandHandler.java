@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,7 +34,8 @@ public class ZKAddAuthTerminalCommandHandler extends ZKCliTerminalCommandHandler
 
     @Override
     public String commandDesc() {
-        return "添加认证";
+        // return "添加认证";
+        return I18nResourceBundle.i18nString("base.add", "base.auth");
     }
 
 }

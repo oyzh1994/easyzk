@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.exception;
 
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+
 /**
  * @author oyzh
  * @since 2023/12/09
@@ -7,7 +9,9 @@ package cn.oyzh.easyzk.exception;
 public class ReadonlyOperationException extends ZKException {
 
     public ReadonlyOperationException() {
-        this("只读模式不支持此操作");
+        this(I18nResourceBundle.i18nString("base.readonlyMode", "base.notSupport", "base.current", "base.action"));
+        // this("只读模式不支持此操作");
+
     }
 
     public ReadonlyOperationException(String msg) {

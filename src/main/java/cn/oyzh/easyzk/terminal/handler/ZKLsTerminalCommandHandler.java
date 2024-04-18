@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,7 +34,8 @@ public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<Ter
 
     @Override
     public String commandDesc() {
-        return "获取子节点列表";
+        // return "获取子节点列表";
+        return I18nResourceBundle.i18nString("base.iter", "base.child");
     }
 
     @Override

@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.terminal.handler;
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
 import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import lombok.AccessLevel;
@@ -36,7 +37,8 @@ public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<T
 
     @Override
     public String commandDesc() {
-        return "同步节点";
+        // return "同步节点";
+        return I18nResourceBundle.i18nString("base.sync", "base.node");
     }
 
     @Override

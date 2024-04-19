@@ -438,7 +438,7 @@
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <SuccessLabel realWidth="135" text="%base.quotaDataSize" maxHeight="24">
+                    <SuccessLabel realWidth="135" text="%base.dataSize" maxHeight="24">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>

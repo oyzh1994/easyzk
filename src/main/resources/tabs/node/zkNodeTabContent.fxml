@@ -416,7 +416,7 @@
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <SuccessLabel realWidth="135" text="%node.main.quotaChildNum" maxHeight="24">
+                    <SuccessLabel realWidth="135" text="%base.childNumber" maxHeight="24">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
@@ -438,7 +438,7 @@
                     <VBox.margin>
                         <Insets top="5" left="5"/>
                     </VBox.margin>
-                    <SuccessLabel realWidth="135" text="%node.main.quotaDataSize" maxHeight="24">
+                    <SuccessLabel realWidth="135" text="%base.quotaDataSize" maxHeight="24">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>

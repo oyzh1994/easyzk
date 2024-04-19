@@ -69,7 +69,7 @@ public class ZKNodeQRCodeController extends Controller {
                     .append(I18nResourceBundle.i18nString("base.node", "base.data")).append(": ")
                     .append(nodeData).append("\n")
                     .append(I18nResourceBundle.i18nString("base.node", "base.type")).append(": ")
-                    .append(zkNode.ephemeral() ? I18nResourceBundle.i18nString("base.ephemeralNode") : I18nResourceBundle.i18nString("base.base.persistentNode"));
+                    .append(zkNode.ephemeral() ? I18nResourceBundle.i18nString("base.ephemeralNode") : I18nResourceBundle.i18nString("base.persistentNode"));
             if (zkNode.stat() != null) {
                 builder.append("\n")
                         .append(I18nResourceBundle.i18nString("base.createTime")).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")

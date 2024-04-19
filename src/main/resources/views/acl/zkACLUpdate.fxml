@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLUpdateController" realWidth="600" realHeight="300">
     <FlexHBox flexWidth="100%" realHeight="50">
@@ -41,32 +43,32 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexHBox realHeight="30" flexWidth="100% - 140" fx:id="perms">
+        <FlexFlowPane realHeight="30" flexWidth="100% - 140" fx:id="perms">
             <padding>
                 <Insets left="10" top="20"/>
             </padding>
-            <FlexCheckBox text="%zk.acl.a" realWidth="60"/>
-            <FlexCheckBox text="%zk.acl.w" realWidth="60">
-                <HBox.margin>
+            <FXCheckBox text="%zk.acl.a"/>
+            <FXCheckBox text="%zk.acl.w">
+                <FlowPane.margin>
                     <Insets left="5"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="%zk.acl.r" realWidth="60">
-                <HBox.margin>
+                </FlowPane.margin>
+            </FXCheckBox>
+            <FXCheckBox text="%zk.acl.r">
+                <FlowPane.margin>
                     <Insets left="5"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="%zk.acl.d" realWidth="90">
-                <HBox.margin>
+                </FlowPane.margin>
+            </FXCheckBox>
+            <FXCheckBox text="%zk.acl.d">
+                <FlowPane.margin>
                     <Insets left="5"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="%zk.acl.c" realWidth="90">
-                <HBox.margin>
+                </FlowPane.margin>
+            </FXCheckBox>
+            <FXCheckBox text="%zk.acl.c">
+                <FlowPane.margin>
                     <Insets left="5"/>
-                </HBox.margin>
-            </FlexCheckBox>
-        </FlexHBox>
+                </FlowPane.margin>
+            </FXCheckBox>
+        </FlexFlowPane>
     </FlexHBox>
     <FlexHBox fx:id="digestACL" flexWidth="100%" realHeight="50" managed="false" visible="false">
         <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">

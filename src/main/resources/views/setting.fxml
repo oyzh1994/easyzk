@@ -21,6 +21,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.FlexSlider?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="500" realHeight="350">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -126,6 +127,26 @@
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FlexCheckBox>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <AccentLabel text="%base.opacity" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <FlexSlider realHeight="25" fx:id="opacity" min="40" value="100">
+                        <HBox.margin>
+                            <Insets left="10" top="15"/>
+                        </HBox.margin>
+                    </FlexSlider>
+                    <ResetButton realWidth="80" realHeight="25" onAction="#resetOpacity">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>

@@ -9,9 +9,9 @@ import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.theme.ThemeConfig;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -58,6 +58,8 @@ public class EasyZKApp extends SpringApplication {
             FontManager.apply(ZKSettingStore.SETTING.fontConfig());
             // 应用主题
             ThemeManager.apply(ZKSettingStore.SETTING.themeConfig());
+            // 应用透明度
+            OpacityManager.apply(ZKSettingStore.SETTING.getOpacity());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 开始执行业务

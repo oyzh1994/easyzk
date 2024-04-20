@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
+import cn.oyzh.fx.plus.controls.FlexSlider;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
@@ -16,10 +17,11 @@ import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.I18nManager;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.TabStrategyComboBox;
 import cn.oyzh.fx.plus.theme.ThemeComboBox;
@@ -195,6 +197,12 @@ public class SettingController extends Controller {
     private LocaleComboBox locale;
 
     /**
+     * 透明度
+     */
+    @FXML
+    private FlexSlider opacity;
+
+    /**
      * 配置对象
      */
     private final ZKSetting setting = ZKSettingStore.SETTING;
@@ -253,6 +261,10 @@ public class SettingController extends Controller {
         this.fontWeight.selectWeight(this.setting.getFontWeight());
         // 区域相关处理
         this.locale.select(this.setting.getLocale());
+        // 透明度相关处理
+        if (this.setting.getOpacity() != null) {
+            this.opacity.setValue(this.setting.getOpacity());
+        }
     }
 
     /**
@@ -281,6 +293,8 @@ public class SettingController extends Controller {
         this.setting.setAccentColor(this.accentColor.getColor());
         // 区域相关处理
         this.setting.setLocale(locale);
+        // 透明度相关处理
+        this.setting.setOpacity(this.opacity.getValue());
         // 其他设置
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
@@ -295,12 +309,14 @@ public class SettingController extends Controller {
             }
             MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess") + tips);
             this.closeStage();
-            // 应用字体配置
-            FontManager.apply(this.setting.fontConfig());
-            // 应用主题配置
-            ThemeManager.apply(this.setting.themeConfig());
             // 应用区域配置
             I18nManager.apply(this.setting.getLocale());
+            // 应用字体配置
+            FontManager.apply(this.setting.fontConfig());
+            // 应用透明度配置
+            OpacityManager.apply(this.opacity.getValue());
+            // 应用主题配置
+            ThemeManager.apply(this.setting.themeConfig());
         } else {
             MessageBox.warnToast(I18nResourceBundle.i18nString("base.actionFail"));
         }
@@ -399,6 +415,14 @@ public class SettingController extends Controller {
     @FXML
     private void resetLocale() {
         this.locale.select((String) null);
+    }
+
+    /**
+     * 重置透明度
+     */
+    @FXML
+    private void resetOpacity() {
+        this.opacity.setValue(OpacityManager.defaultOpacity * 100);
     }
 
     @Override

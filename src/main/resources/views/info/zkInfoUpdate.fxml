@@ -73,7 +73,7 @@
                             <Insets left="10" top="16"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox fx:id="compatibility" text="兼容模式" fontSize="11" tipText="%info.compatibilityTip">
+                    <FlexCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11" tipText="%info.compatibilityTip">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>

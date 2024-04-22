@@ -139,7 +139,7 @@ public class ZKServiceController extends Controller {
 
         ZKClient zkClient = this.getStageProp("zkClient");
         List<ZKServerNode> servers = zkClient.getServers();
-        this.pageData = new Paging<>(servers, 3);
+        this.pageData = new Paging<>(servers, 5);
         this.pagePane.setPaging(this.pageData);
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(this.pageData.first());

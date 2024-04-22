@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.svg.FileSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.button.FileButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeImportController" realWidth="850" realHeight="630">
     <fx:define>
@@ -29,14 +30,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <SuccessButton stateManager="$stateManager" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose" iconSizePercent="0.75">
-            <graphic>
-                <FileSVGGlyph/>
-            </graphic>
+        <FileButton stateManager="$stateManager" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </SuccessButton>
+        </FileButton>
     </FlexHBox>
     <FlexText fx:id="scriptInfo" visible="false" managed="false" fontSize="11">
         <VBox.margin>

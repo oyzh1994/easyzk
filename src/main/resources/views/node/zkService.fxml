@@ -16,36 +16,36 @@
         </VBox.margin>
     </FXSeparator>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.connectionName" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.connectionName" realHeight="30" realWidth="125">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ReadOnlyTextField fx:id="zkInfoName" realHeight="30" flexWidth="100% - 160">
+        <ReadOnlyTextField fx:id="zkInfoName" realHeight="30" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.sdkVer" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.sdkVer" realHeight="30" realWidth="125">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ReadOnlyTextField fx:id="sdkVersion" realHeight="30" flexWidth="100% - 160">
+        <ReadOnlyTextField fx:id="sdkVersion" realHeight="30" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="80">
-        <AccentLabel text="%base.connectAddr" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.connectAddr" realHeight="30" realWidth="125">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ReadOnlyTextArea fx:id="zkInfoHost" realHeight="80" flexWidth="100% - 160">
+        <ReadOnlyTextArea fx:id="zkInfoHost" realHeight="80" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -66,12 +66,12 @@
             <Insets left="12" top="5"/>
         </VBox.margin>
         <columns>
-            <FlexTableColumn flexWidth="8%" fx:id="id" text="%base.No"/>
-            <FlexTableColumn flexWidth="8%" fx:id="weight" text="%base.weight"/>
+            <FlexTableColumn flexWidth="10%" fx:id="id" text="%base.No"/>
+            <FlexTableColumn flexWidth="10%" fx:id="weight" text="%base.weight"/>
             <FlexTableColumn flexWidth="16%" fx:id="type" text="%base.type"/>
             <FlexTableColumn flexWidth="20%" fx:id="clientAddr" text="%base.clientAddr" sortable="false"/>
             <FlexTableColumn flexWidth="22%" fx:id="addr" text="%node.service.tableCol.addr" sortable="false"/>
-            <FlexTableColumn flexWidth="22% - 6" fx:id="electionAddr" text="%node.service.tableCol.electionAddr" sortable="false"/>
+            <FlexTableColumn flexWidth="22% - 10" fx:id="electionAddr" text="%node.service.tableCol.electionAddr" sortable="false"/>
         </columns>
     </FlexTableView>
 </FlexVBox>

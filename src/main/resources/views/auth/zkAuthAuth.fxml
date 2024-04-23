@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.easyzk.fx.ZKAuthTypeComboBox?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
@@ -9,10 +10,10 @@
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import java.lang.String?>
+<?import cn.oyzh.fx.plus.controls.svg.UnLockSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.button.UnLockButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthAuthController" realWidth="600" realHeight="240">
     <FlexHBox flexWidth="100%" realHeight="50">
@@ -33,17 +34,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexComboBox initIndex="0" fx:id="authType" realHeight="30" flexWidth="100% - 200">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="用户密码明文"/>
-                    <String fx:value="已有认证信息"/>
-                </FXCollections>
-            </items>
+        <ZKAuthTypeComboBox initIndex="0" fx:id="authType" realHeight="30" flexWidth="100% - 200">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </FlexComboBox>
+        </ZKAuthTypeComboBox>
     </FlexHBox>
     <FlexVBox fx:id="authType1" flexWidth="100%" realHeight="50">
         <FlexHBox flexWidth="100%" flexHeight="100%">
@@ -84,11 +79,11 @@
         </FlexHBox>
     </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#auth" text="%base.auth">
+        <UnLockButton onAction="#auth" text="%base.auth">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>
-        </SubmitButton>
+        </UnLockButton>
         <CancelButton>
             <HBox.margin>
                 <Insets left="15" top="10"/>

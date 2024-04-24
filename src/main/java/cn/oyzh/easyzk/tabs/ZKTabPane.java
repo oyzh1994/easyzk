@@ -7,7 +7,9 @@ import cn.oyzh.easyzk.event.TreeGraphicChangedEvent;
 import cn.oyzh.easyzk.event.TreeGraphicColorChangedEvent;
 import cn.oyzh.easyzk.event.ZKAuthMainEvent;
 import cn.oyzh.easyzk.event.ZKConnectionClosedEvent;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterMainEvent;
+import cn.oyzh.easyzk.event.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore;
@@ -24,6 +26,8 @@ import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.util.FXUtil;
 import com.google.common.eventbus.Subscribe;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
@@ -58,6 +62,8 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
                 }
             }
         });
+        // 监听ba变化
+        this.selectedTabChanged((observable, oldValue, newValue) -> ZKEventUtil.tabChanged(newValue));
     }
 
     /**
@@ -358,5 +364,16 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
             super.addTab(tab);
         }
         this.select(tab);
+    }
+
+    /**
+     * 恢复数据
+     */
+    @Subscribe
+    public void restoreData(ZKHistoryRestoreEvent event) {
+        ZKNodeTab tab = this.getNodeTab(event.getItem());
+        if (tab != null) {
+            tab.restoreData(event.data());
+        }
     }
 }

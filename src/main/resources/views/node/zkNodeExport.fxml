@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyzk.fx.ZKPrettyComboBox?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CloseButton?>
 <?import cn.oyzh.fx.plus.controls.button.ExportButton?>
@@ -19,7 +20,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
-<?import cn.oyzh.easyzk.fx.ZKPrettyComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="680">
     <fx:define>
@@ -43,7 +43,8 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="%base.formatTip" fx:id="format">
+        <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="%base.formatTip"
+                      fx:id="format">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="json"/>
@@ -138,18 +139,21 @@
     <FlexVBox flexWidth="100%" fontSize="12">
         <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
-                <Insets left="110" top="10"/>
+                <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <Text fill="#666" layoutY="80.0" text="%node.export.tip1">
+        <Text fill="#666" text="%node.export.tip1">
             <VBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets top="10"/>
             </VBox.margin>
         </Text>
-        <Text fill="#666" layoutY="90.0" text="%node.export.tip2">
+        <Text fill="#666" text="%node.export.tip2">
             <VBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets top="10"/>
             </VBox.margin>
         </Text>
+        <VBox.margin>
+            <Insets left="110"/>
+        </VBox.margin>
     </FlexVBox>
 </FlexVBox>

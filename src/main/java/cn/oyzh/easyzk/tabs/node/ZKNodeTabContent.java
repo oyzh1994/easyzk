@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
 import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKACLVBox;
 import cn.oyzh.easyzk.fx.ZKFormatComboBox;
 import cn.oyzh.easyzk.fx.ZKRichDataTextArea;
@@ -109,6 +110,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * zk树节点
      */
     protected ZKNodeTreeItem treeItem;
+
 
     /**
      * 右侧acl分页组件
@@ -364,7 +366,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 重新载入配额
      */
     @FXML
-    public void reloadQuota() {
+    private void reloadQuota() {
         try {
             this.treeItem.reloadQuota();
         } catch (KeeperException.NoNodeException ignore) {
@@ -551,7 +553,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 刷新zk状态
      */
     @FXML
-    public void reloadStat() {
+    private void reloadStat() {
         try {
             this.treeItem.refreshStat();
         } catch (Exception ex) {
@@ -581,7 +583,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 刷新zk节点数据
      */
     @FXML
-    public void reloadData() {
+    private void reloadData() {
         // 放弃保存
         if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.unsavedAndContinue"))) {
             return;
@@ -628,6 +630,8 @@ public class ZKNodeTabContent extends DynamicTabController {
         }
         // 保存数据
         if (this.treeItem.dataUnsaved()) {
+            // 保存数据历史
+            this.treeItem.saveDataHistory();
             RenderService.submit(this.treeItem::saveData);
         }
     }
@@ -703,6 +707,14 @@ public class ZKNodeTabContent extends DynamicTabController {
         if (code == KeyCode.S && e.isControlDown()) {
             this.saveNodeData();
         }
+    }
+
+    /**
+     * 显示历史
+     */
+    @FXML
+    private void showHistory() {
+        ZKEventUtil.historyShow(this.treeItem);
     }
 
     /**
@@ -878,5 +890,16 @@ public class ZKNodeTabContent extends DynamicTabController {
             this.treeItem.getTreeView().select(this.treeItem.root());
         }
         super.onTabClose(tab, event);
+    }
+
+    /**
+     * 恢复数据
+     *
+     * @param data 数据
+     */
+    public void restoreData(byte[] data) {
+        // 保存数据历史
+        this.treeItem.data(data);
+        this.showData();
     }
 }

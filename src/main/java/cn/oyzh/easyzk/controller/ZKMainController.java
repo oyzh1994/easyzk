@@ -33,7 +33,7 @@ import javafx.stage.WindowEvent;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -126,6 +126,12 @@ public class ZKMainController extends ParentController {
      */
     @FXML
     private SearchController searchController;
+
+    /**
+     * zk历史Controller
+     */
+    @FXML
+    private DataHistoryController dataHistoryController;
 
     /**
      * 页面信息
@@ -358,7 +364,10 @@ public class ZKMainController extends ParentController {
 
     @Override
     public List<SubController> getSubControllers() {
-        return Collections.singletonList(this.searchController);
+        List<SubController> list = new ArrayList<>();
+        list.add(this.searchController);
+        list.add(this.dataHistoryController);
+        return list;
     }
 
     /**

@@ -1,24 +1,19 @@
 package cn.oyzh.easyzk.tabs.node;
 
+import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.store.ZKDataHistoryStore;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.CloseCurrConnectTabMenuItem;
-import cn.oyzh.fx.plus.menu.CloseOtherConnectTabMenuItem;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.Cursor;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -202,4 +197,15 @@ public class ZKNodeTab extends DynamicTab {
     //         this.tabs().removeAll(list);
     //     });
     // }
+
+    /**
+     * 恢复数据
+     *
+     * @param history 数据历史
+     */
+    public void restoreData(ZKDataHistory history) {
+        if (history != null) {
+            this.controller().restoreData(ZKDataHistoryStore.INSTANCE.getData(history));
+        }
+    }
 }

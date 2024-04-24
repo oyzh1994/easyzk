@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
@@ -8,6 +9,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.EventUtil;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -372,5 +374,53 @@ public class ZKEventUtil {
      */
     public static void changelog() {
         EventUtil.post(new ChangelogEvent());
+    }
+
+    /**
+     * 显示历史
+     *
+     * @param item zk树节点
+     */
+    public static void historyShow(ZKNodeTreeItem item) {
+        ZKHistoryShowEvent event = new ZKHistoryShowEvent();
+        event.data(item);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 恢复历史
+     *
+     * @param history 历史
+     * @param item    zk树节点
+     */
+    public static void historyRestore(ZKDataHistory history, ZKNodeTreeItem item) {
+        ZKHistoryRestoreEvent event = new ZKHistoryRestoreEvent();
+        event.data(history);
+        event.setItem(item);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 新增历史
+     *
+     * @param history 历史
+     * @param item    zk树节点
+     */
+    public static void historyAdd(ZKDataHistory history, ZKNodeTreeItem item) {
+        ZKHistoryAddEvent event = new ZKHistoryAddEvent();
+        event.data(history);
+        event.setItem(item);
+        EventUtil.post(event);
+    }
+
+    /**
+     * zk面板tab变更事件
+     *
+     * @param tab 面板
+     */
+    public static void tabChanged(Tab tab) {
+        ZKTabChangedEvent event = new ZKTabChangedEvent();
+        event.data(tab);
+        EventUtil.post(event);
     }
 }

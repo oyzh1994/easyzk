@@ -115,7 +115,7 @@
     <FlexVBox flexWidth="100%" fontSize="12">
         <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
-                <Insets top="10"/>
+                <Insets top="20"/>
             </VBox.margin>
         </FXLabel>
         <Text fill="#666" text="%info.transport.tip1">

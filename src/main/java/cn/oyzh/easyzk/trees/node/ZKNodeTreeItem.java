@@ -5,9 +5,11 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAuthController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
+import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.store.ZKDataHistoryStore;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
@@ -504,6 +506,22 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public String nodePath() {
         return this.value.nodePath();
+    }
+
+    /**
+     * 获取节点数据
+     *
+     * @return 节点数据
+     */
+    public byte[] nodeData() {
+        try {
+            if (!this.value.nodeDataLoaded()) {
+                ZKNodeUtil.refreshData(this.client(), this.value);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return this.value.nodeData();
     }
 
     /**
@@ -1321,5 +1339,17 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     @Override
     public void onPrimaryDoubleClick() {
         this.loadChild();
+    }
+
+    /**
+     * 保存数据历史
+     */
+    public void saveDataHistory() {
+        ZKDataHistory history = new ZKDataHistory();
+        history.setData(this.nodeData());
+        history.setPath(this.nodePath());
+        history.setInfoId(this.info().getId());
+        ZKDataHistoryStore.INSTANCE.add(history);
+        ZKEventUtil.historyAdd(history, this);
     }
 }

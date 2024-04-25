@@ -4,8 +4,10 @@ import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
@@ -13,12 +15,13 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@Accessors(fluent = true)
 public class ZKHistoryRestoreEvent extends Event<ZKDataHistory> implements EventFormatter {
 
     private ZKNodeTreeItem item;
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] 数据已恢复", this.data().getPath());
+        return String.format("[%s] " + I18nResourceBundle.i18nString("base.data", "base.restored"), this.data().getPath());
     }
 }

@@ -10,6 +10,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.store.ZKDataHistoryStore;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
@@ -355,6 +356,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             this.closeConnect(false);
             if (this.parent().delConnectItem(this)) {
                 ZKEventUtil.infoDeleted(this.value);
+                // 删除历史记录
+                ZKDataHistoryStore.INSTANCE.clear(this.value.getId());
             } else {
                 MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }

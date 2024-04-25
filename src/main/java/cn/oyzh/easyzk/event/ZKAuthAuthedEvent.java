@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.event;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -11,6 +12,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(fluent = true)
+@EqualsAndHashCode(callSuper = true)
 public class ZKAuthAuthedEvent extends Event<ZKNodeTreeItem> {
 
     private String user;

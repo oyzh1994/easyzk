@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.event;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 /**
  * @author oyzh
@@ -12,6 +13,6 @@ public class ZKInfoDeletedEvent extends Event<ZKInfo> implements EventFormatter 
 
     @Override
     public String eventFormat() {
-        return String.format("连接[%s] 已删除", this.data().getName());
+        return String.format("[%s] " + I18nResourceBundle.i18nString("base.connect", "base.deleted"), this.data().getName());
     }
 }

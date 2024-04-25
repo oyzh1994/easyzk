@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.event.Event;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -13,6 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(fluent = true)
+@EqualsAndHashCode(callSuper = true)
 public class ZKNodeDeletedEvent extends Event<ZKNode>   {
 
     private ZKClient client;

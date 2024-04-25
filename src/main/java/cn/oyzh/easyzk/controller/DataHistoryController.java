@@ -62,13 +62,13 @@ public class DataHistoryController extends SubController implements Initializabl
     private TableColumn<ZKDataHistory, Integer> index;
 
     /**
-     * 时间列
+     * 保存时间列
      */
     @FXML
     private TableColumn<ZKDataHistoryVO, String> saveTime;
 
     /**
-     * 时间列
+     * 数据大小列
      */
     @FXML
     private TableColumn<ZKDataHistoryVO, String> dataSize;
@@ -150,9 +150,13 @@ public class DataHistoryController extends SubController implements Initializabl
     @Subscribe
     public void tabChanged(ZKTabChangedEvent event) {
         Tab tab = event.data();
-        if (tab instanceof ZKNodeTab tab1 && tab1.treeItem() != this.item) {
-            this.item = tab1.treeItem();
-            this.refresh();
+        if (tab instanceof ZKNodeTab tab1) {
+            if (tab1.treeItem() != this.item) {
+                this.item = tab1.treeItem();
+                this.refresh();
+            }
+        } else {
+            this.item = null;
         }
     }
 
@@ -161,7 +165,7 @@ public class DataHistoryController extends SubController implements Initializabl
      */
     @Subscribe
     public void historyAdd(ZKHistoryAddEvent event) {
-        if (event.getItem() == this.item) {
+        if (event.item() == this.item) {
             this.refresh();
         }
     }
@@ -171,26 +175,25 @@ public class DataHistoryController extends SubController implements Initializabl
      */
     @FXML
     private void refresh() {
-        if (!this.root.isSelected()) {
-            return;
-        }
-        this.listTable.clearItems();
-        if (this.item != null) {
-            Map<String, Object> param = new HashMap<>();
-            param.put("path", this.item.nodePath());
-            param.put("infoId", this.item.info().getId());
-            List<ZKDataHistory> histories = this.historyStore.list(param);
-            this.listTable.addItem(ZKDataHistoryVO.convert(histories));
+        if (this.root.isSelected()) {
+            this.listTable.clearItems();
+            if (this.item != null) {
+                Map<String, Object> param = new HashMap<>();
+                param.put("path", this.item.nodePath());
+                param.put("infoId", this.item.info().getId());
+                List<ZKDataHistory> histories = this.historyStore.list(param);
+                this.listTable.addItem(ZKDataHistoryVO.convert(histories));
+            }
         }
     }
 
     /**
-     * 执行初始化
+     * 显示历史
      *
-     * @param event
+     * @param event 事件
      */
     @Subscribe
-    public void init(ZKHistoryShowEvent event) {
+    public void show(ZKHistoryShowEvent event) {
         this.item = event.data();
         this.refresh();
         this.root.selectTab();

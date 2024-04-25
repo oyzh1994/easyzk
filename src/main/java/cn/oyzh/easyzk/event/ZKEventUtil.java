@@ -121,7 +121,6 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-
     /**
      * 节点删除事件
      *
@@ -396,7 +395,7 @@ public class ZKEventUtil {
     public static void historyRestore(ZKDataHistory history, ZKNodeTreeItem item) {
         ZKHistoryRestoreEvent event = new ZKHistoryRestoreEvent();
         event.data(history);
-        event.setItem(item);
+        event.item(item);
         EventUtil.post(event);
     }
 
@@ -409,7 +408,7 @@ public class ZKEventUtil {
     public static void historyAdd(ZKDataHistory history, ZKNodeTreeItem item) {
         ZKHistoryAddEvent event = new ZKHistoryAddEvent();
         event.data(history);
-        event.setItem(item);
+        event.item(item);
         EventUtil.post(event);
     }
 

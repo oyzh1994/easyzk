@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 /**
  * @author oyzh
@@ -13,7 +14,7 @@ public class ZKConnectionLostEvent extends Event<ZKClient> implements EventForma
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] 客户端已中断", this.data().infoName());
+        return String.format("[%s] " + I18nResourceBundle.i18nString("base.client", "base.connectLoss"), this.data().infoName());
     }
 
     public ZKInfo info() {

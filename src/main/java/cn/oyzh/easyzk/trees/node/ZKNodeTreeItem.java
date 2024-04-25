@@ -724,7 +724,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             this.client().delete(this.nodePath(), null, this.value.parentNode());
             // 刷新状态
             this.parent().refreshStat();
+            // 删除树节点
             this.remove();
+            // // 删除历史记录
+            // ZKDataHistoryStore.INSTANCE.clear(this.info().getId(), this.nodePath());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

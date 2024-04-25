@@ -11,9 +11,9 @@
 <FXTab styleClass="root" xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
        fx:controller="cn.oyzh.easyzk.controller.DataHistoryController" text="%base.his">
     <graphic>
-        <HistorySVGGlyph initCursor="DEFAULT" size="13"/>
+        <HistorySVGGlyph initCursor="DEFAULT" size="12"/>
     </graphic>
-    <FlexVBox flexWidth="100%" flexHeight="100%">
+    <FlexVBox flexWidth="100% - 8" flexHeight="100%">
         <FlexHBox realHeight="30">
             <RefreshSVGGlyph size="16" onMousePrimaryClicked="#refresh">
                 <HBox.margin>
@@ -26,7 +26,7 @@
                 <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
                 <FlexTableColumn flexWidth="40%" fx:id="saveTime" text="%base.saveTime"/>
                 <FlexTableColumn flexWidth="30%" fx:id="dataSize" text="%base.dataSize"/>
-                <FlexTableColumn flexWidth="20% - 5" fx:id="action" text="%base.action" sortable="false"/>
+                <FlexTableColumn flexWidth="20% - 15" fx:id="action" text="%base.action" sortable="false"/>
             </columns>
         </FlexTableView>
     </FlexVBox>

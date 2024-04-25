@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
@@ -13,6 +14,7 @@ import lombok.NonNull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,11 @@ import java.util.Map;
  * @since 2024/04/23
  */
 public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
+
+    /**
+     * 最大历史数量
+     */
+    public static int His_Max_Size = 30;
 
     /**
      * 当前实例
@@ -46,10 +53,45 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
         return ZKConst.STORE_PATH + "dataHistory" + File.separator + infoId;
     }
 
+    /**
+     * 清理超出限制的数据
+     *
+     * @param infoId 节点id
+     * @param path   路径
+     */
+    private void clearLimit(String infoId, String path) {
+        String baseDir = this.fileBasePath(infoId);
+        if (FileUtil.isDirectory(baseDir)) {
+            File[] files = FileUtil.ls(baseDir);
+            if (files != null) {
+                List<File> fileList;
+                if (StrUtil.isBlank(path)) {
+                    String pathDigest = DigestUtil.md5Hex(path);
+                    fileList = List.of(files).parallelStream().filter(f -> f.getName().startsWith(pathDigest))
+                            .sorted(Comparator.comparingLong(File::lastModified)).toList();
+                } else {
+                    fileList = List.of(files).parallelStream().sorted(Comparator.comparingLong(File::lastModified)).toList();
+                }
+                fileList.reversed().stream().skip(His_Max_Size).forEach(File::delete);
+            }
+        }
+    }
+
+    /**
+     * 清理数据
+     *
+     * @param infoId 连接id
+     */
+    public void clear(@NonNull String infoId) {
+        FileUtil.del(this.fileBasePath(infoId));
+    }
+
+
     @Override
     public synchronized boolean add(@NonNull ZKDataHistory history) {
         try {
             FileUtil.writeBytes(history.getData(), this.filePath(history));
+            this.clearLimit(history.getInfoId(), history.getPath());
         } catch (Exception e) {
             StaticLog.warn("add error,err:{}", e.getMessage());
         }
@@ -76,7 +118,7 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
         try {
             return FileUtil.readBytes(this.filePath(history));
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            StaticLog.warn("getData error,err:{}", e.getMessage());
         }
         return null;
     }
@@ -95,8 +137,9 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
         if (FileUtil.isDirectory(baseDir)) {
             File[] files = FileUtil.ls(baseDir);
             if (files != null) {
+                String pathDigest = DigestUtil.md5Hex(path);
                 for (File file : files) {
-                    if (file.getName().startsWith(DigestUtil.md5Hex(path))) {
+                    if (file.getName().startsWith(pathDigest)) {
                         String fileName = file.getName();
                         String saveTime = fileName.substring(fileName.indexOf("_") + 1, fileName.indexOf("."));
                         ZKDataHistory history = new ZKDataHistoryVO();

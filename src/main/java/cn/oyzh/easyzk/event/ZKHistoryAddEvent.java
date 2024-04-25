@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Accessors(fluent = true)
 public class ZKHistoryAddEvent extends Event<ZKDataHistory> {
 
     private ZKNodeTreeItem item;

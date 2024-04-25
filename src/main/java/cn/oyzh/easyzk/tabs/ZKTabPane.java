@@ -371,7 +371,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      */
     @Subscribe
     public void restoreData(ZKHistoryRestoreEvent event) {
-        ZKNodeTab tab = this.getNodeTab(event.getItem());
+        ZKNodeTab tab = this.getNodeTab(event.item());
         if (tab != null) {
             tab.restoreData(event.data());
         }

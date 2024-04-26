@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.easyzk.fx.ZKACLType2ComboBox?>
+<?import cn.oyzh.easyzk.fx.ZKCreateModeComboBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
@@ -16,12 +17,9 @@
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import java.lang.String?>
-<?import cn.oyzh.easyzk.fx.ZKCreateModeComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="550">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -118,18 +116,11 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexComboBox fx:id="aclType" realHeight="30" flexWidth="100% - 140" initIndex="0" require="true">
-                        <items>
-                            <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="开放认证(WORLD)"/>
-                                <String fx:value="摘要认证(DIGEST)"/>
-                                <String fx:value="IP认证(IP)"/>
-                            </FXCollections>
-                        </items>
+                    <ZKACLType2ComboBox fx:id="aclType" realHeight="30" flexWidth="100% - 140" initIndex="0" require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </FlexComboBox>
+                    </ZKACLType2ComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <AccentLabel text="%zk.aclScope" realWidth="80" realHeight="30">

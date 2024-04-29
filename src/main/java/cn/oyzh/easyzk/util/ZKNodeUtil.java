@@ -13,6 +13,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.ArrUtil;
+import cn.oyzh.fx.common.util.RuntimeUtil;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -329,6 +330,7 @@ public class ZKNodeUtil {
      * @return 子节点列表
      */
     public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, @NonNull String properties) throws Exception {
+        List<ZKNode> list = new ArrayList<>();
         try {
             // 获取子节点
             List<String> children = client.getChildren(parentPath);
@@ -336,20 +338,42 @@ public class ZKNodeUtil {
             if (CollUtil.isEmpty(children)) {
                 return Collections.emptyList();
             }
-            // 任务列表
-            List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
-            // 获取节点数据
-            for (String sub : children) {
-                // 对节点路径做处理
-                String path = ZKNodeUtil.concatPath(parentPath, sub);
-                // 添加到任务列表
-                tasks.add(() -> getNode(client, path, properties));
+            // 处理器核心数量
+            int pCount = RuntimeUtil.processorCount();
+            // 性能较差机器上同步执行
+            if (pCount < 4) {
+                // 获取节点数据
+                for (String sub : children) {
+                    // 对节点路径做处理
+                    String path = ZKNodeUtil.concatPath(parentPath, sub);
+                    // 获取节点
+                    list.add(getNode(client, path, properties));
+                }
+                children.clear();
+            } else {// 性能较好机器上异步执行
+                // 任务列表
+                List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
+                // 获取节点数据
+                for (String sub : children) {
+                    // 对节点路径做处理
+                    String path = ZKNodeUtil.concatPath(parentPath, sub);
+                    // 添加到任务列表
+                    tasks.add(() -> getNode(client, path, properties));
+                    // 分批获取，避免机器爆炸
+                    if (tasks.size() >= pCount) {
+                        list.addAll(ThreadUtil.invoke(tasks));
+                        tasks.clear();
+                    }
+                }
+                // 处理尾部数据
+                if (!tasks.isEmpty()) {
+                    list.addAll(ThreadUtil.invoke(tasks));
+                }
+                tasks.clear();
+                children.clear();
             }
-            children.clear();
-            // 返回数据
-            return ThreadUtil.invoke(tasks);
-        } catch (ZKNoAuthException ex) {
-            return Collections.emptyList();
+        } catch (ZKNoAuthException ignored) {
         }
+        return list;
     }
 }

@@ -7,7 +7,7 @@
         "vendor": "oyzh",
         "version": "v1.6.3",
         "appName": "EasyZK",
-        "buildType": "build",
+        "buildType": "release",
         "executable": "EasyZK",
         "desc": "这是一个Zookeeper管理工具，简化提供导入导出、传输、控制台、可视化操作等高级功能."
     },

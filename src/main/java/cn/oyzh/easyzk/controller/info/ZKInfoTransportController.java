@@ -262,7 +262,6 @@ public class ZKInfoTransportController extends Controller {
         this.stateManager.enable();
         this.stopTransportBtn.disable();
         this.stage.restoreTitle();
-        SystemUtil.gcLater();
         if (this.formInfo == null) {
             this.formConnect.enable();
         }

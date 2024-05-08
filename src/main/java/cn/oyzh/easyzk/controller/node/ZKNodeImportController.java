@@ -274,7 +274,6 @@ public class ZKNodeImportController extends Controller {
                 this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
-                SystemUtil.gcLater();
             }
         });
     }

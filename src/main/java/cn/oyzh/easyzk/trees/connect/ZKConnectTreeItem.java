@@ -447,7 +447,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             } else if (!this.setting.isLoadRoot()) {// 加载一级节点
                 rootItem.loadChild();
             }
-            SystemUtil.gcLater();
         } else {
             MessageBox.warn(this.value().getName() + I18nResourceBundle.i18nString("base.loadFail"));
         }

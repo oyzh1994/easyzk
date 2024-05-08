@@ -276,16 +276,18 @@ public class SettingController extends Controller {
         byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
         String locale = this.locale.name();
         Integer fontSize = this.fontSize.getValue();
+        String fontFamily = this.fontFamily.getValue();
+        Integer fontWeight = this.fontWeight.getWeight();
 
         // 提示文字
-        String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, locale);
+        String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
 
         this.setting.setLoadMode(loadMode);
         this.setting.setAuthMode(authMode);
         // 字体相关
         this.setting.setFontSize(fontSize);
-        this.setting.setFontWeight(this.fontWeight.getWeight());
-        this.setting.setFontFamily(this.fontFamily.getValue());
+        this.setting.setFontWeight(fontWeight);
+        this.setting.setFontFamily(fontFamily);
         // 主题相关
         this.setting.setTheme(this.theme.name());
         this.setting.setBgColor(this.bgColor.getColor());
@@ -325,15 +327,18 @@ public class SettingController extends Controller {
     /**
      * 检查重启软件配置
      *
-     * @param loadMode 加载模式
-     * @param authMode 认证模式
-     * @param fontSize 字体大小
-     * @param locale   区域
+     * @param loadMode   加载模式
+     * @param authMode   认证模式
+     * @param fontSize   字体大小
+     * @param fontWeight 字体宽度
+     * @param fontFamily 字体名称
+     * @param locale     区域
      * @return 结果
      */
-    private String checkConfigForRestart(byte loadMode, byte authMode, Integer fontSize, String locale) {
+    private String checkConfigForRestart(byte loadMode, byte authMode, Integer fontSize, Integer fontWeight, String fontFamily, String locale) {
         if (!Objects.equals(this.setting.getLoadMode(), loadMode) || !Objects.equals(this.setting.getAuthMode(), authMode)
-                || !Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)) {
+                || !Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)
+                || !Objects.equals(this.setting.getFontFamily(), fontFamily) || !Objects.equals(this.setting.getFontWeight(), fontWeight)) {
             return I18nResourceBundle.i18nString("base.restartTip1");
         }
         return "";

@@ -264,7 +264,6 @@ public class ZKNodeExportController extends Controller {
                 this.stateManager.enable();
                 this.stopExportBtn.disable();
                 this.stage.restoreTitle();
-                SystemUtil.gcLater();
             }
         });
     }

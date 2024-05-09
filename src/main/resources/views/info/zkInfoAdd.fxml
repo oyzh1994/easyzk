@@ -27,7 +27,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="20" require="true" realHeight="30" flexWidth="100% - 140">
+                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="30" require="true" realHeight="30" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -89,12 +89,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 140" min="3" max="30" fx:id="connectTimeOut" tipText="%info.connectTimoutTip" value="5" require="true">
+                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="3" max="30" fx:id="connectTimeOut" tipText="%info.connectTimoutTip" value="5" require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <FXLabel text="秒">
+                    <FXLabel text="%base.second">
                         <HBox.margin>
                             <Insets left="5" top="18"/>
                         </HBox.margin>
@@ -106,12 +106,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 140" min="5" max="120" fx:id="sessionTimeOut" tipText="%info.sessionTimoutTip" value="30" require="true" step="5">
+                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="5" max="120" fx:id="sessionTimeOut" tipText="%info.sessionTimoutTip" value="30" require="true" step="5">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <FXLabel text="分">
+                    <FXLabel text="%base.minute">
                         <HBox.margin>
                             <Insets left="5" top="18"/>
                         </HBox.margin>

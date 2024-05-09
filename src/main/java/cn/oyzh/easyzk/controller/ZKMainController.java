@@ -28,6 +28,7 @@ import cn.oyzh.fx.plus.node.ResizeEnhance;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
 import org.springframework.context.annotation.Lazy;
@@ -38,7 +39,7 @@ import java.util.List;
 
 
 /**
- * zk节点主页
+ * zk主页
  *
  * @author oyzh
  * @since 2020/9/16
@@ -74,11 +75,6 @@ public class ZKMainController extends ParentController {
      */
     private ResizeEnhance resizeEnhance;
 
-    // /**
-    //  * 倒序排序
-    //  */
-    // private boolean ascSort;
-
     /**
      * 节点排序(正序)
      */
@@ -92,22 +88,10 @@ public class ZKMainController extends ParentController {
     private SVGGlyph sortDesc;
 
     /**
-     * 仅看临时节点
+     * 仅看收藏
      */
     @FXML
     private FlexCheckBox onlyCollect;
-
-    /**
-     * 过滤子节点
-     */
-    @FXML
-    private FlexCheckBox filterSubNode;
-
-    /**
-     * 过滤临时节点
-     */
-    @FXML
-    private FlexCheckBox filterEphemeral;
 
     /**
      * zk切换面板
@@ -122,16 +106,28 @@ public class ZKMainController extends ParentController {
     private ZKMsgTextArea msgArea;
 
     /**
-     * zk搜索Controller
+     * 过滤子节点
      */
     @FXML
-    private SearchController searchController;
+    private FlexCheckBox filterSubNode;
+
+    /**
+     * 过滤临时节点
+     */
+    @FXML
+    private FlexCheckBox filterEphemeral;
 
     /**
      * zk历史Controller
      */
     @FXML
     private DataHistoryController dataHistoryController;
+
+    /**
+     * 搜索Controller
+     */
+    @FXML
+    private SearchController searchController;
 
     /**
      * 页面信息
@@ -293,17 +289,8 @@ public class ZKMainController extends ParentController {
         this.filterEphemeral.selectedChanged((obs, o, n) -> this.filter());
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
-        // zk树选中节点变化事件
-        this.tree.selectItemChanged(item -> {
-            if (item instanceof ZKNodeTreeItem treeItem) {
-                this.flushViewTitle(treeItem.info());
-                ZKEventUtil.treeChildSelected(treeItem);
-            } else if (item instanceof ZKConnectTreeItem treeItem) {
-                this.flushViewTitle(treeItem.value());
-            } else {
-                this.flushViewTitle(null);
-            }
-        });
+        // zk树变化事件
+        this.tree.selectItemChanged(this::treeItemChanged);
 
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);
@@ -329,6 +316,22 @@ public class ZKMainController extends ParentController {
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
         // 刷新触发事件
         KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
+    }
+
+    /**
+     * 树节点变化事件
+     *
+     * @param item 节点
+     */
+    private void treeItemChanged(TreeItem<?> item) {
+        if (item instanceof ZKNodeTreeItem treeItem) {
+            this.flushViewTitle(treeItem.info());
+            ZKEventUtil.treeChildSelected(treeItem);
+        } else if (item instanceof ZKConnectTreeItem treeItem) {
+            this.flushViewTitle(treeItem.value());
+        } else {
+            this.flushViewTitle(null);
+        }
     }
 
     /**

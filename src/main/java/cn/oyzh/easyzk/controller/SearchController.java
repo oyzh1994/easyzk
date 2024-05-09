@@ -407,7 +407,7 @@ public class SearchController extends SubController {
      * 搜索触发
      */
     @Subscribe
-    public void searchClose(ZKSearchFireEvent event) {
+    public void searchFire(ZKSearchFireEvent event) {
         if (this.searchMain.isVisible()) {
             this.searchMain.disappear();
             this.treeView.setFlexHeight("100% - 60");

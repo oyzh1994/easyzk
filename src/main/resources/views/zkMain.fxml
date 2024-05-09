@@ -27,7 +27,7 @@
                 <ConnectionSVGGlyph initCursor="DEFAULT" size="12"/>
             </graphic>
             <FlexVBox flexHeight="100%" flexWidth="100% - 8"
-                      style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
+                      style="-fx-border-width: 0 1 0 0; -fx-border-color: #c0c0c0">
                 <FlexHBox realHeight="30" flexWidth="100%">
                     <TerminalSVGGlyph size="15" onMousePrimaryClicked="#openTerminal">
                         <HBox.margin>
@@ -52,24 +52,24 @@
                     </PositioningSVGGlyph>
                 </FlexHBox>
                 <FlexFlowPane realHeight="30" flexWidth="100%">
-                    <FlexCheckBox text="%main.zk.checkbox.filterEphemeral" fx:id="filterEphemeral" fontSize="11">
+                    <FlexCheckBox text="%main.zk.checkbox.filterEphemeral" fx:id="filterEphemeral" fontSize="9">
                         <FlowPane.margin>
                             <Insets left="10" top="5"/>
                         </FlowPane.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="%main.zk.checkbox.filterSub" fx:id="filterSubNode" fontSize="11">
+                    <FlexCheckBox text="%main.zk.checkbox.filterSub" fx:id="filterSubNode" fontSize="9">
                         <FlowPane.margin>
                             <Insets left="8" top="5"/>
                         </FlowPane.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="%base.onlyCollect" fx:id="onlyCollect" fontSize="11">
+                    <FlexCheckBox text="%base.onlyCollect" fx:id="onlyCollect" fontSize="9">
                         <FlowPane.margin>
                             <Insets left="5" top="5"/>
                         </FlowPane.margin>
                     </FlexCheckBox>
                 </FlexFlowPane>
                 <fx:include visible="false" managed="false" fx:id="search" source="search.fxml" realHeight="90"
-                            flexWidth="100%-2"/>
+                            flexWidth="100% - 2"/>
                 <ZKTreeView fx:id="tree" flexHeight="100% - 60" flexWidth="100%"/>
             </FlexVBox>
         </FXTab>

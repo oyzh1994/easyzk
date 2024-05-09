@@ -17,7 +17,7 @@ import javafx.stage.WindowEvent;
 
 
 /**
- * zk过滤配置添加业务
+ * 过滤配置新增业务
  *
  * @author oyzh
  * @since 2022/12/20
@@ -53,11 +53,11 @@ public class ZKFilterAddController extends Controller {
     private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
     /**
-     * 添加zk过滤配置
+     * 添加过滤配置
      */
     @FXML
-    private void addZKFilter() {
-        // 获取节点值
+    private void addFilter() {
+        // 获取输入内容
         String kw = this.kw.getText().trim();
         if (StrUtil.isBlank(kw)) {
             MessageBox.tipMsg(I18nResourceBundle.i18nString("base.contentNotEmpty"), this.kw);

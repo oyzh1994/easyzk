@@ -368,7 +368,7 @@ public class ZKNodeAddController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "node.add";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("zk.title.node.add");
     }
 }

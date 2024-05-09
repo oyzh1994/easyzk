@@ -165,7 +165,7 @@ public class SearchController extends SubController {
         }
         // 检查选项
         if (!this.searchPath.isSelected() && !this.searchData.isSelected()) {
-            MessageBox.warn(this.i18nString("search.tip1"));
+            MessageBox.warn(this.i18nString("zk.search.tip1"));
             return;
         }
         this.searching = true;
@@ -194,7 +194,7 @@ public class SearchController extends SubController {
             return;
         }
         if (!this.searchPath.isSelected() && !this.searchData.isSelected()) {
-            MessageBox.warn(this.i18nString("search.tip1"));
+            MessageBox.warn(this.i18nString("zk.search.tip1"));
             return;
         }
         this.searching = true;
@@ -224,12 +224,12 @@ public class SearchController extends SubController {
         }
         // 无需替换
         if (this.searchKW.getText().equals(this.replaceKW.getText())) {
-            this.replaceTips.setText(this.i18nString("search.tip2"));
+            this.replaceTips.setText(this.i18nString("zk.search.tip2"));
             return;
         }
         // 检查搜索参数
         if (this.searchHandler.searchParam() == null) {
-            this.replaceTips.setText(this.i18nString("search.tip3"));
+            this.replaceTips.setText(this.i18nString("zk.search.tip3"));
             return;
         }
         this.replacing = true;

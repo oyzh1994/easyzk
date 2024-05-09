@@ -100,12 +100,12 @@
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <FlexText fill="#666" text="%node.import.tip1">
+        <FlexText fill="#666" text="%zk.node.import.tip1">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </FlexText>
-        <FlexText fill="#666" text="%node.import.tip2">
+        <FlexText fill="#666" text="%zk.node.import.tip2">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

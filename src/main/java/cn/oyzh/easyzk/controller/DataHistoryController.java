@@ -200,11 +200,6 @@ public class DataHistoryController extends SubController implements Initializabl
     }
 
     @Override
-    public String i18nId() {
-        return "data.history";
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.saveTime.setCellValueFactory(new PropertyValueFactory<>("saveTimeExt"));

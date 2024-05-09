@@ -36,9 +36,4 @@ public class ChangelogTabContent extends DynamicTabController {
         // 初始化更新日志
         this.changelog.init(changelogs);
     }
-
-    @Override
-    public String i18nId() {
-        return "changelog";
-    }
 }

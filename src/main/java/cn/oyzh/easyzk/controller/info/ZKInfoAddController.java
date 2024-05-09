@@ -243,7 +243,6 @@ public class ZKInfoAddController extends Controller {
             zkInfo.setSshInfo(this.getSSHInfo());
             zkInfo.setListen(this.listen.isSelected());
             zkInfo.setRemark(this.remark.getTextTrim());
-            // zkInfo.setCluster(this.cluster.isSelected());
             zkInfo.setReadonly(this.readonly.isSelected());
             zkInfo.setSshForward(this.sshForward.isSelected());
             zkInfo.setGroupId(this.group == null ? null : this.group.getGid());
@@ -302,7 +301,7 @@ public class ZKInfoAddController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "info.add";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.info.add");
     }
 }

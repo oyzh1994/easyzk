@@ -100,17 +100,17 @@
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </RefreshSVGGlyph>
-                <CopySVGGlyph tipText="%node.main.copy1" size="16" onMousePrimaryClicked="#copyNode">
+                <CopySVGGlyph tipText="%zk.node.main.copy1" size="16" onMousePrimaryClicked="#copyNode">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </CopySVGGlyph>
-                <SVGGlyph tipText="%node.main.copy2" size="16" onMousePrimaryClicked="#copyNodePath" url="/font/copy-path.svg">
+                <SVGGlyph tipText="%zk.node.main.copy2" size="16" onMousePrimaryClicked="#copyNodePath" url="/font/copy-path.svg">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <HistorySVGGlyph tipText="%node.main.dataHisTip1" size="16" onMousePrimaryClicked="#showHistory">
+                <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16" onMousePrimaryClicked="#showHistory">
                     <FlowPane.margin>
                         <Insets left="5" top="5"/>
                     </FlowPane.margin>
@@ -152,8 +152,8 @@
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
-                <FXToggleSwitch fx:id="statViewSwitch" unselectedText="%node.main.toggle.normal"
-                                selectedText="%node.main.toggle.friendly"
+                <FXToggleSwitch fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"
+                                selectedText="%zk.node.main.toggle.friendly"
                                 selected="true">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -197,8 +197,8 @@
         </graphic>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">
-                <FXToggleSwitch fx:id="aclViewSwitch" unselectedText="%node.main.toggle.normal"
-                                selectedText="%node.main.toggle.friendly"
+                <FXToggleSwitch fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"
+                                selectedText="%zk.node.main.toggle.friendly"
                                 selected="true">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -378,7 +378,7 @@
             </FlexVBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="%node.main.tab.quota" fx:id="quotaTab">
+    <FXTab text="%zk.node.main.tab.quota" fx:id="quotaTab">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/quota.svg" size="13"/>
         </graphic>
@@ -404,7 +404,7 @@
                         </HBox.margin>
                     </SuccessLabel>
                     <NumberTextField fx:id="quotaNum" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
-                                     tipText="%node.main.quotaChildNumTip">
+                                     tipText="%zk.node.main.quotaChildNumTip">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>
@@ -426,7 +426,7 @@
                         </HBox.margin>
                     </SuccessLabel>
                     <NumberTextField fx:id="quotaBytes" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
-                                     tipText="%node.main.quotaChildNumTip">
+                                     tipText="%zk.node.main.quotaChildNumTip">
                         <HBox.margin>
                             <Insets right="5"/>
                         </HBox.margin>

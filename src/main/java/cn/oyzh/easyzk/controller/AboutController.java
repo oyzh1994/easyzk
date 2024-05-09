@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.text.FlexText;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -65,7 +66,7 @@ public class AboutController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "about";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.about");
     }
 }

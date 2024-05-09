@@ -93,7 +93,7 @@ public class ZKFilterAddController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "filter.add";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.filter.add");
     }
 }

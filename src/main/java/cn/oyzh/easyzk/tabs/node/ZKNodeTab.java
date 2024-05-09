@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
@@ -157,46 +158,6 @@ public class ZKNodeTab extends DynamicTab {
     protected String url() {
         return "/tabs/node/zkNodeTabContent.fxml";
     }
-
-    // @Override
-    // public List<MenuItem> getMenuItems() {
-    //     List<MenuItem> items = super.getMenuItems();
-    //     CloseCurrConnectTabMenuItem closeConnectTab = new CloseCurrConnectTabMenuItem(this::closeConnectTab);
-    //     CloseOtherConnectTabMenuItem closeOtherConnectTab = new CloseOtherConnectTabMenuItem(this::closeOtherConnectTab);
-    //     items.add(4, closeConnectTab);
-    //     items.add(5, closeOtherConnectTab);
-    //     return items;
-    // }
-
-    // /**
-    //  * 关闭当前连接tab
-    //  */
-    // private void closeConnectTab() {
-    //     FXUtil.runLater(() -> {
-    //         List<Tab> list = new ArrayList<>();
-    //         for (Tab tab : this.tabs()) {
-    //             if (tab instanceof ZKNodeTab nodeTab && nodeTab.client() == this.treeItem.client()) {
-    //                 list.add(tab);
-    //             }
-    //         }
-    //         this.tabs().removeAll(list);
-    //     });
-    // }
-    //
-    // /**
-    //  * 关闭其他连接tab
-    //  */
-    // private void closeOtherConnectTab() {
-    //     FXUtil.runLater(() -> {
-    //         List<Tab> list = new ArrayList<>();
-    //         for (Tab tab : this.tabs()) {
-    //             if (tab instanceof ZKNodeTab nodeTab && nodeTab.client() != this.treeItem.client()) {
-    //                 list.add(tab);
-    //             }
-    //         }
-    //         this.tabs().removeAll(list);
-    //     });
-    // }
 
     /**
      * 恢复数据

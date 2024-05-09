@@ -92,7 +92,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     public void init(@NonNull ZKClient client) {
         this.client = client;
         this.disableInput();
-        this.outputLine(I18nResourceBundle.i18nString("home.welcome"));
+        this.outputLine(I18nResourceBundle.i18nString("zk.home.welcome"));
         // this.outputLine("欢迎使用EasyZK!");
         this.outputLine("Powered By oyzh(2020-2024).");
         this.flushPrompt();

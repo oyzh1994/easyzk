@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs.auth;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
@@ -17,11 +18,6 @@ public class ZKAuthTab extends DynamicTab {
         super.flush();
     }
 
-    // @Override
-    // public void flushTitle() {
-    //     super.setTitle("认证信息列表");
-    // }
-
     @Override
     public void flushGraphic() {
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
@@ -35,5 +31,10 @@ public class ZKAuthTab extends DynamicTab {
     @Override
     protected String url() {
         return "/tabs/auth/zkAuthTabContent.fxml";
+    }
+
+    @Override
+    public String getTabTitle() {
+        return I18nResourceBundle.i18nString("zk.title.auth.main");
     }
 }

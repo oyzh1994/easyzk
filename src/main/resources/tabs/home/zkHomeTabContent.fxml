@@ -19,7 +19,7 @@
         <Image url="/image/zoo_no_bg.png"/>
     </ImageView>
     <FlexVBox flexWidth="100% - 300" realHeight="210" layoutX="260" layoutY="100">
-        <FlexLabel text="%home.welcome" fontSize="30">
+        <FlexLabel text="%zk.home.welcome" fontSize="30">
             <VBox.margin>
                 <Insets top="20"/>
             </VBox.margin>

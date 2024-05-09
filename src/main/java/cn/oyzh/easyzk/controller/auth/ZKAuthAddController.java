@@ -86,7 +86,7 @@ public class ZKAuthAddController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "auth.add";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("zk.title.auth.add");
     }
 }

@@ -142,12 +142,12 @@
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <Text fill="#666" text="%node.export.tip1">
+        <Text fill="#666" text="%zk.node.export.tip1">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </Text>
-        <Text fill="#666" text="%node.export.tip2">
+        <Text fill="#666" text="%zk.node.export.tip2">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

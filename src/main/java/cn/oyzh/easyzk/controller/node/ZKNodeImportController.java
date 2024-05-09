@@ -355,7 +355,7 @@ public class ZKNodeImportController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "node.import";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.import");
     }
 }

@@ -222,8 +222,5 @@ public class ZKAuthTabContent extends DynamicTabController {
         this.firstPage();
     }
 
-    @Override
-    public String i18nId() {
-        return "auth.main";
-    }
+
 }

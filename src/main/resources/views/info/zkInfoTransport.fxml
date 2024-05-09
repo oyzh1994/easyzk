@@ -118,17 +118,17 @@
                 <Insets top="20"/>
             </VBox.margin>
         </FXLabel>
-        <Text fill="#666" text="%info.transport.tip1">
+        <Text fill="#666" text="%zk.info.transport.tip1">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </Text>
-        <Text fill="#666" text="%info.transport.tip2">
+        <Text fill="#666" text="%zk.info.transport.tip2">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </Text>
-        <Text fill="#666" text="%info.transport.tip3">
+        <Text fill="#666" text="%zk.info.transport.tip3">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

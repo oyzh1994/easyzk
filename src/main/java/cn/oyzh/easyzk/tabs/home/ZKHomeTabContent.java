@@ -85,9 +85,4 @@ public class ZKHomeTabContent extends DynamicTabController {
     private void changelog() {
         ZKEventUtil.changelog();
     }
-
-    @Override
-    public String i18nId() {
-        return "home";
-    }
 }

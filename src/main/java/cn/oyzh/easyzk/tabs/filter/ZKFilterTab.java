@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs.filter;
 
 import cn.oyzh.fx.plus.controls.svg.FilterSVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
@@ -17,11 +18,6 @@ public class ZKFilterTab extends DynamicTab {
         super.flush();
     }
 
-    // @Override
-    // public void flushTitle() {
-    //     super.setTitle("过滤配置列表");
-    // }
-
     @Override
     public void flushGraphic() {
         FilterSVGGlyph glyph = (FilterSVGGlyph) this.getGraphic();
@@ -37,4 +33,8 @@ public class ZKFilterTab extends DynamicTab {
         return "/tabs/filter/zkFilterTabContent.fxml";
     }
 
+    @Override
+    public String getTabTitle() {
+        return I18nResourceBundle.i18nString("base.title.filter.main");
+    }
 }

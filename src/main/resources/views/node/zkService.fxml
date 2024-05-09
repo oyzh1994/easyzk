@@ -10,7 +10,7 @@
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKServiceController" realHeight="600" realWidth="900">
-    <FXSeparator flexWidth="100% - 24" text="%node.service.separator.serverInfo">
+    <FXSeparator flexWidth="100% - 24" text="%zk.node.service.separator.serverInfo">
         <VBox.margin>
             <Insets left="12" top="5" bottom="5"/>
         </VBox.margin>
@@ -51,7 +51,7 @@
             </HBox.margin>
         </ReadOnlyTextArea>
     </FlexHBox>
-    <FXSeparator flexWidth="100% - 24" text="%node.service.separator.clusterInfo">
+    <FXSeparator flexWidth="100% - 24" text="%zk.node.service.separator.clusterInfo">
         <VBox.margin>
             <Insets left="12" top="5" bottom="5"/>
         </VBox.margin>
@@ -70,8 +70,8 @@
             <FlexTableColumn flexWidth="10%" fx:id="weight" text="%base.weight"/>
             <FlexTableColumn flexWidth="16%" fx:id="type" text="%base.type"/>
             <FlexTableColumn flexWidth="20%" fx:id="clientAddr" text="%base.clientAddr" sortable="false"/>
-            <FlexTableColumn flexWidth="22%" fx:id="addr" text="%node.service.tableCol.addr" sortable="false"/>
-            <FlexTableColumn flexWidth="22% - 10" fx:id="electionAddr" text="%node.service.tableCol.electionAddr" sortable="false"/>
+            <FlexTableColumn flexWidth="22%" fx:id="addr" text="%zk.node.service.tableCol.addr" sortable="false"/>
+            <FlexTableColumn flexWidth="22% - 10" fx:id="electionAddr" text="%zk.node.service.tableCol.electionAddr" sortable="false"/>
         </columns>
     </FlexTableView>
 </FlexVBox>

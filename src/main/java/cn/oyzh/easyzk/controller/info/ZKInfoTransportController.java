@@ -425,7 +425,7 @@ public class ZKInfoTransportController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "info.transport";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.info.transport");
     }
 }

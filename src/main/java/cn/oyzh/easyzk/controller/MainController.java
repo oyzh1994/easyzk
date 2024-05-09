@@ -238,7 +238,7 @@ public class MainController extends ParentController {
     }
 
     @Override
-    public String i18nId() {
-        return "main";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("zk.title.main");
     }
 }

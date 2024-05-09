@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs.home;
 
 import cn.oyzh.fx.plus.controls.svg.HomeSVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
@@ -30,5 +31,10 @@ public class ZKHomeTab extends DynamicTab {
             glyph.setCursor(Cursor.DEFAULT);
             this.graphic(glyph);
         }
+    }
+
+    @Override
+    public String getTabTitle() {
+        return I18nResourceBundle.i18nString("base.title.home");
     }
 }

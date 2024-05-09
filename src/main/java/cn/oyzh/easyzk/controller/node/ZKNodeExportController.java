@@ -393,7 +393,7 @@ public class ZKNodeExportController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "node.export";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.export");
     }
 }

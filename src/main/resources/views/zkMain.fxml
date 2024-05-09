@@ -52,12 +52,12 @@
                     </PositioningSVGGlyph>
                 </FlexHBox>
                 <FlexFlowPane realHeight="30" flexWidth="100%">
-                    <FlexCheckBox text="%main.zk.checkbox.filterEphemeral" fx:id="filterEphemeral" fontSize="9">
+                    <FlexCheckBox text="%zk.main.zk.checkbox.filterEphemeral" fx:id="filterEphemeral" fontSize="9">
                         <FlowPane.margin>
                             <Insets left="10" top="5"/>
                         </FlowPane.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="%main.zk.checkbox.filterSub" fx:id="filterSubNode" fontSize="9">
+                    <FlexCheckBox text="%zk.main.zk.checkbox.filterSub" fx:id="filterSubNode" fontSize="9">
                         <FlowPane.margin>
                             <Insets left="8" top="5"/>
                         </FlowPane.margin>

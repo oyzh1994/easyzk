@@ -93,7 +93,7 @@ public class ZKToolController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "tool";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("zk.title.tool");
     }
 }

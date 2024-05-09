@@ -68,12 +68,12 @@
                             <Insets left="10" top="16"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox fx:id="listen" text="%info.listenNode" fontSize="11" selected="true" tipText="%info.listenNodeTip">
+                    <FlexCheckBox fx:id="listen" text="%zk.info.listenNode" fontSize="11" selected="true" tipText="%zk.info.listenNodeTip">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11" tipText="%info.compatibilityTip">
+                    <FlexCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11" tipText="%zk.info.compatibilityTip">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
@@ -89,7 +89,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="3" max="30" fx:id="connectTimeOut" tipText="%info.connectTimoutTip" value="5" require="true">
+                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="3" max="30" fx:id="connectTimeOut" tipText="%zk.info.connectTimoutTip" value="5" require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -106,7 +106,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="5" max="120" fx:id="sessionTimeOut" tipText="%info.sessionTimoutTip" value="30" require="true" step="5">
+                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="5" max="120" fx:id="sessionTimeOut" tipText="%zk.info.sessionTimoutTip" value="30" require="true" step="5">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -168,7 +168,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout" tipText="%info.sshTimeoutTip" realHeight="30" value="3000">
+                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout" tipText="%base.sshTimeoutTip" realHeight="30" value="3000">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

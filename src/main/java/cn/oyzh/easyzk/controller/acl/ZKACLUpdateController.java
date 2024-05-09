@@ -208,7 +208,7 @@ public class ZKACLUpdateController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "acl.update";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("zk.title.acl.update");
     }
 }

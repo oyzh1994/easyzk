@@ -555,7 +555,7 @@ public class ZKACLAddController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "acl.add";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("zk.title.acl.add");
     }
 }

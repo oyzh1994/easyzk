@@ -431,7 +431,7 @@ public class SettingController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "setting";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.setting");
     }
 }

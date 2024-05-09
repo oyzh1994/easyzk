@@ -97,7 +97,7 @@ public class ZKNodeQRCodeController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "node.qrcode";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("zk.title.node.qrcode");
     }
 }

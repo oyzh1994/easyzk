@@ -60,7 +60,7 @@ public class AboutController extends Controller {
         this.copyright.setText(this.project.getCopyright());
         this.type.setText(StrUtil.equals(this.project.getType(), "build") ? this.i18nString("base.buildType1") : this.i18nString("base.buildType2"));
         // 设置标题
-        this.stage.appendTitle(this.project.getName());
+        this.stage.appendTitle(" " + this.project.getName());
         this.stage.hideOnEscape();
     }
 

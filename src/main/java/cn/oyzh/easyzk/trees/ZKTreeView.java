@@ -278,12 +278,12 @@ public class ZKTreeView extends RichTreeView implements EventListener {
 
     @Subscribe
     private void authAdded(ZKAuthAddedEvent event) {
-      this.authJoined(event.data());
+        this.authJoined(event.data());
     }
 
     @Subscribe
     private void authAdded(ZKAuthEnabledEvent event) {
-      this.authJoined(event.data());
+        this.authJoined(event.data());
     }
 
     /**
@@ -310,6 +310,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
 
     /**
      * 搜索开始事件
+     *
      * @param event 事件
      */
     @Subscribe
@@ -320,6 +321,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
 
     /**
      * 搜索结束事件
+     *
      * @param event 事件
      */
     @Subscribe

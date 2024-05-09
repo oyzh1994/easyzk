@@ -232,7 +232,6 @@ public class ZKInfoUpdateController extends Controller {
         if (StrUtil.isBlank(this.name.getTextTrim())) {
             this.name.setText(host.replace(":", "_"));
         }
-        // }
         String name = this.name.getTextTrim();
         this.zkInfo.setName(name);
         Number connectTimeOut = this.connectTimeOut.getValue();
@@ -242,7 +241,6 @@ public class ZKInfoUpdateController extends Controller {
         this.zkInfo.setSshInfo(this.getSSHInfo());
         this.zkInfo.setListen(this.listen.isSelected());
         this.zkInfo.setRemark(this.remark.getTextTrim());
-        // this.zkInfo.setCluster(this.cluster.isSelected());
         this.zkInfo.setReadonly(this.readonly.isSelected());
         this.zkInfo.setSshForward(this.sshForward.isSelected());
         this.zkInfo.setConnectTimeOut(connectTimeOut.intValue());

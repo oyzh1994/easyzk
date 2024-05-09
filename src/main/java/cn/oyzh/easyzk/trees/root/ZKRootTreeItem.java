@@ -60,9 +60,10 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         this.setValue(new ZKRootTreeItemValue());
         // 初始化子节点
         this.initChildes();
-        // 监听节点变化
+        // 监听变化
         super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             ZKEventUtil.treeChildChanged();
+            this.flushLocal();
         });
     }
 
@@ -80,9 +81,9 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             this.addChild(list);
         }
         // 初始化连接
-        List<ZKInfo> zkInfos = this.infoStore.load();
-        if (CollUtil.isNotEmpty(zkInfos)) {
-            this.addConnects(zkInfos);
+        List<ZKInfo> infos = this.infoStore.load();
+        if (CollUtil.isNotEmpty(infos)) {
+            this.addConnects(infos);
         }
     }
 
@@ -107,19 +108,21 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * 导出连接
      */
     private void exportConnect() {
-        List<ZKInfo> zkInfos = this.infoStore.load();
-        if (zkInfos.isEmpty()) {
-            MessageBox.warn("zk连接列表为空！");
+        List<ZKInfo> infos = this.infoStore.load();
+        if (infos.isEmpty()) {
+            MessageBox.warn(I18nResourceBundle.i18nString("base.connect", "base.is", "base.empty"));
             return;
         }
-        ZKInfoExport export = ZKInfoExport.fromConnects(zkInfos);
+        ZKInfoExport export = ZKInfoExport.fromConnects(infos);
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
-        File file = FileChooserUtil.save("保存zk连接列表", "zk连接列表.json", new FileChooser.ExtensionFilter[]{extensionFilter});
-        try {
-            FileUtil.writeUtf8String(export.toJSONString(), file);
-            MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
-        } catch (Exception ex) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+        File file = FileChooserUtil.save(I18nResourceBundle.i18nString("base.save", "base.connect"), I18nResourceBundle.i18nString("base.zk", "base.connect", "base._json"), new FileChooser.ExtensionFilter[]{extensionFilter});
+        if (file != null) {
+            try {
+                FileUtil.writeUtf8String(export.toJSONString(), file);
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+            } catch (Exception ex) {
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            }
         }
     }
 
@@ -133,7 +136,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             return;
         }
         if (files.size() != 1) {
-            MessageBox.warn("仅支持单个文件！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.onlySupport", "base.single", "base.file"));
             return;
         }
         File file = CollUtil.getFirst(files);
@@ -147,7 +150,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     private void importConnect() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files", "*.json");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FileChooserUtil.choose("选择zk连接列表", new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose(I18nResourceBundle.i18nString("base.choose", "base.file"), new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseConnect(file);
     }
@@ -180,13 +183,13 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         try {
             String text = FileUtil.readUtf8String(file);
             ZKInfoExport export = ZKInfoExport.fromJSON(text);
-            List<ZKInfo> zkInfos = export.getConnects();
-            if (CollUtil.isNotEmpty(zkInfos)) {
-                for (ZKInfo zkInfo : zkInfos) {
-                    if (this.infoStore.add(zkInfo)) {
-                        this.addConnect(zkInfo);
+            List<ZKInfo> infos = export.getConnects();
+            if (CollUtil.isNotEmpty(infos)) {
+                for (ZKInfo info : infos) {
+                    if (this.infoStore.add(info)) {
+                        this.addConnect(info);
                     } else {
-                        MessageBox.warn(I18nResourceBundle.i18nString("base.connect") + "[" + zkInfo.getName() + "]" + I18nResourceBundle.i18nString("base.importFail"));
+                        MessageBox.warn(I18nResourceBundle.i18nString("base.connect") + "[" + info.getName() + "]" + I18nResourceBundle.i18nString("base.importFail"));
                     }
                 }
                 MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
@@ -236,7 +239,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     }
 
     /**
-     * 获取分组节点
+     * 获取分组树节点组件
      *
      * @param groupId 分组id
      */
@@ -250,9 +253,9 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     }
 
     /**
-     * 获取分组节点
+     * 获取分组树节点组件
      *
-     * @return 分组节点
+     * @return 分组树节点组件
      */
     private List<ZKGroupTreeItem> getGroupItems() {
         List<ZKGroupTreeItem> items = new ArrayList<>(this.getChildrenSize());
@@ -266,6 +269,8 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
     /**
      * 连接新增事件
+     *
+     * @param info 连接
      */
     public void infoAdded(ZKInfo info) {
         this.addConnect(info);
@@ -273,6 +278,8 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
     /**
      * 连接变更事件
+     *
+     * @param info 连接
      */
     public void infoUpdated(ZKInfo info) {
         f1:
@@ -294,13 +301,13 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     }
 
     @Override
-    public void addConnect(@NonNull ZKInfo zkInfo) {
-        ZKGroupTreeItem groupItem = this.getGroupItem(zkInfo.getGroupId());
+    public void addConnect(@NonNull ZKInfo info) {
+        ZKGroupTreeItem groupItem = this.getGroupItem(info.getGroupId());
         if (groupItem == null) {
-            super.addChild(new ZKConnectTreeItem(zkInfo, this.getTreeView()));
+            super.addChild(new ZKConnectTreeItem(info, this.getTreeView()));
             this.extend();
         } else {
-            groupItem.addConnect(zkInfo);
+            groupItem.addConnect(info);
         }
     }
 

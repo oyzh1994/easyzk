@@ -56,7 +56,7 @@ public class ZKMainController extends ParentController {
     /**
      * 当前激活的zk信息
      */
-    private ZKInfo zkInfo;
+    private ZKInfo info;
 
     /**
      * 左侧zk树
@@ -193,7 +193,7 @@ public class ZKMainController extends ParentController {
      * @param event 消息
      */
     private void infoUpdate(ZKInfoUpdatedEvent event) {
-        if (this.zkInfo == event.data()) {
+        if (this.info == event.data()) {
             this.flushViewTitle(event.data());
         }
     }
@@ -209,7 +209,7 @@ public class ZKMainController extends ParentController {
         } else {
             this.stage.restoreTitle();
         }
-        this.zkInfo = info;
+        this.info = info;
     }
 
     @Override

@@ -5,11 +5,11 @@
     <parent>
         <groupId>cn.oyzh</groupId>
         <artifactId>fx-base</artifactId>
-        <version>1.3</version>
+        <version>1.3.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <version>1.6.3</version>
+    <version>1.6.4</version>
     <artifactId>easyzk</artifactId>
     <description>zookeeper的可视化操作、导入导出、传输、命令行功能</description>
 

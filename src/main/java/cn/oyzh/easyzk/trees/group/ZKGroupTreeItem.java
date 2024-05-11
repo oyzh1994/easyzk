@@ -63,8 +63,11 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         this.setValue(new ZKGroupTreeItemValue(this));
         // 判断是否展开
         this.setExpanded(this.value.isExpand());
-        // 监听节点变化
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> ZKEventUtil.treeChildChanged());
+        // 监听变化
+        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+            ZKEventUtil.treeChildChanged();
+            this.flushLocal();
+        });
         // 监听收缩变化
         super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             this.value.setExpand(false);
@@ -153,11 +156,11 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     /**
      * 父节点
      *
-     * @return zk根节点
+     * @return 根节点
      */
     public ZKRootTreeItem parent() {
-        Object parent = this.getParent();
-        return (ZKRootTreeItem) parent;
+        TreeItem<?> treeItem = this.getParent();
+        return (ZKRootTreeItem) treeItem;
     }
 
     @Override

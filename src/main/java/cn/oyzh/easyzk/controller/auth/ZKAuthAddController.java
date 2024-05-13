@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -62,16 +63,16 @@ public class ZKAuthAddController extends Controller {
                 return;
             }
             if (this.authStore.exist(user, password)) {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+                MessageBox.warn(I18nHelper.contentAlreadyExists());
                 return;
             }
             ZKAuth auth = new ZKAuth(user, password);
             if (this.authStore.add(auth)) {
                 ZKEventUtil.authAdded(auth);
-                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeStage();
             } else {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

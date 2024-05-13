@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -102,7 +103,7 @@ public class ZKACLUpdateController extends Controller {
         try {
             String perms = this.getPerms();
             if (StrUtil.isBlank(perms)) {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
+                MessageBox.warn(I18nHelper.contentCanNotEmpty());
                 return;
             }
             List<ACL> aclList = this.zkClient.getACL(this.zkItem.nodePath());
@@ -118,7 +119,7 @@ public class ZKACLUpdateController extends Controller {
             if (updateFlag) {
                 this.updateACL(aclList);
             } else {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -135,10 +136,10 @@ public class ZKACLUpdateController extends Controller {
         Stat stat = this.zkClient.setACL(this.zkItem.nodePath(), aclList);
         if (stat != null) {
             this.zkItem.refreshACL();
-            MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+            MessageBox.okToast(I18nHelper.operationSuccess());
             this.closeStage();
         } else {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 

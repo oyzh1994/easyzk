@@ -19,6 +19,7 @@ import cn.oyzh.fx.plus.controls.button.CopyButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
@@ -219,7 +220,7 @@ public class ZKACLAddController extends Controller {
             }
             String perms = this.getPerms();
             if (StrUtil.isBlank(perms)) {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
+                MessageBox.warn(I18nHelper.contentCanNotEmpty());
                 return;
             }
             if (this.aclType.getSelectedIndex() == 0) {
@@ -258,11 +259,11 @@ public class ZKACLAddController extends Controller {
         }
         String digest = ZKAuthUtil.digest(user, password);
         if (digest == null) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
         ACL acl = new ACL();
@@ -302,7 +303,7 @@ public class ZKACLAddController extends Controller {
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
         ACL acl = new ACL();
@@ -320,12 +321,12 @@ public class ZKACLAddController extends Controller {
         // 获取内容
         ZKAuth zkAuth = this.digestInfo3.getValue();
         if (zkAuth == null) {
-            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.contentNotEmpty"), this.digestInfo3);
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.digestInfo3);
             return;
         }
         String digest = zkAuth.digest();
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
         ACL acl = new ACL();
@@ -419,11 +420,11 @@ public class ZKACLAddController extends Controller {
             Stat stat = this.zkClient.addACL(this.zkItem.nodePath(), list);
             if (stat != null) {
                 this.zkItem.refreshACL();
-                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeStage();
                 return true;
             }
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

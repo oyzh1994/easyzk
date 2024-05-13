@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.digital.PortTextField;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -206,7 +207,7 @@ public class ZKInfoAddController extends Controller {
         // 检查连接地址
         String host = this.getHost();
         if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
+            MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
             // 创建zk信息
             ZKInfo zkInfo = new ZKInfo();
@@ -253,10 +254,10 @@ public class ZKInfoAddController extends Controller {
             boolean result = this.infoStore.add(zkInfo);
             if (result) {
                 ZKEventUtil.infoAdded(zkInfo);
-                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeStage();
             } else {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

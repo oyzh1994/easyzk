@@ -15,6 +15,7 @@ import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -148,7 +149,7 @@ public class ZKAuthTabContent extends DynamicTabController {
                         if (authStore.update(authVO)) {
                             ZKEventUtil.authEnabled(authVO);
                         } else {
-                            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                            MessageBox.warn(I18nHelper.operationFail());
                         }
                     });
                     return toggleSwitch;

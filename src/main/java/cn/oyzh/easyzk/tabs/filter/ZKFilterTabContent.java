@@ -16,6 +16,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -149,7 +150,7 @@ public class ZKFilterTabContent extends DynamicTabController {
                         if (filterStore.update(filterVO)) {
                             ZKEventUtil.treeChildFilter();
                         } else {
-                            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                            MessageBox.warn(I18nHelper.operationFail());
                         }
                     });
                     return toggleSwitch;
@@ -172,7 +173,7 @@ public class ZKFilterTabContent extends DynamicTabController {
                         if (filterStore.update(filterVO)) {
                             ZKEventUtil.treeChildFilter();
                         } else if (filterVO.isEnable()) {
-                            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                            MessageBox.warn(I18nHelper.operationFail());
                         }
                     });
                     return toggleSwitch;
@@ -193,7 +194,7 @@ public class ZKFilterTabContent extends DynamicTabController {
                 ZKEventUtil.treeChildFilter();
                 this.firstPage();
             } else {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         }
     }

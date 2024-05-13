@@ -22,6 +22,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddNodeMenuItem;
@@ -669,7 +670,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         String newNodePath = ZKNodeUtil.concatPath(parentPath, nodeName);
         try {
             if (this.client().exists(newNodePath)) {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+                MessageBox.warn(I18nHelper.contentAlreadyExists());
                 return;
             }
             CreateMode createMode = this.value.ephemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
@@ -682,11 +683,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 // 删除旧节点
                 this._delete();
             } else {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+            MessageBox.exception(ex, I18nHelper.contentAlreadyExists());
         }
     }
 
@@ -709,7 +710,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onStart(this::_delete)
                 .onFinish(this::stopWaiting)
                 .onError(MessageBox::exception)
-                .onSuccess(() -> MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess")))
+                .onSuccess(() -> MessageBox.okToast(I18nHelper.operationSuccess()))
                 .build();
         this.startWaiting(task);
     }
@@ -760,7 +761,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onFinish(this::stopWaiting)
                 .onSuccess(this::flushValue)
                 .onStart(() -> this.loadChildes(true))
-                .onError(ex -> MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail")))
+                .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))
                 .build();
         this.startWaiting(task);
     }
@@ -773,7 +774,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onFinish(this::stopWaiting)
                 .onStart(() -> this.collapseAll(this))
                 .onSuccess(() -> this.getTreeView().select(this))
-                .onError(ex -> MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail")))
+                .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))
                 .build();
         this.startWaiting(task);
     }
@@ -786,7 +787,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onFinish(this::stopWaiting)
                 .onStart(() -> this.expandAll(this))
                 .onSuccess(() -> this.getTreeView().select(this))
-                .onError(ex -> MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionFail")))
+                .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))
                 .build();
         this.startWaiting(task);
     }

@@ -10,8 +10,8 @@ import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKExportUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.util.Counter;
-import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
@@ -174,7 +174,7 @@ public class ZKNodeImportController extends Controller {
             return;
         }
         if (file.length() == 0) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
+            MessageBox.warn(I18nHelper.contentCanNotEmpty());
             return;
         }
         try {
@@ -256,17 +256,17 @@ public class ZKNodeImportController extends Controller {
                 }
                 // 收尾工作
                 this.updateStatus(I18nResourceBundle.i18nString("base.processing"));
-                this.updateStatus(I18nResourceBundle.i18nString("base.actionSuccess"));
-                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                this.updateStatus(I18nHelper.operationSuccess());
+                MessageBox.okToast(I18nHelper.operationSuccess());
 
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus(I18nResourceBundle.i18nString("base.actionCancel"));
-                    MessageBox.okToast(I18nResourceBundle.i18nString("base.actionCancel"));
+                    this.updateStatus(I18nHelper.operationCancel());
+                    MessageBox.okToast(I18nHelper.operationCancel());
                 } else {
                     ex.printStackTrace();
-                    this.updateStatus(I18nResourceBundle.i18nString("base.actionFail"));
-                    MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                    this.updateStatus(I18nHelper.operationFail());
+                    MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
                 // 结束处理
@@ -329,13 +329,13 @@ public class ZKNodeImportController extends Controller {
         this.counter.update(status);
         String msg;
         if (status == 1) {
-            msg = I18nResourceBundle.i18nString("base.importNode") + " " + path + " " + I18nResourceBundle.i18nString("base.success");
+            msg = I18nHelper.importNode() + " " + path + " " + I18nHelper.success();
         } else if (status == 2) {
-            msg = I18nResourceBundle.i18nString("base.importNode") + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip1");
+            msg =I18nHelper.importNode() + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip1");
         } else {
-            msg = I18nResourceBundle.i18nString("base.importNode") + " " + path + " " + I18nResourceBundle.i18nString("base.fail");
+            msg = I18nHelper.importNode() + " " + path + " " + I18nHelper.fail();
             if (ex != null) {
-                msg += "，" + I18nResourceBundle.i18nString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + I18nHelper.errorInfo() + ZKExceptionParser.INSTANCE.apply(ex);
             }
         }
         this.importMsg.appendLine(msg);

@@ -14,6 +14,7 @@ import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
@@ -108,14 +109,14 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         this.value.setName(groupName);
         if (this.groupStore.exist(this.value)) {
             this.value.setName(name);
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
         // 修改名称
         if (this.groupStore.update(this.value)) {
             this.getValue().flushText();
         } else {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 
@@ -129,7 +130,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         }
         // 删除失败
         if (!this.groupStore.delete(this.value)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
             return;
         }
         // 处理连接

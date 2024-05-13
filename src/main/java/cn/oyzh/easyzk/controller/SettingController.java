@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.LocaleComboBox;
@@ -309,7 +310,7 @@ public class SettingController extends Controller {
             if (!this.setting.isAutoAuth()) {
                 ZKAuthUtil.clearAuthed();
             }
-            MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess") + tips);
+            MessageBox.okToast(I18nHelper.operationSuccess() + tips);
             this.closeStage();
             // 应用区域配置
             I18nManager.apply(this.setting.getLocale());
@@ -320,7 +321,7 @@ public class SettingController extends Controller {
             // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
         } else {
-            MessageBox.warnToast(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warnToast(I18nHelper.operationFail());
         }
     }
 

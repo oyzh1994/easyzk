@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -434,9 +435,9 @@ public class ZKNodeTabContent extends DynamicTabController {
             Stat stat = this.treeItem.deleteACL(acl);
             if (stat != null) {
                 this.reloadACL();
-                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                MessageBox.okToast(I18nHelper.operationSuccess());
             } else {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -849,7 +850,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     private void saveQuota() {
         try {
             this.treeItem.saveQuota(this.quotaBytes.getValue(), this.quotaNum.getValue().intValue());
-            MessageBox.info(I18nResourceBundle.i18nString("base.actionSuccess"));
+            MessageBox.info(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -863,7 +864,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         try {
             this.treeItem.clearQuotaNum();
             this.quotaNum.setValue(-1);
-            MessageBox.info(I18nResourceBundle.i18nString("base.actionSuccess"));
+            MessageBox.info(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -877,7 +878,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         try {
             this.treeItem.clearQuotaBytes();
             this.quotaBytes.setValue(-1);
-            MessageBox.info(I18nResourceBundle.i18nString("base.actionSuccess"));
+            MessageBox.info(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }

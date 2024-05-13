@@ -23,7 +23,7 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
@@ -346,7 +346,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         if (this.infoStore.add(zkInfo)) {
             this.parent().addConnect(zkInfo);
         } else {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 
@@ -359,7 +359,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                 // 删除历史记录
                 ZKDataHistoryStore.INSTANCE.clear(this.value.getId());
             } else {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         }
     }
@@ -373,7 +373,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         }
         // 检查名称
         if (StrUtil.isBlank(connectName)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
+            MessageBox.warn(I18nHelper.contentCanNotEmpty());
             return;
         }
         this.value.setName(connectName);
@@ -381,7 +381,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         if (this.infoStore.update(this.value)) {
             this.setValue(new ZKConnectTreeItemValue(this));
         } else {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 

@@ -17,6 +17,7 @@ import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
@@ -119,9 +120,9 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         if (file != null) {
             try {
                 FileUtil.writeUtf8String(export.toJSONString(), file);
-                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                MessageBox.okToast(I18nHelper.operationSuccess());
             } catch (Exception ex) {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         }
     }
@@ -177,7 +178,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             return;
         }
         if (file.length() == 0) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
+            MessageBox.warn(I18nHelper.contentCanNotEmpty());
             return;
         }
         try {
@@ -192,7 +193,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
                         MessageBox.warn(I18nResourceBundle.i18nString("base.connect") + "[" + info.getName() + "]" + I18nResourceBundle.i18nString("base.importFail"));
                     }
                 }
-                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                MessageBox.okToast(I18nHelper.operationSuccess());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -227,14 +228,14 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         ZKGroup group = new ZKGroup();
         group.setName(groupName);
         if (this.groupStore.exist(group)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
         group = this.groupStore.add(groupName);
         if (group != null) {
             this.addChild(new ZKGroupTreeItem(group, this.getTreeView()));
         } else {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 

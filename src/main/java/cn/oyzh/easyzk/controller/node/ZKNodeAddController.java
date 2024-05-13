@@ -16,6 +16,7 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -181,9 +182,9 @@ public class ZKNodeAddController extends Controller {
             // 新增节点
             String node = this.zkClient.create(this.nodePathText, nodeData.getBytes(), List.of(acl), null, createMode, true);
             if (node == null) {
-                MessageBox.warnToast(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warnToast(I18nHelper.operationFail());
             } else {
-                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeStage();
             }
         } catch (Exception ex) {

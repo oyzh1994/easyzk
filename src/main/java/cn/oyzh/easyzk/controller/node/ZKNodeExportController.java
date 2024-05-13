@@ -16,8 +16,6 @@ import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.util.Counter;
-import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.FlexHBox;
@@ -27,9 +25,11 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.fxml.FXML;
@@ -212,7 +212,7 @@ public class ZKNodeExportController extends Controller {
                 // 排除临时节点
                 zkNodes = zkNodes.parallelStream().filter(ZKNode::persistent).collect(Collectors.toList());
                 if (CollUtil.isEmpty(zkNodes)) {
-                    MessageBox.okToast(I18nResourceBundle.i18nString("base.actionFail"));
+                    MessageBox.okToast(I18nHelper.operationFail());
                     return;
                 }
                 // 节点按词典顺序排序
@@ -245,19 +245,19 @@ public class ZKNodeExportController extends Controller {
                 // 保存文件
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);
-                    this.updateStatus(I18nResourceBundle.i18nString("base.actionSuccess"));
-                    MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
+                    this.updateStatus(I18nHelper.operationSuccess());
+                    MessageBox.okToast(I18nHelper.operationSuccess());
                 } else {
-                    this.updateStatus(I18nResourceBundle.i18nString("base.actionCancel"));
+                    this.updateStatus(I18nHelper.operationCancel());
                 }
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus(I18nResourceBundle.i18nString("base.actionCancel"));
-                    MessageBox.warn(I18nResourceBundle.i18nString("base.actionCancel"));
+                    this.updateStatus(I18nHelper.operationCancel());
+                    MessageBox.warn(I18nHelper.operationCancel());
                 } else {
                     e.printStackTrace();
-                    this.updateStatus(I18nResourceBundle.i18nString("base.actionFail"));
-                    MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                    this.updateStatus(I18nHelper.operationFail());
+                    MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
                 // 结束处理
@@ -367,13 +367,13 @@ public class ZKNodeExportController extends Controller {
         this.counter.update(status);
         String msg;
         if (status == 1) {
-            msg = I18nResourceBundle.i18nString("base.exportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.success");
+            msg = I18nHelper.exportNode() + " " + path + " " + I18nHelper.success();
         } else if (status == 2) {
-            msg = I18nResourceBundle.i18nString("base.exportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip2");
+            msg = I18nHelper.exportNode() + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip2");
         } else {
-            msg = I18nResourceBundle.i18nString("base.exportNode") + " " + path + " " + I18nResourceBundle.i18nString("base.fail");
+            msg = I18nHelper.exportNode() + " " + path + " " + I18nHelper.fail();
             if (ex != null) {
-                msg += "，" + I18nResourceBundle.i18nString("base.errorInfo") + ZKExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + I18nHelper.errorInfo() + ZKExceptionParser.INSTANCE.apply(ex);
             }
         }
         this.exportMsg.appendLine(msg);

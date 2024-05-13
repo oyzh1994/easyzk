@@ -162,9 +162,9 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         this.outputLine("connect [-timeout timeout] [-server server] [-r]");
         this.outputLine("-timeout " + I18nResourceBundle.i18nString("base.unit", "base.ms"));
         // this.outputLine("-timeout 超时时间，单位毫秒");
-        this.outputLine("-server ip:" + I18nResourceBundle.i18nString("base.port"));
+        this.outputLine("-server ip:" + I18nHelper.port());
         // this.outputLine("-server 连接地址，ip:端口");
-        this.outputLine("-r " + I18nResourceBundle.i18nString("base.readonlyMode"));
+        this.outputLine("-r " + I18nHelper.readonlyMode());
         this.appendByPrompt("connect -timeout 3000 -server localhost:2181");
         this.enableInput();
         this.flushAndMoveCaretAnd();

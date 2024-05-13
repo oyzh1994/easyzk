@@ -9,7 +9,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 public class ReadonlyOperationException extends ZKException {
 
     public ReadonlyOperationException() {
-        this(I18nResourceBundle.i18nString("base.readonlyMode", "base.notSupport", "base.current", "base.action"));
+        this(I18nResourceBundle.i18nString("base.readonlyMode", "base.notSupport", "base.current", "base.operation"));
         // this("只读模式不支持此操作");
 
     }

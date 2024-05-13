@@ -55,7 +55,7 @@ public class ZKConnectUtil {
     }
 
     /**
-     * 关闭zk客户端
+     * 关闭客户端
      *
      * @param client zk客户端
      * @param async  是否异步

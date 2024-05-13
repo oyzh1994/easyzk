@@ -147,7 +147,7 @@ public class ZKNodeExportController extends Controller {
     /**
      * 当前zk对象
      */
-    private ZKClient zkClient;
+    private ZKClient client;
 
     /**
      * 导出操作任务
@@ -182,7 +182,7 @@ public class ZKNodeExportController extends Controller {
         // 开始处理
         this.exportMsg.clear();
         this.stateManager.disable();
-        this.stage.appendTitle("===" + I18nResourceBundle.i18nString("base.export", "base.processing") + "===");
+        this.stage.appendTitle("===" + I18nHelper.exportProcessing() + "===");
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.filters = this.filterStore.loadEnable();
@@ -192,10 +192,10 @@ public class ZKNodeExportController extends Controller {
             try {
                 this.stopExportBtn.enable();
                 // 初始化连接
-                if (!this.zkClient.isConnected()) {
+                if (!this.client.isConnected()) {
                     this.updateStatus(I18nResourceBundle.i18nString("base.connect", "base.initing") + "...");
-                    this.zkClient.start();
-                    if (!this.zkClient.isConnected()) {
+                    this.client.start();
+                    if (!this.client.isConnected()) {
                         MessageBox.okToast(I18nResourceBundle.i18nString("base.connect", "base.init", "base.fail"));
                         return;
                     }
@@ -226,7 +226,7 @@ public class ZKNodeExportController extends Controller {
                 // 文件格式
                 FileChooser.ExtensionFilter extensionFilter;
                 // 处理名称
-                String fileName = "ZK-" + I18nResourceBundle.i18nString("base.connect") + this.zkClient.zkInfo().getName() + "-" + I18nResourceBundle.i18nString("base.exportData");
+                String fileName = "ZK-" + I18nHelper.connect() + this.client.infoName() + "-" + I18nHelper.exportData();
                 if (isJSON) {
                     boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
                     exportData = ZKExportUtil.nodesToJSON(zkNodes, CharsetUtil.defaultCharsetName(), prettyFormat);
@@ -240,8 +240,8 @@ public class ZKNodeExportController extends Controller {
                     fileName += ".txt";
                 }
                 // 收尾工作
-                this.updateStatus(I18nResourceBundle.i18nString("base.processing"));
-                File file = FileChooserUtil.save(I18nResourceBundle.i18nString("base.exportData"), fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
+                this.updateStatus(I18nHelper.fileProcessing());
+                File file = FileChooserUtil.save(I18nHelper.exportData(), fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);
@@ -297,12 +297,12 @@ public class ZKNodeExportController extends Controller {
         super.onStageShown(event);
         TreeItem<?> item = this.getStageProp("zkItem");
         if (item instanceof ZKNodeTreeItem treeItem) {
-            this.zkClient = this.getStageProp("zkClient");
+            this.client = this.getStageProp("zkClient");
             this.exportPath = treeItem.nodePath();
             this.nodePath.setText(treeItem.decodeNodePath());
         } else if (item instanceof ZKConnectTreeItem treeItem) {
             this.nodePathBox.managedBindVisible();
-            this.zkClient = new ZKClient(treeItem.value());
+            this.client = new ZKClient(treeItem.value());
             this.exportPath = "/";
             this.nodePathBox.disappear();
         }
@@ -328,7 +328,7 @@ public class ZKNodeExportController extends Controller {
                 return;
             }
             // 获取节点
-            ZKNode zkNode = ZKNodeUtil.getNode(this.zkClient, path, properties);
+            ZKNode zkNode = ZKNodeUtil.getNode(this.client, path, properties);
             // 失败
             if (zkNode == null) {
                 this.updateStatus(path, 0, null);
@@ -341,7 +341,7 @@ public class ZKNodeExportController extends Controller {
             // 处理子节点
             if (zkNode != null && zkNode.parentNode()) {
                 // 获取子节点路径
-                List<String> subs = this.zkClient.getChildren(path);
+                List<String> subs = this.client.getChildren(path);
                 // 递归获取节点
                 for (String sub : subs) {
                     if (!ThreadUtil.isInterrupted(this.exportTask)) {

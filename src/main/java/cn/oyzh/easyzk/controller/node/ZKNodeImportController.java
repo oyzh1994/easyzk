@@ -10,8 +10,6 @@ import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKExportUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
@@ -20,9 +18,11 @@ import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.fxml.FXML;
@@ -132,7 +132,7 @@ public class ZKNodeImportController extends Controller {
             return;
         }
         if (files.size() != 1) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.onlySupport", "base.single", "base.file"));
+            MessageBox.warn(I18nHelper.onlySupportSingleFile());
             return;
         }
         File file = files.getFirst();
@@ -147,7 +147,7 @@ public class ZKNodeImportController extends Controller {
     private void chooseFile() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files|TXT files", "*.json", "*.txt");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FileChooserUtil.choose(I18nResourceBundle.i18nString("base.choose", "base.file"), new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose(I18nHelper.chooseFile(), new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseFile(file);
     }
@@ -162,15 +162,15 @@ public class ZKNodeImportController extends Controller {
             return;
         }
         if (!file.exists()) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.file", "base.notExists"));
+            MessageBox.warn(I18nHelper.fileNotExists());
             return;
         }
         if (file.isDirectory()) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.notSupport", "base.folder"));
+            MessageBox.warn(I18nHelper.notSupportFolder());
             return;
         }
         if (!FileNameUtil.isType(file.getName(), "txt", "text", "json")) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.invalid", "base.format"));
+            MessageBox.warn(I18nHelper.invalidFormat());
             return;
         }
         if (file.length() == 0) {
@@ -184,14 +184,14 @@ public class ZKNodeImportController extends Controller {
             this.importMsg.clear();
             this.importBtn.enable();
             // 脚本信息
-            String info = I18nResourceBundle.i18nString("base.fileName") + " " + file.getName() + "，" +
-                    I18nResourceBundle.i18nString("base.total") + " " + this.nodeExport.counts() + I18nResourceBundle.i18nString("base.line") + "，" +
-                    I18nResourceBundle.i18nString("base.size") + " " + Math.max(1, file.length() / 1024) + "Kb，" +
-                    I18nResourceBundle.i18nString("base.version") + " " + this.nodeExport.version() + "，" +
-                    I18nResourceBundle.i18nString("base.platform") + " " + this.nodeExport.platform() + "，" +
-                    I18nResourceBundle.i18nString("base.charset") + " " + this.nodeExport.charset();
+            String info = I18nHelper.fileName() + " " + file.getName() + "，" +
+                    I18nHelper.total() + " " + this.nodeExport.counts() +  I18nHelper.line() + "，" +
+                    I18nHelper.size() + " " + Math.max(1, file.length() / 1024) + "Kb，" +
+                    I18nHelper.version() + " " + this.nodeExport.version() + "，" +
+                    I18nHelper.platform() + " " + this.nodeExport.platform() + "，" +
+                    I18nHelper.charset() + " " + this.nodeExport.charset();
             if (this.nodeExport.hasPrefix()) {
-                info += "，" + I18nResourceBundle.i18nString("base.prefix") + this.nodeExport.getPrefix();
+                info += "，" +  I18nHelper.prefix() + this.nodeExport.getPrefix();
             }
             this.scriptInfo.setText(info);
             this.charset.select(this.nodeExport.getCharset());
@@ -199,7 +199,7 @@ public class ZKNodeImportController extends Controller {
             ex.printStackTrace();
             this.nodeExport = null;
             this.importBtn.disable();
-            MessageBox.exception(ex, I18nResourceBundle.i18nString("base.parseFail"));
+            MessageBox.exception(ex, I18nHelper.parseFail());
         }
     }
 
@@ -215,7 +215,7 @@ public class ZKNodeImportController extends Controller {
         // 开始处理
         this.importBtn.disable();
         this.stateManager.disable();
-        this.stage.appendTitle("===" + I18nResourceBundle.i18nString("base.import", "base.processing") + "===");
+        this.stage.appendTitle("===" + I18nHelper.importProcessing() + "===");
         // 忽略已存在节点
         boolean ignoreExist = this.ignoreExist.isSelected();
         // 执行导入
@@ -331,7 +331,7 @@ public class ZKNodeImportController extends Controller {
         if (status == 1) {
             msg = I18nHelper.importNode() + " " + path + " " + I18nHelper.success();
         } else if (status == 2) {
-            msg =I18nHelper.importNode() + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip1");
+            msg = I18nHelper.importNode() + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip1");
         } else {
             msg = I18nHelper.importNode() + " " + path + " " + I18nHelper.fail();
             if (ex != null) {

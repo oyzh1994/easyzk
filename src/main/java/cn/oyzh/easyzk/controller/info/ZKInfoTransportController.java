@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.fx.ConnectComboBox;
 import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -166,7 +167,7 @@ public class ZKInfoTransportController extends Controller {
         ZKInfo formInfo = this.formConnect.getValue();
         ZKInfo targetInfo = this.targetConnect.getValue();
         if (formInfo == targetInfo) {
-            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.invalid", "base.action"), this.formConnect);
+            MessageBox.tipMsg(I18nHelper.invalidOperation(), this.formConnect);
             return;
         }
 
@@ -216,8 +217,8 @@ public class ZKInfoTransportController extends Controller {
         this.counter.reset();
         // 开始传输
         this.transportStart();
-        this.stage.appendTitle("===" + I18nResourceBundle.i18nString("base.transport", "base.processing") + "===");
-        this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transport", "base.starting") + "...");
+        this.stage.appendTitle("===" + I18nHelper.transportProcessing() + "===");
+        this.transportMsg.appendLine(I18nHelper.transportStarting() + "...");
         // 执行传输
         this.exportTask = ThreadUtil.start(() -> {
             this.stopTransportBtn.enable();
@@ -397,10 +398,10 @@ public class ZKInfoTransportController extends Controller {
             this.transportMsg.appendLine(I18nHelper.transportNode() + " " + path + " " + I18nHelper.success());
         } else if (status == 2) {
             this.counter.update(2);
-            this.transportMsg.appendLine(I18nHelper.transportNode() + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip1"));
+            this.transportMsg.appendLine(I18nHelper.transportNode() + " " + path + " " + ZKI18nHelper.nodeTip3());
         } else if (status == 3) {
             this.counter.update(2);
-            this.transportMsg.appendLine(I18nHelper.transportNode() + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip2"));
+            this.transportMsg.appendLine(I18nHelper.transportNode() + " " + path + " " + ZKI18nHelper.nodeTip4());
         } else {
             this.counter.update(0);
             String msg = I18nHelper.transportNode()+ " " + path + " " + I18nHelper.fail();

@@ -305,7 +305,7 @@ public class ZKNodeTabContent extends DynamicTabController {
         this.charset.select(this.treeItem.getCharset());
 
         // 加载耗时处理
-        FXUtil.runWait(() -> this.loadTime.setText(this.i18nString("base.cost") + ":" + this.treeItem.loadTime() + "ms"));
+        FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.treeItem.loadTime() + "ms"));
     }
 
     /**
@@ -392,7 +392,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             ClipboardUtil.setStringAndTip(builder, "权限信息");
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, this.i18nString("base.actionException"));
+            MessageBox.exception(ex, I18nHelper.operationException());
         }
     }
 
@@ -412,7 +412,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             fxView.display();
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, this.i18nString("base.actionException"));
+            MessageBox.exception(ex,I18nHelper.operationException());
         }
     }
 
@@ -421,7 +421,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     @FXML
     private void deleteACL(MouseEvent event) {
-        if (!MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
+        if (!MessageBox.confirm(I18nHelper.deleteData())) {
             return;
         }
         SVGGlyph glyph = (SVGGlyph) event.getTarget();

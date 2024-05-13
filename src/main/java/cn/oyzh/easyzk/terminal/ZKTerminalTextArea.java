@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextArea;
 import javafx.beans.value.ChangeListener;
@@ -63,7 +64,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     public void flushPrompt() {
         String str;
         if (this.isTemporary()) {
-            str = "zk" + I18nResourceBundle.i18nString("base.connect");
+            str = "zk" + I18nHelper.connect();
         } else {
             str = this.client.infoName();
         }
@@ -71,7 +72,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
             str += "@" + this.info().getHost();
         }
         if (this.isConnecting()) {
-            str += "（" + I18nResourceBundle.i18nString("base.connecting") + "）> ";
+            str += "（" + I18nHelper.connectIng() + "）> ";
         } else if (this.isConnected()) {
             if (this.client.isReadonly()) {
                 str += "（" + I18nResourceBundle.i18nString("base.connected") + "/" + I18nResourceBundle.i18nString("base.readonlyMode") + "）> ";
@@ -212,7 +213,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                 // 获取连接
                 String host = this.info().getHost();
                 if (t1 == ZKConnState.CONNECTED) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connect", "base.success") + " .");
+                    this.outputLine(host + I18nHelper.connectSuccess() + " .");
                     // this.outputLine(host + " 连接成功.");
                     // this.outputLine("输入\"help\"或者按下tab键可查看命令列表.");
                     // this.outputLine("输入\"命令 -?\"可查看此命令详情.");
@@ -226,7 +227,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                     // this.outputLine(host + " 连接关闭.");
                     this.enableInput();
                 } else if (t1 == ZKConnState.CONNECTING) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectStart") + " .");
+                    this.outputLine(host + I18nHelper.connectStart() + " .");
                     // this.outputLine(host + " 连接开始.");
                 } else if (t1 == ZKConnState.SUSPENDED) {
                     this.outputLine(host + I18nResourceBundle.i18nString("base.connectSuspended") + " .");
@@ -243,7 +244,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                     // this.outputLine(host + " 连接丢失.");
                     this.enableInput();
                 } else if (t1 == ZKConnState.FAILED) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectFail") + " .");
+                    this.outputLine(host + I18nHelper.connectFail() + " .");
                     // this.outputLine(host + " 连接失败.");
                     if (this.connect != null) {
                         this.appendByPrompt(this.connect.getInput());

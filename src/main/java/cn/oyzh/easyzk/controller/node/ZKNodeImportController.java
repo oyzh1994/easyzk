@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKExportUtil;
+import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -255,7 +256,7 @@ public class ZKNodeImportController extends Controller {
                     this.updateStatus(path, status, exception);
                 }
                 // 收尾工作
-                this.updateStatus(I18nResourceBundle.i18nString("base.processing"));
+                this.updateStatus(I18nHelper.processing());
                 this.updateStatus(I18nHelper.operationSuccess());
                 MessageBox.okToast(I18nHelper.operationSuccess());
 
@@ -296,7 +297,7 @@ public class ZKNodeImportController extends Controller {
         // 文件拖拽相关
         this.stage.scene().setOnDragOver(event1 -> {
             this.stage.disable();
-            this.stage.appendTitle("===" + I18nResourceBundle.i18nString("base.dragTip1") + "===");
+            this.stage.appendTitle("===" + I18nHelper.dragTip1() + "===");
             event1.acceptTransferModes(TransferMode.ANY);
             event1.consume();
         });
@@ -331,7 +332,7 @@ public class ZKNodeImportController extends Controller {
         if (status == 1) {
             msg = I18nHelper.importNode() + " " + path + " " + I18nHelper.success();
         } else if (status == 2) {
-            msg = I18nHelper.importNode() + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip1");
+            msg = I18nHelper.importNode() + " " + path + " " + ZKI18nHelper.nodeTip3();
         } else {
             msg = I18nHelper.importNode() + " " + path + " " + I18nHelper.fail();
             if (ex != null) {

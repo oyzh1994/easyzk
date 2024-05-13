@@ -9,6 +9,7 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -154,7 +155,7 @@ public class MainController extends ParentController {
             StaticLog.info("exit directly.");
             StageUtil.exit();
         } else if (this.setting.isExitAsk()) { // 总是询问
-            if (MessageBox.confirm(I18nResourceBundle.i18nString("base.quit") + this.project.getName())) {
+            if (MessageBox.confirm(I18nHelper.quit() + this.project.getName())) {
                 StaticLog.info("exit by confirm.");
                 StageUtil.exit();
             } else {
@@ -167,7 +168,7 @@ public class MainController extends ParentController {
                 TrayManager.show();
             } else {
                 StaticLog.error("tray not support!");
-                MessageBox.warn(I18nResourceBundle.i18nString("base.trayNotSupport"));
+                MessageBox.warn(I18nHelper.trayNotSupport());
             }
         }
     }

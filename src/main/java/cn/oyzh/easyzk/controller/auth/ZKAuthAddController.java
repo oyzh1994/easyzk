@@ -55,11 +55,11 @@ public class ZKAuthAddController extends Controller {
             String user = this.user.getText().trim();
             String password = this.password.getText().trim();
             if (StrUtil.isBlank(user)) {
-                MessageBox.tipMsg(I18nResourceBundle.i18nString("base.userNameNotEmpty"), this.user);
+                MessageBox.tipMsg(I18nHelper.userNameCanNotEmpty(), this.user);
                 return;
             }
             if (StrUtil.isBlank(password)) {
-                MessageBox.tipMsg(I18nResourceBundle.i18nString("base.passwordNotEmpty"), this.password);
+                MessageBox.tipMsg(I18nHelper.passwordCanNotEmpty(), this.password);
                 return;
             }
             if (this.authStore.exist(user, password)) {

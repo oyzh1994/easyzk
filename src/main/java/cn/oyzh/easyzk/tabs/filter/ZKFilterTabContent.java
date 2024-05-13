@@ -189,7 +189,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      * @param info zk信息
      */
     private void deleteInfo(ZKFilter info) {
-        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
+        if (MessageBox.confirm(I18nHelper.deleteData())) {
             if (this.filterStore.delete(info)) {
                 ZKEventUtil.treeChildFilter();
                 this.firstPage();

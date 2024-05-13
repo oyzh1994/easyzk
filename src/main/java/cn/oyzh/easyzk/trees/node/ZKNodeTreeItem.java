@@ -698,11 +698,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             return;
         }
         // 父节点删除提示
-        if (this.value.parentNode() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.delete") + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip2"))) {
+        if (this.value.parentNode() && !MessageBox.confirm(I18nHelper.delete() + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip2"))) {
             return;
         }
         // 子节点删除提示
-        if (this.value.subNode() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.delete") + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip1"))) {
+        if (this.value.subNode() && !MessageBox.confirm(I18nHelper.delete() + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip1"))) {
             return;
         }
         // 创建任务

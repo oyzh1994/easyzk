@@ -125,7 +125,7 @@ public class DataHistoryController extends SubController implements Initializabl
      * @param history 历史记录
      */
     private void delete(ZKDataHistory history) {
-        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
+        if (MessageBox.confirm(I18nHelper.deleteData())) {
             if (this.historyStore.delete(history)) {
                 this.refresh();
             } else {
@@ -140,7 +140,7 @@ public class DataHistoryController extends SubController implements Initializabl
      * @param history 历史记录
      */
     private void restore(ZKDataHistory history) {
-        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.restore", "base.data"))) {
+        if (MessageBox.confirm(I18nHelper.restoreData())) {
             ZKEventUtil.historyRestore(history, this.item);
         }
     }

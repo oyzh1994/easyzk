@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.fx;
 
 
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 import cn.oyzh.fx.plus.node.NodeManager;
 
@@ -19,7 +19,7 @@ public class ZKFormatComboBox extends FlexComboBox<String> implements I18nSelect
 
     {
         NodeManager.init(this);
-        this.setTipText(I18nResourceBundle.i18nString("base.format"));
+        this.setTipText(I18nHelper.format());
     }
 
     /**

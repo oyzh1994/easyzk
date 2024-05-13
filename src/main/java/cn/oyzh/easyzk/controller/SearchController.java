@@ -19,6 +19,7 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.search.SearchResult;
@@ -271,7 +272,7 @@ public class SearchController extends SubController {
                 ZKSearchParam param = this.getSearchParam();
                 if (!this.searchNext.isDisable()) {
                     // 执行预搜索
-                    this.searchResult.setText(I18nResourceBundle.i18nString("base.searching"));
+                    this.searchResult.setText(I18nHelper.searching());
                     this.searchHandler.preSearch(param);
                     // 搜索开始
                     ZKEventUtil.searchStart(param);

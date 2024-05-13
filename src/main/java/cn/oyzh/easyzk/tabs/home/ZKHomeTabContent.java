@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.tabs.home;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 import org.springframework.context.annotation.Lazy;
@@ -43,7 +44,7 @@ public class ZKHomeTabContent extends DynamicTabController {
     @Override
     public void initialize(URL url, ResourceBundle resource) {
         super.initialize(url, resource);
-        this.softInfo.setText(this.i18nString("base.soft") + ": v" + this.project.getVersion() + " Powered by oyzh.");
+        this.softInfo.setText(I18nHelper.soft() + ": v" + this.project.getVersion() + " Powered by oyzh.");
         String jdkInfo = "";
         if (System.getProperty("java.vm.name") != null) {
             jdkInfo += System.getProperty("java.vm.name");
@@ -51,7 +52,7 @@ public class ZKHomeTabContent extends DynamicTabController {
         if (System.getProperty("java.vm.version") != null) {
             jdkInfo += System.getProperty("java.vm.version");
         }
-        this.jdkInfo.setText(this.i18nString("base.env") + ": " + jdkInfo);
+        this.jdkInfo.setText(I18nHelper.env() + ": " + jdkInfo);
     }
 
     /**

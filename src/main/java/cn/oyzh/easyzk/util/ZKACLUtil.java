@@ -4,6 +4,7 @@ import cn.hutool.core.util.NumberUtil;
 import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.util.RegexUtil;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.NonNull;
@@ -260,7 +261,7 @@ public class ZKACLUtil {
     public static int toPermInt(@NonNull String perms) {
         perms = perms.trim().toLowerCase();
         if (perms.isEmpty() || perms.length() > 5) {
-            throw new ZKException(I18nResourceBundle.i18nString("base.invalid", "base.perms"));
+            throw new ZKException(I18nHelper.invalidPerms());
         }
         int permsInt = 0;
         for (char c : perms.toCharArray()) {
@@ -275,7 +276,7 @@ public class ZKACLUtil {
             } else if (c == 'd') {
                 permsInt += ZooDefs.Perms.DELETE;
             } else {
-                throw new ZKException("[" + c + "]" + I18nResourceBundle.i18nString("base.invalid"));
+                throw new ZKException("[" + c + "]" + I18nHelper.invalid());
             }
         }
         return permsInt;
@@ -291,7 +292,7 @@ public class ZKACLUtil {
         StringBuilder permStr = new StringBuilder(NumberUtil.getBinaryStr(permInt));
         int i = 5 - permStr.length();
         if (i > 5 || i < 0) {
-            throw new ZKException(I18nResourceBundle.i18nString("base.invalid", "base.perms"));
+            throw new ZKException(I18nHelper.invalidPerms());
         }
         while (i-- > 0) {
             permStr.insert(0, "0");

@@ -4,10 +4,10 @@ import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
+import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
@@ -62,7 +62,7 @@ public class ZKNodeTab extends DynamicTab {
         // 节点被移除
         if (this.treeItem.isBeDeleted()) {
             if (!this.treeItem.isIgnoreDeleted()) {
-                if (MessageBox.confirm(this.controller().i18nString("zk.nodeTip2"))) {
+                if (MessageBox.confirm(ZKI18nHelper.nodeTip2())) {
                     this.treeItem.remove();
                     this.closeTab();
                 } else {
@@ -71,7 +71,7 @@ public class ZKNodeTab extends DynamicTab {
             }
         } else if (this.treeItem.isBeUpdated()) { // 节点被更新
             if (!this.treeItem.isIgnoreUpdated()) {
-                if (MessageBox.confirm(this.controller().i18nString("zk.nodeTip1"))) {
+                if (MessageBox.confirm(ZKI18nHelper.nodeTip1())) {
                     this.treeItem.applyUpdate();
                     this.controller().init(this.treeItem);
                     this.treeItem.flushGraphic();

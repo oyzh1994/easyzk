@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.exception;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.fx.common.ssh.SSHException;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import org.apache.zookeeper.KeeperException;
 
@@ -96,7 +97,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
 
         if (e instanceof KeeperException.InvalidACLException) {
             // return "无效的ACL！";
-            return I18nResourceBundle.i18nString("base.invalid") + "ACL";
+            return I18nHelper.invalid() + "ACL";
         }
 
         if (e instanceof KeeperException.NotEmptyException) {
@@ -133,7 +134,7 @@ public class ZKExceptionParser implements Function<Throwable, String> {
 
         if (e instanceof KeeperException.APIErrorException) {
             // return "API错误！";
-            return "API" + I18nResourceBundle.i18nString("base.error");
+            return "API" + I18nHelper.error();
         }
 
         if (e instanceof KeeperException.NotReadOnlyException) {

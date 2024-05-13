@@ -14,6 +14,7 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.ArrUtil;
 import cn.oyzh.fx.common.util.RuntimeUtil;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -80,7 +81,7 @@ public class ZKNodeUtil {
      */
     public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path, @NonNull String properties) {
         if (!path.contains("/")) {
-            throw new ZKException("path:" + path + I18nResourceBundle.i18nString("base.invalid"));
+            throw new ZKException("path:" + path + I18nHelper.invalid());
         }
         try {
             long start = System.currentTimeMillis();

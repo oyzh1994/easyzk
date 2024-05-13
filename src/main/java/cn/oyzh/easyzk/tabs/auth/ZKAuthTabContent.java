@@ -165,7 +165,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      * @param auth 认证信息
      */
     private void delInfo(ZKAuth auth) {
-        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
+        if (MessageBox.confirm(I18nHelper.deleteData())) {
             this.authStore.delete(auth);
             this.firstPage();
         }

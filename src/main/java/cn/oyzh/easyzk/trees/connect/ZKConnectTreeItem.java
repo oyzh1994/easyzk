@@ -221,7 +221,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         this.client.startWithListener();
                         if (!this.isConnected()) {
                             if (!this.canceled) {
-                                MessageBox.warn(this.value.getName() + I18nResourceBundle.i18nString("base.connectFail"));
+                                MessageBox.warn(this.value.getName() + I18nHelper.connectFail());
                             }
                             this.canceled = false;
                         } else {
@@ -352,7 +352,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public void delete() {
-        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.delete") + this.value().getName())) {
+        if (MessageBox.confirm(I18nHelper.delete() + this.value().getName())) {
             this.closeConnect(false);
             if (this.parent().delConnectItem(this)) {
                 ZKEventUtil.infoDeleted(this.value);

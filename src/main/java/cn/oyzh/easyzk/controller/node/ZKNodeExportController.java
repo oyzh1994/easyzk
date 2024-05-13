@@ -12,6 +12,7 @@ import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKExportUtil;
+import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -193,13 +194,13 @@ public class ZKNodeExportController extends Controller {
                 this.stopExportBtn.enable();
                 // 初始化连接
                 if (!this.client.isConnected()) {
-                    this.updateStatus(I18nResourceBundle.i18nString("base.connect", "base.initing") + "...");
+                    this.updateStatus(I18nHelper.connectInitIng() + "...");
                     this.client.start();
                     if (!this.client.isConnected()) {
-                        MessageBox.okToast(I18nResourceBundle.i18nString("base.connect", "base.init", "base.fail"));
+                        MessageBox.okToast(I18nHelper.connectInitFail());
                         return;
                     }
-                    this.updateStatus(I18nResourceBundle.i18nString("base.export", "base.processing"));
+                    this.updateStatus(I18nHelper.exportProcessing());
                 }
                 // 获取节点
                 List<ZKNode> zkNodes = new ArrayList<>();
@@ -369,7 +370,7 @@ public class ZKNodeExportController extends Controller {
         if (status == 1) {
             msg = I18nHelper.exportNode() + " " + path + " " + I18nHelper.success();
         } else if (status == 2) {
-            msg = I18nHelper.exportNode() + " " + path + " " + I18nResourceBundle.i18nString("base.nodeTip2");
+            msg = I18nHelper.exportNode() + " " + path + " " + ZKI18nHelper.nodeTip4();
         } else {
             msg = I18nHelper.exportNode() + " " + path + " " + I18nHelper.fail();
             if (ex != null) {

@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -29,7 +30,7 @@ public class ZKConnectUtil {
             try {
                 view.disable();
                 view.waitCursor();
-                view.appendTitle("==" + I18nResourceBundle.i18nString("base.connect", "base.testing") + "...");
+                view.appendTitle("==" + I18nHelper.connectTesting() + "...");
                 ZKClient client = new ZKClient(info);
                 // 开始连接
                 client.start();
@@ -38,9 +39,9 @@ public class ZKConnectUtil {
                 view.restoreTitle();
                 if (client.isConnected()) {
                     client.close();
-                    MessageBox.okToast(I18nResourceBundle.i18nString("base.connect", "base.success"));
+                    MessageBox.okToast(I18nHelper.connectSuccess());
                 } else {
-                    MessageBox.warn(I18nResourceBundle.i18nString("base.connect", "base.fail"));
+                    MessageBox.warn(I18nHelper.connectFail());
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

@@ -137,7 +137,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             return;
         }
         if (files.size() != 1) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.onlySupport", "base.single", "base.file"));
+            MessageBox.warn(I18nHelper.onlySupportSingleFile());
             return;
         }
         File file = CollUtil.getFirst(files);
@@ -151,7 +151,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     private void importConnect() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files", "*.json");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FileChooserUtil.choose(I18nResourceBundle.i18nString("base.choose", "base.file"), new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose(I18nHelper.chooseFile(), new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseConnect(file);
     }
@@ -166,15 +166,15 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             return;
         }
         if (!file.exists()) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.file", "base.notExists"));
+            MessageBox.warn(I18nHelper.fileNotExists());
             return;
         }
         if (file.isDirectory()) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.notSupport", "base.folder"));
+            MessageBox.warn(I18nHelper.notSupportFolder());
             return;
         }
         if (!FileNameUtil.isType(file.getName(), "json")) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.invalid", "base.format"));
+            MessageBox.warn(I18nHelper.invalidFormat());
             return;
         }
         if (file.length() == 0) {
@@ -197,7 +197,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionException"));
+            MessageBox.exception(ex, I18nHelper.operationException());
         }
     }
 
@@ -221,7 +221,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
         // 不能为空
         if (StrUtil.isBlank(groupName)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.nameNotEmpty"));
+            MessageBox.warn(I18nHelper.nameCanNotEmpty());
             return;
         }
 

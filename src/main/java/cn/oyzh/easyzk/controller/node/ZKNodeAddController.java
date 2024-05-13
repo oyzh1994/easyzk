@@ -261,7 +261,7 @@ public class ZKNodeAddController extends Controller {
 
         if (builder.isEmpty()) {
             this.perms.requestFocus();
-            MessageBox.warn(I18nResourceBundle.i18nString("base.invalidData"));
+            MessageBox.warn(I18nHelper.invalidData());
             return null;
         }
 
@@ -278,12 +278,12 @@ public class ZKNodeAddController extends Controller {
             // 获取内容
             String user = this.digestUser.getText().trim();
             if (StrUtil.isBlank(user)) {
-                MessageBox.tipMsg(I18nResourceBundle.i18nString("base.userNameNotEmpty"), this.digestUser);
+                MessageBox.tipMsg(I18nHelper.userNameCanNotEmpty(), this.digestUser);
                 return null;
             }
             String password = this.digestPassword.getText().trim();
             if (StrUtil.isBlank(password)) {
-                MessageBox.tipMsg(I18nResourceBundle.i18nString("base.passwordNotEmpty"), this.digestPassword);
+                MessageBox.tipMsg(I18nHelper.passwordCanNotEmpty(), this.digestPassword);
                 return null;
             }
             String digest = ZKAuthUtil.digest(user, password);

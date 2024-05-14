@@ -223,24 +223,24 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                     this.flushCaret();
                     super.enableInput();
                 } else if (t1 == ZKConnState.CLOSED) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectClose") + " .");
+                    this.outputLine(host + " " + I18nHelper.connectionClosed() + " .");
                     // this.outputLine(host + " 连接关闭.");
                     this.enableInput();
                 } else if (t1 == ZKConnState.CONNECTING) {
-                    this.outputLine(host + I18nHelper.connectStart() + " .");
+                    this.outputLine(host + " " + I18nHelper.connectionConnecting() + " .");
                     // this.outputLine(host + " 连接开始.");
                 } else if (t1 == ZKConnState.SUSPENDED) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectSuspended") + " .");
+                    this.outputLine(host + " " + I18nResourceBundle.i18nString("base.connectSuspended") + " .");
                     // this.outputLine(host + " 连接中断.");
                     this.enableInput();
                 } else if (t1 == ZKConnState.RECONNECTED) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectReconnected") + " .");
+                    this.outputLine(host + " " + I18nResourceBundle.i18nString("base.connectReconnected") + " .");
                     // this.outputLine(host + " 连接恢复.");
                     this.outputPrompt();
                     this.flushCaret();
                     super.enableInput();
                 } else if (t1 == ZKConnState.LOST) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectLoss") + " .");
+                    this.outputLine(host + " " + I18nHelper.connectionLoss() + " .");
                     // this.outputLine(host + " 连接丢失.");
                     this.enableInput();
                 } else if (t1 == ZKConnState.FAILED) {

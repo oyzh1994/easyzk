@@ -4,6 +4,8 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nAdapter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 /**
@@ -14,7 +16,7 @@ public class ZKConnectionClosedEvent extends Event<ZKClient> implements EventFor
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nResourceBundle.i18nString("base.client", "base.disconnected"), this.data().infoName());
+        return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().infoName());
     }
 
     public ZKInfo info() {

@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 
 /**
  * @author oyzh
@@ -14,7 +14,7 @@ public class ZKConnectionConnectedEvent extends Event<ZKClient> implements Event
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] "+I18nResourceBundle.i18nString("base.client", "base.connected"), this.data().infoName());
+        return String.format("[%s] " + I18nHelper.connectionConnected(), this.data().infoName());
     }
 
     public ZKInfo info() {

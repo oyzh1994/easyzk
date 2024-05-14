@@ -27,7 +27,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="30" require="true" realHeight="30" flexWidth="100% - 140">
+                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="30" require="true" realHeight="30" flexWidth="100% - 180">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -39,7 +39,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="hostIp" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 140" maxLen="1024">
+                    <ClearableTextField fx:id="hostIp" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 180" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -51,7 +51,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <PortTextField flexWidth="100% - 140" fx:id="hostPort" realHeight="30" value="2181">
+                    <PortTextField flexWidth="100% - 180" fx:id="hostPort" realHeight="30" value="2181">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -123,7 +123,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140" tipText="%base.remarkTip" maxLen="100">
+                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip" maxLen="100">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -151,7 +151,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 245" maxLen="1024">
+                    <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 285" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -168,7 +168,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout" tipText="%base.sshTimeoutTip" realHeight="30" value="3000">
+                    <NumberTextField flexWidth="100% - 180" fx:id="sshTimeout" tipText="%base.sshTimeoutTip" realHeight="30" value="3000">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -180,12 +180,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30" flexWidth="50% - 73" text="root">
+                    <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30" flexWidth="50% - 93" text="root">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30" flexWidth="50% - 72">
+                    <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30" flexWidth="50% - 92">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>

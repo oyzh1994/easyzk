@@ -87,7 +87,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexVBox flexWidth="100% - 140" flexHeight="100%">
+        <FlexVBox flexWidth="100% - 180" flexHeight="100%">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>

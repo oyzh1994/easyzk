@@ -364,7 +364,7 @@ public class ZKACLAddController extends Controller {
         acl.setId(new Id("ip", ip));
         acl.setPerms(perms);
         if (this.zkItem.existIPACL(acl.idVal())) {
-            MessageBox.warnToast(ip + I18nHelper.alreadyExists());
+            MessageBox.warnToast("[" + ip + "] " + I18nHelper.alreadyExists());
         } else {
             this.addACL(acl);
         }
@@ -391,7 +391,7 @@ public class ZKACLAddController extends Controller {
             acl.setId(new Id("ip", ip));
             acl.setPerms(perms);
             if (this.zkItem.existIPACL(acl.idVal())) {
-                MessageBox.warnToast(ip + I18nHelper.alreadyExists());
+                MessageBox.warnToast("[" + ip + "] " + I18nHelper.alreadyExists());
                 return;
             }
             aclList.add(acl);

@@ -45,7 +45,6 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -97,7 +96,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public ZKConnectTreeItem(@NonNull ZKInfo value, @NonNull ZKTreeView treeView) {
         super(treeView);
         this.value(value);
-        // 监听节点变化
+        // 监听变化
         super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> ZKEventUtil.treeChildChanged());
     }
 
@@ -126,8 +125,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             EditConnectMenuItem editConnect = new EditConnectMenuItem("12", this::editConnect);
             RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
             ServerInfoMenuItem server = new ServerInfoMenuItem("12", this::serverInfo);
-            ExportDataMenuItem exportData = new ExportDataMenuItem("12", () -> this.firstChild().exportNode());
-            ImportDataMenuItem importData = new ImportDataMenuItem("12", this::importNode);
+            ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportData);
+            ImportDataMenuItem importData = new ImportDataMenuItem("12", this::importData);
             TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
             server.setDisable(!this.client.initialized());
 
@@ -149,17 +148,14 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                 items.add(expandAll);
                 items.add(collapseAll);
             }
-            OpenTerminalMenuItem openTerminal = new OpenTerminalMenuItem("12", this::openTerminal);
-            items.add(openTerminal);
         } else {
             StartConnectMenuItem connect = new StartConnectMenuItem("12", this::connect);
             EditConnectMenuItem editConnect = new EditConnectMenuItem("12", this::editConnect);
             RenameConnectMenuItem renameConnect = new RenameConnectMenuItem("12", this::rename);
             DeleteConnectMenuItem deleteConnect = new DeleteConnectMenuItem("12", this::delete);
             RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
-            ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportNode);
+            ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportData);
             TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
-            OpenTerminalMenuItem openTerminal = new OpenTerminalMenuItem("12", this::openTerminal);
 
             items.add(connect);
             items.add(editConnect);
@@ -168,15 +164,16 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             items.add(exportData);
             items.add(transportData);
             items.add(deleteConnect);
-            items.add(openTerminal);
         }
+        OpenTerminalMenuItem openTerminal = new OpenTerminalMenuItem("12", this::openTerminal);
+        items.add(openTerminal);
         return items;
     }
 
     /**
      * 导出zk节点
      */
-    public void exportNode() {
+    public void exportData() {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeExportController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.client());
@@ -221,12 +218,14 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         this.client.startWithListener();
                         if (!this.isConnected()) {
                             if (!this.canceled) {
-                                MessageBox.warn(this.value.getName() + I18nHelper.connectFail());
+                                MessageBox.warn("[" + this.value.getName() + "] " + I18nHelper.connectFail());
                             }
                             this.canceled = false;
+                            this.closeConnect(false);
                         } else {
                             this.loadRootNode();
                         }
+                        this.flushGraphic();
                     })
                     .onFinish(this::stopWaiting)
                     .onSuccess(this::flushLocal)
@@ -240,7 +239,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     /**
      * 导入数据
      */
-    private void importNode() {
+    private void importData() {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeImportController.class, this.window());
         fxView.setProp("zkClient", this.client);
         fxView.display();
@@ -249,7 +248,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     /**
      * 传输数据
      */
-    @FXML
     private void transportData() {
         StageWrapper wrapper = StageUtil.getStage(ZKInfoTransportController.class);
         if (wrapper != null) {
@@ -265,7 +263,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     public void closeConnect() {
         if (this.isConnected()) {
-            if (this.hasUnsavedNode() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.unsavedAndContinue"))) {
+            if (this.hasUnsavedNode() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
                 return;
             }
             this.closeConnect(true);
@@ -325,7 +323,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     private void editConnect() {
         if (this.isConnected()) {
-            if (!MessageBox.confirm(I18nResourceBundle.i18nString("base.closeAndContinue"))) {
+            if (!MessageBox.confirm(I18nHelper.closeAndContinue())) {
                 return;
             }
             this.closeConnect();
@@ -341,7 +339,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     private void repeatConnect() {
         ZKInfo zkInfo = new ZKInfo();
         zkInfo.copy(this.value);
-        zkInfo.setName(this.value.getName() + "-" + I18nResourceBundle.i18nString("base.repeat"));
+        zkInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         zkInfo.setCollects(Collections.emptyList());
         if (this.infoStore.add(zkInfo)) {
             this.parent().addConnect(zkInfo);
@@ -352,7 +350,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public void delete() {
-        if (MessageBox.confirm(I18nHelper.delete() + this.value().getName())) {
+        if (MessageBox.confirm(I18nHelper.delete() + " [" + this.value().getName() + "]")) {
             this.closeConnect(false);
             if (this.parent().delConnectItem(this)) {
                 ZKEventUtil.infoDeleted(this.value);
@@ -366,7 +364,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public void rename() {
-        String connectName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.getName());
+        String connectName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.getName());
         // 名称为null或者跟当前名称相同，则忽略
         if (connectName == null || Objects.equals(connectName, this.value.getName())) {
             return;
@@ -448,7 +446,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                 rootItem.loadChild();
             }
         } else {
-            MessageBox.warn(this.value().getName() + I18nResourceBundle.i18nString("base.loadFail"));
+            MessageBox.warn(this.value().getName() + I18nHelper.loadFail());
         }
     }
 

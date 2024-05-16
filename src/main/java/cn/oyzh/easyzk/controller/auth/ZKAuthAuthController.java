@@ -169,7 +169,7 @@ public class ZKAuthAuthController extends Controller {
                 MessageBox.warn(I18nHelper.operationFail());
             } else {
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
-                MessageBox.warn(I18nResourceBundle.i18nString("base.authFailTip1"));
+                MessageBox.warn(I18nHelper.authFailTip1());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -203,7 +203,7 @@ public class ZKAuthAuthController extends Controller {
                     if (auth != null) {
                         text = auth.getUser() + ":" + auth.getPassword();
                         if (ZKAuthUtil.isAuthed(client, auth)) {
-                            text += " (" + I18nResourceBundle.i18nString("base.authed") + ")";
+                            text += " (" + I18nHelper.authed() + ")";
                         }
                     }
                     return text;

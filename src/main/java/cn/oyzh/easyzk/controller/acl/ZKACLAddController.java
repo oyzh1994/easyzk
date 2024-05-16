@@ -342,7 +342,7 @@ public class ZKACLAddController extends Controller {
      */
     private void addWorldACL() {
         if (this.zkItem.hasWorldACL()) {
-            MessageBox.warn("World " + I18nResourceBundle.i18nString("base.perms", "base.alreadyExists"));
+            MessageBox.warn("World " + I18nHelper.permsAlreadyExists());
             return;
         }
         ACL acl = new ACL();

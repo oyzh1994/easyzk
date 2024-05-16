@@ -510,7 +510,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     private void handleACLState(ZKACL acl, Text text) {
         Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.client());
         if (CollUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
-            text.setText("(" + I18nResourceBundle.i18nString("base.authed") + ")");
+            text.setText("(" + I18nHelper.authed() + ")");
         } else {
             text.setText("");
         }
@@ -586,7 +586,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private void reloadData() {
         // 放弃保存
-        if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.unsavedAndContinue"))) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
         // 刷新数据
@@ -626,7 +626,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private void saveNodeData() {
         if (this.treeItem.isDataTooLong()) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.dataTooLarge"));
+            MessageBox.warn(I18nHelper.dataTooLarge());
             return;
         }
         // 保存数据

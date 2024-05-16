@@ -23,11 +23,10 @@ import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddNodeMenuItem;
 import cn.oyzh.fx.plus.menu.AuthNodeMenuItem;
-import cn.oyzh.fx.plus.menu.CancelActionMenuItem;
+import cn.oyzh.fx.plus.menu.CancelOperationMenuItem;
 import cn.oyzh.fx.plus.menu.CollapseAllMenuItem;
 import cn.oyzh.fx.plus.menu.DeleteNodeMenuItem;
 import cn.oyzh.fx.plus.menu.ExpandAllMenuItem;
@@ -579,7 +578,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.loading) {
-            CancelActionMenuItem cancel = new CancelActionMenuItem("11", this::cancel);
+            CancelOperationMenuItem cancel = new CancelOperationMenuItem("11", this::cancel);
             items.add(cancel);
         } else {
             AuthNodeMenuItem auth = new AuthNodeMenuItem("12", this::authNode);
@@ -608,7 +607,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 items.add(collapseAll);
             }
             if (this.value.hasReadPerm()) {
-                ExportNodeMenuItem export = new ExportNodeMenuItem("12", this::exportNode);
+                ExportNodeMenuItem export = new ExportNodeMenuItem("12", this::exportData);
                 items.add(export);
             }
             items.add(auth);
@@ -647,7 +646,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     /**
      * 导出zk节点
      */
-    public void exportNode() {
+    public void exportData() {
         StageWrapper fxView = StageUtil.parseStage(ZKNodeExportController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.client());
@@ -660,7 +659,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.value.rootNode() || this.value.parentNode() || this.value.ephemeral()) {
             return;
         }
-        String nodeName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.nodeName());
+        String nodeName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.nodeName());
         // 名称为空或名称跟当前名称相同，则忽略
         if (StrUtil.isBlank(nodeName) || Objects.equals(nodeName, this.value.nodeName())) {
             return;
@@ -697,12 +696,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.value.rootNode()) {
             return;
         }
-        // 父节点删除提示
-        if (this.value.parentNode() && !MessageBox.confirm(I18nHelper.delete() + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip2"))) {
-            return;
-        }
-        // 子节点删除提示
-        if (this.value.subNode() && !MessageBox.confirm(I18nHelper.delete() + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip1"))) {
+        // // 父节点删除提示
+        // if (this.value.parentNode() && !MessageBox.confirm(I18nHelper.delete() + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip2"))) {
+        //     return;
+        // }
+        // 删除提示
+        if (this.value.subNode() && !MessageBox.confirm(I18nHelper.delete() +" ["+ this.value.decodeNodePath()+"] ",I18nHelper.areYouSure())) {
             return;
         }
         // 创建任务

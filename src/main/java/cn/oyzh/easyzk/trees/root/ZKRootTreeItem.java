@@ -111,12 +111,12 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     private void exportConnect() {
         List<ZKInfo> infos = this.infoStore.load();
         if (infos.isEmpty()) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.connect", "base.is", "base.empty"));
+            MessageBox.warn(I18nHelper.connectionIsEmpty());
             return;
         }
         ZKInfoExport export = ZKInfoExport.fromConnects(infos);
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
-        File file = FileChooserUtil.save(I18nResourceBundle.i18nString("base.save", "base.connect"), I18nResourceBundle.i18nString("base.zk", "base.connect", "base._json"), new FileChooser.ExtensionFilter[]{extensionFilter});
+        File file = FileChooserUtil.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.zk", "base.connect", "base._json"), new FileChooser.ExtensionFilter[]{extensionFilter});
         if (file != null) {
             try {
                 FileUtil.writeUtf8String(export.toJSONString(), file);
@@ -190,7 +190,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
                     if (this.infoStore.add(info)) {
                         this.addConnect(info);
                     } else {
-                        MessageBox.warn(I18nResourceBundle.i18nString("base.connect") + "[" + info.getName() + "]" + I18nResourceBundle.i18nString("base.importFail"));
+                        MessageBox.warn(I18nHelper.connect() + " [" + info.getName() + "] " + I18nHelper.importFail());
                     }
                 }
                 MessageBox.okToast(I18nHelper.operationSuccess());
@@ -212,7 +212,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * 添加分组
      */
     public void addGroup() {
-        String groupName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"));
+        String groupName = MessageBox.prompt(I18nHelper.contentTip1());
 
         // 名称为null，则忽略
         if (groupName == null) {

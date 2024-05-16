@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.text.FlexText;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -59,7 +60,7 @@ public class AboutController extends Controller {
         this.updateDate.setText(this.project.getUpdateDate());
         // 设置版权文本框的文本为项目的版权信息
         this.copyright.setText(this.project.getCopyright());
-        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? this.i18nString("base.buildType1") : this.i18nString("base.buildType2"));
+        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? I18nHelper.buildType1() : I18nHelper.buildType2());
         // 设置标题
         this.stage.appendTitle(" " + this.project.getName());
         this.stage.hideOnEscape();

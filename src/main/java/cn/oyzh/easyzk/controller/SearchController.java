@@ -241,7 +241,7 @@ public class SearchController extends SubController {
                         this.replaceTips.setText("");
                         ZKNodeTreeItem item = this.parent().activeItem();
                         if (item.isDataTooLong()) {
-                            MessageBox.warn(I18nResourceBundle.i18nString("base.dataTooLarge"));
+                            MessageBox.warn(I18nHelper.dataTooLarge());
                         } else if (item.saveData()) {
                             // 更新搜索结果
                             this.updateSearchResult();
@@ -252,7 +252,7 @@ public class SearchController extends SubController {
                     } else { // 未找到匹配项
                         // 更新搜索结果
                         this.updateSearchResult();
-                        this.replaceTips.setText(I18nResourceBundle.i18nString("base.noMoreResult"));
+                        this.replaceTips.setText(I18nHelper.noMoreResult());
                     }
                 })
                 .onFinish(() -> this.replacing = false)

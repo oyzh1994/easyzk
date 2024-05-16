@@ -157,11 +157,11 @@ public class ZKInfoTransportController extends Controller {
     private void doTransport() {
         // 检查连接
         if (this.formConnect.getValue() == null) {
-            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.choose", "base.transport", "base.connect"), this.formConnect);
+            MessageBox.tipMsg(I18nHelper.chooseSourceConnection(), this.formConnect);
             return;
         }
         if (this.targetConnect.getValue() == null) {
-            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.choose", "base.target", "base.connect"), this.formConnect);
+            MessageBox.tipMsg(I18nHelper.chooseTargetConnection(), this.targetConnect);
             return;
         }
         ZKInfo formInfo = this.formConnect.getValue();
@@ -176,7 +176,7 @@ public class ZKInfoTransportController extends Controller {
         // 检查传输连接
         if (this.formClient == null || !this.formClient.isConnected() || this.formClient.zkInfo() != formInfo) {
             try {
-                this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transport", "base.connect", "base.initing") + "...");
+                this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transport", "base.connect", "base.initing") + "===");
                 if (this.formClient != null) {
                     this.formClient.close();
                 }
@@ -185,7 +185,7 @@ public class ZKInfoTransportController extends Controller {
                 this.formClient.start();
                 if (!this.formClient.isConnected()) {
                     this.formConnect.requestFocus();
-                    MessageBox.warn(I18nResourceBundle.i18nString("base.transport", "base.connect") + "[" + formInfo.getName() + "]" + I18nResourceBundle.i18nString("base.initfail"));
+                    MessageBox.warn(I18nHelper.sourceConnect() + " [" + formInfo.getName() + "] " + I18nHelper.initFail());
                     return;
                 }
             } finally {
@@ -196,7 +196,7 @@ public class ZKInfoTransportController extends Controller {
         // 检查目标连接
         if (this.targetClient == null || !this.targetClient.isConnected() || this.targetClient.zkInfo() != formInfo) {
             try {
-                this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.target", "base.connect", "base.initing") + "...");
+                this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.target", "base.connect", "base.initing") + "===");
                 if (this.targetClient != null) {
                     this.targetClient.close();
                 }
@@ -205,7 +205,7 @@ public class ZKInfoTransportController extends Controller {
                 this.targetClient.start();
                 if (!this.targetClient.isConnected()) {
                     this.targetConnect.requestFocus();
-                    MessageBox.warn(I18nResourceBundle.i18nString("base.target", "base.connect") + "[" + targetInfo.getName() + "]" + I18nResourceBundle.i18nString("base.initfail"));
+                    MessageBox.warn(I18nHelper.targetConnect() + " [" + targetInfo.getName() + "] " + I18nHelper.initFail());
                     return;
                 }
             } finally {

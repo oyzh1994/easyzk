@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.trees.root;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 
@@ -20,7 +21,7 @@ public class ZKRootTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public String name() {
-        return I18nResourceBundle.i18nString("base.zk");
+        return I18nHelper.zk();
     }
 
     @Override

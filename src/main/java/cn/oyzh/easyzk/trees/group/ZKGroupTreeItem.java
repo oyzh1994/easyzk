@@ -95,7 +95,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
 
     @Override
     public void rename() {
-        String groupName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.getName());
+        String groupName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.getName());
         // 名称为null或者跟当前名称相同，则忽略
         if (groupName == null || Objects.equals(groupName, this.value.getName())) {
             return;
@@ -109,7 +109,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         this.value.setName(groupName);
         if (this.groupStore.exist(this.value)) {
             this.value.setName(name);
-            MessageBox.warn(I18nHelper.contentAlreadyExists());
+            MessageBox.warn(I18nHelper.groupAlreadyExists());
             return;
         }
         // 修改名称
@@ -122,10 +122,10 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
 
     @Override
     public void delete() {
-        if (this.isChildEmpty() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.deleteGroupTip1"))) {
+        if (this.isChildEmpty() && !MessageBox.confirm(I18nHelper.deleteGroupTip1())) {
             return;
         }
-        if (!this.isChildEmpty() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.deleteGroupTip2"))) {
+        if (!this.isChildEmpty() && !MessageBox.confirm(I18nHelper.deleteGroupTip2())) {
             return;
         }
         // 删除失败

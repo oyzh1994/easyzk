@@ -65,16 +65,16 @@ public class ZKNodeQRCodeController extends Controller {
             ZKNode zkNode = this.getStageProp("zkNode");
             String nodeData = this.getStageProp("nodeData");
             StringBuilder builder = new StringBuilder();
-            builder.append(I18nResourceBundle.i18nString("base.node", "base.path")).append(": ")
+            builder.append(I18nHelper.nodePath()).append(": ")
                     .append(zkNode.decodeNodePath()).append("\n")
-                    .append(I18nResourceBundle.i18nString("base.node", "base.data")).append(": ")
+                    .append(I18nHelper.nodeData()).append(": ")
                     .append(nodeData).append("\n")
-                    .append(I18nResourceBundle.i18nString("base.node", "base.type")).append(": ")
+                    .append(I18nHelper.nodeType()).append(": ")
                     .append(zkNode.ephemeral() ? I18nResourceBundle.i18nString("base.ephemeralNode") : I18nResourceBundle.i18nString("base.persistentNode"));
             if (zkNode.stat() != null) {
                 builder.append("\n")
-                        .append(I18nResourceBundle.i18nString("base.createTime")).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
-                        .append(I18nResourceBundle.i18nString("base.updateTime")).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
+                        .append(I18nHelper.createTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
+                        .append(I18nHelper.updateTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
             }
             StaticLog.info("generate qrcode begin.");
             QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
@@ -88,7 +88,7 @@ public class ZKNodeQRCodeController extends Controller {
             ex.printStackTrace();
             StaticLog.warn("initQRCode error, ex:{}", ex.getMessage());
             if (ex.getMessage().contains("Data too big")) {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.dataTooLarge"));
+                MessageBox.warn(I18nHelper.dataTooLarge());
             } else {
                 MessageBox.exception(ex, I18nHelper.operationFail());
             }

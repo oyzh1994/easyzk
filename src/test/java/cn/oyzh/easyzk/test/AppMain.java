@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.test;
 
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.fx.ZKRichDataTextArea;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
@@ -76,7 +75,7 @@ public class AppMain extends Application {
         // test21(stage);
         // test22(stage);
         // test23(stage);
-        test24(stage);
+        // test24(stage);
         // test25(stage);
     }
 
@@ -558,59 +557,59 @@ public class AppMain extends Application {
         stage.show();
     }
 
-    private void test24(Stage stage) {
-        VBox pane = new VBox();
-        pane.setMinWidth(600);
-        pane.setMinHeight(600);
-
-        String xx = """
-                {
-                  "name": "Alice",
-                  "age": "20",
-                  "hobbies": ["reading", "writing", "coding"],
-                  "sub" : {
-                        "name": "Alice",
-                        "age": "20",
-                        "hobbies": ["reading", "writing", "coding"]
-                  }
-                }
-                """;
-
-        ZKRichDataTextArea textArea = new ZKRichDataTextArea();
-        textArea.setFlexWidth("100%");
-        textArea.setFlexHeight("100%");
-        // textArea.setShowType((byte) 1);
-        textArea.showData((byte) 1, xx);
-
-
-        // FlexVirtualizedScrollPane<BaseRichTextArea> sp = new FlexVirtualizedScrollPane<>(textArea);
-        //
-        //
-        // sp.setOnScroll(scrollEvent -> {
-        //     System.out.println("----------");
-        // });
-        // textArea.setOnScroll(scrollEvent -> {
-        //     System.out.println("+++++++++++++++++");
-        // });
-        // textArea.prefWidthProperty().bind(sp.prefWidthProperty());
-        // textArea.prefHeightProperty().bind(sp.prefHeightProperty());
-        // sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        // sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        // sp.setFlexWidth("100%");
-        // sp.setFlexHeight("100%");
-        //
-        // pane.getChildren().add(sp);
-
-        pane.setOnScroll(scrollEvent -> {
-            System.out.println("11111");
-        });
-        // pane.getChildren().add(textArea);
-        stage.setScene(new Scene(pane));
-        stage.getScene().setOnScroll(scrollEvent -> {
-            System.out.println("2222");
-        });
-        stage.show();
-    }
+    // private void test24(Stage stage) {
+    //     VBox pane = new VBox();
+    //     pane.setMinWidth(600);
+    //     pane.setMinHeight(600);
+    //
+    //     String xx = """
+    //             {
+    //               "name": "Alice",
+    //               "age": "20",
+    //               "hobbies": ["reading", "writing", "coding"],
+    //               "sub" : {
+    //                     "name": "Alice",
+    //                     "age": "20",
+    //                     "hobbies": ["reading", "writing", "coding"]
+    //               }
+    //             }
+    //             """;
+    //
+    //     ZKRichDataTextArea textArea = new ZKRichDataTextArea();
+    //     textArea.setFlexWidth("100%");
+    //     textArea.setFlexHeight("100%");
+    //     // textArea.setShowType((byte) 1);
+    //     textArea.showData((byte) 1, xx);
+    //
+    //
+    //     // FlexVirtualizedScrollPane<BaseRichTextArea> sp = new FlexVirtualizedScrollPane<>(textArea);
+    //     //
+    //     //
+    //     // sp.setOnScroll(scrollEvent -> {
+    //     //     System.out.println("----------");
+    //     // });
+    //     // textArea.setOnScroll(scrollEvent -> {
+    //     //     System.out.println("+++++++++++++++++");
+    //     // });
+    //     // textArea.prefWidthProperty().bind(sp.prefWidthProperty());
+    //     // textArea.prefHeightProperty().bind(sp.prefHeightProperty());
+    //     // sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    //     // sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+    //     // sp.setFlexWidth("100%");
+    //     // sp.setFlexHeight("100%");
+    //     //
+    //     // pane.getChildren().add(sp);
+    //
+    //     pane.setOnScroll(scrollEvent -> {
+    //         System.out.println("11111");
+    //     });
+    //     // pane.getChildren().add(textArea);
+    //     stage.setScene(new Scene(pane));
+    //     stage.getScene().setOnScroll(scrollEvent -> {
+    //         System.out.println("2222");
+    //     });
+    //     stage.show();
+    // }
 
     private void test25(Stage stage) {
         TextArea textArea = new TextArea();

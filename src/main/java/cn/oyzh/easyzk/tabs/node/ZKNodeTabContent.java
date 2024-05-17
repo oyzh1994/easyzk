@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKACLVBox;
 import cn.oyzh.easyzk.fx.ZKFormatComboBox;
-import cn.oyzh.easyzk.fx.ZKRichDataTextArea;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
@@ -19,7 +18,6 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.page.PageBox;
-import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -27,7 +25,6 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -37,6 +34,10 @@ import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.rich.control.FlexRichTextArea;
+import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextArea;
+import cn.oyzh.fx.rich.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -177,7 +178,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 右侧zk数据
      */
     @FXML
-    private ZKRichDataTextArea nodeData;
+    private RichDataPane nodeData;
     // private ZKDataTextArea nodeData;
 
     /**
@@ -244,19 +245,19 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
         if (this.format.isStringFormat()) {
-            this.showData((byte) 0);
+            this.showData(RichDataType.STRING);
             this.nodeData.setEditable(true);
         } else if (this.format.isJsonFormat()) {
-            this.showData((byte) 1);
+            this.showData(RichDataType.JSON);
             this.nodeData.setEditable(true);
         } else if (this.format.isBinaryFormat()) {
-            this.showData((byte) 2);
+            this.showData(RichDataType.BINARY);
             this.nodeData.setEditable(false);
         } else if (this.format.isHexFormat()) {
-            this.showData((byte) 3);
+            this.showData(RichDataType.HEX);
             this.nodeData.setEditable(false);
         } else if (this.format.isRawFormat()) {
-            this.showData((byte) 4);
+            this.showData(RichDataType.RAW);
         }
     };
 
@@ -313,7 +314,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      *
      * @return 节点数据组件
      */
-    public FlexRichTextArea getDataNode() {
+    public RichDataPane getDataNode() {
         return this.nodeData;
     }
 
@@ -412,7 +413,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             fxView.display();
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex,I18nHelper.operationException());
+            MessageBox.exception(ex, I18nHelper.operationException());
         }
     }
 
@@ -722,16 +723,16 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 显示数据
      */
     protected void showData() {
-        this.showData(this.nodeData.getShowType());
+        this.nodeData.showData(this.treeItem.data());
     }
 
     /**
      * 显示数据
      *
-     * @param showType 类型
+     * @param dataType 数据类型
      */
-    protected void showData(byte showType) {
-        this.nodeData.showData(showType, this.treeItem.data());
+    protected void showData(RichDataType dataType) {
+        this.nodeData.showData(dataType, this.treeItem.data());
     }
 
     /**

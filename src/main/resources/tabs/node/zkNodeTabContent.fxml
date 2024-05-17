@@ -2,7 +2,6 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLVBox?>
 <?import cn.oyzh.easyzk.fx.ZKFormatComboBox?>
-<?import cn.oyzh.easyzk.fx.ZKRichDataTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.ClearButton?>
 <?import cn.oyzh.fx.plus.controls.button.SaveButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
@@ -11,7 +10,7 @@
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
-<?import cn.oyzh.fx.plus.controls.rich.FlexVirtualizedScrollPane?>
+<?import cn.oyzh.fx.rich.control.FlexVirtualizedScrollPane?>
 <?import cn.oyzh.fx.plus.controls.svg.AddSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
@@ -40,6 +39,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.svg.QRCodeSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.HistorySVGGlyph?>
+<?import cn.oyzh.fx.rich.data.RichDataTextArea?>
+<?import cn.oyzh.fx.rich.data.RichDataPane?>
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -136,11 +137,13 @@
                     </FlowPane.margin>
                 </FXLabel>
             </FlexFlowPane>
-            <FlexVirtualizedScrollPane flexWidth="100%" flexHeight="100% - 32">
-                <content>
-                    <ZKRichDataTextArea fontSize="12" fx:id="nodeData" onKeyPressed="#onNodeDataKeyPressed"/>
-                </content>
-            </FlexVirtualizedScrollPane>
+            <!-- <FlexVirtualizedScrollPane flexWidth="100%" flexHeight="100% - 32"> -->
+            <!--     <content> -->
+            <!--         <RichDataTextArea fontSize="12" fx:id="nodeData" onKeyPressed="#onNodeDataKeyPressed"/> -->
+            <!--     </content> -->
+            <!-- </FlexVirtualizedScrollPane> -->
+            <RichDataPane fontSize="12" fx:id="nodeData" flexHeight="100% - 32"
+                            flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
             <!-- <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 32" -->
             <!--                 flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" -->
             <!--                 text="数据加载中..."/> -->

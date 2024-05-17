@@ -6,10 +6,10 @@ import cn.oyzh.easyzk.store.ZKDataHistoryStore;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.controls.rich.FlexRichTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
+import cn.oyzh.fx.rich.data.RichDataPane;
 import javafx.scene.Cursor;
 import lombok.Getter;
 import lombok.NonNull;
@@ -115,7 +115,7 @@ public class ZKNodeTab extends DynamicTab {
      *
      * @return 节点数据组件
      */
-    public FlexRichTextArea getDataNode() {
+    public RichDataPane getDataNode() {
         return this.controller().getDataNode();
     }
 

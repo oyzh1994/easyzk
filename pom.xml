@@ -150,7 +150,13 @@
             </exclusions>
         </dependency>
 
-        <!-- fx终端 -->
+        <!-- 自定义类库，富文本相关 -->
+        <dependency>
+            <groupId>cn.oyzh</groupId>
+            <artifactId>fx-rich</artifactId>
+        </dependency>
+
+        <!-- 自定义类库，终端相关 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-terminal</artifactId>
@@ -161,32 +167,6 @@
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-pkg</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!-- fx富文本 -->
-        <!-- https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx -->
-        <dependency>
-            <groupId>org.fxmisc.richtext</groupId>
-            <artifactId>richtextfx</artifactId>
-            <version>0.11.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-graphics</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-base</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-fxml</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-controls</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- ssh类库 -->

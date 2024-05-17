@@ -29,12 +29,12 @@ public class ZKSetting extends Setting {
      */
     private Byte authMode;
 
-    /**
-     * 搜索-更多-展开状态
-     * 0|null 不展开
-     * 1 展开
-     */
-    private Byte searchMoreExpand;
+    // /**
+    //  * 搜索-更多-展开状态
+    //  * 0|null 不展开
+    //  * 1 展开
+    //  */
+    // private Byte searchMoreExpand;
 
     /**
      * 是否自动认证
@@ -63,12 +63,12 @@ public class ZKSetting extends Setting {
         return this.loadMode != null && this.loadMode == 2;
     }
 
-    /**
-     * 是否展开搜索-更多
-     *
-     * @return 结果
-     */
-    public boolean isSearchMoreExpand() {
-        return this.searchMoreExpand != null && this.searchMoreExpand == 1;
-    }
+    // /**
+    //  * 是否展开搜索-更多
+    //  *
+    //  * @return 结果
+    //  */
+    // public boolean isSearchMoreExpand() {
+    //     return this.searchMoreExpand != null && this.searchMoreExpand == 1;
+    // }
 }

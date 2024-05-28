@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
+import org.apache.zookeeper.cli.CommandFactory;
 import org.apache.zookeeper.cli.SyncCommand;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +23,8 @@ public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<T
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new SyncCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SYNC);
+    // private final CliCommand cliCommand = new SyncCommand();
+    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SYNC);
 
     @Override
     public String commandName() {

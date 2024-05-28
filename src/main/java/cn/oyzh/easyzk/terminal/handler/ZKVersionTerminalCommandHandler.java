@@ -30,7 +30,7 @@ public class ZKVersionTerminalCommandHandler extends ZKTerminalCommandHandler<Te
     public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
-            result.setResult(Version.getFullVersion());
+            result.setResult("ZooKeeper CLI version: " + Version.getFullVersion());
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.exception.ReadonlyOperationException;
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.terminal.Terminal;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import lombok.AccessLevel;
@@ -43,8 +44,8 @@ public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<
     }
 
     @Override
-    public String commandHelp() {
-        return super.commandHelp() + "\n" +
+    public String commandHelp(ZKTerminalTextArea terminal) {
+        return super.commandHelp(terminal) + "\n" +
                 "-s sequential\n" +
                 "-e ephemeral\n" +
                 "-c container";

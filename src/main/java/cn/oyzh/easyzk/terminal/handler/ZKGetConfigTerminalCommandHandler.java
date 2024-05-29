@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
@@ -8,7 +9,6 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
 import org.apache.zookeeper.cli.CommandFactory;
-import org.apache.zookeeper.cli.GetConfigCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,8 +40,8 @@ public class ZKGetConfigTerminalCommandHandler extends ZKCliTerminalCommandHandl
     }
 
     @Override
-    public String commandHelp() {
-        return super.commandHelp() + "\n" +
+    public String commandHelp(ZKTerminalTextArea terminal) {
+        return super.commandHelp(terminal) + "\n" +
                 "-c client connection string\n" +
                 "-s stats";
     }

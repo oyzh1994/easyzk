@@ -43,8 +43,8 @@ public class ZKSetQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandle
     }
 
     @Override
-    public String commandHelp() {
-        return super.commandHelp() + "\n" +
+    public String commandHelp(ZKTerminalTextArea terminal) {
+        return super.commandHelp(terminal) + "\n" +
                 "-n num quota\n" +
                 "-b bytes quota";
     }

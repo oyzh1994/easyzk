@@ -43,8 +43,8 @@ public class ZKReconfigTerminalCommandHandler extends ZKCliTerminalCommandHandle
     }
 
     @Override
-    public String commandHelp() {
-        return super.commandHelp() + "\n" +
+    public String commandHelp(ZKTerminalTextArea terminal) {
+        return super.commandHelp(terminal) + "\n" +
                 "-s stats\n" +
                 "-v required current config version\n" +
                 "-file path of config file to parse for membership\n" +

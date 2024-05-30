@@ -34,10 +34,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         this.mouseHandler(ZKTerminalMouseHandler.INSTANCE);
         this.historyHandler(ZKTerminalHistoryHandler.INSTANCE);
         this.completeHandler(ZKTerminalCompleteHandler.INSTANCE);
-
-        // 设置内容提示符
-        List<String> commands = TerminalManager.listCommands();
-        super.setContentPrompts(commands);
+        super.initContentPrompts();
     }
 
     /**

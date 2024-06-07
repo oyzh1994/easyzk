@@ -93,7 +93,7 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void quit() {
-        if (MessageBox.confirm(I18nHelper.quit() + this.project.getName())) {
+        if (MessageBox.confirm(I18nHelper.quit() + " " + this.project.getName())) {
             StageUtil.exit();
         }
     }

@@ -1,11 +1,11 @@
 {
-    "destPath": "D:\\Package\\EasyZK\\1.6.3",
+    "destPath": "D:\\Package\\EasyZK\\1.6.4",
     "jdkPath": "D:\\Libraries\\JDKs\\openjdk-22_windows-x64_bin\\jdk-22",
-    "jarPath": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.3.jar",
+    "jarPath": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.4.jar",
     "retainDuringDir": false,
     "package": {
         "vendor": "oyzh",
-        "version": "v1.6.3",
+        "version": "v1.6.4",
         "appName": "EasyZK",
         "buildType": "release",
         "executable": "EasyZK",

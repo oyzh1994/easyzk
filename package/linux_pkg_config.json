@@ -4,7 +4,7 @@
         "enable": true,
         "compressType": "tar.gz",
         "platform": "linux_amd64",
-        "jrePath": "D:\\Package\\EasyZK\\1.6.3\\linux_amd64_jre.zip",
+        "jrePath": "D:\\Package\\EasyZK\\1.6.4\\linux_amd64_jre.zip",
         "mainClass": "org.springframework.boot.loader.JarLauncher",
         "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.png"
     },
@@ -29,12 +29,12 @@
     "jar_clip": {
         "enable": true,
         "excludeJars": [
-            "javafx-fxml-23-ea+3-mac.jar",
-            "javafx-fxml-23-ea+3-win.jar",
-            "javafx-controls-23-ea+3-mac.jar",
-            "javafx-controls-23-ea+3-win.jar",
-            "javafx-graphics-23-ea+3-mac.jar",
-            "javafx-graphics-23-ea+3-win.jar"
+            "javafx-fxml-23-ea+20-mac.jar",
+            "javafx-fxml-23-ea+20-win.jar",
+            "javafx-controls-23-ea+20-mac.jar",
+            "javafx-controls-23-ea+20-win.jar",
+            "javafx-graphics-23-ea+20-mac.jar",
+            "javafx-graphics-23-ea+20-win.jar"
         ]
     }
 }

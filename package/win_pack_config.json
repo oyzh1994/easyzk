@@ -1,0 +1,13 @@
+{
+    "verbose": true,
+    "platform": "Win_64",
+    "executable": "EasyZK",
+    "mainJar": "easyzk-1.6.4.jar",
+    "outDir": "D:\\Package\\EasyZK\\1.6.4\\amd64",
+    "mainClass": "org.springframework.boot.loader.JarLauncher",
+    "jdk": "D:\\Libraries\\JDKs\\openjdk-21_windows-x64_bin\\jdk-21",
+    "iconResource": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.ico",
+    "classpath": [
+        "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.4.jar"
+    ]
+}

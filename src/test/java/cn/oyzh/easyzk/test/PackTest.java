@@ -30,10 +30,7 @@ public class PackTest {
 
         Packer packer = new Packer();
 
-        packer.registerEndHandler();
-        packer.registerConfHandler();
-        packer.registerCompressHandler();
-        packer.registerCompressNameHandler();
+
         packer.registerJreHandler(win_jre_config);
         packer.registerJarHandler(win_jar_config);
         packer.registerJLinkHandler(win_jlink_config);

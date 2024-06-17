@@ -1,4 +1,5 @@
 {
+    "removeEmpty": true,
     "excludes": [
         "module-info.class",
         "package-info.class",

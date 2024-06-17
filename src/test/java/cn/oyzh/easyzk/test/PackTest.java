@@ -1,8 +1,6 @@
 package cn.oyzh.easyzk.test;
 
 import cn.oyzh.fx.pkg.Packer;
-import cn.oyzh.fx.pkg.jre.JreHandler;
-import cn.oyzh.fx.pkg.run.ConfigHandler;
 import org.junit.Test;
 
 /**
@@ -25,18 +23,21 @@ public class PackTest {
     public void pkg_easyzk_win() throws Exception {
 
         String packagePath = this.getPackagePath();
-        String jre_config = packagePath + "jre_config.json";
+        String win_jre_config = packagePath + "win_jre_config.json";
+        String win_jar_config = packagePath + "win_jar_config.json";
         String win_pack_config = packagePath + "win_pack_config.json";
+        String win_jlink_config = packagePath + "win_jlink_config.json";
 
         Packer packer = new Packer();
 
-        JreHandler jreHandler = new JreHandler();
-        jreHandler.parse(jre_config);
+        packer.registerEndHandler();
+        packer.registerConfHandler();
+        packer.registerCompressHandler();
+        packer.registerCompressNameHandler();
+        packer.registerJreHandler(win_jre_config);
+        packer.registerJarHandler(win_jar_config);
+        packer.registerJLinkHandler(win_jlink_config);
 
-        ConfigHandler configHandler = new ConfigHandler();
-
-        packer.registerHandler(jreHandler);
-        packer.registerHandler(configHandler);
         packer.pack(win_pack_config);
     }
 

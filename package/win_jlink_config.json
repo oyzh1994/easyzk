@@ -1,0 +1,40 @@
+{
+    "excludeFiles": [
+        "**jvm.lib",
+        "**jawt.lib",
+        "**javaw.exe",
+        "**jrunscript.exe",
+        "**lcms.dll",
+        "**jawt.dll",
+        "**prefs.dll",
+        "**j2gss.dll",
+        "**jsound.dll",
+        "**javajpeg.dll",
+        "**mlib_image.dll",
+        "**sspi_bridge.dll",
+        "**splashscreen.dll",
+        "**w2k_lsa_auth.dll",
+        "**.md",
+        "**LICENSE",
+        "**COPYRIGHT",
+        "**README.txt",
+        "**ASSEMBLY_EXCEPTION",
+        "**ADDITIONAL_LICENSE_INFO",
+        "**classlist",
+        "**sound.properties"
+    ],
+    "addModules": [
+        "java.xml",
+        "java.sql",
+        "java.base",
+        "java.naming",
+        "java.logging",
+        "java.desktop",
+        "java.scripting",
+        "java.management",
+        "java.datatransfer",
+        "java.security.jgss",
+        "jdk.unsupported"
+    ],
+    "output": "D:\\Package\\EasyZK\\1.6.4\\win_amd64_jre"
+}

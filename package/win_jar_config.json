@@ -1,0 +1,41 @@
+{
+    "excludeJars": [
+        "lombok-",
+        "javafx-fxml-23-ea+20-mac.jar",
+        "javafx-fxml-23-ea+20-linux.jar",
+        "javafx-controls-23-ea+20-mac.jar",
+        "javafx-controls-23-ea+20-linux.jar",
+        "javafx-graphics-23-ea+20-mac.jar",
+        "javafx-graphics-23-ea+20-linux.jar"
+    ],
+    "excludeClasses": [
+        "module-info",
+        "package-info"
+    ],
+    "excludeFiles": [
+        ".md",
+        ".idx",
+        ".xsd",
+        ".tooling",
+        ".schemas",
+        ".handlers",
+        ".processors",
+        ".kotlin_module",
+        "pom.xml",
+        "pom.properties",
+        "DEPENDENCIES",
+        "NOTICE",
+        "LICENSE",
+        "README.md",
+        "README.txt",
+        "changelog.txt",
+        "release-timestamp.txt",
+        "latestchanges.html",
+        "AUTHORS",
+        "ASSEMBLY_EXCEPTION",
+        "ADDITIONAL_LICENSE_INFO",
+        "reactor.blockhound.integration.BlockHoundIntegration",
+        "aot.factories",
+        "reflectionconfig.json"
+    ]
+}

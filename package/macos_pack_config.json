@@ -1,0 +1,17 @@
+{
+    "verbose": true,
+    "version": "v1.6.4",
+    "buildType": "build",
+    "platform": "macos_amd64",
+    "compressType": "zip",
+    "executable": "EasyZK",
+    "bundleIdentifier": "cn.oyzh.EasyZK",
+    "outDir": "D:\\Package\\EasyZK\\1.6.4\\EasyZK.app",
+    "mainClass": "org.springframework.boot.loader.JarLauncher",
+    "jdk": "D:\\Package\\EasyZK\\1.6.4\\macos_amd64_jre",
+    "jdkExec": "D:\\Libraries\\JDKs\\openjdk-21_windows-x64_bin\\jdk-21",
+    "iconResource": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.icns",
+    "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.4.jar",
+    "classpath": [
+    ]
+}

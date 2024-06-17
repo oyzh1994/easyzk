@@ -1,20 +1,20 @@
 {
     "excludes": [
-        ".*.md",
-        "LICENSE*",
         "COPYRIGHT",
         "README.txt",
+        "sound.properties",
         "ASSEMBLY_EXCEPTION",
         "ADDITIONAL_LICENSE_INFO",
+        ".*.md",
+        "lcms.*",
         "jawt.*",
         "j2gss.*",
-        "jsound.*",
-        "javajpeg.*",
         "prefs.*",
-        "splashscreen.*",
-        "lcms.*",
-        "jrunscript.*",
+        "jsound.*",
+        "LICENSE.*",
+        "javajpeg.*",
         "classlist.*",
-        "sound.properties"
+        "jrunscript.*",
+        "splashscreen.*"
     ]
 }

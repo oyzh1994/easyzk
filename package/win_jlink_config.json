@@ -2,7 +2,6 @@
     "excludeFiles": [
         "**jvm.lib",
         "**jawt.lib",
-        "**javaw.exe",
         "**jrunscript.exe",
         "**lcms.dll",
         "**jawt.dll",

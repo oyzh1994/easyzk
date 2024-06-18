@@ -34,7 +34,7 @@ docker run -itd -p 2181:2181 zookeeper
 docker-compose -f .\zk-cluster-compose.yml up -d
 
 ###### mac无法启动解决方案1
-sudo chmod +x EasyZK.app
+chmod -R +x EasyZK.app
 
 ###### mac无法启动解决方案2
 chmod -R 755 /路径/EasyZK.app(可拖入命令行窗口)

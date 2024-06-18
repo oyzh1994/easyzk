@@ -1,17 +1,76 @@
 {
-    "verbose": true,
-    "version": "v1.6.4",
-    "buildType": "build",
+    "packMode": "packr",
     "platform": "macos_amd64",
-    "compressType": "zip",
-    "executable": "EasyZK",
-    "bundleIdentifier": "cn.oyzh.EasyZK",
-    "outDir": "D:\\Package\\EasyZK\\1.6.4\\EasyZK.app",
-    "mainClass": "org.springframework.boot.loader.JarLauncher",
-    "jdk": "D:\\Package\\EasyZK\\1.6.4\\macos_amd64_jre",
-    "jdkExec": "D:\\Libraries\\JDKs\\openjdk-21_windows-x64_bin\\jdk-21",
-    "iconResource": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.icns",
-    "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.4.jar",
-    "classpath": [
-    ]
+    "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK.app",
+    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.icns",
+    "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-${appVersion}.jar",
+    "jrePath": "D:\\Package\\EasyZK\\macos_amd64_jre",
+    "jdkPath": "D:\\Libraries\\JDKs\\openjdk-22_windows-x64_bin\\jdk-22",
+    "packr": {
+        "verbose": true,
+        "bundleIdentifier": "cn.oyzh.EasyZK",
+        "mainClass": "org.springframework.boot.loader.JarLauncher",
+        "classpath": []
+    },
+    "compress": {
+        "type": "zip"
+    },
+    "jre": {
+        "excludes": [
+            "COPYRIGHT",
+            "README.txt",
+            "sound.properties",
+            "ASSEMBLY_EXCEPTION",
+            "ADDITIONAL_LICENSE_INFO",
+            ".*.md",
+            "lcms.*",
+            "jawt.*",
+            "j2gss.*",
+            "prefs.*",
+            "jsound.*",
+            "LICENSE.*",
+            "javajpeg.*",
+            "classlist.*",
+            "jrunscript.*",
+            "splashscreen.*"
+        ]
+    },
+    "jar": {
+        "removeEmpty": true,
+        "excludes": [
+            "pom.xml",
+            "AUTHORS",
+            "README.md",
+            "README.txt",
+            "DEPENDENCIES",
+            "aot.factories",
+            "changelog.txt",
+            "pom.properties",
+            "module-info.class",
+            "latestchanges.html",
+            "package-info.class",
+            "ASSEMBLY_EXCEPTION",
+            "reflectionconfig.json",
+            "release-timestamp.txt",
+            "ADDITIONAL_LICENSE_INFO",
+            "reactor.blockhound.integration.BlockHoundIntegration",
+            ".*.md",
+            ".*.idx",
+            ".*.xsd",
+            "NOTICE.*",
+            "LICENSE.*",
+            ".*.tooling",
+            ".*.schemas",
+            ".*.handlers",
+            "lombok-.*.jar",
+            ".*.processors",
+            ".*.kotlin_module",
+            "javafx-fxml.*-win.jar",
+            "javafx-graphics.*-win.jar",
+            "javafx-controls.*-win.jar",
+            "javafx-fxml.*-linux.jar",
+            "javafx-graphics.*-linux.jar",
+            "javafx-controls.*-linux.jar"
+        ]
+    }
 }

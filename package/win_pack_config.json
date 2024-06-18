@@ -1,13 +1,10 @@
 {
-    "packMode": "jpackage",
-    "buildType": "build",
-    "appName": "EasyZK",
-    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.ico",
-    "appVersion": "v1.6.4",
+    "packMode": "packr",
     "platform": "win_amd64",
-    "dest": "D:\\Package\\EasyZK\\1.6.4\\amd64",
-    "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.4.jar",
-    "jdkExec": "D:\\Libraries\\JDKs\\openjdk-22_windows-x64_bin\\jdk-22",
+    "dest": "D:\\Package\\EasyZK\\${appVersion}\\win_amd64",
+    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.ico",
+    "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-${appVersion}.jar",
+    "jdkPath": "D:\\Libraries\\JDKs\\openjdk-22_windows-x64_bin\\jdk-22",
     "packr": {
         "verbose": true,
         "mainClass": "org.springframework.boot.loader.JarLauncher",
@@ -17,7 +14,7 @@
         "verbose": true,
         "vendor": "oyzh",
         "type": "app-image",
-        "description": "这是一个Zookeeper管理工具，简化提供导入导出、传输、控制台、可视化操作等高级功能."
+        "description": "这是一个Zookeeper管理工具，提供导入、导出、传输、终端、可视化操作等功能."
     },
     "compress": {
         "type": "zip"
@@ -102,16 +99,20 @@
             ".*.md",
             ".*.idx",
             ".*.xsd",
-            "NOTICE*",
-            "LICENSE*",
+            "NOTICE.*",
+            "LICENSE.*",
             ".*.tooling",
             ".*.schemas",
             ".*.handlers",
             "lombok-.*.jar",
             ".*.processors",
             ".*.kotlin_module",
-            "javafx-.*-mac.jar",
-            "javafx-.*-linux.jar"
+            "javafx-fxml.*-mac.jar",
+            "javafx-graphics.*-mac.jar",
+            "javafx-controls.*-mac.jar",
+            "javafx-fxml.*-linux.jar",
+            "javafx-graphics.*-linux.jar",
+            "javafx-controls.*-linux.jar"
         ]
     }
 }

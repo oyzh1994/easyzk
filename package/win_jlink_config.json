@@ -1,38 +1,38 @@
-{
-    "excludeFiles": [
-        "**.md",
-        "**LICENSE",
-        "**jvm.lib",
-        "**jawt.lib",
-        "**lcms.dll",
-        "**jawt.dll",
-        "**COPYRIGHT",
-        "**prefs.dll",
-        "**j2gss.dll",
-        "**classlist",
-        "**jsound.dll",
-        "**README.txt",
-        "**javajpeg.dll",
-        "**mlib_image.dll",
-        "**jrunscript.exe",
-        "**sspi_bridge.dll",
-        "**sound.properties",
-        "**splashscreen.dll",
-        "**w2k_lsa_auth.dll",
-        "**ASSEMBLY_EXCEPTION",
-        "**ADDITIONAL_LICENSE_INFO"
-    ],
-    "addModules": [
-        "java.xml",
-        "java.sql",
-        "java.base",
-        "java.naming",
-        "java.logging",
-        "java.desktop",
-        "java.scripting",
-        "java.management",
-        "java.datatransfer",
-        "java.security.jgss",
-        "jdk.unsupported"
-    ]
-}
+//{
+//    "excludeFiles": [
+//        "**.md",
+//        "**LICENSE",
+//        "**jvm.lib",
+//        "**jawt.lib",
+//        "**lcms.dll",
+//        "**jawt.dll",
+//        "**COPYRIGHT",
+//        "**prefs.dll",
+//        "**j2gss.dll",
+//        "**classlist",
+//        "**jsound.dll",
+//        "**README.txt",
+//        "**javajpeg.dll",
+//        "**mlib_image.dll",
+//        "**jrunscript.exe",
+//        "**sspi_bridge.dll",
+//        "**sound.properties",
+//        "**splashscreen.dll",
+//        "**w2k_lsa_auth.dll",
+//        "**ASSEMBLY_EXCEPTION",
+//        "**ADDITIONAL_LICENSE_INFO"
+//    ],
+//    "addModules": [
+//        "java.xml",
+//        "java.sql",
+//        "java.base",
+//        "java.naming",
+//        "java.logging",
+//        "java.desktop",
+//        "java.scripting",
+//        "java.management",
+//        "java.datatransfer",
+//        "java.security.jgss",
+//        "jdk.unsupported"
+//    ]
+//}

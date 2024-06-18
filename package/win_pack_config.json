@@ -1,15 +1,117 @@
 {
-    "verbose": true,
-    "version": "v1.6.4",
+    "packMode": "jpackage",
     "buildType": "build",
+    "appName": "EasyZK",
+    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.ico",
+    "appVersion": "v1.6.4",
     "platform": "win_amd64",
-    "compressType": "zip",
-    "executable": "EasyZK",
-    "outDir": "D:\\Package\\EasyZK\\1.6.4\\amd64",
-    "mainClass": "org.springframework.boot.loader.JarLauncher",
-    "jdk": "D:\\Libraries\\JDKs\\openjdk-21_windows-x64_bin\\jdk-21",
-    "iconResource": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.ico",
+    "dest": "D:\\Package\\EasyZK\\1.6.4\\amd64",
     "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-1.6.4.jar",
-    "classpath": [
-    ]
+    "jdkExec": "D:\\Libraries\\JDKs\\openjdk-22_windows-x64_bin\\jdk-22",
+    "packr": {
+        "verbose": true,
+        "mainClass": "org.springframework.boot.loader.JarLauncher",
+        "classpath": []
+    },
+    "jpackage": {
+        "verbose": true,
+        "vendor": "oyzh",
+        "type": "app-image",
+        "description": "这是一个Zookeeper管理工具，简化提供导入导出、传输、控制台、可视化操作等高级功能."
+    },
+    "compress": {
+        "type": "zip"
+    },
+    "jlink": {
+        "excludeFiles": [
+            "**.md",
+            "**LICENSE",
+            "**jvm.lib",
+            "**jawt.lib",
+            "**lcms.dll",
+            "**jawt.dll",
+            "**COPYRIGHT",
+            "**prefs.dll",
+            "**j2gss.dll",
+            "**classlist",
+            "**jsound.dll",
+            "**README.txt",
+            "**javajpeg.dll",
+            "**mlib_image.dll",
+            "**jrunscript.exe",
+            "**sspi_bridge.dll",
+            "**sound.properties",
+            "**splashscreen.dll",
+            "**w2k_lsa_auth.dll",
+            "**ASSEMBLY_EXCEPTION",
+            "**ADDITIONAL_LICENSE_INFO"
+        ],
+        "addModules": [
+            "java.xml",
+            "java.sql",
+            "java.base",
+            "java.naming",
+            "java.logging",
+            "java.desktop",
+            "java.scripting",
+            "java.management",
+            "java.datatransfer",
+            "java.security.jgss",
+            "jdk.unsupported"
+        ]
+    },
+    "jre": {
+        "excludes": [
+            "COPYRIGHT",
+            "README.txt",
+            "sound.properties",
+            "ASSEMBLY_EXCEPTION",
+            "ADDITIONAL_LICENSE_INFO",
+            ".*.md",
+            "lcms.*",
+            "jawt.*",
+            "j2gss.*",
+            "prefs.*",
+            "jsound.*",
+            "LICENSE.*",
+            "javajpeg.*",
+            "classlist.*",
+            "jrunscript.*",
+            "splashscreen.*"
+        ]
+    },
+    "jar": {
+        "removeEmpty": true,
+        "excludes": [
+            "pom.xml",
+            "AUTHORS",
+            "README.md",
+            "README.txt",
+            "DEPENDENCIES",
+            "aot.factories",
+            "changelog.txt",
+            "pom.properties",
+            "module-info.class",
+            "latestchanges.html",
+            "package-info.class",
+            "ASSEMBLY_EXCEPTION",
+            "reflectionconfig.json",
+            "release-timestamp.txt",
+            "ADDITIONAL_LICENSE_INFO",
+            "reactor.blockhound.integration.BlockHoundIntegration",
+            ".*.md",
+            ".*.idx",
+            ".*.xsd",
+            "NOTICE*",
+            "LICENSE*",
+            ".*.tooling",
+            ".*.schemas",
+            ".*.handlers",
+            "lombok-.*.jar",
+            ".*.processors",
+            ".*.kotlin_module",
+            "javafx-.*-mac.jar",
+            "javafx-.*-linux.jar"
+        ]
+    }
 }

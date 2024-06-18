@@ -1,20 +1,20 @@
-{
-    "excludes": [
-        "COPYRIGHT",
-        "README.txt",
-        "sound.properties",
-        "ASSEMBLY_EXCEPTION",
-        "ADDITIONAL_LICENSE_INFO",
-        ".*.md",
-        "lcms.*",
-        "jawt.*",
-        "j2gss.*",
-        "prefs.*",
-        "jsound.*",
-        "LICENSE.*",
-        "javajpeg.*",
-        "classlist.*",
-        "jrunscript.*",
-        "splashscreen.*"
-    ]
-}
+//{
+//    "excludes": [
+//        "COPYRIGHT",
+//        "README.txt",
+//        "sound.properties",
+//        "ASSEMBLY_EXCEPTION",
+//        "ADDITIONAL_LICENSE_INFO",
+//        ".*.md",
+//        "lcms.*",
+//        "jawt.*",
+//        "j2gss.*",
+//        "prefs.*",
+//        "jsound.*",
+//        "LICENSE.*",
+//        "javajpeg.*",
+//        "classlist.*",
+//        "jrunscript.*",
+//        "splashscreen.*"
+//    ]
+//}

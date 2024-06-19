@@ -1,10 +1,10 @@
 {
     "packMode": "packr",
-    "platform": "linux_amd64",
-    "dest": "D:\\Package\\EasyZK\\${appVersion}\\linux_amd64",
-    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.png",
+    "platform": "macos_amd64",
+    "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}.app",
+    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.icns",
     "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-${appVersion}.jar",
-    "jrePath": "D:\\Package\\EasyZK\\linux_amd64_jre",
+    "jrePath": "D:\\Package\\EasyZK\\macos_amd64_jre22",
     "jdkPath": "D:\\Libraries\\JDKs\\openjdk-22_windows-x64_bin\\jdk-22",
     "packr": {
         "verbose": true,
@@ -13,7 +13,7 @@
         "classpath": []
     },
     "compress": {
-        "type": "tar.gz"
+        "type": "zip"
     },
     "jre": {
         "excludes": [
@@ -68,9 +68,9 @@
             "javafx-fxml.*-win.jar",
             "javafx-graphics.*-win.jar",
             "javafx-controls.*-win.jar",
-            "javafx-fxml.*-mac.jar",
-            "javafx-graphics.*-mac.jar",
-            "javafx-controls.*-mac.jar"
+            "javafx-fxml.*-linux.jar",
+            "javafx-graphics.*-linux.jar",
+            "javafx-controls.*-linux.jar"
         ]
     }
 }

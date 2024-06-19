@@ -1,19 +1,18 @@
 {
     "packMode": "packr",
-    "platform": "macos_amd64",
-    "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK.app",
-    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.icns",
+    "platform": "linux_arm64",
+    "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}",
+    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.png",
     "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-${appVersion}.jar",
-    "jrePath": "D:\\Package\\EasyZK\\macos_amd64_jre",
+    "jrePath": "D:\\Package\\EasyZK\\linux_arm64_jre22",
     "jdkPath": "D:\\Libraries\\JDKs\\openjdk-22_windows-x64_bin\\jdk-22",
     "packr": {
         "verbose": true,
-        "bundleIdentifier": "cn.oyzh.EasyZK",
         "mainClass": "org.springframework.boot.loader.JarLauncher",
         "classpath": []
     },
     "compress": {
-        "type": "zip"
+        "type": "tar.gz"
     },
     "jre": {
         "excludes": [
@@ -68,9 +67,9 @@
             "javafx-fxml.*-win.jar",
             "javafx-graphics.*-win.jar",
             "javafx-controls.*-win.jar",
-            "javafx-fxml.*-linux.jar",
-            "javafx-graphics.*-linux.jar",
-            "javafx-controls.*-linux.jar"
+            "javafx-fxml.*-mac.jar",
+            "javafx-graphics.*-mac.jar",
+            "javafx-controls.*-mac.jar"
         ]
     }
 }

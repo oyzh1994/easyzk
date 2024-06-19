@@ -1,6 +1,6 @@
 {
     "packMode": "packr",
-    "platform": "windows64",
+    "platform": "win_amd64",
     "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}",
     "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.ico",
     "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-${appVersion}.jar",
@@ -108,10 +108,10 @@
             ".*.processors",
             ".*.kotlin_module",
             "javafx-fxml.*-mac.jar",
-            "javafx-graphics.*-mac.jar",
-            "javafx-controls.*-mac.jar",
             "javafx-fxml.*-linux.jar",
+            "javafx-graphics.*-mac.jar",
             "javafx-graphics.*-linux.jar",
+            "javafx-controls.*-mac.jar",
             "javafx-controls.*-linux.jar"
         ]
     }

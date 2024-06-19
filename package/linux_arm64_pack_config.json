@@ -65,11 +65,14 @@
             ".*.processors",
             ".*.kotlin_module",
             "javafx-fxml.*-win.jar",
-            "javafx-graphics.*-win.jar",
-            "javafx-controls.*-win.jar",
             "javafx-fxml.*-mac.jar",
+            "javafx-fxml.*-linux.jar",
+            "javafx-graphics.*-win.jar",
             "javafx-graphics.*-mac.jar",
-            "javafx-controls.*-mac.jar"
+            "javafx-graphics.*-linux.jar",
+            "javafx-controls.*-win.jar",
+            "javafx-controls.*-mac.jar",
+            "javafx-controls.*-linux.jar"
         ]
     }
 }

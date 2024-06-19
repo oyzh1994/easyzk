@@ -40,7 +40,7 @@ public class ZKClientUtil {
                 .runSafeService(service)
                 .retryPolicy(retryPolicy)
                 .threadFactory(ZKThread::new)
-                .zk34CompatibilityMode(compatibility)
+                // .zk34CompatibilityMode(compatibility)
                 .zookeeperFactory(new ZKFactory())
                 .sessionTimeoutMs(sessionTimeoutMs)
                 .connectionTimeoutMs(connectionTimeoutMs);

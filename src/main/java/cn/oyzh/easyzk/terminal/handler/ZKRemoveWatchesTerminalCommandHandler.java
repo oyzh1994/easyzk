@@ -8,7 +8,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CommandFactory;
 import org.apache.zookeeper.cli.RemoveWatchesCommand;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +20,8 @@ public class ZKRemoveWatchesTerminalCommandHandler extends ZKCliTerminalCommandH
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    // private final CliCommand cliCommand = new RemoveWatchesCommand();
-    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.REMOVE_WATCHES);
+    private final CliCommand cliCommand = new RemoveWatchesCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.REMOVE_WATCHES);
 
     @Override
     public String commandName() {

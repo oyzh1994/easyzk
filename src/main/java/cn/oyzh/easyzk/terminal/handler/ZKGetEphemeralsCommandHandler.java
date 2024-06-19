@@ -7,7 +7,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CommandFactory;
 import org.apache.zookeeper.cli.GetEphemeralsCommand;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +19,8 @@ public class ZKGetEphemeralsCommandHandler extends ZKPathTerminalCommandHandler<
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    // private final CliCommand cliCommand = new GetEphemeralsCommand();
-    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_EPHEMERALS);
+    private final CliCommand cliCommand = new GetEphemeralsCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_EPHEMERALS);
 
     @Override
     public String commandName() {

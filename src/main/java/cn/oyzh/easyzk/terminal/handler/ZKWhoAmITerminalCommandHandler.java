@@ -7,7 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CommandFactory;
+// import org.apache.zookeeper.cli.CommandFactory;
+import org.apache.zookeeper.cli.WhoAmICommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,8 +20,8 @@ public class ZKWhoAmITerminalCommandHandler extends ZKPathTerminalCommandHandler
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    // private final CliCommand cliCommand = new WhoAmICommand();
-    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.WHO_AM_I);
+    private final CliCommand cliCommand = new WhoAmICommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.WHO_AM_I);
 
     @Override
     public String commandName() {

@@ -6,8 +6,6 @@ import org.apache.commons.cli.ParseException;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CliException;
-import org.apache.zookeeper.cli.CliParseException;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -68,7 +66,7 @@ public class ZKCliCommandWrapper {
      * @return 命令
      * @throws ParseException 异常
      */
-    public CliCommand parse(String[] cmdArgs) throws ParseException, CliParseException {
+    public CliCommand parse(String[] cmdArgs) throws ParseException {
         this.command.parse(cmdArgs);
         return this.command;
     }
@@ -79,7 +77,7 @@ public class ZKCliCommandWrapper {
      * @return 结果
      * @throws IOException, InterruptedException, KeeperException 异常
      */
-    public boolean exec() throws IOException, InterruptedException, KeeperException, CliException {
+    public boolean exec() throws IOException, InterruptedException, KeeperException {
         return this.command.exec();
     }
 }

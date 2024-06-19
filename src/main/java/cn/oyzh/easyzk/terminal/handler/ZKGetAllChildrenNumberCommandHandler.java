@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CommandFactory;
+import org.apache.zookeeper.cli.GetAllChildrenNumberCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,8 +19,8 @@ public class ZKGetAllChildrenNumberCommandHandler extends ZKPathTerminalCommandH
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    // private final CliCommand cliCommand = new GetAllChildrenNumberCommand();
-    private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_ALL_CHILDREN_NUMBER);
+    private final CliCommand cliCommand = new GetAllChildrenNumberCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_ALL_CHILDREN_NUMBER);
 
     @Override
     public String commandName() {

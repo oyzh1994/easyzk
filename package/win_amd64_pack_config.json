@@ -1,5 +1,5 @@
 {
-    "packMode": "packr",
+    "packMode": "jpackage",
     "platform": "win_amd64",
     "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}",
     "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.ico",
@@ -18,6 +18,11 @@
     },
     "compress": {
         "type": "zip"
+    },
+    "jdeps": {
+        "skips": [
+            "javafx-.*.jar"
+        ]
     },
     "jlink": {
         "excludeFiles": [
@@ -81,13 +86,13 @@
         "removeEmpty": true,
         "excludes": [
             "pom.xml",
+            "pom.properties",
             "AUTHORS",
             "README.md",
             "README.txt",
             "DEPENDENCIES",
             "aot.factories",
             "changelog.txt",
-            "pom.properties",
             "module-info.class",
             "latestchanges.html",
             "package-info.class",
@@ -96,23 +101,22 @@
             "release-timestamp.txt",
             "ADDITIONAL_LICENSE_INFO",
             "reactor.blockhound.integration.BlockHoundIntegration",
+            "classpath.idx",
+            "LICENSE.*",
             ".*.md",
-            ".*.idx",
+            ".*.pro",
             ".*.xsd",
             "NOTICE.*",
-            "LICENSE.*",
             ".*.tooling",
             ".*.schemas",
             ".*.handlers",
             "lombok-.*.jar",
             ".*.processors",
             ".*.kotlin_module",
-            "javafx-fxml.*-mac.jar",
-            "javafx-fxml.*-linux.jar",
+            ".*.dylib",
+            ".*.so",
             "javafx-graphics.*-mac.jar",
-            "javafx-graphics.*-linux.jar",
-            "javafx-controls.*-mac.jar",
-            "javafx-controls.*-linux.jar"
+            "javafx-graphics.*-linux.jar"
         ]
     }
 }

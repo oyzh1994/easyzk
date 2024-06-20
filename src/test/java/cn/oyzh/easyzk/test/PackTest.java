@@ -28,6 +28,7 @@ public class PackTest {
 
         Packer packer = new Packer();
         packer.registerProjectHandler();
+        packer.registerJdepsHandler();
         packer.pack(win_pack_config);
     }
 

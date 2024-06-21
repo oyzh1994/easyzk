@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.controller.node;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
@@ -18,17 +17,16 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -86,35 +84,41 @@ public class ZKNodeExportController extends Controller {
     @FXML
     private FlexCheckBox applyFilter;
 
-    /**
-     * 格式选项
-     */
-    @FXML
-    private FlexComboBox<String> format;
+    // /**
+    //  * 格式选项
+    //  */
+    // @FXML
+    // private FlexComboBox<String> format;
+    //
+    // /**
+    //  * 前缀选项
+    //  */
+    // @FXML
+    // private FlexComboBox<String> prefix;
+    //
+    // /**
+    //  * 美化选项
+    //  */
+    // @FXML
+    // private FlexComboBox<String> pretty;
+    //
+    // /**
+    //  * 美化组件
+    //  */
+    // @FXML
+    // private FlexFlowPane prettyPane;
 
     /**
-     * 前缀选项
+     * 是否开启美化
      */
     @FXML
-    private FlexComboBox<String> prefix;
+    private FXToggleSwitch pretty;
 
-    /**
-     * 美化选项
-     */
-    @FXML
-    private FlexComboBox<String> pretty;
-
-    /**
-     * 美化组件
-     */
-    @FXML
-    private FlexFlowPane prettyPane;
-
-    /**
-     * 前缀组件
-     */
-    @FXML
-    private FlexFlowPane prefixPane;
+    // /**
+    //  * 前缀组件
+    //  */
+    // @FXML
+    // private FlexFlowPane prefixPane;
 
     /**
      * 结束导出按钮
@@ -122,11 +126,11 @@ public class ZKNodeExportController extends Controller {
     @FXML
     private FlexButton stopExportBtn;
 
-    /**
-     * 状态管理器
-     */
-    @FXML
-    private StateManager stateManager;
+    // /**
+    //  * 状态管理器
+    //  */
+    // @FXML
+    // private StateManager stateManager;
 
     /**
      * 导出状态
@@ -153,7 +157,7 @@ public class ZKNodeExportController extends Controller {
     /**
      * 导出操作任务
      */
-    private Thread exportTask;
+    private Thread execTask;
 
     /**
      * 过滤内容列表
@@ -182,14 +186,15 @@ public class ZKNodeExportController extends Controller {
         String properties = ZKNodeUtil.DATA_PROPERTIES + ZKNodeUtil.STAT_PROPERTIES;
         // 开始处理
         this.exportMsg.clear();
-        this.stateManager.disable();
+        // this.stateManager.disable();
+        NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.exportProcessing() + "===");
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.filters = this.filterStore.loadEnable();
         }
         // 执行导出
-        this.exportTask = ThreadUtil.start(() -> {
+        this.execTask = ThreadUtil.start(() -> {
             try {
                 this.stopExportBtn.enable();
                 // 初始化连接
@@ -206,8 +211,8 @@ public class ZKNodeExportController extends Controller {
                 List<ZKNode> zkNodes = new ArrayList<>();
                 this.getNodeAll(this.exportPath, properties, zkNodes);
                 // 取消操作
-                if (ThreadUtil.isInterrupted(this.exportTask)) {
-                    StaticLog.warn("export cancel!");
+                if (ThreadUtil.isInterrupted(this.execTask)) {
+                    StaticLog.warn("export canceled!");
                     return;
                 }
                 // 排除临时节点
@@ -220,26 +225,27 @@ public class ZKNodeExportController extends Controller {
                 if (dictSort) {
                     zkNodes.sort(ZKNode::compareTo);
                 }
-                // 判断是否json格式
-                boolean isJSON = this.format.getSelectedIndex() == 0;
+                // // 判断是否json格式
+                // boolean isJSON = this.format.getSelectedIndex() == 0;
                 // 导出内容
                 String exportData;
                 // 文件格式
                 FileChooser.ExtensionFilter extensionFilter;
                 // 处理名称
                 String fileName = "ZK-" + I18nHelper.connect() + this.client.infoName() + "-" + I18nHelper.exportData();
-                if (isJSON) {
-                    boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
+                // if (isJSON) {
+                    // boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
+                    boolean prettyFormat = this.pretty.isSelected();
                     exportData = ZKExportUtil.nodesToJSON(zkNodes, CharsetUtil.defaultCharsetName(), prettyFormat);
                     extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
                     fileName += ".json";
-                } else {
-                    // 前缀
-                    String prefixVal = StrUtil.equalsAny(this.prefix.getValue(), "set", "create") ? this.prefix.getValue() : "";
-                    exportData = ZKExportUtil.nodesToTxt(zkNodes, CharsetUtil.defaultCharsetName(), prefixVal);
-                    extensionFilter = new FileChooser.ExtensionFilter("TXT files", "*.txt");
-                    fileName += ".txt";
-                }
+                // } else {
+                //     // 前缀
+                //     String prefixVal = StrUtil.equalsAny(this.prefix.getValue(), "set", "create") ? this.prefix.getValue() : "";
+                //     exportData = ZKExportUtil.nodesToTxt(zkNodes, CharsetUtil.defaultCharsetName(), prefixVal);
+                //     extensionFilter = new FileChooser.ExtensionFilter("TXT files", "*.txt");
+                //     fileName += ".txt";
+                // }
                 // 收尾工作
                 this.updateStatus(I18nHelper.fileProcessing());
                 File file = FileChooserUtil.save(I18nHelper.exportData(), fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
@@ -261,8 +267,9 @@ public class ZKNodeExportController extends Controller {
                     MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
+                NodeGroupUtil.enable(this.stage, "exec");
                 // 结束处理
-                this.stateManager.enable();
+                // this.stateManager.enable();
                 this.stopExportBtn.disable();
                 this.stage.restoreTitle();
             }
@@ -274,23 +281,23 @@ public class ZKNodeExportController extends Controller {
      */
     @FXML
     private void stopExport() {
-        ThreadUtil.interrupt(this.exportTask);
-        this.exportTask = null;
+        ThreadUtil.interrupt(this.execTask);
+        this.execTask = null;
     }
 
     @Override
     protected void bindListeners() {
         this.stage.hideOnEscape();
-        // 格式变化处理
-        this.format.selectedIndexChanged((observableValue, number, t1) -> {
-            if (t1.intValue() == 0) {
-                this.prefixPane.disappear();
-                this.prettyPane.display();
-            } else {
-                this.prefixPane.display();
-                this.prettyPane.disappear();
-            }
-        });
+        // // 格式变化处理
+        // this.format.selectedIndexChanged((observableValue, number, t1) -> {
+        //     if (t1.intValue() == 0) {
+        //         this.prefixPane.disappear();
+        //         this.prettyPane.display();
+        //     } else {
+        //         this.prefixPane.display();
+        //         this.prettyPane.disappear();
+        //     }
+        // });
     }
 
     @Override
@@ -325,7 +332,7 @@ public class ZKNodeExportController extends Controller {
     private void getNodeAll(@NonNull String path, @NonNull String properties, @NonNull List<ZKNode> allNodes) {
         try {
             // 取消操作
-            if (ThreadUtil.isInterrupted(this.exportTask)) {
+            if (ThreadUtil.isInterrupted(this.execTask)) {
                 return;
             }
             // 获取节点
@@ -345,7 +352,7 @@ public class ZKNodeExportController extends Controller {
                 List<String> subs = this.client.getChildren(path);
                 // 递归获取节点
                 for (String sub : subs) {
-                    if (!ThreadUtil.isInterrupted(this.exportTask)) {
+                    if (!ThreadUtil.isInterrupted(this.execTask)) {
                         this.getNodeAll(ZKNodeUtil.concatPath(path, sub), properties, allNodes);
                     }
                 }

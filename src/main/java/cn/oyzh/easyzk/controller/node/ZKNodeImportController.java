@@ -109,7 +109,7 @@ public class ZKNodeImportController extends Controller {
     /**
      * 导入操作任务
      */
-    private Thread importTask;
+    private Thread execTask;
 
     /**
      * 导入数据
@@ -220,13 +220,13 @@ public class ZKNodeImportController extends Controller {
         // 忽略已存在节点
         boolean ignoreExist = this.ignoreExist.isSelected();
         // 执行导入
-        this.importTask = ThreadUtil.start(() -> {
+        this.execTask = ThreadUtil.start(() -> {
             try {
                 this.stopImportBtn.enable();
                 for (Map<String, String> zkNode : this.nodeExport.getNodes()) {
                     // 取消操作
-                    if (ThreadUtil.isInterrupted(this.importTask)) {
-                        StaticLog.warn("import cancel!");
+                    if (ThreadUtil.isInterrupted(this.execTask)) {
+                        StaticLog.warn("import canceled!");
                         break;
                     }
                     // 获取数据
@@ -284,8 +284,8 @@ public class ZKNodeImportController extends Controller {
      */
     @FXML
     private void stopImport() {
-        ThreadUtil.interrupt(this.importTask);
-        this.importTask = null;
+        ThreadUtil.interrupt(this.execTask);
+        this.execTask = null;
     }
 
     @Override

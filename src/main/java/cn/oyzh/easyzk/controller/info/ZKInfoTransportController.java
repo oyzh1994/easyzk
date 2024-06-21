@@ -133,7 +133,7 @@ public class ZKInfoTransportController extends Controller {
     /**
      * 传输操作任务
      */
-    private Thread exportTask;
+    private Thread execTask;
 
     /**
      * 过滤内容列表
@@ -220,7 +220,7 @@ public class ZKInfoTransportController extends Controller {
         this.stage.appendTitle("===" + I18nHelper.transportProcessing() + "===");
         this.transportMsg.appendLine(I18nHelper.transportStarting() + "...");
         // 执行传输
-        this.exportTask = ThreadUtil.start(() -> {
+        this.execTask = ThreadUtil.start(() -> {
             this.stopTransportBtn.enable();
             try {
                 // 适用过滤
@@ -285,8 +285,8 @@ public class ZKInfoTransportController extends Controller {
      */
     @FXML
     private void stopTransport() {
-        ThreadUtil.interrupt(this.exportTask);
-        this.exportTask = null;
+        ThreadUtil.interrupt(this.execTask);
+        this.execTask = null;
     }
 
     @Override
@@ -330,7 +330,7 @@ public class ZKInfoTransportController extends Controller {
     private void transport(@NonNull String path) {
         try {
             // 取消操作
-            if (ThreadUtil.isInterrupted(this.exportTask)) {
+            if (ThreadUtil.isInterrupted(this.execTask)) {
                 return;
             }
             // 获取节点
@@ -373,7 +373,7 @@ public class ZKInfoTransportController extends Controller {
             List<String> subs = this.formClient.getChildren(path);
             // 递归传输节点
             for (String sub : subs) {
-                if (ThreadUtil.isInterrupted(this.exportTask)) {
+                if (ThreadUtil.isInterrupted(this.execTask)) {
                     break;
                 }
                 this.transport(ZKNodeUtil.concatPath(path, sub));

@@ -18,10 +18,10 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -82,11 +82,11 @@ public class ZKNodeImportController extends Controller {
     @FXML
     private FlexButton importBtn;
 
-    /**
-     * 状态管理器
-     */
-    @FXML
-    private StateManager stateManager;
+    // /**
+    //  * 状态管理器
+    //  */
+    // @FXML
+    // private StateManager stateManager;
 
     /**
      * 结束导入按钮
@@ -186,13 +186,13 @@ public class ZKNodeImportController extends Controller {
             this.importBtn.enable();
             // 脚本信息
             String info = I18nHelper.fileName() + " " + file.getName() + "，" +
-                    I18nHelper.total() + " " + this.nodeExport.counts() +  I18nHelper.line() + "，" +
+                    I18nHelper.total() + " " + this.nodeExport.counts() + I18nHelper.line() + "，" +
                     I18nHelper.size() + " " + Math.max(1, file.length() / 1024) + "Kb，" +
                     I18nHelper.version() + " " + this.nodeExport.version() + "，" +
                     I18nHelper.platform() + " " + this.nodeExport.platform() + "，" +
                     I18nHelper.charset() + " " + this.nodeExport.charset();
             if (this.nodeExport.hasPrefix()) {
-                info += "，" +  I18nHelper.prefix() + this.nodeExport.getPrefix();
+                info += "，" + I18nHelper.prefix() + this.nodeExport.getPrefix();
             }
             this.scriptInfo.setText(info);
             this.charset.select(this.nodeExport.getCharset());
@@ -215,7 +215,8 @@ public class ZKNodeImportController extends Controller {
         this.counter.setSum(this.nodeExport.counts());
         // 开始处理
         this.importBtn.disable();
-        this.stateManager.disable();
+        // this.stateManager.disable();
+        NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.importProcessing() + "===");
         // 忽略已存在节点
         boolean ignoreExist = this.ignoreExist.isSelected();
@@ -272,7 +273,8 @@ public class ZKNodeImportController extends Controller {
             } finally {
                 // 结束处理
                 this.importBtn.enable();
-                this.stateManager.enable();
+                // this.stateManager.enable();
+                NodeGroupUtil.enable(this.stage, "exec");
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
             }

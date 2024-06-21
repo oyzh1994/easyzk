@@ -2,35 +2,31 @@
 
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CloseButton?>
+<?import cn.oyzh.fx.plus.controls.button.FileButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.ImportButton?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
-<?import cn.oyzh.fx.plus.controls.button.SuccessButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.svg.FileSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.button.FileButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeImportController" realWidth="850" realHeight="630">
-    <fx:define>
-        <StateManager fx:id="stateManager" managedBindVisible="true"/>
-    </fx:define>
+    <!-- <fx:define> -->
+    <!--     <StateManager fx:id="stateManager" managedBindVisible="true"/> -->
+    <!-- </fx:define> -->
     <FlexHBox realHeight="50" flexWidth="100%">
         <AccentLabel text="%base.file" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FileButton stateManager="$stateManager" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose" iconSizePercent="0.75">
+        <FileButton groupId="exec" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -38,7 +34,7 @@
     </FlexHBox>
     <FlexText fx:id="scriptInfo" visible="false" managed="false" fontSize="11">
         <VBox.margin>
-            <Insets left="95"/>
+            <Insets left="110"/>
         </VBox.margin>
     </FlexText>
     <FlexHBox flexWidth="100%" realHeight="50">
@@ -47,7 +43,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" fx:id="ignoreExist" text="%base.skipByExists" selected="true">
+        <FlexCheckBox groupId="exec" fx:id="ignoreExist" text="%base.skipByExists" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -57,7 +53,7 @@
                 <Insets left="10" top="20"/>
             </HBox.margin>
         </FXLabel>
-        <CharsetComboBox stateManager="$stateManager" prefWidth="120" fx:id="charset" tipText="%base.charset">
+        <CharsetComboBox groupId="exec" prefWidth="120" fx:id="charset" tipText="%base.charset">
             <HBox.margin>
                 <Insets left="5" top="15"/>
             </HBox.margin>
@@ -78,7 +74,7 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
-        <ImportButton onAction="#doImport" fx:id="importBtn" disable="true" iconSizePercent="0.75">
+        <ImportButton onAction="#doImport" fx:id="importBtn" groupId="exec" disable="true" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>

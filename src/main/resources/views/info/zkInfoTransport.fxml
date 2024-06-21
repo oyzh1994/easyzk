@@ -17,9 +17,9 @@
 <?import javafx.scene.text.Text?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoTransportController" realWidth="850" realHeight="620">
-    <fx:define>
-        <StateManager fx:id="stateManager" managedBindVisible="true"/>
-    </fx:define>
+    <!-- <fx:define> -->
+    <!--     <StateManager fx:id="stateManager" managedBindVisible="true"/> -->
+    <!-- </fx:define> -->
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.source" realHeight="30" realWidth="80">
             <HBox.margin>
@@ -36,7 +36,7 @@
                 <Insets left="10" top="20"/>
             </HBox.margin>
         </FXLabel>
-        <CharsetComboBox stateManager="$stateManager" fx:id="formCharset" realHeight="30" prefWidth="120">
+        <CharsetComboBox groupId="exec" fx:id="formCharset" realHeight="30" prefWidth="120">
             <HBox.margin>
                 <Insets left="5" top="10"/>
             </HBox.margin>
@@ -48,7 +48,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ConnectComboBox stateManager="$stateManager" fx:id="targetConnect" realHeight="30" flexWidth="100% - 325">
+        <ConnectComboBox groupId="exec" fx:id="targetConnect" realHeight="30" flexWidth="100% - 325">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -58,7 +58,7 @@
                 <Insets left="10" top="20"/>
             </HBox.margin>
         </FXLabel>
-        <CharsetComboBox stateManager="$stateManager" fx:id="targetCharset" realHeight="30" prefWidth="120">
+        <CharsetComboBox groupId="exec" fx:id="targetCharset" realHeight="30" prefWidth="120">
             <HBox.margin>
                 <Insets left="5" top="10"/>
             </HBox.margin>
@@ -70,18 +70,18 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FXCheckBox stateManager="$stateManager" fx:id="existHandle" text="%base.skipByExists" selected="true">
+        <FXCheckBox groupId="exec" fx:id="existHandle" text="%base.skipByExists" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXCheckBox>
-        <FXCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%base.applyFilter">
+        <FXCheckBox groupId="exec" fx:id="applyFilter" text="%base.applyFilter">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXCheckBox>
     </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="280">
+    <FlexHBox flexWidth="100%" flexHeight="100% - 350">
         <AccentLabel text="%base.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
@@ -96,7 +96,7 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <TransportButton stateManager="$stateManager" fx:id="transportBtn" onAction="#doTransport" realHeight="30" iconSizePercent="0.75">
+        <TransportButton groupId="exec" fx:id="transportBtn" onAction="#doTransport" realHeight="30" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>
@@ -115,7 +115,7 @@
     <FlexVBox flexWidth="100%" fontSize="12">
         <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
-                <Insets top="20"/>
+                <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
         <Text fill="#666" text="%zk.info.transport.tip1">

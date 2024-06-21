@@ -11,6 +11,7 @@ import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -49,11 +50,11 @@ import java.util.List;
 )
 public class ZKInfoTransportController extends Controller {
 
-    /**
-     * 状态管理器
-     */
-    @FXML
-    private StateManager stateManager;
+    // /**
+    //  * 状态管理器
+    //  */
+    // @FXML
+    // private StateManager stateManager;
 
     /**
      * 节点已存在时跳过
@@ -170,7 +171,6 @@ public class ZKInfoTransportController extends Controller {
             MessageBox.tipMsg(I18nHelper.invalidOperation(), this.formConnect);
             return;
         }
-
         // 开始传输
         this.transportStart();
         // 检查传输连接
@@ -251,7 +251,8 @@ public class ZKInfoTransportController extends Controller {
      * 传输开始
      */
     private void transportStart() {
-        this.stateManager.disable();
+        // this.stateManager.disable();
+        NodeGroupUtil.disable(this.stage, "exec");
         this.transportMsg.clear();
         this.formConnect.disable();
     }
@@ -260,7 +261,8 @@ public class ZKInfoTransportController extends Controller {
      * 传输结束
      */
     private void transportEnd() {
-        this.stateManager.enable();
+        NodeGroupUtil.enable(this.stage, "exec");
+        // this.stateManager.enable();
         this.stopTransportBtn.disable();
         this.stage.restoreTitle();
         if (this.formInfo == null) {

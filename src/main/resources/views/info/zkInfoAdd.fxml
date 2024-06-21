@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
@@ -16,6 +15,7 @@
 <?import cn.oyzh.fx.plus.controls.toggle.SwitchToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoAddController" realWidth="750" realHeight="320">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
@@ -123,11 +123,11 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip" maxLen="100">
+                    <FlexTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip" maxLen="100">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </LimitTextArea>
+                    </FlexTextArea>
                 </FlexHBox>
             </FlexVBox>
         </FXTab>

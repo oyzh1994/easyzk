@@ -410,7 +410,7 @@ public class AppMain extends Application {
 
     private void test18(Stage stage) {
         MsgTextArea textArea = new MsgTextArea();
-        textArea.setMaxLine(2000L);
+        textArea.setLineLimit(2000L);
         // textArea.setBuffSize(50);
         Scene scene = new Scene(textArea, 600, 600);
         LongAdder adder = new LongAdder();

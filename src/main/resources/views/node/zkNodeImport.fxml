@@ -73,7 +73,7 @@
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-            <MsgTextArea maxLine="300" fx:id="importMsg" flexWidth="100%" flexHeight="100% - 20"/>
+            <MsgTextArea lineLimit="300" fx:id="importMsg" flexWidth="100%" flexHeight="100% - 20"/>
             <FXLabel fx:id="importStatus"/>
         </FlexVBox>
     </FlexHBox>

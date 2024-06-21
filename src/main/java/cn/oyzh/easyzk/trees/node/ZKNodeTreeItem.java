@@ -527,17 +527,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 加载子节点
      */
     public void loadChild() {
-        if (this.canLoadSub()) {
-            Task task = TaskBuilder.newBuilder()
-                    .onStart(() -> this.loadChildes(false))
-                    .onSuccess(this::extend)
-                    .onFinish(() -> {
-                        this.stopWaiting();
-                        this.flushValue();
-                    })
-                    .onError(MessageBox::exception)
-                    .build();
-            this.startWaiting(task);
+        if (!this.isWaiting() && !this.loaded && !this.loading) {
+            this._loadChild(false);
         }
     }
 
@@ -545,14 +536,45 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 加载子节点，静默模式
      */
     public void loadChildQuiet() {
-        if (this.canLoadSub()) {
+        if (!this.isWaiting() && !this.loaded && !this.loading) {
+            this._loadChild(true);
+        }
+    }
+
+    /**
+     * 加载子节点
+     *
+     * @param quiet 安静模式
+     */
+    private void _loadChild(boolean quiet) {
+        this.loaded = true;
+        this.loading = true;
+        if (quiet) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(() -> this.loadChildes(false))
                     .onSuccess(this::extend)
-                    .onFinish(this::flushLocal)
-                    .onError(Throwable::printStackTrace)
+                    .onFinish(() -> {
+                        this.loading = false;
+                        this.flushValue();
+                    })
+                    .onError(ex -> this.loaded = false)
                     .build();
             TaskManager.start(task);
+        } else {
+            Task task = TaskBuilder.newBuilder()
+                    .onStart(() -> this.loadChildes(false))
+                    .onSuccess(this::extend)
+                    .onFinish(() -> {
+                        this.loading = false;
+                        this.flushValue();
+                        this.stopWaiting();
+                    })
+                    .onError(ex -> {
+                        this.loaded = false;
+                        MessageBox.exception(ex);
+                    })
+                    .build();
+            this.startWaiting(task);
         }
     }
 
@@ -701,7 +723,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         //     return;
         // }
         // 删除提示
-        if (this.value.subNode() && !MessageBox.confirm(I18nHelper.delete() +" ["+ this.value.decodeNodePath()+"] ",I18nHelper.areYouSure())) {
+        if (this.value.subNode() && !MessageBox.confirm(I18nHelper.delete() + " [" + this.value.decodeNodePath() + "] ", I18nHelper.areYouSure())) {
             return;
         }
         // 创建任务
@@ -942,29 +964,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return true;
     }
 
-    /**
-     * 是否能加载子节点
-     *
-     * @return 结果
-     */
-    private boolean canLoadSub() {
-        return this.root.isConnected() && !this.loaded && this.value.parentNode() && this.value.hasReadPerm();
-    }
 
     @Override
     public void reloadChild() {
-        Task task = TaskBuilder.newBuilder()
-                .onStart(() -> {
-                    this.refreshNode();
-                    this.loadChildes(false);
-                    this.flushGraphic();
-                    this.reExpanded();
-                })
-                .onFinish(this::stopWaiting)
-                .onSuccess(this::flushLocal)
-                .onError(MessageBox::exception)
-                .build();
-        this.startWaiting(task);
+        if (!this.isWaiting() || !this.loading) {
+            this.refreshNode();
+            this._loadChild(false);
+        }
     }
 
     /**
@@ -976,8 +982,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.canceled) {
             return;
         }
-        this.loaded = true;
-        this.loading = true;
         try {
             // 没有子节点
             if (!this.value.hasChildren()) {
@@ -1033,13 +1037,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 }
             }
         } catch (Exception ex) {
-            this.loaded = false;
             // 非取消、连接关闭情况下，则抛出异常
             if (!this.canceled && !this.root().isConnected()) {
                 throw new RuntimeException(ex);
             }
-        } finally {
-            this.loading = false;
         }
     }
 

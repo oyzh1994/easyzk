@@ -20,10 +20,8 @@ import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
-import cn.oyzh.fx.plus.menu.AddGroupMenuItem;
-import cn.oyzh.fx.plus.menu.ExportConnectMenuItem;
-import cn.oyzh.fx.plus.menu.ImportConnectMenuItem;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.event.EventHandler;
@@ -91,10 +89,10 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        AddConnectMenuItem addConnect = new AddConnectMenuItem("12", this::addConnect);
-        ExportConnectMenuItem exportConnect = new ExportConnectMenuItem("12", this::exportConnect);
-        ImportConnectMenuItem importConnect = new ImportConnectMenuItem("12", this::importConnect);
-        AddGroupMenuItem addGroup = new AddGroupMenuItem("12", this::addGroup);
+        FXMenuItem addConnect = MenuItemHelper.addConnect("12", this::addConnect);
+        FXMenuItem exportConnect = MenuItemHelper.exportConnect("12", this::exportConnect);
+        FXMenuItem importConnect = MenuItemHelper.importConnect("12", this::importConnect);
+        FXMenuItem addGroup = MenuItemHelper.addGroup("12", this::addGroup);
 
         exportConnect.setDisable(this.isChildEmpty());
 

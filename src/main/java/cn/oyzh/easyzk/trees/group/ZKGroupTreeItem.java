@@ -15,11 +15,9 @@ import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
-import cn.oyzh.fx.plus.menu.DeleteGroupMenuItem;
-import cn.oyzh.fx.plus.menu.RenameGroupMenuItem;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.event.EventHandler;
@@ -84,9 +82,9 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        AddConnectMenuItem addConnect = new AddConnectMenuItem("12", this::addConnect);
-        RenameGroupMenuItem renameGroup = new RenameGroupMenuItem("12", this::rename);
-        DeleteGroupMenuItem delGroup = new DeleteGroupMenuItem("12", this::delete);
+        FXMenuItem addConnect =  MenuItemHelper.addConnect("12", this::addConnect);
+        FXMenuItem renameGroup =  MenuItemHelper.renameGroup("12", this::rename);
+        FXMenuItem delGroup =  MenuItemHelper.deleteGroup("12", this::delete);
         items.add(addConnect);
         items.add(renameGroup);
         items.add(delGroup);

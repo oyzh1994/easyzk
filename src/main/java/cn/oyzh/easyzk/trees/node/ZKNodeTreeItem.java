@@ -24,17 +24,9 @@ import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.AddNodeMenuItem;
-import cn.oyzh.fx.plus.menu.AuthNodeMenuItem;
 import cn.oyzh.fx.plus.menu.CancelOperationMenuItem;
-import cn.oyzh.fx.plus.menu.CollapseAllMenuItem;
-import cn.oyzh.fx.plus.menu.DeleteNodeMenuItem;
-import cn.oyzh.fx.plus.menu.ExpandAllMenuItem;
-import cn.oyzh.fx.plus.menu.ExportNodeMenuItem;
-import cn.oyzh.fx.plus.menu.LoadAllMenuItem;
-import cn.oyzh.fx.plus.menu.ReloadDataMenuItem;
-import cn.oyzh.fx.plus.menu.RenameNodeMenuItem;
-import cn.oyzh.fx.plus.menu.UnLoadMenuItem;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
@@ -603,33 +595,33 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             CancelOperationMenuItem cancel = new CancelOperationMenuItem("11", this::cancel);
             items.add(cancel);
         } else {
-            AuthNodeMenuItem auth = new AuthNodeMenuItem("12", this::authNode);
+            FXMenuItem auth = MenuItemHelper.authNode("12", this::authNode);
             if (!this.ephemeral()) {
-                AddNodeMenuItem add = new AddNodeMenuItem("12", this::addNode);
+                FXMenuItem add = MenuItemHelper.addNode("12", this::addNode);
                 items.add(add);
             }
             if (!this.value.rootNode() && this.value.subNode() && !this.ephemeral()) {
-                RenameNodeMenuItem rename = new RenameNodeMenuItem("12", this::rename);
+                FXMenuItem rename = MenuItemHelper.renameNode("12", this::rename);
                 items.add(rename);
             }
             if (!this.value.rootNode()) {
-                DeleteNodeMenuItem delete = new DeleteNodeMenuItem("12", this::delete);
+                FXMenuItem delete = MenuItemHelper.deleteNode("12", this::delete);
                 items.add(delete);
             }
-            ReloadDataMenuItem reload = new ReloadDataMenuItem("12", this::reloadChild);
+            FXMenuItem reload = MenuItemHelper.refreshData("12", this::reloadChild);
             items.add(reload);
             if (this.value.parentNode()) {
-                UnLoadMenuItem unload = new UnLoadMenuItem("12", this::unloadChild);
-                LoadAllMenuItem loadAll = new LoadAllMenuItem("12", this::loadChildAll);
-                ExpandAllMenuItem expandAll = new ExpandAllMenuItem("12", this::expandAll);
-                CollapseAllMenuItem collapseAll = new CollapseAllMenuItem("12", this::collapseAll);
+                FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
+                FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
+                FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);
+                FXMenuItem collapseAll = MenuItemHelper.collapseAll("12", this::collapseAll);
                 items.add(unload);
                 items.add(loadAll);
                 items.add(expandAll);
                 items.add(collapseAll);
             }
             if (this.value.hasReadPerm()) {
-                ExportNodeMenuItem export = new ExportNodeMenuItem("12", this::exportData);
+                FXMenuItem export = MenuItemHelper.exportData("12", this::exportData);
                 items.add(export);
             }
             items.add(auth);

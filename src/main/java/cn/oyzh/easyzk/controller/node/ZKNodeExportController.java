@@ -17,7 +17,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;

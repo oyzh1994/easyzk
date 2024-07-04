@@ -5,8 +5,8 @@
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>

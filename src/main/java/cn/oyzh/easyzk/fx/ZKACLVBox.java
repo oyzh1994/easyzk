@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.fx.plus.controls.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FlexVBox;
 
 /**
  * zk权限VBox

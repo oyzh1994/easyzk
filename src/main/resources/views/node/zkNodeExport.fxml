@@ -4,8 +4,8 @@
 <?import cn.oyzh.fx.plus.controls.button.ExportButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>

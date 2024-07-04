@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.button.CopyButton?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>

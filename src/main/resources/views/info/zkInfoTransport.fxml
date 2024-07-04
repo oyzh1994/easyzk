@@ -6,8 +6,8 @@
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <?import cn.oyzh.fx.plus.controls.button.TransportButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.handler.StateManager?>

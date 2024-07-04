@@ -7,8 +7,8 @@
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <?import cn.oyzh.fx.rich.control.FlexVirtualizedScrollPane?>
 <?import cn.oyzh.fx.plus.controls.svg.AddSVGGlyph?>

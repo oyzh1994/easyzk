@@ -12,7 +12,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;

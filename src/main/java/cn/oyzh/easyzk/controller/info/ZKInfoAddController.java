@@ -10,7 +10,7 @@ import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.controls.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;

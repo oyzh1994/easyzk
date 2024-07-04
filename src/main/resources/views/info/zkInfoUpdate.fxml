@@ -5,8 +5,8 @@
 <?import cn.oyzh.fx.plus.controls.button.TestButton?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.digital.PortTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>

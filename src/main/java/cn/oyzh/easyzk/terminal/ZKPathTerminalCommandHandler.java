@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class ZKPathTerminalCommandHandler<C extends TerminalCommand> extends ZKCliTerminalCommandHandler<C> {
 
     @Override
-    public boolean completion(String line, ZKTerminalTextArea terminal) {
+    public boolean completion(String line, ZKTerminalTextTextArea terminal) {
         // 获取路径
         String path = ZKTerminalUtil.getPath(line);
         if (!StrUtil.contains(path, "/")) {

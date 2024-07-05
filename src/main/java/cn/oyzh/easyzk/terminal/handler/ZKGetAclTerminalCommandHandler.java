@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.terminal.handler;
 
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
@@ -40,7 +40,7 @@ public class ZKGetAclTerminalCommandHandler extends ZKCliTerminalCommandHandler<
     }
 
     @Override
-    public String commandHelp(ZKTerminalTextArea terminal) {
+    public String commandHelp(ZKTerminalTextTextArea terminal) {
         return super.commandHelp(terminal)  + "\n" +
                 "-s stats";
     }

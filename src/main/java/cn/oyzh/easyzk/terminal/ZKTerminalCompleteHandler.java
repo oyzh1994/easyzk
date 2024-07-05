@@ -12,7 +12,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/7/24
  */
-public class ZKTerminalCompleteHandler extends BaseTerminalCompleteHandler<ZKTerminalTextArea> {
+public class ZKTerminalCompleteHandler extends BaseTerminalCompleteHandler<ZKTerminalTextTextArea> {
 
     @Override
     protected List<TerminalCommandHandler> findCommandHandlers(String line) {

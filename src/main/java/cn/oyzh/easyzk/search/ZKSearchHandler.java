@@ -12,7 +12,7 @@ import cn.oyzh.fx.plus.controls.search.SearchValue;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemValue;
 import cn.oyzh.fx.plus.util.ControlUtil;
-import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.util.RichControlUtil;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
@@ -58,7 +58,7 @@ public class ZKSearchHandler extends SearchHandler {
     /**
      * 数据组件
      */
-    private RichDataPane dataNode;
+    private RichDataTextAreaPane dataNode;
 
     /**
      * 初始化
@@ -163,7 +163,7 @@ public class ZKSearchHandler extends SearchHandler {
      *
      * @return 数据节点
      */
-    private RichDataPane findDataNode() {
+    private RichDataTextAreaPane findDataNode() {
         ZKNodeTab itemTab = this.tabPane.getNodeTab(this.currentItem);
         if (itemTab != null) {
             itemTab.selectDataTab();

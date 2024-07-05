@@ -22,7 +22,7 @@ public abstract class ZKCliTerminalCommandHandler<C extends TerminalCommand> ext
     }
 
     @Override
-    public TerminalExecuteResult execute(C command, ZKTerminalTextArea terminal) {
+    public TerminalExecuteResult execute(C command, ZKTerminalTextTextArea terminal) {
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             terminal.disable();

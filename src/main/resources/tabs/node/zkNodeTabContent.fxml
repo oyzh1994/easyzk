@@ -39,8 +39,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.svg.QRCodeSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.HistorySVGGlyph?>
-<?import cn.oyzh.fx.rich.data.RichDataTextArea?>
-<?import cn.oyzh.fx.rich.data.RichDataPane?>
+<?import cn.oyzh.fx.rich.data.RichDataTextAreaPane?>
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -142,8 +141,8 @@
             <!--         <RichDataTextArea fontSize="12" fx:id="nodeData" onKeyPressed="#onNodeDataKeyPressed"/> -->
             <!--     </content> -->
             <!-- </FlexVirtualizedScrollPane> -->
-            <RichDataPane fontSize="12" fx:id="nodeData" flexHeight="100% - 32"
-                            flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
+            <RichDataTextAreaPane fontSize="12" fx:id="nodeData" flexHeight="100% - 32"
+                                  flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
             <!-- <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 32" -->
             <!--                 flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" -->
             <!--                 text="数据加载中..."/> -->

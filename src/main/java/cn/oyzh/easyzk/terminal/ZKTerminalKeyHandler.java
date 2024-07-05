@@ -6,7 +6,7 @@ import cn.oyzh.fx.terminal.key.TerminalKeyHandler;
  * @author oyzh
  * @since 2023/8/28
  */
-public class ZKTerminalKeyHandler implements TerminalKeyHandler<ZKTerminalTextArea> {
+public class ZKTerminalKeyHandler implements TerminalKeyHandler<ZKTerminalTextTextArea> {
 
     /**
      * 当前实例

@@ -34,7 +34,7 @@ import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -176,7 +176,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      * 右侧zk数据
      */
     @FXML
-    private RichDataPane nodeData;
+    private RichDataTextAreaPane nodeData;
     // private ZKDataTextArea nodeData;
 
     /**
@@ -312,7 +312,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      *
      * @return 节点数据组件
      */
-    public RichDataPane getDataNode() {
+    public RichDataTextAreaPane getDataNode() {
         return this.nodeData;
     }
 

@@ -2,8 +2,8 @@
     "packMode": "packr",
     "platform": "linux_arm64",
     "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}",
-    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.png",
-    "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-${appVersion}.jar",
+    "appIcon": "${projectPath}\\resource\\zoo.png",
+    "mainJar": "${projectPath}\\target\\easyzk-${appVersion}.jar",
     "jrePath": "D:\\Package\\EasyZK\\linux_arm64_jre22",
     "jdkPath": "$SYSTEM",
     "packr": {
@@ -22,7 +22,6 @@
             "ASSEMBLY_EXCEPTION",
             "ADDITIONAL_LICENSE_INFO",
             ".*.md",
-            "lcms.*",
             "jawt.*",
             "j2gss.*",
             "prefs.*",

@@ -2,8 +2,8 @@
     "packMode": "packr",
     "platform": "macos_amd64",
     "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}.app",
-    "appIcon": "D:\\Workspaces\\OYZH\\easyzk\\resource\\zoo.icns",
-    "mainJar": "D:\\Workspaces\\OYZH\\easyzk\\target\\easyzk-${appVersion}.jar",
+    "appIcon": "${projectPath}\\resource\\zoo.icns",
+    "mainJar": "${projectPath}\\target\\easyzk-${appVersion}.jar",
     "jrePath": "D:\\Package\\EasyZK\\macos_amd64_jre22",
     "jdkPath": "$SYSTEM",
     "packr": {
@@ -23,7 +23,6 @@
             "ASSEMBLY_EXCEPTION",
             "ADDITIONAL_LICENSE_INFO",
             ".*.md",
-            "lcms.*",
             "jawt.*",
             "j2gss.*",
             "prefs.*",

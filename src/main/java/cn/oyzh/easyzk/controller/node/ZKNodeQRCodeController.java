@@ -68,14 +68,15 @@ public class ZKNodeQRCodeController extends Controller {
             builder.append(I18nHelper.nodePath()).append(": ")
                     .append(zkNode.decodeNodePath()).append("\n")
                     .append(I18nHelper.nodeData()).append(": ")
-                    .append(nodeData).append("\n")
-                    .append(I18nHelper.nodeType()).append(": ")
-                    .append(zkNode.ephemeral() ? I18nResourceBundle.i18nString("base.ephemeralNode") : I18nResourceBundle.i18nString("base.persistentNode"));
-            if (zkNode.stat() != null) {
-                builder.append("\n")
-                        .append(I18nHelper.createTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
-                        .append(I18nHelper.updateTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
-            }
+                    .append(nodeData);
+//                    .append(nodeData).append("\n")
+//                    .append(I18nHelper.nodeType()).append(": ")
+//                    .append(zkNode.ephemeral() ? I18nResourceBundle.i18nString("base.ephemeralNode") : I18nResourceBundle.i18nString("base.persistentNode"));
+//            if (zkNode.stat() != null) {
+//                builder.append("\n")
+//                        .append(I18nHelper.createTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
+//                        .append(I18nHelper.updateTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
+//            }
             StaticLog.info("generate qrcode begin.");
             QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
             config.setImg(icon);

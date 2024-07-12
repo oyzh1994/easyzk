@@ -11,7 +11,7 @@ import cn.oyzh.easyzk.util.ZKExportUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
@@ -22,7 +22,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
@@ -51,7 +51,7 @@ import java.util.Map;
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeImport.fxml"
 )
-public class ZKNodeImportController extends Controller {
+public class ZKNodeImportController extends StageController {
 
     /**
      * zk客户端
@@ -292,7 +292,7 @@ public class ZKNodeImportController extends Controller {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.zkClient = this.getStageProp("zkClient");
+        this.zkClient = this.getWindowProp("zkClient");
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
         this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StrUtil.isNotBlank(t1)));
         this.stage.hideOnEscape();
@@ -316,7 +316,7 @@ public class ZKNodeImportController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
+    public void onWindowHidden(WindowEvent event) {
         this.stopImport();
     }
 

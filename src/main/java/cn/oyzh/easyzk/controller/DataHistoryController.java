@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.event.ZKTabChangedEvent;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.fx.plus.controller.SubController;
+import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
@@ -17,7 +17,6 @@ import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
@@ -42,7 +41,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2024/04/23
  */
-public class DataHistoryController extends SubController implements Initializable {
+public class DataHistoryController extends SubStageController implements Initializable {
 
     /**
      * 根节点

@@ -26,8 +26,8 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.thread.BackgroundService;
@@ -356,7 +356,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     @FXML
     private void toAddACL() {
-        StageWrapper fxView = StageUtil.parseStage(ZKACLAddController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKACLAddController.class, this.window());
         fxView.setProp("zkItem", this.treeItem);
         fxView.setProp("zkClient", this.treeItem.client());
         fxView.display();
@@ -404,7 +404,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             SVGGlyph glyph = (SVGGlyph) event.getTarget();
             ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
             ZKACL acl = aclVBox.acl();
-            StageWrapper fxView = StageUtil.parseStage(ZKACLUpdateController.class, this.window());
+            StageWrapper fxView = StageManager.parseStage(ZKACLUpdateController.class, this.window());
             fxView.setProp("acl", acl);
             fxView.setProp("zkItem", this.treeItem);
             fxView.setProp("zkClient", this.treeItem.client());
@@ -678,7 +678,7 @@ public class ZKNodeTabContent extends DynamicTabController {
     @FXML
     private void node2QRCode() {
         try {
-            StageWrapper fxView = StageUtil.parseStage(ZKNodeQRCodeController.class, this.window());
+            StageWrapper fxView = StageManager.parseStage(ZKNodeQRCodeController.class, this.window());
             fxView.setProp("zkNode", this.treeItem.value());
             fxView.setProp("nodeData", this.nodeData.getTextTrim());
             fxView.display();

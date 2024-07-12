@@ -27,8 +27,8 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CancelOperationMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -641,7 +641,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 添加zk子节点
      */
     public void addNode() {
-        StageWrapper fxView = StageUtil.parseStage(ZKNodeAddController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKNodeAddController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.client());
         fxView.display();
@@ -651,7 +651,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 认证zk节点
      */
     public void authNode() {
-        StageWrapper fxView = StageUtil.parseStage(ZKAuthAuthController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKAuthAuthController.class, this.window());
         fxView.setProp("zkClient", this.client());
         fxView.setProp("zkItem", this);
         fxView.display();
@@ -661,7 +661,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 导出zk节点
      */
     public void exportData() {
-        StageWrapper fxView = StageUtil.parseStage(ZKNodeExportController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.client());
         fxView.display();

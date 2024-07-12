@@ -6,11 +6,11 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -36,7 +36,7 @@ import java.util.List;
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLUpdate.fxml"
 )
-public class ZKACLUpdateController extends Controller {
+public class ZKACLUpdateController extends StageController {
 
     /**
      * zk权限信息
@@ -137,7 +137,7 @@ public class ZKACLUpdateController extends Controller {
         if (stat != null) {
             this.zkItem.refreshACL();
             MessageBox.okToast(I18nHelper.operationSuccess());
-            this.closeStage();
+            this.closeWindow();
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -146,10 +146,10 @@ public class ZKACLUpdateController extends Controller {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        this.acl = this.getStageProp("acl");
+        this.acl = this.getWindowProp("acl");
         // 获取初始化对象
-        this.zkItem = this.getStageProp("zkItem");
-        this.zkClient = this.getStageProp("zkClient");
+        this.zkItem = this.getWindowProp("zkItem");
+        this.zkClient = this.getWindowProp("zkClient");
 
         CheckBox a = (CheckBox) this.perms.getChildren().get(0);
         CheckBox w = (CheckBox) this.perms.getChildren().get(1);

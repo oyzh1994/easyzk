@@ -6,12 +6,11 @@ import cn.hutool.extra.qrcode.QrConfig;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.fx.common.Const;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.ResourceUtil;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -37,7 +36,7 @@ import java.io.ByteArrayInputStream;
         stageStyle = StageStyle.DECORATED,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeQRCode.fxml"
 )
-public class ZKNodeQRCodeController extends Controller {
+public class ZKNodeQRCodeController extends StageController {
 
     /**
      * 二维码图片
@@ -62,8 +61,8 @@ public class ZKNodeQRCodeController extends Controller {
             var iconUrl = ResourceUtil.getResource(ZKConst.ICON_PATH);
             var icon = ImageIO.read(iconUrl);
             StaticLog.info("read icon finish.");
-            ZKNode zkNode = this.getStageProp("zkNode");
-            String nodeData = this.getStageProp("nodeData");
+            ZKNode zkNode = this.getWindowProp("zkNode");
+            String nodeData = this.getWindowProp("nodeData");
             StringBuilder builder = new StringBuilder();
             builder.append(I18nHelper.nodePath()).append(": ")
                     .append(zkNode.decodeNodePath()).append("\n")
@@ -85,7 +84,7 @@ public class ZKNodeQRCodeController extends Controller {
             this.qrcode.setImage(new Image(bais));
             StaticLog.info("generate qrcode finish size:{}", bais.available());
         } catch (Exception ex) {
-            this.closeStage();
+            this.closeWindow();
             ex.printStackTrace();
             StaticLog.warn("initQRCode error, ex:{}", ex.getMessage());
             if (ex.getMessage().contains("Data too big")) {

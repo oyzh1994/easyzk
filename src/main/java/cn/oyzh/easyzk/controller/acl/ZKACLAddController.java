@@ -12,7 +12,7 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.SimpleStringConverter;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.CopyButton;
@@ -23,7 +23,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -55,7 +55,7 @@ import java.util.List;
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "acl/zkACLAdd.fxml"
 )
-public class ZKACLAddController extends Controller {
+public class ZKACLAddController extends StageController {
 
     /**
      * zk树节点
@@ -421,7 +421,7 @@ public class ZKACLAddController extends Controller {
             if (stat != null) {
                 this.zkItem.refreshACL();
                 MessageBox.okToast(I18nHelper.operationSuccess());
-                this.closeStage();
+                this.closeWindow();
                 return true;
             }
             MessageBox.warn(I18nHelper.operationFail());
@@ -436,8 +436,8 @@ public class ZKACLAddController extends Controller {
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
         // 获取初始化对象
-        this.zkItem = this.getStageProp("zkItem");
-        this.zkClient = this.getStageProp("zkClient");
+        this.zkItem = this.getWindowProp("zkItem");
+        this.zkClient = this.getWindowProp("zkClient");
         // 初始化摘要数据
         this.initDigestData();
 

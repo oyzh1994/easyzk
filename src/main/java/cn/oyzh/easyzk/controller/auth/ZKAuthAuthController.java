@@ -11,7 +11,7 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.SimpleStringConverter;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
@@ -20,7 +20,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -40,7 +40,7 @@ import java.util.List;
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuthAuth.fxml"
 )
-public class ZKAuthAuthController extends Controller {
+public class ZKAuthAuthController extends StageController {
 
     /**
      * 用户名
@@ -163,7 +163,7 @@ public class ZKAuthAuthController extends Controller {
                 }
                 ZKEventUtil.authAuthed(this.zkItem, true, user, password);
                 MessageBox.okToast(I18nHelper.operationSuccess());
-                this.closeStage();
+                this.closeWindow();
             } else if (this.zkNode.aclEmpty() || this.zkNode.hasDigestACL()) {
                 ZKEventUtil.authAuthed(this.zkItem, false, user, password);
                 MessageBox.warn(I18nHelper.operationFail());
@@ -179,7 +179,7 @@ public class ZKAuthAuthController extends Controller {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.zkItem = this.getStageProp("zkItem");
+        this.zkItem = this.getWindowProp("zkItem");
         this.zkNode = this.zkItem.value();
         this.nodePath.setText(this.zkNode.decodeNodePath());
         this.nodeGroupManage.addNodes(this.authType1, this.authType2);

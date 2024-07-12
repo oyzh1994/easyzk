@@ -7,14 +7,14 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKPageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controller.ParentController;
+import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import cn.oyzh.fx.plus.tray.DesktopTrayItem;
 import cn.oyzh.fx.plus.tray.QuitTrayItem;
 import cn.oyzh.fx.plus.tray.SettingTrayItem;
@@ -39,7 +39,7 @@ import java.util.List;
         iconUrls = ZKConst.ICON_PATH,
         value = ZKConst.FXML_BASE_PATH + "main.fxml"
 )
-public class MainController extends ParentController {
+public class MainController extends ParentStageController {
 
     /**
      * 项目信息
@@ -95,7 +95,7 @@ public class MainController extends ParentController {
                 // 退出程序
                 TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
                     StaticLog.warn("exit app by tray.");
-                    StageUtil.exit();
+                    StageManager.exit();
                 }));
                 // 鼠标事件
                 TrayManager.onMouseClicked(e -> {
@@ -115,13 +115,13 @@ public class MainController extends ParentController {
      */
     private void showSetting() {
         FXUtil.runLater(() -> {
-            StageWrapper wrapper = StageUtil.getStage(SettingController.class);
+            StageWrapper wrapper = StageManager.getStage(SettingController.class);
             if (wrapper != null) {
                 StaticLog.info("front setting.");
                 wrapper.toFront();
             } else {
                 StaticLog.info("show setting.");
-                StageUtil.showStage(SettingController.class, this.stage);
+                StageManager.showStage(SettingController.class, this.stage);
             }
         });
     }
@@ -131,19 +131,19 @@ public class MainController extends ParentController {
      */
     private void showMain() {
         FXUtil.runLater(() -> {
-            StageWrapper wrapper = StageUtil.getStage(MainController.class);
+            StageWrapper wrapper = StageManager.getStage(MainController.class);
             if (wrapper != null) {
                 StaticLog.info("front main.");
                 wrapper.toFront();
             } else {
                 StaticLog.info("show main.");
-                StageUtil.showStage(MainController.class);
+                StageManager.showStage(MainController.class);
             }
         });
     }
 
     @Override
-    public List<? extends Controller> getSubControllers() {
+    public List<? extends StageController> getSubControllers() {
         return Arrays.asList(this.zkMainController, this.headerController);
     }
 
@@ -153,11 +153,11 @@ public class MainController extends ParentController {
         // 直接退出应用
         if (this.setting.isExitDirectly()) {
             StaticLog.info("exit directly.");
-            StageUtil.exit();
+            StageManager.exit();
         } else if (this.setting.isExitAsk()) { // 总是询问
             if (MessageBox.confirm(I18nHelper.quit() + this.project.getName())) {
                 StaticLog.info("exit by confirm.");
-                StageUtil.exit();
+                StageManager.exit();
             } else {
                 StaticLog.info("cancel by confirm.");
                 event.consume();
@@ -174,8 +174,8 @@ public class MainController extends ParentController {
     }
 
     @Override
-    public void onStageShowing(WindowEvent event) {
-        super.onStageShowing(event);
+    public void onWindowShowing(WindowEvent event) {
+        super.onWindowShowing(event);
         this.stage.setTitleExt(this.project.getName() + "-v" + this.project.getVersion());
     }
 

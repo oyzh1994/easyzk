@@ -5,13 +5,13 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterStore;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -28,7 +28,7 @@ import javafx.stage.WindowEvent;
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "filter/zkFilterAdd.fxml"
 )
-public class ZKFilterAddController extends Controller {
+public class ZKFilterAddController extends StageController {
 
     /**
      * 关键字
@@ -77,7 +77,7 @@ public class ZKFilterAddController extends Controller {
                 ZKEventUtil.filterAdded();
                 ZKEventUtil.treeChildFilter();
                 MessageBox.okToast(I18nHelper.operationSuccess());
-                this.closeStage();
+                this.closeWindow();
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }

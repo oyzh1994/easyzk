@@ -3,12 +3,12 @@ package cn.oyzh.easyzk.controller.tool;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -26,7 +26,7 @@ import javafx.stage.WindowEvent;
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "tool/zkTool.fxml"
 )
-public class ZKToolController extends Controller {
+public class ZKToolController extends StageController {
 
     /**
      * 用户

@@ -4,13 +4,13 @@ import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.plus.controller.SubController;
+import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 import org.springframework.context.annotation.Lazy;
@@ -26,7 +26,7 @@ import javax.annotation.Resource;
  */
 @Lazy
 @Component
-public class HeaderController extends SubController {
+public class HeaderController extends SubStageController {
 
     /**
      * 项目信息
@@ -64,11 +64,11 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void setting() {
-        StageWrapper wrapper = StageUtil.getStage(SettingController.class);
+        StageWrapper wrapper = StageManager.getStage(SettingController.class);
         if (wrapper != null) {
             wrapper.toFront();
         } else {
-            StageUtil.showStage(SettingController.class, this.stage);
+            StageManager.showStage(SettingController.class, this.stage);
         }
     }
 
@@ -77,7 +77,7 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void about() {
-        StageUtil.showStage(AboutController.class, this.stage);
+        StageManager.showStage(AboutController.class, this.stage);
     }
 
     /**
@@ -94,7 +94,7 @@ public class HeaderController extends SubController {
     @FXML
     private void quit() {
         if (MessageBox.confirm(I18nHelper.quit() + " " + this.project.getName())) {
-            StageUtil.exit();
+            StageManager.exit();
         }
     }
 
@@ -103,11 +103,11 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void transport() {
-        StageWrapper wrapper = StageUtil.getStage(ZKInfoTransportController.class);
+        StageWrapper wrapper = StageManager.getStage(ZKInfoTransportController.class);
         if (wrapper != null) {
             wrapper.toFront();
         } else {
-            StageUtil.showStage(ZKInfoTransportController.class);
+            StageManager.showStage(ZKInfoTransportController.class);
         }
     }
 
@@ -116,7 +116,7 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void tool() {
-        StageUtil.showStage(ZKToolController.class, StageUtil.getPrimaryStage());
+        StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
     }
 
     /**

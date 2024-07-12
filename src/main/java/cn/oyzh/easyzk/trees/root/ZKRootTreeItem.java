@@ -22,7 +22,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -203,7 +203,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * 添加连接
      */
     private void addConnect() {
-        StageUtil.showStage(ZKInfoAddController.class, this.window());
+        StageManager.showStage(ZKInfoAddController.class, this.window());
     }
 
     /**

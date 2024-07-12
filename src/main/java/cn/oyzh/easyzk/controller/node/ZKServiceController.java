@@ -5,11 +5,11 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
@@ -35,7 +35,7 @@ import java.util.List;
         stageStyle = StageStyle.DECORATED,
         value = ZKConst.FXML_BASE_PATH + "node/zkService.fxml"
 )
-public class ZKServiceController extends Controller {
+public class ZKServiceController extends StageController {
 
     /**
      * sdk版本
@@ -133,12 +133,12 @@ public class ZKServiceController extends Controller {
         this.clientAddr.setCellValueFactory(new PropertyValueFactory<>("clientAddr"));
         this.electionAddr.setCellValueFactory(new PropertyValueFactory<>("electionAddr"));
 
-        ZKInfo zkInfo = this.getStageProp("zkInfo");
+        ZKInfo zkInfo = this.getWindowProp("zkInfo");
         this.zkInfoName.setText(zkInfo.getName());
         this.zkInfoHost.setText(zkInfo.getHost());
         this.sdkVersion.setText(Version.getFullVersion());
 
-        ZKClient zkClient = this.getStageProp("zkClient");
+        ZKClient zkClient = this.getWindowProp("zkClient");
         List<ZKServerNode> servers = zkClient.getServers();
         this.pageData = new Paging<>(servers, 5);
         this.pagePane.setPaging(this.pageData);

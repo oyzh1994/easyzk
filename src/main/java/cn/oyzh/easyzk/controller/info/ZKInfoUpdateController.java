@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -36,7 +36,7 @@ import lombok.NonNull;
         iconUrls = ZKConst.ICON_PATH,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoUpdate.fxml"
 )
-public class ZKInfoUpdateController extends Controller {
+public class ZKInfoUpdateController extends StageController {
 
     /**
      * 只读模式
@@ -251,7 +251,7 @@ public class ZKInfoUpdateController extends Controller {
         if (this.infoStore.update(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
             MessageBox.okToast(I18nHelper.operationSuccess());
-            this.closeStage();
+            this.closeWindow();
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -288,7 +288,7 @@ public class ZKInfoUpdateController extends Controller {
     @Override
     public void onStageShown(@NonNull WindowEvent event) {
         super.onStageShown(event);
-        this.zkInfo = this.getStageProp("zkInfo");
+        this.zkInfo = this.getWindowProp("zkInfo");
         this.name.setText(this.zkInfo.getName());
         this.remark.setText(this.zkInfo.getRemark());
         this.readonly.setSelected(this.zkInfo.isReadonly());

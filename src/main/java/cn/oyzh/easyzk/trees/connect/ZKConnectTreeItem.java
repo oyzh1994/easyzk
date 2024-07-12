@@ -29,8 +29,8 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -162,7 +162,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 导出zk节点
      */
     public void exportData() {
-        StageWrapper fxView = StageUtil.parseStage(ZKNodeExportController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.client());
         fxView.display();
@@ -172,7 +172,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 查看服务信息
      */
     private void serverInfo() {
-        StageWrapper fxView = StageUtil.parseStage(ZKServiceController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKServiceController.class, this.window());
         fxView.setProp("zkInfo", this.value);
         fxView.setProp("zkClient", this.client);
         fxView.display();
@@ -228,7 +228,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 导入数据
      */
     private void importData() {
-        StageWrapper fxView = StageUtil.parseStage(ZKNodeImportController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKNodeImportController.class, this.window());
         fxView.setProp("zkClient", this.client);
         fxView.display();
     }
@@ -237,11 +237,11 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 传输数据
      */
     private void transportData() {
-        StageWrapper wrapper = StageUtil.getStage(ZKInfoTransportController.class);
+        StageWrapper wrapper = StageManager.getStage(ZKInfoTransportController.class);
         if (wrapper != null) {
             wrapper.disappear();
         }
-        wrapper = StageUtil.parseStage(ZKInfoTransportController.class);
+        wrapper = StageManager.parseStage(ZKInfoTransportController.class);
         wrapper.setProp("formConnect", this.value);
         wrapper.display();
     }
@@ -316,7 +316,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             }
             this.closeConnect();
         }
-        StageWrapper fxView = StageUtil.parseStage(ZKInfoUpdateController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKInfoUpdateController.class, this.window());
         fxView.setProp("zkInfo", this.value());
         fxView.display();
     }

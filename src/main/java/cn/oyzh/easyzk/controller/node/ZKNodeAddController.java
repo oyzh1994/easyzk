@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -45,7 +45,7 @@ import java.util.List;
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeAdd.fxml"
 )
-public class ZKNodeAddController extends Controller {
+public class ZKNodeAddController extends StageController {
 
     /**
      * 权限tab
@@ -185,7 +185,7 @@ public class ZKNodeAddController extends Controller {
                 MessageBox.warnToast(I18nHelper.operationFail());
             } else {
                 MessageBox.okToast(I18nHelper.operationSuccess());
-                this.closeStage();
+                this.closeWindow();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -353,8 +353,8 @@ public class ZKNodeAddController extends Controller {
     @Override
     public void onStageShown(WindowEvent event) {
         this.parentNodeBox.managedProperty().bind(this.parentNode.visibleProperty());
-        ZKNodeTreeItem zkItem = this.getStageProp("zkItem");
-        this.zkClient = this.getStageProp("zkClient");
+        ZKNodeTreeItem zkItem = this.getWindowProp("zkItem");
+        this.zkClient = this.getWindowProp("zkClient");
         if (zkItem != null) {
             this.parentNode.setVisible(true);
             this.parentNode.setText(zkItem.nodePath());

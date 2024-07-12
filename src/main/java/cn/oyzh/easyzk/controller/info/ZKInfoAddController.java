@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
@@ -20,7 +20,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -36,7 +36,7 @@ import javafx.stage.WindowEvent;
         iconUrls = ZKConst.ICON_PATH,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoAdd.fxml"
 )
-public class ZKInfoAddController extends Controller {
+public class ZKInfoAddController extends StageController {
 
     /**
      * 只读模式
@@ -255,7 +255,7 @@ public class ZKInfoAddController extends Controller {
             if (result) {
                 ZKEventUtil.infoAdded(zkInfo);
                 MessageBox.okToast(I18nHelper.operationSuccess());
-                this.closeStage();
+                this.closeWindow();
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -296,7 +296,7 @@ public class ZKInfoAddController extends Controller {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        this.group = this.getStageProp("group");
+        this.group = this.getWindowProp("group");
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }

@@ -11,7 +11,7 @@ import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.spring.SpringApplication;
-import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -65,7 +65,7 @@ public class EasyZKApp extends SpringApplication {
             // 开始执行业务
             super.start(primaryStage);
             // 显示主页面
-            StageUtil.showStage(MainController.class);
+            StageManager.showStage(MainController.class);
             // 开启定期gc
             SystemUtil.gcInterval(60_000);
             // 设置stage全部关闭后不自动销毁进程

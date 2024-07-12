@@ -18,8 +18,8 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -147,7 +147,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
      * 添加连接
      */
     private void addConnect() {
-        StageWrapper fxView = StageUtil.parseStage(ZKInfoAddController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(ZKInfoAddController.class, this.window());
         fxView.setProp("group", this.value);
         fxView.display();
     }

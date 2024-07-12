@@ -14,16 +14,15 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.common.util.TextUtil;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -48,7 +47,7 @@ import java.util.List;
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoTransport.fxml"
 )
-public class ZKInfoTransportController extends Controller {
+public class ZKInfoTransportController extends StageController {
 
     // /**
     //  * 状态管理器
@@ -318,7 +317,7 @@ public class ZKInfoTransportController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
+    public void onWindowHidden(WindowEvent event) {
         this.transportEnd();
         this.stopTransport();
         this.closeZKClient();

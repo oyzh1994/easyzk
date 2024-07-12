@@ -16,7 +16,7 @@ import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
@@ -27,7 +27,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeExport.fxml"
 )
-public class ZKNodeExportController extends Controller {
+public class ZKNodeExportController extends StageController {
 
     /**
      * 节点路径组件
@@ -303,9 +303,9 @@ public class ZKNodeExportController extends Controller {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        TreeItem<?> item = this.getStageProp("zkItem");
+        TreeItem<?> item = this.getWindowProp("zkItem");
         if (item instanceof ZKNodeTreeItem treeItem) {
-            this.client = this.getStageProp("zkClient");
+            this.client = this.getWindowProp("zkClient");
             this.exportPath = treeItem.nodePath();
             this.nodePath.setText(treeItem.decodeNodePath());
         } else if (item instanceof ZKConnectTreeItem treeItem) {
@@ -318,7 +318,7 @@ public class ZKNodeExportController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
+    public void onWindowHidden(WindowEvent event) {
         this.stopExport();
     }
 

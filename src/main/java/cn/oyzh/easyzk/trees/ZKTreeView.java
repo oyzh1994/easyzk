@@ -28,7 +28,7 @@ import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import com.google.common.eventbus.Subscribe;
 import javafx.scene.control.TreeCell;
@@ -410,6 +410,6 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     @Subscribe
     private void addConnect(ZKAddConnectEvent event) {
-        StageUtil.showStage(ZKInfoAddController.class, this.window());
+        StageManager.showStage(ZKInfoAddController.class, this.window());
     }
 }

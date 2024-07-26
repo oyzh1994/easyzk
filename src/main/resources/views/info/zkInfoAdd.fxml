@@ -3,8 +3,8 @@
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.TestButton?>
-<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
-<?import cn.oyzh.fx.plus.controls.digital.PortTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>

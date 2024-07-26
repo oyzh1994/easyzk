@@ -14,7 +14,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.tray.DesktopTrayItem;
 import cn.oyzh.fx.plus.tray.QuitTrayItem;
 import cn.oyzh.fx.plus.tray.SettingTrayItem;
@@ -115,7 +115,7 @@ public class MainController extends ParentStageController {
      */
     private void showSetting() {
         FXUtil.runLater(() -> {
-            StageWrapper wrapper = StageManager.getStage(SettingController.class);
+            StageAdapter wrapper = StageManager.getStage(SettingController.class);
             if (wrapper != null) {
                 StaticLog.info("front setting.");
                 wrapper.toFront();
@@ -131,7 +131,7 @@ public class MainController extends ParentStageController {
      */
     private void showMain() {
         FXUtil.runLater(() -> {
-            StageWrapper wrapper = StageManager.getStage(MainController.class);
+            StageAdapter wrapper = StageManager.getStage(MainController.class);
             if (wrapper != null) {
                 StaticLog.info("front main.");
                 wrapper.toFront();
@@ -217,7 +217,7 @@ public class MainController extends ParentStageController {
     }
 
     @Override
-    public void onStageInitialize(StageWrapper stage) {
+    public void onStageInitialize(StageAdapter stage) {
         super.onStageInitialize(stage);
         // 设置上次保存的页面大小
         if (this.setting.isRememberPageSize()) {

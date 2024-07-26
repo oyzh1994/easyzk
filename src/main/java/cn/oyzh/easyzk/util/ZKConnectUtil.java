@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -24,7 +24,7 @@ public class ZKConnectUtil {
      * @param view 页面
      * @param info zk信息
      */
-    public static void testConnect(StageWrapper view, ZKInfo info) {
+    public static void testConnect(StageAdapter view, ZKInfo info) {
         ThreadUtil.startVirtual(() -> {
             try {
                 view.disable();

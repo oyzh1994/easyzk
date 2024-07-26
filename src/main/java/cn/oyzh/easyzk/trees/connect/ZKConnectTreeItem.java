@@ -30,7 +30,7 @@ import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -162,7 +162,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 导出zk节点
      */
     public void exportData() {
-        StageWrapper fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
         fxView.setProp("zkItem", this);
         fxView.setProp("zkClient", this.client());
         fxView.display();
@@ -172,7 +172,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 查看服务信息
      */
     private void serverInfo() {
-        StageWrapper fxView = StageManager.parseStage(ZKServiceController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(ZKServiceController.class, this.window());
         fxView.setProp("zkInfo", this.value);
         fxView.setProp("zkClient", this.client);
         fxView.display();
@@ -228,7 +228,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 导入数据
      */
     private void importData() {
-        StageWrapper fxView = StageManager.parseStage(ZKNodeImportController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(ZKNodeImportController.class, this.window());
         fxView.setProp("zkClient", this.client);
         fxView.display();
     }
@@ -237,7 +237,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 传输数据
      */
     private void transportData() {
-        StageWrapper wrapper = StageManager.getStage(ZKInfoTransportController.class);
+        StageAdapter wrapper = StageManager.getStage(ZKInfoTransportController.class);
         if (wrapper != null) {
             wrapper.disappear();
         }
@@ -316,7 +316,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             }
             this.closeConnect();
         }
-        StageWrapper fxView = StageManager.parseStage(ZKInfoUpdateController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(ZKInfoUpdateController.class, this.window());
         fxView.setProp("zkInfo", this.value());
         fxView.display();
     }

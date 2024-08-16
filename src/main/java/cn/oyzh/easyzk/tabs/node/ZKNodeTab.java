@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
-import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import javafx.scene.Cursor;
 import lombok.Getter;
 import lombok.NonNull;

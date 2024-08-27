@@ -23,7 +23,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.util.FileChooserUtil;
+import cn.oyzh.fx.plus.file.FileChooserUtil;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;

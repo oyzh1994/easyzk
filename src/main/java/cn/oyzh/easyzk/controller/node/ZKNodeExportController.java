@@ -30,7 +30,7 @@ import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.util.FileChooserUtil;
+import cn.oyzh.fx.plus.file.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;

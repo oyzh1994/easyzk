@@ -17,6 +17,7 @@ import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -24,11 +25,9 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.file.FileChooserHelper;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.stage.FileChooser;
 import lombok.NonNull;
 
 import java.io.File;
@@ -114,7 +113,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             return;
         }
         ZKInfoExport export = ZKInfoExport.fromConnects(infos);
-        FileExtensionFilter extensionFilter = new FileExtensionFilter("JSON files", "*.json");
+        FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
         File file = FileChooserHelper.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.zk", "base.connect", "base._json"), extensionFilter);
         if (file != null) {
             try {
@@ -148,9 +147,8 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * 导入连接
      */
     private void importConnect() {
-        FileExtensionFilter filter1 = new FileExtensionFilter("JSON files", "*.json");
-        FileExtensionFilter filter2 = new FileExtensionFilter("All", "*.*");
-        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1, filter2);
+        FileExtensionFilter filter1 = FileChooserHelper.jsonExtensionFilter();
+        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
         // 解析文件
         this.parseConnect(file);
     }

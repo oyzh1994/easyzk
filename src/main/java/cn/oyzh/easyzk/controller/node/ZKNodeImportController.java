@@ -146,10 +146,8 @@ public class ZKNodeImportController extends StageController {
      */
     @FXML
     private void chooseFile() {
-
         FileExtensionFilter filter1 = new FileExtensionFilter("JSON files|TXT files", "*.json", "*.txt");
-        FileExtensionFilter filter2 = new FileExtensionFilter("All", "*.*");
-        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1, filter2);
+        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
         // 解析文件
         this.parseFile(file);
     }

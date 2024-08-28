@@ -237,7 +237,7 @@ public class ZKNodeExportController extends StageController {
                 // boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
                 boolean prettyFormat = this.pretty.isSelected();
                 exportData = ZKExportUtil.nodesToJSON(zkNodes, CharsetUtil.defaultCharsetName(), prettyFormat);
-                extensionFilter = new FileExtensionFilter("JSON files", "*.json");
+                extensionFilter = FileChooserHelper.jsonExtensionFilter();
                 fileName += ".json";
                 // } else {
                 //     // 前缀

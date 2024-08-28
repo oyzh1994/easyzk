@@ -17,24 +17,24 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.file.FileChooserHelper;
+import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.file.FileChooserUtil;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
@@ -230,15 +230,15 @@ public class ZKNodeExportController extends StageController {
                 // 导出内容
                 String exportData;
                 // 文件格式
-                FileChooser.ExtensionFilter extensionFilter;
+                FileExtensionFilter extensionFilter;
                 // 处理名称
                 String fileName = "ZK-" + I18nHelper.connect() + this.client.infoName() + "-" + I18nHelper.exportData();
                 // if (isJSON) {
-                    // boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
-                    boolean prettyFormat = this.pretty.isSelected();
-                    exportData = ZKExportUtil.nodesToJSON(zkNodes, CharsetUtil.defaultCharsetName(), prettyFormat);
-                    extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
-                    fileName += ".json";
+                // boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
+                boolean prettyFormat = this.pretty.isSelected();
+                exportData = ZKExportUtil.nodesToJSON(zkNodes, CharsetUtil.defaultCharsetName(), prettyFormat);
+                extensionFilter = new FileExtensionFilter("JSON files", "*.json");
+                fileName += ".json";
                 // } else {
                 //     // 前缀
                 //     String prefixVal = StrUtil.equalsAny(this.prefix.getValue(), "set", "create") ? this.prefix.getValue() : "";
@@ -248,7 +248,7 @@ public class ZKNodeExportController extends StageController {
                 // }
                 // 收尾工作
                 this.updateStatus(I18nHelper.fileProcessing());
-                File file = FileChooserUtil.save(I18nHelper.exportData(), fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
+                File file = FileChooserHelper.save(I18nHelper.exportData(), fileName, extensionFilter);
                 // 保存文件
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);

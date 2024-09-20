@@ -272,7 +272,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func)
-                    .onFinish(this::stopWaiting)
+                    .onFinish(()->{
+                        this.stopWaiting();
+                        this.flushGraphic();
+                    })
                     .onSuccess(this::flushLocal)
                     .onError(MessageBox::exception)
                     .build();

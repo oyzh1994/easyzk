@@ -15,14 +15,21 @@ import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
-import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
-import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
-import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
-import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ScopedProxyMode;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration;
+//import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
+//import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
+//import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
+//import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
+//import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
+//import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+//import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
+//import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
+//import org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration;
+//import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
+//import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
 
 
 /**
@@ -31,16 +38,25 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
  * @author oyzh
  * @since 2020/9/14
  */
-@SpringBootApplication(scanBasePackages = "cn.oyzh",
-        exclude = {
-                AopAutoConfiguration.class,
-                CacheAutoConfiguration.class,
-                DataSourceAutoConfiguration.class,
-                MessageSourceAutoConfiguration.class,
-                TaskExecutionAutoConfiguration.class,
-                TaskSchedulingAutoConfiguration.class,
-                SqlInitializationAutoConfiguration.class,
-        }
+//@SpringBootApplication(scanBasePackages = "cn.oyzh",
+//        exclude = {
+//                AopAutoConfiguration.class,
+//                CacheAutoConfiguration.class,
+//                DataSourceAutoConfiguration.class,
+//                MessageSourceAutoConfiguration.class,
+//                TaskExecutionAutoConfiguration.class,
+//                TaskSchedulingAutoConfiguration.class,
+//                SqlInitializationAutoConfiguration.class,
+//                SpringApplicationAdminJmxAutoConfiguration.class,
+//                GsonAutoConfiguration.class,
+//                ProjectInfoAutoConfiguration.class,
+//                JmxAutoConfiguration.class,
+//                SslAutoConfiguration.class,
+//        }
+//)
+@ComponentScan(
+        lazyInit = true,
+        value = {"cn.oyzh.fx.common","cn.oyzh.easyzk"}
 )
 @EnableSpringUtil
 public class EasyZKApp extends SpringApplication {

@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKInfoExport;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKGroupStore;
+import cn.oyzh.easyzk.store.ZKGroupStore2;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
@@ -52,7 +52,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     /**
      * zk分组储存
      */
-    private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
+    private final ZKGroupStore2 groupStore = ZKGroupStore2.INSTANCE;
 
     public ZKRootTreeItem(@NonNull ZKTreeView treeView) {
         super(treeView);
@@ -222,14 +222,15 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             return;
         }
 
-        ZKGroup group = new ZKGroup();
-        group.setName(groupName);
-        if (this.groupStore.exist(group)) {
+        // 检查是否存在
+        if (this.groupStore.exist(groupName)) {
             MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
-        group = this.groupStore.add(groupName);
-        if (group != null) {
+
+        ZKGroup group = new ZKGroup();
+        group.setName(groupName);
+        if (this.groupStore.replace(group)) {
             this.addChild(new ZKGroupTreeItem(group, this.getTreeView()));
         } else {
             MessageBox.warn(I18nHelper.operationFail());

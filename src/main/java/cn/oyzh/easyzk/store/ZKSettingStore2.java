@@ -4,13 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.plus.domain.Setting;
 import cn.oyzh.fx.plus.store.SettingStore;
-import lombok.NonNull;
 
 import java.util.Map;
 
 
 /**
- *
  * @author oyzh
  * @since 2024/09/23
  */
@@ -47,7 +45,10 @@ public class ZKSettingStore2 extends SettingStore<ZKSetting> {
         return setting;
     }
 
-    public boolean update(@NonNull ZKSetting setting) throws Exception {
+    public boolean replace(ZKSetting setting) throws Exception {
+        if (setting == null) {
+            return false;
+        }
         Map<String, Object> record = this.toRecord(setting);
         if (super.exist(DATA_UID)) {
             return this.update(record, DATA_UID) > 0;

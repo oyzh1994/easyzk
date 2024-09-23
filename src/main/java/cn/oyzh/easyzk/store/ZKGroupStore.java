@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/5/12
  */
+@Deprecated
 //@Slf4j
 public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
 
@@ -33,12 +34,16 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
     /**
      * 已加载的zk节点
      */
-    private final List<ZKGroup> groups;
+    private List<ZKGroup> groups;
 
-    {
+    // {
+    //     this.filePath(ZKConst.STORE_PATH + "zk_group.json");
+    //     StaticLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    //     this.groups = this.load();
+    // }
+
+    public ZKGroupStore() {
         this.filePath(ZKConst.STORE_PATH + "zk_group.json");
-        StaticLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
-        this.groups = this.load();
     }
 
     @Override

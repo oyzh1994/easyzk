@@ -306,7 +306,7 @@ public class SettingController extends StageController {
             this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
             this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
             this.setting.setExitMode(Integer.parseInt(this.exitMode.selectedUserData()));
-            this.settingStore.update(this.setting);
+            this.settingStore.replace(this.setting);
             // 清除认证列表
             if (!this.setting.isAutoAuth()) {
                 ZKAuthUtil.clearAuthed();

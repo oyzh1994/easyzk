@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKGroupStore;
+import cn.oyzh.easyzk.store.ZKGroupStore2;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
@@ -18,8 +18,8 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -54,7 +54,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     /**
      * zk分组储存
      */
-    private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
+    private final ZKGroupStore2 groupStore = ZKGroupStore2.INSTANCE;
 
     public ZKGroupTreeItem(@NonNull ZKGroup group, @NonNull ZKTreeView treeView) {
         super(treeView);
@@ -70,21 +70,21 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         // 监听收缩变化
         super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             this.value.setExpand(false);
-            this.groupStore.update(this.value);
+            this.groupStore.replace(this.value);
         });
         // 监听展开变化
         super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             this.value.setExpand(true);
-            this.groupStore.update(this.value);
+            this.groupStore.replace(this.value);
         });
     }
 
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem addConnect =  MenuItemHelper.addConnect("12", this::addConnect);
-        FXMenuItem renameGroup =  MenuItemHelper.renameGroup("12", this::rename);
-        FXMenuItem delGroup =  MenuItemHelper.deleteGroup("12", this::delete);
+        FXMenuItem addConnect = MenuItemHelper.addConnect("12", this::addConnect);
+        FXMenuItem renameGroup = MenuItemHelper.renameGroup("12", this::rename);
+        FXMenuItem delGroup = MenuItemHelper.deleteGroup("12", this::delete);
         items.add(addConnect);
         items.add(renameGroup);
         items.add(delGroup);
@@ -98,20 +98,23 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         if (groupName == null || Objects.equals(groupName, this.value.getName())) {
             return;
         }
+
         // 检查名称
         if (StrUtil.isBlank(groupName)) {
             return;
         }
+
         // 检查是否存在
         String name = this.value.getName();
-        this.value.setName(groupName);
-        if (this.groupStore.exist(this.value)) {
+        if (this.groupStore.exist(name)) {
             this.value.setName(name);
             MessageBox.warn(I18nHelper.groupAlreadyExists());
             return;
         }
+
         // 修改名称
-        if (this.groupStore.update(this.value)) {
+        this.value.setName(groupName);
+        if (this.groupStore.replace(this.value)) {
             this.getValue().flushText();
         } else {
             MessageBox.warn(I18nHelper.operationFail());

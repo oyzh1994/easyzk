@@ -71,4 +71,13 @@ public class ZKSetting extends Setting {
     // public boolean isSearchMoreExpand() {
     //     return this.searchMoreExpand != null && this.searchMoreExpand == 1;
     // }
+
+    @Override
+    public void copy(Object t1) {
+        super.copy(t1);
+        if (t1 instanceof ZKSetting t2) {
+            this.loadMode = t2.loadMode;
+            this.authMode = t2.authMode;
+        }
+    }
 }

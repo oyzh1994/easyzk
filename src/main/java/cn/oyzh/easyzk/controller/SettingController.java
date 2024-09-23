@@ -4,14 +4,14 @@ package cn.oyzh.easyzk.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexSlider;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
+import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
@@ -23,10 +23,10 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
-import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.tabs.TabStrategyComboBox;
 import cn.oyzh.fx.plus.theme.ThemeComboBox;
 import cn.oyzh.fx.plus.theme.ThemeManager;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Modality;
@@ -206,12 +206,12 @@ public class SettingController extends StageController {
     /**
      * 配置对象
      */
-    private final ZKSetting setting = ZKSettingStore.SETTING;
+    private final ZKSetting setting = ZKSettingStore2.SETTING;
 
     /**
      * 配置持久化对象
      */
-    private final ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
+    private final ZKSettingStore2 settingStore = ZKSettingStore2.INSTANCE;
 
     @Override
     public void onWindowShowing(WindowEvent event) {
@@ -237,7 +237,7 @@ public class SettingController extends StageController {
             this.authMode.setSelected(this.setting.isAutoAuth());
         }
         // 记住页面大小处理
-        if (this.setting.getPageInfo() != null) {
+        if (this.setting.getRememberPageSize() != null) {
             this.pageSize.setSelected(this.setting.isRememberPageSize());
         }
         // 记住页面拉伸处理
@@ -273,39 +273,40 @@ public class SettingController extends StageController {
      */
     @FXML
     private void saveSetting() {
-        byte authMode = (byte) (this.authMode.isSelected() ? 0 : 1);
-        byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
-        String locale = this.locale.name();
-        Integer fontSize = this.fontSize.getValue();
-        String fontFamily = this.fontFamily.getValue();
-        Integer fontWeight = this.fontWeight.getWeight();
+        try {
+            byte authMode = (byte) (this.authMode.isSelected() ? 0 : 1);
+            byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
+            String locale = this.locale.name();
+            Integer fontSize = this.fontSize.getValue();
+            String fontFamily = this.fontFamily.getValue();
+            Integer fontWeight = this.fontWeight.getWeight();
 
-        // 提示文字
-        String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
+            // 提示文字
+            String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
 
-        this.setting.setLoadMode(loadMode);
-        this.setting.setAuthMode(authMode);
-        // 字体相关
-        this.setting.setFontSize(fontSize);
-        this.setting.setFontWeight(fontWeight);
-        this.setting.setFontFamily(fontFamily);
-        // 主题相关
-        this.setting.setTheme(this.theme.name());
-        this.setting.setBgColor(this.bgColor.getColor());
-        this.setting.setFgColor(this.fgColor.getColor());
-        this.setting.setAccentColor(this.accentColor.getColor());
-        // 区域相关处理
-        this.setting.setLocale(locale);
-        // 透明度相关处理
-        this.setting.setOpacity(this.opacity.getValue());
-        // 其他设置
-        this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
-        this.setting.setTabStrategy(this.tabStrategy.getStrategy());
-        this.setting.setTabLimit(this.tabLimit.getValue().intValue());
-        this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
-        this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
-        this.setting.setExitMode(Integer.parseInt(this.exitMode.selectedUserData()));
-        if (this.settingStore.update(this.setting)) {
+            this.setting.setLoadMode(loadMode);
+            this.setting.setAuthMode(authMode);
+            // 字体相关
+            this.setting.setFontSize(fontSize);
+            this.setting.setFontWeight(fontWeight);
+            this.setting.setFontFamily(fontFamily);
+            // 主题相关
+            this.setting.setTheme(this.theme.name());
+            this.setting.setBgColor(this.bgColor.getColor());
+            this.setting.setFgColor(this.fgColor.getColor());
+            this.setting.setAccentColor(this.accentColor.getColor());
+            // 区域相关处理
+            this.setting.setLocale(locale);
+            // 透明度相关处理
+            this.setting.setOpacity(this.opacity.getValue());
+            // 其他设置
+            this.setting.setRememberPageSize(this.pageSize.isSelected() ? 1 : 0);
+            this.setting.setTabStrategy(this.tabStrategy.getStrategy());
+            this.setting.setTabLimit(this.tabLimit.getValue().intValue());
+            this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
+            this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
+            this.setting.setExitMode(Integer.parseInt(this.exitMode.selectedUserData()));
+            this.settingStore.update(this.setting);
             // 清除认证列表
             if (!this.setting.isAutoAuth()) {
                 ZKAuthUtil.clearAuthed();
@@ -320,8 +321,9 @@ public class SettingController extends StageController {
             OpacityManager.apply(this.opacity.getValue());
             // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
-        } else {
-            MessageBox.warnToast(I18nHelper.operationFail());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
     }
 

@@ -4,7 +4,8 @@ import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
-import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.store.ZKSettingStore2;
+import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nManager;
@@ -16,7 +17,6 @@ import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ScopedProxyMode;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration;
 //import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
@@ -68,14 +68,18 @@ public class EasyZKApp extends SpringApplication {
     @Override
     public void start(Stage primaryStage) {
         try {
+            // 储存初始化
+            ZKStoreUtil.init();
+            // 储存迁移
+            ZKStoreUtil.migration();
             // 应用区域
-            I18nManager.apply(ZKSettingStore.SETTING.getLocale());
+            I18nManager.apply(ZKSettingStore2.SETTING.getLocale());
             // 应用字体
-            FontManager.apply(ZKSettingStore.SETTING.fontConfig());
+            FontManager.apply(ZKSettingStore2.SETTING.fontConfig());
             // 应用主题
-            ThemeManager.apply(ZKSettingStore.SETTING.themeConfig());
+            ThemeManager.apply(ZKSettingStore2.SETTING.themeConfig());
             // 应用透明度
-            OpacityManager.apply(ZKSettingStore.SETTING.getOpacity());
+            OpacityManager.apply(ZKSettingStore2.SETTING.getOpacity());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 开始执行业务

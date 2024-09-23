@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKPageInfoStore;
-import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controller.ParentStageController;
@@ -67,7 +67,7 @@ public class MainController extends ParentStageController {
     /**
      * zk相关配置
      */
-    private final ZKSetting setting = ZKSettingStore.SETTING;
+    private final ZKSetting setting = ZKSettingStore2.SETTING;
 
     /**
      * 页面信息储存

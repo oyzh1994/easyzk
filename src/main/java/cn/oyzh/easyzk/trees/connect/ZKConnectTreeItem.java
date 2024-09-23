@@ -12,7 +12,7 @@ import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore;
 import cn.oyzh.easyzk.store.ZKInfoStore;
-import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -74,7 +74,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     /**
      * 配置储存对象
      */
-    private final ZKSetting setting = ZKSettingStore.SETTING;
+    private final ZKSetting setting = ZKSettingStore2.SETTING;
 
     /**
      * zk信息储存

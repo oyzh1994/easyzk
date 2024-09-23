@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
 import cn.oyzh.easyzk.event.ZKLeftExtendEvent;
 import cn.oyzh.easyzk.fx.ZKMsgTextArea;
 import cn.oyzh.easyzk.store.ZKPageInfoStore;
-import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -51,7 +51,7 @@ public class ZKMainController extends ParentStageController {
     /**
      * 配置对象
      */
-    private final ZKSetting setting = ZKSettingStore.SETTING;
+    private final ZKSetting setting = ZKSettingStore2.SETTING;
 
     /**
      * 当前激活的zk信息

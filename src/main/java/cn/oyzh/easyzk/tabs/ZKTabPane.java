@@ -12,7 +12,7 @@ import cn.oyzh.easyzk.event.ZKFilterMainEvent;
 import cn.oyzh.easyzk.event.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
-import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
 import cn.oyzh.easyzk.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
@@ -26,8 +26,6 @@ import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.util.FXUtil;
 import com.google.common.eventbus.Subscribe;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
@@ -82,7 +80,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      */
     private void flushNodeTab() {
         // 获取设置
-        ZKSetting setting = ZKSettingStore.SETTING;
+        ZKSetting setting = ZKSettingStore2.SETTING;
         // 判断是否需要处理tab限制
         if (setting.isTabUnLimit()) {
             return;

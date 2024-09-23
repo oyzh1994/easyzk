@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.store.ObjectFileStore;
@@ -16,6 +15,7 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2022/8/26
  */
+@Deprecated
 public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
 
     /**
@@ -23,14 +23,18 @@ public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
      */
     public static final ZKSettingStore INSTANCE = new ZKSettingStore();
 
-    /**
-     * 当前设置
-     */
-    public static final ZKSetting SETTING = INSTANCE.load();
+    // /**
+    //  * 当前设置
+    //  */
+    // public static final ZKSetting SETTING = INSTANCE.load();
+    //
+    // {
+    //     this.filePath(ZKConst.STORE_PATH + "zk_setting.json");
+    //     StaticLog.info("ZKSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    // }
 
-    {
+    public ZKSettingStore() {
         this.filePath(ZKConst.STORE_PATH + "zk_setting.json");
-        StaticLog.info("ZKSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

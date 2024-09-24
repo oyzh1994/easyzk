@@ -235,7 +235,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      */
     @Subscribe
     private void filterAdded(ZKFilterAddedEvent event) {
-        this.initDataList(0);
+        this.initDataList(this.pageData.currentPage());
     }
 
     @Override

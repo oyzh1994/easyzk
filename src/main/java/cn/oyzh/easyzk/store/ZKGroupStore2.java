@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.fx.common.store.SqlDataUtil;
+import cn.oyzh.fx.common.sqlite.SqlLiteUtil;
 import cn.oyzh.fx.plus.store.GroupStore;
 
 import java.util.ArrayList;
@@ -46,12 +46,9 @@ public class ZKGroupStore2 extends GroupStore<ZKGroup> {
         try {
             if (group != null) {
                 if (this.exist(group.getName())) {
-                    Map<String, Object> record = this.toRecord(group);
-                    result = this.update(record, group.getGid()) > 0;
+                    result = this.update(group) > 0;
                 } else {
-                    group.setGid(SqlDataUtil.generateUid());
-                    Map<String, Object> record = this.toRecord(group);
-                    result = this.insert(record) > 0;
+                    result = this.insert(group) > 0;
                 }
             }
         } catch (Exception ex) {
@@ -110,5 +107,10 @@ public class ZKGroupStore2 extends GroupStore<ZKGroup> {
     @Override
     protected ZKGroup newModel() {
         return new ZKGroup();
+    }
+
+    @Override
+    protected Class<ZKGroup> modelClass() {
+        return ZKGroup.class;
     }
 }

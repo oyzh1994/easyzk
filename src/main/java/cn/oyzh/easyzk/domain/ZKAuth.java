@@ -2,6 +2,9 @@ package cn.oyzh.easyzk.domain;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.common.sqlite.Column;
+import cn.oyzh.fx.common.sqlite.PrimaryKey;
+import cn.oyzh.fx.common.sqlite.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,26 +23,32 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table("t_auth")
 public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
 
     /**
      * 数据id
      */
+    @Column
+    @PrimaryKey
     private String uid;
 
     /**
      * 用户名
      */
+    @Column
     private String user;
 
     /**
      * 密码
      */
+    @Column
     private String password;
 
     /**
      * 是否启用
      */
+    @Column
     private Boolean enable;
 
     public ZKAuth(String user, String password) {

@@ -2,10 +2,12 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.store.SqlDataUtil;
-import cn.oyzh.fx.common.store.SqliteStore;
+import cn.oyzh.fx.common.sqlite.ColumnDefinition;
+import cn.oyzh.fx.common.sqlite.PageParam;
+import cn.oyzh.fx.common.sqlite.SqlLiteUtil;
+import cn.oyzh.fx.common.sqlite.SqliteStore;
+import cn.oyzh.fx.common.sqlite.TableDefinition;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
                     Map<String, Object> record = this.toRecord(model);
                     result = this.update(record, model.getUid()) > 0;
                 } else {
-                    model.setUid(SqlDataUtil.generateUid());
+                    model.setUid(SqlLiteUtil.generateUid());
                     Map<String, Object> record = this.toRecord(model);
                     result = this.insert(record) > 0;
                 }
@@ -109,46 +111,51 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
     }
 
     @Override
-    protected TableDefinition getTableDefinition() {
-        TableDefinition definition = new TableDefinition();
-        definition.setTableName("t_auth");
-        ColumnDefinition gid = new ColumnDefinition();
-        gid.setColumnName("uid");
-        gid.setColumnType("text");
-        gid.setPrimaryKey(true);
-        ColumnDefinition user = new ColumnDefinition();
-        user.setColumnName("user");
-        user.setColumnType("text");
-        ColumnDefinition password = new ColumnDefinition();
-        password.setColumnName("password");
-        password.setColumnType("text");
-        ColumnDefinition enable = new ColumnDefinition();
-        enable.setColumnName("enable");
-        enable.setColumnType("integer");
-        definition.addColumnDefinition(gid);
-        definition.addColumnDefinition(user);
-        definition.addColumnDefinition(password);
-        definition.addColumnDefinition(enable);
-        return definition;
+    protected Class<ZKAuth> modelClass() {
+        return ZKAuth.class;
     }
 
-    @Override
-    protected ZKAuth toModel(Map<String, Object> record) {
-        ZKAuth model = this.newModel();
-        model.setUid((String) record.get("uid"));
-        model.setUser((String) record.get("user"));
-        model.setPassword((String) record.get("password"));
-        model.setEnable(SqlDataUtil.toBool(record.get("enable")));
-        return model;
-    }
+    // @Override
+    // protected TableDefinition tableDefinition() {
+    //     TableDefinition definition = new TableDefinition();
+    //     definition.setTableName("t_auth");
+    //     ColumnDefinition gid = new ColumnDefinition();
+    //     gid.setColumnName("uid");
+    //     gid.setColumnType("text");
+    //     gid.setPrimaryKey(true);
+    //     ColumnDefinition user = new ColumnDefinition();
+    //     user.setColumnName("user");
+    //     user.setColumnType("text");
+    //     ColumnDefinition password = new ColumnDefinition();
+    //     password.setColumnName("password");
+    //     password.setColumnType("text");
+    //     ColumnDefinition enable = new ColumnDefinition();
+    //     enable.setColumnName("enable");
+    //     enable.setColumnType("integer");
+    //     definition.addColumnDefinition(gid);
+    //     definition.addColumnDefinition(user);
+    //     definition.addColumnDefinition(password);
+    //     definition.addColumnDefinition(enable);
+    //     return definition;
+    // }
 
-    @Override
-    protected Map<String, Object> toRecord(ZKAuth model) {
-        Map<String, Object> record = new HashMap<>();
-        record.put("uid", model.getUid());
-        record.put("user", model.getUser());
-        record.put("enable", model.getEnable());
-        record.put("password", model.getPassword());
-        return record;
-    }
+    // @Override
+    // protected ZKAuth toModel(Map<String, Object> record) {
+    //     ZKAuth model = this.newModel();
+    //     model.setUid((String) record.get("uid"));
+    //     model.setUser((String) record.get("user"));
+    //     model.setPassword((String) record.get("password"));
+    //     model.setEnable(SqlLiteUtil.toBool(record.get("enable")));
+    //     return model;
+    // }
+    //
+    // @Override
+    // protected Map<String, Object> toRecord(ZKAuth model) {
+    //     Map<String, Object> record = new HashMap<>();
+    //     record.put("uid", model.getUid());
+    //     record.put("user", model.getUser());
+    //     record.put("enable", model.getEnable());
+    //     record.put("password", model.getPassword());
+    //     return record;
+    // }
 }

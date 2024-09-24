@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.fx.common.sqlite.Column;
+import cn.oyzh.fx.common.sqlite.Table;
 import cn.oyzh.fx.plus.domain.Setting;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table("t_setting")
 public class ZKSetting extends Setting {
 
     /**
@@ -20,6 +23,7 @@ public class ZKSetting extends Setting {
      * 1 加载所有节点
      * 2 仅加载根节点
      */
+    @Column
     private Byte loadMode;
 
     /**
@@ -27,6 +31,7 @@ public class ZKSetting extends Setting {
      * 0|null 自动认证
      * 1 不自动认证
      */
+    @Column
     private Byte authMode;
 
     // /**

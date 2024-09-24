@@ -1,5 +1,8 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.fx.common.sqlite.Column;
+import cn.oyzh.fx.common.sqlite.PrimaryKey;
+import cn.oyzh.fx.common.sqlite.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,21 +22,26 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table("t_filter")
 public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
 
     /**
      * id
      */
+    @Column
+    @PrimaryKey
     private String uid;
 
     /**
      * 关键词
      */
+    @Column
     private String kw;
 
     /**
      * 是否启用
      */
+    @Column
     private boolean enable;
 
     /**
@@ -41,6 +49,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
      * true 模糊匹配
      * false 完全匹配
      */
+    @Column
     private boolean partMatch;
 
     /**

@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.common.sqlite.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import cn.oyzh.fx.plus.domain.TreeGroup;
 
@@ -10,6 +11,7 @@ import cn.oyzh.fx.plus.domain.TreeGroup;
  * @author oyzh
  * @since 2023/5/12
  */
+@Table("t_group")
 public class ZKGroup extends TreeGroup implements ObjectComparator<ZKGroup> {
 
     public ZKGroup() {

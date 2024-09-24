@@ -24,7 +24,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import org.springframework.context.annotation.Lazy;
@@ -205,7 +204,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      */
     @Subscribe
     private void authAdded(ZKAuthAddedEvent event) {
-        this.initDataList(Integer.MAX_VALUE);
+        this.initDataList(this.pageData.currentPage());
     }
 
     @Override

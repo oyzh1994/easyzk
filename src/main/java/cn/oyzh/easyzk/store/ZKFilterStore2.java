@@ -3,8 +3,10 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.store.SqlDataUtil;
-import cn.oyzh.fx.common.store.SqliteStore;
+import cn.oyzh.fx.common.sqlite.PageParam;
+import cn.oyzh.fx.common.sqlite.QueryParam;
+import cn.oyzh.fx.common.sqlite.SqlLiteUtil;
+import cn.oyzh.fx.common.sqlite.SqliteStore;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -68,12 +70,9 @@ public class ZKFilterStore2 extends SqliteStore<ZKFilter> {
         try {
             if (model != null) {
                 if (this.exist(model.getKw())) {
-                    Map<String, Object> record = this.toRecord(model);
-                    result = this.update(record, model.getUid()) > 0;
+                    result = this.update(model) > 0;
                 } else {
-                    model.setUid(SqlDataUtil.generateUid());
-                    Map<String, Object> record = this.toRecord(model);
-                    result = this.insert(record) > 0;
+                    result = this.insert(model) > 0;
                 }
             }
         } catch (Exception ex) {
@@ -129,46 +128,52 @@ public class ZKFilterStore2 extends SqliteStore<ZKFilter> {
     }
 
     @Override
-    protected TableDefinition getTableDefinition() {
-        TableDefinition definition = new TableDefinition();
-        definition.setTableName("t_filter");
-        ColumnDefinition uid = new ColumnDefinition();
-        uid.setColumnName("uid");
-        uid.setColumnType("text");
-        uid.setPrimaryKey(true);
-        ColumnDefinition kw = new ColumnDefinition();
-        kw.setColumnName("kw");
-        kw.setColumnType("text");
-        ColumnDefinition partMatch = new ColumnDefinition();
-        partMatch.setColumnName("partMatch");
-        partMatch.setColumnType("integer");
-        ColumnDefinition enable = new ColumnDefinition();
-        enable.setColumnName("enable");
-        enable.setColumnType("integer");
-        definition.addColumnDefinition(kw);
-        definition.addColumnDefinition(uid);
-        definition.addColumnDefinition(enable);
-        definition.addColumnDefinition(partMatch);
-        return definition;
+    protected Class<ZKFilter> modelClass() {
+        return ZKFilter.class;
     }
 
-    @Override
-    protected ZKFilter toModel(Map<String, Object> record) {
-        ZKFilter model = this.newModel();
-        model.setKw((String) record.get("kw"));
-        model.setUid((String) record.get("uid"));
-        model.setEnable(SqlDataUtil.toBoolVal(record.get("enable")));
-        model.setPartMatch(SqlDataUtil.toBoolVal(record.get("partMatch")));
-        return model;
-    }
-
-    @Override
-    protected Map<String, Object> toRecord(ZKFilter model) {
-        Map<String, Object> record = new HashMap<>();
-        record.put("kw", model.getKw());
-        record.put("uid", model.getUid());
-        record.put("enable", model.isEnable());
-        record.put("partMatch", model.isPartMatch());
-        return record;
-    }
+    //
+    // @Override
+    // protected TableDefinition getTableDefinition() {
+    //     TableDefinition definition = new TableDefinition();
+    //     definition.setTableName("t_filter");
+    //     ColumnDefinition uid = new ColumnDefinition();
+    //     uid.setColumnName("uid");
+    //     uid.setColumnType("text");
+    //     uid.setPrimaryKey(true);
+    //     ColumnDefinition kw = new ColumnDefinition();
+    //     kw.setColumnName("kw");
+    //     kw.setColumnType("text");
+    //     ColumnDefinition partMatch = new ColumnDefinition();
+    //     partMatch.setColumnName("partMatch");
+    //     partMatch.setColumnType("integer");
+    //     ColumnDefinition enable = new ColumnDefinition();
+    //     enable.setColumnName("enable");
+    //     enable.setColumnType("integer");
+    //     definition.addColumnDefinition(kw);
+    //     definition.addColumnDefinition(uid);
+    //     definition.addColumnDefinition(enable);
+    //     definition.addColumnDefinition(partMatch);
+    //     return definition;
+    // }
+    //
+    // @Override
+    // protected ZKFilter toModel(Map<String, Object> record) {
+    //     ZKFilter model = this.newModel();
+    //     model.setKw((String) record.get("kw"));
+    //     model.setUid((String) record.get("uid"));
+    //     model.setEnable(SqlLiteUtil.toBoolVal(record.get("enable")));
+    //     model.setPartMatch(SqlLiteUtil.toBoolVal(record.get("partMatch")));
+    //     return model;
+    // }
+    //
+    // @Override
+    // protected Map<String, Object> toRecord(ZKFilter model) {
+    //     Map<String, Object> record = new HashMap<>();
+    //     record.put("kw", model.getKw());
+    //     record.put("uid", model.getUid());
+    //     record.put("enable", model.isEnable());
+    //     record.put("partMatch", model.isPartMatch());
+    //     return record;
+    // }
 }

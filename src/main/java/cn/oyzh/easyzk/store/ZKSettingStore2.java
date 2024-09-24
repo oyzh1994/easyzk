@@ -2,8 +2,9 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.fx.common.store.SqlDataUtil;
-import cn.oyzh.fx.plus.domain.Setting;
+import cn.oyzh.fx.common.sqlite.ColumnDefinition;
+import cn.oyzh.fx.common.sqlite.SqlLiteUtil;
+import cn.oyzh.fx.common.sqlite.TableDefinition;
 import cn.oyzh.fx.plus.store.SettingStore;
 
 import java.util.Map;
@@ -63,36 +64,41 @@ public class ZKSettingStore2 extends SettingStore<ZKSetting> {
     }
 
     @Override
-    protected TableDefinition getTableDefinition() {
-        TableDefinition definition = super.getTableDefinition();
-
-        ColumnDefinition authMode = new ColumnDefinition();
-        authMode.setColumnName("authMode");
-        authMode.setColumnType("integer");
-
-        ColumnDefinition loadMode = new ColumnDefinition();
-        loadMode.setColumnName("loadMode");
-        loadMode.setColumnType("integer");
-
-        definition.addColumnDefinition(authMode);
-        definition.addColumnDefinition(loadMode);
-
-        return definition;
+    protected Class<ZKSetting> modelClass() {
+        return ZKSetting.class;
     }
 
-    @Override
-    protected Map<String, Object> toRecord(ZKSetting model) {
-        Map<String, Object> record = super.toRecord(model);
-        record.put("authMode", model.getAuthMode());
-        record.put("loadMode", model.getLoadMode());
-        return record;
-    }
-
-    @Override
-    protected ZKSetting toModel(Map<String, Object> record) {
-        ZKSetting setting = super.toModel(record);
-        setting.setAuthMode(SqlDataUtil.toByte(record.get("authMode")));
-        setting.setLoadMode(SqlDataUtil.toByte(record.get("loadMode")));
-        return setting;
-    }
+    // @Override
+    // protected TableDefinition tableDefinition() {
+    //     TableDefinition definition = super.getTableDefinition();
+    //
+    //     ColumnDefinition authMode = new ColumnDefinition();
+    //     authMode.setColumnName("authMode");
+    //     authMode.setColumnType("integer");
+    //
+    //     ColumnDefinition loadMode = new ColumnDefinition();
+    //     loadMode.setColumnName("loadMode");
+    //     loadMode.setColumnType("integer");
+    //
+    //     definition.addColumnDefinition(authMode);
+    //     definition.addColumnDefinition(loadMode);
+    //
+    //     return definition;
+    // }
+    //
+    // @Override
+    // protected Map<String, Object> toRecord(ZKSetting model) {
+    //     Map<String, Object> record = super.toRecord(model);
+    //     record.put("authMode", model.getAuthMode());
+    //     record.put("loadMode", model.getLoadMode());
+    //     return record;
+    // }
+    //
+    // @Override
+    // protected ZKSetting toModel(Map<String, Object> record) {
+    //     ZKSetting setting = super.toModel(record);
+    //     setting.setAuthMode(SqlLiteUtil.toByte(record.get("authMode")));
+    //     setting.setLoadMode(SqlLiteUtil.toByte(record.get("loadMode")));
+    //     return setting;
+    // }
 }

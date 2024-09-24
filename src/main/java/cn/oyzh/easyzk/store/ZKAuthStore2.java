@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.SqlDataUtil;
@@ -13,7 +12,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author oyzh
@@ -28,7 +26,7 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
 
     public List<ZKAuth> load() {
         try {
-            List<Map<String, Object>> records = super.selectList(null);
+            List<Map<String, Object>> records = super.selectList();
             if (CollUtil.isNotEmpty(records)) {
                 List<ZKAuth> list = new ArrayList<>();
                 for (Map<String, Object> record : records) {
@@ -73,23 +71,20 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
         return false;
     }
 
-    public Paging<ZKAuth> getPage(int limit, Map<String, Object> params) {
-        // 加载数据
-        List<ZKAuth> list = this.load();
-        // 分页对象
-        Paging<ZKAuth> paging = new Paging<>(list, limit);
-        // 数据为空
-        if (CollUtil.isNotEmpty(list)) {
-            String searchKeyWord = params == null ? null : (String) params.get("searchKeyWord");
-            // 过滤数据
-            if (StrUtil.isNotBlank(searchKeyWord)) {
-                final String kw = searchKeyWord.toLowerCase().trim();
-                list = list.parallelStream().filter(z -> z.getPassword().contains(kw) || z.getUser().contains(kw)).collect(Collectors.toList());
+    public Paging<ZKAuth> getPage(long pageNo, int limit, String kw) {
+        try {
+            PageParam pageParam = new PageParam(limit, pageNo * limit);
+            List<Map<String, Object>> list = this.selectPage(kw, List.of("user", "password"), pageParam);
+            List<ZKAuth> auths = new ArrayList<>();
+            for (Map<String, Object> objectMap : list) {
+                auths.add(this.toModel(objectMap));
             }
-            // 添加到分页数据
-            paging.dataList(list);
+            // 分页对象
+            return new Paging<>(auths, limit);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return paging;
+        return null;
     }
 
     public boolean exist(@NonNull String user, @NonNull String password) {

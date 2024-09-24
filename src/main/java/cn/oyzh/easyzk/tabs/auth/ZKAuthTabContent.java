@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.tabs.auth;
 
-import cn.hutool.core.map.MapUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAddController;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKAuthVO;
@@ -107,7 +106,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      * @param pageNo 页码
      */
     private void initDataList(long pageNo) {
-        this.pageData = this.authStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
+        this.pageData = this.authStore.getPage(pageNo, 20, this.searchKeyWord.getText());
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(ZKAuthVO.convert(this.pageData.page(pageNo)));
         this.pagePane.setPaging(this.pageData);

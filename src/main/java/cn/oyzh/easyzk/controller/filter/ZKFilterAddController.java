@@ -4,7 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -51,7 +52,7 @@ public class ZKFilterAddController extends StageController {
     /**
      * zk过滤配置储存
      */
-    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
+    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
 
     /**
      * 添加过滤配置
@@ -73,7 +74,7 @@ public class ZKFilterAddController extends StageController {
             filter.setKw(kw);
             filter.setEnable(this.enable.isSelected());
             filter.setPartMatch(this.matchMode.isSelected());
-            if (this.filterStore.add(filter)) {
+            if (this.filterStore.replace(filter)) {
                 ZKEventUtil.filterAdded();
                 ZKEventUtil.treeChildFilter();
                 MessageBox.okToast(I18nHelper.operationSuccess());

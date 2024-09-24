@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.store.SqliteStore;
@@ -82,6 +83,21 @@ public class ZKStoreUtil {
                 // 转移旧文件
                 FileUtil.move(new File(ZKAuthStore.INSTANCE.filePath()), new File(ZKAuthStore.INSTANCE.filePath() + ".bak"), true);
                 StaticLog.info("认证数据迁移成功");
+            }
+
+            // 迁移过滤
+            if (FileUtil.exist(ZKFilterStore.INSTANCE.filePath())) {
+                // 手动执行初始化
+                ZKFilterStore.INSTANCE.init();
+                // 读取配置
+                List<ZKFilter> list = ZKFilterStore.INSTANCE.load();
+                // 执行迁移
+                for (ZKFilter filter : list) {
+                    ZKFilterStore2.INSTANCE.replace(filter);
+                }
+                // 转移旧文件
+                FileUtil.move(new File(ZKFilterStore.INSTANCE.filePath()), new File(ZKFilterStore.INSTANCE.filePath() + ".bak"), true);
+                StaticLog.info("过滤数据迁移成功");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

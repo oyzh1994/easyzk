@@ -7,7 +7,8 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
-import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKExportUtil;
@@ -172,7 +173,7 @@ public class ZKNodeExportController extends StageController {
     /**
      * 过滤配置储存
      */
-    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
+    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
 
     /**
      * 执行导出

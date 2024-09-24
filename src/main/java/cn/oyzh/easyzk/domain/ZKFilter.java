@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -18,7 +19,12 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ZKFilter implements ObjectComparator<ZKFilter> {
+public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
+
+    /**
+     * id
+     */
+    private String uid;
 
     /**
      * 关键词
@@ -45,6 +51,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter> {
      */
     public ZKFilter copy(@NonNull ZKFilter filter) {
         this.kw = filter.kw;
+        this.uid = filter.uid;
         this.enable = filter.enable;
         this.partMatch = filter.partMatch;
         return this;

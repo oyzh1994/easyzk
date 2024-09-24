@@ -11,6 +11,7 @@ import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -58,7 +59,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      * 数据列表
      */
     @FXML
-    private TableView<ZKAuthVO> listTable;
+    private FlexTableView<ZKAuthVO> listTable;
 
     /**
      * 数据索id列
@@ -107,8 +108,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      */
     private void initDataList(long pageNo) {
         this.pageData = this.authStore.getPage(pageNo, 20, this.searchKeyWord.getText());
-        this.listTable.getItems().clear();
-        this.listTable.getItems().addAll(ZKAuthVO.convert(this.pageData.page(pageNo)));
+        this.listTable.setItem(ZKAuthVO.convert(this.pageData.dataList()));
         this.pagePane.setPaging(this.pageData);
     }
 

@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.SqlDataUtil;
@@ -18,18 +17,18 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
+public class ZKFilterStore2 extends SqliteStore<ZKFilter> {
 
     /**
      * 当前实例
      */
-    public static final ZKAuthStore2 INSTANCE = new ZKAuthStore2();
+    public static final ZKFilterStore2 INSTANCE = new ZKFilterStore2();
 
-    public List<ZKAuth> load() {
+    public List<ZKFilter> load() {
         try {
             List<Map<String, Object>> records = super.selectList();
             if (CollUtil.isNotEmpty(records)) {
-                List<ZKAuth> list = new ArrayList<>();
+                List<ZKFilter> list = new ArrayList<>();
                 for (Map<String, Object> record : records) {
                     list.add(this.toModel(record));
                 }
@@ -41,11 +40,34 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
         return Collections.emptyList();
     }
 
-    public boolean replace(ZKAuth model) {
+    /**
+     * 加载已启用的数据列表
+     *
+     * @return 已启用的数据列表
+     */
+    public synchronized List<ZKFilter> loadEnable() {
+        try {
+            List<QueryParam> params = new ArrayList<>();
+            params.add(new QueryParam("enable", true));
+            List<Map<String, Object>> records = super.selectList(params);
+            if (CollUtil.isNotEmpty(records)) {
+                List<ZKFilter> list = new ArrayList<>();
+                for (Map<String, Object> record : records) {
+                    list.add(this.toModel(record));
+                }
+                return list;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    public boolean replace(ZKFilter model) {
         boolean result = false;
         try {
             if (model != null) {
-                if (this.exist(model.getUser(), model.getPassword())) {
+                if (this.exist(model.getKw())) {
                     Map<String, Object> record = this.toRecord(model);
                     result = this.update(record, model.getUid()) > 0;
                 } else {
@@ -60,11 +82,10 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
         return result;
     }
 
-    public boolean delete(String user, String password) {
+    public boolean delete(String kw) {
         try {
             Map<String, Object> params = new HashMap<>();
-            params.put("user", user);
-            params.put("password", password);
+            params.put("kw", kw);
             return this.delete(params) > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -72,13 +93,13 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
         return false;
     }
 
-    public Paging<ZKAuth> getPage(long pageNo, int limit, String kw) {
+    public Paging<ZKFilter> getPage(long pageNo, int limit, String kw) {
         try {
             PageParam pageParam = new PageParam(limit, pageNo * limit);
-            List<Map<String, Object>> list = this.selectPage(kw, List.of("user", "password"), pageParam);
+            List<Map<String, Object>> list = this.selectPage(kw, List.of("kw"), pageParam);
             if (CollUtil.isNotEmpty(list)) {
                 long count = this.selectCount(kw, List.of("kw"));
-                List<ZKAuth> dataList = new ArrayList<>();
+                List<ZKFilter> dataList = new ArrayList<>();
                 for (Map<String, Object> objectMap : list) {
                     dataList.add(this.toModel(objectMap));
                 }
@@ -91,11 +112,10 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
         return null;
     }
 
-    public boolean exist(@NonNull String user, @NonNull String password) {
+    public boolean exist(@NonNull String kw) {
         try {
             Map<String, Object> params = new HashMap<>();
-            params.put("user", user);
-            params.put("password", password);
+            params.put("kw", kw);
             return super.exist(params);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -104,51 +124,51 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
     }
 
     @Override
-    protected ZKAuth newModel() {
-        return new ZKAuth();
+    protected ZKFilter newModel() {
+        return new ZKFilter();
     }
 
     @Override
     protected TableDefinition getTableDefinition() {
         TableDefinition definition = new TableDefinition();
-        definition.setTableName("t_auth");
-        ColumnDefinition gid = new ColumnDefinition();
-        gid.setColumnName("uid");
-        gid.setColumnType("text");
-        gid.setPrimaryKey(true);
-        ColumnDefinition user = new ColumnDefinition();
-        user.setColumnName("user");
-        user.setColumnType("text");
-        ColumnDefinition password = new ColumnDefinition();
-        password.setColumnName("password");
-        password.setColumnType("text");
+        definition.setTableName("t_filter");
+        ColumnDefinition uid = new ColumnDefinition();
+        uid.setColumnName("uid");
+        uid.setColumnType("text");
+        uid.setPrimaryKey(true);
+        ColumnDefinition kw = new ColumnDefinition();
+        kw.setColumnName("kw");
+        kw.setColumnType("text");
+        ColumnDefinition partMatch = new ColumnDefinition();
+        partMatch.setColumnName("partMatch");
+        partMatch.setColumnType("integer");
         ColumnDefinition enable = new ColumnDefinition();
         enable.setColumnName("enable");
         enable.setColumnType("integer");
-        definition.addColumnDefinition(gid);
-        definition.addColumnDefinition(user);
-        definition.addColumnDefinition(password);
+        definition.addColumnDefinition(kw);
+        definition.addColumnDefinition(uid);
         definition.addColumnDefinition(enable);
+        definition.addColumnDefinition(partMatch);
         return definition;
     }
 
     @Override
-    protected ZKAuth toModel(Map<String, Object> record) {
-        ZKAuth model = this.newModel();
+    protected ZKFilter toModel(Map<String, Object> record) {
+        ZKFilter model = this.newModel();
+        model.setKw((String) record.get("kw"));
         model.setUid((String) record.get("uid"));
-        model.setUser((String) record.get("user"));
-        model.setPassword((String) record.get("password"));
-        model.setEnable(SqlDataUtil.toBool(record.get("enable")));
+        model.setEnable(SqlDataUtil.toBoolVal(record.get("enable")));
+        model.setPartMatch(SqlDataUtil.toBoolVal(record.get("partMatch")));
         return model;
     }
 
     @Override
-    protected Map<String, Object> toRecord(ZKAuth model) {
+    protected Map<String, Object> toRecord(ZKFilter model) {
         Map<String, Object> record = new HashMap<>();
+        record.put("kw", model.getKw());
         record.put("uid", model.getUid());
-        record.put("user", model.getUser());
-        record.put("enable", model.getEnable());
-        record.put("password", model.getPassword());
+        record.put("enable", model.isEnable());
+        record.put("partMatch", model.isPartMatch());
         return record;
     }
 }

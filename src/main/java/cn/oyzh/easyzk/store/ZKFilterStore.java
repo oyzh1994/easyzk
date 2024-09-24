@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 //@Slf4j
+@Deprecated
 public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
 
     /**
@@ -32,9 +33,13 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
      */
     public static final ZKFilterStore INSTANCE = new ZKFilterStore();
 
-    {
+    // {
+    //     this.filePath(ZKConst.STORE_PATH + "zk_filter.json");
+    //     StaticLog.info("ZKFilterStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    // }
+
+    public ZKFilterStore() {
         this.filePath(ZKConst.STORE_PATH + "zk_filter.json");
-        StaticLog.info("ZKFilterStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

@@ -6,12 +6,14 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.dto.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
-import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -60,7 +62,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      * 数据列表
      */
     @FXML
-    private TableView<ZKFilter> listTable;
+    private FlexTableView<ZKFilter> listTable;
 
     /**
      * 数据索id列
@@ -100,7 +102,7 @@ public class ZKFilterTabContent extends DynamicTabController {
     /**
      * zk过滤配置储存
      */
-    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
+    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
 
     /**
      * 初始化数据列表
@@ -108,9 +110,8 @@ public class ZKFilterTabContent extends DynamicTabController {
      * @param pageNo 数据页码
      */
     private void initDataList(long pageNo) {
-        this.pageData = this.filterStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
-        this.listTable.getItems().clear();
-        this.listTable.getItems().addAll(ZKFilterVO.convert(this.pageData.page(pageNo)));
+        this.pageData = this.filterStore.getPage(pageNo,20,  this.searchKeyWord.getText());
+        this.listTable.setItem(ZKFilterVO.convert(this.pageData.dataList()));
         this.pagePane.setPaging(this.pageData);
     }
 
@@ -127,7 +128,7 @@ public class ZKFilterTabContent extends DynamicTabController {
                 if (this.hBox == null) {
                     // 删除按钮
                     DeleteSVGGlyph del = new DeleteSVGGlyph("14");
-                    del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
+                    del.setOnMousePrimaryClicked((event) -> deleteFilter(this.getTableItem()));
                     this.hBox = new HBox(del);
                     HBox.setMargin(del, new Insets(7, 0, 0, 5));
                 }
@@ -146,7 +147,7 @@ public class ZKFilterTabContent extends DynamicTabController {
                     toggleSwitch.setSelected(filterVO.isEnable());
                     toggleSwitch.selectedChanged((abs, o, n) -> {
                         filterVO.setEnable(n);
-                        if (filterStore.update(filterVO)) {
+                        if (filterStore.replace(filterVO)) {
                             ZKEventUtil.treeChildFilter();
                         } else {
                             MessageBox.warn(I18nHelper.operationFail());
@@ -169,7 +170,7 @@ public class ZKFilterTabContent extends DynamicTabController {
                     toggleSwitch.setSelected(filterVO.isPartMatch());
                     toggleSwitch.selectedChanged((obs, o, n) -> {
                         filterVO.setPartMatch(n);
-                        if (filterStore.update(filterVO)) {
+                        if (filterStore.replace(filterVO)) {
                             ZKEventUtil.treeChildFilter();
                         } else if (filterVO.isEnable()) {
                             MessageBox.warn(I18nHelper.operationFail());
@@ -183,13 +184,13 @@ public class ZKFilterTabContent extends DynamicTabController {
     }
 
     /**
-     * 删除zk信息
+     * 删除过滤配置
      *
-     * @param info zk信息
+     * @param filter 过滤配置
      */
-    private void deleteInfo(ZKFilter info) {
+    private void deleteFilter(ZKFilter filter) {
         if (MessageBox.confirm(I18nHelper.deleteData())) {
-            if (this.filterStore.delete(info)) {
+            if (this.filterStore.delete(filter.getKw())) {
                 ZKEventUtil.treeChildFilter();
                 this.firstPage();
             } else {
@@ -234,7 +235,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      */
     @Subscribe
     private void filterAdded(ZKFilterAddedEvent event) {
-        this.initDataList(Integer.MAX_VALUE);
+        this.initDataList(0);
     }
 
     @Override

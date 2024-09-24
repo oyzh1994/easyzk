@@ -3,7 +3,8 @@ package cn.oyzh.easyzk.trees;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchParam;
-import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -64,7 +65,7 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     /**
      * 过滤配置储存
      */
-    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
+    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
 
     /**
      * 初始化过滤配置

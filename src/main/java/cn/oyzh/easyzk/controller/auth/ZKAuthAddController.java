@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -44,7 +44,7 @@ public class ZKAuthAddController extends StageController {
     /**
      * 认证储存
      */
-    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+    private final ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
 
     /**
      * 新增认证信息
@@ -67,7 +67,7 @@ public class ZKAuthAddController extends StageController {
                 return;
             }
             ZKAuth auth = new ZKAuth(user, password);
-            if (this.authStore.add(auth)) {
+            if (this.authStore.replace(auth)) {
                 ZKEventUtil.authAdded(auth);
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();

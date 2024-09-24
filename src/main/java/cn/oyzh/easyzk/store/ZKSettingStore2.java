@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.fx.common.store.SqlDataUtil;
 import cn.oyzh.fx.plus.domain.Setting;
 import cn.oyzh.fx.plus.store.SettingStore;
 
@@ -57,16 +58,21 @@ public class ZKSettingStore2 extends SettingStore<ZKSetting> {
     }
 
     @Override
+    protected ZKSetting newModel() {
+        return new ZKSetting();
+    }
+
+    @Override
     protected TableDefinition getTableDefinition() {
         TableDefinition definition = super.getTableDefinition();
 
         ColumnDefinition authMode = new ColumnDefinition();
         authMode.setColumnName("authMode");
-        authMode.setColumnType("byte");
+        authMode.setColumnType("integer");
 
         ColumnDefinition loadMode = new ColumnDefinition();
         loadMode.setColumnName("loadMode");
-        loadMode.setColumnType("byte");
+        loadMode.setColumnType("integer");
 
         definition.addColumnDefinition(authMode);
         definition.addColumnDefinition(loadMode);
@@ -84,9 +90,9 @@ public class ZKSettingStore2 extends SettingStore<ZKSetting> {
 
     @Override
     protected ZKSetting toModel(Map<String, Object> record) {
-        Setting setting = super.toModel(record);
-        ZKSetting zkSetting = new ZKSetting();
-        zkSetting.copy(setting);
-        return zkSetting;
+        ZKSetting setting = super.toModel(record);
+        setting.setAuthMode(SqlDataUtil.toByte(record.get("authMode")));
+        setting.setLoadMode(SqlDataUtil.toByte(record.get("loadMode")));
+        return setting;
     }
 }

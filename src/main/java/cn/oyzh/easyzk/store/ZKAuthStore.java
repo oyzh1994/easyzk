@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 //@Slf4j
+@Deprecated
 public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
 
     /**
@@ -32,9 +33,13 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
      */
     public static final ZKAuthStore INSTANCE = new ZKAuthStore();
 
-    {
+    // {
+    //     this.filePath(ZKConst.STORE_PATH + "zk_auth.json");
+    //     StaticLog.info("ZKAuthStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    // }
+
+    public ZKAuthStore() {
         this.filePath(ZKConst.STORE_PATH + "zk_auth.json");
-        StaticLog.info("ZKAuthStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

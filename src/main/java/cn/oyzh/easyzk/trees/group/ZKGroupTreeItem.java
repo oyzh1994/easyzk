@@ -70,12 +70,12 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         // 监听收缩变化
         super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             this.value.setExpand(false);
-            this.groupStore.replace(this.value);
+            this.groupStore.updateExtend(this.value);
         });
         // 监听展开变化
         super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             this.value.setExpand(true);
-            this.groupStore.replace(this.value);
+            this.groupStore.updateExtend(this.value);
         });
     }
 
@@ -130,7 +130,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
             return;
         }
         // 删除失败
-        if (!this.groupStore.delete(this.value)) {
+        if (!this.groupStore.delete(this.value.getName())) {
             MessageBox.warn(I18nHelper.operationFail());
             return;
         }

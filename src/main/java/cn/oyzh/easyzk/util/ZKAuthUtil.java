@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.util;
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import lombok.NonNull;
@@ -103,7 +103,7 @@ public class ZKAuthUtil {
      * @return 已启用的认证信息列表
      */
     public static List<ZKAuth> loadEnableAuths() {
-        List<ZKAuth> auths = ZKAuthStore.INSTANCE.load();
+        List<ZKAuth> auths = ZKAuthStore2.INSTANCE.load();
         auths = auths.stream().filter(ZKAuth::getEnable).toList();
         return auths;
     }

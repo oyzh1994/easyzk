@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -19,7 +20,12 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ZKAuth implements ObjectComparator<ZKAuth> {
+public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
+
+    /**
+     * 数据id
+     */
+    private String uid;
 
     /**
      * 用户名

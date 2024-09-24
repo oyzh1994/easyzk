@@ -10,6 +10,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,7 +22,7 @@ import java.util.Objects;
  * @since 2020/3/6
  */
 @ToString
-public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo> {
+public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Serializable {
 
     /**
      * 数据id

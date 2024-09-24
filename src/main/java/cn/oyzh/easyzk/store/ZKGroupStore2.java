@@ -2,9 +2,8 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.fx.plus.domain.TreeGroup;
+import cn.oyzh.fx.common.store.SqlDataUtil;
 import cn.oyzh.fx.plus.store.GroupStore;
 
 import java.util.ArrayList;
@@ -26,65 +25,65 @@ public class ZKGroupStore2 extends GroupStore<ZKGroup> {
      */
     public static final ZKGroupStore2 INSTANCE = new ZKGroupStore2();
 
-    @Override
-    protected ZKGroup toModel(Map<String, Object> record) {
-        TreeGroup group = super.toModel(record);
-        ZKGroup zkGroup = new ZKGroup();
-        zkGroup.copy(group);
-        return zkGroup;
-    }
-
-    public synchronized List<ZKGroup> load() {
+    public List<ZKGroup> load() {
         try {
-            // 读取存储文件中的文本
             List<Map<String, Object>> records = super.selectList(null);
-            if (CollUtil.isEmpty(records)) {
-                return new ArrayList<>();
+            if (CollUtil.isNotEmpty(records)) {
+                List<ZKGroup> list = new ArrayList<>();
+                for (Map<String, Object> record : records) {
+                    list.add(this.toModel(record));
+                }
+                return list;
             }
-            List<ZKGroup> list = new ArrayList<>();
-            for (Map<String, Object> record : records) {
-                list.add(this.toModel(record));
-            }
-            return list;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return Collections.emptyList();
     }
 
-    public synchronized boolean replace(ZKGroup group) {
+    public boolean replace(ZKGroup group) {
+        boolean result = false;
         try {
-            if (group == null) {
-                return false;
+            if (group != null) {
+                if (this.exist(group.getName())) {
+                    Map<String, Object> record = this.toRecord(group);
+                    result = this.update(record, group.getGid()) > 0;
+                } else {
+                    group.setGid(SqlDataUtil.generateUid());
+                    Map<String, Object> record = this.toRecord(group);
+                    result = this.insert(record) > 0;
+                }
             }
-            String id = group.getGid();
-            // 更新
-            if (id != null && super.exist(id)) {
-                Map<String, Object> record = this.toRecord(group);
-                return this.update(record, id) > 0;
-            }
-            // 新增
-            if (StrUtil.isBlank(id)) {
-                group.setGid(super.uid());
-            }
-            Map<String, Object> record = this.toRecord(group);
-            return this.insert(record) > 0;
-        } catch (Exception e) {
-            StaticLog.warn("update error,err:{}", e.getMessage());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return false;
+        return result;
     }
 
-    public synchronized boolean delete(ZKGroup group) {
+    public boolean updateExtend(ZKGroup group) {
+        boolean result = false;
         try {
-            if (group != null && group.getGid() != null) {
-                String id = group.getGid();
-                group.setGid(null);
-                return this.delete(id) > 0;
+            if (group != null) {
+                Map<String, Object> record = new HashMap<>();
+                record.put("gid", group.getGid());
+                record.put("extend", group.getExpand());
+                result = this.update(record, group.getGid()) > 0;
             }
-        } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
-            return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    public boolean delete(String name) {
+        try {
+            if (StrUtil.isNotBlank(name)) {
+                Map<String, Object> params = new HashMap<>();
+                params.put("name", name);
+                return this.delete(params) > 0;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return true;
     }
@@ -95,14 +94,12 @@ public class ZKGroupStore2 extends GroupStore<ZKGroup> {
      * @param name 分组信息
      * @return 结果
      */
-    public synchronized boolean exist(String name) {
+    public boolean exist(String name) {
         try {
-            // 如果传入的分组信息为空，则直接返回false
-            if (name == null) {
+            if (StrUtil.isNotBlank(name)) {
                 Map<String, Object> params = new HashMap<>();
                 params.put("name", name);
                 return super.exist(params);
-
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -110,4 +107,8 @@ public class ZKGroupStore2 extends GroupStore<ZKGroup> {
         return false;
     }
 
+    @Override
+    protected ZKGroup newModel() {
+        return new ZKGroup();
+    }
 }

@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKAuthVO;
 import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
@@ -17,8 +17,8 @@ import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.window.StageManager;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -99,7 +99,7 @@ public class ZKAuthTabContent extends DynamicTabController {
     /**
      * 认证信息储存
      */
-    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+    private final ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
 
     /**
      * 初始化数据列表
@@ -145,7 +145,7 @@ public class ZKAuthTabContent extends DynamicTabController {
                     toggleSwitch.setSelected(authVO.getEnable());
                     toggleSwitch.selectedChanged((abs, o, n) -> {
                         authVO.setEnable(n);
-                        if (authStore.update(authVO)) {
+                        if (authStore.replace(authVO)) {
                             ZKEventUtil.authEnabled(authVO);
                         } else {
                             MessageBox.warn(I18nHelper.operationFail());
@@ -165,7 +165,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      */
     private void delInfo(ZKAuth auth) {
         if (MessageBox.confirm(I18nHelper.deleteData())) {
-            this.authStore.delete(auth);
+            this.authStore.delete(auth.getUser(), auth.getPassword());
             this.firstPage();
         }
     }

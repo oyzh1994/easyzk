@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.exception.ZKException;
-import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
@@ -183,7 +183,7 @@ public class ZKACLAddController extends StageController {
     /**
      * 认证信息储存
      */
-    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+    private final ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
 
     /**
      * 复制摘要信息
@@ -273,7 +273,7 @@ public class ZKACLAddController extends StageController {
         // 新增权限
         if (this.addACL(acl) && this.digestSaveInfo.isSelected()) {
             // 保存认证信息
-            this.authStore.add(new ZKAuth(user, password));
+            this.authStore.replace(new ZKAuth(user, password));
         }
     }
 

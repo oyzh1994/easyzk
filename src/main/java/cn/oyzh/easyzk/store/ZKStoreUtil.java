@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.store.SqliteStore;
@@ -50,7 +51,7 @@ public class ZKStoreUtil {
                 ZKSettingStore2.INSTANCE.replace(setting);
                 // 转移旧文件
                 FileUtil.move(new File(ZKSettingStore.INSTANCE.filePath()), new File(ZKSettingStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("配置文件迁移成功");
+                StaticLog.info("配置数据迁移成功");
             }
 
             // 迁移分组
@@ -65,7 +66,22 @@ public class ZKStoreUtil {
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKGroupStore.INSTANCE.filePath()), new File(ZKGroupStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("分组文件迁移成功");
+                StaticLog.info("分组数据迁移成功");
+            }
+
+            // 迁移认证
+            if (FileUtil.exist(ZKAuthStore.INSTANCE.filePath())) {
+                // 手动执行初始化
+                ZKAuthStore.INSTANCE.init();
+                // 读取配置
+                List<ZKAuth> list = ZKAuthStore.INSTANCE.load();
+                // 执行迁移
+                for (ZKAuth auth : list) {
+                    ZKAuthStore2.INSTANCE.replace(auth);
+                }
+                // 转移旧文件
+                FileUtil.move(new File(ZKAuthStore.INSTANCE.filePath()), new File(ZKAuthStore.INSTANCE.filePath() + ".bak"), true);
+                StaticLog.info("认证数据迁移成功");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

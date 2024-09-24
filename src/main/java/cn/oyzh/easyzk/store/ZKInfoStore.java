@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2020/5/23
  */
+@Deprecated
 //@Slf4j
 public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
 

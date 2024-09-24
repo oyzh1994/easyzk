@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -103,7 +103,7 @@ public class ZKAuthAuthController extends StageController {
     /**
      * 认证储存
      */
-    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+    private final ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
 
     /**
      * 节点互斥器
@@ -159,7 +159,7 @@ public class ZKAuthAuthController extends StageController {
             int result = ZKAuthUtil.authNode(user, password, zkClient, this.zkNode);
             if (result == 1) {
                 if (this.saveInfo1.isSelected()) {
-                    this.authStore.add(new ZKAuth(user, password));
+                    this.authStore.replace(new ZKAuth(user, password));
                 }
                 ZKEventUtil.authAuthed(this.zkItem, true, user, password);
                 MessageBox.okToast(I18nHelper.operationSuccess());

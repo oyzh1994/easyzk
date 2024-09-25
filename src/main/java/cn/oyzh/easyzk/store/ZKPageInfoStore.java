@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.fx.common.store.ObjectFileStore;
@@ -16,6 +15,7 @@ import cn.oyzh.fx.common.store.ObjectFileStore;
  * @since 2023/01/17
  */
 //@Slf4j
+@Deprecated
 public class ZKPageInfoStore extends ObjectFileStore<ZKPageInfo> {
 
     /**
@@ -23,14 +23,18 @@ public class ZKPageInfoStore extends ObjectFileStore<ZKPageInfo> {
      */
     public static final ZKPageInfoStore INSTANCE = new ZKPageInfoStore();
 
-    /**
-     * 当前设置
-     */
-    public static final ZKPageInfo PAGE_INFO = INSTANCE.load();
+    // /**
+    //  * 当前设置
+    //  */
+    // public static final ZKPageInfo PAGE_INFO = INSTANCE.load();
 
-    {
+    // {
+    //     this.filePath(ZKConst.STORE_PATH + "page_info.json");
+    //     StaticLog.info("PageInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    // }
+
+    public ZKPageInfoStore() {
         this.filePath(ZKConst.STORE_PATH + "page_info.json");
-        StaticLog.info("PageInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

@@ -6,11 +6,9 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.fx.common.sqlite.SqlLiteUtil;
-import cn.oyzh.fx.common.sqlite.SqliteConn;
 import cn.oyzh.fx.common.sqlite.SqliteConnManager;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -56,6 +54,27 @@ public class ZKStoreUtil {
                 // 转移旧文件
                 FileUtil.move(new File(ZKSettingStore.INSTANCE.filePath()), new File(ZKSettingStore.INSTANCE.filePath() + ".bak"), true);
                 StaticLog.info("配置数据迁移成功");
+            }
+
+            // 迁移页面信息
+            if (FileUtil.exist(ZKPageInfoStore.INSTANCE.filePath())) {
+                // 手动执行初始化
+                ZKPageInfoStore.INSTANCE.init();
+                // 读取配置
+                ZKPageInfo pageInfo = ZKPageInfoStore.INSTANCE.load();
+                // 设置配置
+                ZKSetting setting = ZKSettingStore2.SETTING;
+                setting.setPageWidth(pageInfo.getWidth());
+                setting.setPageHeight(pageInfo.getHeight());
+                setting.setPageScreenX(pageInfo.getScreenX());
+                setting.setPageScreenY(pageInfo.getScreenY());
+                setting.setPageMaximized(pageInfo.isMaximized());
+                setting.setPageLeftWidth(pageInfo.getMainLeftWidth());
+                // 执行迁移
+                ZKSettingStore2.INSTANCE.replace(setting);
+                // 转移旧文件
+                FileUtil.move(new File(ZKPageInfoStore.INSTANCE.filePath()), new File(ZKPageInfoStore.INSTANCE.filePath() + ".bak"), true);
+                StaticLog.info("页面数据迁移成功");
             }
 
             // 迁移分组

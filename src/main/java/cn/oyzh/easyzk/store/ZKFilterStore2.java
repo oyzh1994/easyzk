@@ -33,9 +33,9 @@ public class ZKFilterStore2 extends SqliteStore<ZKFilter> {
      *
      * @return 已启用的数据列表
      */
-    public synchronized List<ZKFilter> loadEnable() {
+    public  List<ZKFilter> loadEnable() {
         List<QueryParam> params = new ArrayList<>();
-        params.add(new QueryParam("enable", true));
+        params.add(new QueryParam("enable", 1));
         return super.selectList(params);
     }
 
@@ -88,49 +88,4 @@ public class ZKFilterStore2 extends SqliteStore<ZKFilter> {
     protected Class<ZKFilter> modelClass() {
         return ZKFilter.class;
     }
-
-    //
-    // @Override
-    // protected TableDefinition getTableDefinition() {
-    //     TableDefinition definition = new TableDefinition();
-    //     definition.setTableName("t_filter");
-    //     ColumnDefinition uid = new ColumnDefinition();
-    //     uid.setColumnName("uid");
-    //     uid.setColumnType("text");
-    //     uid.setPrimaryKey(true);
-    //     ColumnDefinition kw = new ColumnDefinition();
-    //     kw.setColumnName("kw");
-    //     kw.setColumnType("text");
-    //     ColumnDefinition partMatch = new ColumnDefinition();
-    //     partMatch.setColumnName("partMatch");
-    //     partMatch.setColumnType("integer");
-    //     ColumnDefinition enable = new ColumnDefinition();
-    //     enable.setColumnName("enable");
-    //     enable.setColumnType("integer");
-    //     definition.addColumnDefinition(kw);
-    //     definition.addColumnDefinition(uid);
-    //     definition.addColumnDefinition(enable);
-    //     definition.addColumnDefinition(partMatch);
-    //     return definition;
-    // }
-    //
-    // @Override
-    // protected ZKFilter toModel(Map<String, Object> record) {
-    //     ZKFilter model = this.newModel();
-    //     model.setKw((String) record.get("kw"));
-    //     model.setUid((String) record.get("uid"));
-    //     model.setEnable(SqlLiteUtil.toBoolVal(record.get("enable")));
-    //     model.setPartMatch(SqlLiteUtil.toBoolVal(record.get("partMatch")));
-    //     return model;
-    // }
-    //
-    // @Override
-    // protected Map<String, Object> toRecord(ZKFilter model) {
-    //     Map<String, Object> record = new HashMap<>();
-    //     record.put("kw", model.getKw());
-    //     record.put("uid", model.getUid());
-    //     record.put("enable", model.isEnable());
-    //     record.put("partMatch", model.isPartMatch());
-    //     return record;
-    // }
 }

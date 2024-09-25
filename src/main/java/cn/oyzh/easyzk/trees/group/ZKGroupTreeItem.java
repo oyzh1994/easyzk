@@ -69,13 +69,17 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         });
         // 监听收缩变化
         super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            this.value.setExpand(false);
-            this.groupStore.updateExtend(this.value);
+            if (this.value.isExpand()) {
+                this.value.setExpand(false);
+                this.groupStore.replace(this.value);
+            }
         });
         // 监听展开变化
         super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            this.value.setExpand(true);
-            this.groupStore.updateExtend(this.value);
+            if (!this.isExpanded()) {
+                this.value.setExpand(true);
+                this.groupStore.replace(this.value);
+            }
         });
     }
 

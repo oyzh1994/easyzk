@@ -1,14 +1,12 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
 import cn.oyzh.easyzk.event.ZKLeftExtendEvent;
 import cn.oyzh.easyzk.fx.ZKMsgTextArea;
-import cn.oyzh.easyzk.store.ZKPageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
@@ -129,15 +127,15 @@ public class ZKMainController extends ParentStageController {
     @FXML
     private SearchController searchController;
 
-    /**
-     * 页面信息
-     */
-    private final ZKPageInfo pageInfo = ZKPageInfoStore.PAGE_INFO;
+    // /**
+    //  * 页面信息
+    //  */
+    // private final ZKPageInfo pageInfo = ZKPageInfoStore.PAGE_INFO;
 
-    /**
-     * 页面信息储存
-     */
-    private final ZKPageInfoStore pageInfoStore = ZKPageInfoStore.INSTANCE;
+    // /**
+    //  * 页面信息储存
+    //  */
+    // private final ZKPageInfoStore pageInfoStore = ZKPageInfoStore.INSTANCE;
 
     /**
      * 对子节点排序，正序
@@ -222,7 +220,7 @@ public class ZKMainController extends ParentStageController {
 
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
-            this.resizeMainLeft(this.pageInfo.getMainLeftWidth());
+            this.resizeMainLeft(this.setting.getPageLeftWidth());
         }
     }
 
@@ -267,8 +265,8 @@ public class ZKMainController extends ParentStageController {
      */
     private void savePageResize() {
         if (this.setting.isRememberPageResize()) {
-            this.pageInfo.setMainLeftWidth(this.tabPaneLeft.getMinWidth());
-            this.pageInfoStore.update(this.pageInfo);
+            this.setting.setPageLeftWidth(this.tabPaneLeft.getMinWidth());
+            ZKSettingStore2.INSTANCE.replace(this.setting);
         }
     }
 

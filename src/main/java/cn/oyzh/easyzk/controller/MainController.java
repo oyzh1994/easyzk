@@ -2,24 +2,22 @@ package cn.oyzh.easyzk.controller;
 
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.store.ZKPageInfoStore;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controller.ParentStageController;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.tray.DesktopTrayItem;
 import cn.oyzh.fx.plus.tray.QuitTrayItem;
 import cn.oyzh.fx.plus.tray.SettingTrayItem;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
@@ -59,20 +57,20 @@ public class MainController extends ParentStageController {
     @FXML
     private ZKMainController zkMainController;
 
-    /**
-     * 页面信息
-     */
-    private final ZKPageInfo pageInfo = ZKPageInfoStore.PAGE_INFO;
+    // /**
+    //  * 页面信息
+    //  */
+    // private final ZKPageInfo pageInfo = ZKPageInfoStore.PAGE_INFO;
 
     /**
      * zk相关配置
      */
     private final ZKSetting setting = ZKSettingStore2.SETTING;
 
-    /**
-     * 页面信息储存
-     */
-    private final ZKPageInfoStore pageInfoStore = ZKPageInfoStore.INSTANCE;
+    // /**
+    //  * 页面信息储存
+    //  */
+    // private final ZKPageInfoStore pageInfoStore = ZKPageInfoStore.INSTANCE;
 
     /**
      * 初始化系统托盘
@@ -196,20 +194,20 @@ public class MainController extends ParentStageController {
         boolean savePageInfo = false;
         // 记住页面大小
         if (this.setting.isRememberPageSize()) {
-            this.pageInfo.setWidth(this.stage.getWidth());
-            this.pageInfo.setHeight(this.stage.getHeight());
-            this.pageInfo.setMaximized(this.stage.isMaximized());
+            this.setting.setPageWidth(this.stage.getWidth());
+            this.setting.setPageHeight(this.stage.getHeight());
+            this.setting.setPageMaximized(this.stage.isMaximized());
             savePageInfo = true;
         }
         // 记住页面位置
         if (this.setting.isRememberPageLocation()) {
-            this.pageInfo.setScreenX(this.stage.getX());
-            this.pageInfo.setScreenY(this.stage.getY());
+            this.setting.setPageScreenX(this.stage.getX());
+            this.setting.setPageScreenY(this.stage.getY());
             savePageInfo = true;
         }
         // 保存页面信息
         if (savePageInfo) {
-            this.pageInfoStore.update(this.pageInfo);
+            ZKSettingStore2.INSTANCE.replace(this.setting);
         }
         // 关闭托盘
         TrayManager.destroy();
@@ -221,20 +219,18 @@ public class MainController extends ParentStageController {
         super.onStageInitialize(stage);
         // 设置上次保存的页面大小
         if (this.setting.isRememberPageSize()) {
-            if (this.pageInfo.isMaximized()) {
+            if (this.setting.isPageMaximized()) {
                 this.stage.setMaximized(true);
-                StaticLog.debug("view setMaximized");
-            } else if (this.pageInfo.getWidth() != null && this.pageInfo.getHeight() != null) {
-                this.stage.setWidth(this.pageInfo.getWidth());
-                this.stage.setHeight(this.pageInfo.getHeight());
-                StaticLog.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
+                StaticLog.debug("view maximized");
+            } else if (this.setting.getPageWidth() != null && this.setting.getPageHeight() != null) {
+                this.stage.setSize(this.setting.getPageWidth(), this.setting.getPageHeight());
+                StaticLog.debug("view width:{} height:{}", this.setting.getPageWidth(), this.setting.getPageHeight());
             }
         }
         // 设置上次保存的页面位置
-        if (this.setting.isRememberPageLocation() && !this.pageInfo.isMaximized() && this.pageInfo.getScreenX() != null && this.pageInfo.getScreenY() != null) {
-            this.stage.setX(this.pageInfo.getScreenX());
-            this.stage.setY(this.pageInfo.getScreenY());
-            StaticLog.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
+        if (this.setting.isRememberPageLocation() && !this.setting.isPageMaximized() && this.setting.getPageScreenX() != null && this.setting.getPageScreenY() != null) {
+            this.stage.setLocation(this.setting.getPageScreenX(), this.setting.getPageScreenY());
+            StaticLog.debug("view x:{} y:{}", this.setting.getPageScreenX(), this.setting.getPageScreenY());
         }
     }
 

@@ -79,48 +79,4 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
     protected Class<ZKAuth> modelClass() {
         return ZKAuth.class;
     }
-
-    // @Override
-    // protected TableDefinition tableDefinition() {
-    //     TableDefinition definition = new TableDefinition();
-    //     definition.setTableName("t_auth");
-    //     ColumnDefinition gid = new ColumnDefinition();
-    //     gid.setColumnName("uid");
-    //     gid.setColumnType("text");
-    //     gid.setPrimaryKey(true);
-    //     ColumnDefinition user = new ColumnDefinition();
-    //     user.setColumnName("user");
-    //     user.setColumnType("text");
-    //     ColumnDefinition password = new ColumnDefinition();
-    //     password.setColumnName("password");
-    //     password.setColumnType("text");
-    //     ColumnDefinition enable = new ColumnDefinition();
-    //     enable.setColumnName("enable");
-    //     enable.setColumnType("integer");
-    //     definition.addColumnDefinition(gid);
-    //     definition.addColumnDefinition(user);
-    //     definition.addColumnDefinition(password);
-    //     definition.addColumnDefinition(enable);
-    //     return definition;
-    // }
-
-    // @Override
-    // protected ZKAuth toModel(Map<String, Object> record) {
-    //     ZKAuth model = this.newModel();
-    //     model.setUid((String) record.get("uid"));
-    //     model.setUser((String) record.get("user"));
-    //     model.setPassword((String) record.get("password"));
-    //     model.setEnable(SqlLiteUtil.toBool(record.get("enable")));
-    //     return model;
-    // }
-    //
-    // @Override
-    // protected Map<String, Object> toRecord(ZKAuth model) {
-    //     Map<String, Object> record = new HashMap<>();
-    //     record.put("uid", model.getUid());
-    //     record.put("user", model.getUser());
-    //     record.put("enable", model.getEnable());
-    //     record.put("password", model.getPassword());
-    //     return record;
-    // }
 }

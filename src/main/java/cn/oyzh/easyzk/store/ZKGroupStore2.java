@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.fx.plus.store.GroupStore;
+import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/5/12
  */
-public class ZKGroupStore2 extends GroupStore<ZKGroup> {
+public class ZKGroupStore2 extends SqliteStore<ZKGroup> {
 
     /**
      * 当前实例
@@ -26,23 +26,13 @@ public class ZKGroupStore2 extends GroupStore<ZKGroup> {
     }
 
     public boolean replace(ZKGroup group) {
-        boolean result = false;
         if (group != null) {
             if (this.exist(group.getName())) {
-                result = this.update(group);
-            } else {
-                result = this.insert(group);
+                return this.update(group);
             }
+            return this.insert(group);
         }
-        return result;
-    }
-
-    public boolean updateExtend(ZKGroup group) {
-        boolean result = false;
-        if (group != null) {
-            result = this.update(group);
-        }
-        return result;
+        return false;
     }
 
     public boolean delete(String name) {

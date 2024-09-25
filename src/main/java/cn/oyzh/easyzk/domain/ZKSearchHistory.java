@@ -1,10 +1,16 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.fx.common.sqlite.Column;
+import cn.oyzh.fx.common.sqlite.PrimaryKey;
+import cn.oyzh.fx.common.sqlite.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -14,20 +20,37 @@ import java.util.Objects;
  * @since 2023/4/24
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ZKSearchHistory implements ObjectComparator<ZKSearchHistory> {
+@Table("t_search_history")
+public class ZKSearchHistory implements ObjectComparator<ZKSearchHistory>, Serializable {
+
+    /**
+     * 数据id
+     */
+    @Column
+    @PrimaryKey
+    private String uid;
 
     /**
      * 词汇
      */
+    @Column
     private String kw;
 
     /**
      * 1 搜索词
      * 2 替换词
      */
-    private Integer type;
+    @Column
+    private Byte type;
+
+    public ZKSearchHistory() {
+
+    }
+
+    public ZKSearchHistory( String kw, byte type) {
+        this.kw = kw;
+        this.type = type;
+    }
 
     @Override
     public boolean compare(ZKSearchHistory t1) {

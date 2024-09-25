@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.search;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
+import cn.oyzh.easyzk.store.ZKSearchHistoryStore2;
 import cn.oyzh.fx.plus.controls.popup.SearchHistoryPopup;
 
 import java.util.List;
@@ -14,14 +14,20 @@ import java.util.List;
  */
 public class ZKSearchHistoryPopup extends SearchHistoryPopup {
 
+    private final byte type;
+
     /**
      * 搜索历史储存
      */
-    private final ZKSearchHistoryStore historyStore = ZKSearchHistoryStore.INSTANCE;
+    private final ZKSearchHistoryStore2 historyStore = ZKSearchHistoryStore2.INSTANCE;
+
+    public ZKSearchHistoryPopup(byte type) {
+        this.type = type;
+    }
 
     @Override
     public List<String> getHistories() {
-        List<String> list = this.historyStore.getSearchKw();
+        List<String> list = this.historyStore.listKw(this.type);
         if (CollUtil.isNotEmpty(list)) {
             return list.reversed();
         }

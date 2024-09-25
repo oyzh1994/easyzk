@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
+import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.sqlite.SqliteConnManager;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -120,6 +121,21 @@ public class ZKStoreUtil {
                 // 转移旧文件
                 FileUtil.move(new File(ZKFilterStore.INSTANCE.filePath()), new File(ZKFilterStore.INSTANCE.filePath() + ".bak"), true);
                 StaticLog.info("过滤数据迁移成功");
+            }
+
+            // 迁移页面信息
+            if (FileUtil.exist(ZKSearchHistoryStore.INSTANCE.filePath())) {
+                // 手动执行初始化
+                ZKSearchHistoryStore.INSTANCE.init();
+                // 读取配置
+                List<ZKSearchHistory> list = ZKSearchHistoryStore.INSTANCE.load();
+                // 执行迁移
+                for (ZKSearchHistory history : list) {
+                    ZKSearchHistoryStore2.INSTANCE.replace(history);
+                }
+                // 转移旧文件
+                FileUtil.move(new File(ZKSearchHistoryStore.INSTANCE.filePath()), new File(ZKSearchHistoryStore.INSTANCE.filePath() + ".bak"), true);
+                StaticLog.info("搜索数据迁移成功");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 //@Slf4j
+@Deprecated
 public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
 
     /**
@@ -36,9 +37,13 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
      */
     public static final ZKSearchHistoryStore INSTANCE = new ZKSearchHistoryStore();
 
-    {
+    // {
+    //     this.filePath(ZKConst.STORE_PATH + "zk_search_history.json");
+    //     StaticLog.info("ZKSearchHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    // }
+
+    public ZKSearchHistoryStore() {
         this.filePath(ZKConst.STORE_PATH + "zk_search_history.json");
-        StaticLog.info("ZKSearchHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override
@@ -107,7 +112,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
      * @return 结果
      */
     public synchronized boolean addSearchHistory(@NonNull String kw) {
-        return this.add(new ZKSearchHistory(kw, 1));
+        return this.add(new ZKSearchHistory(kw, (byte) 1));
     }
 
     /**
@@ -117,7 +122,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
      * @return 结果
      */
     public synchronized boolean addReplaceHistory(@NonNull String kw) {
-        return this.add(new ZKSearchHistory(kw, 2));
+        return this.add(new ZKSearchHistory(kw, (byte) 2));
     }
 
     @Override

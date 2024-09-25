@@ -4,11 +4,10 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.event.TreeChildChangedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKSearchFireEvent;
-import cn.oyzh.easyzk.search.ZKReplaceHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchParam;
-import cn.oyzh.easyzk.store.ZKSearchHistoryStore;
+import cn.oyzh.easyzk.store.ZKSearchHistoryStore2;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.common.thread.Task;
@@ -152,7 +151,7 @@ public class SearchController extends SubStageController {
     /**
      * 搜索历史储存
      */
-    private final ZKSearchHistoryStore historyStore = ZKSearchHistoryStore.INSTANCE;
+    private final ZKSearchHistoryStore2 historyStore = ZKSearchHistoryStore2.INSTANCE;
 
     /**
      * 搜索-搜索下一个
@@ -176,7 +175,7 @@ public class SearchController extends SubStageController {
                     // 更新搜索结果
                     this.updateSearchResult();
                     // 更新搜索历史
-                    this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
+                    this.historyStore.addSearchKw(this.searchKW.getTextTrim());
                 })
                 .onFinish(() -> this.searching = false)
                 .onError(MessageBox::exception)
@@ -205,7 +204,7 @@ public class SearchController extends SubStageController {
                     // 更新搜索结果
                     this.updateSearchResult();
                     // 更新搜索历史
-                    this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
+                    this.historyStore.addSearchKw(this.searchKW.getTextTrim());
                 })
                 .onFinish(() -> this.searching = false)
                 .onError(MessageBox::exception)
@@ -245,8 +244,8 @@ public class SearchController extends SubStageController {
                             // 更新搜索结果
                             this.updateSearchResult();
                             // 更新搜索、替换历史
-                            this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
-                            this.historyStore.addReplaceHistory(this.replaceKW.getTextTrim());
+                            this.historyStore.addSearchKw(this.searchKW.getTextTrim());
+                            this.historyStore.addReplaceKw(this.replaceKW.getTextTrim());
                         }
                     } else { // 未找到匹配项
                         // 更新搜索结果
@@ -423,8 +422,8 @@ public class SearchController extends SubStageController {
         this.treeView = this.parent().tree;
         // 初始化搜索
         this.searchHandler.init(this.treeView, this.parent().tabPane);
-        this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup());
-        this.replaceKW.setHistoryPopup(new ZKReplaceHistoryPopup());
+        this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup((byte) 1));
+        this.replaceKW.setHistoryPopup(new ZKSearchHistoryPopup((byte) 2));
     }
 
     @Override

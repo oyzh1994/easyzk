@@ -1,13 +1,7 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.fx.common.sqlite.ColumnDefinition;
-import cn.oyzh.fx.common.sqlite.SqlLiteUtil;
-import cn.oyzh.fx.common.sqlite.TableDefinition;
 import cn.oyzh.fx.plus.store.SettingStore;
-
-import java.util.Map;
 
 
 /**
@@ -31,31 +25,21 @@ public class ZKSettingStore2 extends SettingStore<ZKSetting> {
     }
 
     public synchronized ZKSetting load() {
-        ZKSetting setting = null;
-        try {
-            Map<String, Object> record = super.selectOne(DATA_UID);
-            if (CollUtil.isNotEmpty(record)) {
-                setting = this.toModel(record);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        // 如果查询失败，则返回一个新的ZKSetting对象
+        ZKSetting setting = super.selectOne(DATA_UID);
         if (setting == null) {
             setting = new ZKSetting();
         }
         return setting;
     }
 
-    public boolean replace(ZKSetting setting) throws Exception {
-        if (setting == null) {
-            return false;
+    public boolean replace(ZKSetting model) throws Exception {
+        if (model != null) {
+            if (super.exist(DATA_UID)) {
+                return this.update(model);
+            }
+            return this.insert(model);
         }
-        Map<String, Object> record = this.toRecord(setting);
-        if (super.exist(DATA_UID)) {
-            return this.update(record, DATA_UID) > 0;
-        }
-        return this.insert(record) > 0;
+        return false;
     }
 
     @Override

@@ -1,17 +1,13 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.sqlite.ColumnDefinition;
 import cn.oyzh.fx.common.sqlite.PageParam;
 import cn.oyzh.fx.common.sqlite.SqlLiteUtil;
 import cn.oyzh.fx.common.sqlite.SqliteStore;
-import cn.oyzh.fx.common.sqlite.TableDefinition;
-import lombok.NonNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,79 +24,48 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
     public static final ZKAuthStore2 INSTANCE = new ZKAuthStore2();
 
     public List<ZKAuth> load() {
-        try {
-            List<Map<String, Object>> records = super.selectList();
-            if (CollUtil.isNotEmpty(records)) {
-                List<ZKAuth> list = new ArrayList<>();
-                for (Map<String, Object> record : records) {
-                    list.add(this.toModel(record));
-                }
-                return list;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return Collections.emptyList();
+        return super.selectList();
     }
 
     public boolean replace(ZKAuth model) {
         boolean result = false;
-        try {
-            if (model != null) {
-                if (this.exist(model.getUser(), model.getPassword())) {
-                    Map<String, Object> record = this.toRecord(model);
-                    result = this.update(record, model.getUid()) > 0;
-                } else {
-                    model.setUid(SqlLiteUtil.generateUid());
-                    Map<String, Object> record = this.toRecord(model);
-                    result = this.insert(record) > 0;
-                }
+        if (model != null) {
+            if (this.exist(model.getUser(), model.getPassword())) {
+                result = this.update(model);
+            } else {
+                result = this.insert(model);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
         return result;
     }
 
     public boolean delete(String user, String password) {
-        try {
+        if (StrUtil.isEmpty(user) || StrUtil.isEmpty(password)) {
+
             Map<String, Object> params = new HashMap<>();
             params.put("user", user);
             params.put("password", password);
-            return this.delete(params) > 0;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            return this.delete(params);
         }
         return false;
     }
 
     public Paging<ZKAuth> getPage(long pageNo, int limit, String kw) {
-        try {
-            PageParam pageParam = new PageParam(limit, pageNo * limit);
-            List<Map<String, Object>> list = this.selectPage(kw, List.of("user", "password"), pageParam);
-            if (CollUtil.isNotEmpty(list)) {
-                long count = this.selectCount(kw, List.of("kw"));
-                List<ZKAuth> dataList = new ArrayList<>();
-                for (Map<String, Object> objectMap : list) {
-                    dataList.add(this.toModel(objectMap));
-                }
-                return new Paging<>(dataList, limit, count);
-            }
-            return new Paging<>(limit);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        PageParam pageParam = new PageParam(limit, pageNo * limit);
+        List<ZKAuth> list = this.selectPage(kw, List.of("user", "password"), pageParam);
+        if (CollUtil.isNotEmpty(list)) {
+            long count = this.selectCount(kw, List.of("kw"));
+            return new Paging<>(list, limit, count);
         }
-        return null;
+        return new Paging<>(limit);
     }
 
-    public boolean exist(@NonNull String user, @NonNull String password) {
-        try {
+    public boolean exist(String user, String password) {
+        if (StrUtil.isNotBlank(user) && StrUtil.isNotBlank(password)) {
             Map<String, Object> params = new HashMap<>();
             params.put("user", user);
             params.put("password", password);
             return super.exist(params);
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
         return false;
     }

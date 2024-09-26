@@ -11,6 +11,7 @@ import cn.oyzh.easyzk.dto.ZKInfoExport;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKGroupStore2;
 import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -47,7 +48,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     /**
      * zk信息储存
      */
-    private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
+    private final ZKInfoStore2 infoStore = ZKInfoStore2.INSTANCE;
 
     /**
      * zk分组储存
@@ -184,7 +185,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             List<ZKInfo> infos = export.getConnects();
             if (CollUtil.isNotEmpty(infos)) {
                 for (ZKInfo info : infos) {
-                    if (this.infoStore.add(info)) {
+                    if (this.infoStore.replace(info)) {
                         this.addConnect(info);
                     } else {
                         MessageBox.warn(I18nHelper.connect() + " [" + info.getName() + "] " + I18nHelper.importFail());

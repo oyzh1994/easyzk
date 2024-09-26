@@ -35,18 +35,22 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     /**
      * 已加载的zk节点
      */
-    private final List<ZKInfo> infos;
+    private List<ZKInfo> infos;
 
-    {
+    // {
+    //     this.filePath(ZKConst.STORE_PATH + "zk_info.json");
+    //     StaticLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    //     this.infos = this.load();
+    //     for (ZKInfo zkInfo : this.infos) {
+    //         if (StrUtil.isBlank(zkInfo.getId())) {
+    //             zkInfo.setId(UUID.fastUUID().toString(true));
+    //             this.update(zkInfo);
+    //         }
+    //     }
+    // }
+
+    public ZKInfoStore(){
         this.filePath(ZKConst.STORE_PATH + "zk_info.json");
-        StaticLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
-        this.infos = this.load();
-        for (ZKInfo zkInfo : this.infos) {
-            if (StrUtil.isBlank(zkInfo.getId())) {
-                zkInfo.setId(UUID.fastUUID().toString(true));
-                this.update(zkInfo);
-            }
-        }
     }
 
     @Override

@@ -3,7 +3,9 @@ package cn.oyzh.easyzk.domain;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.ssh.SSHConnectInfo;
+import cn.oyzh.fx.common.sqlite.Column;
+import cn.oyzh.fx.common.sqlite.PrimaryKey;
+import cn.oyzh.fx.common.sqlite.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.Getter;
 import lombok.NonNull;
@@ -21,49 +23,52 @@ import java.util.Objects;
  * @author oyzh
  * @since 2020/3/6
  */
+@Setter
 @ToString
+@Table("t_info")
 public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Serializable {
 
     /**
      * 数据id
      */
     @Getter
-    @Setter
+    @Column
+    @PrimaryKey
     private String id;
 
     /**
      * 连接地址
      */
     @Getter
-    @Setter
+    @Column
     private String host;
 
     /**
      * 名称
      */
     @Getter
-    @Setter
+    @Column
     private String name;
 
     /**
      * 备注信息
      */
     @Getter
-    @Setter
+    @Column
     private String remark;
 
     /**
      * 只读模式
      */
-    @Setter
     @Getter
+    @Column
     private Boolean readonly;
 
     /**
      * 分组id
      */
     @Getter
-    @Setter
+    @Column
     private String groupId;
 
     /**
@@ -72,7 +77,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
      * 1: 兼容3.4.x版本
      */
     @Getter
-    @Setter
+    @Column
     private Integer compatibility;
 
     /**
@@ -80,7 +85,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
      * false: 否
      * null|true: 是
      */
-    @Setter
+    @Column
     private Boolean listen;
 
     // /**
@@ -96,34 +101,55 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
      * 收藏的节点
      */
     @Getter
-    @Setter
     private List<String> collects;
 
     /**
      * 会话超时时间
      */
-    @Setter
+    @Column
     private Integer sessionTimeOut;
 
     /**
      * 连接超时时间
      */
-    @Setter
+    @Column
     private Integer connectTimeOut;
 
     /**
      * 是否开启ssh转发
      */
-    @Setter
     @Getter
+    @Column
     private Boolean sshForward;
+
+    // @Column
+    // @Getter
+    // private Integer sshPort;
+    //
+    // @Column
+    // @Getter
+    // private String sshHost;
+    //
+    // @Column
+    // @Getter
+    // private String sshUser;
+    //
+    // @Column
+    // @Getter
+    // private String sshPassword;
+    //
+    // @Column
+    // private Integer sshTimeout;
+    //
+    // public Integer getSshTimeout() {
+    //     return this.sshTimeout==null?5000:this.sshTimeout;
+    // }
 
     /**
      * ssh信息
      */
-    @Setter
     @Getter
-    private SSHConnectInfo sshInfo;
+    private ZKSSHInfo sshInfo;
 
     /**
      * 复制对象

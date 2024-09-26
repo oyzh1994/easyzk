@@ -1,15 +1,20 @@
 package cn.oyzh.easyzk.store;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
+import cn.oyzh.easyzk.domain.ZKSSHInfo;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.sqlite.SqliteConnManager;
+import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -42,7 +47,7 @@ public class ZKStoreUtil {
 
     public static void migration() {
         try {
-            // 迁移配置
+            // 迁移配置数据
             if (FileUtil.exist(ZKSettingStore.INSTANCE.filePath())) {
                 // 手动执行初始化
                 ZKSettingStore.INSTANCE.init();
@@ -57,7 +62,7 @@ public class ZKStoreUtil {
                 StaticLog.info("配置数据迁移成功");
             }
 
-            // 迁移页面信息
+            // 迁移页面数据
             if (FileUtil.exist(ZKPageInfoStore.INSTANCE.filePath())) {
                 // 手动执行初始化
                 ZKPageInfoStore.INSTANCE.init();
@@ -78,7 +83,7 @@ public class ZKStoreUtil {
                 StaticLog.info("页面数据迁移成功");
             }
 
-            // 迁移分组
+            // 迁移分组数据
             if (FileUtil.exist(ZKGroupStore.INSTANCE.filePath())) {
                 // 手动执行初始化
                 ZKGroupStore.INSTANCE.init();
@@ -93,7 +98,7 @@ public class ZKStoreUtil {
                 StaticLog.info("分组数据迁移成功");
             }
 
-            // 迁移认证
+            // 迁移认证数据
             if (FileUtil.exist(ZKAuthStore.INSTANCE.filePath())) {
                 // 手动执行初始化
                 ZKAuthStore.INSTANCE.init();
@@ -108,7 +113,7 @@ public class ZKStoreUtil {
                 StaticLog.info("认证数据迁移成功");
             }
 
-            // 迁移过滤
+            // 迁移过滤数据
             if (FileUtil.exist(ZKFilterStore.INSTANCE.filePath())) {
                 // 手动执行初始化
                 ZKFilterStore.INSTANCE.init();
@@ -123,7 +128,7 @@ public class ZKStoreUtil {
                 StaticLog.info("过滤数据迁移成功");
             }
 
-            // 迁移页面信息
+            // 迁移搜索数据
             if (FileUtil.exist(ZKSearchHistoryStore.INSTANCE.filePath())) {
                 // 手动执行初始化
                 ZKSearchHistoryStore.INSTANCE.init();
@@ -136,6 +141,36 @@ public class ZKStoreUtil {
                 // 转移旧文件
                 FileUtil.move(new File(ZKSearchHistoryStore.INSTANCE.filePath()), new File(ZKSearchHistoryStore.INSTANCE.filePath() + ".bak"), true);
                 StaticLog.info("搜索数据迁移成功");
+            }
+
+            // 迁移信息数据
+            if (FileUtil.exist(ZKInfoStore.INSTANCE.filePath())) {
+                // 手动执行初始化
+                ZKInfoStore.INSTANCE.init();
+                // 读取配置
+                List<ZKInfo> list = ZKInfoStore.INSTANCE.load();
+                // 执行迁移
+                for (ZKInfo info : list) {
+                    // // ssh信息处理
+                    // if (info.getSshInfo() != null) {
+                    //     ZKSSHInfo sshInfo = info.getSshInfo();
+                    //     info.setSshHost(sshInfo.getHost());
+                    //     info.setSshPort(sshInfo.getPort());
+                    //     info.setSshUser(sshInfo.getUser());
+                    //     info.setSshTimeout(sshInfo.getTimeout());
+                    //     info.setSshPassword(sshInfo.getPassword());
+                    // }
+                    ZKInfoStore2.INSTANCE.replace(info);
+                    // // 收藏迁移
+                    // if (CollUtil.isNotEmpty(info.getCollects())) {
+                    //     for (String collect : info.getCollects()) {
+                    //         ZKCollectStore.INSTANCE.replace(new ZKCollect(info.getId(), collect));
+                    //     }
+                    // }
+                }
+                // 转移旧文件
+                FileUtil.move(new File(ZKInfoStore.INSTANCE.filePath()), new File(ZKInfoStore.INSTANCE.filePath() + ".bak"), true);
+                StaticLog.info("信息数据迁移成功");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

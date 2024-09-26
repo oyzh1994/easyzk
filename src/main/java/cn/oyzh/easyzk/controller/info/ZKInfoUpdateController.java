@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.controller.info;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKSSHInfo;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
@@ -188,13 +189,14 @@ public class ZKInfoUpdateController extends StageController {
      *
      * @return ssh连接信息
      */
-    private SSHConnectInfo getSSHInfo() {
-        SSHConnectInfo sshConnectInfo = new SSHConnectInfo();
+    private ZKSSHInfo getSSHInfo() {
+        ZKSSHInfo sshConnectInfo = new ZKSSHInfo();
         sshConnectInfo.setHost(this.sshHost.getText());
         sshConnectInfo.setUser(this.sshUser.getText());
         sshConnectInfo.setPort(this.sshPort.getIntValue());
         sshConnectInfo.setPassword(this.sshPassword.getText());
         sshConnectInfo.setTimeout(this.sshTimeout.getIntValue());
+        sshConnectInfo.setIid(this.zkInfo.getId());
         return sshConnectInfo;
     }
 

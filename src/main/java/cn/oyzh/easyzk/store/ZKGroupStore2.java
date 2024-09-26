@@ -22,7 +22,7 @@ public class ZKGroupStore2 extends SqliteStore<ZKGroup> {
     public static final ZKGroupStore2 INSTANCE = new ZKGroupStore2();
 
     public List<ZKGroup> load() {
-        return super.selectList(null);
+        return super.selectList();
     }
 
     public boolean replace(ZKGroup group) {

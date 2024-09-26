@@ -10,8 +10,8 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKDataHistoryStore;
-import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
+import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
@@ -76,10 +76,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     private final ZKSetting setting = ZKSettingStore2.SETTING;
 
-    /**
-     * zk信息储存
-     */
-    private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
+    // /**
+    //  * zk信息储存
+    //  */
+    // private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
 
     public ZKConnectTreeItem(@NonNull ZKInfo value, @NonNull ZKTreeView treeView) {
         super(treeView);
@@ -332,7 +332,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         zkInfo.copy(this.value);
         zkInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         zkInfo.setCollects(Collections.emptyList());
-        if (this.infoStore.add(zkInfo)) {
+        if (ZKInfoStore2.INSTANCE.replace(zkInfo)) {
             this.parent().addConnect(zkInfo);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
@@ -346,7 +346,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             if (this.parent().delConnectItem(this)) {
                 ZKEventUtil.infoDeleted(this.value);
                 // 删除历史记录
-                ZKDataHistoryStore.INSTANCE.clear(this.value.getId());
+                ZKDataHistoryStore2.INSTANCE.delete(this.value.getId());
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -367,7 +367,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         }
         this.value.setName(connectName);
         // 修改名称
-        if (this.infoStore.update(this.value)) {
+        if (ZKInfoStore2.INSTANCE.replace(this.value)) {
             this.setValue(new ZKConnectTreeItemValue(this));
         } else {
             MessageBox.warn(I18nHelper.operationFail());

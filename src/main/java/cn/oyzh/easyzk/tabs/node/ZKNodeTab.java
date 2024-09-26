@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs.node;
 
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.store.ZKDataHistoryStore;
+import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -166,7 +166,7 @@ public class ZKNodeTab extends DynamicTab {
      */
     public void restoreData(ZKDataHistory history) {
         if (history != null) {
-            this.controller().restoreData(ZKDataHistoryStore.INSTANCE.getData(history));
+            this.controller().restoreData(ZKDataHistoryStore2.INSTANCE.getData(history.getInfoId(), history.getPath()));
         }
     }
 }

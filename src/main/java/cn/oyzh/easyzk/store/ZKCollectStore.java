@@ -34,6 +34,10 @@ public class ZKCollectStore extends SqliteStore<ZKCollect> {
         return Collections.emptyList();
     }
 
+    public boolean replace(String iid, String path) {
+        return this.replace(new ZKCollect(iid, path));
+    }
+
     public boolean replace(ZKCollect model) {
         if (model != null && !this.exist(model.getIid(), model.getPath())) {
             return this.insert(model);

@@ -2,9 +2,7 @@ package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.fx.common.sqlite.Column;
 import cn.oyzh.fx.common.sqlite.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,8 +12,6 @@ import java.io.Serializable;
  */
 @Data
 @Table("t_collect")
-@NoArgsConstructor
-@AllArgsConstructor
 public class ZKCollect implements Serializable {
 
     /**
@@ -29,5 +25,14 @@ public class ZKCollect implements Serializable {
      */
     @Column
     private String path;
+
+    public ZKCollect() {
+
+    }
+
+    public ZKCollect(String iid, String path) {
+        this.iid = iid;
+        this.path = path;
+    }
 
 }

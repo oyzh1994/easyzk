@@ -1,11 +1,13 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.fx.common.Const;
+import cn.oyzh.fx.common.sqlite.Column;
+import cn.oyzh.fx.common.sqlite.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -14,40 +16,44 @@ import java.util.Objects;
  * @author oyzh
  * @since 2024/4/23
  */
-public class ZKDataHistory implements ObjectComparator<ZKDataHistory> {
+@Getter
+@Table("t_data_history")
+public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializable {
 
     /**
      * 内容
      */
-    @Setter
-    @Getter
+    @Column
     private byte[] data;
 
-    /**
-     * 数据大小
-     */
-    @Getter
-    private String dataSize;
+    @Column
+    @Setter
+    private long dataLength;
+
+    // /**
+    //  * 数据大小
+    //  */
+    // private String dataSize;
 
     /**
      * 保存时间
      */
-    @Getter
     @Setter
+    @Column
     private long saveTime = System.currentTimeMillis();
 
     /**
      * 路径
      */
     @Setter
-    @Getter
+    @Column
     private String path;
 
     /**
      * 连接信息id
      */
     @Setter
-    @Getter
+    @Column
     private String infoId;
 
     @Override
@@ -74,23 +80,36 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory> {
         this.data = history.data;
         this.path = history.path;
         this.infoId = history.infoId;
-        this.dataSize = history.dataSize;
+        // this.dataSize = history.dataSize;
         this.saveTime = history.saveTime;
+        this.dataLength = history.dataLength;
         return this;
     }
 
-    public void dataSize(long length) {
+    public String getDataSize() {
+        long length = this.dataLength;
         if (length < 1024) {
-            this.dataSize = length + "b";
-        } else if (length < 1024 * 1024) {
-            this.dataSize = length / 1024 + "Kb";
-        } else if (length < 1024 * 1024 * 1024) {
-            this.dataSize = length / 1024 / 1024 + "Mb";
+            return length + "b";
+        }
+        if (length < 1024 * 1024) {
+            return this.dataLength / 1024 + "Kb";
+        }
+        if (length < 1024 * 1024 * 1024) {
+            return this.dataLength / 1024 / 1024 + "Mb";
+        }
+        return this.dataLength / 1024 / 1024 / 1024 + "Gb";
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+        if (data != null) {
+            this.dataLength = data.length;
+        } else {
+            this.dataLength = 0;
         }
     }
 
-
-    public String getSaveTimeExt() {
-        return Const.DATE_FORMAT.format(this.saveTime);
-    }
+    // public String getSaveTimeExt() {
+    //     return Const.DATE_FORMAT.format(this.saveTime);
+    // }
 }

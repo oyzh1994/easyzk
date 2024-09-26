@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.event.ZKSearchFireEvent;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchParam;
+import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore2;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;

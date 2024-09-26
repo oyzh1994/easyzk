@@ -24,6 +24,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/04/23
  */
+@Deprecated
 public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
 
     /**
@@ -145,7 +146,7 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
                         ZKDataHistory history = new ZKDataHistoryVO();
                         history.setPath(path);
                         history.setInfoId(infoId);
-                        history.dataSize(file.length());
+                        // history.dataSize(file.length());
                         history.setSaveTime(Long.parseLong(saveTime));
                         list.add(history);
                     }
@@ -171,7 +172,7 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
                         ZKDataHistory history = new ZKDataHistoryVO();
                         history.setPath(path);
                         history.setInfoId(infoId);
-                        history.dataSize(file.length());
+                        // history.dataSize(file.length());
                         history.setSaveTime(Long.parseLong(saveTime));
                         list.add(history);
                     }

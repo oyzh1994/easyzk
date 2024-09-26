@@ -32,9 +32,8 @@ public class ZKSearchHistoryStore2 extends SqliteStore<ZKSearchHistory> {
 
     public List<String> listKw(byte type) {
         // 查询总数
-        List<QueryParam> queryParams = new ArrayList<>();
-        queryParams.add(new QueryParam("type", type));
-        List<ZKSearchHistory> list = super.selectList(queryParams);
+        QueryParam queryParam = new QueryParam("type", type);
+        List<ZKSearchHistory> list = super.selectList(queryParam);
         return list.parallelStream().map(ZKSearchHistory::getKw).collect(Collectors.toList());
     }
 

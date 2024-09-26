@@ -1,20 +1,16 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
-import cn.oyzh.easyzk.domain.ZKSSHInfo;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.sqlite.SqliteConnManager;
-import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -151,22 +147,7 @@ public class ZKStoreUtil {
                 List<ZKInfo> list = ZKInfoStore.INSTANCE.load();
                 // 执行迁移
                 for (ZKInfo info : list) {
-                    // // ssh信息处理
-                    // if (info.getSshInfo() != null) {
-                    //     ZKSSHInfo sshInfo = info.getSshInfo();
-                    //     info.setSshHost(sshInfo.getHost());
-                    //     info.setSshPort(sshInfo.getPort());
-                    //     info.setSshUser(sshInfo.getUser());
-                    //     info.setSshTimeout(sshInfo.getTimeout());
-                    //     info.setSshPassword(sshInfo.getPassword());
-                    // }
                     ZKInfoStore2.INSTANCE.replace(info);
-                    // // 收藏迁移
-                    // if (CollUtil.isNotEmpty(info.getCollects())) {
-                    //     for (String collect : info.getCollects()) {
-                    //         ZKCollectStore.INSTANCE.replace(new ZKCollect(info.getId(), collect));
-                    //     }
-                    // }
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKInfoStore.INSTANCE.filePath()), new File(ZKInfoStore.INSTANCE.filePath() + ".bak"), true);

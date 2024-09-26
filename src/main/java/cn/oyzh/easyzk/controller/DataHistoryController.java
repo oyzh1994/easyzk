@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKHistoryAddEvent;
 import cn.oyzh.easyzk.event.ZKHistoryShowEvent;
 import cn.oyzh.easyzk.event.ZKTabChangedEvent;
-import cn.oyzh.easyzk.store.ZKDataHistoryStore;
+import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.controller.SubStageController;
@@ -29,9 +29,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -79,10 +77,10 @@ public class DataHistoryController extends SubStageController implements Initial
     @FXML
     private FlexTableColumn<ZKDataHistoryVO, String> action;
 
-    /**
-     * zk历史储存
-     */
-    private final ZKDataHistoryStore historyStore = ZKDataHistoryStore.INSTANCE;
+    // /**
+    //  * zk历史储存
+    //  */
+    // private final ZKDataHistoryStore historyStore = ZKDataHistoryStore.INSTANCE;
 
     /**
      * zk树节点
@@ -125,7 +123,7 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     private void delete(ZKDataHistory history) {
         if (MessageBox.confirm(I18nHelper.deleteData())) {
-            if (this.historyStore.delete(history)) {
+            if (ZKDataHistoryStore2.INSTANCE.delete(history.getInfoId(), history.getPath())) {
                 this.refresh();
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
@@ -178,10 +176,9 @@ public class DataHistoryController extends SubStageController implements Initial
         if (this.root.isSelected()) {
             this.listTable.clearItems();
             if (this.item != null) {
-                Map<String, Object> param = new HashMap<>();
-                param.put("path", this.item.nodePath());
-                param.put("infoId", this.item.info().getId());
-                List<ZKDataHistory> histories = this.historyStore.list(param);
+                String path = this.item.nodePath();
+                String infoId = this.item.info().getId();
+                List<ZKDataHistory> histories = ZKDataHistoryStore2.INSTANCE.list(infoId, path);
                 this.listTable.addItem(ZKDataHistoryVO.convert(histories));
             }
         }

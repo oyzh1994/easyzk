@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSSHInfo;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -158,10 +158,10 @@ public class ZKInfoUpdateController extends StageController {
     @FXML
     private FlexHBox sshTimeoutBox;
 
-    /**
-     * zk连接储存对象
-     */
-    private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
+    // /**
+    //  * zk连接储存对象
+    //  */
+    // private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
 
     /**
      * 获取连接地址
@@ -250,7 +250,7 @@ public class ZKInfoUpdateController extends StageController {
         this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
         this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
         // 保存数据
-        if (this.infoStore.update(this.zkInfo)) {
+        if (ZKInfoStore2.INSTANCE.replace(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
             MessageBox.okToast(I18nHelper.operationSuccess());
             this.closeWindow();

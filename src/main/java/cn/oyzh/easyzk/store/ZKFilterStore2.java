@@ -8,7 +8,6 @@ import cn.oyzh.fx.common.sqlite.PageParam;
 import cn.oyzh.fx.common.sqlite.QueryParam;
 import cn.oyzh.fx.common.sqlite.SqliteStore;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +32,9 @@ public class ZKFilterStore2 extends SqliteStore<ZKFilter> {
      *
      * @return 已启用的数据列表
      */
-    public  List<ZKFilter> loadEnable() {
-        List<QueryParam> params = new ArrayList<>();
-        params.add(new QueryParam("enable", 1));
-        return super.selectList(params);
+    public List<ZKFilter> loadEnable() {
+        QueryParam queryParam = new QueryParam("enable", 1);
+        return super.selectList(queryParam);
     }
 
     public boolean replace(ZKFilter model) {

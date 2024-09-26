@@ -22,8 +22,8 @@ public class ZKInfoStore2 extends SqliteStore<ZKInfo> {
     public List<ZKInfo> load() {
         List<ZKInfo> list = super.selectList();
         for (ZKInfo info : list) {
-            // 处理收藏
-            info.setCollects(ZKCollectStore.INSTANCE.list(info.getId()));
+            // // 处理收藏
+            // info.setCollects(ZKCollectStore.INSTANCE.list(info.getId()));
             // 处理ssh
             info.setSshInfo(ZKSSHInfoStore.INSTANCE.find(info.getId()));
         }

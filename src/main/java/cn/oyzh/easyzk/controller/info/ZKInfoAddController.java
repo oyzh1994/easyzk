@@ -6,9 +6,8 @@ import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSSHInfo;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
-import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
@@ -158,10 +157,10 @@ public class ZKInfoAddController extends StageController {
      */
     private ZKGroup group;
 
-    /**
-     * zk连接储存对象
-     */
-    private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
+    // /**
+    //  * zk连接储存对象
+    //  */
+    // private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
 
     /**
      * 获取连接地址
@@ -252,7 +251,7 @@ public class ZKInfoAddController extends StageController {
             zkInfo.setConnectTimeOut(connectTimeOut.intValue());
             zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
             // 保存数据
-            boolean result = this.infoStore.add(zkInfo);
+            boolean result = ZKInfoStore2.INSTANCE.replace(zkInfo);
             if (result) {
                 ZKEventUtil.infoAdded(zkInfo);
                 MessageBox.okToast(I18nHelper.operationSuccess());

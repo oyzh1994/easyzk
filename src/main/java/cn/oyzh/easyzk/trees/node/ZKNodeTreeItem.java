@@ -9,8 +9,8 @@ import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKDataHistoryStore;
-import cn.oyzh.easyzk.store.ZKInfoStore;
+import cn.oyzh.easyzk.store.ZKCollectStore;
+import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
@@ -27,9 +27,9 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CancelOperationMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -1104,7 +1104,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 节点是否被收藏
      */
     public boolean isCollect() {
-        return this.info().isCollect(this.nodePath());
+        // return this.info().isCollect(this.nodePath());
+        return ZKCollectStore.INSTANCE.exist(this.info().getId(), this.nodePath());
     }
 
     /**
@@ -1112,16 +1113,18 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void collect() {
         this.info().addCollect(this.nodePath());
-        ZKInfoStore.INSTANCE.update(this.info());
+        // ZKInfoStore.INSTANCE.update(this.info());
+        ZKCollectStore.INSTANCE.replace(this.info().getId(), this.nodePath());
     }
 
     /**
      * 取消收藏节点
      */
     public void unCollect() {
-        if (this.info().removeCollect(this.nodePath())) {
-            ZKInfoStore.INSTANCE.update(this.info());
-        }
+        // if (this.info().removeCollect(this.nodePath())) {
+        //     ZKInfoStore.INSTANCE.update(this.info());
+        ZKCollectStore.INSTANCE.delete(this.info().getId(), this.nodePath());
+        // }
     }
 
     /**
@@ -1344,7 +1347,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         history.setData(this.nodeData());
         history.setPath(this.nodePath());
         history.setInfoId(this.info().getId());
-        ZKDataHistoryStore.INSTANCE.add(history);
+        ZKDataHistoryStore2.INSTANCE.replace(history);
         ZKEventUtil.historyAdd(history, this);
     }
 }

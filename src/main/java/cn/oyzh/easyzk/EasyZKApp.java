@@ -12,24 +12,24 @@ import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.spring.SpringApplication;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.theme.ThemeManager;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.ComponentScan;
-//import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration;
-//import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
-//import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
-//import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
-//import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
-//import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
-//import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-//import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
-//import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
-//import org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration;
-//import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
-//import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
+// import org.springframework.boot.autoconfigure.SpringBootApplication;
+// import org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration;
+// import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
+// import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
+// import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
+// import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
+// import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
+// import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+// import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
+// import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
+// import org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration;
+// import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
+// import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
 
 
 /**
@@ -56,10 +56,15 @@ import org.springframework.context.annotation.ComponentScan;
 //)
 @ComponentScan(
         lazyInit = true,
-        value = {"cn.oyzh.fx.common","cn.oyzh.easyzk"}
+        value = {"cn.oyzh.fx.common", "cn.oyzh.easyzk"}
 )
 @EnableSpringUtil
 public class EasyZKApp extends SpringApplication {
+
+    /**
+     * 启动实际
+     */
+    private final long startAt = System.currentTimeMillis();
 
     public static void main(String[] args) {
         launchSpring(EasyZKApp.class, args);
@@ -90,6 +95,12 @@ public class EasyZKApp extends SpringApplication {
             SystemUtil.gcInterval(60_000);
             // 设置stage全部关闭后不自动销毁进程
             Platform.setImplicitExit(false);
+            // 启动耗时
+            long cost = System.currentTimeMillis() - this.startAt;
+            // 内存消耗
+            double usedMemory = SystemUtil.getUsedMemory();
+            StaticLog.info("启动耗时:{}ms-------------------------------", +cost);
+            StaticLog.info("内存消耗:{}mb-------------------------------", +usedMemory);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

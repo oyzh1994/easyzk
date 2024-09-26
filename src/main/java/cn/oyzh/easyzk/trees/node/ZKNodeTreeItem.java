@@ -24,7 +24,6 @@ import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.CancelOperationMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
@@ -62,7 +61,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     @Getter
     @Accessors(fluent = true, chain = true)
-    private final ZKNode value;
+    private ZKNode value;
 
     /**
      * 字符集
@@ -121,7 +120,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     @Getter
     @Accessors(fluent = true, chain = true)
-    private final ZKConnectTreeItem root;
+    private ZKConnectTreeItem root;
 
     /**
      * 设置被删除状态
@@ -592,7 +591,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.loading) {
-            CancelOperationMenuItem cancel = new CancelOperationMenuItem("11", this::cancel);
+            FXMenuItem cancel = MenuItemHelper.cancelOperation("11", this::cancel);
             items.add(cancel);
         } else {
             FXMenuItem auth = MenuItemHelper.authNode("12", this::authNode);
@@ -1349,5 +1348,23 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         history.setInfoId(this.info().getId());
         ZKDataHistoryStore2.INSTANCE.replace(history);
         ZKEventUtil.historyAdd(history, this);
+    }
+
+    @Override
+    public void destroy() {
+        if (this.treeEventEventHandler != null) {
+            this.removeEventHandler(treeNotificationEvent(), this.treeEventEventHandler);
+            this.treeEventEventHandler = null;
+        }
+        this.root = null;
+        this.value = null;
+        this.charset = null;
+        this.updateData = null;
+        this.aclListener = null;
+        this.dataListener = null;
+        this.dataProperty = null;
+        this.statListener = null;
+        this.quotaListener = null;
+        super.destroy();
     }
 }

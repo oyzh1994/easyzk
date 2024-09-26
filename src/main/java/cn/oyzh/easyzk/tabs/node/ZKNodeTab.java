@@ -13,7 +13,6 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import javafx.scene.Cursor;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.experimental.Accessors;
 
 import java.util.Objects;
 
@@ -31,12 +30,19 @@ public class ZKNodeTab extends DynamicTab {
     @Getter
     private final long openedTime = System.currentTimeMillis();
 
+    // /**
+    //  * zk树节点
+    //  */
+    // @Getter
+    // @Accessors(fluent = true, chain = true)
+    // private ZKNodeTreeItem treeItem;
+
     /**
      * zk树节点
      */
-    @Getter
-    @Accessors(fluent = true, chain = true)
-    private ZKNodeTreeItem treeItem;
+    public ZKNodeTreeItem treeItem() {
+        return this.getProp("_treeItem");
+    }
 
     /**
      * 执行初始化
@@ -44,8 +50,8 @@ public class ZKNodeTab extends DynamicTab {
      * @param treeItem zk树节点
      */
     public void init(@NonNull ZKNodeTreeItem treeItem) {
-        if (treeItem != this.treeItem) {
-            this.treeItem = treeItem;
+        if (treeItem != this.treeItem()) {
+            this.setProp("_treeItem", treeItem);
             // 初始化
             this.controller().init(treeItem);
             // 刷新tab
@@ -59,24 +65,27 @@ public class ZKNodeTab extends DynamicTab {
      * 检查状态
      */
     public void checkStatus() {
+        if (this.treeItem() == null) {
+            return;
+        }
         // 节点被移除
-        if (this.treeItem.isBeDeleted()) {
-            if (!this.treeItem.isIgnoreDeleted()) {
+        if (this.treeItem().isBeDeleted()) {
+            if (!this.treeItem().isIgnoreDeleted()) {
                 if (MessageBox.confirm(ZKI18nHelper.nodeTip2())) {
-                    this.treeItem.remove();
+                    this.treeItem().remove();
                     this.closeTab();
                 } else {
-                    this.treeItem.setIgnoreDeleted(true);
+                    this.treeItem().setIgnoreDeleted(true);
                 }
             }
-        } else if (this.treeItem.isBeUpdated()) { // 节点被更新
-            if (!this.treeItem.isIgnoreUpdated()) {
+        } else if (this.treeItem().isBeUpdated()) { // 节点被更新
+            if (!this.treeItem().isIgnoreUpdated()) {
                 if (MessageBox.confirm(ZKI18nHelper.nodeTip1())) {
-                    this.treeItem.applyUpdate();
-                    this.controller().init(this.treeItem);
-                    this.treeItem.flushGraphic();
+                    this.treeItem().applyUpdate();
+                    this.controller().init(this.treeItem());
+                    this.treeItem().flushGraphic();
                 } else {
-                    this.treeItem.setIgnoreUpdated(true);
+                    this.treeItem().setIgnoreUpdated(true);
                 }
             }
         }
@@ -84,16 +93,22 @@ public class ZKNodeTab extends DynamicTab {
 
     @Override
     public void flushTitle() {
+        if (this.treeItem() == null) {
+            return;
+        }
         // 设置文本
-        this.setText(this.treeItem.infoName() + "-" + this.treeItem.decodeNodePath());
+        this.setText(this.treeItem().infoName() + "-" + this.treeItem().decodeNodePath());
         // 设置提示文本
-        this.setTipText(this.treeItem.infoName() + "-" + this.treeItem.decodeNodePath());
+        this.setTipText(this.treeItem().infoName() + "-" + this.treeItem().decodeNodePath());
     }
 
     @Override
     public void flushGraphic() {
+        if (this.treeItem() == null) {
+            return;
+        }
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
-        String svgUrl = this.treeItem.getSVGUrl();
+        String svgUrl = this.treeItem().getSVGUrl();
         if (glyph == null || !Objects.equals(glyph.getUrl(), svgUrl)) {
             glyph = new SVGGlyph(svgUrl, "12");
             glyph.setCursor(Cursor.DEFAULT);
@@ -103,8 +118,11 @@ public class ZKNodeTab extends DynamicTab {
 
     @Override
     public void flushGraphicColor() {
+        if (this.treeItem() == null) {
+            return;
+        }
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
-        SVGGlyph graphic = this.treeItem.graphic();
+        SVGGlyph graphic = this.treeItem().graphic();
         if (glyph != null && graphic != null && graphic.getColor() != glyph.getColor()) {
             this.fill(graphic.getColor());
         }
@@ -137,7 +155,10 @@ public class ZKNodeTab extends DynamicTab {
      * @return zk信息
      */
     public ZKInfo info() {
-        return this.treeItem.info();
+        if (this.treeItem() == null) {
+            return null;
+        }
+        return this.treeItem().info();
     }
 
     /**
@@ -146,7 +167,10 @@ public class ZKNodeTab extends DynamicTab {
      * @return zk客户端
      */
     public ZKClient client() {
-        return this.treeItem.client();
+        if (this.treeItem() == null) {
+            return null;
+        }
+        return this.treeItem().client();
     }
 
     @Override

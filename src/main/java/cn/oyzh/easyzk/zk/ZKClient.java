@@ -946,6 +946,9 @@ public class ZKClient {
      * @return 状态
      */
     public Stat checkExists(@NonNull String path) throws Exception {
+        if (this.framework == null) {
+            return null;
+        }
         return this.framework.checkExists().forPath(path);
     }
 

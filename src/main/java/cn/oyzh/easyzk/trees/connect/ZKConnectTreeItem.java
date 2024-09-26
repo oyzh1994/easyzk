@@ -26,11 +26,10 @@ import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -106,7 +105,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.isConnecting()) {
-            CancelConnectMenuItem cancelConnect = new CancelConnectMenuItem("12", this::cancelConnect);
+            FXMenuItem cancelConnect =  MenuItemHelper.cancelConnect("12", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
             FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
@@ -129,9 +128,9 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             ZKNodeTreeItem firstChild = this.firstChild();
             // 根节点不为空，加载全部，收缩全部，展开全部菜单启用
             if (firstChild != null && firstChild.value().parentNode()) {
-                FXMenuItem loadAll = MenuItemHelper.loadAll("12", firstChild::loadChildAll);
-                FXMenuItem expandAll = MenuItemHelper.expandAll("12", firstChild::expandAll);
-                FXMenuItem collapseAll = MenuItemHelper.collapseAll("12", firstChild::collapseAll);
+                FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
+                FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);
+                FXMenuItem collapseAll = MenuItemHelper.collapseAll("12", this::collapseAll);
                 items.add(loadAll);
                 items.add(expandAll);
                 items.add(collapseAll);
@@ -156,6 +155,27 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
         items.add(openTerminal);
         return items;
+    }
+
+    private void collapseAll() {
+        ZKNodeTreeItem firstChild = this.firstChild();
+        if (firstChild != null) {
+            firstChild.collapseAll();
+        }
+    }
+
+    private void expandAll() {
+        ZKNodeTreeItem firstChild = this.firstChild();
+        if (firstChild != null) {
+            firstChild.expandAll();
+        }
+    }
+
+    private void loadChildAll() {
+        ZKNodeTreeItem firstChild = this.firstChild();
+        if (firstChild != null) {
+            firstChild.loadChildAll();
+        }
     }
 
     /**
@@ -272,7 +292,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func)
-                    .onFinish(()->{
+                    .onFinish(() -> {
                         this.stopWaiting();
                         this.flushGraphic();
                     })

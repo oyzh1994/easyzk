@@ -44,6 +44,10 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
     public void flushGraphicColor() {
         // 获取当前图形符号
         SVGGlyph glyph = this.graphic();
+        if (glyph == null) {
+            this.flushGraphic();
+            glyph = this.graphic();
+        }
         if (this.treeItem.isConnected() || this.treeItem.isConnecting()) {
             glyph.setColor(Color.GREEN);
         } else {

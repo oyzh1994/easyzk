@@ -22,17 +22,23 @@ import java.util.Objects;
  */
 public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
-    /**
-     * 树节点
-     */
-    private final ZKNodeTreeItem item;
-
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
-        this.item = item;
+        super.setProp("_item", item);
+    }
+
+    private ZKNodeTreeItem getItem() {
+        return this.getProp("_item");
+    }
+
+    private boolean isInvalid() {
+        return !this.hasProp("_item");
     }
 
     @Override
     public void flushGraphic() {
+        if (this.isInvalid()) {
+            return;
+        }
         SVGGlyph glyph = this.graphic();
         if (glyph != null && glyph.isWaiting()) {
             return;
@@ -43,7 +49,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
             glyph = new SVGGlyph(svgUrl, 10);
             glyph.disableTheme();
             this.graphic(glyph);
-            ZKEventUtil.graphicChanged(this.item);
+            ZKEventUtil.graphicChanged(this.getItem());
         }
     }
 
@@ -51,10 +57,13 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
      * 刷新内容
      */
     public void flush() {
+        if (this.isInvalid()) {
+            return;
+        }
         this.flushGraphic();
         this.flushText();
         this.flushGraphicColor();
-        this.flushNum(this.item.value().getNumChildren(), this.item.getChildren().size());
+        this.flushNum(this.getItem().value().getNumChildren(), this.getItem().getChildren().size());
     }
 
     /**
@@ -62,37 +71,40 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
      */
     @Override
     public void flushGraphicColor() {
+        if (this.isInvalid()) {
+            return;
+        }
         // 获取图形符号
         SVGGlyph glyph = this.graphic();
         // 如果节点被删除
-        if (this.item.isBeDeleted()) {
+        if (this.getItem().isBeDeleted()) {
             // 如果图形颜色不是红色
             if (glyph.getColor() != Color.RED) {
                 // 设置图形颜色为红色
                 glyph.setColor(Color.RED);
                 // 触发图形颜色改变事件
-                ZKEventUtil.graphicColorChanged(this.item);
+                ZKEventUtil.graphicColorChanged(this.getItem());
             }
-        } else if (this.item.dataUnsaved()) { // 如果节点数据未保存
+        } else if (this.getItem().dataUnsaved()) { // 如果节点数据未保存
             // 如果图形颜色不是橙色
             if (glyph.getColor() != Color.ORANGE) {
                 // 设置图形颜色为橙色
                 glyph.setColor(Color.ORANGE);
                 // 触发图形颜色改变事件
-                ZKEventUtil.graphicColorChanged(this.item);
+                ZKEventUtil.graphicColorChanged(this.getItem());
             }
-        } else if (this.item.isBeUpdated()) { // 如果节点已被更新
+        } else if (this.getItem().isBeUpdated()) { // 如果节点已被更新
             // 如果图形颜色不是紫色
             if (glyph.getColor() != Color.PURPLE) {
                 // 设置图形颜色为紫色
                 glyph.setColor(Color.PURPLE);
                 // 触发图形颜色改变事件
-                ZKEventUtil.graphicColorChanged(this.item);
+                ZKEventUtil.graphicColorChanged(this.getItem());
             }
         } else {
             super.flushGraphicColor();
             // 触发图形颜色改变事件
-            ZKEventUtil.graphicColorChanged(this.item);
+            ZKEventUtil.graphicColorChanged(this.getItem());
         }
     }
 
@@ -102,9 +114,12 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
      * @return 图标地址
      */
     public String getSVGUrl() {
-        ZKNode value = this.item.value();
+        if (this.isInvalid()) {
+            return null;
+        }
+        ZKNode value = this.getItem().value();
         // 需要认证
-        if (ZKAuthUtil.isNeedAuth(value, this.item.client())) {
+        if (ZKAuthUtil.isNeedAuth(value, this.getItem().client())) {
             return "/fx-plus/font/lock.svg";
         }
         // 临时节点
@@ -116,7 +131,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
             return "/font/file-text.svg";
         }
         // 父节点，已加载
-        if (this.item.loaded()) {
+        if (this.getItem().loaded()) {
             return "/font/folder-open.svg";
         }
         // 父节点，未加载
@@ -156,6 +171,9 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public String name() {
-        return this.item.decodeNodeName();
+        if (this.isInvalid()) {
+            return null;
+        }
+        return this.getItem().decodeNodeName();
     }
 }

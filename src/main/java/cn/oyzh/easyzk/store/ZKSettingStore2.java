@@ -23,7 +23,7 @@ public class ZKSettingStore2 extends SqliteStore<ZKSetting> {
     /**
      * 数据id
      */
-    private static final String DATA_UID = "current";
+    private static final String DATA_UID = "DEFAULT";
 
     public ZKSetting load() {
         ZKSetting setting = super.selectOne(DATA_UID);

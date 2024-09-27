@@ -10,7 +10,7 @@ import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.jdbc.SqliteConnManager;
+import cn.oyzh.fx.common.jdbc.JdbcConnManager;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -31,7 +31,7 @@ public class ZKStoreUtil {
      */
     public static void init() {
         try {
-            SqliteConnManager.initDb(ZKConst.STORE_PATH + "easyzk.db");
+            JdbcConnManager.initDb(ZKConst.STORE_PATH + "easyzk.db");
         } catch (Exception ex) {
             ex.printStackTrace();
             // 提示

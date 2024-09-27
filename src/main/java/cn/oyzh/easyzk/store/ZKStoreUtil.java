@@ -10,6 +10,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.sqlite.SqliteConnManager;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -55,7 +56,7 @@ public class ZKStoreUtil {
                 ZKSettingStore2.INSTANCE.replace(setting);
                 // 转移旧文件
                 FileUtil.move(new File(ZKSettingStore.INSTANCE.filePath()), new File(ZKSettingStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("配置数据迁移成功");
+                JulLog.info("配置数据迁移成功");
             }
 
             // 迁移页面数据
@@ -76,7 +77,7 @@ public class ZKStoreUtil {
                 ZKSettingStore2.INSTANCE.replace(setting);
                 // 转移旧文件
                 FileUtil.move(new File(ZKPageInfoStore.INSTANCE.filePath()), new File(ZKPageInfoStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("页面数据迁移成功");
+                JulLog.info("页面数据迁移成功");
             }
 
             // 迁移分组数据
@@ -91,7 +92,7 @@ public class ZKStoreUtil {
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKGroupStore.INSTANCE.filePath()), new File(ZKGroupStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("分组数据迁移成功");
+                JulLog.info("分组数据迁移成功");
             }
 
             // 迁移认证数据
@@ -106,7 +107,7 @@ public class ZKStoreUtil {
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKAuthStore.INSTANCE.filePath()), new File(ZKAuthStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("认证数据迁移成功");
+                JulLog.info("认证数据迁移成功");
             }
 
             // 迁移过滤数据
@@ -121,7 +122,7 @@ public class ZKStoreUtil {
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKFilterStore.INSTANCE.filePath()), new File(ZKFilterStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("过滤数据迁移成功");
+                JulLog.info("过滤数据迁移成功");
             }
 
             // 迁移搜索数据
@@ -136,7 +137,7 @@ public class ZKStoreUtil {
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKSearchHistoryStore.INSTANCE.filePath()), new File(ZKSearchHistoryStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("搜索数据迁移成功");
+                JulLog.info("搜索数据迁移成功");
             }
 
             // 迁移信息数据
@@ -151,7 +152,7 @@ public class ZKStoreUtil {
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKInfoStore.INSTANCE.filePath()), new File(ZKInfoStore.INSTANCE.filePath() + ".bak"), true);
-                StaticLog.info("信息数据迁移成功");
+                JulLog.info("信息数据迁移成功");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

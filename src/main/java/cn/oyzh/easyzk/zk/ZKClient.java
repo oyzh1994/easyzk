@@ -16,6 +16,7 @@ import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.ssh.SSHForwardInfo;
 import cn.oyzh.fx.common.ssh.SSHForwarder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -276,9 +277,9 @@ public class ZKClient {
                 // 连接成功
                 if (s == ConnectionState.CONNECTED) {
                     long endTime = System.currentTimeMillis();
-                    StaticLog.info("zkClient connected used:{}ms.", (endTime - starTime.get()));
+                    JulLog.info("zkClient connected used:{}ms.", (endTime - starTime.get()));
                 }
-                StaticLog.info("ConnectionState changed:{}==============================", s);
+                JulLog.info("ConnectionState changed:{}==============================", s);
             });
             // 开始连接时间
             starTime.set(System.currentTimeMillis());
@@ -304,7 +305,7 @@ public class ZKClient {
             }
         } catch (Exception ex) {
             this.state.set(ZKConnState.FAILED);
-            StaticLog.warn("zkClient start error", ex);
+            JulLog.warn("zkClient start error", ex);
             throw new ZKException(ex);
         }
     }
@@ -334,7 +335,7 @@ public class ZKClient {
             // 加载已启用的认证
             List<ZKAuth> auths = ZKAuthUtil.loadEnableAuths();
             authInfos = ZKAuthUtil.toAuthInfo(auths);
-            StaticLog.info("auto authorization, auths: {}.", auths);
+            JulLog.info("auto authorization, auths: {}.", auths);
         }
         // 重试策略
         if (this.retryPolicy == null) {
@@ -369,9 +370,9 @@ public class ZKClient {
             this.closeTreeCache();
             this.initialized = false;
             ZKAuthUtil.removeAuthed(this);
-            StaticLog.info("zkClient closed.");
+            JulLog.info("zkClient closed.");
         } catch (Exception ex) {
-            StaticLog.warn("zkClient close error.", ex);
+            JulLog.warn("zkClient close error.", ex);
         }
     }
 
@@ -494,7 +495,7 @@ public class ZKClient {
             return this.framework.setACL().withVersion(version == null ? -1 : version).withACL(aclList).forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoAdminPermException(path);
             }
             throw ex;
@@ -518,7 +519,7 @@ public class ZKClient {
             }
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoAdminPermException(path);
             }
             throw ex;
@@ -664,7 +665,7 @@ public class ZKClient {
         } catch (Exception ex) {
             this.lastCreate = old;
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoCreatePermException(path);
             }
             throw ex;
@@ -725,7 +726,7 @@ public class ZKClient {
             return this.framework.getChildren().forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoChildPermException(path);
             }
             throw ex;
@@ -744,7 +745,7 @@ public class ZKClient {
         } catch (IllegalStateException ignore) {
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoChildPermException(path);
             }
             throw ex;
@@ -762,7 +763,7 @@ public class ZKClient {
             return this.framework.getData().forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoReadPermException(path);
             }
             throw ex;
@@ -781,7 +782,7 @@ public class ZKClient {
         } catch (IllegalStateException ignore) {
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoReadPermException(path);
             }
             throw ex;
@@ -813,7 +814,7 @@ public class ZKClient {
             return this.framework.getACL().forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoAdminPermException(path);
             }
             throw ex;
@@ -832,7 +833,7 @@ public class ZKClient {
         } catch (IllegalStateException ignore) {
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoAdminPermException(path);
             }
             throw ex;
@@ -884,7 +885,7 @@ public class ZKClient {
         } catch (Exception ex) {
             this.lastUpdate = old;
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoWritePermException(path);
             }
             throw ex;
@@ -932,7 +933,7 @@ public class ZKClient {
         } catch (Exception ex) {
             this.lastDelete = old;
             if (ex instanceof KeeperException.NoAuthException) {
-                StaticLog.error("path:{} NoAuth!", path);
+                JulLog.error("path:{} NoAuth!", path);
                 throw new ZKNoDeletePermException(path);
             }
             throw ex;

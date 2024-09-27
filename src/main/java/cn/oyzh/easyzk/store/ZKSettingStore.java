@@ -30,7 +30,7 @@ public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
     //
     // {
     //     this.filePath(ZKConst.STORE_PATH + "zk_setting.json");
-    //     StaticLog.info("ZKSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    //     JulLog.info("ZKSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     // }
 
     public ZKSettingStore() {

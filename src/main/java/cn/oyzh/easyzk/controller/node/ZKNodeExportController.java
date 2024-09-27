@@ -16,6 +16,7 @@ import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
@@ -213,7 +214,7 @@ public class ZKNodeExportController extends StageController {
                 this.getNodeAll(this.exportPath, properties, zkNodes);
                 // 取消操作
                 if (ThreadUtil.isInterrupted(this.execTask)) {
-                    StaticLog.warn("export canceled!");
+                    JulLog.warn("export canceled!");
                     return;
                 }
                 // 排除临时节点

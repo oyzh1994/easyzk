@@ -8,6 +8,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import lombok.NonNull;
 
@@ -39,7 +40,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
 
     // {
     //     this.filePath(ZKConst.STORE_PATH + "zk_search_history.json");
-    //     StaticLog.info("ZKSearchHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    //     JulLog.info("ZKSearchHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     // }
 
     public ZKSearchHistoryStore() {
@@ -100,7 +101,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
             // 保存数据
             return this.save(histories);
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }

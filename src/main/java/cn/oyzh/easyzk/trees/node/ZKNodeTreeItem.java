@@ -18,6 +18,7 @@ import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -850,7 +851,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             // 刷新父节点值
             parent.flushValue();
         } else {
-            StaticLog.warn("remove fail, this.parent() is null.");
+            JulLog.warn("remove fail, this.parent() is null.");
         }
     }
 
@@ -865,7 +866,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             if (node != null) {
                 this.addChild(node);
             } else {
-                StaticLog.warn("获取zk节点:{} 失败", path);
+                JulLog.warn("获取zk节点:{} 失败", path);
             }
         }
     }
@@ -893,7 +894,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 刷新zk节点数据
      */
     public void refreshData() throws Exception {
-        StaticLog.debug("refreshData.");
+        JulLog.debug("refreshData.");
         ZKNodeUtil.refreshData(this.client(), this.value);
         // 清空未保存的数据
         this.clearData();
@@ -905,7 +906,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 刷新zk节点权限
      */
     public void refreshACL() throws Exception {
-        StaticLog.debug("refreshACL.");
+        JulLog.debug("refreshACL.");
         this.value.acl(this.client().getACL(this.nodePath()));
         // 刷新图标
         this.flushGraphic();

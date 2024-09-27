@@ -52,6 +52,27 @@
             </exclusions>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.24.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.24.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>2.24.0</version>
+        </dependency>
+
         <!-- 加密工具类库 -->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -81,6 +102,10 @@
                     <groupId>com.google.guava</groupId>
                     <artifactId>guava</artifactId>
                 </exclusion>
+                <!-- <exclusion> -->
+                <!--     <groupId>org.slf4j</groupId> -->
+                <!--     <artifactId>slf4j-api</artifactId> -->
+                <!-- </exclusion> -->
             </exclusions>
         </dependency>
 
@@ -171,17 +196,24 @@
             <artifactId>fx-terminal</artifactId>
         </dependency>
 
-        <!-- fx打包 -->
+        <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
         <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>fx-pkg</artifactId>
-            <scope>test</scope>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>${sqllit.version}</version>
         </dependency>
 
         <!-- ssh类库 -->
         <dependency>
             <groupId>com.github.mwiede</groupId>
             <artifactId>jsch</artifactId>
+        </dependency>
+
+        <!-- fx打包 -->
+        <dependency>
+            <groupId>cn.oyzh</groupId>
+            <artifactId>fx-pkg</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- 测试类库 -->

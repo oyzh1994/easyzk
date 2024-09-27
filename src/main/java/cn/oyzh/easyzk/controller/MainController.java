@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -77,7 +78,7 @@ public class MainController extends ParentStageController {
      */
     private void initSystemTray() {
         if (!TrayManager.supported()) {
-            StaticLog.warn("tray is not supported.");
+            JulLog.warn("tray is not supported.");
             return;
         }
         if (!TrayManager.exist()) {
@@ -92,7 +93,7 @@ public class MainController extends ParentStageController {
                 TrayManager.addMenuItem(new SettingTrayItem("12", this::showSetting));
                 // 退出程序
                 TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
-                    StaticLog.warn("exit app by tray.");
+                    JulLog.warn("exit app by tray.");
                     StageManager.exit();
                 }));
                 // 鼠标事件
@@ -115,10 +116,10 @@ public class MainController extends ParentStageController {
         FXUtil.runLater(() -> {
             StageAdapter wrapper = StageManager.getStage(SettingController.class);
             if (wrapper != null) {
-                StaticLog.info("front setting.");
+                JulLog.info("front setting.");
                 wrapper.toFront();
             } else {
-                StaticLog.info("show setting.");
+                JulLog.info("show setting.");
                 StageManager.showStage(SettingController.class, this.stage);
             }
         });
@@ -131,10 +132,10 @@ public class MainController extends ParentStageController {
         FXUtil.runLater(() -> {
             StageAdapter wrapper = StageManager.getStage(MainController.class);
             if (wrapper != null) {
-                StaticLog.info("front main.");
+                JulLog.info("front main.");
                 wrapper.toFront();
             } else {
-                StaticLog.info("show main.");
+                JulLog.info("show main.");
                 StageManager.showStage(MainController.class);
             }
         });
@@ -147,25 +148,25 @@ public class MainController extends ParentStageController {
 
     @Override
     public void onStageCloseRequest(WindowEvent event) {
-        StaticLog.warn("main view closing.");
+        JulLog.warn("main view closing.");
         // 直接退出应用
         if (this.setting.isExitDirectly()) {
-            StaticLog.info("exit directly.");
+            JulLog.info("exit directly.");
             StageManager.exit();
         } else if (this.setting.isExitAsk()) { // 总是询问
             if (MessageBox.confirm(I18nHelper.quit() + this.project.getName())) {
-                StaticLog.info("exit by confirm.");
+                JulLog.info("exit by confirm.");
                 StageManager.exit();
             } else {
-                StaticLog.info("cancel by confirm.");
+                JulLog.info("cancel by confirm.");
                 event.consume();
             }
         } else if (this.setting.isExitTray()) {// 系统托盘
             if (TrayManager.exist()) {
-                StaticLog.info("show tray.");
+                JulLog.info("show tray.");
                 TrayManager.show();
             } else {
-                StaticLog.error("tray not support!");
+                JulLog.error("tray not support!");
                 MessageBox.warn(I18nHelper.trayNotSupport());
             }
         }
@@ -184,7 +185,7 @@ public class MainController extends ParentStageController {
             this.initSystemTray();
             TrayManager.show();
         } catch (Exception ex) {
-            StaticLog.warn("不支持系统托盘!");
+            JulLog.warn("不支持系统托盘!");
             ex.printStackTrace();
         }
     }
@@ -221,16 +222,16 @@ public class MainController extends ParentStageController {
         if (this.setting.isRememberPageSize()) {
             if (this.setting.isPageMaximized()) {
                 this.stage.setMaximized(true);
-                StaticLog.debug("view maximized");
+                JulLog.debug("view maximized");
             } else if (this.setting.getPageWidth() != null && this.setting.getPageHeight() != null) {
                 this.stage.setSize(this.setting.getPageWidth(), this.setting.getPageHeight());
-                StaticLog.debug("view width:{} height:{}", this.setting.getPageWidth(), this.setting.getPageHeight());
+                JulLog.debug("view width:{} height:{}", this.setting.getPageWidth(), this.setting.getPageHeight());
             }
         }
         // 设置上次保存的页面位置
         if (this.setting.isRememberPageLocation() && !this.setting.isPageMaximized() && this.setting.getPageScreenX() != null && this.setting.getPageScreenY() != null) {
             this.stage.setLocation(this.setting.getPageScreenX(), this.setting.getPageScreenY());
-            StaticLog.debug("view x:{} y:{}", this.setting.getPageScreenX(), this.setting.getPageScreenY());
+            JulLog.debug("view x:{} y:{}", this.setting.getPageScreenX(), this.setting.getPageScreenY());
         }
     }
 

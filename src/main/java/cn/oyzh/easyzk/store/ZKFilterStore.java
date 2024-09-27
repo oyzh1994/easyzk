@@ -8,6 +8,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import lombok.NonNull;
 
@@ -35,7 +36,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
 
     // {
     //     this.filePath(ZKConst.STORE_PATH + "zk_filter.json");
-    //     StaticLog.info("ZKFilterStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    //     JulLog.info("ZKFilterStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     // }
 
     public ZKFilterStore() {
@@ -88,7 +89,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
             return true;
         } catch (Exception e) {
             // 捕获异常并打印错误日志
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -107,7 +108,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
                 return this.save(filters);
             }
         } catch (Exception e) {
-            StaticLog.warn("update error,err:{}", e.getMessage());
+            JulLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -127,7 +128,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
                 return this.save(filters);
             }
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

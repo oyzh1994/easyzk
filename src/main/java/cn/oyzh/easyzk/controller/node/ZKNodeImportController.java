@@ -10,6 +10,7 @@ import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKExportUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
@@ -226,7 +227,7 @@ public class ZKNodeImportController extends StageController {
                 for (Map<String, String> zkNode : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.execTask)) {
-                        StaticLog.warn("import canceled!");
+                        JulLog.warn("import canceled!");
                         break;
                     }
                     // 获取数据

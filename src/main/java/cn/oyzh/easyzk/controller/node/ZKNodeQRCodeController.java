@@ -6,6 +6,7 @@ import cn.hutool.extra.qrcode.QrConfig;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -56,11 +57,11 @@ public class ZKNodeQRCodeController extends StageController {
     private void initQRCode() {
         ByteArrayInputStream bais = null;
         try {
-            StaticLog.info("read icon begin.");
+            JulLog.info("read icon begin.");
             // icon图片
             var iconUrl = ResourceUtil.getResource(ZKConst.ICON_PATH);
             var icon = ImageIO.read(iconUrl);
-            StaticLog.info("read icon finish.");
+            JulLog.info("read icon finish.");
             ZKNode zkNode = this.getWindowProp("zkNode");
             String nodeData = this.getWindowProp("nodeData");
             StringBuilder builder = new StringBuilder();
@@ -76,17 +77,17 @@ public class ZKNodeQRCodeController extends StageController {
 //                        .append(I18nHelper.createTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
 //                        .append(I18nHelper.updateTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
 //            }
-            StaticLog.info("generate qrcode begin.");
+            JulLog.info("generate qrcode begin.");
             QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
             config.setImg(icon);
             byte[] bytes = QrCodeUtil.generatePng(builder.toString(), config);
             bais = new ByteArrayInputStream(bytes);
             this.qrcode.setImage(new Image(bais));
-            StaticLog.info("generate qrcode finish size:{}", bais.available());
+            JulLog.info("generate qrcode finish size:{}", bais.available());
         } catch (Exception ex) {
             this.closeWindow();
             ex.printStackTrace();
-            StaticLog.warn("initQRCode error, ex:{}", ex.getMessage());
+            JulLog.warn("initQRCode error, ex:{}", ex.getMessage());
             if (ex.getMessage().contains("Data too big")) {
                 MessageBox.warn(I18nHelper.dataTooLarge());
             } else {

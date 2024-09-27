@@ -8,6 +8,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import lombok.NonNull;
 
@@ -35,7 +36,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
 
     // {
     //     this.filePath(ZKConst.STORE_PATH + "zk_auth.json");
-    //     StaticLog.info("ZKAuthStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    //     JulLog.info("ZKAuthStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     // }
 
     public ZKAuthStore() {
@@ -71,7 +72,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
             }
             return true;
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -87,7 +88,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
                 return this.save(auths);
             }
         } catch (Exception e) {
-            StaticLog.warn("update error,err:{}", e.getMessage());
+            JulLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -107,7 +108,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
                 return this.save(zkAuths);
             }
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

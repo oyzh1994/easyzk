@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.dto.ZKDataHistoryVO;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import lombok.NonNull;
 
@@ -38,7 +39,7 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
     public static final ZKDataHistoryStore INSTANCE = new ZKDataHistoryStore();
 
     {
-        StaticLog.info("ZKDataHistoryStore charset:{}.", this.charset());
+        JulLog.info("ZKDataHistoryStore charset:{}.", this.charset());
     }
 
     @Override
@@ -94,7 +95,7 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
             FileUtil.writeBytes(history.getData(), this.filePath(history));
             this.clearLimit(history.getInfoId(), history.getPath());
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -104,7 +105,7 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
         try {
             return FileUtil.del(this.filePath(history));
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -119,7 +120,7 @@ public class ZKDataHistoryStore extends ArrayFileStore<ZKDataHistory> {
         try {
             return FileUtil.readBytes(this.filePath(history));
         } catch (Exception e) {
-            StaticLog.warn("getData error,err:{}", e.getMessage());
+            JulLog.warn("getData error,err:{}", e.getMessage());
         }
         return null;
     }

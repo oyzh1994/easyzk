@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -253,7 +254,7 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
                     this.flushAndMoveCaretAnd();
                     this.enableInput();
                 }
-                StaticLog.info("connState={}", t1);
+                JulLog.info("connState={}", t1);
             };
             this.client().addStateListener(this.stateChangeListener);
         }

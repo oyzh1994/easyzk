@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.zk;
 
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.fx.common.log.JulLog;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -68,14 +69,14 @@ public class ZKTreeListener implements TreeCacheListener {
                 if (type == TreeCacheEvent.Type.NODE_UPDATED) {
                     long mtime = stat.getMtime();
                     if (nowTime - mtime >= this.maxTimeEffect) {
-                        StaticLog.debug("Update消息已过时.");
+                        JulLog.debug("Update消息已过时.");
                         return;
                     }
                 }
                 if (type == TreeCacheEvent.Type.NODE_ADDED) {
                     long ctime = stat.getCtime();
                     if (nowTime - ctime >= this.maxTimeEffect) {
-                        StaticLog.debug("Add消息已过时.");
+                        JulLog.debug("Add消息已过时.");
                         return;
                     }
                 }

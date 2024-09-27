@@ -25,6 +25,7 @@ import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -176,7 +177,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
             ZKNodeTreeItem parent = this.findNodeItem(pPath, info);
             // 父节点不存在
             if (parent == null) {
-                StaticLog.warn("{}: 未找到新增节点的父节点，无法处理节点！", path);
+                JulLog.warn("{}: 未找到新增节点的父节点，无法处理节点！", path);
                 return;
             }
             // 获取节点
@@ -184,20 +185,20 @@ public class ZKTreeView extends RichTreeView implements EventListener {
             // 刷新节点
             if (child != null) {
                 child.refreshNode();
-                StaticLog.info("节点已存在, 更新树节点.");
+                JulLog.info("节点已存在, 更新树节点.");
             } else if (parent.loaded()) {// 添加节点
                 parent.refreshStat();
                 parent.addChild(path);
-                StaticLog.info("节点不存在, 添加树节点.");
+                JulLog.info("节点不存在, 添加树节点.");
             } else if (parent.client().isLastCreate(path)) {// 加载子节点
                 parent.refreshStat();
                 parent.loadChildQuiet();
-                StaticLog.info("父节点未加载, 加载父节点.");
+                JulLog.info("父节点未加载, 加载父节点.");
             }
             // 过滤节点
             parent.doFilter(this.itemFilter);
         } catch (Exception ex) {
-            StaticLog.warn("新增节点失败！", ex);
+            JulLog.warn("新增节点失败！", ex);
         }
     }
 
@@ -219,10 +220,10 @@ public class ZKTreeView extends RichTreeView implements EventListener {
             if (item != null) {
                 item.setBeUpdated(event.nodeData());
             } else {
-                StaticLog.warn("{}: 未找到被修改节点，无法处理节点！", event.decodeNodePath());
+                JulLog.warn("{}: 未找到被修改节点，无法处理节点！", event.decodeNodePath());
             }
         } catch (Exception ex) {
-            StaticLog.warn("修改节点失败！", ex);
+            JulLog.warn("修改节点失败！", ex);
         }
     }
 
@@ -244,10 +245,10 @@ public class ZKTreeView extends RichTreeView implements EventListener {
             if (item != null) {
                 item.setBeDeleted();
             } else {
-                StaticLog.warn("{}: 未找到被删除节点，无法处理节点！", event.decodeNodePath());
+                JulLog.warn("{}: 未找到被删除节点，无法处理节点！", event.decodeNodePath());
             }
         } catch (Exception ex) {
-            StaticLog.warn("删除节点失败！", ex);
+            JulLog.warn("删除节点失败！", ex);
         }
     }
 

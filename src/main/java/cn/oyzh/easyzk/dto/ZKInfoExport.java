@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.fx.common.log.JulLog;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -60,7 +61,7 @@ public class ZKInfoExport {
      * @return ZKInfoExport
      */
     public static ZKInfoExport fromJSON(@NonNull String json) {
-        StaticLog.info("json: {}", json);
+        JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObj(json);
         ZKInfoExport export = new ZKInfoExport();
         export.connects = new ArrayList<>();

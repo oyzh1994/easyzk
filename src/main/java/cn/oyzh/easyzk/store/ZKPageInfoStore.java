@@ -30,7 +30,7 @@ public class ZKPageInfoStore extends ObjectFileStore<ZKPageInfo> {
 
     // {
     //     this.filePath(ZKConst.STORE_PATH + "page_info.json");
-    //     StaticLog.info("PageInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    //     JulLog.info("PageInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     // }
 
     public ZKPageInfoStore() {

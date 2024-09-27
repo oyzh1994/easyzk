@@ -6,6 +6,9 @@ import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
+import cn.oyzh.fx.common.SysConst;
+import cn.oyzh.fx.common.date.LocalZoneRulesProvider;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nManager;
@@ -17,19 +20,6 @@ import cn.oyzh.fx.plus.window.StageManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.ComponentScan;
-// import org.springframework.boot.autoconfigure.SpringBootApplication;
-// import org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration;
-// import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
-// import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
-// import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
-// import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
-// import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
-// import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-// import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
-// import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
-// import org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration;
-// import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
-// import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
 
 
 /**
@@ -38,22 +28,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @author oyzh
  * @since 2020/9/14
  */
-//@SpringBootApplication(scanBasePackages = "cn.oyzh",
-//        exclude = {
-//                AopAutoConfiguration.class,
-//                CacheAutoConfiguration.class,
-//                DataSourceAutoConfiguration.class,
-//                MessageSourceAutoConfiguration.class,
-//                TaskExecutionAutoConfiguration.class,
-//                TaskSchedulingAutoConfiguration.class,
-//                SqlInitializationAutoConfiguration.class,
-//                SpringApplicationAdminJmxAutoConfiguration.class,
-//                GsonAutoConfiguration.class,
-//                ProjectInfoAutoConfiguration.class,
-//                JmxAutoConfiguration.class,
-//                SslAutoConfiguration.class,
-//        }
-//)
 @ComponentScan(
         lazyInit = true,
         value = {"cn.oyzh.fx.common", "cn.oyzh.easyzk"}
@@ -67,6 +41,9 @@ public class EasyZKApp extends SpringApplication {
     private final long startAt = System.currentTimeMillis();
 
     public static void main(String[] args) {
+        // 初始化时区处理器
+        System.setProperty(SysConst.CACHE_DIR, ZKConst.CACHE_PATH);
+        System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
         launchSpring(EasyZKApp.class, args);
     }
 
@@ -99,8 +76,8 @@ public class EasyZKApp extends SpringApplication {
             long cost = System.currentTimeMillis() - this.startAt;
             // 内存消耗
             double usedMemory = SystemUtil.getUsedMemory();
-            StaticLog.info("启动耗时:{}ms-------------------------------", +cost);
-            StaticLog.info("内存消耗:{}mb-------------------------------", +usedMemory);
+            JulLog.info("启动耗时:{}ms-------------------------------", +cost);
+            JulLog.info("内存消耗:{}mb-------------------------------", +usedMemory);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -108,11 +85,11 @@ public class EasyZKApp extends SpringApplication {
 
     @Override
     public void destroy() {
-        StaticLog.info("EasyZKApp destroyed.");
+        JulLog.info("EasyZKApp destroyed.");
     }
 
     @Override
     public void run(String... args) {
-        StaticLog.info("EasyZKApp started.");
+        JulLog.info("EasyZKApp started.");
     }
 }

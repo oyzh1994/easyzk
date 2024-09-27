@@ -9,6 +9,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import lombok.NonNull;
 
@@ -39,7 +40,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
 
     // {
     //     this.filePath(ZKConst.STORE_PATH + "zk_info.json");
-    //     StaticLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+    //     JulLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     //     this.infos = this.load();
     //     for (ZKInfo zkInfo : this.infos) {
     //         if (StrUtil.isBlank(zkInfo.getId())) {
@@ -91,7 +92,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
                 return this.save(this.infos);
             }
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -104,7 +105,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
                 return this.save(this.infos);
             }
         } catch (Exception e) {
-            StaticLog.warn("update error,err:{}", e.getMessage());
+            JulLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -117,7 +118,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
                 return this.save(this.infos);
             }
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

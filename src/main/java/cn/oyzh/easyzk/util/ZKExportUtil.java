@@ -12,6 +12,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.util.OSUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -165,7 +166,7 @@ public class ZKExportUtil {
      * @return ZKNodeExport
      */
     public static ZKNodeExport fromJSON(@NonNull String json) {
-        StaticLog.info("json: {}", json);
+        JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObj(json);
         ZKNodeExport export = new ZKNodeExport();
         export.setNodes(new ArrayList<>());
@@ -194,7 +195,7 @@ public class ZKExportUtil {
      * @return ZKNodeExport
      */
     public static ZKNodeExport fromTxt(@NonNull String txt) {
-        StaticLog.info("txt: {}", txt);
+        JulLog.info("txt: {}", txt);
         ZKNodeExport export = new ZKNodeExport();
         export.setNodes(new ArrayList<>());
         // 分割数据
@@ -233,7 +234,7 @@ public class ZKExportUtil {
         boolean isV155 =  Objects.equals(export.getVersion(), "1.5.5");
         // boolean isV155 = txt.contains(LINE_REPLACE) || export.version().contains("1.5.5") || !txt.contains(TEXT_LINE_SEPARATOR);
         if (isV155) {
-            StaticLog.warn("当前导入数据版本为1.5.5版本");
+            JulLog.warn("当前导入数据版本为1.5.5版本");
             v1_5_5_txtHandle(export, txtList);
         } else {
             txtHandle(export, txtList);
@@ -279,10 +280,10 @@ public class ZKExportUtil {
             // 当前为分割行
             if (t.equals(TEXT_LINE_SEPARATOR)) {
                 func.run();
-                StaticLog.debug("寻找到分割行.");
+                JulLog.debug("寻找到分割行.");
             } else {// 当前是数据行
                 lineData.append(t);
-                StaticLog.debug("寻找到数据行.");
+                JulLog.debug("寻找到数据行.");
             }
         }
         func.run();
@@ -307,7 +308,7 @@ public class ZKExportUtil {
                 node.put("data", restoreData(data));
                 export.getNodes().add(node);
             } else {
-                StaticLog.warn("数据:{} 不合法", t);
+                JulLog.warn("数据:{} 不合法", t);
             }
         }
     }

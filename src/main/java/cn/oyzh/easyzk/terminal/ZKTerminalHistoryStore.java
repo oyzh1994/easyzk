@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.terminal;
 
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.terminal.histroy.TerminalHistoryStore;
 
 /**
@@ -20,7 +21,7 @@ public class ZKTerminalHistoryStore extends TerminalHistoryStore {
 
     {
         this.filePath(ZKConst.STORE_PATH + "zk_shell_history.json");
-        StaticLog.info("ZKShellHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("ZKShellHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
 }

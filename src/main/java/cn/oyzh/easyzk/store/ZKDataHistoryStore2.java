@@ -3,9 +3,9 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.fx.common.exception.InvalidDataException;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.QueryParam;
 import cn.oyzh.fx.common.jdbc.SelectListParam;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.Map;
  * @since 2022/12/16
  */
 //@Slf4j
-public class ZKDataHistoryStore2 extends SqliteStore<ZKDataHistory> {
+public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
 
     /**
      * 最大历史数量

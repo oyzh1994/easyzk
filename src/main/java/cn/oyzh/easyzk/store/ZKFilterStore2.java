@@ -4,9 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.PageParam;
 import cn.oyzh.fx.common.jdbc.QueryParam;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class ZKFilterStore2 extends SqliteStore<ZKFilter> {
+public class ZKFilterStore2 extends JdbcStore<ZKFilter> {
 
     /**
      * 当前实例
@@ -61,11 +61,15 @@ public class ZKFilterStore2 extends SqliteStore<ZKFilter> {
     public Paging<ZKFilter> getPage(long pageNo, int limit, String kw) {
         PageParam pageParam = new PageParam(limit, pageNo * limit);
         List<ZKFilter> list = this.selectPage(kw, List.of("kw"), pageParam);
+        Paging<ZKFilter> paging;
         if (CollUtil.isNotEmpty(list)) {
             long count = this.selectCount(kw, List.of("kw"));
-            return new Paging<>(list, limit, count);
+            paging = new Paging<>(list, limit, count);
+            paging.currentPage(pageNo);
+        } else {
+            paging = new Paging<>(limit);
         }
-        return new Paging<>(limit);
+        return paging;
     }
 
     public boolean exist(String kw) {

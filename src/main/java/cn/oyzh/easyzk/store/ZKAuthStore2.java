@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.PageParam;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
+public class ZKAuthStore2 extends JdbcStore<ZKAuth> {
 
     /**
      * 当前实例
@@ -52,11 +52,15 @@ public class ZKAuthStore2 extends SqliteStore<ZKAuth> {
     public Paging<ZKAuth> getPage(long pageNo, int limit, String kw) {
         PageParam pageParam = new PageParam(limit, pageNo * limit);
         List<ZKAuth> list = this.selectPage(kw, List.of("user", "password"), pageParam);
+        Paging<ZKAuth> paging;
         if (CollUtil.isNotEmpty(list)) {
             long count = this.selectCount(kw, List.of("kw"));
-            return new Paging<>(list, limit, count);
+            paging = new Paging<>(list, limit, count);
+            paging.currentPage(pageNo);
+        } else {
+            paging = new Paging<>(limit);
         }
-        return new Paging<>(limit);
+        return paging;
     }
 
     public boolean exist(String user, String password) {

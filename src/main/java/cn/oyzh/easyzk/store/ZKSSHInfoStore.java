@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSSHInfo;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.QueryParam;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKSSHInfoStore extends SqliteStore<ZKSSHInfo> {
+public class ZKSSHInfoStore extends JdbcStore<ZKSSHInfo> {
 
     /**
      * 当前实例

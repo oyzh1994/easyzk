@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.QueryParam;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 //@Slf4j
-public class ZKSearchHistoryStore2 extends SqliteStore<ZKSearchHistory> {
+public class ZKSearchHistoryStore2 extends JdbcStore<ZKSearchHistory> {
 
     /**
      * 最大历史数量

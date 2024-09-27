@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSSHInfo;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKInfoStore2 extends SqliteStore<ZKInfo> {
+public class ZKInfoStore2 extends JdbcStore<ZKInfo> {
 
     /**
      * 当前实例

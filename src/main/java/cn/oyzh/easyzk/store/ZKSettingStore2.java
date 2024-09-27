@@ -1,14 +1,14 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 
 
 /**
  * @author oyzh
  * @since 2024/09/23
  */
-public class ZKSettingStore2 extends SqliteStore<ZKSetting> {
+public class ZKSettingStore2 extends JdbcStore<ZKSetting> {
 
     /**
      * 当前实例

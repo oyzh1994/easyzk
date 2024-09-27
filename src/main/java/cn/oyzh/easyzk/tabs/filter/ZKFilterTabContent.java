@@ -110,6 +110,9 @@ public class ZKFilterTabContent extends DynamicTabController {
      * @param pageNo 数据页码
      */
     private void initDataList(long pageNo) {
+        if (this.pageData != null) {
+            pageNo = this.pageData.fixPageNo(pageNo);
+        }
         this.pageData = this.filterStore.getPage(pageNo,20,  this.searchKeyWord.getText());
         this.listTable.setItem(ZKFilterVO.convert(this.pageData.dataList()));
         this.pagePane.setPaging(this.pageData);

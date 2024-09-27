@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/5/12
  */
-public class ZKGroupStore2 extends SqliteStore<ZKGroup> {
+public class ZKGroupStore2 extends JdbcStore<ZKGroup> {
 
     /**
      * 当前实例

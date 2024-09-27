@@ -9,8 +9,9 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.fx.common.jdbc.JdbcConst;
+import cn.oyzh.fx.common.jdbc.JdbcDialect;
 import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.jdbc.JdbcConnManager;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -31,7 +32,8 @@ public class ZKStoreUtil {
      */
     public static void init() {
         try {
-            JdbcConnManager.initDb(ZKConst.STORE_PATH + "easyzk.db");
+            System.setProperty(JdbcConst.DB_FILE, ZKConst.STORE_PATH + "db");
+            System.setProperty(JdbcConst.DB_DIALECT, JdbcDialect.H2.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
             // 提示

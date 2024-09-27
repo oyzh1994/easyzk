@@ -3,8 +3,8 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKCollect;
+import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.QueryParam;
-import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKCollectStore extends SqliteStore<ZKCollect> {
+public class ZKCollectStore extends JdbcStore<ZKCollect> {
 
     /**
      * 当前实例

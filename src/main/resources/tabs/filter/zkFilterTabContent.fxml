@@ -22,7 +22,7 @@
                 <Insets left="5"/>
             </HBox.margin>
         </AddFillSVGGlyph>
-        <PageBox fx:id="pagePane" onNextClicked="#nextPage" onPrevClicked="#prevPage" realHeight="22" realWidth="300">
+        <PageBox hideIfLessPage="false" fx:id="pagePane" onNextClicked="#nextPage" onPrevClicked="#prevPage" realHeight="22" realWidth="300">
             <HBox.margin>
                 <Insets left="5" top="-3"/>
             </HBox.margin>

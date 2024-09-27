@@ -4,8 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.sqlite.PageParam;
-import cn.oyzh.fx.common.sqlite.SqlLiteUtil;
+import cn.oyzh.fx.common.jdbc.PageParam;
 import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.HashMap;

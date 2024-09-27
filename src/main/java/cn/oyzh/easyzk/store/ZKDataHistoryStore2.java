@@ -3,8 +3,8 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.fx.common.exception.InvalidDataException;
-import cn.oyzh.fx.common.sqlite.QueryParam;
-import cn.oyzh.fx.common.sqlite.SelectListParam;
+import cn.oyzh.fx.common.jdbc.QueryParam;
+import cn.oyzh.fx.common.jdbc.SelectListParam;
 import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.HashMap;

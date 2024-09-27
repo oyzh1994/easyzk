@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKFilter;
@@ -11,7 +10,7 @@ import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.sqlite.SqliteConnManager;
+import cn.oyzh.fx.common.jdbc.SqliteConnManager;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;

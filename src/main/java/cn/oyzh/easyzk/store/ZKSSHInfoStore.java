@@ -1,9 +1,7 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKSSHInfo;
-import cn.oyzh.fx.common.sqlite.QueryParam;
+import cn.oyzh.fx.common.jdbc.QueryParam;
 import cn.oyzh.fx.common.sqlite.SqliteStore;
 
 import java.util.HashMap;

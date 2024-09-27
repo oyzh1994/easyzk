@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.sqlite.Table;
+import cn.oyzh.fx.common.jdbc.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import cn.oyzh.fx.plus.domain.TreeGroup;
 

@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.fx.common.sqlite.Column;
-import cn.oyzh.fx.common.sqlite.Table;
+import cn.oyzh.fx.common.jdbc.Column;
+import cn.oyzh.fx.common.jdbc.Table;
 import lombok.Data;
 
 import java.io.Serializable;

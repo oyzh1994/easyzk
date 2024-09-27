@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.fx.common.exception.InvalidDataException;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.QueryParam;
-import cn.oyzh.fx.common.jdbc.SelectListParam;
+import cn.oyzh.fx.common.jdbc.SelectParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
     public static final ZKDataHistoryStore2 INSTANCE = new ZKDataHistoryStore2();
 
     public List<ZKDataHistory> list(String infoId, String path) {
-        SelectListParam param = new SelectListParam();
+        SelectParam param = new SelectParam();
         param.addQueryParam(new QueryParam("path", path));
         param.addQueryParam(new QueryParam("infoId", infoId));
         param.addQueryColumn("path");
@@ -50,8 +50,7 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
         // 新增数据
         boolean result = super.insert(model);
         // 查询总数
-        QueryParam queryParam = new QueryParam("infoId", infoId);
-        long count = super.selectCount(queryParam);
+        long count = super.selectCount(new QueryParam("infoId", infoId));
         // 删除超过部分数据
         if (count > His_Max_Size) {
             Map<String, Object> params = new HashMap<>();
@@ -85,10 +84,11 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
         return ZKDataHistory.class;
     }
 
-    public byte[] getData(String infoId, String path) {
-        SelectListParam param = new SelectListParam();
+    public byte[] getData(String infoId, String path,long saveTime) {
+        SelectParam param = new SelectParam();
         param.addQueryParam(new QueryParam("path", path));
         param.addQueryParam(new QueryParam("infoId", infoId));
+        param.addQueryParam(new QueryParam("saveTime", saveTime));
         param.addQueryColumn("data");
         ZKDataHistory history = super.selectOne(param);
         if (history != null) {

@@ -190,7 +190,8 @@ public class ZKNodeTab extends DynamicTab {
      */
     public void restoreData(ZKDataHistory history) {
         if (history != null) {
-            this.controller().restoreData(ZKDataHistoryStore2.INSTANCE.getData(history.getInfoId(), history.getPath()));
+            byte[] data = ZKDataHistoryStore2.INSTANCE.getData(history.getInfoId(), history.getPath(), history.getSaveTime());
+            this.controller().restoreData(data);
         }
     }
 }

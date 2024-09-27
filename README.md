@@ -44,3 +44,4 @@ chmod -R 755 /路径/EasyZK.app(可拖入命令行窗口)
 
 ###### 模块相关
 官方链接 https://docs.oracle.com/en/java/javase/19/docs/api/
+--add-opens java.base/java.time.zone=ALL-UNNAMED

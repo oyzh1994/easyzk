@@ -199,8 +199,8 @@ public class DataHistoryController extends SubStageController implements Initial
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-        this.saveTime.setCellValueFactory(new PropertyValueFactory<>("saveTimeExt"));
         this.dataSize.setCellValueFactory(new PropertyValueFactory<>("dataSize"));
+        this.saveTime.setCellValueFactory(new PropertyValueFactory<>("saveTimeFormated"));
         // 初始化表单
         this.initTable();
         this.root.selectedProperty().addListener((observable, oldValue, newValue) -> this.refresh());

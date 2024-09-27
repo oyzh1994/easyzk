@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
@@ -702,10 +703,10 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     @FXML
     private void onNodeDataKeyPressed(KeyEvent e) {
-        KeyCode code = e.getCode();
         // 保存节点数据
-        if (code == KeyCode.S && e.isControlDown()) {
+        if (KeyboardUtil.isCtrlS(e)) {
             this.saveNodeData();
+            e.consume();
         }
     }
 

@@ -186,12 +186,9 @@ public class ZKNodeTab extends DynamicTab {
     /**
      * 恢复数据
      *
-     * @param history 数据历史
+     * @param data 历史数据
      */
-    public void restoreData(ZKDataHistory history) {
-        if (history != null) {
-            byte[] data = ZKDataHistoryStore2.INSTANCE.getData(history.getInfoId(), history.getPath(), history.getSaveTime());
-            this.controller().restoreData(data);
-        }
+    public void restoreData(byte[] data) {
+        this.controller().restoreData(data);
     }
 }

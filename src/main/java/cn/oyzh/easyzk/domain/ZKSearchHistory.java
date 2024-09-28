@@ -39,6 +39,12 @@ public class ZKSearchHistory implements ObjectComparator<ZKSearchHistory>, Seria
     @Column
     private Byte type;
 
+    /**
+     * 搜索时间
+     */
+    @Column
+    private long searchTime;
+
     public ZKSearchHistory() {
 
     }

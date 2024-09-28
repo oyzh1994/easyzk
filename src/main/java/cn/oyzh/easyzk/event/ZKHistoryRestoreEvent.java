@@ -16,12 +16,12 @@ import lombok.experimental.Accessors;
 @Setter
 @Getter
 @Accessors(fluent = true)
-public class ZKHistoryRestoreEvent extends Event<ZKDataHistory> implements EventFormatter {
+public class ZKHistoryRestoreEvent extends Event<byte[]> implements EventFormatter {
 
     private ZKNodeTreeItem item;
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nResourceBundle.i18nString("base.data", "base.restored"), this.data().getPath());
+        return String.format("[%s] " + I18nResourceBundle.i18nString("base.data", "base.restored"), this.item.nodePath());
     }
 }

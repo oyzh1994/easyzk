@@ -389,24 +389,24 @@ public class ZKEventUtil {
     /**
      * 恢复历史
      *
-     * @param history 历史
+     * @param data 历史
      * @param item    zk树节点
      */
-    public static void historyRestore(ZKDataHistory history, ZKNodeTreeItem item) {
+    public static void historyRestore(byte[] data, ZKNodeTreeItem item) {
         ZKHistoryRestoreEvent event = new ZKHistoryRestoreEvent();
-        event.data(history);
+        event.data(data);
         event.item(item);
         EventUtil.post(event);
     }
 
     /**
-     * 新增历史
+     * 数据历史新增
      *
-     * @param history 历史
+     * @param history 数据历史
      * @param item    zk树节点
      */
-    public static void historyAdd(ZKDataHistory history, ZKNodeTreeItem item) {
-        ZKHistoryAddEvent event = new ZKHistoryAddEvent();
+    public static void dataHistoryAdded(ZKDataHistory history, ZKNodeTreeItem item) {
+        ZKHistoryAddedEvent event = new ZKHistoryAddedEvent();
         event.data(history);
         event.item(item);
         EventUtil.post(event);

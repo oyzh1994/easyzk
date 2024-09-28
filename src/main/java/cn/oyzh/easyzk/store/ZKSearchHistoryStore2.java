@@ -2,7 +2,9 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
+import cn.oyzh.fx.common.jdbc.DeleteParam;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
+import cn.oyzh.fx.common.jdbc.OrderByParam;
 import cn.oyzh.fx.common.jdbc.QueryParam;
 
 import java.util.ArrayList;
@@ -62,7 +64,11 @@ public class ZKSearchHistoryStore2 extends JdbcStore<ZKSearchHistory> {
             long count = super.selectCount(queryParams);
             // 删除超过部分数据
             if (count > His_Max_Size) {
-                super.delete(params, count - His_Max_Size);
+                DeleteParam deleteParam = new DeleteParam();
+                deleteParam.addQueryParam(new QueryParam("kw", kw));
+                deleteParam.addQueryParam(new QueryParam("type", type));
+                deleteParam.addOrderByParam(new OrderByParam("searchTime", "desc"));
+                super.delete(deleteParam);
             }
             return result;
         }

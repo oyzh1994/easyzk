@@ -365,8 +365,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             this.closeConnect(false);
             if (this.parent().delConnectItem(this)) {
                 ZKEventUtil.infoDeleted(this.value);
-                // 删除历史记录
-                ZKDataHistoryStore2.INSTANCE.delete(this.value.getId());
+//                // 删除历史记录
+//                ZKDataHistoryStore2.INSTANCE.delete(this.value.getId());
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }

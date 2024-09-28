@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(fluent = true)
-public class ZKHistoryAddEvent extends Event<ZKDataHistory> {
+public class ZKHistoryAddedEvent extends Event<ZKDataHistory> {
 
     private ZKNodeTreeItem item;
 

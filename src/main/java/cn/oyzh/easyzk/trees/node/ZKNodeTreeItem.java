@@ -1347,8 +1347,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         history.setData(this.nodeData());
         history.setPath(this.nodePath());
         history.setInfoId(this.info().getId());
-        ZKDataHistoryStore2.INSTANCE.replace(history);
-        ZKEventUtil.historyAdd(history, this);
+        ZKDataHistoryStore2.INSTANCE.replace(history, this.client());
+        ZKEventUtil.dataHistoryAdded(history, this);
     }
 
     @Override

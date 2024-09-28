@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.controller;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.dto.ZKDataHistoryVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.ZKHistoryAddEvent;
+import cn.oyzh.easyzk.event.ZKHistoryAddedEvent;
 import cn.oyzh.easyzk.event.ZKHistoryShowEvent;
 import cn.oyzh.easyzk.event.ZKTabChangedEvent;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
@@ -16,6 +16,7 @@ import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import com.google.common.eventbus.Subscribe;
@@ -48,6 +49,12 @@ public class DataHistoryController extends SubStageController implements Initial
     private FXTab root;
 
     /**
+     * 类型
+     */
+    @FXML
+    private FXToggleSwitch type;
+
+    /**
      * 数据列表
      */
     @FXML
@@ -76,11 +83,6 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     @FXML
     private FlexTableColumn<ZKDataHistoryVO, String> action;
-
-    // /**
-    //  * zk历史储存
-    //  */
-    // private final ZKDataHistoryStore historyStore = ZKDataHistoryStore.INSTANCE;
 
     /**
      * zk树节点
@@ -123,7 +125,13 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     private void delete(ZKDataHistory history) {
         if (MessageBox.confirm(I18nHelper.deleteData())) {
-            if (ZKDataHistoryStore2.INSTANCE.delete(history.getInfoId(), history.getPath())) {
+            boolean result;
+            if (this.type.isSelected()) {
+                result = ZKDataHistoryStore2.INSTANCE.deleteServer(history.getInfoId(), this.item.nodePath(), history.getSaveTime(), this.item.client());
+            } else {
+                result = ZKDataHistoryStore2.INSTANCE.deleteLocal(history.getInfoId(), this.item.nodePath(), history.getSaveTime());
+            }
+            if (result) {
                 this.refresh();
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
@@ -138,7 +146,17 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     private void restore(ZKDataHistory history) {
         if (MessageBox.confirm(I18nHelper.restoreData())) {
-            ZKEventUtil.historyRestore(history, this.item);
+            byte[] bytes;
+            if (this.type.isSelected()) {
+                bytes = ZKDataHistoryStore2.INSTANCE.getServerData(history.getInfoId(), this.item.nodePath(), history.getSaveTime(), this.item.client());
+            } else {
+                bytes = ZKDataHistoryStore2.INSTANCE.getLocalData(history.getInfoId(), this.item.nodePath(), history.getSaveTime());
+            }
+            if (bytes == null) {
+                MessageBox.warn(I18nHelper.notFoundData());
+            } else {
+                ZKEventUtil.historyRestore(bytes, this.item);
+            }
         }
     }
 
@@ -159,10 +177,10 @@ public class DataHistoryController extends SubStageController implements Initial
     }
 
     /**
-     * 新增历史
+     * 历史新增事件
      */
     @Subscribe
-    public void historyAdd(ZKHistoryAddEvent event) {
+    public void historyAdded(ZKHistoryAddedEvent event) {
         if (event.item() == this.item) {
             this.refresh();
         }
@@ -178,7 +196,12 @@ public class DataHistoryController extends SubStageController implements Initial
             if (this.item != null) {
                 String path = this.item.nodePath();
                 String infoId = this.item.info().getId();
-                List<ZKDataHistory> histories = ZKDataHistoryStore2.INSTANCE.list(infoId, path);
+                List<ZKDataHistory> histories;
+                if (this.type.isSelected()) {
+                    histories = ZKDataHistoryStore2.INSTANCE.listServer(infoId, path, this.item.client());
+                } else {
+                    histories = ZKDataHistoryStore2.INSTANCE.listLocal(infoId, path);
+                }
                 this.listTable.addItem(ZKDataHistoryVO.convert(histories));
             }
         }
@@ -192,7 +215,6 @@ public class DataHistoryController extends SubStageController implements Initial
     @Subscribe
     public void show(ZKHistoryShowEvent event) {
         this.item = event.data();
-        this.refresh();
         this.root.selectTab();
     }
 
@@ -203,6 +225,8 @@ public class DataHistoryController extends SubStageController implements Initial
         this.saveTime.setCellValueFactory(new PropertyValueFactory<>("saveTimeFormated"));
         // 初始化表单
         this.initTable();
+        // 监听按钮
         this.root.selectedProperty().addListener((observable, oldValue, newValue) -> this.refresh());
+        this.type.selectedProperty().addListener((observable, oldValue, newValue) -> this.refresh());
     }
 }

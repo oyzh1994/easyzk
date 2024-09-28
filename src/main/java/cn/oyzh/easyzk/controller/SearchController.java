@@ -40,8 +40,8 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/4/11
  */
-@Lazy
-@Component
+//@Lazy
+//@Component
 public class SearchController extends SubStageController {
 
     /**
@@ -146,8 +146,8 @@ public class SearchController extends SubStageController {
     /**
      * zk主页搜索处理
      */
-    @Autowired
-    private ZKSearchHandler searchHandler;
+//    @Autowired
+    private final ZKSearchHandler searchHandler = new ZKSearchHandler();
 
     /**
      * 搜索历史储存

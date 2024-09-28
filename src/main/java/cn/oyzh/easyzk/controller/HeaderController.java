@@ -24,15 +24,15 @@ import javax.annotation.Resource;
  * @author oyzh
  * @since 2022/1/26
  */
-@Lazy
-@Component
+//@Lazy
+//@Component
 public class HeaderController extends SubStageController {
 
     /**
      * 项目信息
      */
-    @Resource
-    private Project project;
+//    @Resource
+    private final Project project = Project.load();
 
     /**
      * 展开zk树

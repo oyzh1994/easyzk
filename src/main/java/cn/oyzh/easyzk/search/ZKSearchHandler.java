@@ -30,8 +30,8 @@ import java.util.List;
  * @author oyzh
  * @since 2023/03/12
  */
-@Lazy
-@Component
+//@Lazy
+//@Component
 @Accessors(chain = true, fluent = true)
 public class ZKSearchHandler extends SearchHandler {
 

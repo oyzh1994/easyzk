@@ -38,8 +38,8 @@ public class ZKHomeTabContent extends DynamicTabController {
     /**
      * 项目对象
      */
-    @Resource
-    private Project project;
+//    @Resource
+    private final Project project = Project.load();
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {

@@ -40,8 +40,16 @@ chmod -R +x EasyZK.app
 chmod -R 755 /路径/EasyZK.app(可拖入命令行窗口)
 
 ###### jvm参数
--Dprism.verbose=true -Xmx512m -Xms128m -XX:NewRatio=2 -XX:MinHeapFreeRatio=8 -XX:MaxHeapFreeRatio=20
+--add-opens java.base/java.time.zone=ALL-UNNAMED
+-Dprism.verbose=true
+-verbose:gc
+-XX:+UseZGC
+-Xss512K
+-Xmx1024m 
+-Xms32m 
+-XX:NewRatio=2 
+-XX:MinHeapFreeRatio=8 
+-XX:MaxHeapFreeRatio=20
 
 ###### 模块相关
 官方链接 https://docs.oracle.com/en/java/javase/19/docs/api/
---add-opens java.base/java.time.zone=ALL-UNNAMED

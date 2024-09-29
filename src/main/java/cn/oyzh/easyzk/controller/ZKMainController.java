@@ -7,9 +7,11 @@ import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
 import cn.oyzh.easyzk.event.ZKLeftExtendEvent;
 import cn.oyzh.easyzk.fx.ZKMsgTextArea;
+import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.easyzk.trees.ZKTreeItemFilter;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
@@ -60,7 +62,7 @@ public class ZKMainController extends ParentStageController {
      * 左侧zk树
      */
     @FXML
-    public ZKTreeView tree;
+    private ZKTreeView tree;
 
     /**
      * 左侧组件
@@ -95,7 +97,7 @@ public class ZKMainController extends ParentStageController {
      * zk切换面板
      */
     @FXML
-    public ZKTabPane tabPane;
+    private ZKTabPane tabPane;
 
     /**
      * 消息文本框
@@ -137,6 +139,8 @@ public class ZKMainController extends ParentStageController {
     //  */
     // private final ZKPageInfoStore pageInfoStore = ZKPageInfoStore.INSTANCE;
 
+    private final ZKSearchHandler searchHandler = new ZKSearchHandler();
+
     /**
      * 对子节点排序，正序
      */
@@ -171,17 +175,22 @@ public class ZKMainController extends ParentStageController {
     private void filter() {
         TaskManager.startDelay("zk:tree:filter", () -> {
             this.tree.disable();
-            if (this.onlyCollect.isSelected()) {
-                this.tree.itemFilter().setOnlyCollect(true);
-                this.tree.itemFilter().setExcludeSub(false);
-                this.tree.itemFilter().setExcludeEphemeral(false);
-            } else {
-                this.tree.itemFilter().setOnlyCollect(false);
-                this.tree.itemFilter().setExcludeSub(this.filterSubNode.isSelected());
-                this.tree.itemFilter().setExcludeEphemeral(this.filterEphemeral.isSelected());
+            try {
+                ZKTreeItemFilter itemFilter = this.tree.itemFilter();
+                itemFilter.setSearchHandler(this.searchHandler);
+                if (this.onlyCollect.isSelected()) {
+                    itemFilter.setOnlyCollect(true);
+                    itemFilter.setExcludeSub(false);
+                    itemFilter.setExcludeEphemeral(false);
+                } else {
+                    itemFilter.setOnlyCollect(false);
+                    itemFilter.setExcludeSub(this.filterSubNode.isSelected());
+                    itemFilter.setExcludeEphemeral(this.filterEphemeral.isSelected());
+                }
+                this.tree.filter();
+            } finally {
+                this.tree.enable();
             }
-            this.tree.filter();
-            this.tree.enable();
         }, 100);
     }
 
@@ -212,6 +221,8 @@ public class ZKMainController extends ParentStageController {
 
     @Override
     public void onStageShown(WindowEvent event) {
+        this.searchHandler.init(this.tree, this.tabPane);
+        super.setProp("searchHandler", this.searchHandler);
         super.onStageShown(event);
         EventUtil.register(this.tree);
         EventUtil.register(this.tabPane);

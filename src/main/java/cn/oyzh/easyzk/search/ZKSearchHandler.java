@@ -17,10 +17,9 @@ import cn.oyzh.fx.rich.richtextfx.util.RichControlUtil;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -53,6 +52,7 @@ public class ZKSearchHandler extends SearchHandler {
     /**
      * 树组件
      */
+    @Getter
     private ZKTreeView treeNode;
 
     /**

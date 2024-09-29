@@ -6,10 +6,9 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import atlantafx.base.controls.ToggleSwitch?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <FXTab styleClass="root" xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
        fx:controller="cn.oyzh.easyzk.controller.DataHistoryController" text="%base.his">
     <graphic>
@@ -32,8 +31,8 @@
             <columns>
                 <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
                 <FlexTableColumn flexWidth="40%" fx:id="saveTime" text="%base.saveTime"/>
-                <FlexTableColumn flexWidth="30%" fx:id="dataSize" text="%base.dataSize"/>
-                <FlexTableColumn flexWidth="20% - 15" fx:id="action" text="%base.action" sortable="false"/>
+                <FlexTableColumn flexWidth="25%" fx:id="dataSize" text="%base.dataSize"/>
+                <FlexTableColumn flexWidth="25% - 10" fx:id="action" text="%base.action" sortable="false"/>
             </columns>
         </FlexTableView>
     </FlexVBox>

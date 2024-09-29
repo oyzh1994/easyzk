@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.trees;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchParam;
-import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -12,10 +11,6 @@ import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +21,8 @@ import java.util.List;
  * @author oyzh
  * @since 2023/3/28
  */
-@Lazy
-@Component
+// @Lazy
+// @Component
 public class ZKTreeItemFilter implements RichTreeItemFilter {
 
     /**
@@ -54,7 +49,8 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     /**
      * zk主页搜索处理
      */
-    @Autowired
+    // @Autowired
+    @Setter
     private ZKSearchHandler searchHandler;
 
     /**

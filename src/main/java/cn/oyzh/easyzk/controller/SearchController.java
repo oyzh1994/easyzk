@@ -7,9 +7,7 @@ import cn.oyzh.easyzk.event.ZKSearchFireEvent;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.search.ZKSearchHistoryPopup;
 import cn.oyzh.easyzk.search.ZKSearchParam;
-import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore2;
-import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
@@ -17,20 +15,17 @@ import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
+import cn.oyzh.fx.plus.controls.search.SearchResult;
+import cn.oyzh.fx.plus.controls.search.SearchTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.controls.search.SearchResult;
-import cn.oyzh.fx.plus.controls.search.SearchTextField;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.WindowEvent;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -138,16 +133,16 @@ public class SearchController extends SubStageController {
     @FXML
     private FlexText replaceTips;
 
-    /**
-     * zk树
-     */
-    private ZKTreeView treeView;
+    // /**
+    //  * zk树
+    //  */
+    // private ZKTreeView treeView;
 
     /**
      * zk主页搜索处理
      */
 //    @Autowired
-    private final ZKSearchHandler searchHandler = new ZKSearchHandler();
+    private ZKSearchHandler searchHandler;
 
     /**
      * 搜索历史储存
@@ -267,7 +262,7 @@ public class SearchController extends SubStageController {
         TaskManager.startDelay("zk:search:preSearch", () -> {
             try {
                 this.searchCheck();
-                this.treeView.disable();
+                this.searchHandler.treeNode().disable();
                 ZKSearchParam param = this.getSearchParam();
                 if (!this.searchNext.isDisable()) {
                     // 执行预搜索
@@ -284,7 +279,7 @@ public class SearchController extends SubStageController {
             } catch (Exception ex) {
                 ex.printStackTrace();
             } finally {
-                this.treeView.enable();
+                this.searchHandler.treeNode().enable();
             }
         }, 300);
     }
@@ -395,7 +390,7 @@ public class SearchController extends SubStageController {
      */
     @Subscribe
     public void flushSearchResult(TreeChildChangedEvent event) {
-        if (this.treeView.searching()) {
+        if (this.searchHandler.treeNode().searching()) {
             TaskManager.startDelay("zk:search:flushSearchResult", () -> {
                 this.searchHandler.updateResult();
                 this.updateSearchResult();
@@ -410,19 +405,20 @@ public class SearchController extends SubStageController {
     public void searchFire(ZKSearchFireEvent event) {
         if (this.searchMain.isVisible()) {
             this.searchMain.disappear();
-            this.treeView.setFlexHeight("100% - 60");
+            this.searchHandler.treeNode().setFlexHeight("100% - 60");
         } else {
             this.searchMain.display();
-            this.treeView.setFlexHeight("100% - 150");
+            this.searchHandler.treeNode().setFlexHeight("100% - 150");
         }
     }
 
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        this.treeView = this.parent().tree;
-        // 初始化搜索
-        this.searchHandler.init(this.treeView, this.parent().tabPane);
+        this.searchHandler = super.getProp("searchHandler");
+        // this.treeView = this.parent().tree;
+        // // 初始化搜索
+        // this.searchHandler.init(this.treeView, this.parent().tabPane);
         this.searchKW.setHistoryPopup(new ZKSearchHistoryPopup((byte) 1));
         this.replaceKW.setHistoryPopup(new ZKSearchHistoryPopup((byte) 2));
     }

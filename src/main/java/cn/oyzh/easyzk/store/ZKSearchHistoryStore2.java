@@ -7,10 +7,7 @@ import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.OrderByParam;
 import cn.oyzh.fx.common.jdbc.QueryParam;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -49,26 +46,23 @@ public class ZKSearchHistoryStore2 extends JdbcStore<ZKSearchHistory> {
         String kw = model.getKw();
         byte type = model.getType();
         if (StrUtil.isNotBlank(kw)) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("kw", kw);
-            params.put("type", type);
+            DeleteParam deleteParam = new DeleteParam();
+            deleteParam.addQueryParam(new QueryParam("kw", kw));
+            deleteParam.addQueryParam(new QueryParam("type", type));
             // 删除旧数据
-            if (super.exist(params)) {
-                super.delete(params);
-            }
+            super.delete(deleteParam);
             // 新增数据
             boolean result = super.insert(model);
             // 查询总数
-            List<QueryParam> queryParams = new ArrayList<>();
-            queryParams.add(new QueryParam("type", type));
-            long count = super.selectCount(queryParams);
+            QueryParam queryParam = new QueryParam("type", type);
+            long count = super.selectCount(queryParam);
             // 删除超过部分数据
             if (count > His_Max_Size) {
-                DeleteParam deleteParam = new DeleteParam();
-                deleteParam.addQueryParam(new QueryParam("kw", kw));
-                deleteParam.addQueryParam(new QueryParam("type", type));
-                deleteParam.addOrderByParam(new OrderByParam("searchTime", "desc"));
-                super.delete(deleteParam);
+                DeleteParam deleteParam1 = new DeleteParam();
+                deleteParam1.setLimit(1L);
+                deleteParam1.addQueryParam(queryParam);
+                deleteParam1.addOrderByParam(new OrderByParam("searchTime", "desc"));
+                super.delete(deleteParam1);
             }
             return result;
         }
@@ -94,7 +88,6 @@ public class ZKSearchHistoryStore2 extends JdbcStore<ZKSearchHistory> {
     public boolean addReplaceKw(String kw) {
         return this.replace(new ZKSearchHistory(kw, (byte) 2));
     }
-
 
     @Override
     protected ZKSearchHistory newModel() {

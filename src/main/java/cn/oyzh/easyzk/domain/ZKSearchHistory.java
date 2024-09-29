@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.fx.common.jdbc.Column;
-import cn.oyzh.fx.common.jdbc.PrimaryKey;
 import cn.oyzh.fx.common.jdbc.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.Data;
@@ -20,13 +19,6 @@ import java.util.Objects;
 public class ZKSearchHistory implements ObjectComparator<ZKSearchHistory>, Serializable {
 
     /**
-     * 数据id
-     */
-    @Column
-    @PrimaryKey
-    private String uid;
-
-    /**
      * 词汇
      */
     @Column
@@ -43,13 +35,13 @@ public class ZKSearchHistory implements ObjectComparator<ZKSearchHistory>, Seria
      * 搜索时间
      */
     @Column
-    private long searchTime;
+    private long searchTime = System.currentTimeMillis();
 
     public ZKSearchHistory() {
 
     }
 
-    public ZKSearchHistory( String kw, byte type) {
+    public ZKSearchHistory(String kw, byte type) {
         this.kw = kw;
         this.type = type;
     }

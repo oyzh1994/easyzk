@@ -1,7 +1,5 @@
 package cn.oyzh.easyzk.trees;
 
-import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -29,8 +27,8 @@ import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.trees.RichTreeView;
+import cn.oyzh.fx.plus.window.StageManager;
 import com.google.common.eventbus.Subscribe;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -89,11 +87,15 @@ public class ZKTreeView extends RichTreeView implements EventListener {
 
     @Override
     public ZKTreeItemFilter itemFilter() {
-        // 初始化过滤器
-        if (this.itemFilter == null) {
-            ZKTreeItemFilter filter = SpringUtil.getBean(ZKTreeItemFilter.class);
-            filter.initFilters();
-            this.itemFilter = filter;
+        try {
+            // 初始化过滤器
+            if (this.itemFilter == null) {
+                ZKTreeItemFilter filter = new ZKTreeItemFilter();
+                filter.initFilters();
+                this.itemFilter = filter;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return (ZKTreeItemFilter) this.itemFilter;
     }

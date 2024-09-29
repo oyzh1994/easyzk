@@ -122,29 +122,6 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
     @Column
     private Boolean sshForward;
 
-    // @Column
-    // @Getter
-    // private Integer sshPort;
-    //
-    // @Column
-    // @Getter
-    // private String sshHost;
-    //
-    // @Column
-    // @Getter
-    // private String sshUser;
-    //
-    // @Column
-    // @Getter
-    // private String sshPassword;
-    //
-    // @Column
-    // private Integer sshTimeout;
-    //
-    // public Integer getSshTimeout() {
-    //     return this.sshTimeout==null?5000:this.sshTimeout;
-    // }
-
     /**
      * ssh信息
      */

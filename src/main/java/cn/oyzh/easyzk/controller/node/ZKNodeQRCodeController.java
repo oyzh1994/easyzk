@@ -93,7 +93,7 @@ public class ZKNodeQRCodeController extends StageController {
                 MessageBox.exception(ex, I18nHelper.operationFail());
             }
         } finally {
-            IoUtil.close(bais);
+            IOUtil.close(bais);
         }
     }
 

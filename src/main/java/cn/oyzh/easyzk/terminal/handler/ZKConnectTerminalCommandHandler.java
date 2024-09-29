@@ -15,9 +15,9 @@ import cn.oyzh.fx.terminal.util.TerminalManager;
 // @Component
 public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKConnectTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKConnectTerminalCommandHandler.class);
+    // }
 
     @Override
     protected TerminalCommand parseCommand(String line, String[] args) {

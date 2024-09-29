@@ -18,9 +18,9 @@ import org.apache.zookeeper.cli.ListQuotaCommand;
 // @Component
 public class ZKListQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKListQuotaTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKListQuotaTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

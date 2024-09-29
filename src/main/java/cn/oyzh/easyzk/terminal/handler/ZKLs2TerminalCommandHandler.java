@@ -23,9 +23,9 @@ import java.util.List;
 // @Component
 public class ZKLs2TerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKLs2TerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKLs2TerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

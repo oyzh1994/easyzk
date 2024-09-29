@@ -16,9 +16,9 @@ import org.apache.zookeeper.Version;
 public class ZKVersionTerminalCommandHandler extends ZKTerminalCommandHandler<TerminalCommand> {
 // public class ZKVersionTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKVersionTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKVersionTerminalCommandHandler.class);
+    // }
 
     // @Getter(AccessLevel.PROTECTED)
     // @Accessors(fluent = true)

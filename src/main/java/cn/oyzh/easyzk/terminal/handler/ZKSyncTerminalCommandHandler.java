@@ -19,10 +19,10 @@ import org.apache.zookeeper.cli.SyncCommand;
  */
 // @Component
 public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    static {
-        TerminalManager.registerHandler(ZKSyncTerminalCommandHandler.class);
-    }
+    //
+    // static {
+    //     TerminalManager.registerHandler(ZKSyncTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

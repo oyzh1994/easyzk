@@ -9,9 +9,9 @@ import cn.oyzh.fx.terminal.util.TerminalManager;
 // @Component
 public class ZKRmrTerminalCommandHandler extends ZKDeleteallTerminalCommandHandler {
 
-    static {
-        TerminalManager.registerHandler(ZKRmrTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKRmrTerminalCommandHandler.class);
+    // }
 
     @Override
     public String commandName() {

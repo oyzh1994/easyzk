@@ -18,9 +18,9 @@ import org.apache.zookeeper.cli.RemoveWatchesCommand;
 // @Component
 public class ZKRemoveWatchesTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKRemoveWatchesTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKRemoveWatchesTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

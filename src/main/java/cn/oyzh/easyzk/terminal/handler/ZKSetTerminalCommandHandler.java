@@ -20,9 +20,9 @@ import org.apache.zookeeper.cli.SetCommand;
 // @Component
 public class ZKSetTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKSetTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKSetTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

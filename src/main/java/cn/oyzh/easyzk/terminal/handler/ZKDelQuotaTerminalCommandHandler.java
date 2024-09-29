@@ -21,9 +21,9 @@ import org.apache.zookeeper.cli.DelQuotaCommand;
 // @Component
 public class ZKDelQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKDelQuotaTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKDelQuotaTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

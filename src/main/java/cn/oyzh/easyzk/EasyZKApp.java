@@ -15,6 +15,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.terminal.TerminalConst;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -40,6 +41,7 @@ public class EasyZKApp extends ApplicationExt {
     public static void main(String[] args) {
         // 初始化时区处理器
         System.setProperty(SysConst.CACHE_DIR, ZKConst.CACHE_PATH);
+        System.setProperty(TerminalConst.SCAN_BASE, "cn.oyzh.easyzk.terminal");
         System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
         launch(EasyZKApp.class, args);
     }

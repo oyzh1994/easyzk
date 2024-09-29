@@ -21,9 +21,9 @@ import org.apache.zookeeper.cli.CreateCommand;
 // @Component
 public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKCreateTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKCreateTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

@@ -21,9 +21,9 @@ import org.apache.zookeeper.cli.DeleteCommand;
 // @Component
 public class ZKDeleteTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKDeleteTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKDeleteTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

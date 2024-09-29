@@ -17,9 +17,9 @@ import org.apache.zookeeper.cli.WhoAmICommand;
 // @Component
 public class ZKWhoAmITerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKWhoAmITerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKWhoAmITerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

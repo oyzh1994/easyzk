@@ -20,9 +20,9 @@ import org.apache.zookeeper.cli.ReconfigCommand;
 // @Component
 public class ZKReconfigTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKReconfigTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKReconfigTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

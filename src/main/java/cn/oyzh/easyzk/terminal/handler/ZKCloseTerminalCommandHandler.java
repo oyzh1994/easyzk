@@ -21,9 +21,9 @@ import org.apache.zookeeper.cli.CloseCommand;
 // @Component
 public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKCloseTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKCloseTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

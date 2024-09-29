@@ -18,9 +18,9 @@ import org.apache.zookeeper.cli.GetAllChildrenNumberCommand;
 // @Component
 public class ZKGetAllChildrenNumberCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKGetAllChildrenNumberCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKGetAllChildrenNumberCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

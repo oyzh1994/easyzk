@@ -18,9 +18,9 @@ import org.apache.zookeeper.cli.LsCommand;
 // @Component
 public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
-    static {
-        TerminalManager.registerHandler(ZKLsTerminalCommandHandler.class);
-    }
+    // static {
+    //     TerminalManager.registerHandler(ZKLsTerminalCommandHandler.class);
+    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

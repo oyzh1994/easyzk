@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.util;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.digest.DigestUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.exception.ZKException;
@@ -13,6 +12,7 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.ArrUtil;
+import cn.oyzh.fx.common.util.MD5Util;
 import cn.oyzh.fx.common.util.RuntimeUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.NonNull;
@@ -266,8 +266,8 @@ public class ZKNodeUtil {
             if (data == null || data.length < Data_Cache_Threshold) {
                 return false;
             }
-            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + DigestUtil.md5Hex(host) + File.separator;
-            String fileName = baseDir + DigestUtil.md5Hex(path);
+            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + MD5Util.md5Hex(host) + File.separator;
+            String fileName = baseDir + MD5Util.md5Hex(path);
             FileUtil.writeBytes(data, fileName);
             return true;
         } catch (Exception ex) {
@@ -285,8 +285,8 @@ public class ZKNodeUtil {
      */
     public static byte[] loadData(String host, String path) {
         try {
-            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + DigestUtil.md5Hex(host) + File.separator;
-            String fileName = baseDir + DigestUtil.md5Hex(path);
+            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + MD5Util.md5Hex(host) + File.separator;
+            String fileName = baseDir + MD5Util.md5Hex(path);
             if (FileUtil.exist(fileName)) {
                 return FileUtil.readBytes(fileName);
             }
@@ -304,8 +304,8 @@ public class ZKNodeUtil {
      */
     public static void deleteData(String host, String path) {
         try {
-            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + DigestUtil.md5Hex(host) + File.separator;
-            String fileName = baseDir + DigestUtil.md5Hex(path);
+            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + MD5Util.md5Hex(host) + File.separator;
+            String fileName = baseDir + MD5Util.md5Hex(path);
             FileUtil.del(fileName);
         } catch (Exception ex) {
             ex.printStackTrace();

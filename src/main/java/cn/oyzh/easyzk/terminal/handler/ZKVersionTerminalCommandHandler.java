@@ -5,7 +5,6 @@ import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
-import cn.oyzh.fx.terminal.util.TerminalManager;
 import org.apache.zookeeper.Version;
 
 /**

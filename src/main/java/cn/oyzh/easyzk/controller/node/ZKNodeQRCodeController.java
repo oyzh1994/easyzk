@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.controller.node;
 
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.extra.qrcode.QrCodeUtil;
-import cn.hutool.extra.qrcode.QrConfig;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.log.JulLog;
+import cn.oyzh.fx.common.qrcode.QrCodeUtil;
+import cn.oyzh.fx.common.qrcode.QrConfig;
 import cn.oyzh.fx.common.util.ResourceUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;

@@ -1,19 +1,20 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.lang.UUID;
-import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.fx.common.json.JSONUtil;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
+import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.fx.common.util.FileUtil;
 import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.fx.common.util.UUIDUtil;
 import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -72,7 +73,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
      * @return 结果
      */
     public synchronized ZKGroup add(@NonNull String groupName) {
-        ZKGroup group = new ZKGroup(UUID.fastUUID().toString(true), groupName, false);
+        ZKGroup group = new ZKGroup(UUIDUtil.uuid(), groupName, false);
         if (this.add(group)) {
             return group;
         }

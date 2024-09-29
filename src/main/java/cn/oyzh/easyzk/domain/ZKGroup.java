@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.fx.common.jdbc.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.domain.TreeGroup;
 
 /**

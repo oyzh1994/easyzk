@@ -1,10 +1,11 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
+import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.common.util.TextUtil;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

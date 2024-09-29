@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.util;
 
-import cn.hutool.core.util.NumberUtil;
 import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
+import cn.oyzh.fx.common.util.NumberUtil;
 import cn.oyzh.fx.common.util.RegexUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nManager;

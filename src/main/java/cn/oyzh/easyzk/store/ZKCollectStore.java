@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.QueryParam;
+import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.common.util.StringUtil;
 
 import java.util.Collections;

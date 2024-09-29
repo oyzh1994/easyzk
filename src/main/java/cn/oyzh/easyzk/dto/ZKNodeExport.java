@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.dto;
 
-import cn.hutool.json.JSONUtil;
+import cn.oyzh.fx.common.json.JSONUtil;
 import cn.oyzh.fx.common.util.StringUtil;
 import lombok.Getter;
 import lombok.NonNull;

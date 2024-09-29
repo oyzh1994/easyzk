@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.PageParam;
+import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.common.util.StringUtil;
 
 import java.util.HashMap;

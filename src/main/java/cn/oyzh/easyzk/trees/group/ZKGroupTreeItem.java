@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.trees.group;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -12,6 +11,7 @@ import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
+import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.i18n.I18nHelper;

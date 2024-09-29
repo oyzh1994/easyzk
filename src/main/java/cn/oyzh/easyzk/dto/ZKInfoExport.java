@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.dto;
 
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.fx.common.json.JSONUtil;
 import cn.oyzh.fx.common.log.JulLog;
 import lombok.Getter;
 import lombok.NonNull;
+import org.h2.util.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

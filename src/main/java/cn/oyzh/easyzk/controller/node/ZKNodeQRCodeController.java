@@ -1,26 +1,22 @@
 package cn.oyzh.easyzk.controller.node;
 
-import cn.hutool.core.io.IoUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.qrcode.QrCodeUtil;
-import cn.oyzh.fx.common.qrcode.QrConfig;
-import cn.oyzh.fx.common.util.ResourceUtil;
+import cn.oyzh.fx.common.qrcode.QRCodeUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-import javax.imageio.ImageIO;
-import java.io.ByteArrayInputStream;
+import java.awt.image.BufferedImage;
 
 
 /**
@@ -54,12 +50,12 @@ public class ZKNodeQRCodeController extends StageController {
      * 初始化二维码
      */
     private void initQRCode() {
-        ByteArrayInputStream bais = null;
+        // ByteArrayInputStream bais = null;
         try {
             JulLog.info("read icon begin.");
             // icon图片
-            var iconUrl = ResourceUtil.getResource(ZKConst.ICON_PATH);
-            var icon = ImageIO.read(iconUrl);
+            // String iconUrl = ResourceUtil.getResource(ZKConst.ICON_PATH);
+            // var icon = ImageIO.read(iconUrl);
             JulLog.info("read icon finish.");
             ZKNode zkNode = this.getWindowProp("zkNode");
             String nodeData = this.getWindowProp("nodeData");
@@ -77,12 +73,16 @@ public class ZKNodeQRCodeController extends StageController {
 //                        .append(I18nHelper.updateTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
 //            }
             JulLog.info("generate qrcode begin.");
-            QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
-            config.setImg(icon);
-            byte[] bytes = QrCodeUtil.generatePng(builder.toString(), config);
-            bais = new ByteArrayInputStream(bytes);
-            this.qrcode.setImage(new Image(bais));
-            JulLog.info("generate qrcode finish size:{}", bais.available());
+            int codeW = (int) this.qrcode.getFitWidth();
+            int codeH = (int) this.qrcode.getFitHeight();
+            // QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
+            // config.setImg(icon);
+            // byte[] bytes = QrCodeUtil.generatePng(builder.toString(), config);
+            // bais = new ByteArrayInputStream(bytes);
+            BufferedImage source = QRCodeUtil.createImage(builder.toString(), "utf-8", codeW, codeH);
+            QRCodeUtil.insertImage(source, ZKConst.ICON_PATH, 60, 60, true);
+            this.qrcode.setImage(FXUtil.toImage(source));
+            // JulLog.info("generate qrcode finish size:{}", bais.available());
         } catch (Exception ex) {
             this.closeWindow();
             ex.printStackTrace();
@@ -93,7 +93,7 @@ public class ZKNodeQRCodeController extends StageController {
                 MessageBox.exception(ex, I18nHelper.operationFail());
             }
         } finally {
-            IOUtil.close(bais);
+            // IOUtil.close(bais);
         }
     }
 

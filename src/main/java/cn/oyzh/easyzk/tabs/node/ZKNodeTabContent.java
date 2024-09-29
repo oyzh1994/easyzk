@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.tabs.node;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
@@ -12,6 +11,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;

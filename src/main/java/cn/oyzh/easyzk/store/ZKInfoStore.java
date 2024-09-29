@@ -1,15 +1,15 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.lang.UUID;
-import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.json.JSONUtil;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
+import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.fx.common.util.FileUtil;
 import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.fx.common.util.UUIDUtil;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
         try {
             if (!this.infos.contains(zkInfo)) {
                 if (StringUtil.isBlank(zkInfo.getId())) {
-                    zkInfo.setId(UUID.fastUUID().toString(true));
+                    zkInfo.setId(UUIDUtil.uuid());
                 }
                 // 添加到集合
                 this.infos.add(zkInfo);

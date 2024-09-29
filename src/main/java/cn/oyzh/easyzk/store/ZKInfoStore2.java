@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSSHInfo;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
+import cn.oyzh.fx.common.util.CollectionUtil;
 
 import java.util.List;
 

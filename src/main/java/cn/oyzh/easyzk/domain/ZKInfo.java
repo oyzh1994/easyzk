@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.BooleanUtil;
 import cn.oyzh.fx.common.jdbc.Column;
 import cn.oyzh.fx.common.jdbc.PrimaryKey;
 import cn.oyzh.fx.common.jdbc.Table;
+import cn.oyzh.fx.common.util.BooleanUtil;
+import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import cn.oyzh.fx.common.util.StringUtil;
 import lombok.Getter;

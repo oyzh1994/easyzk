@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.trees;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
+import cn.oyzh.fx.common.util.CollectionUtil;
 import lombok.NonNull;
 
 import java.util.List;

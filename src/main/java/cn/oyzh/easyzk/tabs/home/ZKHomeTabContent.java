@@ -6,10 +6,7 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,8 +16,8 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/5/24
  */
-@Lazy
-@Component
+// @Lazy
+// @Component
 public class ZKHomeTabContent extends DynamicTabController {
 
     /**

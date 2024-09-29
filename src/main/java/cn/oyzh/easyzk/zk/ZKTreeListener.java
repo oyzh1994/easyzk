@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.common.log.JulLog;
 import lombok.Getter;

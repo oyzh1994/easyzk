@@ -9,14 +9,10 @@ import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * 主页头部业务

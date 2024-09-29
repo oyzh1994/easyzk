@@ -11,13 +11,12 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
 import org.apache.zookeeper.cli.SetQuotaCommand;
-import org.springframework.stereotype.Component;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
-@Component
+// @Component
 public class ZKSetQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)

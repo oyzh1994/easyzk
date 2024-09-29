@@ -6,13 +6,12 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import org.apache.zookeeper.Version;
-import org.springframework.stereotype.Component;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
-@Component
+// @Component
 public class ZKVersionTerminalCommandHandler extends ZKTerminalCommandHandler<TerminalCommand> {
 // public class ZKVersionTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 

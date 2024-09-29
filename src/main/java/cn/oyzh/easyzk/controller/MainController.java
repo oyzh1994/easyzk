@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
@@ -22,7 +21,6 @@ import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
-import javax.annotation.Resource;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;

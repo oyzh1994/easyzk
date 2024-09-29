@@ -18,45 +18,45 @@
     </properties>
 
     <dependencies>
-        <!-- Spring boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>jakarta.annotation</groupId>
-                    <artifactId>jakarta.annotation-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                </exclusion>
-                <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-to-slf4j -->
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-to-slf4j</artifactId>
-                </exclusion>
-                <!-- https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j -->
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>jul-to-slf4j</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-autoconfigure</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!-- &lt;!&ndash; Spring boot &ndash;&gt; -->
+        <!-- <dependency> -->
+        <!--     <groupId>org.springframework.boot</groupId> -->
+        <!--     <artifactId>spring-boot-starter</artifactId> -->
+        <!--     <exclusions> -->
+        <!--         <exclusion> -->
+        <!--             <groupId>jakarta.annotation</groupId> -->
+        <!--             <artifactId>jakarta.annotation-api</artifactId> -->
+        <!--         </exclusion> -->
+        <!--         <exclusion> -->
+        <!--             <groupId>org.yaml</groupId> -->
+        <!--             <artifactId>snakeyaml</artifactId> -->
+        <!--         </exclusion> -->
+        <!--         &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-to-slf4j &ndash;&gt; -->
+        <!--         <exclusion> -->
+        <!--             <groupId>org.apache.logging.log4j</groupId> -->
+        <!--             <artifactId>log4j-to-slf4j</artifactId> -->
+        <!--         </exclusion> -->
+        <!--         &lt;!&ndash; https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j &ndash;&gt; -->
+        <!--         <exclusion> -->
+        <!--             <groupId>org.slf4j</groupId> -->
+        <!--             <artifactId>jul-to-slf4j</artifactId> -->
+        <!--         </exclusion> -->
+        <!--         <exclusion> -->
+        <!--             <groupId>org.springframework.boot</groupId> -->
+        <!--             <artifactId>spring-boot-autoconfigure</artifactId> -->
+        <!--         </exclusion> -->
+        <!--         <exclusion> -->
+        <!--             <groupId>org.springframework.boot</groupId> -->
+        <!--             <artifactId>spring-boot-starter-logging</artifactId> -->
+        <!--         </exclusion> -->
+        <!--     </exclusions> -->
+        <!-- </dependency> -->
 
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j2-impl</artifactId>
-        </dependency>
+        <!-- &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl &ndash;&gt; -->
+        <!-- <dependency> -->
+        <!--     <groupId>org.apache.logging.log4j</groupId> -->
+        <!--     <artifactId>log4j-slf4j2-impl</artifactId> -->
+        <!-- </dependency> -->
 
         <!-- 加密工具类库 -->
         <dependency>
@@ -102,14 +102,14 @@
             <!-- <version>3.9.2</version> -->
             <version>3.5.2-alpha</version>
             <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
+                <!-- <exclusion> -->
+                <!--     <groupId>org.slf4j</groupId> -->
+                <!--     <artifactId>slf4j-api</artifactId> -->
+                <!-- </exclusion> -->
+                <!-- <exclusion> -->
+                <!--     <groupId>log4j</groupId> -->
+                <!--     <artifactId>log4j</artifactId> -->
+                <!-- </exclusion> -->
                 <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-reload4j</artifactId>

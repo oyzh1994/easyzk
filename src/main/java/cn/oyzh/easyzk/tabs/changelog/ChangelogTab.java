@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.tabs.changelog;
 
 import cn.oyzh.fx.plus.controls.svg.ChangelogSVGGlyph;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;

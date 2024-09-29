@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.dto;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.log.JulLog;
@@ -47,7 +46,7 @@ public class ZKInfoExport {
      */
     public static ZKInfoExport fromConnects(@NonNull List<ZKInfo> zkInfos) {
         ZKInfoExport export = new ZKInfoExport();
-        Project project = SpringUtil.getBean(Project.class);
+        Project project = Project.load();
         export.version = project.getVersion();
         export.connects = zkInfos;
         export.platform = System.getProperty("os.name");

@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKServerNode;

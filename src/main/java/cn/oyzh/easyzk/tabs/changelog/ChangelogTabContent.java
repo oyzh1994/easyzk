@@ -5,8 +5,6 @@ import cn.oyzh.fx.plus.changelog.ChangelogListView;
 import cn.oyzh.fx.plus.changelog.ChangelogManager;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.List;
@@ -18,8 +16,8 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2024/04/07
  */
-@Lazy
-@Component
+// @Lazy
+// @Component
 public class ChangelogTabContent extends DynamicTabController {
 
     /**

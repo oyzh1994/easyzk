@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.terminal;
 
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.terminal.histroy.TerminalHistoryStore;

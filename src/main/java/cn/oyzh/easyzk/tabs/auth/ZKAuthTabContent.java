@@ -26,8 +26,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,8 +36,8 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/11/03
  */
-@Lazy
-@Component
+// @Lazy
+// @Component
 public class ZKAuthTabContent extends DynamicTabController {
 
     /**

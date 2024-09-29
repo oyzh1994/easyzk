@@ -10,7 +10,6 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
 import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.ZKConnectManager;

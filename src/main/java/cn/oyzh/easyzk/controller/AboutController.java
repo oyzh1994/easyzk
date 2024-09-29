@@ -13,8 +13,6 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
-import javax.annotation.Resource;
-
 /**
  * 关于业务
  *

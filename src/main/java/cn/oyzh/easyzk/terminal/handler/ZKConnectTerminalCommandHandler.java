@@ -5,14 +5,19 @@ import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
-import org.springframework.stereotype.Component;
+import cn.oyzh.fx.terminal.standard.ClearTerminalCommandHandler;
+import cn.oyzh.fx.terminal.util.TerminalManager;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
-@Component
+// @Component
 public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<TerminalCommand> {
+
+    static {
+        TerminalManager.registerHandler(ZKConnectTerminalCommandHandler.class);
+    }
 
     @Override
     protected TerminalCommand parseCommand(String line, String[] args) {

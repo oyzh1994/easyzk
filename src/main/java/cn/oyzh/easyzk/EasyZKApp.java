@@ -1,7 +1,5 @@
 package cn.oyzh.easyzk;
 
-import cn.hutool.extra.spring.EnableSpringUtil;
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
@@ -10,16 +8,15 @@ import cn.oyzh.fx.common.SysConst;
 import cn.oyzh.fx.common.date.LocalZoneRulesProvider;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.ext.ApplicationExt;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
-import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import org.springframework.context.annotation.ComponentScan;
 
 
 /**
@@ -28,12 +25,12 @@ import org.springframework.context.annotation.ComponentScan;
  * @author oyzh
  * @since 2020/9/14
  */
-@ComponentScan(
-        lazyInit = true,
-        value = {"cn.oyzh.fx.common", "cn.oyzh.easyzk"}
-)
-@EnableSpringUtil
-public class EasyZKApp extends SpringApplication {
+// @ComponentScan(
+//         lazyInit = true,
+//         value = {"cn.oyzh.fx.common", "cn.oyzh.easyzk"}
+// )
+// @EnableSpringUtil
+public class EasyZKApp extends ApplicationExt {
 
     /**
      * 启动实际
@@ -44,7 +41,7 @@ public class EasyZKApp extends SpringApplication {
         // 初始化时区处理器
         System.setProperty(SysConst.CACHE_DIR, ZKConst.CACHE_PATH);
         System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
-        launchSpring(EasyZKApp.class, args);
+        launch(EasyZKApp.class, args);
     }
 
     @Override
@@ -78,18 +75,25 @@ public class EasyZKApp extends SpringApplication {
             double usedMemory = SystemUtil.getUsedMemory();
             JulLog.info("启动耗时:{}ms-------------------------------", +cost);
             JulLog.info("内存消耗:{}mb-------------------------------", +usedMemory);
+            JulLog.info("EasyZKApp start.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     @Override
-    public void destroy() {
-        JulLog.info("EasyZKApp destroyed.");
+    public void stop() {
+        super.stop();
+        JulLog.info("EasyZKApp stop");
     }
 
-    @Override
-    public void run(String... args) {
-        JulLog.info("EasyZKApp started.");
-    }
+    // @Override
+    // public void destroy() {
+    //     JulLog.info("EasyZKApp destroyed.");
+    // }
+    //
+    // @Override
+    // public void run(String... args) {
+    //     JulLog.info("EasyZKApp started.");
+    // }
 }

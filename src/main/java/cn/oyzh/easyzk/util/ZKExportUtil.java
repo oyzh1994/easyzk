@@ -4,11 +4,9 @@ package cn.oyzh.easyzk.util;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.Project;
@@ -84,7 +82,7 @@ public class ZKExportUtil {
      * @return 数据文本字符串
      */
     public static String nodesToTxt(@NonNull List<ZKNode> zkNodes, String charset, String prefix) {
-        Project project = SpringUtil.getBean(Project.class);
+        Project project = Project.load();
         String version = project.getVersion();
         String platform = OSUtil.getOSType();
         StringBuilder builder = new StringBuilder();
@@ -122,7 +120,7 @@ public class ZKExportUtil {
      * @return 数据json字符串
      */
     public static String nodesToJSON(@NonNull List<ZKNode> zkNodes, String charset, boolean prettyFormat) {
-        Project project = SpringUtil.getBean(Project.class);
+        Project project = Project.load();
         String version = project.getVersion();
         String platform = OSUtil.getOSType();
         ZKNodeExport export = new ZKNodeExport();
@@ -231,7 +229,7 @@ public class ZKExportUtil {
             txtList.remove(metaLine);
         }
         // 是否v1.5.5版本
-        boolean isV155 =  Objects.equals(export.getVersion(), "1.5.5");
+        boolean isV155 = Objects.equals(export.getVersion(), "1.5.5");
         // boolean isV155 = txt.contains(LINE_REPLACE) || export.version().contains("1.5.5") || !txt.contains(TEXT_LINE_SEPARATOR);
         if (isV155) {
             JulLog.warn("当前导入数据版本为1.5.5版本");

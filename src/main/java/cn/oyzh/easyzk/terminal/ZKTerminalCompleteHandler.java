@@ -15,7 +15,7 @@ import java.util.List;
 public class ZKTerminalCompleteHandler extends BaseTerminalCompleteHandler<ZKTerminalTextTextArea> {
 
     @Override
-    protected List<TerminalCommandHandler> findCommandHandlers(String line) {
+    protected List<TerminalCommandHandler<?,?>> findCommandHandlers(String line) {
         if (line.contains(" /")) {
             return TerminalManager.findHandlers(line.split(" ")[0], 2);
         }

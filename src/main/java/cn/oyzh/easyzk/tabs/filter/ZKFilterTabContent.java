@@ -1,12 +1,10 @@
 package cn.oyzh.easyzk.tabs.filter;
 
-import cn.hutool.core.map.MapUtil;
 import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.dto.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
-import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.page.PageBox;
@@ -20,18 +18,15 @@ import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.window.StageManager;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,8 +37,8 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/11/03
  */
-@Lazy
-@Component
+// @Lazy
+// @Component
 public class ZKFilterTabContent extends DynamicTabController {
 
     /**

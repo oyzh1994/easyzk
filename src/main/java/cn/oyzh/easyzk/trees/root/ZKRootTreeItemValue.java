@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.trees.root;
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 
 /**

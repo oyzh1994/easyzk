@@ -4,15 +4,11 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.NonNull;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 /**
  * zk终端tab内容组件
@@ -20,9 +16,9 @@ import org.springframework.stereotype.Component;
  * @author oyzh
  * @since 2023/07/21
  */
-@Lazy
-@Component
-@Scope(ScopeType.PROTOTYPE)
+// @Lazy
+// @Component
+// @Scope(ScopeType.PROTOTYPE)
 public class ZKTerminalTabContent extends DynamicTabController {
 
     /**

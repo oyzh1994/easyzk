@@ -12,29 +12,28 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
-import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import javafx.beans.value.ChangeListener;
@@ -42,7 +41,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -52,9 +50,6 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.List;
@@ -67,9 +62,9 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/05/21
  */
-@Lazy
-@Component
-@Scope(ScopeType.PROTOTYPE)
+// @Lazy
+// @Component
+// @Scope(ScopeType.PROTOTYPE)
 public class ZKNodeTabContent extends DynamicTabController {
 
     /**

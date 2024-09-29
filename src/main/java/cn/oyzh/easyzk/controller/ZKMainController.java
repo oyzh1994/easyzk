@@ -31,8 +31,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +42,8 @@ import java.util.List;
  * @author oyzh
  * @since 2020/9/16
  */
-@Lazy
-@Component
+// @Lazy
+// @Component
 public class ZKMainController extends ParentStageController {
 
     /**

@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.terminal;
 
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;

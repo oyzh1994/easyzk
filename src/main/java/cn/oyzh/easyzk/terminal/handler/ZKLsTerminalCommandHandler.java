@@ -9,13 +9,12 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
 import org.apache.zookeeper.cli.LsCommand;
-import org.springframework.stereotype.Component;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
-@Component
+// @Component
 public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     @Getter(AccessLevel.PROTECTED)

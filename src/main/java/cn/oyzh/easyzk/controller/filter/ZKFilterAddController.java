@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;

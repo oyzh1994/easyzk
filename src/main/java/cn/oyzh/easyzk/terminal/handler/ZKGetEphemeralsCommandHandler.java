@@ -19,7 +19,7 @@ import org.apache.zookeeper.cli.GetEphemeralsCommand;
 public class ZKGetEphemeralsCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     static {
-        TerminalManager.registerHandler(ClearTerminalCommandHandler.class);
+        TerminalManager.registerHandler(ZKGetEphemeralsCommandHandler.class);
     }
 
     @Getter(AccessLevel.PROTECTED)

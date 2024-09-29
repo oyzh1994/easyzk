@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.util.TerminalManager;
 import org.apache.zookeeper.Version;
 
 /**
@@ -14,6 +15,10 @@ import org.apache.zookeeper.Version;
 // @Component
 public class ZKVersionTerminalCommandHandler extends ZKTerminalCommandHandler<TerminalCommand> {
 // public class ZKVersionTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+
+    static {
+        TerminalManager.registerHandler(ZKVersionTerminalCommandHandler.class);
+    }
 
     // @Getter(AccessLevel.PROTECTED)
     // @Accessors(fluent = true)

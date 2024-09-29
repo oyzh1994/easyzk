@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
+import cn.oyzh.fx.terminal.util.TerminalManager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -16,6 +17,10 @@ import org.apache.zookeeper.cli.RemoveWatchesCommand;
  */
 // @Component
 public class ZKRemoveWatchesTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+
+    static {
+        TerminalManager.registerHandler(ZKRemoveWatchesTerminalCommandHandler.class);
+    }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

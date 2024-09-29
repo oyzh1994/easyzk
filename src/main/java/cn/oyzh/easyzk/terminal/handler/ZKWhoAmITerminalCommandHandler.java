@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.terminal.handler;
 import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
+import cn.oyzh.fx.terminal.util.TerminalManager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -15,6 +16,10 @@ import org.apache.zookeeper.cli.WhoAmICommand;
  */
 // @Component
 public class ZKWhoAmITerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+
+    static {
+        TerminalManager.registerHandler(ZKWhoAmITerminalCommandHandler.class);
+    }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)

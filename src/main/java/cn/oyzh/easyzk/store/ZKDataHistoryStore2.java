@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -11,6 +10,7 @@ import cn.oyzh.fx.common.jdbc.OrderByParam;
 import cn.oyzh.fx.common.jdbc.QueryParam;
 import cn.oyzh.fx.common.jdbc.SelectParam;
 import cn.oyzh.fx.common.util.MD5Util;
+import cn.oyzh.fx.common.util.StringUtil;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
@@ -85,7 +85,7 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
     public boolean replace(ZKDataHistory model, ZKClient client) {
         String path = model.getPath();
         String infoId = model.getInfoId();
-        if (StrUtil.isBlank(path) || StrUtil.isBlank(infoId)) {
+        if (StringUtil.isBlank(path) || StringUtil.isBlank(infoId)) {
             throw new InvalidDataException("path", "infoId");
         }
         try {

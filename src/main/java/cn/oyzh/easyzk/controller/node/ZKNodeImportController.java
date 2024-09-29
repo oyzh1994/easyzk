@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.controller.node;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
@@ -11,6 +10,7 @@ import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
@@ -293,7 +293,7 @@ public class ZKNodeImportController extends StageController {
     public void onStageShown(WindowEvent event) {
         this.zkClient = this.getWindowProp("zkClient");
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
-        this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StrUtil.isNotBlank(t1)));
+        this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StringUtil.isNotBlank(t1)));
         this.stage.hideOnEscape();
         // 文件拖拽相关
         this.stage.scene().setOnDragOver(event1 -> {

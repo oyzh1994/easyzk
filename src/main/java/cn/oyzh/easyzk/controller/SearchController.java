@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.event.TreeChildChangedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKSearchFireEvent;
@@ -12,6 +11,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
@@ -330,7 +330,7 @@ public class SearchController extends SubStageController {
 
             // 搜索相关检查
             this.searchKW.enable();
-            if (StrUtil.isBlank(this.searchKW.getText())) {
+            if (StringUtil.isBlank(this.searchKW.getText())) {
                 this.searchNext.disable();
                 this.searchResult.setText("");
                 this.searchHandler.clear();

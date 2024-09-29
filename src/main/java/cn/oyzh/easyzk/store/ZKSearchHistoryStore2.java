@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.fx.common.jdbc.DeleteParam;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.OrderByParam;
 import cn.oyzh.fx.common.jdbc.QueryParam;
+import cn.oyzh.fx.common.util.StringUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +45,7 @@ public class ZKSearchHistoryStore2 extends JdbcStore<ZKSearchHistory> {
     public boolean replace(ZKSearchHistory model) {
         String kw = model.getKw();
         byte type = model.getType();
-        if (StrUtil.isNotBlank(kw)) {
+        if (StringUtil.isNotBlank(kw)) {
             DeleteParam deleteParam = new DeleteParam();
             deleteParam.addQueryParam(new QueryParam("kw", kw));
             deleteParam.addQueryParam(new QueryParam("type", type));

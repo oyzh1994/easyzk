@@ -66,7 +66,7 @@
 //            File[] files = FileUtil.ls(baseDir);
 //            if (files != null) {
 //                List<File> fileList;
-//                if (StrUtil.isBlank(path)) {
+//                if (StringUtil.isBlank(path)) {
 //                    String pathDigest = DigestUtil.md5Hex(path);
 //                    fileList = List.of(files).parallelStream().filter(f -> f.getName().startsWith(pathDigest))
 //                            .sorted(Comparator.comparingLong(File::lastModified)).toList();

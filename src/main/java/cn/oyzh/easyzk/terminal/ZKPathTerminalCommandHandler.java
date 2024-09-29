@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.terminal;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -18,7 +17,7 @@ public abstract class ZKPathTerminalCommandHandler<C extends TerminalCommand> ex
     public boolean completion(String line, ZKTerminalTextTextArea terminal) {
         // 获取路径
         String path = ZKTerminalUtil.getPath(line);
-        if (!StrUtil.contains(path, "/")) {
+        if (!StringUtil.contains(path, "/")) {
             return false;
         }
         try {

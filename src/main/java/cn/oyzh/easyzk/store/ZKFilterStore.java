@@ -2,13 +2,13 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
     @Override
     public synchronized List<ZKFilter> load() {
         String text = FileUtil.readString(this.storeFile(), this.charset());
-        if (StrUtil.isBlank(text)) {
+        if (StringUtil.isBlank(text)) {
             return new ArrayList<>();
         }
         List<ZKFilter> filters = JSONUtil.toList(text, ZKFilter.class);
@@ -143,7 +143,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
         if (CollUtil.isNotEmpty(list)) {
             String searchKeyWord = params == null ? null : (String) params.get("searchKeyWord");
             // 过滤数据
-            if (StrUtil.isNotBlank(searchKeyWord)) {
+            if (StringUtil.isNotBlank(searchKeyWord)) {
                 final String kw = searchKeyWord.toLowerCase().trim();
                 list = list.parallelStream().filter(z -> z.getKw().contains(kw)).collect(Collectors.toList());
             }

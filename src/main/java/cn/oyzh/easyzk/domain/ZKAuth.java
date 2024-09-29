@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.common.jdbc.Column;
 import cn.oyzh.fx.common.jdbc.PrimaryKey;
 import cn.oyzh.fx.common.jdbc.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -62,7 +62,7 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
      * @return 摘要信息
      */
     public String digest() {
-        if (StrUtil.isBlank(this.getUser()) || StrUtil.isBlank(this.getPassword())) {
+        if (StringUtil.isBlank(this.getUser()) || StringUtil.isBlank(this.getPassword())) {
             return "";
         }
         return ZKAuthUtil.digest(this.getUser(), this.getPassword());

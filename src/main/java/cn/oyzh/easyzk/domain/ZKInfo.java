@@ -2,11 +2,11 @@ package cn.oyzh.easyzk.domain;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.fx.common.jdbc.Column;
 import cn.oyzh.fx.common.jdbc.PrimaryKey;
 import cn.oyzh.fx.common.jdbc.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -248,7 +248,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
     //  * @return 结果
     //  */
     // public boolean isCluster() {
-    //     return BooleanUtil.isTrue(this.cluster) || StrUtil.count(this.host, ":") > 1;
+    //     return BooleanUtil.isTrue(this.cluster) || StringUtil.count(this.host, ":") > 1;
     // }
 
     /**
@@ -283,7 +283,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
      * @return 连接ip
      */
     public String hostIp() {
-        if (StrUtil.isNotBlank(this.host) && this.host.contains(":")) {
+        if (StringUtil.isNotBlank(this.host) && this.host.contains(":")) {
             return this.host.split(":")[0];
         }
         return "";
@@ -296,7 +296,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
      */
     public int hostPort() {
         try {
-            if (StrUtil.isNotBlank(this.host) && !this.host.contains(",") && this.host.contains(":")) {
+            if (StringUtil.isNotBlank(this.host) && !this.host.contains(",") && this.host.contains(":")) {
                 return Integer.parseInt(this.host.split(":")[1]);
             }
         } catch (Exception ex) {
@@ -310,6 +310,6 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
         if (t1 == null) {
             return false;
         }
-        return StrUtil.equals(this.name, t1.name);
+        return StringUtil.equals(this.name, t1.name);
     }
 }

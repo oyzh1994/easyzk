@@ -3,12 +3,12 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
         if (this.groups == null) {
             // 读取存储文件中的文本
             String text = FileUtil.readString(this.storeFile(), this.charset());
-            if (StrUtil.isBlank(text)) {
+            if (StringUtil.isBlank(text)) {
                 return new ArrayList<>();
             }
             // 将文本转换为ZKGroup列表

@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.controller.filter;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -60,7 +60,7 @@ public class ZKFilterAddController extends StageController {
     private void addFilter() {
         // 获取输入内容
         String kw = this.kw.getText().trim();
-        if (StrUtil.isBlank(kw)) {
+        if (StringUtil.isBlank(kw)) {
             MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.kw);
             return;
         }

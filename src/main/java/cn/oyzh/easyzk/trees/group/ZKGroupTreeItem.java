@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.trees.group;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -13,6 +12,7 @@ import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -104,7 +104,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         }
 
         // 检查名称
-        if (StrUtil.isBlank(groupName)) {
+        if (StringUtil.isBlank(groupName)) {
             return;
         }
 

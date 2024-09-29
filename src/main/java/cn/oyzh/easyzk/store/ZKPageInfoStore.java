@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.fx.common.store.ObjectFileStore;
+import cn.oyzh.fx.common.util.StringUtil;
 
 
 /**
@@ -43,7 +43,7 @@ public class ZKPageInfoStore extends ObjectFileStore<ZKPageInfo> {
         try {
             // 从文件中读取文本内容
             String text = FileUtil.readString(this.storeFile(), this.charset());
-            if (StrUtil.isNotBlank(text)) {
+            if (StringUtil.isNotBlank(text)) {
                 // 将文本内容转换为页面信息对象
                 pageInfo = JSONUtil.toBean(text, ZKPageInfo.class);
             }

@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.controller.acl;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -102,7 +102,7 @@ public class ZKACLUpdateController extends StageController {
     private void updateACL() {
         try {
             String perms = this.getPerms();
-            if (StrUtil.isBlank(perms)) {
+            if (StringUtil.isBlank(perms)) {
                 MessageBox.warn(I18nHelper.contentCanNotEmpty());
                 return;
             }

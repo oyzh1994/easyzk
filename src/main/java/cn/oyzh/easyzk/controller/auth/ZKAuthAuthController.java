@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.controller.auth;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -10,6 +9,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -120,11 +120,11 @@ public class ZKAuthAuthController extends StageController {
             if (this.authType1.isVisible()) {
                 user = this.user.getText().trim();
                 password = this.password.getText().trim();
-                if (StrUtil.isBlank(user)) {
+                if (StringUtil.isBlank(user)) {
                     MessageBox.tipMsg(I18nHelper.userNameCanNotEmpty(), this.user);
                     return;
                 }
-                if (StrUtil.isBlank(password)) {
+                if (StringUtil.isBlank(password)) {
                     MessageBox.tipMsg(I18nHelper.passwordCanNotEmpty(), this.password);
                     return;
                 }

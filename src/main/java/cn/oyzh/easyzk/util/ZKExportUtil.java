@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -12,6 +11,7 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.util.OSUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -97,7 +97,7 @@ public class ZKExportUtil {
         for (ZKNode n : zkNodes) {
             builder.append(System.lineSeparator()).append(TEXT_LINE_SEPARATOR).append(System.lineSeparator());
             // 拼接前缀
-            if (!StrUtil.isBlank(prefix)) {
+            if (!StringUtil.isBlank(prefix)) {
                 builder.append(prefix).append(" ");
             }
             // 拼接数据
@@ -151,7 +151,7 @@ public class ZKExportUtil {
      */
     public static ZKNodeExport fromFile(@NonNull File file) {
         String text = FileUtil.readUtf8String(file);
-        if (StrUtil.equalsIgnoreCase(FileNameUtil.extName(file), "json")) {
+        if (StringUtil.equalsIgnoreCase(FileNameUtil.extName(file), "json")) {
             return fromJSON(text);
         }
         return fromTxt(text);

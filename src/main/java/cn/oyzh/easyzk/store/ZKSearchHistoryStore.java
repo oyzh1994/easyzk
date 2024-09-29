@@ -2,13 +2,13 @@ package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
         // 从文件中读取字符串内容
         String text = FileUtil.readString(this.storeFile(), this.charset());
         // 如果字符串为空，则返回空列表
-        if (StrUtil.isBlank(text)) {
+        if (StringUtil.isBlank(text)) {
             return new ArrayList<>();
         }
         // 将字符串解析为搜索历史记录列表

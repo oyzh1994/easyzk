@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.trees.connect;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
@@ -22,6 +21,7 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -380,7 +380,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             return;
         }
         // 检查名称
-        if (StrUtil.isBlank(connectName)) {
+        if (StringUtil.isBlank(connectName)) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
             return;
         }

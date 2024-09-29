@@ -20,7 +20,7 @@ public class ZKTerminalKeyHandler implements TerminalKeyHandler<ZKTerminalTextTe
 //            terminal.connect(input);
 //            terminal.saveHistory(input);
 //        } else if (terminal.isConnected()) {
-//            if (StrUtil.isEmpty(input)) {
+//            if (StringUtil.isEmpty(input)) {
 //                HelpTerminalCommandHandler commandHandler = SpringUtil.getBean(HelpTerminalCommandHandler.class);
 //                TerminalExecuteResult result = commandHandler.execute(null, terminal);
 //                terminal.appendLine((String) result.getResult());

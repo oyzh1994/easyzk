@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.dto;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -84,7 +84,7 @@ public class ZKNodeExport {
      * @return 数据字节数组
      */
     public byte[] getDateBytes(String data, @NonNull Charset charset) {
-        // if (StrUtil.isBlank(charset)) {
+        // if (StringUtil.isBlank(charset)) {
         //     charset = StandardCharsets.UTF_8.name();
         // } else if ("跟随系统".equals(charset)) {
         //     charset = Charset.defaultCharset().name();
@@ -111,7 +111,7 @@ public class ZKNodeExport {
      * @return 结果
      */
     public boolean hasPrefix() {
-        return StrUtil.isNotBlank(this.prefix);
+        return StringUtil.isNotBlank(this.prefix);
     }
 
     public String version() {

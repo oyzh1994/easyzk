@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.trees.node;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAuthController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
@@ -21,6 +20,7 @@ import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -674,7 +674,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         }
         String nodeName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.nodeName());
         // 名称为空或名称跟当前名称相同，则忽略
-        if (StrUtil.isBlank(nodeName) || Objects.equals(nodeName, this.value.nodeName())) {
+        if (StringUtil.isBlank(nodeName) || Objects.equals(nodeName, this.value.nodeName())) {
             return;
         }
         // 检查是否存在
@@ -811,7 +811,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return zk节点
      */
     public ZKNodeTreeItem getChild(String path) {
-        if (StrUtil.isNotBlank(path) && !this.isChildEmpty()) {
+        if (StringUtil.isNotBlank(path) && !this.isChildEmpty()) {
             for (TreeItem<?> child : this.getRealChildren()) {
                 if (child instanceof ZKNodeTreeItem treeItem) {
                     if (treeItem.decodeNodePath().equals(path)) {
@@ -860,7 +860,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @param path zk节点路径
      */
     public void addChild(String path) {
-        if (StrUtil.isNotBlank(path)) {
+        if (StringUtil.isNotBlank(path)) {
             ZKNode node = ZKNodeUtil.getNode(this.client(), path);
             if (node != null) {
                 this.addChild(node);

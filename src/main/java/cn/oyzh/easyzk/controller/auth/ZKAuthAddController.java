@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.controller.auth;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -54,11 +54,11 @@ public class ZKAuthAddController extends StageController {
         try {
             String user = this.user.getText().trim();
             String password = this.password.getText().trim();
-            if (StrUtil.isBlank(user)) {
+            if (StringUtil.isBlank(user)) {
                 MessageBox.tipMsg(I18nHelper.userNameCanNotEmpty(), this.user);
                 return;
             }
-            if (StrUtil.isBlank(password)) {
+            if (StringUtil.isBlank(password)) {
                 MessageBox.tipMsg(I18nHelper.passwordCanNotEmpty(), this.password);
                 return;
             }

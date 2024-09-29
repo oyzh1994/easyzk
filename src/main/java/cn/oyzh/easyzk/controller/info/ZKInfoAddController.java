@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.controller.info;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -8,6 +7,7 @@ import cn.oyzh.easyzk.domain.ZKSSHInfo;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
@@ -206,7 +206,7 @@ public class ZKInfoAddController extends StageController {
     private void testConnect() {
         // 检查连接地址
         String host = this.getHost();
-        if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
+        if (StringUtil.isBlank(host) || StringUtil.isBlank(host.split(":")[0])) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
             // 创建zk信息
@@ -231,7 +231,7 @@ public class ZKInfoAddController extends StageController {
             return;
         }
         // 名称未填，则直接以host为名称
-        if (StrUtil.isBlank(this.name.getTextTrim())) {
+        if (StringUtil.isBlank(this.name.getTextTrim())) {
             this.name.setText(host.replace(":", "_"));
         }
         try {

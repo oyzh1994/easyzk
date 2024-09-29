@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.store.ObjectFileStore;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.NonNull;
 
 
@@ -43,7 +43,7 @@ public class ZKSettingStore extends ObjectFileStore<ZKSetting> {
         try {
             // 读取配置文件内容
             String text = FileUtil.readString(this.storeFile(), this.charset());
-            if (StrUtil.isNotBlank(text)) {
+            if (StringUtil.isNotBlank(text)) {
                 // 将配置文件内容解析为ZKSetting对象
                 setting = JSONUtil.toBean(text, ZKSetting.class);
             }

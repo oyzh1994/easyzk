@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.fx.common.jdbc.Table;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import cn.oyzh.fx.plus.domain.TreeGroup;
@@ -27,7 +26,7 @@ public class ZKGroup extends TreeGroup implements ObjectComparator<ZKGroup> {
         if (t1 == null) {
             return false;
         }
-        return StrUtil.equals(this.getName(), t1.getName());
+        return StringUtil.equals(this.getName(), t1.getName());
     }
 }
 

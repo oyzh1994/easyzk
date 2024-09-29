@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.controller.acl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
@@ -11,6 +10,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
@@ -200,7 +200,7 @@ public class ZKACLAddController extends StageController {
     @FXML
     private void segmentModel() {
         String ip = this.ipContent1.getText().trim();
-        if (StrUtil.isNotBlank(ip) && !ip.endsWith("/16")) {
+        if (StringUtil.isNotBlank(ip) && !ip.endsWith("/16")) {
             if (!ip.endsWith(".0")) {
                 ip += ".0";
             }
@@ -219,7 +219,7 @@ public class ZKACLAddController extends StageController {
                 return;
             }
             String perms = this.getPerms();
-            if (StrUtil.isBlank(perms)) {
+            if (StringUtil.isBlank(perms)) {
                 MessageBox.warn(I18nHelper.contentCanNotEmpty());
                 return;
             }
@@ -248,12 +248,12 @@ public class ZKACLAddController extends StageController {
     private void addDigestACL1() {
         // 获取内容
         String user = this.digestInfo1User.getText().trim();
-        if (StrUtil.isBlank(user)) {
+        if (StringUtil.isBlank(user)) {
             MessageBox.tipMsg(I18nHelper.userNameCanNotEmpty(), this.digestInfo1User);
             return;
         }
         String password = this.digestInfo1Password.getText().trim();
-        if (StrUtil.isBlank(password)) {
+        if (StringUtil.isBlank(password)) {
             MessageBox.tipMsg(I18nHelper.passwordCanNotEmpty(), this.digestInfo1Password);
             return;
         }
@@ -290,11 +290,11 @@ public class ZKACLAddController extends StageController {
         }
         String user = text[0];
         String password = text[1];
-        if (StrUtil.isBlank(user)) {
+        if (StringUtil.isBlank(user)) {
             MessageBox.tipMsg(I18nHelper.userNameCanNotEmpty(), this.digestInfo2);
             return;
         }
-        if (StrUtil.isBlank(password)) {
+        if (StringUtil.isBlank(password)) {
             MessageBox.tipMsg(I18nHelper.passwordCanNotEmpty(), this.digestInfo2);
             return;
         }
@@ -481,7 +481,7 @@ public class ZKACLAddController extends StageController {
         ChangeListener<String> info1listener = (observableValue, s, t1) -> {
             String user = this.digestInfo1User.getText().trim();
             String password = this.digestInfo1Password.getTextTrim();
-            if (StrUtil.isNotBlank(user) && StrUtil.isNotBlank(password)) {
+            if (StringUtil.isNotBlank(user) && StringUtil.isNotBlank(password)) {
                 String digest = ZKAuthUtil.digest(user, password);
                 this.digestText.setText(digest);
                 this.copyDigestText.display();

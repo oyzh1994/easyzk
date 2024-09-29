@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.PageParam;
 import cn.oyzh.fx.common.jdbc.QueryParam;
+import cn.oyzh.fx.common.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +50,7 @@ public class ZKFilterStore2 extends JdbcStore<ZKFilter> {
     }
 
     public boolean delete(String kw) {
-        if (StrUtil.isNotBlank(kw)) {
+        if (StringUtil.isNotBlank(kw)) {
             Map<String, Object> params = new HashMap<>();
             params.put("kw", kw);
             return this.delete(params);
@@ -73,7 +73,7 @@ public class ZKFilterStore2 extends JdbcStore<ZKFilter> {
     }
 
     public boolean exist(String kw) {
-        if (StrUtil.isNotBlank(kw)) {
+        if (StringUtil.isNotBlank(kw)) {
             Map<String, Object> params = new HashMap<>();
             params.put("kw", kw);
             return super.exist(params);

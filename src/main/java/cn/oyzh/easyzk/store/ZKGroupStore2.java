@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.store;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
+import cn.oyzh.fx.common.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +36,7 @@ public class ZKGroupStore2 extends JdbcStore<ZKGroup> {
     }
 
     public boolean delete(String name) {
-        if (StrUtil.isNotBlank(name)) {
+        if (StringUtil.isNotBlank(name)) {
             Map<String, Object> params = new HashMap<>();
             params.put("name", name);
             return this.delete(params);
@@ -51,7 +51,7 @@ public class ZKGroupStore2 extends JdbcStore<ZKGroup> {
      * @return 结果
      */
     public boolean exist(String name) {
-        if (StrUtil.isNotBlank(name)) {
+        if (StringUtil.isNotBlank(name)) {
             Map<String, Object> params = new HashMap<>();
             params.put("name", name);
             return super.exist(params);

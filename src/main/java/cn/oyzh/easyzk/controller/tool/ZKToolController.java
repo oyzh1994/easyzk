@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.controller.tool;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -52,11 +52,11 @@ public class ZKToolController extends StageController {
     @FXML
     private void genDigest() {
         try {
-            if(StrUtil.isBlank(this.user.getText())){
+            if(StringUtil.isBlank(this.user.getText())){
                 this.user.requestFocus();
                 return;
             }
-            if(StrUtil.isBlank(this.pwd.getText())){
+            if(StringUtil.isBlank(this.pwd.getText())){
                 this.pwd.requestFocus();
                 return;
             }

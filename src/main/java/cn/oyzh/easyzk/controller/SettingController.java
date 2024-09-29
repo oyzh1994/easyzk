@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.controller;
 
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
@@ -250,9 +249,9 @@ public class SettingController extends StageController {
         }
         // 主题相关处理
         this.theme.select(this.setting.getTheme());
-        this.fgColor.setColor(StrUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
-        this.bgColor.setColor(StrUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
-        this.accentColor.setColor(StrUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
+        this.fgColor.setColor(StringUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
+        this.bgColor.setColor(StringUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
+        this.accentColor.setColor(StringUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
         // 标签相关处理
         this.tabLimit.setValue(this.setting.getTabLimit());
         this.tabStrategy.select(this.setting.getTabStrategy());

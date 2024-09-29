@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.controller.node;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
@@ -8,6 +7,7 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
@@ -277,12 +277,12 @@ public class ZKNodeAddController extends StageController {
         if (this.aclType.getSelectedIndex() == 1) {
             // 获取内容
             String user = this.digestUser.getText().trim();
-            if (StrUtil.isBlank(user)) {
+            if (StringUtil.isBlank(user)) {
                 MessageBox.tipMsg(I18nHelper.userNameCanNotEmpty(), this.digestUser);
                 return null;
             }
             String password = this.digestPassword.getText().trim();
-            if (StrUtil.isBlank(password)) {
+            if (StringUtil.isBlank(password)) {
                 MessageBox.tipMsg(I18nHelper.passwordCanNotEmpty(), this.digestPassword);
                 return null;
             }
@@ -309,7 +309,7 @@ public class ZKNodeAddController extends StageController {
     protected void bindListeners() {
         // 节点路径变化处理
         this.nodePath.addTextChangeListener((observableValue, s, t1) -> {
-            if (StrUtil.isNotBlank(t1)) {
+            if (StringUtil.isNotBlank(t1)) {
                 this.nodePathText = ZKNodeUtil.concatPath(this.parentNode.getText(), t1).trim();
                 this.nodePathPreviewBox.setVisible(true);
             } else {
@@ -337,7 +337,7 @@ public class ZKNodeAddController extends StageController {
         ChangeListener<String> info1listener = (observableValue, s, t1) -> {
             String user = this.digestUser.getText().trim();
             String password = this.digestPassword.getTextTrim();
-            if (StrUtil.isNotBlank(user) && StrUtil.isNotBlank(password)) {
+            if (StringUtil.isNotBlank(user) && StringUtil.isNotBlank(password)) {
                 String digest = ZKAuthUtil.digest(user, password);
                 this.digestText.setText(digest);
             } else {

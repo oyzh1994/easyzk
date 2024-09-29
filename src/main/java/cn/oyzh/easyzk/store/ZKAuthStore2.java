@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.PageParam;
+import cn.oyzh.fx.common.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +39,7 @@ public class ZKAuthStore2 extends JdbcStore<ZKAuth> {
     }
 
     public boolean delete(String user, String password) {
-        if (StrUtil.isEmpty(user) || StrUtil.isEmpty(password)) {
+        if (StringUtil.isEmpty(user) || StringUtil.isEmpty(password)) {
 
             Map<String, Object> params = new HashMap<>();
             params.put("user", user);
@@ -64,7 +64,7 @@ public class ZKAuthStore2 extends JdbcStore<ZKAuth> {
     }
 
     public boolean exist(String user, String password) {
-        if (StrUtil.isNotBlank(user) && StrUtil.isNotBlank(password)) {
+        if (StringUtil.isNotBlank(user) && StringUtil.isNotBlank(password)) {
             Map<String, Object> params = new HashMap<>();
             params.put("user", user);
             params.put("password", password);

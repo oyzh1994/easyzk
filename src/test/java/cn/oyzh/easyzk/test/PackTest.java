@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.test;
 
+import cn.hutool.core.util.JdkUtil;
 import cn.oyzh.fx.pkg.Packer;
 import org.junit.Test;
 
@@ -74,7 +75,7 @@ public class PackTest {
 //        String macos_amd64_pack_config = packagePath + "macos_amd64_pack_config.json";
         String baseDir = projectPath.replace("easyzk", "fx-base");
         String projectDir = projectPath;
-        Map<String, Object> properties = new HashMap<String, Object>();
+        Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", projectPath);
         Packer packer = new Packer();
         packer.registerProjectHandler();

@@ -241,7 +241,7 @@ public class ZKNodeExportController extends StageController {
                 fileName += ".json";
                 // } else {
                 //     // 前缀
-                //     String prefixVal = StrUtil.equalsAny(this.prefix.getValue(), "set", "create") ? this.prefix.getValue() : "";
+                //     String prefixVal = StringUtil.equalsAny(this.prefix.getValue(), "set", "create") ? this.prefix.getValue() : "";
                 //     exportData = ZKExportUtil.nodesToTxt(zkNodes, CharsetUtil.defaultCharsetName(), prefixVal);
                 //     extensionFilter = new FileChooser.ExtensionFilter("TXT files", "*.txt");
                 //     fileName += ".txt";

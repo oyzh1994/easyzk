@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.zk;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -270,7 +269,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 解码的节点路径
      */
     public String decodeNodePath() {
-        if (StrUtil.containsAny(this.nodePath, "%", "+")) {
+        if (StringUtil.containsAny(this.nodePath, "%", "+")) {
             return URLDecoder.decode(this.nodePath, Charset.defaultCharset());
         }
         return this.nodePath;
@@ -283,7 +282,7 @@ public class ZKNode implements Comparable<ZKNode> {
      */
     public String decodeNodeName() {
         String nodeName = this.nodeName();
-        if (StrUtil.containsAny(nodeName, "%", "+")) {
+        if (StringUtil.containsAny(nodeName, "%", "+")) {
             return URLDecoder.decode(nodeName, Charset.defaultCharset());
         }
         return nodeName;
@@ -576,6 +575,6 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 结果
      */
     public boolean nodeEquals(ZKNode node) {
-        return node != null && StrUtil.equals(this.nodePath(), node.nodePath());
+        return node != null && StringUtil.equals(this.nodePath(), node.nodePath());
     }
 }

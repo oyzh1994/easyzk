@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.store;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.QueryParam;
+import cn.oyzh.fx.common.util.StringUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +46,7 @@ public class ZKCollectStore extends JdbcStore<ZKCollect> {
     }
 
     public boolean delete(String iid, String path) {
-        if (StrUtil.isEmpty(iid) || StrUtil.isEmpty(path)) {
+        if (StringUtil.isEmpty(iid) || StringUtil.isEmpty(path)) {
             Map<String, Object> params = new HashMap<>();
             params.put("iid", iid);
             params.put("path", path);
@@ -56,7 +56,7 @@ public class ZKCollectStore extends JdbcStore<ZKCollect> {
     }
 
     public boolean exist(String iid, String path) {
-        if (StrUtil.isNotBlank(iid) && StrUtil.isNotBlank(path)) {
+        if (StringUtil.isNotBlank(iid) && StringUtil.isNotBlank(path)) {
             Map<String, Object> params = new HashMap<>();
             params.put("iid", iid);
             params.put("path", path);

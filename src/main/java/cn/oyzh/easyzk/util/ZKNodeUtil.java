@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.exception.ZKException;
@@ -11,9 +10,10 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.common.util.ArrUtil;
+import cn.oyzh.fx.common.util.ArrayUtil;
 import cn.oyzh.fx.common.util.MD5Util;
 import cn.oyzh.fx.common.util.RuntimeUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -210,7 +210,7 @@ public class ZKNodeUtil {
      * @return 当前路径的父路径
      */
     public static String getParentPath(String path) {
-        if (StrUtil.isBlank(path) || !path.contains("/")) {
+        if (StringUtil.isBlank(path) || !path.contains("/")) {
             return "";
         }
         if (path.equals("/")) {
@@ -250,7 +250,7 @@ public class ZKNodeUtil {
         if (path == null || path.isEmpty()) {
             return "";
         }
-        return "/".equals(path) ? "/" : ArrUtil.last(path.split("/"));
+        return "/".equals(path) ? "/" : ArrayUtil.last(path.split("/"));
     }
 
     /**

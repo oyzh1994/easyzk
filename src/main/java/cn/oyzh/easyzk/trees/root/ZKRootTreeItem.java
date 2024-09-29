@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.trees.root;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -16,6 +15,7 @@ import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -217,7 +217,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         }
 
         // 不能为空
-        if (StrUtil.isBlank(groupName)) {
+        if (StringUtil.isBlank(groupName)) {
             MessageBox.warn(I18nHelper.nameCanNotEmpty());
             return;
         }
@@ -243,7 +243,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * @param groupId 分组id
      */
     private ZKGroupTreeItem getGroupItem(String groupId) {
-        if (StrUtil.isNotBlank(groupId)) {
+        if (StringUtil.isNotBlank(groupId)) {
             List<ZKGroupTreeItem> items = this.getGroupItems();
             Optional<ZKGroupTreeItem> groupTreeItem = items.parallelStream().filter(g -> Objects.equals(g.value().getGid(), groupId)).findAny();
             return groupTreeItem.orElse(null);

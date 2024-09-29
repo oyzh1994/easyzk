@@ -3,13 +3,13 @@ package cn.oyzh.easyzk.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.store.ArrayFileStore;
+import cn.oyzh.fx.common.util.StringUtil;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     //     JulLog.info("ZKInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     //     this.infos = this.load();
     //     for (ZKInfo zkInfo : this.infos) {
-    //         if (StrUtil.isBlank(zkInfo.getId())) {
+    //         if (StringUtil.isBlank(zkInfo.getId())) {
     //             zkInfo.setId(UUID.fastUUID().toString(true));
     //             this.update(zkInfo);
     //         }
@@ -60,7 +60,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
             // 读取storeFile文件的内容
             String text = FileUtil.readString(this.storeFile(), this.charset());
             // 如果文件内容为空
-            if (StrUtil.isBlank(text)) {
+            if (StringUtil.isBlank(text)) {
                 // 返回空列表
                 return new ArrayList<>();
             }
@@ -82,7 +82,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     public synchronized boolean add(@NonNull ZKInfo zkInfo) {
         try {
             if (!this.infos.contains(zkInfo)) {
-                if (StrUtil.isBlank(zkInfo.getId())) {
+                if (StringUtil.isBlank(zkInfo.getId())) {
                     zkInfo.setId(UUID.fastUUID().toString(true));
                 }
                 // 添加到集合
@@ -133,7 +133,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
         if (CollUtil.isNotEmpty(infos)) {
             String searchKeyWord = params == null ? null : (String) params.get("searchKeyWord");
             // 过滤数据
-            if (StrUtil.isNotBlank(searchKeyWord)) {
+            if (StringUtil.isNotBlank(searchKeyWord)) {
                 final String kw = searchKeyWord.toLowerCase().trim();
                 infos = infos.parallelStream().filter(z ->
                         z.getHost() != null && z.getHost().contains(kw)

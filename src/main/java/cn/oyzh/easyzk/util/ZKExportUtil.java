@@ -10,10 +10,10 @@ import cn.oyzh.fx.common.util.FileUtil;
 import cn.oyzh.fx.common.file.FileNameUtil;
 import cn.oyzh.fx.common.util.OSUtil;
 import cn.oyzh.fx.common.util.StringUtil;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import org.h2.util.json.JSONArray;
-import org.h2.util.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -168,16 +168,16 @@ public class ZKExportUtil {
         JSONObject object = JSONUtil.parseObj(json);
         ZKNodeExport export = new ZKNodeExport();
         export.setNodes(new ArrayList<>());
-        export.setVersion(object.getStr("version"));
-        export.setCharset(object.getStr("charset"));
-        export.setPlatform(object.getStr("platform"));
+        export.setVersion(object.getString("version"));
+        export.setCharset(object.getString("charset"));
+        export.setPlatform(object.getString("platform"));
         JSONArray nodes = object.getJSONArray("nodes");
         for (Object n : nodes) {
             JSONObject o = (JSONObject) n;
             Map<String, String> node = new HashMap<>();
-            node.put("path", o.getStr("path"));
+            node.put("path", o.getString("path"));
             if (o.containsKey("data")) {
-                node.put("data", o.getStr("data"));
+                node.put("data", o.getString("data"));
             } else {
                 node.put("data", "");
             }

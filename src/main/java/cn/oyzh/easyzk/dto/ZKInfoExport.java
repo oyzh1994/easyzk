@@ -4,9 +4,9 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.json.JSONUtil;
 import cn.oyzh.fx.common.log.JulLog;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.NonNull;
-import org.h2.util.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +63,9 @@ public class ZKInfoExport {
         JSONObject object = JSONUtil.parseObj(json);
         ZKInfoExport export = new ZKInfoExport();
         export.connects = new ArrayList<>();
-        export.version = object.getStr("version");
-        export.connects = object.getBeanList("connects", ZKInfo.class);
+        export.version = object.getString("version");
+        // export.connects = object.getJSONArray("connects", ZKInfo.class);
+        export.connects = JSONUtil.toList(object.getJSONArray("connects"), ZKInfo.class);
         return export;
     }
 

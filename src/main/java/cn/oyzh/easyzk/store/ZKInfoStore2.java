@@ -41,7 +41,7 @@ public class ZKInfoStore2 extends JdbcStore<ZKInfo> {
 
             if (result) {
                 // 处理收藏
-                if (CollUtil.isNotEmpty(info.getCollects())) {
+                if (CollectionUtil.isNotEmpty(info.getCollects())) {
                     for (String collect : info.getCollects()) {
                         ZKCollectStore.INSTANCE.replace(new ZKCollect(info.getId(), collect));
                     }

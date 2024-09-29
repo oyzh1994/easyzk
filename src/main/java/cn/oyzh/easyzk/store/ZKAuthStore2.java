@@ -53,7 +53,7 @@ public class ZKAuthStore2 extends JdbcStore<ZKAuth> {
         PageParam pageParam = new PageParam(limit, pageNo * limit);
         List<ZKAuth> list = this.selectPage(kw, List.of("user", "password"), pageParam);
         Paging<ZKAuth> paging;
-        if (CollUtil.isNotEmpty(list)) {
+        if (CollectionUtil.isNotEmpty(list)) {
             long count = this.selectCount(kw, List.of("kw"));
             paging = new Paging<>(list, limit, count);
             paging.currentPage(pageNo);

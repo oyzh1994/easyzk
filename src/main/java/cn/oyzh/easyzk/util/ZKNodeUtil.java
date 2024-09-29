@@ -182,7 +182,7 @@ public class ZKNodeUtil {
      * @return 结果
      */
     public static boolean isFiltered(String nodePath, List<ZKFilter> filters) {
-        if (CollUtil.isEmpty(filters) || nodePath == null) {
+        if (CollectionUtil.isEmpty(filters) || nodePath == null) {
             return false;
         }
         // 匹配结果
@@ -335,7 +335,7 @@ public class ZKNodeUtil {
             // 获取子节点
             List<String> children = client.getChildren(parentPath);
             // 为空，直接返回
-            if (CollUtil.isEmpty(children)) {
+            if (CollectionUtil.isEmpty(children)) {
                 return Collections.emptyList();
             }
             // 处理器核心数量

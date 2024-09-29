@@ -56,7 +56,7 @@ public class ZKGroupStore extends ArrayFileStore<ZKGroup> {
             }
             // 将文本转换为ZKGroup列表
             List<ZKGroup> groups = JSONUtil.toList(text, ZKGroup.class);
-            if (CollUtil.isNotEmpty(groups)) {
+            if (CollectionUtil.isNotEmpty(groups)) {
                 // 对ZKGroup列表进行排序
                 groups = groups.parallelStream().sorted().collect(Collectors.toList());
             }

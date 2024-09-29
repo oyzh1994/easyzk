@@ -194,7 +194,7 @@ public class ZKAuthAuthController extends StageController {
         this.authList.getItems().clear();
         ZKClient client = this.zkItem.client();
         List<ZKAuth> authList = this.authStore.load();
-        if (CollUtil.isNotEmpty(authList)) {
+        if (CollectionUtil.isNotEmpty(authList)) {
             this.authList.addItems(authList);
             this.authList.setConverter(new SimpleStringConverter<>() {
                 @Override

@@ -29,7 +29,7 @@ public interface ZKConnectManager {
      * @param zkInfos 连接列表
      */
     default void addConnects(List<ZKInfo> zkInfos) {
-        if (CollUtil.isNotEmpty(zkInfos)) {
+        if (CollectionUtil.isNotEmpty(zkInfos)) {
             for (ZKInfo zkInfo : zkInfos) {
                 this.addConnect(zkInfo);
             }

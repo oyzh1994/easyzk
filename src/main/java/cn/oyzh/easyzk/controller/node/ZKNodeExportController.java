@@ -217,7 +217,7 @@ public class ZKNodeExportController extends StageController {
                 }
                 // 排除临时节点
                 zkNodes = zkNodes.parallelStream().filter(ZKNode::persistent).collect(Collectors.toList());
-                if (CollUtil.isEmpty(zkNodes)) {
+                if (CollectionUtil.isEmpty(zkNodes)) {
                     MessageBox.okToast(I18nHelper.operationFail());
                     return;
                 }

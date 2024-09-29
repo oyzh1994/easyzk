@@ -67,7 +67,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
             // 将文件内容解析为ZKInfo列表
             List<ZKInfo> infos = JSONUtil.toList(text, ZKInfo.class);
             // 如果ZKInfo列表非空
-            if (CollUtil.isNotEmpty(infos)) {
+            if (CollectionUtil.isNotEmpty(infos)) {
                 // 对ZKInfo列表进行排序
                 infos = infos.parallelStream().sorted().collect(Collectors.toList());
             }
@@ -130,7 +130,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
         // 分页对象
         Paging<ZKInfo> paging = new Paging<>(infos, limit);
         // 数据为空
-        if (CollUtil.isNotEmpty(infos)) {
+        if (CollectionUtil.isNotEmpty(infos)) {
             String searchKeyWord = params == null ? null : (String) params.get("searchKeyWord");
             // 过滤数据
             if (StringUtil.isNotBlank(searchKeyWord)) {

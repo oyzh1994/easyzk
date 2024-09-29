@@ -23,7 +23,7 @@
 //     @Override
 //     public List<String> getHistories() {
 //         List<String> list = this.historyStore.getReplaceKw();
-//         if (CollUtil.isNotEmpty(list)) {
+//         if (CollectionUtil.isNotEmpty(list)) {
 //             return list.reversed();
 //         }
 //         return list;

@@ -51,7 +51,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
         }
         // 将文本信息解析为权限列表
         List<ZKAuth> auths = JSONUtil.toList(text, ZKAuth.class);
-        if (CollUtil.isNotEmpty(auths)) {
+        if (CollectionUtil.isNotEmpty(auths)) {
             // 过滤掉空的权限对象，并按照用户名称进行排序
             auths = auths.parallelStream().filter(Objects::nonNull).sorted((o1, o2) -> o1.getUser().compareToIgnoreCase(o2.getUser())).collect(Collectors.toList());
         }
@@ -96,7 +96,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
     public synchronized boolean delete(@NonNull ZKAuth auth) {
         try {
             List<ZKAuth> zkAuths = this.load();
-            if (CollUtil.isEmpty(zkAuths)) {
+            if (CollectionUtil.isEmpty(zkAuths)) {
                 return false;
             }
             Optional<ZKAuth> authOptional = zkAuths.parallelStream().filter(auth::compare).findFirst();
@@ -120,7 +120,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
         // 分页对象
         Paging<ZKAuth> paging = new Paging<>(list, limit);
         // 数据为空
-        if (CollUtil.isNotEmpty(list)) {
+        if (CollectionUtil.isNotEmpty(list)) {
             String searchKeyWord = params == null ? null : (String) params.get("searchKeyWord");
             // 过滤数据
             if (StringUtil.isNotBlank(searchKeyWord)) {
@@ -135,7 +135,7 @@ public class ZKAuthStore extends ArrayFileStore<ZKAuth> {
 
     public synchronized boolean exist(@NonNull String user, @NonNull String password) {
         List<ZKAuth> zkAuths = this.load();
-        if (CollUtil.isEmpty(zkAuths)) {
+        if (CollectionUtil.isEmpty(zkAuths)) {
             return false;
         }
         Optional<ZKAuth> optional = zkAuths.parallelStream().filter(z -> z.compare(user, password)).findFirst();

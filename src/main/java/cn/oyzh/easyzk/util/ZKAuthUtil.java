@@ -43,7 +43,7 @@ public class ZKAuthUtil {
      * @return 认证信息列表
      */
     public static List<AuthInfo> toAuthInfo(List<? extends ZKAuth> auths) {
-        if (CollUtil.isNotEmpty(auths)) {
+        if (CollectionUtil.isNotEmpty(auths)) {
             List<AuthInfo> authInfos = new ArrayList<>();
             for (ZKAuth auth : auths) {
                 authInfos.add(new AuthInfo("digest", (auth.getUser() + ":" + auth.getPassword()).getBytes()));
@@ -125,7 +125,7 @@ public class ZKAuthUtil {
      * @param auths  认证信息列表
      */
     public static void setAuthed(@NonNull ZKClient client, List<? extends ZKAuth> auths) {
-        if (CollUtil.isNotEmpty(auths)) {
+        if (CollectionUtil.isNotEmpty(auths)) {
             auths.parallelStream().forEach(a -> setAuthed(client, a));
         }
     }
@@ -212,7 +212,7 @@ public class ZKAuthUtil {
      * @return 结果
      */
     public static boolean isAnyAuthed(@NonNull ZKClient client, List<ZKACL> aclList) {
-        if (CollUtil.isNotEmpty(aclList)) {
+        if (CollectionUtil.isNotEmpty(aclList)) {
             Set<String> digestList = getAuthedDigest(client);
             for (ZKACL zkacl : aclList) {
                 if (digestList.contains(zkacl.idVal())) {

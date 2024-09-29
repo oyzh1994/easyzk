@@ -510,7 +510,7 @@ public class ZKACLAddController extends StageController {
     private void initDigestData() {
         this.digestInfo3.getItems().clear();
         List<ZKAuth> authList = this.authStore.load();
-        if (CollUtil.isNotEmpty(authList)) {
+        if (CollectionUtil.isNotEmpty(authList)) {
             this.digestInfo3.addItems(authList);
             this.digestInfo3.setConverter(new SimpleStringConverter<>() {
                 @Override

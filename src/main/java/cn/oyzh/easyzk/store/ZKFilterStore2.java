@@ -62,7 +62,7 @@ public class ZKFilterStore2 extends JdbcStore<ZKFilter> {
         PageParam pageParam = new PageParam(limit, pageNo * limit);
         List<ZKFilter> list = this.selectPage(kw, List.of("kw"), pageParam);
         Paging<ZKFilter> paging;
-        if (CollUtil.isNotEmpty(list)) {
+        if (CollectionUtil.isNotEmpty(list)) {
             long count = this.selectCount(kw, List.of("kw"));
             paging = new Paging<>(list, limit, count);
             paging.currentPage(pageNo);

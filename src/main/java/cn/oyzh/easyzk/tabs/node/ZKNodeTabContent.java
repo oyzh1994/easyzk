@@ -504,7 +504,7 @@ public class ZKNodeTabContent extends DynamicTabController {
      */
     private void handleACLState(ZKACL acl, Text text) {
         Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.client());
-        if (CollUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
+        if (CollectionUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
             text.setText("(" + I18nHelper.authed() + ")");
         } else {
             text.setText("");
@@ -538,7 +538,7 @@ public class ZKNodeTabContent extends DynamicTabController {
             builder.append(statInfo.getName(this.statViewSwitch.isSelected()))
                     .append(" : ")
                     .append(statInfo.getValue(this.statViewSwitch.isSelected()));
-            if (statInfo != CollUtil.getLast(statInfos)) {
+            if (statInfo != CollectionUtil.getLast(statInfos)) {
                 builder.append(System.lineSeparator());
             }
         }

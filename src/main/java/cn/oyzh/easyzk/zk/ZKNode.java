@@ -102,7 +102,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @param aclList acl权限
      */
     public void acl(List<? extends ACL> aclList) {
-        if (CollUtil.isEmpty(aclList)) {
+        if (CollectionUtil.isEmpty(aclList)) {
             this.aclProperty().set(Collections.emptyList());
         } else {
             List<ZKACL> list = new ArrayList<>(aclList.size());
@@ -392,7 +392,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 结果
      */
     public boolean aclEmpty() {
-        return CollUtil.isEmpty(this.acl());
+        return CollectionUtil.isEmpty(this.acl());
     }
 
     /**

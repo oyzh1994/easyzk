@@ -28,7 +28,7 @@ public class ZKCollectStore extends JdbcStore<ZKCollect> {
         param.setName("iid");
         param.setData(iid);
         List<ZKCollect> collects = super.selectList(param);
-        if (CollUtil.isNotEmpty(collects)) {
+        if (CollectionUtil.isNotEmpty(collects)) {
             return collects.parallelStream().map(ZKCollect::getPath).collect(Collectors.toList());
         }
         return Collections.emptyList();

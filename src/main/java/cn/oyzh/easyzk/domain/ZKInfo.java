@@ -176,7 +176,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
      * @return 结果
      */
     public boolean isCollect(@NonNull String path) {
-        return CollUtil.isNotEmpty(this.collects) && this.collects.contains(path);
+        return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(path);
     }
 
     /**

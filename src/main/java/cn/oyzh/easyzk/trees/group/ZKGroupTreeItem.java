@@ -187,7 +187,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
 
     @Override
     public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
-        if (CollUtil.isNotEmpty(items)) {
+        if (CollectionUtil.isNotEmpty(items)) {
             this.addChild((List) items);
         }
     }

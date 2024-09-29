@@ -1,8 +1,5 @@
 package cn.oyzh.easyzk.trees.root;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.file.FileNameUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -15,6 +12,8 @@ import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
+import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.fx.common.util.FileUtil;
 import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
@@ -72,7 +71,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     private void initChildes() {
         // 初始化分组
         List<ZKGroup> groups = this.groupStore.load();
-        if (CollUtil.isNotEmpty(groups)) {
+        if (CollectionUtil.isNotEmpty(groups)) {
             List<TreeItem<?>> list = new ArrayList<>();
             for (ZKGroup group : groups) {
                 list.add(new ZKGroupTreeItem(group, this.getTreeView()));
@@ -81,7 +80,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         }
         // 初始化连接
         List<ZKInfo> infos = this.infoStore.load();
-        if (CollUtil.isNotEmpty(infos)) {
+        if (CollectionUtil.isNotEmpty(infos)) {
             this.addConnects(infos);
         }
     }
@@ -131,14 +130,14 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * @param files 文件
      */
     public void dragFile(List<File> files) {
-        if (CollUtil.isEmpty(files)) {
+        if (CollectionUtil.isEmpty(files)) {
             return;
         }
         if (files.size() != 1) {
             MessageBox.warn(I18nHelper.onlySupportSingleFile());
             return;
         }
-        File file = CollUtil.getFirst(files);
+        File file = CollectionUtil.getFirst(files);
         // 解析文件
         this.parseConnect(file);
     }
@@ -182,7 +181,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             String text = FileUtil.readUtf8String(file);
             ZKInfoExport export = ZKInfoExport.fromJSON(text);
             List<ZKInfo> infos = export.getConnects();
-            if (CollUtil.isNotEmpty(infos)) {
+            if (CollectionUtil.isNotEmpty(infos)) {
                 for (ZKInfo info : infos) {
                     if (this.infoStore.replace(info)) {
                         this.addConnect(info);
@@ -324,7 +323,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
     @Override
     public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
-        if (CollUtil.isNotEmpty(items)) {
+        if (CollectionUtil.isNotEmpty(items)) {
             this.addChild((List) items);
             this.extend();
         }

@@ -49,7 +49,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
             return new ArrayList<>();
         }
         List<ZKFilter> filters = JSONUtil.toList(text, ZKFilter.class);
-        if (CollUtil.isNotEmpty(filters)) {
+        if (CollectionUtil.isNotEmpty(filters)) {
             filters = filters.parallelStream().filter(Objects::nonNull).sorted((o1, o2) -> o1.getKw().compareToIgnoreCase(o2.getKw())).collect(Collectors.toList());
         }
         return filters;
@@ -64,7 +64,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
         // 加载所有数据
         List<ZKFilter> filters = this.load();
         // 如果数据列表不为空
-        if (CollUtil.isNotEmpty(filters)) {
+        if (CollectionUtil.isNotEmpty(filters)) {
             // 过滤出已启用的数据
             filters = filters.parallelStream().filter(ZKFilter::isEnable).toList();
         }
@@ -116,7 +116,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
     public synchronized boolean delete(@NonNull ZKFilter filter) {
         try {
             List<ZKFilter> filters = this.load();
-            if (CollUtil.isEmpty(filters)) {
+            if (CollectionUtil.isEmpty(filters)) {
                 return false;
             }
             Optional<ZKFilter> optional = filters.parallelStream().filter(filter::compare).findFirst();
@@ -140,7 +140,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
         // 分页对象
         Paging<ZKFilter> paging = new Paging<>(list, limit);
         // 数据为空
-        if (CollUtil.isNotEmpty(list)) {
+        if (CollectionUtil.isNotEmpty(list)) {
             String searchKeyWord = params == null ? null : (String) params.get("searchKeyWord");
             // 过滤数据
             if (StringUtil.isNotBlank(searchKeyWord)) {
@@ -161,7 +161,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
      */
     public synchronized boolean exist(String kw) {
         List<ZKFilter> filters = this.load();
-        if (CollUtil.isEmpty(filters)) {
+        if (CollectionUtil.isEmpty(filters)) {
             return false;
         }
         Optional<ZKFilter> optional = filters.parallelStream().filter(f -> f.compare(kw)).findFirst();

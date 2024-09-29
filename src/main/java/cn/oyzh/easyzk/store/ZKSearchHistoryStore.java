@@ -84,7 +84,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
             // 过滤出当前类型
             List<ZKSearchHistory> hisList = histories.parallelStream().filter(h -> Objects.equals(h.getType(), history.getType())).collect(Collectors.toList());
             // 最新的数据是当前数据，则无需添加
-            if (history.compare(CollUtil.getLast(hisList))) {
+            if (history.compare(CollectionUtil.getLast(hisList))) {
                 return true;
             }
             // 移除当前添加内容

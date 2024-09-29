@@ -129,7 +129,7 @@ public class ZKNodeImportController extends StageController {
     private void dragFile(DragEvent event) {
         Dragboard dragboard = event.getDragboard();
         List<File> files = dragboard.getFiles();
-        if (CollUtil.isEmpty(files)) {
+        if (CollectionUtil.isEmpty(files)) {
             return;
         }
         if (files.size() != 1) {

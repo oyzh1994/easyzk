@@ -252,7 +252,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                             this.canceled = false;
                             this.closeConnect(false);
                         } else {
-                            this.loadRootNode();
+                            // this.loadRootNode();
+                            ZKEventUtil.connectionOpened(this);
                         }
                         this.flushGraphic();
                     })

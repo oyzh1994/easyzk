@@ -1335,7 +1335,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void onPrimaryDoubleClick() {
-        this.loadChild();
+        if (this.loaded) {
+            this.extend();
+        } else {
+            this.loadChild();
+        }
     }
 
     /**

@@ -300,7 +300,7 @@ public class ZKMainController extends ParentStageController {
         this.tree.selectItemChanged(this::treeItemChanged);
 
         // 文件拖拽初始化
-        this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);
+        this.stage.initDragFile(this.tree.dragContent(), this.tree.getRoot()::dragFile);
         // 拖动改变redis树大小处理
         this.resizeEnhance = new ResizeEnhance(this.tabPaneLeft, Cursor.DEFAULT);
         this.resizeEnhance.minWidth(390d);

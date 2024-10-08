@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.search.ZKSearchParam;
+import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -23,6 +24,18 @@ import org.apache.zookeeper.data.Stat;
  */
 @UtilityClass
 public class ZKEventUtil {
+
+    /**
+     * 连接丢失事件
+     *
+     * @param item zk客户端
+     */
+    public static void connectionOpened(ZKConnectTreeItem item) {
+        ZKConnectOpenedEvent event = new ZKConnectOpenedEvent();
+        event.data(item);
+        EventUtil.post(event);
+    }
+
 
     /**
      * 连接丢失事件

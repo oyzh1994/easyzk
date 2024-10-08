@@ -40,6 +40,11 @@
 <?import cn.oyzh.fx.plus.controls.svg.QRCodeSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.HistorySVGGlyph?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
+<?import cn.oyzh.easyzk.tabs.node.ZKNodeTab?>
+<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeItemValue?>
+<?import cn.oyzh.easyzk.trees.ZKNodeTreeView?>
+
+
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"

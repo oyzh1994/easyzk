@@ -155,7 +155,7 @@ public class ZKSearchHandler extends SearchHandler {
 
     @Override
     protected List<SearchValue> getMatchValues() {
-        return super.getMatchValues(this.treeNode.root());
+        return super.getMatchValues(this.treeNode.getRoot());
     }
 
     /**

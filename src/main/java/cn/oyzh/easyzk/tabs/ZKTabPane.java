@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.event.TreeChildSelectedEvent;
 import cn.oyzh.easyzk.event.TreeGraphicChangedEvent;
 import cn.oyzh.easyzk.event.TreeGraphicColorChangedEvent;
 import cn.oyzh.easyzk.event.ZKAuthMainEvent;
+import cn.oyzh.easyzk.event.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterMainEvent;
@@ -17,6 +18,7 @@ import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
 import cn.oyzh.easyzk.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
+import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -303,6 +305,29 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
             this.select(nodeTab);
             // 初始化节点
             nodeTab.init(event.data());
+        }
+    }
+
+    /**
+     * 连接关闭事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void connectionOpened(ZKConnectOpenedEvent event) {
+        boolean found = false;
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKConnectTab connectTab && connectTab.treeItem() == event.data()) {
+                connectTab.selectTab();
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            ZKConnectTab connectTab = new ZKConnectTab();
+            connectTab.init(event.data());
+            super.addTab(connectTab);
+            connectTab.selectTab();
         }
     }
 

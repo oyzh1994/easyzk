@@ -67,8 +67,8 @@ public class ZKTreeView extends RichTreeView implements EventListener {
         this.dragContent = "zk_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new ZKTreeCell());
         // 初始化根节点
-        super.root(new ZKRootTreeItem(this));
-        this.root().extend();
+        super.setRoot(new ZKRootTreeItem(this));
+        this.getRoot().extend();
     }
 
     @Override
@@ -101,15 +101,15 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     }
 
     @Override
-    public ZKRootTreeItem root() {
-        return (ZKRootTreeItem) this.getRoot();
+    public ZKRootTreeItem getRoot() {
+        return (ZKRootTreeItem) super.getRoot();
     }
 
     /**
      * 关闭连接
      */
     public void closeConnects() {
-        for (ZKConnectTreeItem treeItem : this.root().getConnectedItems()) {
+        for (ZKConnectTreeItem treeItem : this.getRoot().getConnectedItems()) {
             ThreadUtil.startVirtual(() -> treeItem.closeConnect(false));
         }
     }
@@ -122,7 +122,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      * @return zk节点
      */
     public ZKNodeTreeItem findNodeItem(@NonNull String targetPath, @NonNull ZKInfo zkInfo) {
-        List<ZKConnectTreeItem> connectTreeItems = this.root().getConnectedItems();
+        List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
         Optional<ZKConnectTreeItem> itemOptional = connectTreeItems.parallelStream().filter(c -> c.value() == zkInfo).findFirst();
         return itemOptional.map(item -> item.findNodeItem(targetPath)).orElse(null);
     }
@@ -134,7 +134,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     public List<ZKNodeTreeItem> getAllNodeItem() {
         List<ZKNodeTreeItem> list = new ArrayList<>();
-        List<ZKConnectTreeItem> connectTreeItems = this.root().getConnectedItems();
+        List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
         for (ZKConnectTreeItem connectTreeItem : connectTreeItems) {
             list.addAll(connectTreeItem.getAllNodeItem());
         }
@@ -298,7 +298,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
         if (this.setting.isAutoAuth()) {
             try {
                 // 获取已连接的zk连接
-                List<ZKConnectTreeItem> connectTreeItems = this.root().getConnectedItems();
+                List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
                 // 遍历添加认证信息，并手动触发认证事件
                 for (ZKConnectTreeItem item : connectTreeItems) {
                     item.client().addAuth(auth.getUser(), auth.getPassword());
@@ -385,7 +385,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     @Subscribe
     public void addGroup(ZKAddGroupEvent event) {
-        this.root().addGroup();
+        this.getRoot().addGroup();
     }
 
     /**
@@ -395,7 +395,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     @Subscribe
     private void infoAdded(ZKInfoAddedEvent event) {
-        this.root().infoAdded(event.data());
+        this.getRoot().infoAdded(event.data());
     }
 
     /**
@@ -405,7 +405,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      */
     @Subscribe
     private void infoUpdated(ZKInfoUpdatedEvent event) {
-        this.root().infoUpdated(event.data());
+        this.getRoot().infoUpdated(event.data());
     }
 
     /**

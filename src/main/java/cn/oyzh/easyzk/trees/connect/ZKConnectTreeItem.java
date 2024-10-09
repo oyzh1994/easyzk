@@ -22,18 +22,15 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.StringUtil;
-import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -263,6 +260,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                     .build();
             // 执行连接
             this.startWaiting(task);
+        } else {
+            ZKEventUtil.connectionOpened(this);
         }
     }
 

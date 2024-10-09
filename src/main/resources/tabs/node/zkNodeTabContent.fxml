@@ -42,7 +42,7 @@
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import cn.oyzh.easyzk.tabs.node.ZKNodeTab?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeItemValue?>
-<?import cn.oyzh.easyzk.trees.ZKNodeTreeView?>
+<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 
 
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"

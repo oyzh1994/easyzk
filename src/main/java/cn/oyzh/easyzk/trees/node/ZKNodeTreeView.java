@@ -1,47 +1,20 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.node;
 
-import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
-import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.TreeChildFilterEvent;
-import cn.oyzh.easyzk.event.ZKAddConnectEvent;
-import cn.oyzh.easyzk.event.ZKAddGroupEvent;
-import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
-import cn.oyzh.easyzk.event.ZKAuthAuthedEvent;
-import cn.oyzh.easyzk.event.ZKAuthEnabledEvent;
-import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
-import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
-import cn.oyzh.easyzk.event.ZKNodeAddEvent;
-import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
-import cn.oyzh.easyzk.event.ZKNodeDeletedEvent;
-import cn.oyzh.easyzk.event.ZKNodeUpdatedEvent;
-import cn.oyzh.easyzk.event.ZKSearchFinishEvent;
-import cn.oyzh.easyzk.event.ZKSearchStartEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
+import cn.oyzh.easyzk.trees.ZKTreeItem;
+import cn.oyzh.easyzk.trees.ZKTreeItemFilter;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
-import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventListener;
-import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
-import cn.oyzh.fx.plus.window.StageManager;
 import com.google.common.eventbus.Subscribe;
-import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.input.KeyCode;
-import javafx.util.Callback;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * zk树

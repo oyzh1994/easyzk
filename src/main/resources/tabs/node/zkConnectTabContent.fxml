@@ -2,7 +2,7 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLVBox?>
 <?import cn.oyzh.easyzk.fx.ZKFormatComboBox?>
-<?import cn.oyzh.easyzk.trees.ZKNodeTreeView?>
+<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.ClearButton?>

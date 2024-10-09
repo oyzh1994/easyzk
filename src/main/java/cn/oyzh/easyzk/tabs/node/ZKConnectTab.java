@@ -18,11 +18,11 @@ import lombok.NonNull;
  */
 public class ZKConnectTab extends DynamicTab {
 
-    /**
-     * 标签打开时间
-     */
-    @Getter
-    private final long openedTime = System.currentTimeMillis();
+    // /**
+    //  * 标签打开时间
+    //  */
+    // @Getter
+    // private final long openedTime = System.currentTimeMillis();
 
     /**
      * zk树节点
@@ -52,17 +52,25 @@ public class ZKConnectTab extends DynamicTab {
         }
     }
 
+    // @Override
+    // public void flushTitle() {
+    //     if (this.treeItem() == null) {
+    //         return;
+    //     }
+    //     // 设置文本
+    //     if (this.activeItem() == null) {
+    //         this.setText(this.treeItem().infoName());
+    //     } else {
+    //         this.setText(this.activeItem().decodeNodePath() + "#" + this.treeItem().infoName());
+    //     }
+    // }
+
     @Override
-    public void flushTitle() {
-        if (this.treeItem() == null) {
-            return;
-        }
-        // 设置文本
+    protected String getTabTitle() {
         if (this.activeItem() == null) {
-            this.setText(this.treeItem().infoName());
-        } else {
-            this.setText(this.activeItem().decodeNodePath() + "#" + this.treeItem().infoName());
+            return this.treeItem().infoName();
         }
+        return this.activeItem().decodeNodePath() + "#" + this.treeItem().infoName();
     }
 
     // @Override
@@ -94,22 +102,6 @@ public class ZKConnectTab extends DynamicTab {
         }
     }
 
-    /**
-     * 获取节点数据组件
-     *
-     * @return 节点数据组件
-     */
-    public RichDataTextAreaPane getDataNode() {
-        return this.controller().getDataNode();
-    }
-
-    /**
-     * 选中数据tab
-     */
-    public void selectDataTab() {
-        this.controller().selectDataTab();
-    }
-
     @Override
     public void reload() {
         this.controller().reload();
@@ -138,7 +130,7 @@ public class ZKConnectTab extends DynamicTab {
 
     @Override
     public ZKConnectTabContent controller() {
-        return (ZKConnectTabContent) super.controller();
+        return super.controller();
     }
 
     @Override

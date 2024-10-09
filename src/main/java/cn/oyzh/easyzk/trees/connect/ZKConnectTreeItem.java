@@ -28,6 +28,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
+import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -80,7 +81,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     //  */
     // private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
 
-    public ZKConnectTreeItem(@NonNull ZKInfo value, @NonNull ZKTreeView treeView) {
+    public ZKConnectTreeItem(@NonNull ZKInfo value, @NonNull RichTreeView treeView) {
         super(treeView);
         this.value(value);
         // 监听变化
@@ -438,31 +439,31 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         return this.client != null && this.client.isConnecting();
     }
 
-    /**
-     * 加载ZK根节点
-     */
-    public void loadRootNode() {
-        // 获取根节点
-        ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
-        if (rootNode != null) {
-            // 生成根节点
-            ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this);
-            // 设置根节点
-            this.setChild(rootItem);
-            // 展开连接
-            this.extend();
-            // 展开根节点
-            rootItem.extend();
-            // 加载全部节点
-            if (this.setting.isLoadAll()) {
-                rootItem.loadChildAll();
-            } else if (!this.setting.isLoadRoot()) {// 加载一级节点
-                rootItem.loadChild();
-            }
-        } else {
-            MessageBox.warn(this.value().getName() + I18nHelper.loadFail());
-        }
-    }
+    // /**
+    //  * 加载ZK根节点
+    //  */
+    // public void loadRootNode() {
+    //     // 获取根节点
+    //     ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
+    //     if (rootNode != null) {
+    //         // 生成根节点
+    //         ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this);
+    //         // 设置根节点
+    //         this.setChild(rootItem);
+    //         // 展开连接
+    //         this.extend();
+    //         // 展开根节点
+    //         rootItem.extend();
+    //         // 加载全部节点
+    //         if (this.setting.isLoadAll()) {
+    //             rootItem.loadChildAll();
+    //         } else if (!this.setting.isLoadRoot()) {// 加载一级节点
+    //             rootItem.loadChild();
+    //         }
+    //     } else {
+    //         MessageBox.warn(this.value().getName() + I18nHelper.loadFail());
+    //     }
+    // }
 
     /**
      * 获取全部zk子节点列表

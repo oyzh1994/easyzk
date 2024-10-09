@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.trees.node;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
@@ -18,28 +19,10 @@ import java.util.List;
  */
 public class ZKRootNodeTreeItem extends ZKNodeTreeItem {
 
-    /**
-     * 配置储存对象
-     */
-    private final ZKSetting setting = ZKSettingStore2.SETTING;
-
-    public ZKRootNodeTreeItem(@NonNull ZKNode value, @NonNull ZKConnectTreeItem root) {
-        super(value, root);
+    public ZKRootNodeTreeItem(@NonNull ZKNode value, ZKNodeTreeView treeView, ZKClient client) {
+        super(value, treeView, client);
+        // this.setFilterable(false);
     }
-
-    // /**
-    //  * 加载子节点
-    //  */
-    // public void loadChild() {
-    //     if (!this.isWaiting() && !this.loaded && !this.loading) {
-    //         // 加载全部节点
-    //         if (this.setting.isLoadAll()) {
-    //             super.loadChildAll();
-    //         } else if (!this.setting.isLoadRoot()) {// 加载一级节点
-    //             super.loadChild();
-    //         }
-    //     }
-    // }
 
     @Override
     public List<MenuItem> getMenuItems() {

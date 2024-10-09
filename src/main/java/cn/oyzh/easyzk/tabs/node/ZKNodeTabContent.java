@@ -879,14 +879,14 @@ public class ZKNodeTabContent extends DynamicTabController {
         }
     }
 
-    @Override
-    public void onTabClose(DynamicTab tab, Event event) {
-        // 取消当前节点的选中
-        if (this.treeItem != null && this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
-            this.treeItem.getTreeView().select(this.treeItem.root());
-        }
-        super.onTabClose(tab, event);
-    }
+    // @Override
+    // public void onTabClose(DynamicTab tab, Event event) {
+    //     // 取消当前节点的选中
+    //     if (this.treeItem != null && this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
+    //         this.treeItem.getTreeView().select(this.treeItem.root());
+    //     }
+    //     super.onTabClose(tab, event);
+    // }
 
     /**
      * 恢复数据

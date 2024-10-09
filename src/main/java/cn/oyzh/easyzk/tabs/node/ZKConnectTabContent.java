@@ -8,6 +8,8 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKACLVBox;
 import cn.oyzh.easyzk.fx.ZKFormatComboBox;
+import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
+import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
@@ -81,6 +83,12 @@ public class ZKConnectTabContent extends DynamicTabController {
 
     @FXML
     private ZKNodeTreeView treeView;
+
+    @FXML
+    private ZKNodeSearchTypeComboBox searchType;
+
+    @FXML
+    private ZKNodeSearchTextField searchKW;
 
     /**
      * 右侧zk属性组件
@@ -285,7 +293,7 @@ public class ZKConnectTabContent extends DynamicTabController {
         ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
         if (rootNode != null) {
             // 生成根节点
-            ZKNodeTreeItem rootItem = ZKNodeTreeItemUtil.of(rootNode, item);
+            ZKNodeTreeItem rootItem = ZKNodeTreeItemUtil.of(rootNode, this.treeView, this.client);
             // 设置根节点
             this.treeView.setRoot(rootItem);
             // 加载节点
@@ -304,6 +312,9 @@ public class ZKConnectTabContent extends DynamicTabController {
     private void initItem() {
         this.activeItem = (ZKNodeTreeItem) this.treeView.getSelectedItem();
         this.getTab().flush();
+        if (this.activeItem == null) {
+            return;
+        }
         this.initData();
         this.initAcl();
         this.initQuota();
@@ -414,7 +425,7 @@ public class ZKConnectTabContent extends DynamicTabController {
             ZKACL acl = aclVBox.acl();
             StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class, this.window());
             fxView.setProp("acl", acl);
-            fxView.setProp("zkItem", this.treeItem);
+            fxView.setProp("zkItem", this.activeItem);
             fxView.setProp("zkClient", this.treeItem.client());
             fxView.display();
         } catch (Exception ex) {
@@ -687,7 +698,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     private void node2QRCode() {
         try {
             StageAdapter fxView = StageManager.parseStage(ZKNodeQRCodeController.class, this.window());
-            fxView.setProp("zkNode", this.treeItem.value());
+            fxView.setProp("zkNode", this.activeItem.value());
             fxView.setProp("nodeData", this.nodeData.getTextTrim());
             fxView.display();
         } catch (Exception ex) {
@@ -897,10 +908,8 @@ public class ZKConnectTabContent extends DynamicTabController {
 
     @Override
     public void onTabClose(DynamicTab tab, Event event) {
-        // 取消当前节点的选中
-        if (this.treeItem != null && this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
-            this.treeItem.getTreeView().select(this.nodeItem().root());
-        }
+        // 销毁节点
+        this.treeView.destroy();
         super.onTabClose(tab, event);
     }
 
@@ -913,5 +922,14 @@ public class ZKConnectTabContent extends DynamicTabController {
         // 保存数据历史
         this.nodeItem().data(data);
         this.showData();
+    }
+
+    @FXML
+    private void doSearch() {
+        String kw = this.searchKW.getTextTrim();
+        int type = this.searchType.getSelectedIndex();
+        this.treeView.itemFilter().setKw(kw);
+        this.treeView.itemFilter().setType(type);
+        this.treeView.filter();
     }
 }

@@ -1,0 +1,99 @@
+package cn.oyzh.easyzk.trees.node;
+
+import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.store.ZKFilterStore2;
+import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.fx.plus.trees.RichTreeItem;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+/**
+ * 树节点过滤器
+ *
+ * @author oyzh
+ * @since 2023/3/28
+ */
+public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
+
+    /**
+     * 0. 所有节点
+     * 1. 收藏节点
+     * 2. 持久节点
+     */
+    @Setter
+    @Getter
+    private int type;
+
+    @Getter
+    @Setter
+    private String kw;
+
+    /**
+     * 1. 包含
+     * 2. 包含 + 大小写符合
+     * 3. 全字匹配
+     * 4. 全字匹配 + 大小写符合
+     */
+    @Getter
+    @Setter
+    private String matchMode;
+
+    /**
+     * 过滤内容列表
+     */
+    private List<ZKFilter> filters;
+
+    /**
+     * 过滤配置储存
+     */
+    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
+
+    /**
+     * 初始化过滤配置
+     */
+    public void initFilters() {
+        this.filters = this.filterStore.loadEnable();
+    }
+
+    @Override
+    public boolean test(RichTreeItem<?> item) {
+        // 根节点直接展示
+        if (item instanceof ZKRootNodeTreeItem) {
+            return true;
+        }
+        if (item instanceof ZKNodeTreeItem treeItem) {
+            // 仅收藏
+            if (1 == this.type && !treeItem.isCollect()) {
+                return false;
+            }
+            // 仅持久节点
+            if (2 == this.type && treeItem.ephemeral()) {
+                return false;
+            }
+            String nodePath = treeItem.decodeNodePath();
+            // 过滤节点
+            if (ZKNodeUtil.isFiltered(nodePath, this.filters)) {
+                return false;
+            }
+            if (StringUtil.isNotBlank(this.kw)) {
+                if ("1".equals(this.matchMode)) {
+                    return StringUtil.containsIgnoreCase(nodePath, this.kw);
+                }
+                if ("2".equals(this.matchMode)) {
+                    return StringUtil.contains(nodePath, this.kw);
+                }
+                if ("3".equals(this.matchMode)) {
+                    return StringUtil.equalsIgnoreCase(nodePath, this.kw);
+                }
+                if ("4".equals(this.matchMode)) {
+                    return StringUtil.equals(nodePath, this.kw);
+                }
+            }
+        }
+        return true;
+    }
+}

@@ -37,30 +37,22 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
     @Getter
     private volatile boolean searching;
 
-    /**
-     * 配置储存对象
-     */
-    private final ZKSetting setting = ZKSettingStore2.SETTING;
-
-    @Setter
-    private ZKClient client ;
-
     public ZKNodeTreeView() {
     }
 
     @Override
-    public ZKTreeItemFilter itemFilter() {
+    public ZKNodeTreeItemFilter itemFilter() {
         try {
             // 初始化过滤器
             if (this.itemFilter == null) {
-                ZKTreeItemFilter filter = new ZKTreeItemFilter();
+                ZKNodeTreeItemFilter filter = new ZKNodeTreeItemFilter();
                 filter.initFilters();
                 this.itemFilter = filter;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return (ZKTreeItemFilter) this.itemFilter;
+        return (ZKNodeTreeItemFilter) this.itemFilter;
     }
 
     @Override
@@ -106,15 +98,6 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
                 return treeItem;
             }
         }
-        return null;
-    }
-
-    /**
-     * 获取所有zk节点
-     *
-     * @return zk节点集合
-     */
-    public List<ZKNodeTreeItem> getAllNodeItem() {
         return null;
     }
 

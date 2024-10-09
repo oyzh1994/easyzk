@@ -18,6 +18,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
+import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.event.EventHandler;
@@ -56,7 +57,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
      */
     private final ZKGroupStore2 groupStore = ZKGroupStore2.INSTANCE;
 
-    public ZKGroupTreeItem(@NonNull ZKGroup group, @NonNull ZKTreeView treeView) {
+    public ZKGroupTreeItem(@NonNull ZKGroup group, @NonNull RichTreeView treeView) {
         super(treeView);
         this.value = group;
         this.setValue(new ZKGroupTreeItemValue(this));

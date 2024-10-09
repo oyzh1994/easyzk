@@ -2,6 +2,8 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLVBox?>
 <?import cn.oyzh.easyzk.fx.ZKFormatComboBox?>
+<?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
+<?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
@@ -23,6 +25,7 @@
 <?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SearchSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
@@ -40,15 +43,24 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyzk.fx.ZKNodeTypeComboBox?>
 <FlexVBox xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.node.ZKConnectTabContent">
     <FlexHBox realHeight="30" flexWidth="100%">
-        <ZKNodeTypeComboBox initIndex="0" realWidth="100">
+        <ZKNodeSearchTypeComboBox initIndex="0" realWidth="100" fx:id="searchType">
             <HBox.margin>
                 <Insets left="10" top="5"/>
             </HBox.margin>
-        </ZKNodeTypeComboBox>
+        </ZKNodeSearchTypeComboBox>
+        <ZKNodeSearchTextField  fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </ZKNodeSearchTextField>
+        <SearchSVGGlyph sizeStr="24" onMousePrimaryClicked="#doSearch">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </SearchSVGGlyph>
     </FlexHBox>
     <FlexHBox flexHeight="100% - 30" flexWidth="100%">
         <ZKNodeTreeView flexWidth="40%" fx:id="treeView" flexHeight="100%">

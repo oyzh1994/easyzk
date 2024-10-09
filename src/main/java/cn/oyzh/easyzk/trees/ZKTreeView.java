@@ -79,8 +79,8 @@ public class ZKTreeView extends RichTreeView implements EventListener {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof ZKConnectTreeItem treeItem) {
                 treeItem.closeConnect();
-            } else if (item instanceof ZKNodeTreeItem nodeTreeItem) {
-                nodeTreeItem.root().closeConnect();
+            // } else if (item instanceof ZKNodeTreeItem nodeTreeItem) {
+            //     nodeTreeItem.root().closeConnect();
             }
         });
     }

@@ -9,9 +9,10 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKACLVBox;
 import cn.oyzh.easyzk.fx.ZKFormatComboBox;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeItemUtil;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -279,22 +280,23 @@ public class ZKConnectTabContent extends DynamicTabController {
         ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
         if (rootNode != null) {
             // 生成根节点
-            ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, item);
+            ZKNodeTreeItem rootItem = ZKNodeTreeItemUtil.of(rootNode, item);
             // 设置根节点
             this.treeView.setRoot(rootItem);
-            // 加载全部节点
-            if (this.setting.isLoadAll()) {
-                rootItem.loadChildAll();
-            } else if (!this.setting.isLoadRoot()) {// 加载一级节点
+            // 加载节点
+            if (this.setting.isLoadRoot()) {
                 rootItem.loadChild();
+            } else if (this.setting.isLoadAll()) {
+                rootItem.loadChildAll();
             }
+            // 监听选中变化
             this.treeView.selectItemChanged(treeItem -> this.initItem());
         } else {
             MessageBox.warn(item.value().getName() + I18nHelper.loadFail());
         }
     }
 
-    private void initItem( ) {
+    private void initItem() {
         this.initData();
         this.initAcl();
         this.initQuota();

@@ -61,7 +61,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     @Getter
     @Accessors(fluent = true, chain = true)
-    private ZKNode value;
+    protected ZKNode value;
 
     /**
      * 字符集
@@ -96,19 +96,19 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     @Setter
     private boolean ignoreUpdated;
 
-    /**
-     * 已加载标志位
-     */
-    @Getter
-    @Accessors(fluent = true, chain = true)
-    private volatile boolean loaded;
-
-    /**
-     * 加载中标志位
-     */
-    @Getter
-    @Accessors(fluent = true, chain = true)
-    private volatile boolean loading;
+    // /**
+    //  * 已加载标志位
+    //  */
+    // @Getter
+    // @Accessors(fluent = true, chain = true)
+    // private volatile boolean loaded;
+    //
+    // /**
+    //  * 加载中标志位
+    //  */
+    // @Getter
+    // @Accessors(fluent = true, chain = true)
+    // private volatile boolean loading;
 
     /**
      * 取消标志位
@@ -669,7 +669,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     @Override
     public void rename() {
         // 判断是否符合要求
-        if (this.value.rootNode() || this.value.parentNode() || this.value.ephemeral()) {
+        if ( this.value.parentNode() || this.value.ephemeral()) {
             return;
         }
         String nodeName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.nodeName());
@@ -705,16 +705,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void delete() {
-        // 不能删除根节点
-        if (this.value.rootNode()) {
-            return;
-        }
-        // // 父节点删除提示
-        // if (this.value.parentNode() && !MessageBox.confirm(I18nHelper.delete() + this.value.decodeNodePath(), I18nResourceBundle.i18nString("base.deleteNodeTip2"))) {
-        //     return;
-        // }
         // 删除提示
-        if (this.value.subNode() && !MessageBox.confirm(I18nHelper.delete() + " [" + this.value.decodeNodePath() + "] ", I18nHelper.areYouSure())) {
+        if (!MessageBox.confirm(I18nHelper.delete() + " [" + this.value.decodeNodePath() + "] ", I18nHelper.areYouSure())) {
             return;
         }
         // 创建任务

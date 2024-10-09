@@ -6,12 +6,18 @@ import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeItemFilter;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
+import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.event.EventListener;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import com.google.common.eventbus.Subscribe;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.List;
@@ -35,6 +41,9 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
      * 配置储存对象
      */
     private final ZKSetting setting = ZKSettingStore2.SETTING;
+
+    @Setter
+    private ZKClient client ;
 
     public ZKNodeTreeView() {
     }
@@ -153,6 +162,4 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
             this.select(item);
         }
     }
-
-
 }

@@ -60,6 +60,15 @@ public class ZKSetting extends Setting {
     }
 
     /**
+     * 是否加载一级节点
+     *
+     * @return 结果
+     */
+    public boolean isLoadFirst() {
+        return this.loadMode == null || this.loadMode == 0;
+    }
+
+    /**
      * 是否仅加载根节点
      *
      * @return 结果

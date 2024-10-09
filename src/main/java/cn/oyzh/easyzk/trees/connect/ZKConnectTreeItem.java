@@ -22,6 +22,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -102,25 +103,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public List<MenuItem> getMenuItems() {
-        // TreeItem item = this.getTreeView().getSelectedItem();
-        // System.out.println(item);
-        // Object val = item.getValue();
-        // if(val instanceof ZKConnectTreeItemValue itemValue) {
-        //     itemValue.setPrefHeight(25);
-        //     itemValue.setMinHeight(25);
-        //     itemValue.setMaxHeight(25);
-        //     // itemValue.graphic(new SaveSVGGlyph());
-        //     itemValue.flushGraphic();
-        //     itemValue.flushGraphicColor();
-        //     itemValue.flushText();
-        //     // item.setGraphic(null);
-        //     item.setValue(null);
-        //     item.setValue(itemValue);
-        // }
-        // if(item instanceof RichTreeItem richTreeItem) {
-        //     System.out.println(richTreeItem.isVisible());
-        // }
-        // System.out.println(val);
         List<MenuItem> items = new ArrayList<>();
         if (this.isConnecting()) {
             FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("12", this::cancelConnect);
@@ -595,5 +577,18 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     @Override
     public void onPrimaryDoubleClick() {
         this.connect();
+    }
+
+    public String infoName() {
+        return this.value.getName();
+    }
+
+    /**
+     * 获取图标
+     *
+     * @return 图标
+     */
+    public SVGGlyph graphic() {
+        return this.getValue().graphic();
     }
 }

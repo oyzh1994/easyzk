@@ -54,6 +54,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
+import lombok.Getter;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
@@ -113,7 +114,11 @@ public class ZKConnectTabContent extends DynamicTabController {
     /**
      * zk树节点
      */
-    protected ZKConnectTreeItem treeItem;
+    @Getter
+    private ZKConnectTreeItem treeItem;
+
+    @Getter
+    private ZKNodeTreeItem activeItem;
 
     private ZKClient client;
 
@@ -284,7 +289,7 @@ public class ZKConnectTabContent extends DynamicTabController {
             // 设置根节点
             this.treeView.setRoot(rootItem);
             // 加载节点
-            if (this.setting.isLoadRoot()) {
+            if (this.setting.isLoadFirst()) {
                 rootItem.loadChild();
             } else if (this.setting.isLoadAll()) {
                 rootItem.loadChildAll();
@@ -297,6 +302,8 @@ public class ZKConnectTabContent extends DynamicTabController {
     }
 
     private void initItem() {
+        this.activeItem = (ZKNodeTreeItem) this.treeView.getSelectedItem();
+        this.getTab().flush();
         this.initData();
         this.initAcl();
         this.initQuota();

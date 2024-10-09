@@ -3,17 +3,12 @@ package cn.oyzh.easyzk.tabs.node;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import javafx.scene.Cursor;
 import lombok.Getter;
 import lombok.NonNull;
-
-import java.util.Objects;
 
 /**
  * zk节点tab
@@ -33,7 +28,14 @@ public class ZKConnectTab extends DynamicTab {
      * zk树节点
      */
     public ZKConnectTreeItem treeItem() {
-        return this.getProp("_treeItem");
+        return this.controller().getTreeItem();
+    }
+
+    /**
+     * zk树节点
+     */
+    public ZKNodeTreeItem activeItem() {
+        return this.controller().getActiveItem();
     }
 
     /**
@@ -43,22 +45,10 @@ public class ZKConnectTab extends DynamicTab {
      */
     public void init(@NonNull ZKConnectTreeItem treeItem) {
         if (treeItem != this.treeItem()) {
-            this.setProp("_treeItem", treeItem);
             // 初始化
             this.controller().init(treeItem);
             // 刷新tab
             this.flush();
-            // 检查节点状态
-            this.checkStatus();
-        }
-    }
-
-    /**
-     * 检查状态
-     */
-    public void checkStatus() {
-        if (this.treeItem() == null) {
-            return;
         }
     }
 
@@ -67,22 +57,41 @@ public class ZKConnectTab extends DynamicTab {
         if (this.treeItem() == null) {
             return;
         }
+        // 设置文本
+        if (this.activeItem() == null) {
+            this.setText(this.treeItem().infoName());
+        } else {
+            this.setText(this.activeItem().decodeNodePath() + "#" + this.treeItem().infoName());
+        }
     }
 
-    @Override
-    public void flushGraphic() {
-        if (this.treeItem() == null) {
-            return;
-        }
-        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
-    }
+    // @Override
+    // public void flushGraphic() {
+    //     if (this.treeItem() == null) {
+    //         return;
+    //     }
+    //     SVGGlyph glyph1 = (SVGGlyph) this.getGraphic();
+    //     if (this.activeItem() == null) {
+    //         if (glyph1 == null) {
+    //             this.setGraphic(this.treeItem().graphic().clone());
+    //         }
+    //     } else {
+    //         SVGGlyph glyph2 = this.activeItem().graphic();
+    //         if (glyph1 == null || StringUtil.notEquals(glyph1.getUrl(), glyph2.getUrl())) {
+    //             this.setGraphic(glyph2.clone());
+    //         }
+    //     }
+    // }
 
     @Override
     public void flushGraphicColor() {
-        if (this.treeItem() == null) {
-            return;
+        if (this.activeItem() != null) {
+            SVGGlyph glyph1 = (SVGGlyph) this.getGraphic();
+            SVGGlyph glyph2 = this.activeItem().graphic();
+            if (glyph1 != null && glyph1.getColor() != glyph2.getColor()) {
+                glyph1.setColor(glyph2.getColor());
+            }
         }
-        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
     }
 
     /**
@@ -112,7 +121,7 @@ public class ZKConnectTab extends DynamicTab {
      * @return zk信息
      */
     public ZKInfo info() {
-            return null;
+        return null;
     }
 
     /**

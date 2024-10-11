@@ -7,7 +7,8 @@ import cn.oyzh.easyzk.event.ZKHistoryAddedEvent;
 import cn.oyzh.easyzk.event.ZKHistoryShowEvent;
 import cn.oyzh.easyzk.event.ZKTabChangedEvent;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
-import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+// import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
@@ -166,9 +167,9 @@ public class DataHistoryController extends SubStageController implements Initial
     @Subscribe
     public void tabChanged(ZKTabChangedEvent event) {
         Tab tab = event.data();
-        if (tab instanceof ZKNodeTab tab1) {
-            if (tab1.treeItem() != this.item) {
-                this.item = tab1.treeItem();
+        if (tab instanceof ZKConnectTab tab1) {
+            if (tab1.activeItem() != this.item) {
+                this.item = tab1.activeItem();
                 this.refresh();
             }
         } else {

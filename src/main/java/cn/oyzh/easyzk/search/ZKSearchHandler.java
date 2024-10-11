@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.search;
 
 import cn.oyzh.easyzk.tabs.ZKTabPane;
-import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
@@ -91,44 +90,44 @@ public class ZKSearchHandler extends SearchHandler {
         this.treeNode.enable();
     }
 
-    /**
-     * 替换
-     *
-     * @param replaceKW 替换词
-     * @return 结果
-     */
-    public boolean replace(String replaceKW) {
-        // 如果当前节点不符合分析条件，则寻找下一个节点
-        if (!this.dataAnalyse()) {
-            do {
-                // 获取匹配节点
-                List<SearchValue> matchItems = this.getMatchValues();
-                // 如果找不到任何匹配数据的节点，则直接回调false
-                if (matchItems.parallelStream().noneMatch(SearchValue::isMatchData)) {
-                    // 更新搜索结果
-                    this.updateResult();
-                    return false;
-                }
-                // 搜索下一个
-                this.searchNext(this.searchParam);
-                // 如果当前节点匹配数据，则执行数据分析
-                if (this.searchResult().isMatchData()) {
-                    this.dataAnalyse();
-                    break;
-                }
-            } while (true);
-        }
-        if (this.dataNode != null) {
-            // 记录旧的索引位置，替换数据后，这个索引值会变成0
-            int index = this.dataIndex;
-            // 替换选中内容
-            this.dataNode.replaceSelection(replaceKW);
-            // 更新数据索引，防止索引错位导致重复替换
-            int len = replaceKW.length() - this.searchParam.getKw().length();
-            this.dataIndex = index + len;
-        }
-        return true;
-    }
+    // /**
+    //  * 替换
+    //  *
+    //  * @param replaceKW 替换词
+    //  * @return 结果
+    //  */
+    // public boolean replace(String replaceKW) {
+    //     // 如果当前节点不符合分析条件，则寻找下一个节点
+    //     if (!this.dataAnalyse()) {
+    //         do {
+    //             // 获取匹配节点
+    //             List<SearchValue> matchItems = this.getMatchValues();
+    //             // 如果找不到任何匹配数据的节点，则直接回调false
+    //             if (matchItems.parallelStream().noneMatch(SearchValue::isMatchData)) {
+    //                 // 更新搜索结果
+    //                 this.updateResult();
+    //                 return false;
+    //             }
+    //             // 搜索下一个
+    //             this.searchNext(this.searchParam);
+    //             // 如果当前节点匹配数据，则执行数据分析
+    //             if (this.searchResult().isMatchData()) {
+    //                 this.dataAnalyse();
+    //                 break;
+    //             }
+    //         } while (true);
+    //     }
+    //     if (this.dataNode != null) {
+    //         // 记录旧的索引位置，替换数据后，这个索引值会变成0
+    //         int index = this.dataIndex;
+    //         // 替换选中内容
+    //         this.dataNode.replaceSelection(replaceKW);
+    //         // 更新数据索引，防止索引错位导致重复替换
+    //         int len = replaceKW.length() - this.searchParam.getKw().length();
+    //         this.dataIndex = index + len;
+    //     }
+    //     return true;
+    // }
 
     @Override
     protected void doSearch(SearchParam param, String action) {
@@ -158,48 +157,53 @@ public class ZKSearchHandler extends SearchHandler {
         return super.getMatchValues(this.treeNode.getRoot());
     }
 
-    /**
-     * 寻找数据节点
-     *
-     * @return 数据节点
-     */
-    private RichDataTextAreaPane findDataNode() {
-        ZKNodeTab itemTab = this.tabPane.getNodeTab(this.currentItem);
-        if (itemTab != null) {
-            itemTab.selectDataTab();
-            return itemTab.getDataNode();
-        }
-        return null;
-    }
-
-    /**
-     * 执行分析
-     */
     @Override
     public void doAnalyse() {
-        try {
-            // 判断节点是否存在
-            if (this.currentItem == null || this.searchResult == null) {
-                return;
-            }
-            // 执行路径分析
-            if (this.searchResult.isMatchName() && this.searchParam().isSearchPath() && this.pathIndex != -100 && this.pathAnalyse()) {
-                return;
-            }
-            // 执行数据分析
-            if (this.searchResult.isMatchData() && this.searchParam().isSearchData() && this.dataIndex != -100 && this.dataAnalyse()) {
-                return;
-            }
-            // 初始化索引及文本组件
-            this.dataIndex = 0;
-            this.pathIndex = 0;
-            ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
-            RichControlUtil.deselect(this.dataNode);
-            ControlUtil.deselect(value.text());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+
     }
+
+    // /**
+    //  * 寻找数据节点
+    //  *
+    //  * @return 数据节点
+    //  */
+    // private RichDataTextAreaPane findDataNode() {
+    //     ZKNodeTab itemTab = this.tabPane.getNodeTab(this.currentItem);
+    //     if (itemTab != null) {
+    //         itemTab.selectDataTab();
+    //         return itemTab.getDataNode();
+    //     }
+    //     return null;
+    // }
+
+    // /**
+    //  * 执行分析
+    //  */
+    // @Override
+    // public void doAnalyse() {
+    //     try {
+    //         // 判断节点是否存在
+    //         if (this.currentItem == null || this.searchResult == null) {
+    //             return;
+    //         }
+    //         // 执行路径分析
+    //         if (this.searchResult.isMatchName() && this.searchParam().isSearchPath() && this.pathIndex != -100 && this.pathAnalyse()) {
+    //             return;
+    //         }
+    //         // 执行数据分析
+    //         if (this.searchResult.isMatchData() && this.searchParam().isSearchData() && this.dataIndex != -100 && this.dataAnalyse()) {
+    //             return;
+    //         }
+    //         // 初始化索引及文本组件
+    //         this.dataIndex = 0;
+    //         this.pathIndex = 0;
+    //         ZKTreeItemValue value = (ZKTreeItemValue) this.currentItem.getValue();
+    //         RichControlUtil.deselect(this.dataNode);
+    //         ControlUtil.deselect(value.text());
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    // }
 
     /**
      * 路径节点分析
@@ -229,33 +233,33 @@ public class ZKSearchHandler extends SearchHandler {
         return false;
     }
 
-    /**
-     * 数据节点分析
-     *
-     * @return 结果
-     */
-    private boolean dataAnalyse() {
-        try {
-            this.dataNode = this.findDataNode();
-            if (this.dataNode == null) {
-                return false;
-            }
-            String kw = this.searchParam.getKw();
-            String text = this.dataNode.getText();
-            // 搜索索引
-            int index = TextUtil.findIndex(text, kw, this.dataIndex, this.searchParam.isCompareCase(), this.searchParam.isFullMatch());
-            if (index != -1) {
-                int end = index + kw.length();
-                this.dataNode.selectRange(index, end);
-                this.dataIndex = end;
-                return true;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        this.dataIndex = -100;
-        return false;
-    }
+    // /**
+    //  * 数据节点分析
+    //  *
+    //  * @return 结果
+    //  */
+    // private boolean dataAnalyse() {
+    //     try {
+    //         this.dataNode = this.findDataNode();
+    //         if (this.dataNode == null) {
+    //             return false;
+    //         }
+    //         String kw = this.searchParam.getKw();
+    //         String text = this.dataNode.getText();
+    //         // 搜索索引
+    //         int index = TextUtil.findIndex(text, kw, this.dataIndex, this.searchParam.isCompareCase(), this.searchParam.isFullMatch());
+    //         if (index != -1) {
+    //             int end = index + kw.length();
+    //             this.dataNode.selectRange(index, end);
+    //             this.dataIndex = end;
+    //             return true;
+    //         }
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    //     this.dataIndex = -100;
+    //     return false;
+    // }
 
     @Override
     public String getMatchType(TreeItem<?> item) {
@@ -268,11 +272,11 @@ public class ZKSearchHandler extends SearchHandler {
             String value = treeItem.getValue().name();
             m1 = this.searchParam.isMatch(value);
         }
-        // 数据
-        if (this.searchParam().isSearchData() && item instanceof ZKNodeTreeItem treeItem) {
-            String data = treeItem.dataStr();
-            m2 = this.searchParam.isMatch(data);
-        }
+        // // 数据
+        // if (this.searchParam().isSearchData() && item instanceof ZKNodeTreeItem treeItem) {
+        //     String data = treeItem.dataStr();
+        //     m2 = this.searchParam.isMatch(data);
+        // }
         // 匹配全部
         if (m1 && m2) {
             return "all";

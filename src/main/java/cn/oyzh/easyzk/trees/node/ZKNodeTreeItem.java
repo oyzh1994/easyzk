@@ -30,9 +30,6 @@ import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -72,44 +69,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     private Charset charset = Charset.defaultCharset();
 
     /**
-     * 是否被其他连接删除
+     * 是否已变更
      */
     @Getter
-    private boolean beDeleted;
-
-    /**
-     * 被其他连接修改的数据
-     */
-    @Getter
-    private byte[] updateData;
-
-    /**
-     * 忽略删除数据
-     */
-    @Getter
-    @Setter
-    private boolean ignoreDeleted;
-
-    /**
-     * 忽略修改数据
-     */
-    @Getter
-    @Setter
-    private boolean ignoreUpdated;
-
-    // /**
-    //  * 已加载标志位
-    //  */
-    // @Getter
-    // @Accessors(fluent = true, chain = true)
-    // private volatile boolean loaded;
-    //
-    // /**
-    //  * 加载中标志位
-    //  */
-    // @Getter
-    // @Accessors(fluent = true, chain = true)
-    // private volatile boolean loading;
+    private byte nodeStatus;
 
     /**
      * 取消标志位
@@ -130,237 +93,67 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     /**
      * 设置被删除状态
      */
+    public void setBeChanged() {
+        this.nodeStatus = 1;
+        this.flushValue();
+    }
+
+    /**
+     * 设置被删除状态
+     */
     public void setBeDeleted() {
-        this.beDeleted = true;
-        this.ignoreDeleted = false;
+        this.nodeStatus = 2;
         this.flushValue();
     }
 
-    /**
-     * 是否被修改状态
-     *
-     * @return 结果
-     */
-    public boolean isBeUpdated() {
-        return this.updateData != null;
+    public boolean isBeChanged() {
+        return this.nodeStatus == 1;
     }
 
-    /**
-     * 设置更新状态
-     *
-     * @param updateData 更新数据
-     */
-    public void setBeUpdated(byte[] updateData) {
-        this.updateData = updateData;
-        this.ignoreUpdated = false;
-        this.flushValue();
+    public boolean isBeDeleted() {
+        return this.nodeStatus == 2;
     }
 
     /**
      * 清除数据状态
      */
     public void clearStatus() {
-        this.beDeleted = false;
-        this.updateData = null;
+        this.nodeStatus = 0;
         this.flushValue();
-    }
-
-    /**
-     * 获取节点状态属性
-     *
-     * @return 节点状态属性
-     */
-    public ObjectProperty<Stat> statProperty() {
-        return this.value.statProperty();
-    }
-
-    /**
-     * 获取节点配额属性
-     *
-     * @return 配额属性
-     */
-    public ObjectProperty<StatsTrack> quotaProperty() {
-        return this.value.quotaProperty();
-    }
-
-    /**
-     * 获取节点权限属性
-     *
-     * @return 节点权限属性
-     */
-    public ObjectProperty<List<ZKACL>> aclProperty() {
-        return this.value.aclProperty();
     }
 
     /**
      * 数据属性
      */
-    private SimpleObjectProperty<byte[]> dataProperty;
-
-    /**
-     * 获取数据属性
-     *
-     * @return 数据属性
-     */
-    public SimpleObjectProperty<byte[]> dataProperty() {
-        if (this.dataProperty == null) {
-            this.dataProperty = new SimpleObjectProperty<>();
-        }
-        return this.dataProperty;
-    }
-
-    /**
-     * 数据监听器
-     */
-    private ChangeListener<byte[]> dataListener;
-
-    /**
-     * 状态监听器
-     */
-    private ChangeListener<Stat> statListener;
-
-    /**
-     * 权限监听器
-     */
-    private ChangeListener<List<ZKACL>> aclListener;
-
-    /**
-     * 配额监听器
-     */
-    private ChangeListener<StatsTrack> quotaListener;
-
-    /**
-     * 添加数据监听器
-     *
-     * @param dataListener 数据监听器
-     */
-    public void addDataListener(ChangeListener<byte[]> dataListener) {
-        if (this.dataListener != null) {
-            this.dataProperty().removeListener(this.dataListener);
-        }
-        if (dataListener != null) {
-            this.dataProperty().addListener(dataListener);
-        }
-        this.dataListener = dataListener;
-    }
-
-    /**
-     * 添加状态监听器
-     *
-     * @param statListener 数据监听器
-     */
-    public void addStatListener(ChangeListener<Stat> statListener) {
-        if (this.statListener != null) {
-            this.statProperty().removeListener(this.statListener);
-        }
-        if (statListener != null) {
-            this.statProperty().addListener(statListener);
-        }
-        this.statListener = statListener;
-    }
-
-    /**
-     * 添加权限监听器
-     *
-     * @param aclListener 权限监听器
-     */
-    public void addAclListener(ChangeListener<List<ZKACL>> aclListener) {
-        if (this.aclListener != null) {
-            this.aclProperty().removeListener(this.aclListener);
-        }
-        if (aclListener != null) {
-            this.aclProperty().addListener(aclListener);
-        }
-        this.aclListener = aclListener;
-    }
-
-    /**
-     * 添加配额监听器
-     *
-     * @param quotaListener 配额监听器
-     */
-    public void addQuotaListener(ChangeListener<StatsTrack> quotaListener) {
-        if (this.quotaListener != null) {
-            this.quotaProperty().removeListener(this.quotaListener);
-        }
-        if (quotaListener != null) {
-            this.quotaProperty().addListener(quotaListener);
-        }
-        this.quotaListener = quotaListener;
-    }
-
-    /**
-     * 清除监听器
-     */
-    public void clearListener() {
-        this.addDataListener(null);
-        this.addStatListener(null);
-        this.addAclListener(null);
-        this.addQuotaListener(null);
-    }
+    @Getter
+    @Setter
+    private byte[] unsavedData;
 
     /**
      * 获取数据
      *
      * @return 数据
      */
-    public byte[] data() {
-        if (this.dataUnsaved()) {
-            return this.dataProperty.get();
-        }
-        try {
-            if (!this.value.nodeDataLoaded()) {
-                ZKNodeUtil.refreshData(this.client(), this.value);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public byte[] nodeData() {
         return this.value.nodeData();
     }
 
     /**
-     * 获取数据字符串
-     *
-     * @return 数据字符串
-     */
-    public String dataStr() {
-        byte[] bytes = this.data();
-        if (bytes == null || bytes.length == 0) {
-            return "";
-        }
-        return new String(this.data(), this.charset);
-    }
-
-    /**
      * 设置数据
      *
      * @param data 数据
      */
-    public void data(byte[] data) {
-        this.dataProperty().set(data);
+    public void nodeData(byte[] data) {
+        this.unsavedData = data;
         this.flushValue();
-    }
-
-    /**
-     * 设置数据
-     *
-     * @param data 数据
-     */
-    public void data(String data) {
-        if (!Objects.equals(this.dataStr(), data)) {
-            this.dataProperty().set(data.getBytes(this.charset));
-            this.flushValue();
-        }
     }
 
     /**
      * 清除数据
      */
     public void clearData() {
-        if (this.dataProperty != null) {
-            this.dataProperty.set(null);
-            this.flushValue();
-        }
+        this.unsavedData = null;
+        this.flushValue();
     }
 
     /**
@@ -368,11 +161,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      *
      * @return 结果
      */
-    public boolean dataUnsaved() {
-        if (this.dataProperty == null) {
-            return false;
-        }
-        return this.dataProperty.get() != null;
+    public boolean isDataUnsaved() {
+        return this.unsavedData != null;
     }
 
     public ZKNodeTreeItem(@NonNull ZKNode value, RichTreeView treeView, ZKClient client) {
@@ -384,7 +174,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.setValue(new ZKNodeTreeItemValue(this));
         this.initValue();
         this.flushValue();
-        if (this.value.rootNode()) {
+        if (this.value.isRoot()) {
             super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler());
         } else {
             this.visibleProperty().addListener((observableValue, aBoolean, t1) -> super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler()));
@@ -486,15 +276,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.flushValue();
     }
 
-    // /**
-    //  * 获取zk客户端
-    //  *
-    //  * @return zk客户端
-    //  */
-    // public ZKClient client() {
-    //     return this.root.client();
-    // }
-
     /**
      * 获取节点路径
      *
@@ -504,21 +285,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.value.nodePath();
     }
 
-    /**
-     * 获取节点数据
-     *
-     * @return 节点数据
-     */
-    public byte[] nodeData() {
-        try {
-            if (!this.value.nodeDataLoaded()) {
-                ZKNodeUtil.refreshData(this.client(), this.value);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return this.value.nodeData();
-    }
 
     /**
      * 加载子节点
@@ -601,21 +367,21 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             items.add(cancel);
         } else {
             FXMenuItem auth = MenuItemHelper.authNode("12", this::authNode);
-            if (!this.ephemeral()) {
+            if (!this.isEphemeral()) {
                 FXMenuItem add = MenuItemHelper.addNode("12", this::addNode);
                 items.add(add);
             }
-            if (!this.value.rootNode() && this.value.subNode() && !this.ephemeral()) {
+            if (!this.value.isRoot() && this.value.isChildren() && !this.isEphemeral()) {
                 FXMenuItem rename = MenuItemHelper.renameNode("12", this::rename);
                 items.add(rename);
             }
-            if (!this.value.rootNode()) {
+            if (!this.value.isRoot()) {
                 FXMenuItem delete = MenuItemHelper.deleteNode("12", this::delete);
                 items.add(delete);
             }
             FXMenuItem reload = MenuItemHelper.refreshData("12", this::reloadChild);
             items.add(reload);
-            if (this.value.parentNode()) {
+            if (this.value.isParent()) {
                 FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
                 FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
                 FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);
@@ -675,7 +441,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     @Override
     public void rename() {
         // 判断是否符合要求
-        if (this.value.parentNode() || this.value.ephemeral()) {
+        if (this.value.isParent() || this.value.isEphemeral()) {
             return;
         }
         String nodeName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.nodeName());
@@ -691,13 +457,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 MessageBox.warn(I18nHelper.contentAlreadyExists());
                 return;
             }
-            CreateMode createMode = this.value.ephemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
+            CreateMode createMode = this.value.isEphemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
             List<ACL> aclList = new ArrayList<>();
             for (ZKACL zkacl : this.value.acl()) {
                 aclList.add(new ACL(zkacl.getPerms(), zkacl.getId()));
             }
             // 创建新节点并删除旧节点
-            if (this.client().create(newNodePath, this.data(), aclList, null, createMode, true) != null) {
+            if (this.client().create(newNodePath, this.nodeData(), aclList, null, createMode, true) != null) {
                 // 删除旧节点
                 this._delete();
             } else {
@@ -731,7 +497,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     private void _delete() {
         try {
             // 执行删除
-            this.client().delete(this.nodePath(), null, this.value.parentNode());
+            this.client().delete(this.nodePath(), null, this.value.isParent());
             // 刷新状态
             if (this.parent() != null) {
                 this.parent().refreshStat();
@@ -935,9 +701,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 结果
      */
     public boolean saveData() {
-        if (this.dataUnsaved()) {
+        if (this.isDataUnsaved()) {
             try {
-                byte[] data = this.data();
+                byte[] data = this.unsavedData;
                 // 更新数据
                 Stat stat = this.client().setData(this.nodePath(), data);
                 if (stat != null) {
@@ -1144,7 +910,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 结果
      */
     public boolean isDataTooLong() {
-        return this.dataUnsaved() && this.data().length > 1024 * 1024;
+        if (this.isDataUnsaved()) {
+            return this.unsavedData.length > 1024 * 1024;
+        }
+        return this.nodeData().length > 1024 * 1024;
     }
 
     /**
@@ -1199,17 +968,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      *
      * @return 结果
      */
-    public boolean persistent() {
-        return this.value.persistent();
-    }
-
-    /**
-     * 是否临时节点
-     *
-     * @return 结果
-     */
-    public boolean ephemeral() {
-        return this.value.ephemeral();
+    public boolean isEphemeral() {
+        return this.value.isEphemeral();
     }
 
     /**
@@ -1239,19 +999,19 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.value.decodeNodeName();
     }
 
-    /**
-     * 应用更改
-     */
-    public void applyUpdate() {
-        try {
-            this.value.nodeData(this.updateData);
-            this.refreshStat();
-            this.clearStatus();
-            this.clearData();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    // /**
+    //  * 应用更改
+    //  */
+    // public void applyUpdate() {
+    //     try {
+    //         this.value.nodeData(this.updateData);
+    //         this.refreshStat();
+    //         this.clearStatus();
+    //         this.clearData();
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    // }
 
     /**
      * 获取图标
@@ -1381,12 +1141,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.value = null;
         this.client = null;
         this.charset = null;
-        this.updateData = null;
-        this.aclListener = null;
-        this.dataListener = null;
-        this.dataProperty = null;
-        this.statListener = null;
-        this.quotaListener = null;
         super.destroy();
     }
 }

@@ -128,7 +128,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
             ZKNodeTreeItem firstChild = this.firstChild();
             // 根节点不为空，加载全部，收缩全部，展开全部菜单启用
-            if (firstChild != null && firstChild.value().parentNode()) {
+            if (firstChild != null && firstChild.value().isParent()) {
                 FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
                 FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);
                 FXMenuItem collapseAll = MenuItemHelper.collapseAll("12", this::collapseAll);
@@ -275,7 +275,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     public void closeConnect() {
         if (this.isConnected()) {
-            if (this.hasUnsavedNode() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+            if (this.hasUnsavedData() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
                 return;
             }
             this.closeConnect(true);
@@ -314,10 +314,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      *
      * @return 结果
      */
-    private boolean hasUnsavedNode() {
+    private boolean hasUnsavedData() {
         List<ZKNodeTreeItem> items = this.getAllNodeItem();
         for (ZKNodeTreeItem item : items) {
-            if (item.dataUnsaved()) {
+            if (item.isDataUnsaved()) {
                 return true;
             }
         }

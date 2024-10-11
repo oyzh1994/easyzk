@@ -49,6 +49,7 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -74,7 +75,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKConnectTabContent extends DynamicTabController {
+public class ZKConnectTabContent extends DynamicTabController   {
 
     /**
      * 根节点
@@ -230,41 +231,6 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     protected NumberTextField quotaBytes;
-
-    /**
-     * 文本监听器
-     */
-    private final ChangeListener<String> textListener = (observable, oldValue, newValue) -> {
-        if (this.treeItem != null) {
-            this.activeItem.data(newValue);
-        }
-    };
-
-    /**
-     * 数据监听器
-     */
-    private final ChangeListener<byte[]> dataListener = (observable, oldValue, newValue) -> {
-        if (newValue == null) {
-            this.saveNodeData.disable();
-        } else {
-            this.saveNodeData.enable();
-        }
-    };
-
-    /**
-     * 状态监听器
-     */
-    private final ChangeListener<Stat> statListener = (observable, oldValue, newValue) -> this.initStat();
-
-    /**
-     * 权限监听器
-     */
-    private final ChangeListener<List<ZKACL>> aclListener = (observable, oldValue, newValue) -> this.initAcl();
-
-    /**
-     * 配额监听器
-     */
-    private final ChangeListener<StatsTrack> quotaListener = (observable, oldValue, newValue) -> this.initQuota();
 
     /**
      * 配置储存对象
@@ -623,7 +589,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void reloadData() {
         // 放弃保存
-        if (this.activeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+        if (this.activeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
         // 刷新数据
@@ -667,7 +633,7 @@ public class ZKConnectTabContent extends DynamicTabController {
             return;
         }
         // 保存数据
-        if (this.activeItem.dataUnsaved()) {
+        if (this.activeItem.isDataUnsaved()) {
             // 保存数据历史
             this.activeItem.saveDataHistory();
             RenderService.submit(this.activeItem::saveData);
@@ -759,7 +725,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 显示数据
      */
     protected void showData() {
-        this.nodeData.showData(this.activeItem.data());
+        this.nodeData.showData(this.activeItem.nodeData());
     }
 
     /**
@@ -768,11 +734,11 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param dataType 数据类型
      */
     protected void showData(RichDataType dataType) {
-        this.nodeData.showData(dataType, this.activeItem.data());
+        this.nodeData.showData(dataType, this.activeItem.nodeData());
     }
 
     public void initData() {
-        this.nodeData.showData(this.activeItem.data());
+        this.nodeData.showData(this.activeItem.nodeData());
         // 加载耗时处理
         FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.activeItem.loadTime() + "ms"));
     }
@@ -827,7 +793,7 @@ public class ZKConnectTabContent extends DynamicTabController {
         if (this.treeItem == null) {
             return;
         }
-        this.quotaTab.getContent().setDisable(this.activeItem.value().rootNode());
+        this.quotaTab.getContent().setDisable(this.activeItem.value().isRoot());
         StatsTrack quota = this.activeItem.quota();
         if (quota != null) {
             this.quotaNum.setValue(quota.getCount());
@@ -844,22 +810,8 @@ public class ZKConnectTabContent extends DynamicTabController {
         // 收藏处理
         this.collect.managedProperty().bind(this.collect.visibleProperty());
         this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
-        // 切换tab
-        this.root.selectedIndexChanged((t3, t2, newValue) -> {
-            if (newValue.intValue() == 0) {
-                this.showData();
-            } else if (newValue.intValue() == 1) {
-                this.initStat();
-            } else if (newValue.intValue() == 2) {
-                this.initAcl();
-            } else if (newValue.intValue() == 3) {
-                this.initQuota();
-            }
-        });
         // 格式监听
         this.format.selectedItemChanged(this.formatListener);
-        // 数据监听
-        this.nodeData.addTextChangeListener(this.textListener);
         // undo监听
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
         // redo监听
@@ -941,7 +893,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     public void restoreData(byte[] data) {
         // 保存数据历史
-        this.activeItem.data(data);
+        this.activeItem.nodeData(data);
         this.showData();
     }
 
@@ -955,4 +907,5 @@ public class ZKConnectTabContent extends DynamicTabController {
         this.treeView.itemFilter().setMatchMode(mode);
         this.treeView.filter();
     }
+
 }

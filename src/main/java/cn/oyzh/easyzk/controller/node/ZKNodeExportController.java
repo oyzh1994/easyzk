@@ -216,7 +216,7 @@ public class ZKNodeExportController extends StageController {
                     return;
                 }
                 // 排除临时节点
-                zkNodes = zkNodes.parallelStream().filter(ZKNode::persistent).collect(Collectors.toList());
+                zkNodes = zkNodes.parallelStream().filter(ZKNode::isPersistent).collect(Collectors.toList());
                 if (CollectionUtil.isEmpty(zkNodes)) {
                     MessageBox.okToast(I18nHelper.operationFail());
                     return;
@@ -347,7 +347,7 @@ public class ZKNodeExportController extends StageController {
                 this.updateStatus(path, 1, null);
             }
             // 处理子节点
-            if (zkNode != null && zkNode.parentNode()) {
+            if (zkNode != null && zkNode.isParent()) {
                 // 获取子节点路径
                 List<String> subs = this.client.getChildren(path);
                 // 递归获取节点

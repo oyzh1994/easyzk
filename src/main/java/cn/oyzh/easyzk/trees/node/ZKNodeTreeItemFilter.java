@@ -71,7 +71,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 仅持久节点
-            if (2 == this.type && treeItem.ephemeral()) {
+            if (2 == this.type && treeItem.isEphemeral()) {
                 return false;
             }
             String nodePath = treeItem.decodeNodePath();

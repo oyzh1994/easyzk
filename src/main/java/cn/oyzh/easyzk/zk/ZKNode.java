@@ -39,63 +39,16 @@ public class ZKNode implements Comparable<ZKNode> {
     /**
      * 配额属性
      */
-    private ObjectProperty<StatsTrack> quotaProperty;
-
-    /**
-     * 获取配额属性
-     *
-     * @return 配额属性
-     */
-    public ObjectProperty<StatsTrack> quotaProperty() {
-        if (this.quotaProperty == null) {
-            this.quotaProperty = new SimpleObjectProperty<>();
-        }
-        return this.quotaProperty;
-    }
-
-    /**
-     * 获取配额
-     *
-     * @return 配额
-     */
-    public StatsTrack quota() {
-        return this.quotaProperty == null ? null : quotaProperty.get();
-    }
-
-    /**
-     * 设置配额
-     *
-     * @param track 配额
-     */
-    public void quota(StatsTrack track) {
-        this.quotaProperty().set(track);
-    }
+    @Getter
+    @Setter
+    private StatsTrack quota;
 
     /**
      * acl权限属性
      */
-    private ObjectProperty<List<ZKACL>> aclProperty;
-
-    /**
-     * 获取acl权限属性
-     *
-     * @return acl权限属性
-     */
-    public ObjectProperty<List<ZKACL>> aclProperty() {
-        if (this.aclProperty == null) {
-            this.aclProperty = new SimpleObjectProperty<>();
-        }
-        return this.aclProperty;
-    }
-
-    /**
-     * 获取acl权限
-     *
-     * @return acl权限
-     */
-    public List<ZKACL> acl() {
-        return this.aclProperty == null ? Collections.emptyList() : this.aclProperty.get();
-    }
+    @Getter
+    @Setter
+    private List<ZKACL> acl;
 
     /**
      * 设置acl权限
@@ -104,54 +57,25 @@ public class ZKNode implements Comparable<ZKNode> {
      */
     public void acl(List<? extends ACL> aclList) {
         if (CollectionUtil.isEmpty(aclList)) {
-            this.aclProperty().set(Collections.emptyList());
+            this.acl = Collections.emptyList();
         } else {
-            List<ZKACL> list = new ArrayList<>(aclList.size());
+            this.acl = new ArrayList<>(aclList.size());
             for (ACL acl : aclList) {
                 if (ZKACLUtil.isOpenACL(acl)) {
-                    list.add(new ZKACL(ZKACLUtil.OPEN_ACL));
+                    this.acl.add(new ZKACL(ZKACLUtil.OPEN_ACL));
                 } else {
-                    list.add(new ZKACL(acl));
+                    this.acl.add(new ZKACL(acl));
                 }
             }
-            this.aclProperty().set(list);
         }
     }
 
     /**
      * 状态属性
      */
-    private ObjectProperty<Stat> statProperty;
-
-    /**
-     * 获取状态属性
-     *
-     * @return 状态属性
-     */
-    public ObjectProperty<Stat> statProperty() {
-        if (this.statProperty == null) {
-            this.statProperty = new SimpleObjectProperty<>();
-        }
-        return this.statProperty;
-    }
-
-    /**
-     * 获取状态
-     *
-     * @return 状态
-     */
-    public Stat stat() {
-        return this.statProperty == null ? null : this.statProperty.get();
-    }
-
-    /**
-     * 设置状态
-     *
-     * @param stat 状态
-     */
-    public void stat(Stat stat) {
-        this.statProperty().set(stat);
-    }
+    @Getter
+    @Setter
+    private Stat stat;
 
     /**
      * 加载耗时
@@ -170,46 +94,9 @@ public class ZKNode implements Comparable<ZKNode> {
     /**
      * 节点数据属性
      */
-    private ObjectProperty<byte[]> nodeDataProperty;
-
-    /**
-     * 获取节点数据属性
-     *
-     * @return 节点数据属性
-     */
-    public ObjectProperty<byte[]> nodeDataProperty() {
-        if (this.nodeDataProperty == null) {
-            this.nodeDataProperty = new SimpleObjectProperty<>();
-        }
-        return this.nodeDataProperty;
-    }
-
-    /**
-     * 获取节点数据
-     *
-     * @return 节点数据
-     */
-    public byte[] nodeData() {
-        return this.nodeDataProperty == null ? null : nodeDataProperty.get();
-    }
-
-    /**
-     * 设置节点数据
-     *
-     * @param bytes 节点数据
-     */
-    public void nodeData(byte[] bytes) {
-        this.nodeDataProperty().set(bytes);
-    }
-
-    /**
-     * 获取节点数据字符串
-     *
-     * @return 节点数据字符串
-     */
-    public String nodeDataStr() {
-        return this.nodeDataStr(Charset.defaultCharset());
-    }
+    @Getter
+    @Setter
+    private byte[] nodeData;
 
     /**
      * 节点值字符串
@@ -239,15 +126,6 @@ public class ZKNode implements Comparable<ZKNode> {
             return new String(bytes);
         }
         return new String(bytes, charset);
-    }
-
-    /**
-     * 节点数据是否加载
-     *
-     * @return 结果
-     */
-    public boolean nodeDataLoaded() {
-        return this.nodeDataProperty != null;
     }
 
     /**
@@ -303,8 +181,8 @@ public class ZKNode implements Comparable<ZKNode> {
      *
      * @return 结果
      */
-    public boolean persistent() {
-        return !this.ephemeral();
+    public boolean isPersistent() {
+        return !this.isEphemeral();
     }
 
     /**
@@ -312,7 +190,7 @@ public class ZKNode implements Comparable<ZKNode> {
      *
      * @return 结果
      */
-    public boolean ephemeral() {
+    public boolean isEphemeral() {
         return this.stat() != null && this.stat().getEphemeralOwner() > 0;
     }
 
@@ -321,7 +199,7 @@ public class ZKNode implements Comparable<ZKNode> {
      *
      * @return 结果
      */
-    public boolean dubbo() {
+    public boolean isDubbo() {
         return this.nodePath() != null && this.nodePath().startsWith("/dubbo");
     }
 
@@ -330,7 +208,7 @@ public class ZKNode implements Comparable<ZKNode> {
      *
      * @return 结果
      */
-    public boolean parentNode() {
+    public boolean isParent() {
         return this.stat() != null && this.stat().getNumChildren() > 0;
     }
 
@@ -339,8 +217,8 @@ public class ZKNode implements Comparable<ZKNode> {
      *
      * @return 结果
      */
-    public boolean subNode() {
-        return !this.parentNode();
+    public boolean isChildren() {
+        return !this.isParent();
     }
 
     /**
@@ -348,7 +226,7 @@ public class ZKNode implements Comparable<ZKNode> {
      *
      * @return 结果
      */
-    public boolean rootNode() {
+    public boolean isRoot() {
         return "/".equals(this.nodePath());
     }
 

@@ -19,7 +19,6 @@ import cn.oyzh.easyzk.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
-import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -56,9 +55,9 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
             while (c.next()) {
                 if (c.wasAdded() || c.wasRemoved()) {
                     TaskManager.startDelay("zk:homeTab:flush", this::flushHomeTab, 100);
-                    if (c.wasAdded()) {
-                        TaskManager.startDelay("zk:nodeTab:flush", this::flushNodeTab, 100);
-                    }
+                    // if (c.wasAdded()) {
+                    //     TaskManager.startDelay("zk:nodeTab:flush", this::flushNodeTab, 100);
+                    // }
                 }
             }
         });
@@ -77,53 +76,53 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         }
     }
 
-    /**
-     * 刷新节点标签
-     */
-    private void flushNodeTab() {
-        // 获取设置
-        ZKSetting setting = ZKSettingStore2.SETTING;
-        // 判断是否需要处理tab限制
-        if (setting.isTabUnLimit()) {
-            return;
-        }
-        // 获取全部节点tab
-        List<ZKNodeTab> tabs = this.getNodeTabs();
-        // 数据不满足限制要求，则直接忽略
-        if (tabs.size() <= setting.getTabLimit()) {
-            return;
-        }
-        // tab处理函数
-        Consumer<List<ZKNodeTab>> func = tabList -> {
-            // 数据满足限制要求才处理
-            if (tabList.size() > setting.getTabLimit()) {
-                // 进行排序
-                tabList.sort((o1, o2) -> Comparator.comparingLong(ZKNodeTab::getOpenedTime).compare(o2, o1));
-                // 跳过指定数量
-                List<ZKNodeTab> list = tabList.stream().skip(setting.getTabLimit()).toList();
-                // 移除tab
-                if (!list.isEmpty()) {
-                    FXUtil.runLater(() -> this.getTabs().removeAll(list));
-                }
-            }
-        };
-        // 限制全部连接
-        if (setting.isAllTabLimitStrategy()) {
-            func.accept(tabs);
-        } else if (setting.isSingleTabLimitStrategy()) {// 限制单个连接
-            // 分组处理
-            Map<ZKClient, List<ZKNodeTab>> map = new HashMap<>();
-            // 按分组添加到map
-            for (ZKNodeTab tab : tabs) {
-                List<ZKNodeTab> list = map.computeIfAbsent(tab.client(), k -> new ArrayList<>());
-                list.add(tab);
-            }
-            // 处理值
-            for (List<ZKNodeTab> tabList : map.values()) {
-                func.accept(tabList);
-            }
-        }
-    }
+    // /**
+    //  * 刷新节点标签
+    //  */
+    // private void flushNodeTab() {
+    //     // 获取设置
+    //     ZKSetting setting = ZKSettingStore2.SETTING;
+    //     // 判断是否需要处理tab限制
+    //     if (setting.isTabUnLimit()) {
+    //         return;
+    //     }
+    //     // 获取全部节点tab
+    //     List<ZKNodeTab> tabs = this.getNodeTabs();
+    //     // 数据不满足限制要求，则直接忽略
+    //     if (tabs.size() <= setting.getTabLimit()) {
+    //         return;
+    //     }
+    //     // tab处理函数
+    //     Consumer<List<ZKNodeTab>> func = tabList -> {
+    //         // 数据满足限制要求才处理
+    //         if (tabList.size() > setting.getTabLimit()) {
+    //             // 进行排序
+    //             tabList.sort((o1, o2) -> Comparator.comparingLong(ZKNodeTab::getOpenedTime).compare(o2, o1));
+    //             // 跳过指定数量
+    //             List<ZKNodeTab> list = tabList.stream().skip(setting.getTabLimit()).toList();
+    //             // 移除tab
+    //             if (!list.isEmpty()) {
+    //                 FXUtil.runLater(() -> this.getTabs().removeAll(list));
+    //             }
+    //         }
+    //     };
+    //     // 限制全部连接
+    //     if (setting.isAllTabLimitStrategy()) {
+    //         func.accept(tabs);
+    //     } else if (setting.isSingleTabLimitStrategy()) {// 限制单个连接
+    //         // 分组处理
+    //         Map<ZKClient, List<ZKNodeTab>> map = new HashMap<>();
+    //         // 按分组添加到map
+    //         for (ZKNodeTab tab : tabs) {
+    //             List<ZKNodeTab> list = map.computeIfAbsent(tab.client(), k -> new ArrayList<>());
+    //             list.add(tab);
+    //         }
+    //         // 处理值
+    //         for (List<ZKNodeTab> tabList : map.values()) {
+    //             func.accept(tabList);
+    //         }
+    //     }
+    // }
 
     /**
      * 获取主页tab
@@ -231,82 +230,82 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         }
     }
 
-    /**
-     * 图标更换事件
-     *
-     * @param event 事件
-     */
-    @Subscribe
-    public void graphicChanged(TreeGraphicChangedEvent event) {
-        ZKNodeTab nodeTab = this.getNodeTab(event.data());
-        if (nodeTab != null) {
-            nodeTab.flushGraphic();
-            nodeTab.flushTitle();
-        }
-    }
+    // /**
+    //  * 图标更换事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @Subscribe
+    // public void graphicChanged(TreeGraphicChangedEvent event) {
+    //     ZKNodeTab nodeTab = this.getNodeTab(event.data());
+    //     if (nodeTab != null) {
+    //         nodeTab.flushGraphic();
+    //         nodeTab.flushTitle();
+    //     }
+    // }
+    //
+    // /**
+    //  * 图标颜色更换事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @Subscribe
+    // public void graphicColorChanged(TreeGraphicColorChangedEvent event) {
+    //     ZKNodeTab nodeTab = this.getNodeTab(event.data());
+    //     if (nodeTab != null) {
+    //         nodeTab.flushGraphicColor();
+    //     }
+    // }
+    //
+    // /**
+    //  * 获取节点tab
+    //  *
+    //  * @param item 树节点
+    //  * @return 节点tab
+    //  */
+    // public ZKNodeTab getNodeTab(TreeItem<?> item) {
+    //     for (Tab tab : this.getTabs()) {
+    //         if (tab instanceof ZKNodeTab nodeTab && nodeTab.treeItem() == item) {
+    //             return nodeTab;
+    //         }
+    //     }
+    //     return null;
+    // }
 
-    /**
-     * 图标颜色更换事件
-     *
-     * @param event 事件
-     */
-    @Subscribe
-    public void graphicColorChanged(TreeGraphicColorChangedEvent event) {
-        ZKNodeTab nodeTab = this.getNodeTab(event.data());
-        if (nodeTab != null) {
-            nodeTab.flushGraphicColor();
-        }
-    }
+    // /**
+    //  * 获取节点tab列表
+    //  *
+    //  * @return 节点tab列表
+    //  */
+    // public List<ZKNodeTab> getNodeTabs() {
+    //     List<ZKNodeTab> list = new ArrayList<>();
+    //     for (Tab tab : this.getTabs()) {
+    //         if (tab instanceof ZKNodeTab nodeTab) {
+    //             list.add(nodeTab);
+    //         }
+    //     }
+    //     return list;
+    // }
 
-    /**
-     * 获取节点tab
-     *
-     * @param item 树节点
-     * @return 节点tab
-     */
-    public ZKNodeTab getNodeTab(TreeItem<?> item) {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKNodeTab nodeTab && nodeTab.treeItem() == item) {
-                return nodeTab;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 获取节点tab列表
-     *
-     * @return 节点tab列表
-     */
-    public List<ZKNodeTab> getNodeTabs() {
-        List<ZKNodeTab> list = new ArrayList<>();
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKNodeTab nodeTab) {
-                list.add(nodeTab);
-            }
-        }
-        return list;
-    }
-
-    /**
-     * 初始化节点tab
-     *
-     * @param event 事件
-     */
-    @Subscribe
-    public void treeChildSelected(TreeChildSelectedEvent event) {
-        if (event != null && event.data() != null) {
-            ZKNodeTab nodeTab = this.getNodeTab(event.data());
-            if (nodeTab == null) {
-                nodeTab = new ZKNodeTab();
-                super.addTab(nodeTab);
-            }
-            // 选中节点
-            this.select(nodeTab);
-            // 初始化节点
-            nodeTab.init(event.data());
-        }
-    }
+    // /**
+    //  * 初始化节点tab
+    //  *
+    //  * @param event 事件
+    //  */
+    // @Subscribe
+    // public void treeChildSelected(TreeChildSelectedEvent event) {
+    //     if (event != null && event.data() != null) {
+    //         ZKNodeTab nodeTab = this.getNodeTab(event.data());
+    //         if (nodeTab == null) {
+    //             nodeTab = new ZKNodeTab();
+    //             super.addTab(nodeTab);
+    //         }
+    //         // 选中节点
+    //         this.select(nodeTab);
+    //         // 初始化节点
+    //         nodeTab.init(event.data());
+    //     }
+    // }
 
     /**
      * 连接关闭事件
@@ -331,19 +330,19 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         }
     }
 
-    /**
-     * 连接关闭事件
-     *
-     * @param event 事件
-     */
-    @Subscribe
-    public void connectionClosed(ZKConnectionClosedEvent event) {
-        for (ZKNodeTab nodeTab : this.getNodeTabs()) {
-            if (nodeTab.client() == event.data()) {
-                nodeTab.closeTab();
-            }
-        }
-    }
+    // /**
+    //  * 连接关闭事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @Subscribe
+    // public void connectionClosed(ZKConnectionClosedEvent event) {
+    //     for (ZKNodeTab nodeTab : this.getNodeTabs()) {
+    //         if (nodeTab.client() == event.data()) {
+    //             nodeTab.closeTab();
+    //         }
+    //     }
+    // }
 
     /**
      * 获取认证tab
@@ -389,14 +388,14 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         this.select(tab);
     }
 
-    /**
-     * 恢复数据
-     */
-    @Subscribe
-    public void restoreData(ZKHistoryRestoreEvent event) {
-        ZKNodeTab tab = this.getNodeTab(event.item());
-        if (tab != null) {
-            tab.restoreData(event.data());
-        }
-    }
+    // /**
+    //  * 恢复数据
+    //  */
+    // @Subscribe
+    // public void restoreData(ZKHistoryRestoreEvent event) {
+    //     ZKNodeTab tab = this.getNodeTab(event.item());
+    //     if (tab != null) {
+    //         tab.restoreData(event.data());
+    //     }
+    // }
 }

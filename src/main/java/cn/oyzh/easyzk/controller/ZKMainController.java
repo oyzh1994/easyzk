@@ -10,7 +10,7 @@ import cn.oyzh.easyzk.fx.ZKMsgTextArea;
 import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
-import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+// import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.trees.ZKTreeItemFilter;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
@@ -121,11 +121,11 @@ public class ZKMainController extends ParentStageController {
     @FXML
     private DataHistoryController dataHistoryController;
 
-    /**
-     * 搜索Controller
-     */
-    @FXML
-    private SearchController searchController;
+    // /**
+    //  * 搜索Controller
+    //  */
+    // @FXML
+    // private SearchController searchController;
 
     // /**
     //  * 页面信息
@@ -375,22 +375,22 @@ public class ZKMainController extends ParentStageController {
     @Override
     public List<SubStageController> getSubControllers() {
         List<SubStageController> list = new ArrayList<>();
-        list.add(this.searchController);
+        // list.add(this.searchController);
         list.add(this.dataHistoryController);
         return list;
     }
 
-    /**
-     * 当前活跃的zk树节点
-     *
-     * @return zk树节点
-     */
-    public ZKNodeTreeItem activeItem() {
-        if (this.tabPane.getSelectedItem() instanceof ZKNodeTab itemTab) {
-            return itemTab.treeItem();
-        }
-        return null;
-    }
+    // /**
+    //  * 当前活跃的zk树节点
+    //  *
+    //  * @return zk树节点
+    //  */
+    // public ZKNodeTreeItem activeItem() {
+    //     if (this.tabPane.getSelectedItem() instanceof ZKNodeTab itemTab) {
+    //         return itemTab.treeItem();
+    //     }
+    //     return null;
+    // }
 
     /**
      * 清空节点消息

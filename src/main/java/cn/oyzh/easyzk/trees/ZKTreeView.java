@@ -220,7 +220,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
             ZKNodeTreeItem item = this.findNodeItem(event.nodePath(), event.info());
             // 更新信息
             if (item != null) {
-                item.setBeUpdated(event.nodeData());
+                item.setBeChanged();
             } else {
                 JulLog.warn("{}: 未找到被修改节点，无法处理节点！", event.decodeNodePath());
             }

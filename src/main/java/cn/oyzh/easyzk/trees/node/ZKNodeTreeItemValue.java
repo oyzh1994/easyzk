@@ -85,7 +85,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
                 // 触发图形颜色改变事件
                 ZKEventUtil.graphicColorChanged(this.getItem());
             }
-        } else if (this.getItem().dataUnsaved()) { // 如果节点数据未保存
+        } else if (this.getItem().isDataUnsaved()) { // 如果节点数据未保存
             // 如果图形颜色不是橙色
             if (glyph.getColor() != Color.ORANGE) {
                 // 设置图形颜色为橙色
@@ -93,7 +93,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
                 // 触发图形颜色改变事件
                 ZKEventUtil.graphicColorChanged(this.getItem());
             }
-        } else if (this.getItem().isBeUpdated()) { // 如果节点已被更新
+        } else if (this.getItem().isBeChanged()) { // 如果节点已被更新
             // 如果图形颜色不是紫色
             if (glyph.getColor() != Color.PURPLE) {
                 // 设置图形颜色为紫色
@@ -123,19 +123,11 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
             return "/fx-plus/font/lock.svg";
         }
         // 临时节点
-        if (value.ephemeral()) {
+        if (value.isEphemeral()) {
             return "/font/temp.svg";
         }
-        // 子节点
-        if (value.subNode()) {
-            return "/font/file-text.svg";
-        }
-        // 父节点，已加载
-        if (this.getItem().loaded()) {
-            return "/font/folder-open.svg";
-        }
-        // 父节点，未加载
-        return "/font/folder.svg";
+        // 其他节点
+        return "/font/file-text.svg";
     }
 
     @Override

@@ -13,7 +13,7 @@ import lombok.experimental.UtilityClass;
 public class ZKNodeTreeItemUtil {
 
     public static ZKNodeTreeItem of(ZKNode node, ZKNodeTreeView treeView, ZKClient client) {
-        if (node.rootNode()) {
+        if (node.isRoot()) {
             return new ZKRootNodeTreeItem(node, treeView, client);
         }
         return new ZKNodeTreeItem(node, treeView, client);

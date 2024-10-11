@@ -34,7 +34,7 @@ public class ZKRootNodeTreeItem extends ZKNodeTreeItem {
         items.add(add);
         FXMenuItem reload = MenuItemHelper.refreshData("12", this::reloadChild);
         items.add(reload);
-        if (this.value.parentNode()) {
+        if (this.value.isParent()) {
             FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
             FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
             FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);

@@ -76,7 +76,7 @@
                 </graphic>
                 <FlexVBox flexWidth="100%" flexHeight="100%">
                     <FlexFlowPane realHeight="32" flexWidth="100%">
-                        <SaveSVGGlyph fx:id="saveNodeData" disable="true" size="16" tipText="%base.pasteTip1"
+                        <SaveSVGGlyph fx:id="saveNodeData" size="16" tipText="%base.pasteTip1"
                                       onMousePrimaryClicked="#saveNodeData">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>
@@ -104,7 +104,7 @@
                                 <Insets left="5" top="5"/>
                             </FlowPane.margin>
                         </ClearSVGGlyph>
-                        <QRCodeSVGGlyph disable="true" fx:id="node2QRCode" size="16"
+                        <QRCodeSVGGlyph fx:id="node2QRCode" size="16"
                                         onMousePrimaryClicked="#node2QRCode">
                             <FlowPane.margin>
                                 <Insets left="5" top="5"/>

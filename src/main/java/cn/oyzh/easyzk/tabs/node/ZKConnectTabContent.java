@@ -927,9 +927,11 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void doSearch() {
         String kw = this.searchKW.getTextTrim();
+        int mode = this.searchKW.getSelectedIndex();
         int type = this.searchType.getSelectedIndex();
         this.treeView.itemFilter().setKw(kw);
         this.treeView.itemFilter().setType(type);
+        this.treeView.itemFilter().setMatchMode(mode);
         this.treeView.filter();
     }
 }

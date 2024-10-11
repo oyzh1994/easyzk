@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.search;
 
-import cn.oyzh.fx.plus.controls.popup.SearchHistoryPopup;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SettingSVGGlyph;
 import cn.oyzh.fx.plus.skin.ClearableTextFieldSkin;
@@ -9,8 +8,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lombok.Getter;
@@ -44,10 +41,15 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
             } else {
                 this.popup.show(this.getSkinnable());
             }
-        }else{
+        } else {
             this.popup = new ZKNodeSearchPopup();
-            this.popup.setOnIndexSelected(this::onIndexSelected);
+            this.popup.show(this.getSkinnable());
+            this.popup.setOnIndexSelected(this::onModeSelected);
         }
+    }
+
+    public void onModeSelected(int mode) {
+        this.closePopup();
     }
 
     /**
@@ -57,23 +59,6 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         if (this.popup != null && this.popup.isShowing()) {
             this.popup.hide();
         }
-    }
-
-    /**
-     * 搜索事件
-     *
-     * @param text 文本
-     */
-    protected void onSearch(String text) {
-        this.closePopup();
-    }
-
-    /**
-     * 搜索历史词汇选中事件
-     *
-     */
-    protected void onIndexSelected(int index) {
-        this.closePopup();
     }
 
     public ZKNodeSearchTextFieldSkin(TextField textField) {
@@ -87,14 +72,6 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         this.button.setOnMouseMoved(mouseEvent -> this.button.setColor("#E36413"));
         this.button.setOnMouseExited(mouseEvent -> this.button.setColor(this.getButtonColor()));
         this.getChildren().add(this.button);
-
-        // 按键监听
-        this.getSkinnable().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                this.onSearch(this.getText());
-            }
-            this.closePopup();
-        });
         // 鼠标监听
         this.getSkinnable().addEventHandler(MouseEvent.MOUSE_PRESSED, event -> this.closePopup());
     }
@@ -127,5 +104,9 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         }
         // 设置组件位置
         super.positionInArea(this.button, 3, y * 0.9, w, h, btnSize, HPos.LEFT, VPos.CENTER);
+    }
+
+    public int getSelectedIndex() {
+        return this.popup.getSelectedIndex();
     }
 }

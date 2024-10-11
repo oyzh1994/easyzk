@@ -33,14 +33,14 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
     private String kw;
 
     /**
-     * 1. 包含
-     * 2. 包含 + 大小写符合
-     * 3. 全字匹配
-     * 4. 全字匹配 + 大小写符合
+     * 0. 包含
+     * 1. 包含 + 大小写符合
+     * 2. 全字匹配
+     * 3. 全字匹配 + 大小写符合
      */
     @Getter
     @Setter
-    private String matchMode;
+    private int matchMode;
 
     /**
      * 过滤内容列表
@@ -80,16 +80,16 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             if (StringUtil.isNotBlank(this.kw)) {
-                if ("1".equals(this.matchMode)) {
+                if (this.matchMode == 0) {
                     return StringUtil.containsIgnoreCase(nodePath, this.kw);
                 }
-                if ("2".equals(this.matchMode)) {
+                if (this.matchMode == 1) {
                     return StringUtil.contains(nodePath, this.kw);
                 }
-                if ("3".equals(this.matchMode)) {
+                if (this.matchMode == 2) {
                     return StringUtil.equalsIgnoreCase(nodePath, this.kw);
                 }
-                if ("4".equals(this.matchMode)) {
+                if (this.matchMode == 3) {
                     return StringUtil.equals(nodePath, this.kw);
                 }
             }

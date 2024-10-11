@@ -133,13 +133,13 @@ public class HeaderController extends SubStageController {
         ZKEventUtil.leftExtend();
     }
 
-    /**
-     * 搜索
-     */
-    @FXML
-    private void search() {
-        ZKEventUtil.searchFire();
-    }
+    // /**
+    //  * 搜索
+    //  */
+    // @FXML
+    // private void search() {
+    //     ZKEventUtil.searchFire();
+    // }
 
     @Override
     public void onStageShown(WindowEvent event) {

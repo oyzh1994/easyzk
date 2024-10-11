@@ -85,11 +85,11 @@ public class ZKMainController extends ParentStageController {
     @FXML
     private SVGGlyph sortDesc;
 
-    /**
-     * 仅看收藏
-     */
-    @FXML
-    private FlexCheckBox onlyCollect;
+    // /**
+    //  * 仅看收藏
+    //  */
+    // @FXML
+    // private FlexCheckBox onlyCollect;
 
     /**
      * zk切换面板
@@ -103,17 +103,17 @@ public class ZKMainController extends ParentStageController {
     @FXML
     private ZKMsgTextArea msgArea;
 
-    /**
-     * 过滤子节点
-     */
-    @FXML
-    private FlexCheckBox filterSubNode;
-
-    /**
-     * 过滤临时节点
-     */
-    @FXML
-    private FlexCheckBox filterEphemeral;
+    // /**
+    //  * 过滤子节点
+    //  */
+    // @FXML
+    // private FlexCheckBox filterSubNode;
+    //
+    // /**
+    //  * 过滤临时节点
+    //  */
+    // @FXML
+    // private FlexCheckBox filterEphemeral;
 
     /**
      * zk历史Controller
@@ -167,30 +167,30 @@ public class ZKMainController extends ParentStageController {
         ZKEventUtil.terminalOpen();
     }
 
-    /**
-     * 执行过滤
-     */
-    private void filter() {
-        TaskManager.startDelay("zk:tree:filter", () -> {
-            this.tree.disable();
-            try {
-                ZKTreeItemFilter itemFilter = this.tree.itemFilter();
-                itemFilter.setSearchHandler(this.searchHandler);
-                if (this.onlyCollect.isSelected()) {
-                    itemFilter.setOnlyCollect(true);
-                    itemFilter.setExcludeSub(false);
-                    itemFilter.setExcludeEphemeral(false);
-                } else {
-                    itemFilter.setOnlyCollect(false);
-                    itemFilter.setExcludeSub(this.filterSubNode.isSelected());
-                    itemFilter.setExcludeEphemeral(this.filterEphemeral.isSelected());
-                }
-                this.tree.filter();
-            } finally {
-                this.tree.enable();
-            }
-        }, 100);
-    }
+    // /**
+    //  * 执行过滤
+    //  */
+    // private void filter() {
+    //     TaskManager.startDelay("zk:tree:filter", () -> {
+    //         this.tree.disable();
+    //         try {
+    //             ZKTreeItemFilter itemFilter = this.tree.itemFilter();
+    //             itemFilter.setSearchHandler(this.searchHandler);
+    //             if (this.onlyCollect.isSelected()) {
+    //                 itemFilter.setOnlyCollect(true);
+    //                 itemFilter.setExcludeSub(false);
+    //                 itemFilter.setExcludeEphemeral(false);
+    //             } else {
+    //                 itemFilter.setOnlyCollect(false);
+    //                 itemFilter.setExcludeSub(this.filterSubNode.isSelected());
+    //                 itemFilter.setExcludeEphemeral(this.filterEphemeral.isSelected());
+    //             }
+    //             this.tree.filter();
+    //         } finally {
+    //             this.tree.enable();
+    //         }
+    //     }, 100);
+    // }
 
     /**
      * zk信息修改事件
@@ -225,7 +225,7 @@ public class ZKMainController extends ParentStageController {
         EventUtil.register(this.tree);
         EventUtil.register(this.tabPane);
         EventUtil.register(this.msgArea);
-        this.filter();
+        // this.filter();
 
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
@@ -281,19 +281,19 @@ public class ZKMainController extends ParentStageController {
 
     @Override
     protected void bindListeners() {
-        // 左侧栏业务
-        this.onlyCollect.selectedChanged((obs, o, n) -> {
-            if (n) {
-                this.filterSubNode.disable();
-                this.filterEphemeral.disable();
-            } else {
-                this.filterSubNode.enable();
-                this.filterEphemeral.enable();
-            }
-            this.filter();
-        });
-        this.filterSubNode.selectedChanged((obs, o, n) -> this.filter());
-        this.filterEphemeral.selectedChanged((obs, o, n) -> this.filter());
+        // // 左侧栏业务
+        // this.onlyCollect.selectedChanged((obs, o, n) -> {
+        //     if (n) {
+        //         this.filterSubNode.disable();
+        //         this.filterEphemeral.disable();
+        //     } else {
+        //         this.filterSubNode.enable();
+        //         this.filterEphemeral.enable();
+        //     }
+        //     this.filter();
+        // });
+        // this.filterSubNode.selectedChanged((obs, o, n) -> this.filter());
+        // this.filterEphemeral.selectedChanged((obs, o, n) -> this.filter());
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
         // zk树变化事件

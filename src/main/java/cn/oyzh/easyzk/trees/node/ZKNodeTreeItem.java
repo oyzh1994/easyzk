@@ -1109,11 +1109,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void destroy() {
-        for (TreeItem<?> child : super.getRealChildren()) {
-            if (child instanceof Destroyable destroyable) {
-                destroyable.destroy();
-            }
-        }
         if (this.treeEventEventHandler != null) {
             this.removeEventHandler(treeNotificationEvent(), this.treeEventEventHandler);
             this.treeEventEventHandler = null;

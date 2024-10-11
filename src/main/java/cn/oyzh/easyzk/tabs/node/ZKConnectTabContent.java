@@ -90,6 +90,18 @@ public class ZKConnectTabContent extends DynamicTabController {
     private ZKNodeTreeView treeView;
 
     /**
+     * 节点排序(正序)
+     */
+    @FXML
+    private SVGGlyph sortAsc;
+
+    /**
+     * 节点排序(倒序)
+     */
+    @FXML
+    private SVGGlyph sortDesc;
+
+    /**
      * 搜索类型
      */
     @FXML
@@ -897,4 +909,31 @@ public class ZKConnectTabContent extends DynamicTabController {
         this.treeView.filter();
     }
 
+    /**
+     * 对子节点排序，正序
+     */
+    @FXML
+    private void sortAsc() {
+        this.sortAsc.disappear();
+        this.sortDesc.display();
+        this.treeView.sortAsc();
+    }
+
+    /**
+     * 对子节点排序，倒序
+     */
+    @FXML
+    private void sortDesc() {
+        this.sortDesc.disappear();
+        this.sortAsc.display();
+        this.treeView.sortDesc();
+    }
+
+    /**
+     * 定位节点
+     */
+    @FXML
+    private void positionNode() {
+        this.treeView.scrollTo(this.treeView.getSelectedItem());
+    }
 }

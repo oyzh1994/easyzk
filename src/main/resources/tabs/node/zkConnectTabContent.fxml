@@ -48,7 +48,7 @@
     <FlexHBox realHeight="30" flexWidth="100%">
         <ZKNodeSearchTypeComboBox initIndex="0" realWidth="100" fx:id="searchType">
             <HBox.margin>
-                <Insets left="10" top="5"/>
+                <Insets left="5" top="5"/>
             </HBox.margin>
         </ZKNodeSearchTypeComboBox>
         <ZKNodeSearchTextField  fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30">

@@ -17,10 +17,10 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItemUtil;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -81,12 +81,21 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private FlexTabPane root;
 
+    /**
+     * 节点数
+     */
     @FXML
     private ZKNodeTreeView treeView;
 
+    /**
+     * 搜索类型
+     */
     @FXML
     private ZKNodeSearchTypeComboBox searchType;
 
+    /**
+     * 搜索组件
+     */
     @FXML
     private ZKNodeSearchTextField searchKW;
 
@@ -120,15 +129,16 @@ public class ZKConnectTabContent extends DynamicTabController {
     private Paging<ZKACL> aclPaging;
 
     /**
-     * zk树节点
+     * zk连接节点
      */
     @Getter
     private ZKConnectTreeItem treeItem;
 
+    /**
+     * 当前激活的节点
+     */
     @Getter
     private ZKNodeTreeItem activeItem;
-
-    private ZKClient client;
 
     /**
      * 右侧acl分页组件
@@ -288,25 +298,32 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     public void init(ZKConnectTreeItem item) {
         this.treeItem = item;
-        this.client = item.client();
-        // 获取根节点
-        ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
-        if (rootNode != null) {
-            // 生成根节点
-            ZKNodeTreeItem rootItem = ZKNodeTreeItemUtil.of(rootNode, this.treeView, this.client);
-            // 设置根节点
-            this.treeView.setRoot(rootItem);
-            // 加载节点
-            if (this.setting.isLoadFirst()) {
-                rootItem.loadChild();
-            } else if (this.setting.isLoadAll()) {
-                rootItem.loadChildAll();
+        this.treeView.disable();
+        // 异步执行
+        ThreadUtil.start(() -> {
+            try {
+                // 获取根节点
+                ZKNode rootNode = ZKNodeUtil.getNode(item.client(), "/");
+                if (rootNode != null) {
+                    // 生成根节点
+                    ZKNodeTreeItem rootItem = ZKNodeTreeItemUtil.of(rootNode, this.treeView, item.client());
+                    // 设置根节点
+                    this.treeView.setRoot(rootItem);
+                    // 加载节点
+                    if (this.setting.isLoadFirst()) {
+                        rootItem.loadChild();
+                    } else if (this.setting.isLoadAll()) {
+                        rootItem.loadChildAll();
+                    }
+                    // 监听选中变化
+                    this.treeView.selectItemChanged(treeItem -> this.initItem());
+                } else {
+                    MessageBox.warn(item.value().getName() + I18nHelper.loadFail());
+                }
+            } finally {
+                this.treeView.enable();
             }
-            // 监听选中变化
-            this.treeView.selectItemChanged(treeItem -> this.initItem());
-        } else {
-            MessageBox.warn(item.value().getName() + I18nHelper.loadFail());
-        }
+        }, 100);
     }
 
     private void initItem() {

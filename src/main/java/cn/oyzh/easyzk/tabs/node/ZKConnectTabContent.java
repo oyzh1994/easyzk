@@ -49,7 +49,6 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -75,7 +74,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKConnectTabContent extends DynamicTabController   {
+public class ZKConnectTabContent extends DynamicTabController {
 
     /**
      * 根节点
@@ -725,7 +724,11 @@ public class ZKConnectTabContent extends DynamicTabController   {
      * 显示数据
      */
     protected void showData() {
-        this.nodeData.showData(this.activeItem.nodeData());
+        if (this.activeItem.isDataUnsaved()) {
+            this.nodeData.showData(this.activeItem.unsavedData());
+        } else {
+            this.nodeData.showData(this.activeItem.nodeData());
+        }
     }
 
     /**
@@ -738,7 +741,10 @@ public class ZKConnectTabContent extends DynamicTabController   {
     }
 
     public void initData() {
-        this.nodeData.showData(this.activeItem.nodeData());
+        // 显示数据
+        this.showData();
+        // 遗忘历史
+        this.nodeData.forgetHistory();
         // 加载耗时处理
         FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.activeItem.loadTime() + "ms"));
     }
@@ -820,13 +826,19 @@ public class ZKConnectTabContent extends DynamicTabController   {
         this.aclViewSwitch.selectedChanged((t3, t2, t1) -> this.initAcl());
         // 切换显示监听
         this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
-        // 字符集选择事件
-        this.charset.selectedItemChanged((t3, t2, t1) -> {
-            this.activeItem.setCharset(this.charset.getCharset());
-            this.showData();
-        });
         // 节点内容搜索
         this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setSearchText(newValue));
+        // 字符集选择事件
+        this.charset.selectedItemChanged((t3, t2, t1) -> {
+            this.activeItem.charset(this.charset.getCharset());
+            this.showData();
+        });
+        // 节点内容变更
+        this.nodeData.addTextChangeListener((observable, oldValue, newValue) -> {
+            if (this.activeItem != null) {
+                this.activeItem.nodeData(newValue);
+            }
+        });
     }
 
     /**

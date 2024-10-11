@@ -43,13 +43,12 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         if (glyph != null && glyph.isWaiting()) {
             return;
         }
-        String svgUrl = this.getSVGUrl();
         // 设置图标
-        if (glyph == null || !Objects.equals(glyph.getUrl(), svgUrl)) {
-            glyph = new SVGGlyph(svgUrl, 10);
+        if (glyph == null ) {
+            glyph = new SVGGlyph("/font/file-text.svg", 10);
             glyph.disableTheme();
             this.graphic(glyph);
-            ZKEventUtil.graphicChanged(this.getItem());
+            // ZKEventUtil.graphicChanged(this.getItem());
         }
     }
 
@@ -63,7 +62,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         this.flushGraphic();
         this.flushText();
         this.flushGraphicColor();
-        this.flushNum(this.getItem().value().getNumChildren(), this.getItem().getChildren().size());
+        this.flushNum(this.getItem().getNumChildren(), this.getItem().getChildrenSize());
     }
 
     /**
@@ -82,53 +81,53 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
             if (glyph.getColor() != Color.RED) {
                 // 设置图形颜色为红色
                 glyph.setColor(Color.RED);
-                // 触发图形颜色改变事件
-                ZKEventUtil.graphicColorChanged(this.getItem());
+                // // 触发图形颜色改变事件
+                // ZKEventUtil.graphicColorChanged(this.getItem());
             }
         } else if (this.getItem().isDataUnsaved()) { // 如果节点数据未保存
             // 如果图形颜色不是橙色
             if (glyph.getColor() != Color.ORANGE) {
                 // 设置图形颜色为橙色
                 glyph.setColor(Color.ORANGE);
-                // 触发图形颜色改变事件
-                ZKEventUtil.graphicColorChanged(this.getItem());
+                // // 触发图形颜色改变事件
+                // ZKEventUtil.graphicColorChanged(this.getItem());
             }
         } else if (this.getItem().isBeChanged()) { // 如果节点已被更新
             // 如果图形颜色不是紫色
             if (glyph.getColor() != Color.PURPLE) {
                 // 设置图形颜色为紫色
                 glyph.setColor(Color.PURPLE);
-                // 触发图形颜色改变事件
-                ZKEventUtil.graphicColorChanged(this.getItem());
+                // // 触发图形颜色改变事件
+                // ZKEventUtil.graphicColorChanged(this.getItem());
             }
         } else {
             super.flushGraphicColor();
-            // 触发图形颜色改变事件
-            ZKEventUtil.graphicColorChanged(this.getItem());
+            // // 触发图形颜色改变事件
+            // ZKEventUtil.graphicColorChanged(this.getItem());
         }
     }
 
-    /**
-     * 获取图标地址
-     *
-     * @return 图标地址
-     */
-    public String getSVGUrl() {
-        if (this.isInvalid()) {
-            return null;
-        }
-        ZKNode value = this.getItem().value();
-        // 需要认证
-        if (ZKAuthUtil.isNeedAuth(value, this.getItem().client())) {
-            return "/fx-plus/font/lock.svg";
-        }
-        // 临时节点
-        if (value.isEphemeral()) {
-            return "/font/temp.svg";
-        }
-        // 其他节点
-        return "/font/file-text.svg";
-    }
+    // /**
+    //  * 获取图标地址
+    //  *
+    //  * @return 图标地址
+    //  */
+    // public String getSVGUrl() {
+    //     if (this.isInvalid()) {
+    //         return null;
+    //     }
+    //     ZKNode value = this.getItem().value();
+    //     // 需要认证
+    //     if (ZKAuthUtil.isNeedAuth(value, this.getItem().client())) {
+    //         return "/fx-plus/font/lock.svg";
+    //     }
+    //     // 临时节点
+    //     if (value.isEphemeral()) {
+    //         return "/font/temp.svg";
+    //     }
+    //     // 其他节点
+    //     return "/font/file-text.svg";
+    // }
 
     @Override
     public SVGGlyph graphic() {

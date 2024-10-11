@@ -66,6 +66,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     @Getter
     @Setter
+    @Accessors(fluent = true, chain = true)
     private Charset charset = Charset.defaultCharset();
 
     /**
@@ -127,6 +128,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     @Getter
     @Setter
+    @Accessors(fluent = true, chain = true)
     private byte[] unsavedData;
 
     /**
@@ -136,6 +138,15 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public byte[] nodeData() {
         return this.value.nodeData();
+    }
+
+    /**
+     * 设置数据
+     *
+     * @param data 数据
+     */
+    public void nodeData(String data) {
+        this.nodeData(data == null ? new byte[]{} : data.getBytes(this.charset));
     }
 
     /**
@@ -350,14 +361,14 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         }
     }
 
-    /**
-     * 获取图标地址
-     *
-     * @return 图标地址
-     */
-    public String getSVGUrl() {
-        return this.getValue().getSVGUrl();
-    }
+    // /**
+    //  * 获取图标地址
+    //  *
+    //  * @return 图标地址
+    //  */
+    // public String getSVGUrl() {
+    //     return this.getValue().getSVGUrl();
+    // }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -1142,5 +1153,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.client = null;
         this.charset = null;
         super.destroy();
+    }
+
+    public Integer getNumChildren() {
+        return this.value.getNumChildren();
     }
 }

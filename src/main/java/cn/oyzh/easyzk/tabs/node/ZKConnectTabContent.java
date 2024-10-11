@@ -22,6 +22,7 @@ import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
@@ -64,6 +65,7 @@ import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -724,11 +726,14 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 显示数据
      */
     protected void showData() {
+        byte[] bytes;
         if (this.activeItem.isDataUnsaved()) {
-            this.nodeData.showData(this.activeItem.unsavedData());
+            bytes = this.activeItem.unsavedData();
         } else {
-            this.nodeData.showData(this.activeItem.nodeData());
+            bytes = this.activeItem.nodeData();
         }
+        bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
+        this.nodeData.showData(bytes);
     }
 
     /**
@@ -830,7 +835,7 @@ public class ZKConnectTabContent extends DynamicTabController {
         this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setSearchText(newValue));
         // 字符集选择事件
         this.charset.selectedItemChanged((t3, t2, t1) -> {
-            this.activeItem.charset(this.charset.getCharset());
+            // this.activeItem.charset(this.charset.getCharset());
             this.showData();
         });
         // 节点内容变更

@@ -442,7 +442,7 @@
                                     <Insets right="5"/>
                                 </HBox.margin>
                             </NumberTextField>
-                            <SaveButton onAction="#saveQuota">
+                            <SaveButton onAction="#saveQuota" realHeight="24">
                                 <HBox.margin>
                                     <Insets right="5"/>
                                 </HBox.margin>
@@ -465,7 +465,7 @@
                                     <Insets right="5"/>
                                 </HBox.margin>
                             </NumberTextField>
-                            <SaveButton onAction="#saveQuota">
+                            <SaveButton onAction="#saveQuota" realHeight="24">
                                 <HBox.margin>
                                     <Insets right="5"/>
                                 </HBox.margin>

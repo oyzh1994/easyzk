@@ -79,7 +79,7 @@
             </FXCheckBox>
         </FlexFlowPane>
     </FlexHBox>
-    <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digest1ACL">
+    <FlexVBox flexWidth="100%" managed="false" realHeight="75" visible="false" fx:id="digest1ACL">
         <FlexHBox realHeight="50" flexWidth="100%">
             <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
                 <HBox.margin>
@@ -104,12 +104,12 @@
                 </HBox.margin>
             </FlexCheckBox>
         </FlexHBox>
-        <FlexHBox flexWidth="100%" realHeight="15">
+        <FlexHBox flexWidth="100%" realHeight="25">
             <VBox.margin>
-                <Insets left="95"/>
+                <Insets left="110"/>
             </VBox.margin>
-            <FXLabel fx:id="digestText"/>
-            <CopyButton fx:id="copyDigestText" visible="false" onMousePrimaryClicked="#copyDigestText">
+            <FXLabel fx:id="digestText" realHeight="25"/>
+            <CopyButton fx:id="copyDigestText" realHeight="25" visible="false" onMousePrimaryClicked="#copyDigestText">
                 <HBox.margin>
                     <Insets left="15"/>
                 </HBox.margin>

@@ -18,6 +18,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.StatsTrack;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -145,6 +146,26 @@ public class ZKNodeUtil {
         long end = System.currentTimeMillis();
         long loadTime = end - start;
         node.loadTime((short) loadTime);
+    }
+
+    /**
+     * 刷新节点权限
+     *
+     * @param client zk客户端
+     * @param node   zk节点
+     */
+    public void refreshAcl(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+        node.acl(client.getACL(node.nodePath()));
+    }
+
+    /**
+     * 刷新节点配额
+     *
+     * @param client zk客户端
+     * @param node   zk节点
+     */
+    public void refreshQuota(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+        node.quota(client.listQuota(node.nodePath()));
     }
 
     /**

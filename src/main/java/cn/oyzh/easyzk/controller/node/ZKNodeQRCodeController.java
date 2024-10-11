@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.qrcode.QRCodeUtil;
+import cn.oyzh.fx.common.util.ResourceUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -17,6 +18,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 
 /**
@@ -50,13 +52,7 @@ public class ZKNodeQRCodeController extends StageController {
      * 初始化二维码
      */
     private void initQRCode() {
-        // ByteArrayInputStream bais = null;
         try {
-            JulLog.info("read icon begin.");
-            // icon图片
-            // String iconUrl = ResourceUtil.getResource(ZKConst.ICON_PATH);
-            // var icon = ImageIO.read(iconUrl);
-            JulLog.info("read icon finish.");
             ZKNode zkNode = this.getWindowProp("zkNode");
             String nodeData = this.getWindowProp("nodeData");
             StringBuilder builder = new StringBuilder();
@@ -64,36 +60,19 @@ public class ZKNodeQRCodeController extends StageController {
                     .append(zkNode.decodeNodePath()).append("\n")
                     .append(I18nHelper.nodeData()).append(": ")
                     .append(nodeData);
-//                    .append(nodeData).append("\n")
-//                    .append(I18nHelper.nodeType()).append(": ")
-//                    .append(zkNode.ephemeral() ? I18nResourceBundle.i18nString("base.ephemeralNode") : I18nResourceBundle.i18nString("base.persistentNode"));
-//            if (zkNode.stat() != null) {
-//                builder.append("\n")
-//                        .append(I18nHelper.createTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getCtime())).append("\n")
-//                        .append(I18nHelper.updateTime()).append(": ").append(Const.DATE_FORMAT.format(zkNode.stat().getMtime())).append("\n");
-//            }
             JulLog.info("generate qrcode begin.");
             int codeW = (int) this.qrcode.getFitWidth();
             int codeH = (int) this.qrcode.getFitHeight();
-            // QrConfig config = new QrConfig((int) this.qrcode.getFitWidth(), (int) this.qrcode.getFitHeight());
-            // config.setImg(icon);
-            // byte[] bytes = QrCodeUtil.generatePng(builder.toString(), config);
-            // bais = new ByteArrayInputStream(bytes);
             BufferedImage source = QRCodeUtil.createImage(builder.toString(), "utf-8", codeW, codeH);
-            QRCodeUtil.insertImage(source, ZKConst.ICON_PATH, 60, 60, true);
+            String filePath = ResourceUtil.getResource(ZKConst.ICON_PATH).getFile();
+            File iconFile = new File(filePath);
+            QRCodeUtil.insertImage(source, iconFile, 60, 60, true);
             this.qrcode.setImage(FXUtil.toImage(source));
-            // JulLog.info("generate qrcode finish size:{}", bais.available());
         } catch (Exception ex) {
             this.closeWindow();
             ex.printStackTrace();
             JulLog.warn("initQRCode error, ex:{}", ex.getMessage());
-            if (ex.getMessage().contains("Data too big")) {
-                MessageBox.warn(I18nHelper.dataTooLarge());
-            } else {
-                MessageBox.exception(ex, I18nHelper.operationFail());
-            }
-        } finally {
-            // IOUtil.close(bais);
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 

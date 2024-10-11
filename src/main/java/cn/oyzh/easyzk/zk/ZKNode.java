@@ -47,7 +47,6 @@ public class ZKNode implements Comparable<ZKNode> {
      * acl权限属性
      */
     @Getter
-    @Setter
     private List<ZKACL> acl;
 
     /**

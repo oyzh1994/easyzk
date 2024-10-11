@@ -42,7 +42,6 @@ import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -108,14 +107,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     }
 
     /**
-     * 清除数据状态
-     */
-    public void clearStatus() {
-        this.nodeStatus = 0;
-        this.flushValue();
-    }
-
-    /**
      * 数据属性
      */
     @Getter
@@ -143,9 +134,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     }
 
     /**
-     * 清除数据
+     * 清理
      */
-    public void clearData() {
+    public void clear() {
+        this.nodeStatus = 0;
         this.unsavedData = null;
         this.flushValue();
     }
@@ -649,7 +641,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void refreshNode() {
         ZKNodeUtil.refreshNode(this.client(), this.value);
-        this.clearStatus();
+        this.clear();
     }
 
     /**
@@ -658,10 +650,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void refreshData() throws Exception {
         JulLog.debug("refreshData.");
         ZKNodeUtil.refreshData(this.client(), this.value);
-        // 清空未保存的数据
-        this.clearData();
-        // 清空修改数据
-        this.clearStatus();
+        this.clear();
     }
 
     /**
@@ -669,23 +658,22 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void refreshACL() throws Exception {
         JulLog.debug("refreshACL.");
-        this.value.acl(this.client().getACL(this.nodePath()));
-        // 刷新图标
-        this.flushGraphic();
+        ZKNodeUtil.refreshAcl(this.client(), this.value);
     }
 
     /**
      * 刷新zk节点配额
      */
-    public void reloadQuota() throws Exception {
-        StatsTrack track = this.client().listQuota(this.nodePath());
-        this.value.quota(track);
+    public void refreshQuota() throws Exception {
+        JulLog.debug("refreshQuota.");
+        ZKNodeUtil.refreshQuota(this.client(), this.value);
     }
 
     /**
      * 刷新zk节点状态
      */
     public void refreshStat() throws Exception {
+        JulLog.debug("refreshStat.");
         ZKNodeUtil.refreshStat(this.client(), this.value);
     }
 
@@ -695,29 +683,23 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 结果
      */
     public boolean saveData() {
-        if (this.isDataUnsaved()) {
-            try {
-                byte[] data = this.unsavedData;
+        try {
+            byte[] data = this.unsavedData;
+            // 更新数据
+            Stat stat = this.client().setData(this.nodePath(), data);
+            if (stat != null) {
                 // 更新数据
-                Stat stat = this.client().setData(this.nodePath(), data);
-                if (stat != null) {
-                    // 更新数据
-                    this.value.stat(stat);
-                    this.value.nodeData(data);
-                    // 清理属性
-                    this.clearStatus();
-                    this.clearData();
-                    return true;
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
+                this.value.stat(stat);
+                this.value.nodeData(data);
+                this.clear();
+                return true;
             }
-            return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
-        return true;
+        return false;
     }
-
 
     @Override
     public void reloadChild() {
@@ -965,6 +947,14 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public boolean isEphemeral() {
         return this.value.isEphemeral();
     }
+    /**
+     * 是否临时节点
+     *
+     * @return 结果
+     */
+    public boolean isRoot() {
+        return this.value.isRoot();
+    }
 
     /**
      * acl是否为空
@@ -1021,12 +1011,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      *
      * @return 配额
      */
-    public StatsTrack quota() {
+    public StatsTrack quota() throws Exception {
         if (this.value.quota() == null) {
-            try {
-                this.reloadQuota();
-            } catch (Exception ignored) {
-            }
+            this.refreshQuota();
         }
         return this.value.quota();
     }
@@ -1113,7 +1100,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void saveDataHistory() {
         ZKDataHistory history = new ZKDataHistory();
-        history.setData(this.nodeData());
+        history.setData(this.unsavedData);
         history.setPath(this.nodePath());
         history.setInfoId(this.info().getId());
         ZKDataHistoryStore2.INSTANCE.replace(history, this.client());

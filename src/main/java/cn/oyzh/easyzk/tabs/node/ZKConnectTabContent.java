@@ -47,7 +47,6 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
-import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -279,44 +278,17 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param treeItem 当前节点
      */
     private void initItem(TreeItem<?> treeItem) {
-        this.activeItem = (ZKNodeTreeItem) treeItem;
-        this.flushTab();
-        if (this.activeItem != null) {
-            this.initData();
-            this.initAcl();
-            this.initStat();
-            this.initQuota();
-        }
-    }
-
-    /**
-     * 获取节点数据组件
-     *
-     * @return 节点数据组件
-     */
-    public RichDataTextAreaPane getDataNode() {
-        return this.nodeData;
-    }
-
-    /**
-     * 选中数据tab
-     */
-    public void selectDataTab() {
-        this.root.select(0);
-    }
-
-    /**
-     * 重新载入
-     */
-    public void reload() {
-        if (this.root.getSelectedIndex() == 0) {
-            this.reloadData();
-        } else if (this.root.getSelectedIndex() == 1) {
-            this.reloadStat();
-        } else if (this.root.getSelectedIndex() == 2) {
-            this.reloadACL();
-        } else if (this.root.getSelectedIndex() == 3) {
-            this.reloadQuota();
+        try {
+            this.activeItem = (ZKNodeTreeItem) treeItem;
+            this.flushTab();
+            if (this.activeItem != null) {
+                this.initData();
+                this.initAcl();
+                this.initStat();
+                this.initQuota();
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 
@@ -340,8 +312,8 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void toAddACL() {
         StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class, this.window());
-        fxView.setProp("zkItem", this.treeItem);
-        fxView.setProp("zkClient", this.treeItem.client());
+        fxView.setProp("zkItem", this.activeItem);
+        fxView.setProp("zkClient", this.activeItem.client());
         fxView.display();
     }
 
@@ -351,11 +323,9 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void reloadQuota() {
         try {
-            this.activeItem.reloadQuota();
+            this.activeItem.refreshQuota();
             this.initQuota();
-        } catch (KeeperException.NoNodeException ignore) {
         } catch (Exception ex) {
-            ex.printStackTrace();
             MessageBox.exception(ex);
         }
     }
@@ -616,6 +586,7 @@ public class ZKConnectTabContent extends DynamicTabController {
         if (this.activeItem.isDataUnsaved()) {
             // 保存数据历史
             this.activeItem.saveDataHistory();
+            // 保存数据
             RenderService.submit(this.activeItem::saveData);
         }
     }
@@ -783,18 +754,22 @@ public class ZKConnectTabContent extends DynamicTabController {
     /**
      * 初始化配额
      */
-    public void initQuota() {
+    public void initQuota() throws Exception {
         if (this.treeItem == null) {
             return;
         }
-        this.quotaTab.getContent().setDisable(this.activeItem.value().isRoot());
-        StatsTrack quota = this.activeItem.quota();
-        if (quota != null) {
-            this.quotaNum.setValue(quota.getCount());
-            this.quotaBytes.setValue(quota.getBytes());
+        if (this.activeItem.isRoot()) {
+            this.quotaTab.getContent().setDisable(true);
         } else {
-            this.quotaNum.setValue(-1);
-            this.quotaBytes.setValue(-1);
+            try {
+                this.quotaTab.getContent().setDisable(false);
+                StatsTrack quota = this.activeItem.quota();
+                this.quotaNum.setValue(quota.getCount());
+                this.quotaBytes.setValue(quota.getBytes());
+            } catch (KeeperException.NoNodeException ignore) {
+                this.quotaNum.setValue(-1);
+                this.quotaBytes.setValue(-1);
+            }
         }
     }
 

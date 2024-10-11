@@ -102,11 +102,6 @@ public class ZKConnectTab extends DynamicTab {
         }
     }
 
-    @Override
-    public void reload() {
-        this.controller().reload();
-    }
-
     /**
      * 获取zk信息
      *

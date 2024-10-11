@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import cn.oyzh.easyzk.fx.ZKACLVBox?>
 <?import cn.oyzh.easyzk.fx.ZKFormatComboBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.ClearButton?>
 <?import cn.oyzh.fx.plus.controls.button.SaveButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
-<?import cn.oyzh.fx.rich.richtextfx.control.FlexVirtualizedScrollPane?>
 <?import cn.oyzh.fx.plus.controls.svg.AddSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CopySVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.EditSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.HistorySVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.LockSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.QRCodeSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
@@ -32,19 +33,13 @@
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.SuccessLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.svg.QRCodeSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.HistorySVGGlyph?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
-<?import cn.oyzh.easyzk.tabs.node.ZKNodeTab?>
-<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeItemValue?>
-<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
-
-
 <FlexTabPane styleClass="root" fx:id="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"

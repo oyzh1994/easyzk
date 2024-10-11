@@ -51,6 +51,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -235,7 +236,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     private final ChangeListener<String> textListener = (observable, oldValue, newValue) -> {
         if (this.treeItem != null) {
-            this.nodeItem().data(newValue);
+            this.activeItem.data(newValue);
         }
     };
 
@@ -316,7 +317,7 @@ public class ZKConnectTabContent extends DynamicTabController {
                         rootItem.loadChildAll();
                     }
                     // 监听选中变化
-                    this.treeView.selectItemChanged(treeItem -> this.initItem());
+                    this.treeView.selectItemChanged(this::initItem);
                 } else {
                     MessageBox.warn(item.value().getName() + I18nHelper.loadFail());
                 }
@@ -326,16 +327,20 @@ public class ZKConnectTabContent extends DynamicTabController {
         }, 100);
     }
 
-    private void initItem() {
-        this.activeItem = (ZKNodeTreeItem) this.treeView.getSelectedItem();
-        this.getTab().flush();
-        if (this.activeItem == null) {
-            return;
+    /**
+     * 初始化节点
+     *
+     * @param treeItem 当前节点
+     */
+    private void initItem(TreeItem<?> treeItem) {
+        this.activeItem = (ZKNodeTreeItem) treeItem;
+        this.flushTab();
+        if (this.activeItem != null) {
+            this.initData();
+            this.initAcl();
+            this.initStat();
+            this.initQuota();
         }
-        this.initData();
-        this.initAcl();
-        this.initQuota();
-        this.initStat();
     }
 
     /**
@@ -375,7 +380,8 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     public void reloadACL() {
         try {
-            this.nodeItem().refreshACL();
+            this.activeItem.refreshACL();
+            this.initAcl();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -393,18 +399,14 @@ public class ZKConnectTabContent extends DynamicTabController {
         fxView.display();
     }
 
-
-    private ZKNodeTreeItem nodeItem() {
-        return (ZKNodeTreeItem) this.treeView.getSelectedItem();
-    }
-
     /**
      * 重新载入配额
      */
     @FXML
     private void reloadQuota() {
         try {
-            this.nodeItem().reloadQuota();
+            this.activeItem.reloadQuota();
+            this.initQuota();
         } catch (KeeperException.NoNodeException ignore) {
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -424,7 +426,7 @@ public class ZKConnectTabContent extends DynamicTabController {
             String builder = acl.idFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.idFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
                     acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
                     acl.permsFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.permsFriend().getValue(this.aclViewSwitch.isSelected());
-            ClipboardUtil.setStringAndTip(builder, "权限信息");
+            ClipboardUtil.setStringAndTip(builder);
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex, I18nHelper.operationException());
@@ -462,12 +464,12 @@ public class ZKConnectTabContent extends DynamicTabController {
         SVGGlyph glyph = (SVGGlyph) event.getTarget();
         ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
         ZKACL acl = aclVBox.acl();
-        if (this.nodeItem().acl().size() == 1) {
+        if (this.activeItem.acl().size() == 1) {
             MessageBox.warn(this.i18nString("zk.aclTip1"));
             return;
         }
         try {
-            Stat stat = this.nodeItem().deleteACL(acl);
+            Stat stat = this.activeItem.deleteACL(acl);
             if (stat != null) {
                 this.reloadACL();
                 MessageBox.okToast(I18nHelper.operationSuccess());
@@ -571,7 +573,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void copyStat() {
-        List<FriendlyInfo<Stat>> statInfos = this.nodeItem().statInfos();
+        List<FriendlyInfo<Stat>> statInfos = this.activeItem.statInfos();
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < statInfos.size(); i++) {
             FriendlyInfo<Stat> statInfo = statInfos.get(i);
@@ -591,7 +593,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void reloadStat() {
         try {
-            this.nodeItem().refreshStat();
+            this.activeItem.refreshStat();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -603,7 +605,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void copyNode() {
-        String data = this.nodeItem().decodeNodePath() + " " + this.nodeData.getTextTrim();
+        String data = this.activeItem.decodeNodePath() + " " + this.nodeData.getTextTrim();
         ClipboardUtil.setStringAndTip(data, "节点");
     }
 
@@ -612,7 +614,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void copyNodePath() {
-        ClipboardUtil.setStringAndTip(this.nodeItem().decodeNodePath(), "节点路径");
+        ClipboardUtil.setStringAndTip(this.activeItem.decodeNodePath(), "节点路径");
     }
 
     /**
@@ -621,12 +623,12 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void reloadData() {
         // 放弃保存
-        if (this.nodeItem().dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+        if (this.activeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
         // 刷新数据
         try {
-            this.nodeItem().refreshData();
+            this.activeItem.refreshData();
             // 数据变更
             this.showData();
         } catch (Exception ex) {
@@ -640,7 +642,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void collect() {
-        this.nodeItem().collect();
+        this.activeItem.collect();
         this.collect.disappear();
         this.unCollect.display();
     }
@@ -650,7 +652,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void unCollect() {
-        this.nodeItem().unCollect();
+        this.activeItem.unCollect();
         this.collect.display();
         this.unCollect.disappear();
     }
@@ -660,15 +662,15 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void saveNodeData() {
-        if (this.nodeItem().isDataTooLong()) {
+        if (this.activeItem.isDataTooLong()) {
             MessageBox.warn(I18nHelper.dataTooLarge());
             return;
         }
         // 保存数据
-        if (this.nodeItem().dataUnsaved()) {
+        if (this.activeItem.dataUnsaved()) {
             // 保存数据历史
-            this.nodeItem().saveDataHistory();
-            RenderService.submit(this.nodeItem()::saveData);
+            this.activeItem.saveDataHistory();
+            RenderService.submit(this.activeItem::saveData);
         }
     }
 
@@ -728,7 +730,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void authNode() {
-        this.nodeItem().authNode();
+        this.activeItem.authNode();
     }
 
     /**
@@ -750,14 +752,14 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void showHistory() {
-        ZKEventUtil.historyShow(this.nodeItem());
+        ZKEventUtil.historyShow(this.activeItem);
     }
 
     /**
      * 显示数据
      */
     protected void showData() {
-        this.nodeData.showData(this.nodeItem().data());
+        this.nodeData.showData(this.activeItem.data());
     }
 
     /**
@@ -766,11 +768,13 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param dataType 数据类型
      */
     protected void showData(RichDataType dataType) {
-        this.nodeData.showData(dataType, this.nodeItem().data());
+        this.nodeData.showData(dataType, this.activeItem.data());
     }
 
     public void initData() {
-        this.nodeData.showData(this.nodeItem().data());
+        this.nodeData.showData(this.activeItem.data());
+        // 加载耗时处理
+        FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.activeItem.loadTime() + "ms"));
     }
 
     /**
@@ -780,7 +784,7 @@ public class ZKConnectTabContent extends DynamicTabController {
         if (this.treeItem == null) {
             return;
         }
-        List<FriendlyInfo<Stat>> statInfos = this.nodeItem().statInfos();
+        List<FriendlyInfo<Stat>> statInfos = this.activeItem.statInfos();
         // 遍历属性
         for (int i = 0; i < statInfos.size(); i++) {
             FriendlyInfo<Stat> statInfo = statInfos.get(i);
@@ -803,11 +807,11 @@ public class ZKConnectTabContent extends DynamicTabController {
         if (this.treeItem == null) {
             return;
         }
-        if (this.nodeItem().aclEmpty()) {
+        if (this.activeItem.aclEmpty()) {
             this.aclViewSwitch.disable();
         } else {
             this.aclViewSwitch.disable();
-            List<ZKACL> aclList = this.nodeItem().acl();
+            List<ZKACL> aclList = this.activeItem.acl();
             // 获取分页控件
             this.aclPaging = new Paging<>(aclList, 5);
             // 渲染首页收据
@@ -823,8 +827,8 @@ public class ZKConnectTabContent extends DynamicTabController {
         if (this.treeItem == null) {
             return;
         }
-        this.quotaTab.getContent().setDisable(this.nodeItem().value().rootNode());
-        StatsTrack quota = this.nodeItem().quota();
+        this.quotaTab.getContent().setDisable(this.activeItem.value().rootNode());
+        StatsTrack quota = this.activeItem.quota();
         if (quota != null) {
             this.quotaNum.setValue(quota.getCount());
             this.quotaBytes.setValue(quota.getBytes());
@@ -866,7 +870,7 @@ public class ZKConnectTabContent extends DynamicTabController {
         this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
         // 字符集选择事件
         this.charset.selectedItemChanged((t3, t2, t1) -> {
-            this.nodeItem().setCharset(this.charset.getCharset());
+            this.activeItem.setCharset(this.charset.getCharset());
             this.showData();
         });
         // 节点内容搜索
@@ -888,7 +892,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void saveQuota() {
         try {
-            this.nodeItem().saveQuota(this.quotaBytes.getValue(), this.quotaNum.getValue().intValue());
+            this.activeItem.saveQuota(this.quotaBytes.getValue(), this.quotaNum.getValue().intValue());
             MessageBox.info(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
@@ -901,7 +905,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void clearQuotaNum() {
         try {
-            this.nodeItem().clearQuotaNum();
+            this.activeItem.clearQuotaNum();
             this.quotaNum.setValue(-1);
             MessageBox.info(I18nHelper.operationSuccess());
         } catch (Exception ex) {
@@ -915,7 +919,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void clearQuotaBytes() {
         try {
-            this.nodeItem().clearQuotaBytes();
+            this.activeItem.clearQuotaBytes();
             this.quotaBytes.setValue(-1);
             MessageBox.info(I18nHelper.operationSuccess());
         } catch (Exception ex) {
@@ -937,7 +941,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     public void restoreData(byte[] data) {
         // 保存数据历史
-        this.nodeItem().data(data);
+        this.activeItem.data(data);
         this.showData();
     }
 

@@ -8,6 +8,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lombok.Getter;
@@ -44,12 +46,13 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         } else {
             this.popup = new ZKNodeSearchPopup();
             this.popup.show(this.getSkinnable());
-            this.popup.setOnIndexSelected(this::onModeSelected);
+            this.popup.setOnIndexSelected(this::onIndexSelected);
         }
     }
 
-    public void onModeSelected(int mode) {
+    public void onIndexSelected(int index) {
         this.closePopup();
+        this.getSkinnable().setPromptText(this.popup.getItems().get(index));
     }
 
     /**
@@ -74,6 +77,16 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         this.getChildren().add(this.button);
         // 鼠标监听
         this.getSkinnable().addEventHandler(MouseEvent.MOUSE_PRESSED, event -> this.closePopup());
+        // 按键监听
+        this.getSkinnable().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                this.onSearch(this.getText());
+            }
+        });
+    }
+
+    public void onSearch(String text) {
+        this.closePopup();
     }
 
     @Override
@@ -107,6 +120,9 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
     }
 
     public int getSelectedIndex() {
+        if (this.popup == null) {
+            return 0;
+        }
         return this.popup.getSelectedIndex();
     }
 }

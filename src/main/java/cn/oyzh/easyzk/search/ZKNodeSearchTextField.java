@@ -20,6 +20,10 @@ public class ZKNodeSearchTextField extends LimitTextField {
         this.setPromptText(I18nHelper.contains());
     }
 
+    @Setter
+    @Getter
+    private EventHandler<AnonymousEvent<Object>> onSearch;
+
     /**
      * 当前皮肤
      *
@@ -31,7 +35,15 @@ public class ZKNodeSearchTextField extends LimitTextField {
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new ZKNodeSearchTextFieldSkin(this) ;
+        return new ZKNodeSearchTextFieldSkin(this) {
+            @Override
+            public void onSearch(String text) {
+                super.onSearch(text);
+                if (onSearch != null) {
+                    onSearch.handle(AnonymousEvent.of(text));
+                }
+            }
+        };
     }
 
     public int getSelectedIndex() {

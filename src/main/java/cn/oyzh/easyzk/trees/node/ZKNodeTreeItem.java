@@ -62,14 +62,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     protected ZKNode value;
 
     /**
-     * 字符集
-     */
-    @Getter
-    @Setter
-    @Accessors(fluent = true, chain = true)
-    private Charset charset = Charset.defaultCharset();
-
-    /**
      * 是否已变更
      */
     @Getter
@@ -138,15 +130,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public byte[] nodeData() {
         return this.value.nodeData();
-    }
-
-    /**
-     * 设置数据
-     *
-     * @param data 数据
-     */
-    public void nodeData(String data) {
-        this.nodeData(data == null ? new byte[]{} : data.getBytes(this.charset));
     }
 
     /**
@@ -1151,7 +1134,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.info = null;
         this.value = null;
         this.client = null;
-        this.charset = null;
         super.destroy();
     }
 

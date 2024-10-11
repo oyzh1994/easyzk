@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKACLVBox;
-import cn.oyzh.easyzk.fx.ZKFormatComboBox;
+import cn.oyzh.easyzk.fx.ZKDataFormatComboBox;
 import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
 import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
@@ -213,7 +213,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 格式
      */
     @FXML
-    protected ZKFormatComboBox format;
+    protected ZKDataFormatComboBox dataFormat;
 
     /**
      * 配额组件tab
@@ -237,27 +237,6 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 配置储存对象
      */
     private final ZKSetting setting = ZKSettingStore2.SETTING;
-
-    /**
-     * 格式监听器
-     */
-    private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
-        if (this.format.isStringFormat()) {
-            this.showData(RichDataType.STRING);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isJsonFormat()) {
-            this.showData(RichDataType.JSON);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isBinaryFormat()) {
-            this.showData(RichDataType.BINARY);
-            this.nodeData.setEditable(false);
-        } else if (this.format.isHexFormat()) {
-            this.showData(RichDataType.HEX);
-            this.nodeData.setEditable(false);
-        } else if (this.format.isRawFormat()) {
-            this.showData(RichDataType.RAW);
-        }
-    };
 
     /**
      * 初始化
@@ -742,7 +721,11 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param dataType 数据类型
      */
     protected void showData(RichDataType dataType) {
-        this.nodeData.showData(dataType, this.activeItem.nodeData());
+        if (this.activeItem.isDataUnsaved()) {
+            this.nodeData.showData(dataType, this.activeItem.unsavedData());
+        } else {
+            this.nodeData.showData(dataType, this.activeItem.nodeData());
+        }
     }
 
     public void initData() {
@@ -821,27 +804,41 @@ public class ZKConnectTabContent extends DynamicTabController {
         // 收藏处理
         this.collect.managedProperty().bind(this.collect.visibleProperty());
         this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
-        // 格式监听
-        this.format.selectedItemChanged(this.formatListener);
         // undo监听
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
         // redo监听
         this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
+        // 字符集选择事件
+        this.charset.selectedItemChanged((t3, t2, t1) -> this.showData());
         // 切换显示监听
         this.aclViewSwitch.selectedChanged((t3, t2, t1) -> this.initAcl());
         // 切换显示监听
         this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
         // 节点内容搜索
         this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setSearchText(newValue));
-        // 字符集选择事件
-        this.charset.selectedItemChanged((t3, t2, t1) -> {
-            // this.activeItem.charset(this.charset.getCharset());
-            this.showData();
+        // 格式监听
+        this.dataFormat.selectedItemChanged((t1, t2, t3) -> {
+            if (this.dataFormat.isStringFormat()) {
+                this.showData(RichDataType.STRING);
+                this.nodeData.setEditable(true);
+            } else if (this.dataFormat.isJsonFormat()) {
+                this.showData(RichDataType.JSON);
+                this.nodeData.setEditable(true);
+            } else if (this.dataFormat.isBinaryFormat()) {
+                this.showData(RichDataType.BINARY);
+                this.nodeData.setEditable(false);
+            } else if (this.dataFormat.isHexFormat()) {
+                this.showData(RichDataType.HEX);
+                this.nodeData.setEditable(false);
+            } else if (this.dataFormat.isRawFormat()) {
+                this.showData(RichDataType.RAW);
+            }
         });
         // 节点内容变更
         this.nodeData.addTextChangeListener((observable, oldValue, newValue) -> {
             if (this.activeItem != null) {
-                this.activeItem.nodeData(newValue);
+                byte[] bytes = newValue == null ? new byte[]{} : newValue.getBytes(this.charset.getCharset());
+                this.activeItem.nodeData(bytes);
             }
         });
     }

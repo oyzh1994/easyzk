@@ -15,7 +15,7 @@ import java.util.Locale;
  * @author oyzh
  * @since 2023/9/18
  */
-public class ZKFormatComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
+public class ZKDataFormatComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
 
     {
         NodeManager.init(this);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyzk.fx.ZKACLVBox?>
+<?import cn.oyzh.easyzk.fx.ZKACLTableView?>
 <?import cn.oyzh.easyzk.fx.ZKDataFormatComboBox?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
@@ -21,18 +21,21 @@
 <?import cn.oyzh.fx.plus.controls.svg.HistorySVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.LockSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PositioningSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.QRCodeSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SearchSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SortAscSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.SortDescSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnLockSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.text.FlexText?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.SuccessLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
@@ -43,11 +46,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SortAscSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.SortDescSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.PositioningSVGGlyph?>
-<?import cn.oyzh.easyzk.fx.ZKACLTableView?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.svg.AccessControlSVGGlyph?>
 <FlexHBox xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.node.ZKConnectTabContent">
     <FlexVBox flexWidth="40%" flexHeight="100%">
@@ -250,7 +249,7 @@
         </FXTab>
         <FXTab text="%zk.acl">
             <graphic>
-                <LockSVGGlyph initCursor="DEFAULT" size="13"/>
+                <AccessControlSVGGlyph initCursor="DEFAULT" size="13"/>
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexFlowPane realHeight="32" flexWidth="100%">
@@ -266,6 +265,21 @@
                             <Insets left="5"/>
                         </FlowPane.margin>
                     </AddSVGGlyph>
+                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyACL">
+                        <FlowPane.margin>
+                            <Insets left="5"/>
+                        </FlowPane.margin>
+                    </CopySVGGlyph>
+                    <EditSVGGlyph size="16" onMousePrimaryClicked="#updateACL">
+                        <FlowPane.margin>
+                            <Insets left="5"/>
+                        </FlowPane.margin>
+                    </EditSVGGlyph>
+                    <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteACL">
+                        <FlowPane.margin>
+                            <Insets left="5"/>
+                        </FlowPane.margin>
+                    </DeleteSVGGlyph>
                     <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadACL">
                         <FlowPane.margin>
                             <Insets left="5"/>
@@ -437,7 +451,8 @@
                             <FlexTableColumn flexWidth="44%" fx:id="aclId" text="%base.identify" sortable="false"/>
                             <FlexTableColumn flexWidth="32%" fx:id="aclPerms" text="%base.perms" sortable="false"/>
                             <FlexTableColumn flexWidth="12%" fx:id="aclSchema" text="%base.schema" sortable="false"/>
-                            <FlexTableColumn flexWidth="12% - 10" fx:id="aclStatus" text="%base.status" sortable="false"/>
+                            <FlexTableColumn flexWidth="12% - 10" fx:id="aclStatus" text="%base.status"
+                                             sortable="false"/>
                         </columns>
                     </ZKACLTableView>
                 </FlexVBox>

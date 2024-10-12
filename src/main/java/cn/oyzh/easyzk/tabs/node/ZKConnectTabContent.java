@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
-import cn.oyzh.easyzk.fx.ZKACLVBox;
 import cn.oyzh.easyzk.fx.ZKDataFormatComboBox;
 import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
 import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
@@ -366,14 +365,15 @@ public class ZKConnectTabContent extends DynamicTabController {
     }
 
     /**
-     * 复制权限
+     * 复制访问控制
      */
     @FXML
-    private void copyACL(MouseEvent event) {
+    private void copyACL() {
+        ZKACL acl = this.aclTableView.getSelectedItem();
+        if (acl == null) {
+            return;
+        }
         try {
-            SVGGlyph glyph = (SVGGlyph) event.getTarget();
-            ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
-            ZKACL acl = aclVBox.acl();
             String builder = acl.idFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.idFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
                     acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
                     acl.permsFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.permsFriend().getValue(this.aclViewSwitch.isSelected());
@@ -388,11 +388,12 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 修改权限
      */
     @FXML
-    private void updateACL(MouseEvent event) {
+    private void updateACL() {
+        ZKACL acl = this.aclTableView.getSelectedItem();
+        if (acl == null) {
+            return;
+        }
         try {
-            SVGGlyph glyph = (SVGGlyph) event.getTarget();
-            ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
-            ZKACL acl = aclVBox.acl();
             StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class, this.window());
             fxView.setProp("acl", acl);
             fxView.setProp("zkItem", this.activeItem);
@@ -409,12 +410,13 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void deleteACL(MouseEvent event) {
-        if (!MessageBox.confirm(I18nHelper.deleteData())) {
+        ZKACL acl = this.aclTableView.getSelectedItem();
+        if (acl == null) {
             return;
         }
-        SVGGlyph glyph = (SVGGlyph) event.getTarget();
-        ZKACLVBox aclVBox = (ZKACLVBox) glyph.getParent().getParent();
-        ZKACL acl = aclVBox.acl();
+        if (!MessageBox.confirm(I18nHelper.deleteACL())) {
+            return;
+        }
         if (this.activeItem.acl().size() == 1) {
             MessageBox.warn(this.i18nString("zk.aclTip1"));
             return;
@@ -423,7 +425,6 @@ public class ZKConnectTabContent extends DynamicTabController {
             Stat stat = this.activeItem.deleteACL(acl);
             if (stat != null) {
                 this.reloadACL();
-                // MessageBox.okToast(I18nHelper.operationSuccess());
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -818,13 +819,11 @@ public class ZKConnectTabContent extends DynamicTabController {
             this.aclViewSwitch.disable();
             this.aclTableView.clearItems();
         } else {
-            // this.aclViewSwitch.disable();
             List<ZKACL> aclList = this.activeItem.acl();
             // 获取分页控件
             this.aclPaging = new Paging<>(aclList, 10);
             // 渲染首页数据
             this.renderACLView(0);
-            // this.aclViewSwitch.enable();
         }
     }
 

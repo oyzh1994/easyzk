@@ -3,28 +3,21 @@ package cn.oyzh.easyzk.controller;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
 import cn.oyzh.easyzk.event.ZKLeftExtendEvent;
 import cn.oyzh.easyzk.fx.ZKMsgTextArea;
-import cn.oyzh.easyzk.search.ZKSearchHandler;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
-// import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
-import cn.oyzh.easyzk.trees.ZKTreeItemFilter;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.node.ResizeEnhance;
+import cn.oyzh.fx.plus.node.ResizeHelper;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -71,7 +64,7 @@ public class ZKMainController extends ParentStageController {
     /**
      * 大小调整增强
      */
-    private ResizeEnhance resizeEnhance;
+    private ResizeHelper resizeHelper;
 
     /**
      * 节点排序(正序)
@@ -85,12 +78,6 @@ public class ZKMainController extends ParentStageController {
     @FXML
     private SVGGlyph sortDesc;
 
-    // /**
-    //  * 仅看收藏
-    //  */
-    // @FXML
-    // private FlexCheckBox onlyCollect;
-
     /**
      * zk切换面板
      */
@@ -103,41 +90,11 @@ public class ZKMainController extends ParentStageController {
     @FXML
     private ZKMsgTextArea msgArea;
 
-    // /**
-    //  * 过滤子节点
-    //  */
-    // @FXML
-    // private FlexCheckBox filterSubNode;
-    //
-    // /**
-    //  * 过滤临时节点
-    //  */
-    // @FXML
-    // private FlexCheckBox filterEphemeral;
-
     /**
      * zk历史Controller
      */
     @FXML
     private DataHistoryController dataHistoryController;
-
-    // /**
-    //  * 搜索Controller
-    //  */
-    // @FXML
-    // private SearchController searchController;
-
-    // /**
-    //  * 页面信息
-    //  */
-    // private final ZKPageInfo pageInfo = ZKPageInfoStore.PAGE_INFO;
-
-    // /**
-    //  * 页面信息储存
-    //  */
-    // private final ZKPageInfoStore pageInfoStore = ZKPageInfoStore.INSTANCE;
-
-    private final ZKSearchHandler searchHandler = new ZKSearchHandler();
 
     /**
      * 对子节点排序，正序
@@ -167,42 +124,6 @@ public class ZKMainController extends ParentStageController {
         ZKEventUtil.terminalOpen();
     }
 
-    // /**
-    //  * 执行过滤
-    //  */
-    // private void filter() {
-    //     TaskManager.startDelay("zk:tree:filter", () -> {
-    //         this.tree.disable();
-    //         try {
-    //             ZKTreeItemFilter itemFilter = this.tree.itemFilter();
-    //             itemFilter.setSearchHandler(this.searchHandler);
-    //             if (this.onlyCollect.isSelected()) {
-    //                 itemFilter.setOnlyCollect(true);
-    //                 itemFilter.setExcludeSub(false);
-    //                 itemFilter.setExcludeEphemeral(false);
-    //             } else {
-    //                 itemFilter.setOnlyCollect(false);
-    //                 itemFilter.setExcludeSub(this.filterSubNode.isSelected());
-    //                 itemFilter.setExcludeEphemeral(this.filterEphemeral.isSelected());
-    //             }
-    //             this.tree.filter();
-    //         } finally {
-    //             this.tree.enable();
-    //         }
-    //     }, 100);
-    // }
-
-    /**
-     * zk信息修改事件
-     *
-     * @param event 消息
-     */
-    private void infoUpdate(ZKInfoUpdatedEvent event) {
-        if (this.info == event.data()) {
-            this.flushViewTitle(event.data());
-        }
-    }
-
     /**
      * 刷新窗口标题
      *
@@ -219,14 +140,10 @@ public class ZKMainController extends ParentStageController {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.searchHandler.init(this.tree, this.tabPane);
-        super.setProp("searchHandler", this.searchHandler);
         super.onStageShown(event);
         EventUtil.register(this.tree);
         EventUtil.register(this.tabPane);
         EventUtil.register(this.msgArea);
-        // this.filter();
-
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
             this.resizeMainLeft(this.setting.getPageLeftWidth());
@@ -281,19 +198,6 @@ public class ZKMainController extends ParentStageController {
 
     @Override
     protected void bindListeners() {
-        // // 左侧栏业务
-        // this.onlyCollect.selectedChanged((obs, o, n) -> {
-        //     if (n) {
-        //         this.filterSubNode.disable();
-        //         this.filterEphemeral.disable();
-        //     } else {
-        //         this.filterSubNode.enable();
-        //         this.filterEphemeral.enable();
-        //     }
-        //     this.filter();
-        // });
-        // this.filterSubNode.selectedChanged((obs, o, n) -> this.filter());
-        // this.filterEphemeral.selectedChanged((obs, o, n) -> this.filter());
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
         // zk树变化事件
@@ -302,21 +206,15 @@ public class ZKMainController extends ParentStageController {
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.dragContent(), this.tree.getRoot()::dragFile);
         // 拖动改变redis树大小处理
-        this.resizeEnhance = new ResizeEnhance(this.tabPaneLeft, Cursor.DEFAULT);
-        this.resizeEnhance.minWidth(390d);
-        this.resizeEnhance.maxWidth(800d);
-        this.resizeEnhance.triggerThreshold(8d);
-        this.resizeEnhance.mouseDragged(event -> {
+        this.resizeHelper = new ResizeHelper(this.tabPaneLeft, this.tree, 240, 800, Cursor.DEFAULT);
+        this.resizeHelper.mouseDragged(event -> {
             double sceneX = event.getSceneX();
-            if (this.resizeEnhance.resizeWidthAble(sceneX)) {
+            if (this.resizeHelper.resizeWidthAble(sceneX)) {
                 // 左侧组件重新布局
                 this.resizeMainLeft(sceneX);
             }
         });
-        // 初始化拉伸事件
-        this.tree.setOnMouseMoved(this.resizeEnhance.mouseMoved());
-        this.resizeEnhance.initResizeEvent();
-
+        this.resizeHelper.initResizeEvent();
         // 搜索触发事件
         KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));
         // 刷新触发事件
@@ -331,10 +229,7 @@ public class ZKMainController extends ParentStageController {
      * @param item 节点
      */
     private void treeItemChanged(TreeItem<?> item) {
-        if (item instanceof ZKNodeTreeItem treeItem) {
-            this.flushViewTitle(treeItem.info());
-            ZKEventUtil.treeChildSelected(treeItem);
-        } else if (item instanceof ZKConnectTreeItem treeItem) {
+        if (item instanceof ZKConnectTreeItem treeItem) {
             this.flushViewTitle(treeItem.value());
         } else {
             this.flushViewTitle(null);
@@ -375,22 +270,9 @@ public class ZKMainController extends ParentStageController {
     @Override
     public List<SubStageController> getSubControllers() {
         List<SubStageController> list = new ArrayList<>();
-        // list.add(this.searchController);
         list.add(this.dataHistoryController);
         return list;
     }
-
-    // /**
-    //  * 当前活跃的zk树节点
-    //  *
-    //  * @return zk树节点
-    //  */
-    // public ZKNodeTreeItem activeItem() {
-    //     if (this.tabPane.getSelectedItem() instanceof ZKNodeTab itemTab) {
-    //         return itemTab.treeItem();
-    //     }
-    //     return null;
-    // }
 
     /**
      * 清空节点消息

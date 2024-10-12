@@ -6,7 +6,7 @@ import lombok.NonNull;
 import org.apache.zookeeper.data.ACL;
 
 /**
- * zk权限
+ * zk访问控制
  *
  * @author oyzh
  * @since 2022/6/7

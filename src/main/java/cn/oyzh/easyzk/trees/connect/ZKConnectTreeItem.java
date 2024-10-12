@@ -6,18 +6,16 @@ import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
 import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
 import cn.oyzh.easyzk.controller.node.ZKServiceController;
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore2;
-import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
-import cn.oyzh.easyzk.trees.ZKTreeView;
+import cn.oyzh.easyzk.trees.data.ZKDataTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.easyzk.trees.query.ZKQueryTreeItem;
+import cn.oyzh.easyzk.trees.terminal.ZKTerminalTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -71,16 +69,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     private boolean canceled;
 
-    /**
-     * 配置储存对象
-     */
-    private final ZKSetting setting = ZKSettingStore2.SETTING;
-
-    // /**
-    //  * zk信息储存
-    //  */
-    // private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
-
     public ZKConnectTreeItem(@NonNull ZKInfo value, @NonNull RichTreeView treeView) {
         super(treeView);
         this.value(value);
@@ -97,10 +85,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         return this.client.stateProperty();
     }
 
-    @Override
-    public ZKNodeTreeItem firstChild() {
-        return (ZKNodeTreeItem) super.firstChild();
-    }
+    // @Override
+    // public ZKNodeTreeItem firstChild() {
+    //     return (ZKNodeTreeItem) super.firstChild();
+    // }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -126,16 +114,16 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             items.add(transportData);
             items.add(server);
 
-            ZKNodeTreeItem firstChild = this.firstChild();
-            // 根节点不为空，加载全部，收缩全部，展开全部菜单启用
-            if (firstChild != null && firstChild.value().isParent()) {
-                FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
-                FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);
-                FXMenuItem collapseAll = MenuItemHelper.collapseAll("12", this::collapseAll);
-                items.add(loadAll);
-                items.add(expandAll);
-                items.add(collapseAll);
-            }
+            // ZKNodeTreeItem firstChild = this.firstChild();
+            // // 根节点不为空，加载全部，收缩全部，展开全部菜单启用
+            // if (firstChild != null && firstChild.value().isParent()) {
+            //     FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
+            //     FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);
+            //     FXMenuItem collapseAll = MenuItemHelper.collapseAll("12", this::collapseAll);
+            //     items.add(loadAll);
+            //     items.add(expandAll);
+            //     items.add(collapseAll);
+            // }
         } else {
             FXMenuItem connect = MenuItemHelper.startConnect("12", this::connect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
@@ -158,26 +146,26 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         return items;
     }
 
-    private void collapseAll() {
-        ZKNodeTreeItem firstChild = this.firstChild();
-        if (firstChild != null) {
-            firstChild.collapseAll();
-        }
-    }
-
-    private void expandAll() {
-        ZKNodeTreeItem firstChild = this.firstChild();
-        if (firstChild != null) {
-            firstChild.expandAll();
-        }
-    }
-
-    private void loadChildAll() {
-        ZKNodeTreeItem firstChild = this.firstChild();
-        if (firstChild != null) {
-            firstChild.loadChildAll();
-        }
-    }
+    // private void collapseAll() {
+    //     ZKNodeTreeItem firstChild = this.firstChild();
+    //     if (firstChild != null) {
+    //         firstChild.collapseAll();
+    //     }
+    // }
+    //
+    // private void expandAll() {
+    //     ZKNodeTreeItem firstChild = this.firstChild();
+    //     if (firstChild != null) {
+    //         firstChild.expandAll();
+    //     }
+    // }
+    //
+    // private void loadChildAll() {
+    //     ZKNodeTreeItem firstChild = this.firstChild();
+    //     if (firstChild != null) {
+    //         firstChild.loadChildAll();
+    //     }
+    // }
 
     /**
      * 导出zk节点
@@ -232,8 +220,11 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                             this.canceled = false;
                             this.closeConnect(false);
                         } else {
-                            // this.loadRootNode();
-                            ZKEventUtil.connectionOpened(this);
+                            ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
+                            ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
+                            ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
+                            this.setChild(List.of(dataItem, queryItem, terminalItem));
+                            this.extend();
                         }
                         this.flushGraphic();
                     })
@@ -243,8 +234,6 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                     .build();
             // 执行连接
             this.startWaiting(task);
-        } else {
-            ZKEventUtil.connectionOpened(this);
         }
     }
 
@@ -315,12 +304,12 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * @return 结果
      */
     private boolean hasUnsavedData() {
-        List<ZKNodeTreeItem> items = this.getAllNodeItem();
-        for (ZKNodeTreeItem item : items) {
-            if (item.isDataUnsaved()) {
-                return true;
-            }
-        }
+        // List<ZKNodeTreeItem> items = this.getAllNodeItem();
+        // for (ZKNodeTreeItem item : items) {
+        //     if (item.isDataUnsaved()) {
+        //         return true;
+        //     }
+        // }
         return false;
     }
 
@@ -465,16 +454,16 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     //     }
     // }
 
-    /**
-     * 获取全部zk子节点列表
-     *
-     * @return zk子节点列表
-     */
-    public List<ZKNodeTreeItem> getAllNodeItem() {
-        List<ZKNodeTreeItem> list = new ArrayList<>();
-        this.getAllNodeItem(this.firstChild(), list);
-        return list;
-    }
+    // /**
+    //  * 获取全部zk子节点列表
+    //  *
+    //  * @return zk子节点列表
+    //  */
+    // public List<ZKNodeTreeItem> getAllNodeItem() {
+    //     List<ZKNodeTreeItem> list = new ArrayList<>();
+    //     this.getAllNodeItem(this.firstChild(), list);
+    //     return list;
+    // }
 
     /**
      * 获取全部zk子节点列表
@@ -493,18 +482,18 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         }
     }
 
-    /**
-     * 寻找zk节点
-     *
-     * @param targetPath 目标路径
-     * @return zk节点
-     */
-    public ZKNodeTreeItem findNodeItem(@NonNull String targetPath) {
-        if (this.isConnected() && !this.isChildEmpty()) {
-            return this.findNodeItem(this.firstChild(), targetPath);
-        }
-        return null;
-    }
+    // /**
+    //  * 寻找zk节点
+    //  *
+    //  * @param targetPath 目标路径
+    //  * @return zk节点
+    //  */
+    // public ZKNodeTreeItem findNodeItem(@NonNull String targetPath) {
+    //     if (this.isConnected() && !this.isChildEmpty()) {
+    //         return this.findNodeItem(this.firstChild(), targetPath);
+    //     }
+    //     return null;
+    // }
 
     /**
      * 寻找zk节点
@@ -536,26 +525,26 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         }
         return null;
     }
-
-    @Override
-    public void sortAsc() {
-        if (super.isSortable()) {
-            ZKNodeTreeItem firstChild = this.firstChild();
-            if (firstChild != null) {
-                firstChild.sortAsc();
-            }
-        }
-    }
-
-    @Override
-    public void sortDesc() {
-        if (super.isSortable()) {
-            ZKNodeTreeItem firstChild = this.firstChild();
-            if (firstChild != null) {
-                firstChild.sortDesc();
-            }
-        }
-    }
+    //
+    // @Override
+    // public void sortAsc() {
+    //     if (super.isSortable()) {
+    //         ZKNodeTreeItem firstChild = this.firstChild();
+    //         if (firstChild != null) {
+    //             firstChild.sortAsc();
+    //         }
+    //     }
+    // }
+    //
+    // @Override
+    // public void sortDesc() {
+    //     if (super.isSortable()) {
+    //         ZKNodeTreeItem firstChild = this.firstChild();
+    //         if (firstChild != null) {
+    //             firstChild.sortDesc();
+    //         }
+    //     }
+    // }
 
     /**
      * 获取当前父节点

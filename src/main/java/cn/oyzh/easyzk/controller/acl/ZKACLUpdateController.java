@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.controller.acl;
 
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -136,7 +137,8 @@ public class ZKACLUpdateController extends StageController {
         Stat stat = this.zkClient.setACL(this.zkItem.nodePath(), aclList);
         if (stat != null) {
             this.zkItem.refreshACL();
-            MessageBox.okToast(I18nHelper.operationSuccess());
+            ZKEventUtil.aclChanged(this.zkItem);
+            // MessageBox.okToast(I18nHelper.operationSuccess());
             this.closeWindow();
         } else {
             MessageBox.warn(I18nHelper.operationFail());

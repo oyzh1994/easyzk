@@ -435,4 +435,10 @@ public class ZKEventUtil {
         event.data(tab);
         EventUtil.post(event);
     }
+
+    public static void aclChanged(ZKNodeTreeItem item) {
+        ZKAclChangedEvent event = new ZKAclChangedEvent();
+        event.data(item);
+        EventUtil.post(event);
+    }
 }

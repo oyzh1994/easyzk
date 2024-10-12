@@ -122,9 +122,10 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      * @return zk节点
      */
     public ZKNodeTreeItem findNodeItem(@NonNull String targetPath, @NonNull ZKInfo zkInfo) {
-        List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
-        Optional<ZKConnectTreeItem> itemOptional = connectTreeItems.parallelStream().filter(c -> c.value() == zkInfo).findFirst();
-        return itemOptional.map(item -> item.findNodeItem(targetPath)).orElse(null);
+        // List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
+        // Optional<ZKConnectTreeItem> itemOptional = connectTreeItems.parallelStream().filter(c -> c.value() == zkInfo).findFirst();
+        // return itemOptional.map(item -> item.findNodeItem(targetPath)).orElse(null);
+        return null;
     }
 
     /**
@@ -133,12 +134,13 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      * @return zk节点集合
      */
     public List<ZKNodeTreeItem> getAllNodeItem() {
-        List<ZKNodeTreeItem> list = new ArrayList<>();
-        List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
-        for (ZKConnectTreeItem connectTreeItem : connectTreeItems) {
-            list.addAll(connectTreeItem.getAllNodeItem());
-        }
-        return list;
+        // List<ZKNodeTreeItem> list = new ArrayList<>();
+        // List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
+        // for (ZKConnectTreeItem connectTreeItem : connectTreeItems) {
+        //     list.addAll(connectTreeItem.getAllNodeItem());
+        // }
+        // return list;
+        return null;
     }
 
     /**
@@ -349,9 +351,9 @@ public class ZKTreeView extends RichTreeView implements EventListener {
             treeItem.expandAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
             treeItem.extend();
-            if (!treeItem.isChildEmpty()) {
-                treeItem.firstChild().expandAll(); // 展开第一个子项的所有子项
-            }
+            // if (!treeItem.isChildEmpty()) {
+            //     treeItem.firstChild().expandAll(); // 展开第一个子项的所有子项
+            // }
         } else if (item instanceof ZKTreeItem<?> treeItem) {
             treeItem.extend();
         }
@@ -367,9 +369,9 @@ public class ZKTreeView extends RichTreeView implements EventListener {
             treeItem.collapseAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
             treeItem.collapse();
-            if (!treeItem.isChildEmpty()) {
-                treeItem.firstChild().collapseAll();
-            }
+            // if (!treeItem.isChildEmpty()) {
+            //     treeItem.firstChild().collapseAll();
+            // }
         } else if (item instanceof ZKTreeItem<?> treeItem) {
             treeItem.collapse();
         }

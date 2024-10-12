@@ -117,9 +117,9 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
             treeItem.expandAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
             treeItem.extend();
-            if (!treeItem.isChildEmpty()) {
-                treeItem.firstChild().expandAll(); // 展开第一个子项的所有子项
-            }
+            // if (!treeItem.isChildEmpty()) {
+            //     treeItem.firstChild().expandAll(); // 展开第一个子项的所有子项
+            // }
         } else if (item instanceof ZKTreeItem<?> treeItem) {
             treeItem.extend();
         }
@@ -135,9 +135,9 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
             treeItem.collapseAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
             treeItem.collapse();
-            if (!treeItem.isChildEmpty()) {
-                treeItem.firstChild().collapseAll();
-            }
+            // if (!treeItem.isChildEmpty()) {
+            //     treeItem.firstChild().collapseAll();
+            // }
         } else if (item instanceof ZKTreeItem<?> treeItem) {
             treeItem.collapse();
         }

@@ -53,6 +53,7 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -147,11 +148,11 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private ClearableTextField dataSearch;
 
-    /**
-     * 右侧acl组件
-     */
-    @FXML
-    private FlexVBox aclBox;
+    // /**
+    //  * 右侧acl组件
+    //  */
+    // @FXML
+    // private FlexVBox aclBox;
 
     /**
      * 分页信息
@@ -936,7 +937,7 @@ public class ZKConnectTabContent extends DynamicTabController {
         this.aclSchema.setCellValueFactory(new PropertyValueFactory<>("schemaControl"));
         this.aclStatus.setCellValueFactory(new PropertyValueFactory<>("statusControl"));
         // 设置cell工厂
-        Callback<TableColumn<String, String>, TableCell<String, String>> cellFactory = param -> TableViewUtil.lineHeightCell(16);
+        Callback<TableColumn<String, String>, TableCell<String, String>> cellFactory = param -> TableViewUtil.newCell(18, Pos.CENTER_LEFT);
         this.aclId.setCellFactory(cellFactory);
         this.aclPerms.setCellFactory(cellFactory);
         this.aclSchema.setCellFactory(cellFactory);

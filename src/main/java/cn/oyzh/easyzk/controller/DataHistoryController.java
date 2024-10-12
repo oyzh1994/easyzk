@@ -14,7 +14,7 @@ import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.table.FXTableCell;
+import cn.oyzh.fx.plus.controls.table.GraphicTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -95,7 +95,7 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     private void initTable() {
         // 操作栏初始化
-        this.action.setCellFactory((cell) -> new FXTableCell<>() {
+        this.action.setCellFactory((cell) -> new GraphicTableCell<>() {
             private HBox hBox;
 
             @Override

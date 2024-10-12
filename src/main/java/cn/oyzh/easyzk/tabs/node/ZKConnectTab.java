@@ -5,6 +5,8 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
+import cn.oyzh.fx.plus.theme.ThemeManager;
+import javafx.scene.paint.Color;
 import lombok.NonNull;
 
 /**
@@ -66,10 +68,14 @@ public class ZKConnectTab extends DynamicTab {
 
     @Override
     public void flushGraphicColor() {
+        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         if (this.activeItem() != null) {
-            SVGGlyph glyph1 = (SVGGlyph) this.getGraphic();
             SVGGlyph glyph2 = this.activeItem().graphic();
-            glyph1.setColor(glyph2.getColor());
+            glyph.setColor(glyph2.getColor());
+        } else if (ThemeManager.isDarkMode()) {
+            glyph.setColor(Color.WHITE);
+        } else {
+            glyph.setColor(Color.BLACK);
         }
     }
 

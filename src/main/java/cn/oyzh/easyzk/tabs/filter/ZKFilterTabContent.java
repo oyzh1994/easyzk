@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
-import cn.oyzh.fx.plus.controls.table.FXTableCell;
+import cn.oyzh.fx.plus.controls.table.GraphicTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
@@ -118,7 +118,7 @@ public class ZKFilterTabContent extends DynamicTabController {
      */
     private void initTable() {
         // 操作栏初始化
-        this.action.setCellFactory((cell) -> new FXTableCell<>() {
+        this.action.setCellFactory((cell) -> new GraphicTableCell<>() {
             private HBox hBox;
 
             @Override
@@ -135,7 +135,7 @@ public class ZKFilterTabContent extends DynamicTabController {
         });
 
         // 状态栏初始化
-        this.status.setCellFactory((cell) -> new FXTableCell<>() {
+        this.status.setCellFactory((cell) -> new GraphicTableCell<>() {
             @Override
             public FXToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();
@@ -158,7 +158,7 @@ public class ZKFilterTabContent extends DynamicTabController {
         });
 
         // 匹配模式栏初始化
-        this.matchMode.setCellFactory((cell) -> new FXTableCell<>() {
+        this.matchMode.setCellFactory((cell) -> new GraphicTableCell<>() {
             @Override
             public FXToggleSwitch initGraphic() {
                 ZKFilterVO filterVO = this.getTableItem();

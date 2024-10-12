@@ -152,64 +152,27 @@ public class ZKACLUtil {
         StringBuilder friendlyValueBuilder = new StringBuilder();
         if (permsString.contains("a")) {
             valueBuilder.append("a");
-            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-                friendlyValueBuilder.append(",特权");
-            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-                friendlyValueBuilder.append(",特權");
-            } else {
-                friendlyValueBuilder.append(",admin");
-            }
+            friendlyValueBuilder.append(",").append(I18nHelper.admin());
         }
         if (permsString.contains("w")) {
             valueBuilder.append("w");
-            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-                friendlyValueBuilder.append(",写入");
-            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-                friendlyValueBuilder.append(",写入");
-            } else {
-                friendlyValueBuilder.append(",write");
-            }
+            friendlyValueBuilder.append(",").append(I18nHelper.write());
         }
         if (permsString.contains("r")) {
             valueBuilder.append("r");
-            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-                friendlyValueBuilder.append(",读取");
-            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-                friendlyValueBuilder.append(",讀取");
-            } else {
-                friendlyValueBuilder.append(",read");
-            }
+            friendlyValueBuilder.append(",").append(I18nHelper.read());
         }
         if (permsString.contains("d")) {
             valueBuilder.append("d");
-            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-                friendlyValueBuilder.append(",删除子节点");
-            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-                friendlyValueBuilder.append(",刪除子節點");
-            } else {
-                friendlyValueBuilder.append(",deleteChild");
-            }
+            friendlyValueBuilder.append(",").append(I18nHelper.delete());
         }
         if (permsString.contains("c")) {
             valueBuilder.append("c");
-            if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-                friendlyValueBuilder.append(",创建子节点");
-            } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-                friendlyValueBuilder.append(",創建子節點");
-            } else {
-                friendlyValueBuilder.append(",createChild");
-            }
+            friendlyValueBuilder.append(",").append(I18nHelper.create());
         }
-
         FriendlyInfo<ACL> perms = new FriendlyInfo<>();
         perms.name("perms");
-        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-            perms.friendlyName("权限");
-        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-            perms.friendlyName("權限");
-        } else {
-            perms.friendlyName("perms");
-        }
+        perms.friendlyName(I18nHelper.perms());
         perms.value(valueBuilder.toString());
         if (friendlyValueBuilder.toString().startsWith(",")) {
             perms.friendlyValue(friendlyValueBuilder.substring(1));

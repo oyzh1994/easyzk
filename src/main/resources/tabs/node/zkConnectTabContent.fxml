@@ -46,6 +46,8 @@
 <?import cn.oyzh.fx.plus.controls.svg.SortAscSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SortDescSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PositioningSVGGlyph?>
+<?import cn.oyzh.easyzk.fx.ZKACLTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <FlexHBox xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.node.ZKConnectTabContent">
     <FlexVBox flexWidth="40%" flexHeight="100%">
@@ -270,7 +272,7 @@
                         </FlowPane.margin>
                     </RefreshSVGGlyph>
                     <PageBox fx:id="aclPage" realHeight="22"
-                             realWidth="300" onPrevClicked="#prevPage" onNextClicked="#nextPage">
+                             realWidth="300" onPrevClicked="#aclPrevPage" onNextClicked="#aclNextPage">
                         <FlowPane.margin>
                             <Insets left="5" top="1"/>
                         </FlowPane.margin>
@@ -280,156 +282,164 @@
                     </padding>
                 </FlexFlowPane>
                 <FlexVBox fx:id="aclBox" flexHeight="100% - 32" flexWidth="100% - 20" fontSize="11">
-                    <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
-                        <VBox.margin>
-                            <Insets top="5" left="5"/>
-                        </VBox.margin>
-                        <FlexFlowPane flexWidth="100%" realHeight="24">
-                            <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
-                                <FlowPane.margin>
-                                    <Insets top="5"/>
-                                </FlowPane.margin>
-                            </CopySVGGlyph>
-                            <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </EditSVGGlyph>
-                            <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </DeleteSVGGlyph>
-                            <FlexText fill="forestgreen" styleClass="acl-status">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </FlexText>
-                        </FlexFlowPane>
-                        <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
-                    </ZKACLVBox>
-                    <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
-                        <VBox.margin>
-                            <Insets top="5" left="5"/>
-                        </VBox.margin>
-                        <FlexFlowPane flexWidth="100%" realHeight="24">
-                            <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
-                                <FlowPane.margin>
-                                    <Insets top="5"/>
-                                </FlowPane.margin>
-                            </CopySVGGlyph>
-                            <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </EditSVGGlyph>
-                            <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </DeleteSVGGlyph>
-                            <FlexText fill="forestgreen" styleClass="acl-status">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </FlexText>
-                        </FlexFlowPane>
-                        <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
-                    </ZKACLVBox>
-                    <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
-                        <VBox.margin>
-                            <Insets top="5" left="5"/>
-                        </VBox.margin>
-                        <FlexFlowPane flexWidth="100%" realHeight="24">
-                            <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
-                                <FlowPane.margin>
-                                    <Insets top="5"/>
-                                </FlowPane.margin>
-                            </CopySVGGlyph>
-                            <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </EditSVGGlyph>
-                            <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </DeleteSVGGlyph>
-                            <FlexText fill="forestgreen" styleClass="acl-status">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </FlexText>
-                        </FlexFlowPane>
-                        <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
-                    </ZKACLVBox>
-                    <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
-                        <VBox.margin>
-                            <Insets top="5" left="5"/>
-                        </VBox.margin>
-                        <FlexFlowPane flexWidth="100%" realHeight="24">
-                            <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
-                                <FlowPane.margin>
-                                    <Insets top="5"/>
-                                </FlowPane.margin>
-                            </CopySVGGlyph>
-                            <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </EditSVGGlyph>
-                            <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </DeleteSVGGlyph>
-                            <FlexText fill="forestgreen" styleClass="acl-status">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </FlexText>
-                        </FlexFlowPane>
-                        <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
-                    </ZKACLVBox>
-                    <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false">
-                        <VBox.margin>
-                            <Insets top="5" left="5"/>
-                        </VBox.margin>
-                        <FlexFlowPane flexWidth="100%" realHeight="24">
-                            <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL">
-                                <FlowPane.margin>
-                                    <Insets top="5"/>
-                                </FlowPane.margin>
-                            </CopySVGGlyph>
-                            <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </EditSVGGlyph>
-                            <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </DeleteSVGGlyph>
-                            <FlexText fill="forestgreen" styleClass="acl-status">
-                                <FlowPane.margin>
-                                    <Insets left="5" top="5"/>
-                                </FlowPane.margin>
-                            </FlexText>
-                        </FlexFlowPane>
-                        <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/>
-                        <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/>
-                    </ZKACLVBox>
+                    <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
+                    <!--     <VBox.margin> -->
+                    <!--         <Insets top="5" left="5"/> -->
+                    <!--     </VBox.margin> -->
+                    <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
+                    <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </CopySVGGlyph> -->
+                    <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </EditSVGGlyph> -->
+                    <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </DeleteSVGGlyph> -->
+                    <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </FlexText> -->
+                    <!--     </FlexFlowPane> -->
+                    <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
+                    <!-- </ZKACLVBox> -->
+                    <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
+                    <!--     <VBox.margin> -->
+                    <!--         <Insets top="5" left="5"/> -->
+                    <!--     </VBox.margin> -->
+                    <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
+                    <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </CopySVGGlyph> -->
+                    <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </EditSVGGlyph> -->
+                    <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </DeleteSVGGlyph> -->
+                    <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </FlexText> -->
+                    <!--     </FlexFlowPane> -->
+                    <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
+                    <!-- </ZKACLVBox> -->
+                    <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
+                    <!--     <VBox.margin> -->
+                    <!--         <Insets top="5" left="5"/> -->
+                    <!--     </VBox.margin> -->
+                    <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
+                    <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </CopySVGGlyph> -->
+                    <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </EditSVGGlyph> -->
+                    <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </DeleteSVGGlyph> -->
+                    <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </FlexText> -->
+                    <!--     </FlexFlowPane> -->
+                    <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
+                    <!-- </ZKACLVBox> -->
+                    <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
+                    <!--     <VBox.margin> -->
+                    <!--         <Insets top="5" left="5"/> -->
+                    <!--     </VBox.margin> -->
+                    <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
+                    <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </CopySVGGlyph> -->
+                    <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </EditSVGGlyph> -->
+                    <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </DeleteSVGGlyph> -->
+                    <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </FlexText> -->
+                    <!--     </FlexFlowPane> -->
+                    <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
+                    <!-- </ZKACLVBox> -->
+                    <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
+                    <!--     <VBox.margin> -->
+                    <!--         <Insets top="5" left="5"/> -->
+                    <!--     </VBox.margin> -->
+                    <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
+                    <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </CopySVGGlyph> -->
+                    <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </EditSVGGlyph> -->
+                    <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </DeleteSVGGlyph> -->
+                    <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
+                    <!--             <FlowPane.margin> -->
+                    <!--                 <Insets left="5" top="5"/> -->
+                    <!--             </FlowPane.margin> -->
+                    <!--         </FlexText> -->
+                    <!--     </FlexFlowPane> -->
+                    <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
+                    <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
+                    <!-- </ZKACLVBox> -->
+                    <ZKACLTableView fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 32">
+                        <columns>
+                            <FlexTableColumn flexWidth="44%" fx:id="aclId" text="%base.identify" sortable="false"/>
+                            <FlexTableColumn flexWidth="32%" fx:id="aclPerms" text="%base.perms" sortable="false"/>
+                            <FlexTableColumn flexWidth="12%" fx:id="aclSchema" text="%base.schema" sortable="false"/>
+                            <FlexTableColumn flexWidth="12% - 10" fx:id="aclStatus" text="%base.status" sortable="false"/>
+                        </columns>
+                    </ZKACLTableView>
                 </FlexVBox>
             </FlexVBox>
         </FXTab>

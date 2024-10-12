@@ -6,6 +6,8 @@ import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.fx.ZKACLControl;
+import cn.oyzh.easyzk.fx.ZKACLTableView;
 import cn.oyzh.easyzk.fx.ZKACLVBox;
 import cn.oyzh.easyzk.fx.ZKDataFormatComboBox;
 import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
@@ -17,6 +19,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItemUtil;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
@@ -30,6 +33,7 @@ import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
@@ -39,35 +43,35 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.TableViewUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import lombok.Getter;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.StatsTrack;
-import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 /**
  * zk节点tab内容组件
@@ -172,6 +176,21 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private FXToggleSwitch aclViewSwitch;
 
+    @FXML
+    private ZKACLTableView aclTableView;
+
+    @FXML
+    private FlexTableColumn<String, String> aclId;
+
+    @FXML
+    private FlexTableColumn<String, String> aclPerms;
+
+    @FXML
+    private FlexTableColumn<String, String> aclSchema;
+
+    @FXML
+    private FlexTableColumn<String, String> aclStatus;
+
     /**
      * 收藏节点
      */
@@ -249,6 +268,9 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     private final ZKSetting setting = ZKSettingStore2.SETTING;
 
+    private ZKClient client;
+
+
     /**
      * 初始化
      *
@@ -257,6 +279,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     public void init(ZKConnectTreeItem item) {
         this.treeItem = item;
         this.treeView.disable();
+        this.client = item.client();
         // 异步执行
         ThreadUtil.start(() -> {
             try {
@@ -400,7 +423,7 @@ public class ZKConnectTabContent extends DynamicTabController {
             Stat stat = this.activeItem.deleteACL(acl);
             if (stat != null) {
                 this.reloadACL();
-                MessageBox.okToast(I18nHelper.operationSuccess());
+                // MessageBox.okToast(I18nHelper.operationSuccess());
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -414,9 +437,9 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 权限列表，上一页
      */
     @FXML
-    private void prevPage() {
+    private void aclPrevPage() {
         if (this.aclPaging != null) {
-            this.renderNode(this.aclPaging.prevPage());
+            this.renderACLView(this.aclPaging.prevPage());
         }
     }
 
@@ -424,9 +447,9 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 权限列表，下一页
      */
     @FXML
-    private void nextPage() {
+    private void aclNextPage() {
         if (this.aclPaging != null) {
-            this.renderNode(this.aclPaging.nextPage());
+            this.renderACLView(this.aclPaging.nextPage());
         }
     }
 
@@ -435,66 +458,105 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param pageNo 页码
      */
-    private void renderNode(long pageNo) {
-        // 获取子节点
-        List<Node> nodes = this.aclBox.getChildren();
-        // 隐藏子节点
-        nodes.forEach(n -> n.setVisible(false));
+    private void renderACLView(long pageNo) {
+        // // 获取子节点
+        // List<Node> nodes = this.aclBox.getChildren();
+        // // 隐藏子节点
+        // nodes.forEach(n -> n.setVisible(false));
         // 获取zk权限分页数据
         List<ZKACL> aclList = this.aclPaging.page(pageNo);
         // 设置分页信息
         this.aclPage.setPaging(this.aclPaging);
-        // 处理zk权限分页数据
-        for (int i = 0; i < aclList.size(); i++) {
-            ZKACL acl = aclList.get(i);
-            ZKACLVBox vBox = (ZKACLVBox) nodes.get(i);
-            // 获取控件，设置acl信息，并显示
-            vBox.acl(acl);
-            vBox.setVisible(true);
-            // 查找组件
-            HBox idBox = (HBox) vBox.lookup(".acl-id");
-            HBox permsBox = (HBox) vBox.lookup(".acl-perms");
-            HBox schemeBox = (HBox) vBox.lookup(".acl-scheme");
-            Text statusText = (Text) vBox.lookup(".acl-status");
-            // 执行渲染
-            BackgroundService.submitFX(() -> {
-                this.handleACLState(acl, statusText);
-                this.handleACLInfo(acl.idFriend(), idBox);
-                this.handleACLInfo(acl.permsFriend(), permsBox);
-                this.handleACLInfo(acl.schemeFriend(), schemeBox);
-            });
+        List<ZKACLControl> list = new ArrayList<>();
+        for (ZKACL zkacl : aclList) {
+            ZKACLControl control = new ZKACLControl();
+            control.setId(zkacl.getId());
+            control.setPerms(zkacl.getPerms());
+            control.setFriendly(this.aclViewSwitch.isSelected());
+            control.setAuthed(ZKAuthUtil.isDigestAuthed(this.client, zkacl.idVal()));
+            list.add(control);
         }
+        this.aclTableView.setItem(list);
+
+        // // 处理zk权限分页数据
+        // for (int i = 0; i < aclList.size(); i++) {
+        //     ZKACL acl = aclList.get(i);
+        //     ZKACLVBox vBox = (ZKACLVBox) nodes.get(i);
+        //     // 获取控件，设置acl信息，并显示
+        //     vBox.acl(acl);
+        //     vBox.setVisible(true);
+        //     // 查找组件
+        //     HBox idBox = (HBox) vBox.lookup(".acl-id");
+        //     HBox permsBox = (HBox) vBox.lookup(".acl-perms");
+        //     HBox schemeBox = (HBox) vBox.lookup(".acl-scheme");
+        //     Text statusText = (Text) vBox.lookup(".acl-status");
+        //     // 执行渲染
+        //     BackgroundService.submitFX(() -> {
+        //         this.handleACLState(acl, statusText);
+        //         this.handleACLInfo(acl.idFriend(), idBox);
+        //         this.handleACLInfo(acl.permsFriend(), permsBox);
+        //         this.handleACLInfo(acl.schemeFriend(), schemeBox);
+        //     });
+        // }
+        // // 获取子节点
+        // List<Node> nodes = this.aclBox.getChildren();
+        // // 隐藏子节点
+        // nodes.forEach(n -> n.setVisible(false));
+        // // 获取zk权限分页数据
+        // List<ZKACL> aclList = this.aclPaging.page(pageNo);
+        // // 设置分页信息
+        // this.aclPage.setPaging(this.aclPaging);
+        // // 处理zk权限分页数据
+        // for (int i = 0; i < aclList.size(); i++) {
+        //     ZKACL acl = aclList.get(i);
+        //     ZKACLVBox vBox = (ZKACLVBox) nodes.get(i);
+        //     // 获取控件，设置acl信息，并显示
+        //     vBox.acl(acl);
+        //     vBox.setVisible(true);
+        //     // 查找组件
+        //     HBox idBox = (HBox) vBox.lookup(".acl-id");
+        //     HBox permsBox = (HBox) vBox.lookup(".acl-perms");
+        //     HBox schemeBox = (HBox) vBox.lookup(".acl-scheme");
+        //     Text statusText = (Text) vBox.lookup(".acl-status");
+        //     // 执行渲染
+        //     BackgroundService.submitFX(() -> {
+        //         this.handleACLState(acl, statusText);
+        //         this.handleACLInfo(acl.idFriend(), idBox);
+        //         this.handleACLInfo(acl.permsFriend(), permsBox);
+        //         this.handleACLInfo(acl.schemeFriend(), schemeBox);
+        //     });
+        // }
     }
 
-    /**
-     * 处理权限状态
-     *
-     * @param acl  权限
-     * @param text 组件
-     */
-    private void handleACLState(ZKACL acl, Text text) {
-        Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.client());
-        if (CollectionUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
-            text.setText("(" + I18nHelper.authed() + ")");
-        } else {
-            text.setText("");
-        }
-    }
-
-    /**
-     * 处理权限属性
-     *
-     * @param info 属性
-     * @param box  组件
-     */
-    private void handleACLInfo(FriendlyInfo<ACL> info, HBox box) {
-        // 获取标题和文本框
-        Label label = (Label) box.getChildren().get(0);
-        Label data = (Label) box.getChildren().get(1);
-        // 设置属性值及属性值
-        label.setText(info.getName(this.aclViewSwitch.isSelected()));
-        data.setText(info.getValue(this.aclViewSwitch.isSelected()).toString());
-    }
+    // /**
+    //  * 处理权限状态
+    //  *
+    //  * @param acl  权限
+    //  * @param text 组件
+    //  */
+    // private void handleACLState(ZKACL acl, Text text) {
+    //     Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.client());
+    //     if (CollectionUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
+    //         text.setText("(" + I18nHelper.authed() + ")");
+    //     } else {
+    //         text.setText("");
+    //     }
+    // }
+    //
+    // /**
+    //  * 处理权限属性
+    //  *
+    //  * @param info 属性
+    //  * @param box  组件
+    //  */
+    // private void handleACLInfo(FriendlyInfo<ACL> info, HBox box) {
+    //     // 获取标题和文本框
+    //     Label label = (Label) box.getChildren().get(0);
+    //     Label data = (Label) box.getChildren().get(1);
+    //     // 设置属性值及属性值
+    //     label.setText(info.getName(this.aclViewSwitch.isSelected()));
+    //     data.setText(info.getValue(this.aclViewSwitch.isSelected()).toString());
+    // }
 
     /**
      * 复制zk状态
@@ -559,6 +621,7 @@ public class ZKConnectTabContent extends DynamicTabController {
             this.activeItem.refreshData();
             // 数据变更
             this.showData();
+            this.flushTabGraphicColor();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -753,14 +816,15 @@ public class ZKConnectTabContent extends DynamicTabController {
         }
         if (this.activeItem.aclEmpty()) {
             this.aclViewSwitch.disable();
+            this.aclTableView.clearItems();
         } else {
-            this.aclViewSwitch.disable();
+            // this.aclViewSwitch.disable();
             List<ZKACL> aclList = this.activeItem.acl();
             // 获取分页控件
-            this.aclPaging = new Paging<>(aclList, 5);
-            // 渲染首页收据
-            this.renderNode(0);
-            this.aclViewSwitch.enable();
+            this.aclPaging = new Paging<>(aclList, 10);
+            // 渲染首页数据
+            this.renderACLView(0);
+            // this.aclViewSwitch.enable();
         }
     }
 
@@ -787,11 +851,8 @@ public class ZKConnectTabContent extends DynamicTabController {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        super.initialize(url, resourceBundle);
-        // 收藏处理
-        this.collect.managedProperty().bind(this.collect.visibleProperty());
-        this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
+    protected void bindListeners() {
+        super.bindListeners();
         // undo监听
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
         // redo监听
@@ -830,6 +891,25 @@ public class ZKConnectTabContent extends DynamicTabController {
                 this.flushTabGraphicColor();
             }
         });
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
+        // 收藏处理
+        this.collect.managedProperty().bind(this.collect.visibleProperty());
+        this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
+        // acl处理
+        this.aclId.setCellValueFactory(new PropertyValueFactory<>("idControl"));
+        this.aclPerms.setCellValueFactory(new PropertyValueFactory<>("permsControl"));
+        this.aclSchema.setCellValueFactory(new PropertyValueFactory<>("schemaControl"));
+        this.aclStatus.setCellValueFactory(new PropertyValueFactory<>("statusControl"));
+        // 设置cell工厂
+        Callback<TableColumn<String, String>, TableCell<String, String>> cellFactory = param -> TableViewUtil.lineHeightCell(16);
+        this.aclId.setCellFactory(cellFactory);
+        this.aclPerms.setCellFactory(cellFactory);
+        this.aclSchema.setCellFactory(cellFactory);
+        this.aclStatus.setCellFactory(cellFactory);
     }
 
     /**

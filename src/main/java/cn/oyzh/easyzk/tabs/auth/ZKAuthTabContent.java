@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
-import cn.oyzh.fx.plus.controls.table.FXTableCell;
+import cn.oyzh.fx.plus.controls.table.GraphicTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
@@ -117,7 +117,7 @@ public class ZKAuthTabContent extends DynamicTabController {
      */
     private void initTable() {
         // 初始化操作栏
-        this.action.setCellFactory((cell) -> new FXTableCell<>() {
+        this.action.setCellFactory((cell) -> new GraphicTableCell<>() {
             private HBox hBox;
 
             @Override
@@ -134,7 +134,7 @@ public class ZKAuthTabContent extends DynamicTabController {
         });
 
         // 状态栏初始化
-        this.enable.setCellFactory((cell) -> new FXTableCell<>() {
+        this.enable.setCellFactory((cell) -> new GraphicTableCell<>() {
             @Override
             public FXToggleSwitch initGraphic() {
                 ZKAuthVO authVO = this.getTableItem();

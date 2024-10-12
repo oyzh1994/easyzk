@@ -206,6 +206,17 @@ public class ZKAuthUtil {
     }
 
     /**
+     * 获取已认证的摘要信息
+     *
+     * @param client zk客户端
+     * @return 已认证的摘要信息列表
+     */
+    public static boolean isDigestAuthed(ZKClient client, String digestVal) {
+        Set<String> digests = ZKAuthUtil.getAuthedDigest(client);
+        return CollectionUtil.isNotEmpty(digests) && digests.contains(digestVal);
+    }
+
+    /**
      * 是否任意权限已认证
      *
      * @param aclList 权限列表

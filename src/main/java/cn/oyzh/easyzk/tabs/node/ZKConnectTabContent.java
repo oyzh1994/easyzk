@@ -40,6 +40,7 @@ import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
+import cn.oyzh.fx.plus.node.ResizeHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.thread.RenderService;
@@ -52,6 +53,7 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -81,10 +83,21 @@ import java.util.ResourceBundle;
 public class ZKConnectTabContent extends DynamicTabController {
 
     /**
-     * 根节点
+     * 左侧节点
      */
     @FXML
-    private FlexTabPane root;
+    private FlexVBox leftBox;
+
+    /**
+     * tab节点
+     */
+    @FXML
+    private FlexTabPane tabPane;
+
+    /**
+     * 拉伸辅助器
+     */
+    private ResizeHelper resizeHelper;
 
     /**
      * 节点数
@@ -890,6 +903,25 @@ public class ZKConnectTabContent extends DynamicTabController {
                 this.flushTabGraphicColor();
             }
         });
+        // 拖动改变redis树大小处理
+        this.resizeHelper = new ResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        this.resizeHelper.widthLimit(240, 750);
+        this.resizeHelper.initResizeEvent();
+    }
+
+    /**
+     * 左侧组件重新布局
+     *
+     * @param newWidth 新宽度
+     */
+    private void resizeLeft(Double newWidth) {
+        if (newWidth != null && !Double.isNaN(newWidth)) {
+            // 设置组件宽
+            this.leftBox.setRealWidth(newWidth);
+            this.tabPane.setLayoutX(newWidth);
+            this.tabPane.setFlexWidth("100% - " + newWidth);
+            this.leftBox.parentAutosize();
+        }
     }
 
     @Override

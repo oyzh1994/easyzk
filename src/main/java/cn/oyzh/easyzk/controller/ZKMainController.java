@@ -146,7 +146,7 @@ public class ZKMainController extends ParentStageController {
         EventUtil.register(this.msgArea);
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
-            this.resizeMainLeft(this.setting.getPageLeftWidth());
+            this.resizeLeft(this.setting.getPageLeftWidth());
         }
     }
 
@@ -170,7 +170,7 @@ public class ZKMainController extends ParentStageController {
      *
      * @param newWidth 新宽度
      */
-    private void resizeMainLeft(Double newWidth) {
+    private void resizeLeft(Double newWidth) {
         if (newWidth != null && !Double.isNaN(newWidth)) {
             // 设置组件宽
             this.tabPaneLeft.setRealWidth(newWidth);
@@ -206,14 +206,8 @@ public class ZKMainController extends ParentStageController {
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.dragContent(), this.tree.getRoot()::dragFile);
         // 拖动改变redis树大小处理
-        this.resizeHelper = new ResizeHelper(this.tabPaneLeft, this.tree, 240, 800, Cursor.DEFAULT);
-        this.resizeHelper.mouseDragged(event -> {
-            double sceneX = event.getSceneX();
-            if (this.resizeHelper.resizeWidthAble(sceneX)) {
-                // 左侧组件重新布局
-                this.resizeMainLeft(sceneX);
-            }
-        });
+        this.resizeHelper = new ResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeLeft);
+        this.resizeHelper.widthLimit(240, 650);
         this.resizeHelper.initResizeEvent();
         // 搜索触发事件
         KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));

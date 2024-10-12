@@ -23,7 +23,7 @@
             <graphic>
                 <ConnectionSVGGlyph initCursor="DEFAULT" size="12"/>
             </graphic>
-            <FlexVBox flexHeight="100%" flexWidth="100% - 8"
+            <FlexVBox flexHeight="100%" flexWidth="100%"
                       style="-fx-border-width: 0 1 0 0; -fx-border-color: #c0c0c0">
                 <FlexHBox realHeight="30" flexWidth="100%">
                     <TerminalSVGGlyph size="15" onMousePrimaryClicked="#openTerminal">
@@ -74,7 +74,7 @@
             <graphic>
                 <MessageSVGGlyph initCursor="DEFAULT" size="13"/>
             </graphic>
-            <FlexVBox flexHeight="100%" flexWidth="100% - 8" style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
+            <FlexVBox flexHeight="100%" flexWidth="100%" style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
                 <FlexHBox realHeight="30">
                     <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearMsg">
                         <HBox.margin>
@@ -85,7 +85,7 @@
                 <ZKMsgTextArea fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%" lineLimit="1000"/>
             </FlexVBox>
         </FXTab>
-       <fx:include fx:id="dataHistory" source="dataHistory.fxml"/>
+        <fx:include fx:id="dataHistory" source="dataHistory.fxml"/>
     </FlexTabPane>
     <ZKTabPane fx:id="tabPane" layoutX="300" flexWidth="100% - 300" tabDragPolicy="FIXED" tabClosingPolicy="ALL_TABS"
                flexHeight="100%"/>

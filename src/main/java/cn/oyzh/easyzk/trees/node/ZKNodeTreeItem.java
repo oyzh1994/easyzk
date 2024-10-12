@@ -684,6 +684,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public boolean saveData() {
         try {
+            // 保存数据历史
+            this.saveDataHistory();
+            // 当前数据
             byte[] data = this.unsavedData;
             // 更新数据
             Stat stat = this.client().setData(this.nodePath(), data);

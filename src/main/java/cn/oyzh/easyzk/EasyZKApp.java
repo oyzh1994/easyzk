@@ -51,8 +51,8 @@ public class EasyZKApp extends ApplicationExt {
         try {
             // 储存初始化
             ZKStoreUtil.init();
-            // 储存迁移
-            ZKStoreUtil.migration();
+            // // 储存迁移
+            // ZKStoreUtil.migration();
             // 应用区域
             I18nManager.apply(ZKSettingStore2.SETTING.getLocale());
             // 应用字体

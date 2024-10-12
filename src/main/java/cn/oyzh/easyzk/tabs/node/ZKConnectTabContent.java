@@ -596,10 +596,11 @@ public class ZKConnectTabContent extends DynamicTabController {
         }
         // 保存数据
         if (this.activeItem.isDataUnsaved()) {
-            // 保存数据历史
-            this.activeItem.saveDataHistory();
             // 保存数据
-            RenderService.submit(this.activeItem::saveData);
+            RenderService.submit(() -> {
+                this.activeItem.saveData();
+                this.flushTabGraphicColor();
+            });
         }
     }
 
@@ -826,6 +827,7 @@ public class ZKConnectTabContent extends DynamicTabController {
             if (this.activeItem != null) {
                 byte[] bytes = newValue == null ? new byte[]{} : newValue.getBytes(this.charset.getCharset());
                 this.activeItem.nodeData(bytes);
+                this.flushTabGraphicColor();
             }
         });
     }

@@ -328,13 +328,16 @@ public class ZKConnectTabContent extends DynamicTabController {
     private void initItem(TreeItem<?> treeItem) {
         try {
             this.activeItem = (ZKNodeTreeItem) treeItem;
-            this.flushTab();
             if (this.activeItem != null) {
                 this.initData();
                 this.initAcl();
                 this.initStat();
                 this.initQuota();
+                this.tabPane.enable();
+            } else {
+                this.tabPane.disable();
             }
+            this.flushTab();
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -428,11 +431,11 @@ public class ZKConnectTabContent extends DynamicTabController {
         if (acl == null) {
             return;
         }
-        if (!MessageBox.confirm(I18nHelper.deleteACL())) {
-            return;
-        }
         if (this.activeItem.acl().size() == 1) {
             MessageBox.warn(this.i18nString("zk.aclTip1"));
+            return;
+        }
+        if (!MessageBox.confirm(I18nHelper.deleteACL() + " " + acl.idVal() + " ?")) {
             return;
         }
         try {
@@ -443,7 +446,6 @@ public class ZKConnectTabContent extends DynamicTabController {
                 MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
             MessageBox.exception(ex);
         }
     }

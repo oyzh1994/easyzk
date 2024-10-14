@@ -14,6 +14,7 @@ import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.CopyButton;
@@ -28,11 +29,11 @@ import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -72,7 +73,7 @@ public class ZKACLAddController extends StageController {
      * 权限
      */
     @FXML
-    private Pane perms;
+    private FlexFlowPane perms;
 
     /**
      * 节点路径
@@ -216,14 +217,18 @@ public class ZKACLAddController extends StageController {
     @FXML
     private void addACL() {
         try {
+            // 检查类型
             if (!this.aclType.validate()) {
                 return;
             }
+            // 检查权限
             String perms = this.getPerms();
             if (StringUtil.isBlank(perms)) {
-                MessageBox.warn(I18nHelper.contentCanNotEmpty());
+                Node perm = this.perms.getChild(0);
+                MessageBox.tipMsg("perms " + I18nHelper.canNotEmpty(), perm);
                 return;
             }
+            // 执行新增
             if (this.aclType.getSelectedIndex() == 0) {
                 this.addWorldACL();
             } else if (this.aclType.getSelectedIndex() == 1) {
@@ -264,7 +269,7 @@ public class ZKACLAddController extends StageController {
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(I18nHelper.contentAlreadyExists());
+            MessageBox.warn("[" + digest + "] " + I18nHelper.alreadyExists());
             return;
         }
         ACL acl = new ACL();
@@ -304,7 +309,7 @@ public class ZKACLAddController extends StageController {
             return;
         }
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(I18nHelper.contentAlreadyExists());
+            MessageBox.warn("[" + digest + "] " + I18nHelper.alreadyExists());
             return;
         }
         ACL acl = new ACL();
@@ -327,7 +332,7 @@ public class ZKACLAddController extends StageController {
         }
         String digest = zkAuth.digest();
         if (this.zkItem.existDigestACL(digest)) {
-            MessageBox.warn(I18nHelper.contentAlreadyExists());
+            MessageBox.warn("[" + digest + "] " + I18nHelper.alreadyExists());
             return;
         }
         ACL acl = new ACL();
@@ -533,11 +538,11 @@ public class ZKACLAddController extends StageController {
      * @return 权限内容
      */
     private String getPerms() {
-        CheckBox a = (CheckBox) this.perms.getChildren().get(0);
-        CheckBox w = (CheckBox) this.perms.getChildren().get(1);
-        CheckBox r = (CheckBox) this.perms.getChildren().get(2);
-        CheckBox d = (CheckBox) this.perms.getChildren().get(3);
-        CheckBox c = (CheckBox) this.perms.getChildren().get(4);
+        CheckBox a = (CheckBox) this.perms.getChild(0);
+        CheckBox w = (CheckBox) this.perms.getChild(1);
+        CheckBox r = (CheckBox) this.perms.getChild(2);
+        CheckBox d = (CheckBox) this.perms.getChild(3);
+        CheckBox c = (CheckBox) this.perms.getChild(4);
         StringBuilder builder = new StringBuilder();
         if (a.isSelected()) {
             builder.append("a");

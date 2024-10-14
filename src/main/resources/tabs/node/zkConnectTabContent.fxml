@@ -67,10 +67,10 @@
                 </HBox.margin>
             </SearchSVGGlyph>
         </FlexHBox>
-        <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 62">
+        <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 67">
 
         </ZKNodeTreeView>
-        <FlexHBox flexWidth="100%" flexHeight="30">
+        <FlexHBox flexWidth="100%" flexHeight="35">
             <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
                 <HBox.margin>
                     <Insets left="5" top="10"/>
@@ -91,7 +91,7 @@
     </FlexVBox>
     <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
                  flexHeight="100%"
-                 rotateGraphic="true">
+                 rotateGraphic="true" disable="true">
         <FXTab text="%base.data">
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
@@ -171,13 +171,13 @@
                         </FlowPane.margin>
                     </ClearableTextField>
                 </FlexFlowPane>
-                <RichDataTextAreaPane fontSize="12" fx:id="nodeData" flexHeight="100% - 62"
+                <RichDataTextAreaPane fontSize="12" fx:id="nodeData" flexHeight="100% - 67"
                                       flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
-                <FlexHBox flexWidth="100%" flexHeight="30">
+                <FlexHBox flexWidth="100%" flexHeight="35">
                     <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
                                      onMousePrimaryClicked="#showHistory">
                         <HBox.margin>
-                            <Insets left="5" top="7"/>
+                            <Insets left="5" top="8"/>
                         </HBox.margin>
                     </HistorySVGGlyph>
                     <ZKDataFormatComboBox fx:id="dataFormat" initIndex="0" fontSize="11" prefWidth="100"

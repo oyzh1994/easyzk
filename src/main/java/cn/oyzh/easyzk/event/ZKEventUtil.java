@@ -73,13 +73,13 @@ public class ZKEventUtil {
     /**
      * 节点添加事件
      *
-     * @param client zk客户端
+     * @param info zk客户端
      * @param path   路径
      */
-    public static void nodeAdd(ZKClient client, String path) {
+    public static void nodeAdd(ZKInfo info, String path) {
         ZKNodeAddEvent event = new ZKNodeAddEvent();
         event.data(path);
-        event.info(client.zkInfo());
+        event.info(info);
         EventUtil.post(event);
     }
 

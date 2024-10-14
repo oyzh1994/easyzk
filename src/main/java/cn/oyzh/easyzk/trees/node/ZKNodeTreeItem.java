@@ -38,7 +38,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.StatsTrack;
-import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
@@ -270,7 +269,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.value.nodePath();
     }
 
-
     /**
      * 加载子节点
      */
@@ -295,7 +293,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @param quiet 安静模式
      */
     private void _loadChild(boolean quiet) {
-        this.loaded = true;
+        // this.loaded = true;
         this.loading = true;
         if (quiet) {
             Task task = TaskBuilder.newBuilder()
@@ -305,7 +303,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                         this.loading = false;
                         this.flushValue();
                     })
-                    .onError(ex -> this.loaded = false)
+                    // .onError(ex -> this.loaded = false)
                     .build();
             TaskManager.start(task);
         } else {
@@ -318,7 +316,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                         this.stopWaiting();
                     })
                     .onError(ex -> {
-                        this.loaded = false;
+                        // this.loaded = false;
                         MessageBox.exception(ex);
                     })
                     .build();
@@ -449,21 +447,17 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 MessageBox.warn(I18nHelper.contentAlreadyExists());
                 return;
             }
+            // 创建模式
             CreateMode createMode = this.value.isEphemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
-            List<ACL> aclList = new ArrayList<>();
-            for (ZKACL zkacl : this.value.acl()) {
-                aclList.add(new ACL(zkacl.getPerms(), zkacl.getId()));
-            }
-            // 创建新节点并删除旧节点
-            if (this.client().create(newNodePath, this.nodeData(), aclList, null, createMode, true) != null) {
+            // 创建新节点
+            if (this.client().create(newNodePath, this.nodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
                 // 删除旧节点
-                this._delete();
-            } else {
+                this.deleteNode();
+            } else {// 操作失败
                 MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.contentAlreadyExists());
+            MessageBox.exception(ex);
         }
     }
 
@@ -479,7 +473,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         }
         // 创建任务
         Task task = TaskBuilder.newBuilder()
-                .onStart(this::_delete)
+                .onStart(this::deleteNode)
                 .onFinish(this::stopWaiting)
                 .onError(MessageBox::exception)
                 .onSuccess(() -> MessageBox.okToast(I18nHelper.operationSuccess()))
@@ -488,21 +482,18 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     }
 
     /**
-     * 删除节点实际业务
+     * 删除节点
      */
-    private void _delete() {
-        try {
-            // 执行删除
-            this.client().delete(this.nodePath(), null, this.value.isParent());
-            // 刷新状态
-            if (this.parent() != null) {
-                this.parent().refreshStat();
-            }
-            // 删除树节点
-            this.remove();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+    private void deleteNode() throws Exception {
+        ZKNodeTreeItem parent = this.parent();
+        // 执行删除
+        this.client().delete(this.nodePath(), null, this.value.isParent());
+        // 刷新状态
+        if (parent != null) {
+            parent.refreshStat();
         }
+        // 删除树节点
+        this.remove();
     }
 
     /**
@@ -570,7 +561,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @param path 路径
      * @return zk节点
      */
-    public ZKNodeTreeItem getChild(String path) {
+    public ZKNodeTreeItem getNodeItem(String path) {
         if (StringUtil.isNotBlank(path) && !this.isChildEmpty()) {
             for (TreeItem<?> child : this.getRealChildren()) {
                 if (child instanceof ZKNodeTreeItem treeItem) {
@@ -732,6 +723,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             return;
         }
         try {
+            this.loaded = true;
             // 没有子节点
             if (!this.value.hasChildren()) {
                 this.clearChild();
@@ -790,6 +782,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             if (!this.canceled && !this.client.isConnected()) {
                 throw new RuntimeException(ex);
             }
+            this.loaded = false;
         }
     }
 

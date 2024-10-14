@@ -75,8 +75,8 @@ public class EasyZKApp extends ApplicationExt {
             long cost = System.currentTimeMillis() - this.startAt;
             // 内存消耗
             double usedMemory = SystemUtil.getUsedMemory();
-            JulLog.info("启动耗时:{}ms-------------------------------", +cost);
-            JulLog.info("内存消耗:{}mb-------------------------------", +usedMemory);
+            JulLog.info("启动耗时:{}ms-------------------------------", cost);
+            JulLog.info("内存消耗:{}mb-------------------------------", usedMemory);
             JulLog.info("EasyZKApp start.");
         } catch (Exception ex) {
             ex.printStackTrace();

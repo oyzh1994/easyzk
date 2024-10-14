@@ -284,7 +284,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         };
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
-                    .onStart(func)
+                    .onStart(func::run)
                     .onFinish(() -> {
                         this.stopWaiting();
                         this.flushGraphic();

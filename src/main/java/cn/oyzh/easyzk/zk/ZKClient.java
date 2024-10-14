@@ -657,9 +657,6 @@ public class ZKClient {
             } else {
                 nodePath = builder.forPath(path, data);
             }
-            if (nodePath != null) {
-                ZKEventUtil.nodeAdd(this, path);
-            }
             return nodePath;
         } catch (Exception ex) {
             this.lastCreate = old;

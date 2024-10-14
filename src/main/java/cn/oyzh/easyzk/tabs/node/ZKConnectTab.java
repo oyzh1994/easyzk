@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.tabs.node;
 
+import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -85,10 +86,16 @@ public class ZKConnectTab extends DynamicTab {
      * @return zk客户端
      */
     public ZKClient client() {
-        if (this.treeItem() != null) {
-            return this.treeItem().client();
-        }
-        return null;
+        return this.treeItem() == null ? null : this.treeItem().client();
+    }
+
+    /**
+     * 获取zk信息
+     *
+     * @return zk信息
+     */
+    public ZKInfo info() {
+        return this.treeItem() == null ? null : this.treeItem().value();
     }
 
     @Override
@@ -108,5 +115,9 @@ public class ZKConnectTab extends DynamicTab {
      */
     public void restoreData(byte[] data) {
         this.controller().restoreData(data);
+    }
+
+    public void onNodeAdd(String nodePath) {
+        this.controller().onNodeAdd(nodePath);
     }
 }

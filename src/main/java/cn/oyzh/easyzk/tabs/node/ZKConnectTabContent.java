@@ -291,6 +291,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     public void init(ZKConnectTreeItem item) {
         this.treeItem = item;
         this.treeView.disable();
+        this.treeView.client(item.client());
         this.client = item.client();
         // 异步执行
         ThreadUtil.start(() -> {
@@ -1049,6 +1050,10 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void positionNode() {
-        this.treeView.scrollTo(this.treeView.getSelectedItem());
+        this.treeView.positionItem();
+    }
+
+    public void onNodeAdd(String nodePath) {
+        this.treeView.onNodeAdd(nodePath);
     }
 }

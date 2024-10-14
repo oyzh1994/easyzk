@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.controller.node;
 
 import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
@@ -163,7 +164,7 @@ public class ZKNodeAddController extends StageController {
      * 添加zk节点
      */
     @FXML
-    private void addZKNode() {
+    private void addNode() {
         if (!this.nodePath.validate()) {
             this.dataTab.selectTab();
             return;
@@ -184,7 +185,8 @@ public class ZKNodeAddController extends StageController {
             if (node == null) {
                 MessageBox.warnToast(I18nHelper.operationFail());
             } else {
-                MessageBox.okToast(I18nHelper.operationSuccess());
+                // MessageBox.okToast(I18nHelper.operationSuccess());
+                ZKEventUtil.nodeAdd(this.zkClient.zkInfo(), this.nodePathText);
                 this.closeWindow();
             }
         } catch (Exception ex) {

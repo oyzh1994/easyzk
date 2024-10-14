@@ -153,58 +153,58 @@ public class ZKTreeView extends RichTreeView implements EventListener {
         if (event.client().isLastCreate(event.nodePath())) {
             event.client().clearLastCreate();
         } else {
-            this.nodeAdd(event.nodePath(), event.info());
+            // this.nodeAdd(event.nodePath(), event.info());
         }
     }
 
-    /**
-     * zk节点新增事件，手动操作
-     *
-     * @param event 消息
-     */
-    @Subscribe
-    private void nodeAdd(ZKNodeAddEvent event) {
-        this.nodeAdd(event.data(), event.info());
-    }
-
-    /**
-     * zk节点新增
-     *
-     * @param path 路径
-     * @param info zk信息
-     */
-    private void nodeAdd(String path, ZKInfo info) {
-        try {
-            // 父节点路径
-            String pPath = ZKNodeUtil.getParentPath(path);
-            // 寻找节点
-            ZKNodeTreeItem parent = this.findNodeItem(pPath, info);
-            // 父节点不存在
-            if (parent == null) {
-                JulLog.warn("{}: 未找到新增节点的父节点，无法处理节点！", path);
-                return;
-            }
-            // 获取节点
-            ZKNodeTreeItem child = parent.getChild(path);
-            // 刷新节点
-            if (child != null) {
-                child.refreshNode();
-                JulLog.info("节点已存在, 更新树节点.");
-            } else if (parent.loaded()) {// 添加节点
-                parent.refreshStat();
-                parent.addChild(path);
-                JulLog.info("节点不存在, 添加树节点.");
-            } else if (parent.client().isLastCreate(path)) {// 加载子节点
-                parent.refreshStat();
-                parent.loadChildQuiet();
-                JulLog.info("父节点未加载, 加载父节点.");
-            }
-            // 过滤节点
-            parent.doFilter(this.itemFilter);
-        } catch (Exception ex) {
-            JulLog.warn("新增节点失败！", ex);
-        }
-    }
+    // /**
+    //  * zk节点新增事件，手动操作
+    //  *
+    //  * @param event 消息
+    //  */
+    // @Subscribe
+    // private void nodeAdd(ZKNodeAddEvent event) {
+    //     this.nodeAdd(event.data(), event.info());
+    // }
+    //
+    // /**
+    //  * zk节点新增
+    //  *
+    //  * @param path 路径
+    //  * @param info zk信息
+    //  */
+    // private void nodeAdd(String path, ZKInfo info) {
+    //     try {
+    //         // 父节点路径
+    //         String pPath = ZKNodeUtil.getParentPath(path);
+    //         // 寻找节点
+    //         ZKNodeTreeItem parent = this.findNodeItem(pPath, info);
+    //         // 父节点不存在
+    //         if (parent == null) {
+    //             JulLog.warn("{}: 未找到新增节点的父节点，无法处理节点！", path);
+    //             return;
+    //         }
+    //         // 获取节点
+    //         ZKNodeTreeItem child = parent.getChild(path);
+    //         // 刷新节点
+    //         if (child != null) {
+    //             child.refreshNode();
+    //             JulLog.info("节点已存在, 更新树节点.");
+    //         } else if (parent.loaded()) {// 添加节点
+    //             parent.refreshStat();
+    //             parent.addChild(path);
+    //             JulLog.info("节点不存在, 添加树节点.");
+    //         } else if (parent.client().isLastCreate(path)) {// 加载子节点
+    //             parent.refreshStat();
+    //             parent.loadChildQuiet();
+    //             JulLog.info("父节点未加载, 加载父节点.");
+    //         }
+    //         // 过滤节点
+    //         parent.doFilter(this.itemFilter);
+    //     } catch (Exception ex) {
+    //         JulLog.warn("新增节点失败！", ex);
+    //     }
+    // }
 
     /**
      * zk节点修改事件

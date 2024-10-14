@@ -199,7 +199,7 @@
         </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#addZKNode">
+        <SubmitButton onAction="#addNode">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>

@@ -62,10 +62,11 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
     @Override
     public boolean test(RichTreeItem<?> item) {
         // 根节点直接展示
-        if (item instanceof ZKRootNodeTreeItem) {
-            return true;
-        }
         if (item instanceof ZKNodeTreeItem treeItem) {
+            // 根节点不参与过滤
+            if(treeItem.isRoot()){
+                return true;
+            }
             // 仅收藏
             if (1 == this.type && !treeItem.isCollect()) {
                 return false;

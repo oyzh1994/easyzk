@@ -14,7 +14,6 @@ import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItemUtil;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -300,7 +299,7 @@ public class ZKConnectTabContent extends DynamicTabController {
                 ZKNode rootNode = ZKNodeUtil.getNode(item.client(), "/");
                 if (rootNode != null) {
                     // 生成根节点
-                    ZKNodeTreeItem rootItem = ZKNodeTreeItemUtil.of(rootNode, this.treeView, item.client());
+                    ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this.treeView, item.client());
                     // 设置根节点
                     this.treeView.setRoot(rootItem);
                     // 加载节点

@@ -19,7 +19,6 @@ import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.common.util.Destroyable;
 import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -352,21 +351,25 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             FXMenuItem cancel = MenuItemHelper.cancelOperation("11", this::cancel);
             items.add(cancel);
         } else {
-            FXMenuItem auth = MenuItemHelper.authNode("12", this::authNode);
-            if (!this.isEphemeral()) {
+            // 持久节点
+            if (this.isPersistent()) {
                 FXMenuItem add = MenuItemHelper.addNode("12", this::addNode);
                 items.add(add);
             }
-            if (!this.value.isRoot() && this.value.isChildren() && !this.isEphemeral()) {
+            // 非根节点 + 子节点 + 持久节点
+            if (!this.value.isRoot() && this.value.isChildren() && this.isPersistent()) {
                 FXMenuItem rename = MenuItemHelper.renameNode("12", this::rename);
                 items.add(rename);
             }
+            // 非根节点
             if (!this.value.isRoot()) {
                 FXMenuItem delete = MenuItemHelper.deleteNode("12", this::delete);
                 items.add(delete);
             }
+            // 重载
             FXMenuItem reload = MenuItemHelper.refreshData("12", this::reloadChild);
             items.add(reload);
+            // 父节点
             if (this.value.isParent()) {
                 FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
                 FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
@@ -377,10 +380,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 items.add(expandAll);
                 items.add(collapseAll);
             }
+            // 有读取权限
             if (this.value.hasReadPerm()) {
                 FXMenuItem export = MenuItemHelper.exportData("12", this::exportData);
                 items.add(export);
             }
+            // 认证
+            FXMenuItem auth = MenuItemHelper.authNode("12", this::authNode);
             items.add(auth);
         }
         return items;
@@ -427,7 +433,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     @Override
     public void rename() {
         // 判断是否符合要求
-        if (this.value.isParent() || this.value.isEphemeral()) {
+        if (this.isRoot() || this.value.isParent() || this.value.isEphemeral()) {
             return;
         }
         String nodeName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.nodeName());
@@ -463,7 +469,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void delete() {
-        // 删除提示
+        // 根节点
+        if (this.isRoot()) {
+            return;
+        }
+        // 父节点
         if (!MessageBox.confirm(I18nHelper.delete() + " [" + this.value.decodeNodePath() + "] ", I18nHelper.areYouSure())) {
             return;
         }
@@ -943,6 +953,15 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     }
 
     /**
+     * 是否持久节点
+     *
+     * @return 结果
+     */
+    public boolean isPersistent() {
+        return this.value.isPersistent();
+    }
+
+    /**
      * 是否临时节点
      *
      * @return 结果
@@ -950,6 +969,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public boolean isEphemeral() {
         return this.value.isEphemeral();
     }
+
     /**
      * 是否临时节点
      *

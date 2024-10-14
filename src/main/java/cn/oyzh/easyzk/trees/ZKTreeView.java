@@ -206,55 +206,55 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     //     }
     // }
 
-    /**
-     * zk节点修改事件
-     *
-     * @param event 消息
-     */
-    @Subscribe
-    private void nodeUpdated(ZKNodeUpdatedEvent event) {
-        if (event.client().isLastUpdate(event.nodePath())) {
-            event.client().clearLastUpdate();
-            return;
-        }
-        try {
-            // 寻找节点
-            ZKNodeTreeItem item = this.findNodeItem(event.nodePath(), event.info());
-            // 更新信息
-            if (item != null) {
-                item.setBeChanged();
-            } else {
-                JulLog.warn("{}: 未找到被修改节点，无法处理节点！", event.decodeNodePath());
-            }
-        } catch (Exception ex) {
-            JulLog.warn("修改节点失败！", ex);
-        }
-    }
+    // /**
+    //  * zk节点修改事件
+    //  *
+    //  * @param event 消息
+    //  */
+    // @Subscribe
+    // private void nodeUpdated(ZKNodeUpdatedEvent event) {
+    //     if (event.client().isLastUpdate(event.nodePath())) {
+    //         event.client().clearLastUpdate();
+    //         return;
+    //     }
+    //     try {
+    //         // 寻找节点
+    //         ZKNodeTreeItem item = this.findNodeItem(event.nodePath(), event.info());
+    //         // 更新信息
+    //         if (item != null) {
+    //             item.setBeChanged();
+    //         } else {
+    //             JulLog.warn("{}: 未找到被修改节点，无法处理节点！", event.decodeNodePath());
+    //         }
+    //     } catch (Exception ex) {
+    //         JulLog.warn("修改节点失败！", ex);
+    //     }
+    // }
 
-    /**
-     * zk节点删除事件
-     *
-     * @param event 消息
-     */
-    @Subscribe
-    private void nodeDeleted(ZKNodeDeletedEvent event) {
-        if (event.client().isLastDelete(event.nodePath())) {
-            event.client().clearLastDelete();
-            return;
-        }
-        try {
-            // 寻找节点
-            ZKNodeTreeItem item = this.findNodeItem(event.nodePath(), event.info());
-            // 更新信息
-            if (item != null) {
-                item.setBeDeleted();
-            } else {
-                JulLog.warn("{}: 未找到被删除节点，无法处理节点！", event.decodeNodePath());
-            }
-        } catch (Exception ex) {
-            JulLog.warn("删除节点失败！", ex);
-        }
-    }
+    // /**
+    //  * zk节点删除事件
+    //  *
+    //  * @param event 消息
+    //  */
+    // @Subscribe
+    // private void nodeDeleted(ZKNodeDeletedEvent event) {
+    //     if (event.client().isLastDelete(event.nodePath())) {
+    //         event.client().clearLastDelete();
+    //         return;
+    //     }
+    //     try {
+    //         // 寻找节点
+    //         ZKNodeTreeItem item = this.findNodeItem(event.nodePath(), event.info());
+    //         // 更新信息
+    //         if (item != null) {
+    //             item.setBeDeleted();
+    //         } else {
+    //             JulLog.warn("{}: 未找到被删除节点，无法处理节点！", event.decodeNodePath());
+    //         }
+    //     } catch (Exception ex) {
+    //         JulLog.warn("删除节点失败！", ex);
+    //     }
+    // }
 
     /**
      * 认证成功事件

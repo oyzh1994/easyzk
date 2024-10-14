@@ -9,6 +9,8 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterMainEvent;
 import cn.oyzh.easyzk.event.ZKNodeAddEvent;
 import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
+import cn.oyzh.easyzk.event.ZKNodeDeletedEvent;
+import cn.oyzh.easyzk.event.ZKNodeUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
@@ -396,7 +398,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
     public void aclChanged(ZKAclChangedEvent event) {
         for (Tab tab : this.getTabs()) {
             if (tab instanceof ZKConnectTab connectTab && connectTab.activeItem() == event.data()) {
-                connectTab.controller().initAcl();
+                connectTab.onNodeACLChanged();
                 break;
             }
         }
@@ -427,6 +429,36 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         for (Tab tab : this.getTabs()) {
             if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
                 connectTab.onNodeAdded(event.nodePath());
+                break;
+            }
+        }
+    }
+
+    /**
+     * zk节点删除事件
+     *
+     * @param event 消息
+     */
+    @Subscribe
+    private void nodeDeleted(ZKNodeDeletedEvent event) {
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
+                connectTab.onNodeDeleted(event.nodePath());
+                break;
+            }
+        }
+    }
+
+    /**
+     * zk节点修改事件
+     *
+     * @param event 消息
+     */
+    @Subscribe
+    private void nodeUpdated(ZKNodeUpdatedEvent event) {
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
+                connectTab.onNodeUpdated(event.nodePath());
                 break;
             }
         }

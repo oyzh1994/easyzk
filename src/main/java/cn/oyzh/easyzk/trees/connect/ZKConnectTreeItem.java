@@ -129,16 +129,16 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem renameConnect = MenuItemHelper.renameConnect("12", this::rename);
             FXMenuItem deleteConnect = MenuItemHelper.deleteConnect("12", this::delete);
-            FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
+            FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
 
             items.add(connect);
             items.add(editConnect);
             items.add(renameConnect);
-            items.add(repeatConnect);
             items.add(exportData);
             items.add(transportData);
+            items.add(repeatConnect);
             items.add(deleteConnect);
         }
         FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
@@ -209,32 +209,33 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 连接
      */
     public void connect() {
-        if (!this.isConnected() && !this.isConnecting()) {
-            Task task = TaskBuilder.newBuilder()
-                    .onStart(() -> {
-                        this.client.startWithListener();
-                        if (!this.isConnected()) {
-                            if (!this.canceled) {
-                                MessageBox.warn("[" + this.value.getName() + "] " + I18nHelper.connectFail());
-                            }
-                            this.canceled = false;
-                            this.closeConnect(false);
-                        } else {
-                            ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
-                            ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
-                            ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
-                            this.setChild(List.of(dataItem, queryItem, terminalItem));
-                            this.extend();
-                        }
-                        this.flushGraphic();
-                    })
-                    .onFinish(this::stopWaiting)
-                    .onSuccess(this::flushLocal)
-                    .onError(MessageBox::exception)
-                    .build();
-            // 执行连接
-            this.startWaiting(task);
+        if (this.isConnected() || this.isConnecting()) {
+            return;
         }
+        Task task = TaskBuilder.newBuilder()
+                .onStart(() -> {
+                    this.client.startWithListener();
+                    if (!this.isConnected()) {
+                        if (!this.canceled) {
+                            MessageBox.warn("[" + this.value.getName() + "] " + I18nHelper.connectFail());
+                        }
+                        this.canceled = false;
+                        this.closeConnect(false);
+                    } else {
+                        ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
+                        ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
+                        ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
+                        this.setChild(List.of(dataItem, queryItem, terminalItem));
+                        this.extend();
+                    }
+                    this.flushGraphic();
+                })
+                .onFinish(this::stopWaiting)
+                .onSuccess(this::flushLocal)
+                .onError(MessageBox::exception)
+                .build();
+        // 执行连接
+        this.startWaiting(task);
     }
 
     /**
@@ -313,14 +314,14 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         return false;
     }
 
-    @Override
-    public void free() {
-        if (!this.isConnected()) {
-            this.connect();
-        } else {
-            super.free();
-        }
-    }
+    // @Override
+    // public void free() {
+    //     if (!this.isConnected()) {
+    //         this.connect();
+    //     } else {
+    //         super.free();
+    //     }
+    // }
 
     /**
      * 编辑连接
@@ -566,7 +567,11 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public void onPrimaryDoubleClick() {
-        this.connect();
+        if (!this.isConnected() && !this.isConnecting()) {
+            this.connect();
+        } else {
+            super.onPrimaryDoubleClick();
+        }
     }
 
     public String infoName() {

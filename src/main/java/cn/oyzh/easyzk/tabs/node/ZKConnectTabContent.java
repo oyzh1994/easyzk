@@ -16,6 +16,7 @@ import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -329,17 +330,67 @@ public class ZKConnectTabContent extends DynamicTabController {
         try {
             this.activeItem = (ZKNodeTreeItem) treeItem;
             if (this.activeItem != null) {
+                // 初始化数据
                 this.initData();
-                this.initAcl();
+                // 初始化acl
+                this.initACL();
+                // 初始化状态
                 this.initStat();
+                // 初始化配额
                 this.initQuota();
+                // 启用组件
                 this.tabPane.enable();
+                // 检查状态
+                FXUtil.runLater(this::checkStatus, 100);
             } else {
+                // 禁用组件
                 this.tabPane.disable();
             }
             this.flushTab();
         } catch (Exception ex) {
             MessageBox.exception(ex);
+        }
+    }
+
+    private void refreshItem() {
+        try {
+            if (this.activeItem != null) {
+                // 刷新节点
+                this.activeItem.refreshNode();
+                // 初始化数据
+                this.initData();
+                // 初始化acl
+                this.initACL();
+                // 初始化状态
+                this.initStat();
+                // 初始化配额
+                this.initQuota();
+                // 刷新tab
+                this.flushTab();
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
+        }
+    }
+
+    private void checkStatus() {
+        // 节点被移除
+        if (this.activeItem.isBeDeleted()) {
+            if (!this.activeItem.isIgnoreDeleted()) {
+                if (MessageBox.confirm(ZKI18nHelper.nodeTip2())) {
+                    this.activeItem.remove();
+                } else {
+                    this.activeItem.doIgnoreDeleted();
+                }
+            }
+        } else if (this.activeItem.isBeChanged()) { // 节点被更新
+            if (!this.activeItem.isIgnoreChanged()) {
+                if (MessageBox.confirm(ZKI18nHelper.nodeTip1())) {
+                    this.refreshItem();
+                } else {
+                    this.activeItem.doIgnoreChanged();
+                }
+            }
         }
     }
 
@@ -350,7 +401,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     public void reloadACL() {
         try {
             this.activeItem.refreshACL();
-            this.initAcl();
+            this.initACL();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -827,7 +878,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     /**
      * 初始化权限
      */
-    public void initAcl() {
+    public void initACL() {
         if (this.treeItem == null) {
             return;
         }
@@ -875,7 +926,7 @@ public class ZKConnectTabContent extends DynamicTabController {
         // 字符集选择事件
         this.charset.selectedItemChanged((t3, t2, t1) -> this.showData());
         // 切换显示监听
-        this.aclViewSwitch.selectedChanged((t3, t2, t1) -> this.initAcl());
+        this.aclViewSwitch.selectedChanged((t3, t2, t1) -> this.initACL());
         // 切换显示监听
         this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
         // 节点内容搜索
@@ -1059,5 +1110,13 @@ public class ZKConnectTabContent extends DynamicTabController {
 
     public void onNodeAdded(String nodePath) {
         this.treeView.onNodeAdded(nodePath);
+    }
+
+    public void onNodeDeleted(String nodePath) {
+        this.treeView.onNodeDeleted(nodePath);
+    }
+
+    public void onNodeUpdated(String nodePath) {
+        this.treeView.onNodeUpdated(nodePath);
     }
 }

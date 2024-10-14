@@ -52,16 +52,12 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         }
     }
 
-    /**
-     * 刷新内容
-     */
+   @Override
     public void flush() {
         if (this.isInvalid()) {
             return;
         }
-        this.flushGraphic();
-        this.flushText();
-        this.flushGraphicColor();
+        super.flush();
         this.flushNum(this.getItem().getNumChildren(), this.getItem().getChildrenSize());
     }
 

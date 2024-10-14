@@ -143,19 +143,19 @@ public class ZKTreeView extends RichTreeView implements EventListener {
         return null;
     }
 
-    /**
-     * zk节点新增事件，消息监听
-     *
-     * @param event 消息
-     */
-    @Subscribe
-    private void nodeAdded(ZKNodeAddedEvent event) {
-        if (event.client().isLastCreate(event.nodePath())) {
-            event.client().clearLastCreate();
-        } else {
-            // this.nodeAdd(event.nodePath(), event.info());
-        }
-    }
+    // /**
+    //  * zk节点新增事件，消息监听
+    //  *
+    //  * @param event 消息
+    //  */
+    // @Subscribe
+    // private void nodeAdded(ZKNodeAddedEvent event) {
+    //     if (event.client().isLastCreate(event.nodePath())) {
+    //         event.client().clearLastCreate();
+    //     } else {
+    //         // this.nodeAdd(event.nodePath(), event.info());
+    //     }
+    // }
 
     // /**
     //  * zk节点新增事件，手动操作

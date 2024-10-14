@@ -120,4 +120,8 @@ public class ZKConnectTab extends DynamicTab {
     public void onNodeAdd(String nodePath) {
         this.controller().onNodeAdd(nodePath);
     }
+
+    public void onNodeAdded(String nodePath) {
+        this.controller().onNodeAdded(nodePath);
+    }
 }

@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.event.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterMainEvent;
 import cn.oyzh.easyzk.event.ZKNodeAddEvent;
+import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
 import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
@@ -411,6 +412,21 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         for (Tab tab : this.getTabs()) {
             if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
                 connectTab.onNodeAdd(event.data());
+                break;
+            }
+        }
+    }
+
+    /**
+     * zk节点已新增事件，消息监听
+     *
+     * @param event 消息
+     */
+    @Subscribe
+    private void nodeAdded(ZKNodeAddedEvent event) {
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
+                connectTab.onNodeAdded(event.nodePath());
                 break;
             }
         }

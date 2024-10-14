@@ -434,7 +434,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.isRoot() || this.value.isParent() || this.value.isEphemeral()) {
             return;
         }
-        String nodeName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.nodeName());
+        String nodeName = MessageBox.prompt(I18nHelper.pleaseInputNodeName(), this.value.nodeName());
         // 名称为空或名称跟当前名称相同，则忽略
         if (StringUtil.isBlank(nodeName) || Objects.equals(nodeName, this.value.nodeName())) {
             return;
@@ -444,15 +444,17 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         String newNodePath = ZKNodeUtil.concatPath(parentPath, nodeName);
         try {
             if (this.client().exists(newNodePath)) {
-                MessageBox.warn(I18nHelper.contentAlreadyExists());
+                MessageBox.warn(I18nHelper.node() + " [" + newNodePath + "] " + I18nHelper.alreadyExists());
                 return;
             }
             // 创建模式
             CreateMode createMode = this.value.isEphemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
             // 创建新节点
-            if (this.client().create(newNodePath, this.nodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
+            if (this.client.create(newNodePath, this.nodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
                 // 删除旧节点
                 this.deleteNode();
+                // 发送事件
+                ZKEventUtil.nodeAdd(this.info, newNodePath);
             } else {// 操作失败
                 MessageBox.warn(I18nHelper.operationFail());
             }

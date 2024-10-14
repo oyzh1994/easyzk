@@ -1056,4 +1056,8 @@ public class ZKConnectTabContent extends DynamicTabController {
     public void onNodeAdd(String nodePath) {
         this.treeView.onNodeAdd(nodePath);
     }
+
+    public void onNodeAdded(String nodePath) {
+        this.treeView.onNodeAdded(nodePath);
+    }
 }

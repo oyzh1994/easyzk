@@ -8,7 +8,6 @@ import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.util.FXUtil;
 import com.google.common.eventbus.Subscribe;
-import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -169,5 +168,12 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
         } catch (Exception ex) {
             JulLog.warn("新增节点失败！", ex);
         }
+    }
+
+    public void onNodeAdded(String nodePath) {
+        if (this.client.isLastCreate(nodePath)) {
+            return;
+        }
+
     }
 }

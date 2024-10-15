@@ -16,6 +16,8 @@ public class ZKI18nHelper {
 
     public static final String NODE_TIP4 = "zk.nodeTip4";
 
+    public static final String NODE_TIP5 = "zk.nodeTip5";
+
     public static String nodeTip1() {
         return I18nResourceBundle.i18nString(NODE_TIP1);
     }
@@ -30,5 +32,9 @@ public class ZKI18nHelper {
 
     public static String nodeTip4() {
         return I18nResourceBundle.i18nString(NODE_TIP4);
+    }
+
+    public static String nodeTip5() {
+        return I18nResourceBundle.i18nString(NODE_TIP5);
     }
 }

@@ -1,16 +1,11 @@
 package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.event.ZKAclChangedEvent;
 import cn.oyzh.easyzk.event.ZKAuthMainEvent;
 import cn.oyzh.easyzk.event.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterMainEvent;
-import cn.oyzh.easyzk.event.ZKNodeAddEvent;
-import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
-import cn.oyzh.easyzk.event.ZKNodeDeletedEvent;
-import cn.oyzh.easyzk.event.ZKNodeUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
@@ -394,73 +389,73 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
     //     }
     // }
 
-    @Subscribe
-    public void aclChanged(ZKAclChangedEvent event) {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKConnectTab connectTab && connectTab.activeItem() == event.data()) {
-                connectTab.onNodeACLChanged();
-                break;
-            }
-        }
-    }
+    // @Subscribe
+    // public void aclChanged(ZKNodeACLChangedEvent event) {
+    //     for (Tab tab : this.getTabs()) {
+    //         if (tab instanceof ZKConnectTab connectTab && connectTab.activeItem() == event.data()) {
+    //             connectTab.onNodeACLChanged();
+    //             break;
+    //         }
+    //     }
+    // }
 
-    /**
-     * zk节点新增事件，手动操作
-     *
-     * @param event 消息
-     */
-    @Subscribe
-    private void nodeAdd(ZKNodeAddEvent event) {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
-                connectTab.onNodeAdd(event.data());
-                break;
-            }
-        }
-    }
-
-    /**
-     * zk节点已新增事件，消息监听
-     *
-     * @param event 消息
-     */
-    @Subscribe
-    private void nodeAdded(ZKNodeAddedEvent event) {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
-                connectTab.onNodeAdded(event.nodePath());
-                break;
-            }
-        }
-    }
-
-    /**
-     * zk节点删除事件
-     *
-     * @param event 消息
-     */
-    @Subscribe
-    private void nodeDeleted(ZKNodeDeletedEvent event) {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
-                connectTab.onNodeDeleted(event.nodePath());
-                break;
-            }
-        }
-    }
-
-    /**
-     * zk节点修改事件
-     *
-     * @param event 消息
-     */
-    @Subscribe
-    private void nodeUpdated(ZKNodeUpdatedEvent event) {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
-                connectTab.onNodeUpdated(event.nodePath());
-                break;
-            }
-        }
-    }
+    // /**
+    //  * zk节点新增事件，手动操作
+    //  *
+    //  * @param event 消息
+    //  */
+    // @Subscribe
+    // private void nodeAdd(ZKNodeAddEvent event) {
+    //     for (Tab tab : this.getTabs()) {
+    //         if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
+    //             connectTab.onNodeAdd(event.data());
+    //             break;
+    //         }
+    //     }
+    // }
+    //
+    // /**
+    //  * zk节点已新增事件，消息监听
+    //  *
+    //  * @param event 消息
+    //  */
+    // @Subscribe
+    // private void nodeAdded(ZKNodeAddedEvent event) {
+    //     for (Tab tab : this.getTabs()) {
+    //         if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
+    //             connectTab.onNodeAdded(event.nodePath());
+    //             break;
+    //         }
+    //     }
+    // }
+    //
+    // /**
+    //  * zk节点删除事件
+    //  *
+    //  * @param event 消息
+    //  */
+    // @Subscribe
+    // private void nodeDeleted(ZKNodeDeletedEvent event) {
+    //     for (Tab tab : this.getTabs()) {
+    //         if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
+    //             connectTab.onNodeDeleted(event.nodePath());
+    //             break;
+    //         }
+    //     }
+    // }
+    //
+    // /**
+    //  * zk节点修改事件
+    //  *
+    //  * @param event 消息
+    //  */
+    // @Subscribe
+    // private void nodeUpdated(ZKNodeUpdatedEvent event) {
+    //     for (Tab tab : this.getTabs()) {
+    //         if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
+    //             connectTab.onNodeUpdated(event.nodePath());
+    //             break;
+    //         }
+    //     }
+    // }
 }

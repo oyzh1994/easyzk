@@ -19,7 +19,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.NonNull;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
@@ -108,40 +107,22 @@ public class ZKACLUpdateController extends StageController {
                 return;
             }
             List<ACL> aclList = this.zkClient.getACL(this.zkItem.nodePath());
-            // 权限id
-            String idVal = this.acl.isWorldACL() ? "world" : this.acl.schemeVal();
-            boolean updateFlag = false;
             for (ACL acl : aclList) {
-                if (acl.getId().getScheme().equals(idVal)) {
+                if (acl.equals(this.acl)) {
                     acl.setPerms(ZKACLUtil.toPermInt(perms));
-                    updateFlag = true;
+                    Stat stat = this.zkClient.setACL(this.zkItem.nodePath(), aclList);
+                    if (stat != null) {
+                        ZKEventUtil.nodeACLUpdated(this.zkItem.info());
+                        this.closeWindow();
+                    } else {
+                        MessageBox.warn(I18nHelper.operationFail());
+                    }
+                    break;
                 }
-            }
-            if (updateFlag) {
-                this.updateACL(aclList);
-            } else {
-                MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
-        }
-    }
-
-    /**
-     * 修改zk权限
-     *
-     * @param aclList 权限列表
-     */
-    private void updateACL(@NonNull List<ACL> aclList) throws Exception {
-        Stat stat = this.zkClient.setACL(this.zkItem.nodePath(), aclList);
-        if (stat != null) {
-            this.zkItem.refreshACL();
-            ZKEventUtil.aclChanged(this.zkItem);
-            // MessageBox.okToast(I18nHelper.operationSuccess());
-            this.closeWindow();
-        } else {
-            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 

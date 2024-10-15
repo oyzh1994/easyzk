@@ -6,6 +6,12 @@ import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.event.ZKNodeACLAddedEvent;
+import cn.oyzh.easyzk.event.ZKNodeACLUpdatedEvent;
+import cn.oyzh.easyzk.event.ZKNodeAddEvent;
+import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
+import cn.oyzh.easyzk.event.ZKNodeDeletedEvent;
+import cn.oyzh.easyzk.event.ZKNodeUpdatedEvent;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
 import cn.oyzh.easyzk.fx.ZKDataFormatComboBox;
@@ -51,6 +57,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import com.google.common.eventbus.Subscribe;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -354,20 +361,18 @@ public class ZKConnectTabContent extends DynamicTabController {
 
     private void refreshItem() {
         try {
-            if (this.activeItem != null) {
-                // 刷新节点
-                this.activeItem.refreshNode();
-                // 初始化数据
-                this.initData();
-                // 初始化acl
-                this.initACL();
-                // 初始化状态
-                this.initStat();
-                // 初始化配额
-                this.initQuota();
-                // 刷新tab
-                this.flushTab();
-            }
+            // 刷新节点
+            this.activeItem.refreshNode();
+            // 初始化数据
+            this.initData();
+            // 初始化acl
+            this.initACL();
+            // 初始化状态
+            this.initStat();
+            // 初始化配额
+            this.initQuota();
+            // 刷新tab
+            this.flushTab();
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -391,6 +396,14 @@ public class ZKConnectTabContent extends DynamicTabController {
                     this.activeItem.doIgnoreChanged();
                 }
             }
+        } else if (this.activeItem.isBeChildChanged()) { // 子节点被更新
+            if (!this.activeItem.isIgnoreChildChanged()) {
+                if (MessageBox.confirm(ZKI18nHelper.nodeTip5())) {
+                    this.activeItem.reloadChild();
+                } else {
+                    this.activeItem.doIgnoreChildChanged();
+                }
+            }
         }
     }
 
@@ -403,7 +416,6 @@ public class ZKConnectTabContent extends DynamicTabController {
             this.activeItem.refreshACL();
             this.initACL();
         } catch (Exception ex) {
-            ex.printStackTrace();
             MessageBox.exception(ex);
         }
     }
@@ -492,7 +504,10 @@ public class ZKConnectTabContent extends DynamicTabController {
         try {
             Stat stat = this.activeItem.deleteACL(acl);
             if (stat != null) {
-                this.reloadACL();
+                this.aclTableView.removeItem(acl);
+                if (this.aclTableView.isItemEmpty()) {
+                    this.reloadACL();
+                }
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -879,10 +894,11 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 初始化权限
      */
     public void initACL() {
-        if (this.treeItem == null) {
+        if (this.treeItem == null || this.activeItem == null) {
             return;
         }
         if (this.activeItem.aclEmpty()) {
+            this.aclPaging = null;
             this.aclViewSwitch.disable();
             this.aclTableView.clearItems();
         } else {
@@ -1104,19 +1120,82 @@ public class ZKConnectTabContent extends DynamicTabController {
         this.treeView.positionItem();
     }
 
-    public void onNodeAdd(String nodePath) {
-        this.treeView.onNodeAdd(nodePath);
+    /**
+     * 节点添加事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void onNodeAdd(ZKNodeAddEvent event) {
+        if (event.info() == this.client.zkInfo()) {
+            this.treeView.onNodeAdd(event.data());
+        }
     }
 
-    public void onNodeAdded(String nodePath) {
-        this.treeView.onNodeAdded(nodePath);
+    /**
+     * 节点已添加事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void onNodeAdded(ZKNodeAddedEvent event) {
+        if (event.info() == this.client.zkInfo()) {
+            this.treeView.onNodeAdded(event.decodeNodePath());
+        }
     }
 
-    public void onNodeDeleted(String nodePath) {
-        this.treeView.onNodeDeleted(nodePath);
+    /**
+     * 节点已删除事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void onNodeDeleted(ZKNodeDeletedEvent event) {
+        if (event.info() == this.client.zkInfo()) {
+            this.treeView.onNodeDeleted(event.decodeNodePath());
+        }
     }
 
-    public void onNodeUpdated(String nodePath) {
-        this.treeView.onNodeUpdated(nodePath);
+    /**
+     * 节点已变更事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void onNodeUpdated(ZKNodeUpdatedEvent event) {
+        if (event.info() == this.client.zkInfo()) {
+            this.treeView.onNodeUpdated(event.decodeNodePath());
+        }
+    }
+
+    /**
+     * 节点访问控制已新增事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void onNodeACLAdded(ZKNodeACLAddedEvent event) {
+        if (event.data() == this.client.zkInfo()) {
+            this.reloadACL();
+            if (this.aclPaging != null) {
+                this.renderACLView(this.aclPaging.lastPage());
+            }
+        }
+    }
+
+    /**
+     * 节点访问控制已变更事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void onNodeACLUpdated(ZKNodeACLUpdatedEvent event) {
+        if (event.data() == this.client.zkInfo()) {
+            Long curPage = this.aclPaging == null ? null : this.aclPaging.currentPage();
+            this.reloadACL();
+            if (curPage != null) {
+                this.renderACLView(curPage);
+            }
+        }
     }
 }

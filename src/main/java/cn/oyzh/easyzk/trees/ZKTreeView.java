@@ -12,18 +12,12 @@ import cn.oyzh.easyzk.event.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.ZKAuthEnabledEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
-import cn.oyzh.easyzk.event.ZKNodeAddEvent;
-import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
-import cn.oyzh.easyzk.event.ZKNodeDeletedEvent;
-import cn.oyzh.easyzk.event.ZKNodeUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKSearchFinishEvent;
 import cn.oyzh.easyzk.event.ZKSearchStartEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
-import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -39,9 +33,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * zk树
@@ -114,19 +106,19 @@ public class ZKTreeView extends RichTreeView implements EventListener {
         }
     }
 
-    /**
-     * 寻找zk节点
-     *
-     * @param targetPath 目标路径
-     * @param zkInfo     zk信息
-     * @return zk节点
-     */
-    public ZKNodeTreeItem findNodeItem(@NonNull String targetPath, @NonNull ZKInfo zkInfo) {
-        // List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
-        // Optional<ZKConnectTreeItem> itemOptional = connectTreeItems.parallelStream().filter(c -> c.value() == zkInfo).findFirst();
-        // return itemOptional.map(item -> item.findNodeItem(targetPath)).orElse(null);
-        return null;
-    }
+    // /**
+    //  * 寻找zk节点
+    //  *
+    //  * @param targetPath 目标路径
+    //  * @param zkInfo     zk信息
+    //  * @return zk节点
+    //  */
+    // public ZKNodeTreeItem findNodeItem(@NonNull String targetPath, @NonNull ZKInfo zkInfo) {
+    //     // List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
+    //     // Optional<ZKConnectTreeItem> itemOptional = connectTreeItems.parallelStream().filter(c -> c.value() == zkInfo).findFirst();
+    //     // return itemOptional.map(item -> item.findNodeItem(targetPath)).orElse(null);
+    //     return null;
+    // }
 
     /**
      * 获取所有zk节点

@@ -117,23 +117,23 @@ public class ZKConnectTab extends DynamicTab {
         this.controller().restoreData(data);
     }
 
-    public void onNodeAdd(String nodePath) {
-        this.controller().onNodeAdd(nodePath);
-    }
-
-    public void onNodeAdded(String nodePath) {
-        this.controller().onNodeAdded(nodePath);
-    }
-
-    public void onNodeDeleted(String nodePath) {
-        this.controller().onNodeDeleted(nodePath);
-    }
-
-    public void onNodeUpdated(String nodePath) {
-        this.controller().onNodeUpdated(nodePath);
-    }
-
-    public void onNodeACLChanged() {
-        this.controller().initACL();
-    }
+    // public void onNodeAdd(String nodePath) {
+    //     this.controller().onNodeAdd(nodePath);
+    // }
+    //
+    // public void onNodeAdded(String nodePath) {
+    //     this.controller().onNodeAdded(nodePath);
+    // }
+    //
+    // public void onNodeDeleted(String nodePath) {
+    //     this.controller().onNodeDeleted(nodePath);
+    // }
+    //
+    // public void onNodeUpdated(String nodePath) {
+    //     this.controller().onNodeUpdated(nodePath);
+    // }
+    //
+    // public void onNodeACLChanged() {
+    //     this.controller().initACL();
+    // }
 }

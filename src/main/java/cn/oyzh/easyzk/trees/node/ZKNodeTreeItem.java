@@ -62,6 +62,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 节点状态
      * 1. 已变更
      * 2. 已删除
+     * 3. 子节点已变更
      */
     @Getter
     private Byte nodeStatus;
@@ -70,6 +71,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 忽略状态
      * 1. 已忽略变更
      * 2. 已忽略删除
+     * 3. 已忽略子节点变更
      */
     private Byte ignoreStatus;
 
@@ -105,12 +107,24 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.flushValue();
     }
 
+    /**
+     * 设置被删除状态
+     */
+    public void setBeChildChanged() {
+        this.nodeStatus = 3;
+        this.flushValue();
+    }
+
     public boolean isBeChanged() {
         return this.nodeStatus != null && this.nodeStatus == 1;
     }
 
     public boolean isBeDeleted() {
         return this.nodeStatus != null && this.nodeStatus == 2;
+    }
+
+    public boolean isBeChildChanged() {
+        return this.nodeStatus != null && this.nodeStatus == 3;
     }
 
     /**
@@ -127,12 +141,23 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.ignoreStatus = 2;
     }
 
+    /**
+     * 设置被删除状态
+     */
+    public void doIgnoreChildChanged() {
+        this.ignoreStatus = 3;
+    }
+
     public boolean isIgnoreChanged() {
         return this.ignoreStatus != null && this.ignoreStatus == 1;
     }
 
     public boolean isIgnoreDeleted() {
         return this.ignoreStatus != null && this.ignoreStatus == 2;
+    }
+
+    public boolean isIgnoreChildChanged() {
+        return this.ignoreStatus != null && this.ignoreStatus == 3;
     }
 
     /**

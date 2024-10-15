@@ -436,9 +436,15 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    public static void aclChanged(ZKNodeTreeItem item) {
-        ZKAclChangedEvent event = new ZKAclChangedEvent();
-        event.data(item);
+    public static void nodeACLAdded(ZKInfo info) {
+        ZKNodeACLAddedEvent event = new ZKNodeACLAddedEvent();
+        event.data(info);
+        EventUtil.post(event);
+    }
+
+    public static void nodeACLUpdated(ZKInfo info) {
+        ZKNodeACLUpdatedEvent event = new ZKNodeACLUpdatedEvent();
+        event.data(info);
         EventUtil.post(event);
     }
 }

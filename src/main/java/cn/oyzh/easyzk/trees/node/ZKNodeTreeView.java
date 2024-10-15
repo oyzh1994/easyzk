@@ -173,8 +173,11 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
             }
         } catch (Exception ex) {
             JulLog.warn("新增节点事件处理失败！", ex);
-        } finally {
-            this.client.clearLastCreate();
+        // } finally {
+        //     // 如果未开启节点监听，则清除新增标记
+        //     if (!this.client.isEnableListen()) {
+        //         this.client.clearLastCreate();
+        //     }
         }
     }
 
@@ -183,7 +186,7 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
      *
      * @param nodePath 节点路径
      */
-    public void onNodeAdded(String nodePath) {
+    public void onNodeCreated(String nodePath) {
         if (this.client.isLastCreate(nodePath)) {
             this.client.clearLastCreate();
             return;
@@ -222,7 +225,7 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
      *
      * @param nodePath 节点路径
      */
-    public void onNodeDeleted(String nodePath) {
+    public void onNodeRemoved(String nodePath) {
         if (this.client.isLastDelete(nodePath)) {
             this.client.clearLastDelete();
             return;
@@ -257,7 +260,7 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
      *
      * @param nodePath 节点路径
      */
-    public void onNodeUpdated(String nodePath) {
+    public void onNodeChanged(String nodePath) {
         if (this.client.isLastUpdate(nodePath)) {
             this.client.clearLastUpdate();
             return;

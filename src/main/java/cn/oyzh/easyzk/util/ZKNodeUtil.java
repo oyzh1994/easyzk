@@ -18,9 +18,10 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.StatsTrack;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -396,5 +397,12 @@ public class ZKNodeUtil {
         } catch (ZKNoAuthException ignored) {
         }
         return list;
+    }
+
+    public static String decodePath(String nodePath) {
+        if (StringUtil.containsAny(nodePath, "%", "+")) {
+            return URLDecoder.decode(nodePath, Charset.defaultCharset());
+        }
+        return nodePath;
     }
 }

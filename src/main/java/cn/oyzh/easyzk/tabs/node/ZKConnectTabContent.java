@@ -9,9 +9,9 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKNodeACLAddedEvent;
 import cn.oyzh.easyzk.event.ZKNodeACLUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKNodeAddEvent;
-import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
-import cn.oyzh.easyzk.event.ZKNodeDeletedEvent;
-import cn.oyzh.easyzk.event.ZKNodeUpdatedEvent;
+import cn.oyzh.easyzk.event.ZKNodeCreatedEvent;
+import cn.oyzh.easyzk.event.ZKNodeRemovedEvent;
+import cn.oyzh.easyzk.event.ZKNodeChangedEvent;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
 import cn.oyzh.easyzk.fx.ZKDataFormatComboBox;
@@ -1173,9 +1173,9 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param event 事件
      */
     @Subscribe
-    public void onNodeAdded(ZKNodeAddedEvent event) {
+    public void onNodeCreated(ZKNodeCreatedEvent event) {
         if (event.info() == this.client.zkInfo()) {
-            this.treeView.onNodeAdded(event.decodeNodePath());
+            this.treeView.onNodeCreated(event.data());
         }
     }
 
@@ -1185,9 +1185,9 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param event 事件
      */
     @Subscribe
-    public void onNodeDeleted(ZKNodeDeletedEvent event) {
+    public void onNodeRemoved(ZKNodeRemovedEvent event) {
         if (event.info() == this.client.zkInfo()) {
-            this.treeView.onNodeDeleted(event.decodeNodePath());
+            this.treeView.onNodeRemoved(event.data());
         }
     }
 
@@ -1197,9 +1197,9 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param event 事件
      */
     @Subscribe
-    public void onNodeUpdated(ZKNodeUpdatedEvent event) {
+    public void onNodeChanged(ZKNodeChangedEvent event) {
         if (event.info() == this.client.zkInfo()) {
-            this.treeView.onNodeUpdated(event.decodeNodePath());
+            this.treeView.onNodeChanged(event.data());
         }
     }
 

@@ -56,12 +56,12 @@ public class ZKTreeListener implements TreeCacheListener {
             TreeCacheEvent.Type type = event.getType();
             ChildData data = event.getData();
             Stat stat = null;
-            byte[] nodeData = null;
+            // byte[] nodeData = null;
             String nodePath = null;
             if (data != null) {
                 stat = data.getStat();
                 nodePath = data.getPath();
-                nodeData = data.getData();
+                // nodeData = data.getData();
             }
             if (stat != null) {
                 long nowTime = System.currentTimeMillis();
@@ -80,11 +80,15 @@ public class ZKTreeListener implements TreeCacheListener {
                     }
                 }
             }
-
+            // switch (type) {
+            //     case NODE_ADDED -> ZKEventUtil.nodeAdded(this.zkClient, stat, nodeData, nodePath);
+            //     case NODE_UPDATED -> ZKEventUtil.nodeUpdated(this.zkClient, stat, nodeData, nodePath);
+            //     case NODE_REMOVED -> ZKEventUtil.nodeDeleted(this.zkClient, stat, nodePath);
+            // }
             switch (type) {
-                case NODE_ADDED -> ZKEventUtil.nodeAdded(this.zkClient, stat, nodeData, nodePath);
-                case NODE_UPDATED -> ZKEventUtil.nodeUpdated(this.zkClient, stat, nodeData, nodePath);
-                case NODE_REMOVED -> ZKEventUtil.nodeDeleted(this.zkClient, stat, nodePath);
+                case NODE_ADDED -> ZKEventUtil.nodeCreated(this.zkClient, nodePath);
+                case NODE_UPDATED -> ZKEventUtil.nodeChanged(this.zkClient, nodePath);
+                case NODE_REMOVED -> ZKEventUtil.nodeRemoved(this.zkClient, nodePath);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
+import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
@@ -74,7 +75,7 @@ public class ZKEventUtil {
      * 节点添加事件
      *
      * @param info zk客户端
-     * @param path   路径
+     * @param path 路径
      */
     public static void nodeAdd(ZKInfo info, String path) {
         ZKNodeAddEvent event = new ZKNodeAddEvent();
@@ -83,21 +84,34 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
+    // /**
+    //  * 节点已添加事件
+    //  *
+    //  * @param client   zk客户端
+    //  * @param stat     状态
+    //  * @param nodeData 数据
+    //  * @param nodePath 路径
+    //  */
+    // public static void nodeAdded(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
+    //     ZKNodeAddedEvent event = new ZKNodeAddedEvent();
+    //     ZKNode zkNode = new ZKNode();
+    //     zkNode.stat(stat);
+    //     zkNode.nodePath(nodePath);
+    //     zkNode.nodeData(nodeData);
+    //     event.data(zkNode);
+    //     event.client(client);
+    //     EventUtil.post(event);
+    // }
+
     /**
      * 节点已添加事件
      *
      * @param client   zk客户端
-     * @param stat     状态
-     * @param nodeData 数据
      * @param nodePath 路径
      */
-    public static void nodeAdded(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
-        ZKNodeAddedEvent event = new ZKNodeAddedEvent();
-        ZKNode zkNode = new ZKNode();
-        zkNode.stat(stat);
-        zkNode.nodePath(nodePath);
-        zkNode.nodeData(nodeData);
-        event.data(zkNode);
+    public static void nodeCreated(ZKClient client, String nodePath) {
+        ZKNodeCreatedEvent event = new ZKNodeCreatedEvent();
+        event.data(ZKNodeUtil.decodePath(nodePath));
         event.client(client);
         EventUtil.post(event);
     }
@@ -115,21 +129,34 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
+    // /**
+    //  * 节点已修改事件
+    //  *
+    //  * @param client   zk客户端
+    //  * @param stat     状态
+    //  * @param nodeData 数据
+    //  * @param nodePath 路径
+    //  */
+    // public static void nodeUpdated(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
+    //     ZKNodeUpdatedEvent event = new ZKNodeUpdatedEvent();
+    //     ZKNode zkNode = new ZKNode();
+    //     zkNode.stat(stat);
+    //     zkNode.nodePath(nodePath);
+    //     zkNode.nodeData(nodeData);
+    //     event.data(zkNode);
+    //     event.client(client);
+    //     EventUtil.post(event);
+    // }
+
     /**
      * 节点已修改事件
      *
      * @param client   zk客户端
-     * @param stat     状态
-     * @param nodeData 数据
      * @param nodePath 路径
      */
-    public static void nodeUpdated(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
-        ZKNodeUpdatedEvent event = new ZKNodeUpdatedEvent();
-        ZKNode zkNode = new ZKNode();
-        zkNode.stat(stat);
-        zkNode.nodePath(nodePath);
-        zkNode.nodeData(nodeData);
-        event.data(zkNode);
+    public static void nodeChanged(ZKClient client, String nodePath) {
+        ZKNodeChangedEvent event = new ZKNodeChangedEvent();
+        event.data(ZKNodeUtil.decodePath(nodePath));
         event.client(client);
         EventUtil.post(event);
     }
@@ -149,19 +176,32 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
+    // /**
+    //  * 节点已删除事件
+    //  *
+    //  * @param client   zk客户端
+    //  * @param stat     状态
+    //  * @param nodePath 路径
+    //  */
+    // public static void nodeDeleted(ZKClient client, Stat stat, String nodePath) {
+    //     ZKNodeDeletedEvent event = new ZKNodeDeletedEvent();
+    //     ZKNode zkNode = new ZKNode();
+    //     zkNode.stat(stat);
+    //     zkNode.nodePath(nodePath);
+    //     event.data(zkNode);
+    //     event.client(client);
+    //     EventUtil.post(event);
+    // }
+
     /**
      * 节点已删除事件
      *
      * @param client   zk客户端
-     * @param stat     状态
      * @param nodePath 路径
      */
-    public static void nodeDeleted(ZKClient client, Stat stat, String nodePath) {
-        ZKNodeDeletedEvent event = new ZKNodeDeletedEvent();
-        ZKNode zkNode = new ZKNode();
-        zkNode.stat(stat);
-        zkNode.nodePath(nodePath);
-        event.data(zkNode);
+    public static void nodeRemoved(ZKClient client, String nodePath) {
+        ZKNodeRemovedEvent event = new ZKNodeRemovedEvent();
+        event.data(ZKNodeUtil.decodePath(nodePath));
         event.client(client);
         EventUtil.post(event);
     }
@@ -403,7 +443,7 @@ public class ZKEventUtil {
      * 恢复历史
      *
      * @param data 历史
-     * @param item    zk树节点
+     * @param item zk树节点
      */
     public static void historyRestore(byte[] data, ZKNodeTreeItem item) {
         ZKHistoryRestoreEvent event = new ZKHistoryRestoreEvent();

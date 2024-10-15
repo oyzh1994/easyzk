@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.theme.ThemeManager;
@@ -59,10 +60,29 @@ public class ZKConnectTab extends DynamicTab {
         if (this.treeItem() == null) {
             return;
         }
+        boolean changed = false;
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         if (glyph == null) {
-            glyph = new SVGGlyph("/font/file-text.svg", 10);
-            glyph.disableTheme();
+            changed = true;
+        } else if (this.activeItem() == null) {
+            SVGGlyph glyph1 = this.treeItem().graphic();
+            if (StringUtil.notEquals(glyph.getUrl(), glyph1.getUrl())) {
+                changed = true;
+            }
+        } else {
+            SVGGlyph glyph1 = this.activeItem().graphic();
+            if (StringUtil.notEquals(glyph.getUrl(), glyph1.getUrl())) {
+                changed = true;
+            }
+        }
+        if (changed) {
+            if (this.activeItem() == null) {
+                glyph = this.treeItem().graphic().clone();
+                glyph.disableTheme();
+            } else {
+                glyph = this.activeItem().graphic().clone();
+                glyph.disableTheme();
+            }
             this.setGraphic(glyph);
         }
     }
@@ -116,24 +136,4 @@ public class ZKConnectTab extends DynamicTab {
     public void restoreData(byte[] data) {
         this.controller().restoreData(data);
     }
-
-    // public void onNodeAdd(String nodePath) {
-    //     this.controller().onNodeAdd(nodePath);
-    // }
-    //
-    // public void onNodeAdded(String nodePath) {
-    //     this.controller().onNodeAdded(nodePath);
-    // }
-    //
-    // public void onNodeDeleted(String nodePath) {
-    //     this.controller().onNodeDeleted(nodePath);
-    // }
-    //
-    // public void onNodeUpdated(String nodePath) {
-    //     this.controller().onNodeUpdated(nodePath);
-    // }
-    //
-    // public void onNodeACLChanged() {
-    //     this.controller().initACL();
-    // }
 }

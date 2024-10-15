@@ -15,21 +15,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class ZKNodeUpdatedEvent extends Event<ZKNode> {
+public class ZKNodeChangedEvent extends Event<String> {
 
     private ZKClient client;
-
-    public byte[] nodeData() {
-        return this.data().nodeData();
-    }
-
-    public String nodePath() {
-        return this.data().nodePath();
-    }
-
-    public String decodeNodePath() {
-        return this.data().decodeNodePath();
-    }
 
     public ZKInfo info() {
         return this.client.zkInfo();

@@ -15,17 +15,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class ZKNodeDeletedEvent extends Event<ZKNode>   {
+public class ZKNodeRemovedEvent extends Event<String>   {
 
     private ZKClient client;
-
-    public String nodePath() {
-        return this.data().nodePath();
-    }
-
-    public String decodeNodePath() {
-        return this.data().decodeNodePath();
-    }
 
     public ZKInfo info(){
         return this.client.zkInfo();

@@ -147,10 +147,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 解码的节点路径
      */
     public String decodeNodePath() {
-        if (StringUtil.containsAny(this.nodePath, "%", "+")) {
-            return URLDecoder.decode(this.nodePath, Charset.defaultCharset());
-        }
-        return this.nodePath;
+        return ZKNodeUtil.decodePath(this.nodePath);
     }
 
     /**
@@ -159,11 +156,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 解码的节点名称
      */
     public String decodeNodeName() {
-        String nodeName = this.nodeName();
-        if (StringUtil.containsAny(nodeName, "%", "+")) {
-            return URLDecoder.decode(nodeName, Charset.defaultCharset());
-        }
-        return nodeName;
+        return ZKNodeUtil.decodePath(this.nodeName());
     }
 
     /**

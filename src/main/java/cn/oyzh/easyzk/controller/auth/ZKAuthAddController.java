@@ -88,6 +88,6 @@ public class ZKAuthAddController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("zk.title.auth.add");
+        return I18nHelper.addAuth();
     }
 }

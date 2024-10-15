@@ -561,6 +561,6 @@ public class ZKACLAddController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("zk.title.acl.add");
+        return I18nHelper.addACL();
     }
 }

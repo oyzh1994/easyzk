@@ -158,7 +158,7 @@
                             <Insets left="5" top="5"/>
                         </FlowPane.margin>
                     </CopySVGGlyph>
-                    <SVGGlyph tipText="%zk.node.main.copy2" size="16" onMousePrimaryClicked="#copyNodePath"
+                    <SVGGlyph tipText="%base.copyPath" size="16" onMousePrimaryClicked="#copyNodePath"
                               url="/font/copy-path.svg">
                         <FlowPane.margin>
                             <Insets left="5" top="5"/>
@@ -201,7 +201,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%base.status">
+        <FXTab text="%base.stat">
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
             </graphic>
@@ -246,7 +246,7 @@
                 </FlexVBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%zk.acl">
+        <FXTab text="%base.acl">
             <graphic>
                 <AccessControlSVGGlyph initCursor="DEFAULT" size="13"/>
             </graphic>
@@ -457,7 +457,7 @@
                 <!-- </FlexVBox> -->
             </FlexVBox>
         </FXTab>
-        <FXTab text="%zk.node.main.tab.quota" fx:id="quotaTab">
+        <FXTab text="%base.quota" fx:id="quotaTab">
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/quota.svg" size="13"/>
             </graphic>

@@ -8,9 +8,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKServiceController" realHeight="600" realWidth="900">
-    <FXSeparator flexWidth="100% - 24" text="%zk.node.service.separator.serverInfo">
+    <FXSeparator flexWidth="100% - 24" text="%base.serverInfo">
         <VBox.margin>
             <Insets left="12" top="5" bottom="5"/>
         </VBox.margin>
@@ -51,7 +53,7 @@
             </HBox.margin>
         </ReadOnlyTextArea>
     </FlexHBox>
-    <FXSeparator flexWidth="100% - 24" text="%zk.node.service.separator.clusterInfo">
+    <FXSeparator flexWidth="100% - 24" text="%base.clusterInfo">
         <VBox.margin>
             <Insets left="12" top="5" bottom="5"/>
         </VBox.margin>

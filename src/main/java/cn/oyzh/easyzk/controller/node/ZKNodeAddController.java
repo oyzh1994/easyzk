@@ -372,6 +372,6 @@ public class ZKNodeAddController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("zk.title.node.add");
+        return I18nHelper.addNode();
     }
 }

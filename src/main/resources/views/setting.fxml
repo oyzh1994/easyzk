@@ -64,7 +64,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexCheckBox tipText="%zk.info.autoAuthTip" text="%zk.setting.auth.autoAuth" realHeight="25"
+                    <FlexCheckBox tipText="%zk.info.autoAuthTip" text="%base.autoAuth" realHeight="25"
                                   selected="true" fx:id="authMode">
                         <HBox.margin>
                             <Insets left="10" top="12"/>

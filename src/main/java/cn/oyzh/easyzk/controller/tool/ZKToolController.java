@@ -95,6 +95,6 @@ public class ZKToolController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("zk.title.tool");
+        return I18nHelper.tools();
     }
 }

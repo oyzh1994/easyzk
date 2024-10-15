@@ -108,7 +108,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%zk.acl" fx:id="aclTab">
+        <FXTab text="%base.acl" fx:id="aclTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
                     <AccentLabel text="%zk.aclType" realWidth="80" realHeight="30">
@@ -132,18 +132,18 @@
                         <padding>
                             <Insets left="10" top="20"/>
                         </padding>
-                        <FlexCheckBox text="%zk.acl.a" selected="true" realWidth="60"/>
-                        <FlexCheckBox text="%zk.acl.w" selected="true" realWidth="60">
+                        <FlexCheckBox text="%base.admin" selected="true" realWidth="60"/>
+                        <FlexCheckBox text="%base.write" selected="true" realWidth="60">
                             <HBox.margin>
                                 <Insets left="5"/>
                             </HBox.margin>
                         </FlexCheckBox>
-                        <FlexCheckBox text="%zk.acl.r" selected="true" realWidth="60">
+                        <FlexCheckBox text="%base.read" selected="true" realWidth="60">
                             <HBox.margin>
                                 <Insets left="5"/>
                             </HBox.margin>
                         </FlexCheckBox>
-                        <FlexCheckBox text="%zk.acl.d" selected="true" realWidth="90">
+                        <FlexCheckBox text="%base.delete" selected="true" realWidth="90">
                             <HBox.margin>
                                 <Insets left="5"/>
                             </HBox.margin>

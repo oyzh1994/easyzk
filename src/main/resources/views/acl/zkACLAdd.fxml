@@ -56,18 +56,18 @@
             <padding>
                 <Insets left="10" top="20"/>
             </padding>
-            <FXCheckBox text="%zk.acl.a" selected="true"/>
-            <FXCheckBox text="%zk.acl.w" selected="true">
+            <FXCheckBox text="%base.admin" selected="true"/>
+            <FXCheckBox text="%base.write" selected="true">
                 <FlowPane.margin>
                     <Insets left="5"/>
                 </FlowPane.margin>
             </FXCheckBox>
-            <FXCheckBox text="%zk.acl.r" selected="true">
+            <FXCheckBox text="%base.read" selected="true">
                 <FlowPane.margin>
                     <Insets left="5"/>
                 </FlowPane.margin>
             </FXCheckBox>
-            <FXCheckBox text="%zk.acl.d" selected="true">
+            <FXCheckBox text="%base.delete" selected="true">
                 <FlowPane.margin>
                     <Insets left="5"/>
                 </FlowPane.margin>

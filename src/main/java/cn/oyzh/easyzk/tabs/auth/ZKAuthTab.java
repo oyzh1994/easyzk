@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.auth;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
@@ -35,6 +35,6 @@ public class ZKAuthTab extends DynamicTab {
 
     @Override
     public String getTabTitle() {
-        return I18nResourceBundle.i18nString("zk.title.auth.main");
+        return I18nHelper.authList();
     }
 }

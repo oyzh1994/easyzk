@@ -8,7 +8,7 @@ import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -149,6 +149,6 @@ public class ZKServiceController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("zk.title.node.service");
+        return I18nHelper.serverInfo();
     }
 }

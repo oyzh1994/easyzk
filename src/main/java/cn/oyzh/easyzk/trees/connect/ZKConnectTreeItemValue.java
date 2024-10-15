@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -16,18 +17,24 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true, fluent = true)
 public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
-    private final ZKConnectTreeItem treeItem;
+    /**
+     * 状态监听器
+     */
+    private ChangeListener<Object> statListener = (obs, oldValue, newValue) -> this.flushGraphicColor();
 
-    public ZKConnectTreeItemValue(@NonNull ZKConnectTreeItem treeItem) {
-        this.treeItem = treeItem;
-        this.flushGraphic();
-        this.flushText();
-        treeItem.stateProperty().addListener((t3, t2, t1) -> this.flushGraphicColor());
+    public ZKConnectTreeItemValue(@NonNull ZKConnectTreeItem item) {
+        this.setProp("_item", item);
+        this.flush();
+        item.stateProperty().addListener(this.statListener);
+    }
+
+    private ZKConnectTreeItem item() {
+        return this.getProp("_item");
     }
 
     @Override
     public String name() {
-        return this.treeItem.value().getName();
+        return this.item().value().getName();
     }
 
     @Override
@@ -35,7 +42,6 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
         if (this.graphic() == null) {
             SVGGlyph glyph = new SVGGlyph("/font/Zookeeper1.svg", 12);
             glyph.disableTheme();
-            // 设置图形
             this.graphic(glyph);
         }
     }
@@ -45,10 +51,10 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
         // 获取当前图形符号
         SVGGlyph glyph = this.graphic();
         if (glyph == null) {
-            this.flushGraphic();
-            glyph = this.graphic();
+            return;
         }
-        if (this.treeItem.isConnected() || this.treeItem.isConnecting()) {
+        ZKConnectTreeItem item = this.item();
+        if (item.isConnected() || item.isConnecting()) {
             glyph.setColor(Color.GREEN);
         } else {
             super.flushGraphicColor();
@@ -58,5 +64,15 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
     @Override
     public SVGGlyph graphic() {
         return (SVGGlyph) super.graphic();
+    }
+
+    @Override
+    public void destroy() {
+        ZKConnectTreeItem item = this.item();
+        if (item != null && this.statListener != null) {
+            item.stateProperty().removeListener(this.statListener);
+            this.statListener = null;
+        }
+        super.destroy();
     }
 }

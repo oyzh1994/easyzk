@@ -19,9 +19,10 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
         super.setProp("_item", item);
+        this.flush();
     }
 
-    private ZKNodeTreeItem getItem() {
+    private ZKNodeTreeItem item() {
         return this.getProp("_item");
     }
 
@@ -52,7 +53,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
             return;
         }
         super.flush();
-        this.flushNum(this.getItem().getNumChildren(), this.getItem().getChildrenSize());
+        this.flushNum(this.item().getNumChildren(), this.item().getChildrenSize());
     }
 
     /**
@@ -66,13 +67,13 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         // 获取图形符号
         SVGGlyph glyph = this.graphic();
         // 节点已删除
-        if (this.getItem().isBeDeleted()) {
+        if (this.item().isBeDeleted()) {
             glyph.setColor(Color.RED);
-        } else if (this.getItem().isDataUnsaved()) { // 节点数据未保存
+        } else if (this.item().isDataUnsaved()) { // 节点数据未保存
             glyph.setColor(Color.ORANGE);
-        } else if (this.getItem().isBeChanged()) { // 节点已更新
+        } else if (this.item().isBeChanged()) { // 节点已更新
             glyph.setColor(Color.PURPLE);
-        } else if (this.getItem().isBeChildChanged()) { // 子节点已更新
+        } else if (this.item().isBeChildChanged()) { // 子节点已更新
             glyph.setColor(Color.BROWN);
         } else {
             super.flushGraphicColor();
@@ -115,6 +116,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         if (this.isInvalid()) {
             return null;
         }
-        return this.getItem().decodeNodeName();
+        return this.item().decodeNodeName();
     }
 }

@@ -213,96 +213,96 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.info = client.zkInfo();
         this.setFilterable(true);
         this.setValue(new ZKNodeTreeItemValue(this));
-        this.initValue();
-        this.flushValue();
-        if (this.value.isRoot()) {
-            super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler());
-        } else {
-            this.visibleProperty().addListener((observableValue, aBoolean, t1) -> super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler()));
-        }
+        // this.initValue();
+        // this.flushValue();
+        // if (this.value.isRoot()) {
+        //     super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler());
+        // } else {
+        //     this.visibleProperty().addListener((observableValue, aBoolean, t1) -> super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler()));
+        // }
     }
 
-    /**
-     * 事件处理
-     */
-    private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler = null;
+    // /**
+    //  * 事件处理
+    //  */
+    // private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler = null;
+    //
+    // private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler() {
+    //     if (this.treeEventEventHandler == null) {
+    //         this.treeEventEventHandler = event -> {
+    //             if (Objects.equals(this, event.getTreeItem())) {
+    //                 if (event.getEventType() == branchCollapsedEvent()) {
+    //                     this.clearChildValue();
+    //                 } else if (event.getEventType() == branchExpandedEvent()) {
+    //                     this.initChildValue();
+    //                 } else if (event.getEventType() == childrenModificationEvent()) {
+    //                     try {
+    //                         // 添加、移除则刷新状态
+    //                         if (event.wasAdded() || event.wasRemoved()) {
+    //                             this.refreshStat();
+    //                         }
+    //                         ZKEventUtil.treeChildChanged();
+    //                     } catch (Exception ex) {
+    //                         ex.printStackTrace();
+    //                     }
+    //                 }
+    //             }
+    //         };
+    //     }
+    //     return this.treeEventEventHandler;
+    // }
 
-    private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler() {
-        if (this.treeEventEventHandler == null) {
-            this.treeEventEventHandler = event -> {
-                if (Objects.equals(this, event.getTreeItem())) {
-                    if (event.getEventType() == branchCollapsedEvent()) {
-                        this.clearChildValue();
-                    } else if (event.getEventType() == branchExpandedEvent()) {
-                        this.initChildValue();
-                    } else if (event.getEventType() == childrenModificationEvent()) {
-                        try {
-                            // 添加、移除则刷新状态
-                            if (event.wasAdded() || event.wasRemoved()) {
-                                this.refreshStat();
-                            }
-                            ZKEventUtil.treeChildChanged();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            };
-        }
-        return this.treeEventEventHandler;
-    }
+    // /**
+    //  * 初始化值
+    //  */
+    // protected void initValue() {
+    //     try {
+    //         if (this.getValue().isChildEmpty()) {
+    //             this.getValue().flush();
+    //         }
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    // }
 
-    /**
-     * 初始化值
-     */
-    protected void initValue() {
-        try {
-            if (this.getValue().isChildEmpty()) {
-                this.getValue().flush();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    // /**
+    //  * 销毁值
+    //  */
+    // protected void clearValue() {
+    //     try {
+    //         if (!this.getValue().isChildEmpty()) {
+    //             this.getValue().clearChild();
+    //         }
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    // }
 
-    /**
-     * 销毁值
-     */
-    protected void clearValue() {
-        try {
-            if (!this.getValue().isChildEmpty()) {
-                this.getValue().clearChild();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    // /**
+    //  * 初始化子节点值
+    //  */
+    // protected void initChildValue() {
+    //     try {
+    //         for (ZKNodeTreeItem showChild : this.showChildren()) {
+    //             showChild.initValue();
+    //         }
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    // }
 
-    /**
-     * 初始化子节点值
-     */
-    protected void initChildValue() {
-        try {
-            for (ZKNodeTreeItem showChild : this.showChildren()) {
-                showChild.initValue();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    /**
-     * 销毁子节点值
-     */
-    protected void clearChildValue() {
-        try {
-            for (ZKNodeTreeItem showChild : this.showChildren()) {
-                showChild.clearValue();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    // /**
+    //  * 销毁子节点值
+    //  */
+    // protected void clearChildValue() {
+    //     try {
+    //         for (ZKNodeTreeItem showChild : this.showChildren()) {
+    //             showChild.clearValue();
+    //         }
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    // }
 
     @Override
     public void doFilter(RichTreeItemFilter itemFilter) {
@@ -1146,10 +1146,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void destroy() {
-        if (this.treeEventEventHandler != null) {
-            this.removeEventHandler(treeNotificationEvent(), this.treeEventEventHandler);
-            this.treeEventEventHandler = null;
-        }
+        // if (this.treeEventEventHandler != null) {
+        //     this.removeEventHandler(treeNotificationEvent(), this.treeEventEventHandler);
+        //     this.treeEventEventHandler = null;
+        // }
         this.info = null;
         this.value = null;
         this.client = null;

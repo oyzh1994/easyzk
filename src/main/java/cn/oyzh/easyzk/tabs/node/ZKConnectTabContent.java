@@ -379,6 +379,9 @@ public class ZKConnectTabContent extends DynamicTabController {
     }
 
     private void checkStatus() {
+        if (this.activeItem == null) {
+            return;
+        }
         // 节点被移除
         if (this.activeItem.isBeDeleted()) {
             if (!this.activeItem.isIgnoreDeleted()) {

@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
-import cn.oyzh.easyzk.fx.ConnectComboBox;
+import cn.oyzh.easyzk.fx.ZKInfoComboBox;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -95,7 +95,7 @@ public class ZKInfoTransportController extends StageController {
      * 来源连接
      */
     @FXML
-    private ConnectComboBox formConnect;
+    private ZKInfoComboBox formConnect;
 
     /**
      * 来源信息
@@ -112,7 +112,7 @@ public class ZKInfoTransportController extends StageController {
      * 目标连接
      */
     @FXML
-    private ConnectComboBox targetConnect;
+    private ZKInfoComboBox targetConnect;
 
     /**
      * 目标字符集

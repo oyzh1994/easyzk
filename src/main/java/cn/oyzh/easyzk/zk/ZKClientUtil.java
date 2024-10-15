@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.zk;
 
+import cn.oyzh.easyzk.domain.ZKInfo;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.curator.RetryPolicy;
@@ -71,5 +72,9 @@ public class ZKClientUtil {
                 .setExecutor(ZKThread::new)
                 .setCreateParentNodes(true);
         return builder.build();
+    }
+
+    public static ZKClient newClient(ZKInfo zkInfo) {
+        return new ZKClient(zkInfo);
     }
 }

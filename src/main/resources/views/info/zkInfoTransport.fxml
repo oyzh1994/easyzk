@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyzk.fx.ConnectComboBox?>
+<?import cn.oyzh.easyzk.fx.ZKInfoComboBox?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CloseButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
@@ -26,11 +26,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ConnectComboBox fx:id="formConnect" realHeight="30" flexWidth="100% - 325">
+        <ZKInfoComboBox fx:id="formConnect" realHeight="30" flexWidth="100% - 325">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </ConnectComboBox>
+        </ZKInfoComboBox>
         <FXLabel text="%base.charset">
             <HBox.margin>
                 <Insets left="10" top="20"/>
@@ -48,11 +48,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ConnectComboBox groupId="exec" fx:id="targetConnect" realHeight="30" flexWidth="100% - 325">
+        <ZKInfoComboBox groupId="exec" fx:id="targetConnect" realHeight="30" flexWidth="100% - 325">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </ConnectComboBox>
+        </ZKInfoComboBox>
         <FXLabel text="%base.charset">
             <HBox.margin>
                 <Insets left="10" top="20"/>

@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller;
 
+import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -99,12 +100,18 @@ public class HeaderController extends SubStageController {
      */
     @FXML
     private void transport() {
-        StageAdapter wrapper = StageManager.getStage(ZKInfoTransportController.class);
+        StageAdapter wrapper = StageManager.getStage(ZKDataTransportController.class);
         if (wrapper != null) {
             wrapper.toFront();
         } else {
-            StageManager.showStage(ZKInfoTransportController.class);
+            StageManager.showStage(ZKDataTransportController.class);
         }
+        // StageAdapter wrapper = StageManager.getStage(ZKInfoTransportController.class);
+        // if (wrapper != null) {
+        //     wrapper.toFront();
+        // } else {
+        //     StageManager.showStage(ZKInfoTransportController.class);
+        // }
     }
 
     /**

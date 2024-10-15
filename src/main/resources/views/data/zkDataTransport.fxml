@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.button.NextStepButton?>
+<?import cn.oyzh.fx.plus.controls.button.PrevStepButton?>
+<?import cn.oyzh.fx.plus.controls.button.StopButton?>
+<?import cn.oyzh.fx.plus.controls.button.TransportButton?>
+<?import cn.oyzh.fx.plus.controls.svg.database.DatabaseSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.RightSideSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.easyzk.fx.ZKInfoComboBox?>
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.data.ZKDataTransportController" realWidth="800" realHeight="600">
+    <FlexHBox flexWidth="100%" realHeight="100">
+        <FlexHBox flexHeight="100%" flexWidth="50% - 20" nodeOrientation="RIGHT_TO_LEFT">
+            <DatabaseSVGGlyph sizeStr="30,40" color="yellowgreen">
+                <HBox.margin>
+                    <Insets left="10" top="20"/>
+                </HBox.margin>
+            </DatabaseSVGGlyph>
+            <FlexVBox flexHeight="100%">
+                <FXLabel realHeight="15" fx:id="sourceInfoName">
+                    <VBox.margin>
+                        <Insets left="5" top="3"/>
+                    </VBox.margin>
+                </FXLabel>
+                <HBox.margin>
+                    <Insets left="10" top="20"/>
+                </HBox.margin>
+            </FlexVBox>
+        </FlexHBox>
+        <RightSideSVGGlyph sizeStr="30,20">
+            <HBox.margin>
+                <Insets top="30"/>
+            </HBox.margin>
+        </RightSideSVGGlyph>
+        <FlexHBox flexHeight="100%" flexWidth="50% - 20">
+            <DatabaseSVGGlyph sizeStr="30,40" color="mediumturquoise">
+                <HBox.margin>
+                    <Insets left="10" top="20"/>
+                </HBox.margin>
+            </DatabaseSVGGlyph>
+            <FlexVBox flexHeight="100%">
+                <FXLabel realHeight="15" fx:id="targetInfoName">
+                    <VBox.margin>
+                        <Insets left="5" top="3"/>
+                    </VBox.margin>
+                </FXLabel>
+                <HBox.margin>
+                    <Insets left="10" top="20"/>
+                </HBox.margin>
+            </FlexVBox>
+        </FlexHBox>
+    </FlexHBox>
+    <FlexVBox fx:id="step1" flexHeight="100% - 100" flexWidth="100%">
+        <FlexHBox flexHeight="100% - 60" flexWidth="100%">
+            <FlexVBox flexHeight="100%" flexWidth="50% - 5" nodeOrientation="RIGHT_TO_LEFT">
+                <FlexLabel text="%base.source" realHeight="30" fontWeight="BOLD" fontSize="16"
+                           style="-fx-text-fill: yellowgreen">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </FlexLabel>
+                <FlexLabel text="%base.connect" realHeight="30">
+                    <VBox.margin>
+                        <Insets left="30" top="15"/>
+                    </VBox.margin>
+                </FlexLabel>
+                <ZKInfoComboBox fx:id="sourceInfo" realHeight="30" flexWidth="100% - 60">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </ZKInfoComboBox>
+                <FlexLabel text="%base.info" realHeight="30" fontWeight="BOLD" fontSize="16"
+                           style="-fx-text-fill: yellowgreen">
+                    <VBox.margin>
+                        <Insets left="30" top="30"/>
+                    </VBox.margin>
+                </FlexLabel>
+                <FlexHBox realHeight="25" flexWidth="100%">
+                    <FXLabel text="%base.host" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexLabel fx:id="sourceHost" flexWidth="100% - 100">
+                        <HBox.margin>
+                            <Insets left="10" top="5"/>
+                        </HBox.margin>
+                    </FlexLabel>
+                </FlexHBox>
+            </FlexVBox>
+            <FlexVBox flexHeight="100%" flexWidth="50% -5">
+                <FlexLabel text="%base.target" realHeight="30" fontWeight="BOLD" fontSize="16"
+                           style="-fx-text-fill: mediumturquoise">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </FlexLabel>
+                <FlexLabel text="%base.connect" realHeight="30">
+                    <VBox.margin>
+                        <Insets left="30" top="15"/>
+                    </VBox.margin>
+                </FlexLabel>
+                <ZKInfoComboBox fx:id="targetInfo" realHeight="30" flexWidth="100% - 50">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </ZKInfoComboBox>
+                <FlexLabel text="%base.info" realHeight="30" fontWeight="BOLD" fontSize="16"
+                           style="-fx-text-fill: mediumturquoise">
+                    <VBox.margin>
+                        <Insets left="30" top="30"/>
+                    </VBox.margin>
+                </FlexLabel>
+                <FlexHBox realHeight="25" flexWidth="100%">
+                    <FXLabel text="%base.host" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexLabel fx:id="targetHost" flexWidth="100% - 100">
+                        <HBox.margin>
+                            <Insets left="10" top="5"/>
+                        </HBox.margin>
+                    </FlexLabel>
+                </FlexHBox>
+            </FlexVBox>
+        </FlexHBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <NextStepButton onAction="#showStep2" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </NextStepButton>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
+        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <PrevStepButton onAction="#showStep1" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </PrevStepButton>
+            <NextStepButton onAction="#showStep3" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </NextStepButton>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
+        <FlexVBox flexWidth="100%" flexHeight="100% - 60">
+            <MsgTextArea lineLimit="300" fx:id="transportMsg" flexWidth="100% - 60" flexHeight="100% - 30">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </MsgTextArea>
+            <FXLabel fx:id="transportStatus" realHeight="30">
+                <VBox.margin>
+                    <Insets left="30"/>
+                </VBox.margin>
+            </FXLabel>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </PrevStepButton>
+            <TransportButton tipText="%base.start" groupId="exec" onAction="#doTransport" realHeight="30">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </TransportButton>
+            <StopButton disable="true" fx:id="stopTransportBtn" onAction="#stopTransport" realHeight="30"
+                        iconSizePercent="0.9">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </StopButton>
+        </FlexHBox>
+    </FlexVBox>
+</FlexVBox>

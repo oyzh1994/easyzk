@@ -62,6 +62,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -81,6 +82,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * zk节点tab内容组件
@@ -101,11 +103,6 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private FlexTabPane tabPane;
-
-    /**
-     * 拉伸辅助器
-     */
-    private ResizeHelper resizeHelper;
 
     /**
      * 节点数
@@ -141,7 +138,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 右侧zk属性组件
      */
     @FXML
-    private FlexVBox statPane;
+    private FlexVBox statBox;
 
     /**
      * zk属性视图切换按钮
@@ -154,12 +151,6 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private ClearableTextField dataSearch;
-
-    // /**
-    //  * 右侧acl组件
-    //  */
-    // @FXML
-    // private FlexVBox aclBox;
 
     /**
      * 分页信息
@@ -196,18 +187,33 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private FXToggleSwitch aclViewSwitch;
 
+    /**
+     * acl表视图
+     */
     @FXML
     private ZKACLTableView aclTableView;
 
+    /**
+     * acl编码
+     */
     @FXML
     private FlexTableColumn<String, String> aclId;
 
+    /**
+     * acl权限
+     */
     @FXML
     private FlexTableColumn<String, String> aclPerms;
 
+    /**
+     * acl协议
+     */
     @FXML
     private FlexTableColumn<String, String> aclSchema;
 
+    /**
+     * acl状态
+     */
     @FXML
     private FlexTableColumn<String, String> aclStatus;
 
@@ -275,7 +281,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 子节点数量配额
      */
     @FXML
-    protected NumberTextField quotaNum;
+    protected NumberTextField quotaCount;
 
     /**
      * 节点数据大小配额
@@ -288,8 +294,10 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     private final ZKSetting setting = ZKSettingStore2.SETTING;
 
+    /**
+     * zk客户端
+     */
     private ZKClient client;
-
 
     /**
      * 初始化
@@ -435,7 +443,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     }
 
     /**
-     * 重新载入配额
+     * 重载配额
      */
     @FXML
     private void reloadQuota() {
@@ -444,6 +452,28 @@ public class ZKConnectTabContent extends DynamicTabController {
             this.initQuota();
         } catch (Exception ex) {
             MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 复制配额
+     */
+    @FXML
+    private void copyQuota() {
+        try {
+            if (this.activeItem == null) {
+                return;
+            }
+            StatsTrack quota = this.activeItem.quota();
+            if (quota == null) {
+                return;
+            }
+            String builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() +
+                    I18nHelper.bytes() + " " + quota.getBytes();
+            ClipboardUtil.setStringAndTip(builder);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex, I18nHelper.operationException());
         }
     }
 
@@ -878,10 +908,12 @@ public class ZKConnectTabContent extends DynamicTabController {
             return;
         }
         List<FriendlyInfo<Stat>> statInfos = this.activeItem.statInfos();
-        // 遍历属性
-        for (int i = 0; i < statInfos.size(); i++) {
-            FriendlyInfo<Stat> statInfo = statInfos.get(i);
-            FlexHBox box = (FlexHBox) this.statPane.getChildren().get(i);
+        Set<Node> statItems = this.statBox.lookupAll(".statItem");
+        // 遍历节点
+        int index = 0;
+        for (Node statItem : statItems) {
+            FlexHBox box = (FlexHBox) statItem;
+            FriendlyInfo<Stat> statInfo = statInfos.get(index++);
             Label label = (Label) box.getChildren().get(0);
             Label data = (Label) box.getChildren().get(1);
             data.setFocusTraversable(true);
@@ -926,10 +958,10 @@ public class ZKConnectTabContent extends DynamicTabController {
             try {
                 this.quotaTab.getContent().setDisable(false);
                 StatsTrack quota = this.activeItem.quota();
-                this.quotaNum.setValue(quota.getCount());
+                this.quotaCount.setValue(quota.getCount());
                 this.quotaBytes.setValue(quota.getBytes());
             } catch (KeeperException.NoNodeException ignore) {
-                this.quotaNum.setValue(-1);
+                this.quotaCount.setValue(-1);
                 this.quotaBytes.setValue(-1);
             }
         }
@@ -976,10 +1008,10 @@ public class ZKConnectTabContent extends DynamicTabController {
                 this.flushTabGraphicColor();
             }
         });
-        // 拖动改变redis树大小处理
-        this.resizeHelper = new ResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
-        this.resizeHelper.widthLimit(240, 750);
-        this.resizeHelper.initResizeEvent();
+        // 拉伸辅助
+        ResizeHelper resizeHelper = new ResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        resizeHelper.widthLimit(240, 750);
+        resizeHelper.initResizeEvent();
     }
 
     /**
@@ -1031,7 +1063,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void saveQuota() {
         try {
-            this.activeItem.saveQuota(this.quotaBytes.getValue(), this.quotaNum.getValue().intValue());
+            this.activeItem.saveQuota(this.quotaBytes.getValue(), this.quotaCount.getValue().intValue());
             MessageBox.info(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
@@ -1042,10 +1074,10 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 清除子节点数量配额
      */
     @FXML
-    private void clearQuotaNum() {
+    private void clearQuotaCount() {
         try {
             this.activeItem.clearQuotaNum();
-            this.quotaNum.setValue(-1);
+            this.quotaCount.setValue(-1);
             MessageBox.info(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);

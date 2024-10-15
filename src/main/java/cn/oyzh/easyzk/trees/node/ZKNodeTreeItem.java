@@ -28,7 +28,6 @@ import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
-import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -391,8 +390,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 items.add(expandAll);
                 items.add(collapseAll);
             }
-            // 有读取权限
-            if (this.value.hasReadPerm()) {
+            // 持久节点 + 有读取权限
+            if (this.isPersistent() && this.value.hasReadPerm()) {
                 FXMenuItem export = MenuItemHelper.exportData("12", this::exportData);
                 items.add(export);
             }
@@ -1059,12 +1058,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 保存配额
      *
      * @param bytes 配额数据大小
-     * @param num   配额子节点数量
+     * @param count 配额子节点数量
      * @throws Exception 异常
      */
-    public void saveQuota(long bytes, int num) throws Exception {
+    public void saveQuota(long bytes, int count) throws Exception {
         this.client().delQuota(this.nodePath(), true, true);
-        this.client().createQuota(this.nodePath(), bytes, num);
+        this.client().createQuota(this.nodePath(), bytes, count);
     }
 
     /**

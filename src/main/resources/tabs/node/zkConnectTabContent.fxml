@@ -205,45 +205,37 @@
             <graphic>
                 <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
             </graphic>
-            <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FlexVBox flexWidth="100%" flexHeight="100%" fx:id="statBox">
                 <FlexFlowPane realHeight="32" flexWidth="100%">
-                    <FXToggleSwitch fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"
+                    <FXToggleSwitch maxHeight="22" fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"
                                     selectedText="%zk.node.main.toggle.friendly"
                                     selected="true">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="7"/>
                         </FlowPane.margin>
                     </FXToggleSwitch>
                     <CopySVGGlyph size="16" onMousePrimaryClicked="#copyStat">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="7"/>
                         </FlowPane.margin>
                     </CopySVGGlyph>
                     <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadStat">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="7"/>
                         </FlowPane.margin>
                     </RefreshSVGGlyph>
-                    <padding>
-                        <Insets top="9"/>
-                    </padding>
                 </FlexFlowPane>
-                <FlexVBox fx:id="statPane" flexHeight="100% - 32" flexWidth="100% - 20" fontSize="11">
-                    <VBox.margin>
-                        <Insets left="5" top="5"/>
-                    </VBox.margin>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                    <fx:include source="zkNodeStatItem.fxml"/>
-                </FlexVBox>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
+                <fx:include source="zkNodeStatItem.fxml"/>
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.acl">
@@ -252,199 +244,45 @@
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexFlowPane realHeight="32" flexWidth="100%">
-                    <FXToggleSwitch fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"
+                    <FXToggleSwitch maxHeight="22" fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"
                                     selectedText="%zk.node.main.toggle.friendly"
                                     selected="true">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="5"/>
                         </FlowPane.margin>
                     </FXToggleSwitch>
                     <AddSVGGlyph size="16" onMousePrimaryClicked="#toAddACL">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="5"/>
                         </FlowPane.margin>
                     </AddSVGGlyph>
                     <CopySVGGlyph size="16" onMousePrimaryClicked="#copyACL">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="5"/>
                         </FlowPane.margin>
                     </CopySVGGlyph>
                     <EditSVGGlyph size="16" onMousePrimaryClicked="#updateACL">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="5"/>
                         </FlowPane.margin>
                     </EditSVGGlyph>
                     <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteACL">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="5"/>
                         </FlowPane.margin>
                     </DeleteSVGGlyph>
                     <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadACL">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="5"/>
                         </FlowPane.margin>
                     </RefreshSVGGlyph>
                     <PageBox fx:id="aclPage" realHeight="22"
                              realWidth="300" onPrevClicked="#aclPrevPage" onNextClicked="#aclNextPage">
                         <FlowPane.margin>
-                            <Insets left="5" top="1"/>
+                            <Insets left="5" top="6"/>
                         </FlowPane.margin>
                     </PageBox>
-                    <padding>
-                        <Insets top="9"/>
-                    </padding>
                 </FlexFlowPane>
-                <!-- <FlexVBox fx:id="aclBox" flexHeight="100% - 32" flexWidth="100% - 20" fontSize="11"> -->
-                <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
-                <!--     <VBox.margin> -->
-                <!--         <Insets top="5" left="5"/> -->
-                <!--     </VBox.margin> -->
-                <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
-                <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </CopySVGGlyph> -->
-                <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </EditSVGGlyph> -->
-                <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </DeleteSVGGlyph> -->
-                <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </FlexText> -->
-                <!--     </FlexFlowPane> -->
-                <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
-                <!-- </ZKACLVBox> -->
-                <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
-                <!--     <VBox.margin> -->
-                <!--         <Insets top="5" left="5"/> -->
-                <!--     </VBox.margin> -->
-                <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
-                <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </CopySVGGlyph> -->
-                <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </EditSVGGlyph> -->
-                <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </DeleteSVGGlyph> -->
-                <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </FlexText> -->
-                <!--     </FlexFlowPane> -->
-                <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
-                <!-- </ZKACLVBox> -->
-                <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
-                <!--     <VBox.margin> -->
-                <!--         <Insets top="5" left="5"/> -->
-                <!--     </VBox.margin> -->
-                <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
-                <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </CopySVGGlyph> -->
-                <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </EditSVGGlyph> -->
-                <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </DeleteSVGGlyph> -->
-                <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </FlexText> -->
-                <!--     </FlexFlowPane> -->
-                <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
-                <!-- </ZKACLVBox> -->
-                <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
-                <!--     <VBox.margin> -->
-                <!--         <Insets top="5" left="5"/> -->
-                <!--     </VBox.margin> -->
-                <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
-                <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </CopySVGGlyph> -->
-                <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </EditSVGGlyph> -->
-                <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </DeleteSVGGlyph> -->
-                <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </FlexText> -->
-                <!--     </FlexFlowPane> -->
-                <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
-                <!-- </ZKACLVBox> -->
-                <!-- <ZKACLVBox flexWidth="100%" realHeight="102" styleClass="acl-item" visible="false"> -->
-                <!--     <VBox.margin> -->
-                <!--         <Insets top="5" left="5"/> -->
-                <!--     </VBox.margin> -->
-                <!--     <FlexFlowPane flexWidth="100%" realHeight="24"> -->
-                <!--         <CopySVGGlyph size="14" onMousePrimaryClicked="#copyACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </CopySVGGlyph> -->
-                <!--         <EditSVGGlyph size="14" onMousePrimaryClicked="#updateACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </EditSVGGlyph> -->
-                <!--         <DeleteSVGGlyph size="14" onMousePrimaryClicked="#deleteACL"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </DeleteSVGGlyph> -->
-                <!--         <FlexText fill="forestgreen" styleClass="acl-status"> -->
-                <!--             <FlowPane.margin> -->
-                <!--                 <Insets left="5" top="5"/> -->
-                <!--             </FlowPane.margin> -->
-                <!--         </FlexText> -->
-                <!--     </FlexFlowPane> -->
-                <!--     <fx:include styleClass="acl-id" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-perms" source="zkNodeACLItem.fxml"/> -->
-                <!--     <fx:include styleClass="acl-scheme" source="zkNodeACLItem.fxml"/> -->
-                <!-- </ZKACLVBox> -->
                 <ZKACLTableView fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 32">
                     <columns>
                         <FlexTableColumn flexWidth="44%" fx:id="aclId" text="%base.identify" sortable="false"/>
@@ -454,7 +292,6 @@
                                          sortable="false"/>
                     </columns>
                 </ZKACLTableView>
-                <!-- </FlexVBox> -->
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.quota" fx:id="quotaTab">
@@ -465,60 +302,65 @@
                 <FlexFlowPane realHeight="32" flexWidth="100%">
                     <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadQuota">
                         <FlowPane.margin>
-                            <Insets left="5"/>
+                            <Insets left="5" top="7"/>
                         </FlowPane.margin>
                     </RefreshSVGGlyph>
-                    <padding>
-                        <Insets top="9"/>
-                    </padding>
+                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyACL">
+                        <FlowPane.margin>
+                            <Insets left="5" top="7"/>
+                        </FlowPane.margin>
+                    </CopySVGGlyph>
                 </FlexFlowPane>
-                <FlexVBox flexHeight="100% - 32" flexWidth="100% - 20" fontSize="11">
-                    <FlexHBox flexWidth="100%" realHeight="24">
-                        <VBox.margin>
+                <FlexHBox flexWidth="100%" realHeight="30">
+                    <SuccessLabel realWidth="135" text="%base.childNumber" maxHeight="30">
+                        <HBox.margin>
                             <Insets top="5" left="5"/>
-                        </VBox.margin>
-                        <SuccessLabel realWidth="135" text="%base.childNumber" maxHeight="24">
-                            <HBox.margin>
-                                <Insets right="5"/>
-                            </HBox.margin>
-                        </SuccessLabel>
-                        <NumberTextField fx:id="quotaNum" realHeight="24" flexWidth="100% - 300" min="-1" value="-1"
-                                         tipText="%zk.node.main.quotaChildNumTip">
-                            <HBox.margin>
-                                <Insets right="5"/>
-                            </HBox.margin>
-                        </NumberTextField>
-                        <SaveButton onAction="#saveQuota" realHeight="24">
-                            <HBox.margin>
-                                <Insets right="5"/>
-                            </HBox.margin>
-                        </SaveButton>
-                        <ClearButton onAction="#clearQuotaNum"/>
-                    </FlexHBox>
-                    <FlexHBox flexWidth="100%" realHeight="24">
-                        <VBox.margin>
+                        </HBox.margin>
+                    </SuccessLabel>
+                    <NumberTextField fx:id="quotaCount" realHeight="30" flexWidth="100% - 300" min="-1" value="-1"
+                                     tipText="%zk.node.main.quotaCountTip">
+                        <HBox.margin>
                             <Insets top="5" left="5"/>
-                        </VBox.margin>
-                        <SuccessLabel realWidth="135" text="%base.dataSize" maxHeight="24">
-                            <HBox.margin>
-                                <Insets right="5"/>
-                            </HBox.margin>
-                        </SuccessLabel>
-                        <NumberTextField fx:id="quotaBytes" realHeight="24" flexWidth="100% - 300" min="-1"
-                                         value="-1"
-                                         tipText="%zk.node.main.quotaChildNumTip">
-                            <HBox.margin>
-                                <Insets right="5"/>
-                            </HBox.margin>
-                        </NumberTextField>
-                        <SaveButton onAction="#saveQuota" realHeight="24">
-                            <HBox.margin>
-                                <Insets right="5"/>
-                            </HBox.margin>
-                        </SaveButton>
-                        <ClearButton onAction="#clearQuotaBytes"/>
-                    </FlexHBox>
-                </FlexVBox>
+                        </HBox.margin>
+                    </NumberTextField>
+                    <SaveButton onAction="#saveQuota" realHeight="30">
+                        <HBox.margin>
+                            <Insets top="5" left="5"/>
+                        </HBox.margin>
+                    </SaveButton>
+                    <ClearButton onAction="#clearQuotaCount" realHeight="30">
+                        <HBox.margin>
+                            <Insets top="5" left="5"/>
+                        </HBox.margin>
+                    </ClearButton>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="30">
+                    <FlexVBox.margin>
+                        <Insets top="5"/>
+                    </FlexVBox.margin>
+                    <SuccessLabel realWidth="135" text="%base.bytes" maxHeight="30">
+                        <HBox.margin>
+                            <Insets top="5" left="5"/>
+                        </HBox.margin>
+                    </SuccessLabel>
+                    <NumberTextField fx:id="quotaBytes" realHeight="30" flexWidth="100% - 300" min="-1"
+                                     value="-1"
+                                     tipText="%zk.node.main.quotaBytesTip">
+                        <HBox.margin>
+                            <Insets top="5" left="5"/>
+                        </HBox.margin>
+                    </NumberTextField>
+                    <SaveButton onAction="#saveQuota" realHeight="30">
+                        <HBox.margin>
+                            <Insets top="5" left="5"/>
+                        </HBox.margin>
+                    </SaveButton>
+                    <ClearButton onAction="#clearQuotaBytes" realHeight="30">
+                        <HBox.margin>
+                            <Insets top="5" left="5"/>
+                        </HBox.margin>
+                    </ClearButton>
+                </FlexHBox>
             </FlexVBox>
         </FXTab>
     </FlexTabPane>

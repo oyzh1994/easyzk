@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import javafx.geometry.Insets;
@@ -39,9 +40,22 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         if (glyph != null && glyph.isWaiting()) {
             return;
         }
-        // 设置图标
+        boolean changed = false;
         if (glyph == null) {
-            glyph = new SVGGlyph("/font/file-text.svg", 10);
+            changed = true;
+        } else if (this.item().isEphemeral() && StringUtil.notEquals(glyph.getProp("_type"), "2")) {
+            changed = true;
+        } else if (StringUtil.notEquals(glyph.getProp("_type"), "1")) {
+            changed = true;
+        }
+        if (changed) {
+            if (this.item().isEphemeral()) {
+                glyph = new SVGGlyph("/font/temp.svg", 11);
+                glyph.setProp("_type", "2");
+            } else {
+                glyph = new SVGGlyph("/font/file-text.svg", 11);
+                glyph.setProp("_type", "1");
+            }
             glyph.disableTheme();
             this.graphic(glyph);
         }

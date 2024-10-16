@@ -1,7 +1,14 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.fx.common.Index;
+import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -52,5 +59,42 @@ public class ZKFilterVO extends ZKFilter implements Index {
             voList.add(copy(list.get(i), i + 1));
         }
         return voList;
+    }
+
+    /**
+     * 过滤储存
+     */
+    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
+
+    /**
+     * 匹配模式控件
+     */
+    public MatchToggleSwitch getMatchModeControl() {
+        MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
+        toggleSwitch.fontSize(11);
+        toggleSwitch.setSelected(this.isPartMatch());
+        toggleSwitch.selectedChanged((obs, o, n) -> {
+            this.setPartMatch(n);
+            if (this.filterStore.replace(this)) {
+                ZKEventUtil.treeChildFilter();
+            }
+        });
+        return toggleSwitch;
+    }
+
+    /**
+     * 状态控件
+     */
+    public EnabledToggleSwitch getStatusControl() {
+        EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
+        toggleSwitch.setFontSize(11);
+        toggleSwitch.setSelected(this.isEnable());
+        toggleSwitch.selectedChanged((abs, o, n) -> {
+            this.setEnable(n);
+            if (this.filterStore.replace(this)) {
+                ZKEventUtil.treeChildFilter();
+            }
+        });
+        return toggleSwitch;
     }
 }

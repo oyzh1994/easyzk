@@ -58,12 +58,6 @@ public class ZKAuthTabContent extends DynamicTabController {
     private FlexTableView<ZKAuthVO> listTable;
 
     /**
-     * 是否启用列
-     */
-    @FXML
-    private FlexTableColumn<ZKAuthVO, String> status;
-
-    /**
      * 分页数据
      */
     private Paging<ZKAuth> pageData;
@@ -86,35 +80,6 @@ public class ZKAuthTabContent extends DynamicTabController {
         this.listTable.setItem(ZKAuthVO.convert(this.pageData.dataList()));
         this.pagePane.setPaging(this.pageData);
     }
-
-    /**
-     * 初始化列表控件
-     */
-    private void initTable() {
-        // 状态栏初始化
-        this.status.setCellFactory((cell) -> new GraphicTableCell<>() {
-            @Override
-            public FXToggleSwitch initGraphic() {
-                ZKAuthVO authVO = this.getTableItem();
-                if (authVO != null) {
-                    EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
-                    toggleSwitch.setFontSize(11);
-                    toggleSwitch.setSelected(authVO.getEnable());
-                    toggleSwitch.selectedChanged((abs, o, n) -> {
-                        authVO.setEnable(n);
-                        if (authStore.replace(authVO)) {
-                            ZKEventUtil.authEnabled(authVO);
-                        } else {
-                            MessageBox.warn(I18nHelper.operationFail());
-                        }
-                    });
-                    return toggleSwitch;
-                }
-                return null;
-            }
-        });
-    }
-
 
     /**
      * 首页
@@ -196,8 +161,6 @@ public class ZKAuthTabContent extends DynamicTabController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        // 初始化表单
-        this.initTable();
         // 显示首页
         this.firstPage();
     }

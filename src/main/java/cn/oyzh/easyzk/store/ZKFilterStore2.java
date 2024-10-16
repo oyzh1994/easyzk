@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.fx.common.jdbc.DeleteParam;
 import cn.oyzh.fx.common.jdbc.JdbcStore;
 import cn.oyzh.fx.common.jdbc.PageParam;
 import cn.oyzh.fx.common.jdbc.QueryParam;
@@ -51,9 +52,9 @@ public class ZKFilterStore2 extends JdbcStore<ZKFilter> {
 
     public boolean delete(String kw) {
         if (StringUtil.isNotBlank(kw)) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("kw", kw);
-            return this.delete(params);
+            DeleteParam param = new DeleteParam();
+            param.addQueryParam(new QueryParam("kw", kw));
+            return this.delete(param);
         }
         return false;
     }

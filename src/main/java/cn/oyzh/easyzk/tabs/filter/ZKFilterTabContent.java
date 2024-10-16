@@ -9,9 +9,9 @@ import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
-import cn.oyzh.fx.plus.controls.table.GraphicTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.GraphicTableCell;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -37,8 +37,6 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/11/03
  */
-// @Lazy
-// @Component
 public class ZKFilterTabContent extends DynamicTabController {
 
     /**
@@ -60,36 +58,6 @@ public class ZKFilterTabContent extends DynamicTabController {
     private FlexTableView<ZKFilter> listTable;
 
     /**
-     * 数据索id列
-     */
-    @FXML
-    private TableColumn<ZKFilterVO, String> index;
-
-    /**
-     * 关键词列
-     */
-    @FXML
-    private TableColumn<ZKFilterVO, String> kw;
-
-    /**
-     * 数据状态列
-     */
-    @FXML
-    private FlexTableColumn<ZKFilterVO, String> status;
-
-    /**
-     * 匹配模式列
-     */
-    @FXML
-    private FlexTableColumn<ZKFilterVO, String> matchMode;
-
-    /**
-     * 数据操作列
-     */
-    @FXML
-    private FlexTableColumn<ZKFilterVO, String> action;
-
-    /**
      * 分页数据
      */
     private Paging<ZKFilter> pageData;
@@ -108,101 +76,40 @@ public class ZKFilterTabContent extends DynamicTabController {
         if (this.pageData != null) {
             pageNo = this.pageData.fixPageNo(pageNo);
         }
-        this.pageData = this.filterStore.getPage(pageNo,20,  this.searchKeyWord.getText());
+        this.pageData = this.filterStore.getPage(pageNo, 20, this.searchKeyWord.getText());
         this.listTable.setItem(ZKFilterVO.convert(this.pageData.dataList()));
         this.pagePane.setPaging(this.pageData);
     }
 
+
     /**
-     * 初始化列表控件
+     * 添加过滤
      */
-    private void initTable() {
-        // 操作栏初始化
-        this.action.setCellFactory((cell) -> new GraphicTableCell<>() {
-            private HBox hBox;
-
-            @Override
-            public Node initGraphic() {
-                if (this.hBox == null) {
-                    // 删除按钮
-                    DeleteSVGGlyph del = new DeleteSVGGlyph("14");
-                    del.setOnMousePrimaryClicked((event) -> deleteFilter(this.getTableItem()));
-                    this.hBox = new HBox(del);
-                    HBox.setMargin(del, new Insets(7, 0, 0, 5));
-                }
-                return hBox;
-            }
-        });
-
-        // 状态栏初始化
-        this.status.setCellFactory((cell) -> new GraphicTableCell<>() {
-            @Override
-            public FXToggleSwitch initGraphic() {
-                ZKFilterVO filterVO = this.getTableItem();
-                if (filterVO != null) {
-                    EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
-                    toggleSwitch.setFontSize(11);
-                    toggleSwitch.setSelected(filterVO.isEnable());
-                    toggleSwitch.selectedChanged((abs, o, n) -> {
-                        filterVO.setEnable(n);
-                        if (filterStore.replace(filterVO)) {
-                            ZKEventUtil.treeChildFilter();
-                        } else {
-                            MessageBox.warn(I18nHelper.operationFail());
-                        }
-                    });
-                    return toggleSwitch;
-                }
-                return null;
-            }
-        });
-
-        // 匹配模式栏初始化
-        this.matchMode.setCellFactory((cell) -> new GraphicTableCell<>() {
-            @Override
-            public FXToggleSwitch initGraphic() {
-                ZKFilterVO filterVO = this.getTableItem();
-                if (filterVO != null) {
-                    MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
-                    toggleSwitch.fontSize(11);
-                    toggleSwitch.setSelected(filterVO.isPartMatch());
-                    toggleSwitch.selectedChanged((obs, o, n) -> {
-                        filterVO.setPartMatch(n);
-                        if (filterStore.replace(filterVO)) {
-                            ZKEventUtil.treeChildFilter();
-                        } else if (filterVO.isEnable()) {
-                            MessageBox.warn(I18nHelper.operationFail());
-                        }
-                    });
-                    return toggleSwitch;
-                }
-                return null;
-            }
-        });
+    @FXML
+    private void add() {
+        StageManager.showStage(ZKFilterAddController.class);
     }
 
     /**
-     * 删除过滤配置
-     *
-     * @param filter 过滤配置
+     * 删除过滤
      */
-    private void deleteFilter(ZKFilter filter) {
+    @FXML
+    private void delete() {
+        ZKFilter filter = this.listTable.getSelectedItem();
+        if (filter == null) {
+            return;
+        }
         if (MessageBox.confirm(I18nHelper.deleteData())) {
             if (this.filterStore.delete(filter.getKw())) {
                 ZKEventUtil.treeChildFilter();
-                this.firstPage();
+                this.listTable.removeItem(filter);
+                if (this.listTable.isItemEmpty()) {
+                    this.firstPage();
+                }
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }
         }
-    }
-
-    /**
-     * 添加zk信息
-     */
-    @FXML
-    private void toAdd() {
-        StageManager.showStage(ZKFilterAddController.class);
     }
 
     /**
@@ -237,13 +144,14 @@ public class ZKFilterTabContent extends DynamicTabController {
     }
 
     @Override
+    protected void bindListeners() {
+        super.bindListeners();
+        this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
+    }
+
+    @Override
     public void initialize(URL url, ResourceBundle resources) {
         super.initialize(url, resources);
-        this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
-        this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-        this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
-        // 初始化表单
-        this.initTable();
         // 显示首页
         this.firstPage();
     }

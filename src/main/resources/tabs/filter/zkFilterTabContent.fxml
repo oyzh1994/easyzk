@@ -9,20 +9,27 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.filter.ZKFilterTabContent">
     <FlexHBox realHeight="50" flexWidth="100%">
-        <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" tipText="%base.searchKWTip">
+        <ClearableTextField realHeight="26" fx:id="searchKeyWord" realWidth="200" tipText="%base.searchKWTip">
             <HBox.margin>
                 <Insets left="5" top="-4"/>
             </HBox.margin>
         </ClearableTextField>
-        <AddFillSVGGlyph size="14" onMousePrimaryClicked="#toAdd">
+        <AddFillSVGGlyph size="16" onMousePrimaryClicked="#add">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
         </AddFillSVGGlyph>
-        <PageBox hideIfLessPage="false" fx:id="pagePane" onNextClicked="#nextPage" onPrevClicked="#prevPage" realHeight="22" realWidth="300">
+        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#delete">
+            <HBox.margin>
+                <Insets left="5"/>
+            </HBox.margin>
+        </DeleteSVGGlyph>
+        <PageBox hideIfLessPage="false" fx:id="pagePane" onNextClicked="#nextPage" onPrevClicked="#prevPage"
+                 realHeight="24" realWidth="300">
             <HBox.margin>
                 <Insets left="5" top="-3"/>
             </HBox.margin>
@@ -33,11 +40,10 @@
     </FlexHBox>
     <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable">
         <columns>
-            <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
-            <FlexTableColumn flexWidth="40%" fx:id="kw" text="%base.kw"/>
-            <FlexTableColumn flexWidth="20%" fx:id="matchMode" text="%base.matchMode"/>
-            <FlexTableColumn flexWidth="20%" fx:id="status" text="%base.status" sortable="false"/>
-            <FlexTableColumn flexWidth="10% - 15" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
+            <FlexTableColumn flexWidth="45%" text="%base.kw" valueName="kw"/>
+            <FlexTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl" sortable="false"/>
+            <FlexTableColumn flexWidth="20% - 15" text="%base.status" valueName="statusControl" sortable="false"/>
         </columns>
     </FlexTableView>
 </FlexVBox>

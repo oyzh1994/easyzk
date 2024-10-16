@@ -1,7 +1,13 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.fx.common.Index;
+import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -52,5 +58,28 @@ public class ZKAuthVO extends ZKAuth implements Index {
             voList.add(copy(list.get(i), i + 1));
         }
         return voList;
+    }
+
+    /**
+     * 认证储存
+     */
+    private final ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
+
+    /**
+     * 状态控件
+     */
+    public FXToggleSwitch getStatusControl() {
+        EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
+        toggleSwitch.setFontSize(11);
+        toggleSwitch.setSelected(this.getEnable());
+        toggleSwitch.selectedChanged((abs, o, n) -> {
+            this.setEnable(n);
+            if (this.authStore.replace(this)) {
+                ZKEventUtil.authEnabled(this);
+            } else {
+                MessageBox.warn(I18nHelper.operationFail());
+            }
+        });
+        return toggleSwitch;
     }
 }

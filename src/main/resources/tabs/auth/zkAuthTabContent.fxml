@@ -49,7 +49,7 @@
             <FlexTableColumn flexWidth="10%" text="%base.No" valueName="index"/>
             <FlexTableColumn flexWidth="30%" text="%base.userName" valueName="user"/>
             <FlexTableColumn flexWidth="40%" text="%base.password" valueName="password" sortable="false"/>
-            <FlexTableColumn flexWidth="20% - 15" fx:id="status" text="%base.status" sortable="false"/>
+            <FlexTableColumn flexWidth="20% - 15"  text="%base.status" valueName="statusControl" sortable="false"/>
         </columns>
     </FlexTableView>
 </FlexVBox>

@@ -62,8 +62,8 @@ public class ZKEventUtil {
      *
      * @param client zk客户端
      */
-    public static void connectionConnected(ZKClient client) {
-        ZKConnectionConnectedEvent event = new ZKConnectionConnectedEvent();
+    public static void connectionSucceed(ZKClient client) {
+        ZKConnectionSucceedEvent event = new ZKConnectionSucceedEvent();
         event.data(client);
         EventUtil.post(event);
     }
@@ -74,8 +74,8 @@ public class ZKEventUtil {
      * @param info zk客户端
      * @param path 路径
      */
-    public static void nodeAdd(ZKInfo info, String path) {
-        ZKNodeAddEvent event = new ZKNodeAddEvent();
+    public static void nodeAdded(ZKInfo info, String path) {
+        ZKNodeAddedEvent event = new ZKNodeAddedEvent();
         event.data(path);
         event.info(info);
         EventUtil.post(event);
@@ -119,31 +119,12 @@ public class ZKEventUtil {
      * @param client zk客户端
      * @param path   路径
      */
-    public static void nodeUpdate(ZKClient client, String path) {
-        ZKNodeUpdateEvent event = new ZKNodeUpdateEvent();
+    public static void nodeUpdated(ZKClient client, String path) {
+        ZKNodeUpdatedEvent event = new ZKNodeUpdatedEvent();
         event.data(path);
         event.infoName(client.infoName());
         EventUtil.post(event);
     }
-
-    // /**
-    //  * 节点已修改事件
-    //  *
-    //  * @param client   zk客户端
-    //  * @param stat     状态
-    //  * @param nodeData 数据
-    //  * @param nodePath 路径
-    //  */
-    // public static void nodeUpdated(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
-    //     ZKNodeUpdatedEvent event = new ZKNodeUpdatedEvent();
-    //     ZKNode zkNode = new ZKNode();
-    //     zkNode.stat(stat);
-    //     zkNode.nodePath(nodePath);
-    //     zkNode.nodeData(nodeData);
-    //     event.data(zkNode);
-    //     event.client(client);
-    //     EventUtil.post(event);
-    // }
 
     /**
      * 节点已修改事件
@@ -165,30 +146,13 @@ public class ZKEventUtil {
      * @param path        路径
      * @param delChildren 是否删除子节点
      */
-    public static void nodeDelete(ZKClient client, String path, boolean delChildren) {
-        ZKNodeDeleteEvent event = new ZKNodeDeleteEvent();
+    public static void nodeDeleted(ZKClient client, String path, boolean delChildren) {
+        ZKNodeDeletedEvent event = new ZKNodeDeletedEvent();
         event.data(path);
         event.delChildren(delChildren);
         event.infoName(client.infoName());
         EventUtil.post(event);
     }
-
-    // /**
-    //  * 节点已删除事件
-    //  *
-    //  * @param client   zk客户端
-    //  * @param stat     状态
-    //  * @param nodePath 路径
-    //  */
-    // public static void nodeDeleted(ZKClient client, Stat stat, String nodePath) {
-    //     ZKNodeDeletedEvent event = new ZKNodeDeletedEvent();
-    //     ZKNode zkNode = new ZKNode();
-    //     zkNode.stat(stat);
-    //     zkNode.nodePath(nodePath);
-    //     event.data(zkNode);
-    //     event.client(client);
-    //     EventUtil.post(event);
-    // }
 
     /**
      * 节点已删除事件

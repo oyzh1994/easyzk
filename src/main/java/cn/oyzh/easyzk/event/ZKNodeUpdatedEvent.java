@@ -1,9 +1,8 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,13 +14,12 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class ZKNodeAddEvent extends Event<String> implements EventFormatter {
+public class ZKNodeUpdatedEvent extends Event<String> implements EventFormatter {
 
-    private ZKInfo info;
+    private String infoName;
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nResourceBundle.i18nString("base.node", "base.add") + ":%s", this.info.getName(), this.data());
+        return String.format("[%s] " + I18nHelper.nodeUpdated() + ":%s", this.infoName, this.data());
     }
-
 }

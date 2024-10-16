@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Getter
 @Accessors(fluent = true)
-public class ZKNodeDeleteEvent extends Event<String> implements EventFormatter {
+public class ZKNodeDeletedEvent extends Event<String> implements EventFormatter {
 
     private String infoName;
 
@@ -22,6 +22,6 @@ public class ZKNodeDeleteEvent extends Event<String> implements EventFormatter {
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nResourceBundle.i18nString("base.node", "base.delete") + ":%s", this.infoName, this.data());
+        return String.format("[%s] " + I18nHelper.nodeDeleted() + ":%s", this.infoName, this.data());
     }
 }

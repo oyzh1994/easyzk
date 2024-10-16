@@ -467,7 +467,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 // 删除旧节点
                 this.deleteNode();
                 // 发送事件
-                ZKEventUtil.nodeAdd(this.info, newNodePath);
+                ZKEventUtil.nodeAdded(this.info, newNodePath);
             } else {// 操作失败
                 MessageBox.warn(I18nHelper.operationFail());
             }

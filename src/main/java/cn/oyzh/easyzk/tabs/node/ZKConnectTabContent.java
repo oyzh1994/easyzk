@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKNodeACLAddedEvent;
 import cn.oyzh.easyzk.event.ZKNodeACLUpdatedEvent;
-import cn.oyzh.easyzk.event.ZKNodeAddEvent;
+import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
 import cn.oyzh.easyzk.event.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.event.ZKNodeChangedEvent;
@@ -1164,7 +1164,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param event 事件
      */
     @Subscribe
-    public void onNodeAdd(ZKNodeAddEvent event) {
+    public void onNodeAdd(ZKNodeAddedEvent event) {
         if (event.info() == this.client.zkInfo()) {
             this.treeView.onNodeAdd(event.data());
         }

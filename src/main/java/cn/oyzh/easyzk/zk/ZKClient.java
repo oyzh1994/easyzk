@@ -174,7 +174,7 @@ public class ZKClient {
                 switch (newValue) {
                     case LOST -> ZKEventUtil.connectionLost(this);
                     case CLOSED -> ZKEventUtil.connectionClosed(this);
-                    case CONNECTED -> ZKEventUtil.connectionConnected(this);
+                    case CONNECTED -> ZKEventUtil.connectionSucceed(this);
                 }
             }
         });
@@ -871,7 +871,7 @@ public class ZKClient {
             this.lastUpdate = path;
             Stat stat = this.framework.setData().withVersion(version == null ? -1 : version).forPath(path, data);
             if (stat != null) {
-                ZKEventUtil.nodeUpdate(this, path);
+                ZKEventUtil.nodeUpdated(this, path);
             }
             return stat;
         } catch (Exception ex) {
@@ -921,7 +921,7 @@ public class ZKClient {
                 builder.deletingChildrenIfNeeded();
             }
             builder.forPath(path);
-            ZKEventUtil.nodeDelete(this, path, delChildren);
+            ZKEventUtil.nodeDeleted(this, path, delChildren);
         } catch (Exception ex) {
             this.lastDelete = old;
             if (ex instanceof KeeperException.NoAuthException) {

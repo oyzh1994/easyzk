@@ -44,7 +44,7 @@
             <Insets top="18"/>
         </padding>
     </FlexHBox>
-    <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable">
+    <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable" copyCellDataOnDoubleClicked="true">
         <columns>
             <FlexTableColumn flexWidth="10%" text="%base.No" valueName="index"/>
             <FlexTableColumn flexWidth="30%" text="%base.userName" valueName="user"/>

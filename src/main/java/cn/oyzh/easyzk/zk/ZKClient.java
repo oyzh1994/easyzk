@@ -266,8 +266,6 @@ public class ZKClient {
         // 初始化客户端
         this.initClient();
         try {
-            // 创建客户端
-            // this.framework = ZKClientUtil.buildClient(this.zkInfo, this.retryPolicy);
             // 开始连接时间
             final AtomicLong starTime = new AtomicLong();
             // 设置连接监听事件
@@ -328,20 +326,18 @@ public class ZKClient {
             host = this.zkInfo.hostIp() + ":" + this.zkInfo.hostPort();
         }
         // 认证信息列表
-        List<AuthInfo> authInfos = null;
+        List<AuthInfo> authInfos = List.of();
         // 开启自动认证
         if (ZKSettingStore2.SETTING.isAutoAuth()) {
             // 加载已启用的认证
-            List<ZKAuth> auths = ZKAuthUtil.loadEnableAuths();
-            authInfos = ZKAuthUtil.toAuthInfo(auths);
-            JulLog.info("auto authorization, auths: {}.", auths);
+            authInfos = ZKAuthUtil.toAuthInfo(ZKAuthUtil.loadEnableAuths());
+            JulLog.info("auto authorization, auths: {}.", authInfos);
         }
         // 重试策略
         if (this.retryPolicy == null) {
             this.retryPolicy = new RetryOneTime(3_000);
         }
         // 创建客户端
-        // this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.zkInfo.connectTimeOutMs(), this.zkInfo.sessionTimeOutMs(), authInfos, true);
         this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.zkInfo.connectTimeOutMs(), this.zkInfo.sessionTimeOutMs(), authInfos, this.zkInfo.compatibility34());
     }
 

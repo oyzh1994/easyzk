@@ -141,8 +141,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             items.add(repeatConnect);
             items.add(deleteConnect);
         }
-        FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
-        items.add(openTerminal);
+        // FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
+        // items.add(openTerminal);
         return items;
     }
 
@@ -187,12 +187,12 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         fxView.display();
     }
 
-    /**
-     * 打开终端
-     */
-    private void openTerminal() {
-        ZKEventUtil.terminalOpen(this.value);
-    }
+    // /**
+    //  * 打开终端
+    //  */
+    // private void openTerminal() {
+    //     ZKEventUtil.terminalOpen(this.value);
+    // }
 
     /**
      * 取消连接

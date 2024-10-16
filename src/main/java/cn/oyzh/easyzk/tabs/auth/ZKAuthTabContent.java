@@ -9,15 +9,16 @@ import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
-import cn.oyzh.fx.plus.controls.table.GraphicTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.GraphicTableCell;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageManager;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
@@ -36,8 +37,6 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/11/03
  */
-// @Lazy
-// @Component
 public class ZKAuthTabContent extends DynamicTabController {
 
     /**
@@ -59,34 +58,10 @@ public class ZKAuthTabContent extends DynamicTabController {
     private FlexTableView<ZKAuthVO> listTable;
 
     /**
-     * 数据索id列
-     */
-    @FXML
-    private TableColumn<ZKAuthVO, String> index;
-
-    /**
-     * 用户名
-     */
-    @FXML
-    private TableColumn<ZKAuthVO, String> user;
-
-    /**
-     * 密码
-     */
-    @FXML
-    private TableColumn<ZKAuthVO, String> password;
-
-    /**
      * 是否启用列
      */
     @FXML
-    private FlexTableColumn<ZKAuthVO, String> enable;
-
-    /**
-     * 数据操作列
-     */
-    @FXML
-    private FlexTableColumn<ZKAuthVO, String> action;
+    private FlexTableColumn<ZKAuthVO, String> status;
 
     /**
      * 分页数据
@@ -107,7 +82,7 @@ public class ZKAuthTabContent extends DynamicTabController {
         if (this.pageData != null) {
             pageNo = this.pageData.fixPageNo(pageNo);
         }
-        this.pageData = this.authStore.getPage(pageNo, 20, this.searchKeyWord.getText());
+        this.pageData = this.authStore.getPage(pageNo, 15, this.searchKeyWord.getText());
         this.listTable.setItem(ZKAuthVO.convert(this.pageData.dataList()));
         this.pagePane.setPaging(this.pageData);
     }
@@ -116,25 +91,8 @@ public class ZKAuthTabContent extends DynamicTabController {
      * 初始化列表控件
      */
     private void initTable() {
-        // 初始化操作栏
-        this.action.setCellFactory((cell) -> new GraphicTableCell<>() {
-            private HBox hBox;
-
-            @Override
-            public Node initGraphic() {
-                if (this.hBox == null) {
-                    // 删除按钮
-                    DeleteSVGGlyph del = new DeleteSVGGlyph("14");
-                    del.setOnMousePrimaryClicked((event) -> delInfo(this.getTableItem()));
-                    this.hBox = new HBox(del);
-                    HBox.setMargin(del, new Insets(7, 0, 0, 5));
-                }
-                return this.hBox;
-            }
-        });
-
         // 状态栏初始化
-        this.enable.setCellFactory((cell) -> new GraphicTableCell<>() {
+        this.status.setCellFactory((cell) -> new GraphicTableCell<>() {
             @Override
             public FXToggleSwitch initGraphic() {
                 ZKAuthVO authVO = this.getTableItem();
@@ -157,17 +115,6 @@ public class ZKAuthTabContent extends DynamicTabController {
         });
     }
 
-    /**
-     * 删除认证信息
-     *
-     * @param auth 认证信息
-     */
-    private void delInfo(ZKAuth auth) {
-        if (MessageBox.confirm(I18nHelper.deleteData())) {
-            this.authStore.delete(auth.getUser(), auth.getPassword());
-            this.firstPage();
-        }
-    }
 
     /**
      * 首页
@@ -196,8 +143,40 @@ public class ZKAuthTabContent extends DynamicTabController {
      * 添加zk认证信息
      */
     @FXML
-    private void toAdd() {
+    private void add() {
         StageManager.showStage(ZKAuthAddController.class);
+    }
+
+    /**
+     * 删除认证
+     */
+    @FXML
+    private void delete() {
+        ZKAuthVO auth = this.listTable.getSelectedItem();
+        if (auth == null) {
+            return;
+        }
+        if (MessageBox.confirm(I18nHelper.deleteData())) {
+            this.authStore.delete(auth.getUser(), auth.getPassword());
+            this.listTable.removeItem(auth);
+            if (this.listTable.isItemEmpty()) {
+                this.firstPage();
+            }
+        }
+    }
+
+    /**
+     * 复制认证
+     */
+    @FXML
+    private void copy() {
+        ZKAuthVO auth = this.listTable.getSelectedItem();
+        if (auth == null) {
+            return;
+        }
+        String data = I18nHelper.userName() + " " + auth.getUser() + System.lineSeparator()
+                + I18nHelper.password() + " " + auth.getPassword();
+        ClipboardUtil.setStringAndTip(data);
     }
 
     /**
@@ -209,17 +188,17 @@ public class ZKAuthTabContent extends DynamicTabController {
     }
 
     @Override
+    protected void bindListeners() {
+        super.bindListeners();
+        this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
+    }
+
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        this.user.setCellValueFactory(new PropertyValueFactory<>("user"));
-        this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-        this.password.setCellValueFactory(new PropertyValueFactory<>("password"));
-        this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
         // 初始化表单
         this.initTable();
         // 显示首页
         this.firstPage();
     }
-
-
 }

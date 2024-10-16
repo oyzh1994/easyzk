@@ -715,7 +715,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void copyNode() {
         String data = this.activeItem.decodeNodePath() + " " + this.nodeData.getTextTrim();
-        ClipboardUtil.setStringAndTip(data, "节点");
+        ClipboardUtil.setStringAndTip(data);
     }
 
     /**
@@ -723,7 +723,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void copyNodePath() {
-        ClipboardUtil.setStringAndTip(this.activeItem.decodeNodePath(), "节点路径");
+        ClipboardUtil.setStringAndTip(this.activeItem.decodeNodePath());
     }
 
     /**

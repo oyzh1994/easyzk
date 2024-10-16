@@ -186,7 +186,7 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </ZKDataFormatComboBox>
-                    <CharsetComboBox fx:id="charset" fontSize="11" prefWidth="80" style="-fx-padding: 0;">
+                    <CharsetComboBox initDefault="true" fx:id="charset" fontSize="11" prefWidth="120" style="-fx-padding: 0;">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>

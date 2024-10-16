@@ -74,7 +74,7 @@ public class ZKConnectTab extends DynamicTab {
                 changed = true;
             }
         } else {
-            SVGGlyph glyph1 = this.activeItem().graphic();
+            SVGGlyph glyph1 = this.activeItem().valueGraphic();
             if (StringUtil.notEquals(glyph.getUrl(), glyph1.getUrl())) {
                 changed = true;
             }
@@ -84,7 +84,7 @@ public class ZKConnectTab extends DynamicTab {
                 glyph = this.treeItem().graphic().clone();
                 glyph.disableTheme();
             } else {
-                glyph = this.activeItem().graphic().clone();
+                glyph = this.activeItem().valueGraphic().clone();
                 glyph.disableTheme();
             }
             this.setGraphic(glyph);
@@ -95,7 +95,7 @@ public class ZKConnectTab extends DynamicTab {
     public void flushGraphicColor() {
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         if (this.activeItem() != null) {
-            SVGGlyph glyph2 = this.activeItem().graphic();
+            SVGGlyph glyph2 = this.activeItem().valueGraphic();
             glyph.setColor(glyph2.getColor());
         } else if (ThemeManager.isDarkMode()) {
             glyph.setColor(Color.WHITE);

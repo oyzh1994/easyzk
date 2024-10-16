@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.trees.RichTreeView;
+import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.scene.control.MenuItem;
@@ -490,7 +491,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onStart(this::deleteNode)
                 .onFinish(this::stopWaiting)
                 .onError(MessageBox::exception)
-                // .onSuccess(() -> MessageBox.okToast(I18nHelper.operationSuccess()))
                 .build();
         this.startWaiting(task);
     }
@@ -594,32 +594,29 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void remove() {
-        // // 取消选中
-        // this.getTreeView().clearSelection();
         // 获取父节点
         ZKNodeTreeItem parent = this.parent();
         // 删除节点
         if (parent != null) {
-            // 待选中节点
-            TreeItem<?> selectItem = null;
-            // 如果是最后删除的节点或者当前节点被选中
-            if (this.client().isLastDelete(this.nodePath()) || this.isSelected()) {
+            // 下一个节点
+            TreeItem<?> nextItem = null;
+            // 如果当前节点被选中
+            if (this.isSelected()) {
                 // 如果下一个节点不为null，则选中下一个节点，否则选中此节点的父节点
-                selectItem = this.nextSibling();
-                selectItem = selectItem == null ? parent : selectItem;
+                nextItem = this.nextSibling();
+                nextItem = nextItem == null ? parent : nextItem;
             }
             // 取消此节点的收藏
             this.unCollect();
             // 移除此节点
             parent.removeChild(this);
-            // 选中节点
-            if (selectItem != null) {
-                this.getTreeView().select(selectItem);
-            } else {// 清除选择
-                this.getTreeView().clearSelection();
-            }
             // 刷新父节点值
             parent.flushValue();
+            // 选中节点
+            if (nextItem != null) {
+                TreeItem<?> finalNextItem = nextItem;
+                FXUtil.runPulse(() -> parent.getTreeView().select(finalNextItem));
+            }
         } else {
             JulLog.warn("remove fail, this.parent() is null.");
         }
@@ -864,17 +861,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 结果
      */
     public boolean needAuth() {
-        if (ZKAuthUtil.isNeedAuth(this.value, this.client())) {
-            return true;
-        }
-        return this.graphic().getUrl().contains("lock");
+        return ZKAuthUtil.isNeedAuth(this.value, this.client());
     }
 
     /**
      * 节点是否被收藏
      */
     public boolean isCollect() {
-        // return this.info().isCollect(this.nodePath());
         return ZKCollectStore.INSTANCE.exist(this.info().getId(), this.nodePath());
     }
 
@@ -883,7 +876,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void collect() {
         this.info().addCollect(this.nodePath());
-        // ZKInfoStore.INSTANCE.update(this.info());
         ZKCollectStore.INSTANCE.replace(this.info().getId(), this.nodePath());
     }
 
@@ -891,20 +883,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 取消收藏节点
      */
     public void unCollect() {
-        // if (this.info().removeCollect(this.nodePath())) {
-        //     ZKInfoStore.INSTANCE.update(this.info());
         ZKCollectStore.INSTANCE.delete(this.info().getId(), this.nodePath());
-        // }
     }
-
-    // /**
-    //  * zk信息
-    //  *
-    //  * @return zk信息
-    //  */
-    // public ZKInfo info() {
-    //     return this.root().value();
-    // }
 
     /**
      * 数据是否太大
@@ -1019,27 +999,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.value.decodeNodeName();
     }
 
-    // /**
-    //  * 应用更改
-    //  */
-    // public void applyUpdate() {
-    //     try {
-    //         this.value.nodeData(this.updateData);
-    //         this.refreshStat();
-    //         this.clearStatus();
-    //         this.clearData();
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    // }
-
-    /**
-     * 获取图标
-     *
-     * @return 图标
-     */
-    public SVGGlyph graphic() {
-        return this.getValue().graphic();
+    @Override
+    public SVGGlyph valueGraphic() {
+        if (this.getValue() != null) {
+            return this.getValue().graphic();
+        }
+        return null;
     }
 
     /**

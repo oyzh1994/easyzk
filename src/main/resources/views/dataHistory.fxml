@@ -12,7 +12,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FXTab styleClass="root" xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
-       fx:controller="cn.oyzh.easyzk.controller.DataHistoryController" text="%base.his">
+       fx:controller="cn.oyzh.easyzk.controller.DataHistoryController" text="%base.his" disable="true">
     <graphic>
         <HistorySVGGlyph initCursor="DEFAULT" size="12"/>
     </graphic>
@@ -41,9 +41,9 @@
         </FlexHBox>
         <FlexTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="15%" fx:id="index" text="%base.No" valueName="index"/>
-                <FlexTableColumn realWidth="120" fx:id="saveTime" text="%base.saveTime" valueName="saveTimeFormated"/>
-                <FlexTableColumn flexWidth="85% - 135" fx:id="dataSize" text="%base.size" valueName="dataSize"/>
+                <FlexTableColumn flexWidth="15%"  text="%base.No" valueName="index"/>
+                <FlexTableColumn realWidth="120"  text="%base.saveTime" valueName="saveTimeFormated"/>
+                <FlexTableColumn flexWidth="85% - 135"  text="%base.size" valueName="dataSize"/>
             </columns>
         </FlexTableView>
     </FlexVBox>

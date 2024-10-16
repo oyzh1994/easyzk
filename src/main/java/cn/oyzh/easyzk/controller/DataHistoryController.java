@@ -7,26 +7,19 @@ import cn.oyzh.easyzk.event.ZKHistoryAddedEvent;
 import cn.oyzh.easyzk.event.ZKHistoryShowEvent;
 import cn.oyzh.easyzk.event.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
+import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.table.FXTableCell;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.util.TableViewUtil;
+import cn.oyzh.fx.plus.tabs.TabClosedEvent;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
-import javax.swing.text.TabableView;
 import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.List;
@@ -60,24 +53,6 @@ public class DataHistoryController extends SubStageController implements Initial
     private FlexTableView<ZKDataHistory> listTable;
 
     /**
-     * 数据索id列
-     */
-    @FXML
-    private TableColumn<ZKDataHistoryVO, String> index;
-
-    /**
-     * 保存时间列
-     */
-    @FXML
-    private TableColumn<ZKDataHistoryVO, String> saveTime;
-
-    /**
-     * 数据大小列
-     */
-    @FXML
-    private TableColumn<ZKDataHistoryVO, String> dataSize;
-
-    /**
      * zk树节点
      */
     private WeakReference<ZKNodeTreeItem> itemReference;
@@ -87,17 +62,42 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     private final ZKDataHistoryStore2 historyStore = ZKDataHistoryStore2.INSTANCE;
 
+    private ZKNodeTreeItem item() {
+        return this.itemReference == null ? null : this.itemReference.get();
+    }
+
     /**
-     * tab变化事件
+     * tab关闭事件
+     *
+     * @param event 事件
      */
     @Subscribe
-    private void nodeSelected(ZKNodeSelectedEvent event) {
+    private void onTabClosed(TabClosedEvent event) {
+        ZKNodeTreeItem item = this.item();
+        if (item == null) {
+            return;
+        }
+        if (event.data() instanceof ZKConnectTab tab1 && tab1.info() == item.info()) {
+            this.itemReference = null;
+            this.listTable.clearItems();
+            this.root.disable();
+        }
+    }
+
+    /**
+     * 节点选中事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void onNodeSelected(ZKNodeSelectedEvent event) {
         if (event.data() == null) {
             this.itemReference = null;
             this.listTable.clearItems();
             this.root.disable();
             return;
         }
+        this.root.enable();
         if (this.itemReference == null || event.data() != this.itemReference.get()) {
             this.itemReference = new WeakReference<>(event.data());
             this.refresh();
@@ -109,7 +109,8 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     @Subscribe
     private void historyAdded(ZKHistoryAddedEvent event) {
-        if (this.itemReference != null && event.item() == this.itemReference.get()) {
+        ZKNodeTreeItem item = this.item();
+        if (event.item() == item) {
             this.refresh();
         }
     }
@@ -121,7 +122,7 @@ public class DataHistoryController extends SubStageController implements Initial
     private void refresh() {
         if (this.root.isSelected()) {
             this.listTable.clearItems();
-            ZKNodeTreeItem item = this.itemReference == null ? null : this.itemReference.get();
+            ZKNodeTreeItem item = this.item();
             if (item == null) {
                 return;
             }
@@ -142,7 +143,7 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     @FXML
     private void delete() {
-        ZKNodeTreeItem item = this.itemReference == null ? null : this.itemReference.get();
+        ZKNodeTreeItem item = this.item();
         if (item == null) {
             return;
         }
@@ -170,7 +171,7 @@ public class DataHistoryController extends SubStageController implements Initial
      */
     @FXML
     private void restore() {
-        ZKNodeTreeItem item = this.itemReference == null ? null : this.itemReference.get();
+        ZKNodeTreeItem item = this.item();
         if (item == null) {
             return;
         }
@@ -193,7 +194,6 @@ public class DataHistoryController extends SubStageController implements Initial
         }
     }
 
-
     /**
      * 显示历史
      *
@@ -207,11 +207,6 @@ public class DataHistoryController extends SubStageController implements Initial
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // // 设置cell工厂
-        // Callback<TableColumn<ZKDataHistoryVO, String>, TableCell<ZKDataHistoryVO, String>> cellFactory = param -> TableViewUtil.newCell(18, Pos.CENTER_LEFT);
-        // this.index.setCellFactory(cellFactory);
-        // this.saveTime.setCellFactory(cellFactory);
-        // this.dataSize.setCellFactory(cellFactory);
         // 监听按钮
         this.root.selectedProperty().addListener((observable, oldValue, newValue) -> this.refresh());
         this.type.selectedProperty().addListener((observable, oldValue, newValue) -> this.refresh());

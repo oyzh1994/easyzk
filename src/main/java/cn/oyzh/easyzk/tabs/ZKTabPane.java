@@ -4,8 +4,8 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKAuthMainEvent;
 import cn.oyzh.easyzk.event.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.ZKConnectionClosedEvent;
-import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterMainEvent;
+import cn.oyzh.easyzk.event.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
@@ -45,8 +45,8 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
                 }
             }
         });
-        // 监听ba变化
-        this.selectedTabChanged((observable, oldValue, newValue) -> ZKEventUtil.tabChanged(newValue));
+        // // 监听ba变化
+        // this.selectedTabChanged((observable, oldValue, newValue) -> ZKEventUtil.tabChanged(newValue));
     }
 
     /**
@@ -292,14 +292,16 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         this.select(tab);
     }
 
-    // /**
-    //  * 恢复数据
-    //  */
-    // @Subscribe
-    // public void restoreData(ZKHistoryRestoreEvent event) {
-    //     ZKNodeTab tab = this.getNodeTab(event.item());
-    //     if (tab != null) {
-    //         tab.restoreData(event.data());
-    //     }
-    // }
+    /**
+     * 恢复数据
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void restoreData(ZKHistoryRestoreEvent event) {
+        ZKConnectTab connectTab = this.getConnectTab(event.info());
+        if (connectTab != null) {
+            connectTab.restoreData(event.data());
+        }
+    }
 }

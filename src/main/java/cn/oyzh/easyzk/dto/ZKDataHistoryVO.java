@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.dto;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.common.Index;
+import cn.oyzh.fx.common.date.DateUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -56,6 +57,6 @@ public class ZKDataHistoryVO extends ZKDataHistory implements Index {
     }
 
     public String getSaveTimeFormated() {
-        return Const.DATE_FORMAT.format(this.getSaveTime());
+        return DateUtil.format("yy-MM-dd HH:mm:ss", this.getSaveTime());
     }
 }

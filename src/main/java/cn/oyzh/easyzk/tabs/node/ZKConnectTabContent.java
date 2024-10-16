@@ -361,6 +361,9 @@ public class ZKConnectTabContent extends DynamicTabController {
                 // 禁用组件
                 this.tabPane.disable();
             }
+            // 触发事件
+            ZKEventUtil.nodeSelected(this.activeItem);
+            // 刷新tab
             this.flushTab();
         } catch (Exception ex) {
             MessageBox.exception(ex);

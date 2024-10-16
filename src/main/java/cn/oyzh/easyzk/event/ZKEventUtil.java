@@ -10,7 +10,6 @@ import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.EventUtil;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -463,14 +462,25 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
+    // /**
+    //  * zk面板tab变更事件
+    //  *
+    //  * @param tab 面板
+    //  */
+    // public static void tabChanged(Tab tab) {
+    //     ZKTabChangedEvent event = new ZKTabChangedEvent();
+    //     event.data(tab);
+    //     EventUtil.post(event);
+    // }
+
     /**
-     * zk面板tab变更事件
+     * zk节点选中事件
      *
-     * @param tab 面板
+     * @param item 节点
      */
-    public static void tabChanged(Tab tab) {
-        ZKTabChangedEvent event = new ZKTabChangedEvent();
-        event.data(tab);
+    public static void nodeSelected(ZKNodeTreeItem item) {
+        ZKNodeSelectedEvent event = new ZKNodeSelectedEvent();
+        event.data(item);
         EventUtil.post(event);
     }
 

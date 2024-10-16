@@ -34,7 +34,7 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
     /**
      * 最大历史数量
      */
-    public static int His_Max_Size = 10;
+    public static int His_Max_Size = 5;
 
     /**
      * 当前实例
@@ -53,7 +53,7 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
         param.addQueryColumn("infoId");
         param.addQueryColumn("saveTime");
         param.addQueryColumn("dataLength");
-        List<ZKDataHistory> histories= super.selectList(param).reversed();
+        List<ZKDataHistory> histories = super.selectList(param).reversed();
         return histories.parallelStream().sorted(Comparator.comparingLong(ZKDataHistory::getSaveTime)).collect(Collectors.toList()).reversed();
     }
 
@@ -105,12 +105,14 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
         // 新增数据
         super.insert(model);
         // 查询总数
-        long count = super.selectCount(new QueryParam("infoId", infoId));
+        List<QueryParam> queryParams = new ArrayList<>();
+        queryParams.add(new QueryParam("path", path));
+        queryParams.add(new QueryParam("infoId", infoId));
+        long count = super.selectCount(queryParams);
         // 删除超出限制的节点
         if (count > His_Max_Size) {
             DeleteParam deleteParam = new DeleteParam();
-            deleteParam.addQueryParam(new QueryParam("path", path));
-            deleteParam.addQueryParam(new QueryParam("infoId", infoId));
+            deleteParam.addQueryParams(queryParams);
             deleteParam.addOrderByParam(new OrderByParam("saveTime", "desc"));
             deleteParam.setLimit(1L);
             super.delete(deleteParam);

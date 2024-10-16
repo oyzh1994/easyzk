@@ -338,7 +338,7 @@
                     <FlexVBox.margin>
                         <Insets top="5"/>
                     </FlexVBox.margin>
-                    <SuccessLabel realWidth="135" text="%base.bytes" maxHeight="30">
+                    <SuccessLabel realWidth="135" text="%base.size" maxHeight="30">
                         <HBox.margin>
                             <Insets top="5" left="5"/>
                         </HBox.margin>

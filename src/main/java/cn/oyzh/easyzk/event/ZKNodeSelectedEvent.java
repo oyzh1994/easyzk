@@ -2,14 +2,11 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.event.Event;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * @author oyzh
- * @since 2024/4/23
+ * @since 2023/9/18
  */
-public class ZKHistoryShowEvent extends Event<ZKNodeTreeItem> {
-
+public class ZKNodeSelectedEvent extends Event<ZKNodeTreeItem> {
 
 }

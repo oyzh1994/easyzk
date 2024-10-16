@@ -224,7 +224,7 @@
     </FlexVBox>
     <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
-            <MsgTextArea lineLimit="3000" fx:id="transportMsg" flexWidth="100% - 60" flexHeight="100% - 30">
+            <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="transportMsg" flexWidth="100% - 60" flexHeight="100% - 30">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>

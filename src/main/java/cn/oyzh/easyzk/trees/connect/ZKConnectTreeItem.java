@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
-import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
+import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
 import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
@@ -251,13 +251,13 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 传输数据
      */
     private void transportData() {
-        StageAdapter wrapper = StageManager.getStage(ZKInfoTransportController.class);
-        if (wrapper != null) {
-            wrapper.disappear();
+        StageAdapter adapter = StageManager.getStage(ZKDataTransportController.class);
+        if (adapter != null) {
+            adapter.disappear();
         }
-        wrapper = StageManager.parseStage(ZKInfoTransportController.class);
-        wrapper.setProp("formConnect", this.value);
-        wrapper.display();
+        adapter = StageManager.parseStage(ZKDataTransportController.class);
+        adapter.setProp("sourceInfo", this.value);
+        adapter.display();
     }
 
     /**

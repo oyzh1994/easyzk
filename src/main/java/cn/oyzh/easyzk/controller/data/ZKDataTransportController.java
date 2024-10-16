@@ -319,6 +319,12 @@ public class ZKDataTransportController extends StageController {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
+        // 来源连接不为null，则禁用来源选项
+        ZKInfo sourceInfo = this.stage.getProp("sourceInfo");
+        if (sourceInfo != null) {
+            this.sourceInfo.select(sourceInfo);
+            this.sourceInfo.disable();
+        }
         this.stage.hideOnEscape();
     }
 

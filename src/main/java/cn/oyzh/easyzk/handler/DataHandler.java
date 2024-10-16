@@ -93,6 +93,14 @@ public class DataHandler {
     }
 
     /**
+     * 更新忽略进度
+     *
+     */
+    protected void processedSkip( ) {
+      this.processed(0);
+    }
+
+    /**
      * 更新进度
      *
      * @param processed 进度

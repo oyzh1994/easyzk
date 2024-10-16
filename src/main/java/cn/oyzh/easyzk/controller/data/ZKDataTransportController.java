@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.fx.ZKInfoComboBox;
 import cn.oyzh.easyzk.handler.ZKDataTransportHandler;
+import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -12,9 +13,12 @@ import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
+import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexLabel;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -80,10 +84,34 @@ public class ZKDataTransportController extends StageController {
     private ZKInfoComboBox sourceInfo;
 
     /**
+     * 来源字符集
+     */
+    @FXML
+    private CharsetComboBox sourceCharset;
+
+    /**
+     * 来源字符集名称
+     */
+    @FXML
+    private FlexLabel sourceCharsetName;
+
+    /**
      * 目标信息
      */
     @FXML
     private ZKInfoComboBox targetInfo;
+
+    /**
+     * 目标字符集
+     */
+    @FXML
+    private CharsetComboBox targetCharset;
+
+    /**
+     * 目标字符集名称
+     */
+    @FXML
+    private FlexLabel targetCharsetName;
 
     /**
      * 来源主机
@@ -126,6 +154,18 @@ public class ZKDataTransportController extends StageController {
     private MsgTextArea transportMsg;
 
     /**
+     * 节点存在时处理策略
+     */
+    @FXML
+    private FXToggleGroup existsPolicy;
+
+    /**
+     * 适用过滤配置
+     */
+    @FXML
+    private FXCheckBox applyFilter;
+
+    /**
      * 传输操作任务
      */
     private Thread execTask;
@@ -141,6 +181,11 @@ public class ZKDataTransportController extends StageController {
     private ZKDataTransportHandler transportHandler;
 
     /**
+     * 过滤配置储存
+     */
+    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
+
+    /**
      * 执行传输
      */
     @FXML
@@ -153,12 +198,15 @@ public class ZKDataTransportController extends StageController {
         // 生成传输处理器
         if (this.transportHandler == null) {
             this.transportHandler = new ZKDataTransportHandler();
-            this.transportHandler.messageHandler(str -> this.transportMsg.appendLine(str))
+            this.transportHandler
+                    .messageHandler(str -> this.transportMsg.appendLine(str))
                     .processedHandler(count -> {
-                        if (count > 0) {
-                            this.counter.incrSuccess(count);
+                        if (count == 0) {
+                            this.counter.incrIgnore(count);
+                        } else if (count < 0) {
+                            this.counter.incrFail(count);
                         } else {
-                            this.counter.incrFail(Math.abs(count));
+                            this.counter.incrSuccess(count);
                         }
                         this.updateStatus(I18nHelper.transportInProgress());
                     });
@@ -169,6 +217,18 @@ public class ZKDataTransportController extends StageController {
         this.transportHandler.sourceClient(this.sourceClient);
         // 目标客户端
         this.transportHandler.targetClient(this.targetClient);
+        // 来源字符集
+        this.transportHandler.sourceCharset(this.sourceCharset.getCharset());
+        // 目标字符集
+        this.transportHandler.targetCharset(this.targetCharset.getCharset());
+        // 节点存在时处理策略
+        this.transportHandler.existsPolicy(this.existsPolicy.selectedUserData());
+        // 适用过滤
+        if (this.applyFilter.isSelected()) {
+            this.transportHandler.filters(this.filterStore.loadEnable());
+        } else {
+            this.transportHandler.filters(null);
+        }
         // 开始处理
         NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.transportInProgress() + "===");
@@ -182,14 +242,12 @@ public class ZKDataTransportController extends StageController {
                 this.transportHandler.doTransport();
                 // 更新状态
                 this.updateStatus(I18nHelper.transportFinished());
-            } catch (Exception e) {
-                if (e.getClass().isAssignableFrom(InterruptedException.class)) {
+            } catch (Exception ex) {
+                if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus(I18nHelper.operationCancel());
-                    MessageBox.okToast(I18nHelper.operationCancel());
                 } else {
-                    e.printStackTrace();
+                    ex.printStackTrace();
                     this.updateStatus(I18nHelper.operationFail());
-                    MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
                 // 结束处理
@@ -224,6 +282,10 @@ public class ZKDataTransportController extends StageController {
                 this.sourceHost.clear();
                 this.sourceInfoName.clear();
             }
+            if (this.sourceClient != null) {
+                this.sourceClient.close();
+                this.sourceClient = null;
+            }
         });
         this.targetInfo.selectedItemChanged((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -232,6 +294,24 @@ public class ZKDataTransportController extends StageController {
             } else {
                 this.targetHost.clear();
                 this.targetInfoName.clear();
+            }
+            if (this.targetClient != null) {
+                this.targetClient.close();
+                this.targetClient = null;
+            }
+        });
+        this.sourceCharset.selectedItemChanged((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                this.sourceCharsetName.setText(newValue);
+            } else {
+                this.sourceCharsetName.clear();
+            }
+        });
+        this.targetCharset.selectedItemChanged((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                this.targetCharsetName.setText(newValue);
+            } else {
+                this.targetCharsetName.clear();
             }
         });
     }
@@ -295,53 +375,47 @@ public class ZKDataTransportController extends StageController {
                 return;
             }
 
-            if (this.sourceClient != null) {
-                this.sourceClient.close();
-                this.sourceClient = null;
-            }
-
-            if (this.targetClient != null) {
-                this.targetClient.close();
-                this.targetClient = null;
-            }
-
             this.getStage().appendTitle("===" + I18nHelper.connectIng() + "===");
             this.getStage().disable();
 
-            CountDownLatch latch1 = new CountDownLatch(1);
-            ThreadUtil.start(() -> {
-                try {
-                    this.sourceClient = ZKClientUtil.newClient(sourceInfo);
-                    this.sourceClient.start();
-                } finally {
-                    latch1.countDown();
+            if (this.sourceClient == null || this.sourceClient.isClosed()) {
+                CountDownLatch latch = new CountDownLatch(1);
+                ThreadUtil.start(() -> {
+                    try {
+                        this.sourceClient = ZKClientUtil.newClient(sourceInfo);
+                        this.sourceClient.start();
+                    } finally {
+                        latch.countDown();
+                    }
+                }, 500);
+                ThreadUtil.await(latch);
+                if (!this.sourceClient.isConnected()) {
+                    this.sourceClient.close();
+                    this.sourceClient = null;
+                    this.sourceInfo.requestFocus();
+                    MessageBox.warn(I18nHelper.connectInitFail());
+                    return;
                 }
-            }, 500);
-            ThreadUtil.await(latch1);
-            if (!this.sourceClient.isConnected()) {
-                this.sourceClient.close();
-                this.sourceClient = null;
-                this.sourceInfo.requestFocus();
-                MessageBox.warn(I18nHelper.connectInitFail());
-                return;
             }
 
-            CountDownLatch latch2 = new CountDownLatch(1);
-            ThreadUtil.start(() -> {
-                try {
-                    this.targetClient = ZKClientUtil.newClient(targetInfo);
-                    this.targetClient.start();
-                } finally {
-                    latch2.countDown();
+            if (this.targetClient == null || this.targetClient.isClosed()) {
+                CountDownLatch latch = new CountDownLatch(1);
+                ThreadUtil.start(() -> {
+                    try {
+                        this.targetClient = ZKClientUtil.newClient(targetInfo);
+                        this.targetClient.start();
+                    } finally {
+                        latch.countDown();
+                    }
+                }, 100);
+                ThreadUtil.await(latch);
+                if (!this.targetClient.isConnected()) {
+                    this.targetClient.close();
+                    this.targetClient = null;
+                    this.targetInfo.requestFocus();
+                    MessageBox.warn(I18nHelper.connectInitFail());
+                    return;
                 }
-            }, 100);
-            ThreadUtil.await(latch2);
-            if (!this.targetClient.isConnected()) {
-                this.targetClient.close();
-                this.targetClient = null;
-                this.targetInfo.requestFocus();
-                MessageBox.warn(I18nHelper.connectInitFail());
-                return;
             }
 
             this.step1.disappear();

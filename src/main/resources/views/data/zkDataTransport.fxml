@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyzk.fx.ZKInfoComboBox?>
+<?import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.button.NextStepButton?>
 <?import cn.oyzh.fx.plus.controls.button.PrevStepButton?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <?import cn.oyzh.fx.plus.controls.button.TransportButton?>
-<?import cn.oyzh.fx.plus.controls.svg.database.DatabaseSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.svg.RightSideSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.FlexLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyzk.fx.ZKInfoComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataTransportController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="100">
         <FlexHBox flexHeight="100%" flexWidth="50% - 20" nodeOrientation="RIGHT_TO_LEFT">
-            <DatabaseSVGGlyph sizeStr="30,40" color="yellowgreen">
+            <ZookeeperSVGGlyph sizeStr="40,40" color="yellowgreen">
                 <HBox.margin>
                     <Insets left="10" top="20"/>
                 </HBox.margin>
-            </DatabaseSVGGlyph>
-            <FlexVBox flexHeight="100%">
-                <FXLabel realHeight="15" fx:id="sourceInfoName">
-                    <VBox.margin>
-                        <Insets left="5" top="3"/>
-                    </VBox.margin>
-                </FXLabel>
+            </ZookeeperSVGGlyph>
+            <FXLabel realHeight="25" fx:id="sourceInfoName" fontSize="15">
                 <HBox.margin>
-                    <Insets left="10" top="20"/>
+                    <Insets left="15" top="28"/>
                 </HBox.margin>
-            </FlexVBox>
+            </FXLabel>
         </FlexHBox>
         <RightSideSVGGlyph sizeStr="30,20">
             <HBox.margin>
@@ -40,21 +39,16 @@
             </HBox.margin>
         </RightSideSVGGlyph>
         <FlexHBox flexHeight="100%" flexWidth="50% - 20">
-            <DatabaseSVGGlyph sizeStr="30,40" color="mediumturquoise">
+            <ZookeeperSVGGlyph sizeStr="40,40" color="mediumturquoise">
                 <HBox.margin>
                     <Insets left="10" top="20"/>
                 </HBox.margin>
-            </DatabaseSVGGlyph>
-            <FlexVBox flexHeight="100%">
-                <FXLabel realHeight="15" fx:id="targetInfoName">
-                    <VBox.margin>
-                        <Insets left="5" top="3"/>
-                    </VBox.margin>
-                </FXLabel>
+            </ZookeeperSVGGlyph>
+            <FXLabel realHeight="25" fx:id="targetInfoName" fontSize="15">
                 <HBox.margin>
-                    <Insets left="10" top="20"/>
+                    <Insets left="15" top="28"/>
                 </HBox.margin>
-            </FlexVBox>
+            </FXLabel>
         </FlexHBox>
     </FlexHBox>
     <FlexVBox fx:id="step1" flexHeight="100% - 100" flexWidth="100%">
@@ -71,11 +65,21 @@
                         <Insets left="30" top="15"/>
                     </VBox.margin>
                 </FlexLabel>
-                <ZKInfoComboBox fx:id="sourceInfo" realHeight="30" flexWidth="100% - 60">
+                <ZKInfoComboBox fx:id="sourceInfo" realHeight="30" flexWidth="100% - 50">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ZKInfoComboBox>
+                <FlexLabel text="%base.charset" realHeight="30">
+                    <VBox.margin>
+                        <Insets left="30" top="15"/>
+                    </VBox.margin>
+                </FlexLabel>
+                <CharsetComboBox fx:id="sourceCharset" realHeight="30" flexWidth="100% - 50">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </CharsetComboBox>
                 <FlexLabel text="%base.info" realHeight="30" fontWeight="BOLD" fontSize="16"
                            style="-fx-text-fill: yellowgreen">
                     <VBox.margin>
@@ -89,6 +93,18 @@
                         </HBox.margin>
                     </FXLabel>
                     <FlexLabel fx:id="sourceHost" flexWidth="100% - 100">
+                        <HBox.margin>
+                            <Insets left="10" top="5"/>
+                        </HBox.margin>
+                    </FlexLabel>
+                </FlexHBox>
+                <FlexHBox realHeight="25" flexWidth="100%">
+                    <FXLabel text="%base.charset" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexLabel fx:id="sourceCharsetName" flexWidth="100% - 100">
                         <HBox.margin>
                             <Insets left="10" top="5"/>
                         </HBox.margin>
@@ -112,6 +128,16 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ZKInfoComboBox>
+                <FlexLabel text="%base.charset" realHeight="30">
+                    <VBox.margin>
+                        <Insets left="30" top="15"/>
+                    </VBox.margin>
+                </FlexLabel>
+                <CharsetComboBox fx:id="targetCharset" realHeight="30" flexWidth="100% - 50">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </CharsetComboBox>
                 <FlexLabel text="%base.info" realHeight="30" fontWeight="BOLD" fontSize="16"
                            style="-fx-text-fill: mediumturquoise">
                     <VBox.margin>
@@ -130,6 +156,18 @@
                         </HBox.margin>
                     </FlexLabel>
                 </FlexHBox>
+                <FlexHBox realHeight="25" flexWidth="100%">
+                    <FXLabel text="%base.charset" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexLabel fx:id="targetCharsetName" flexWidth="100% - 100">
+                        <HBox.margin>
+                            <Insets left="10" top="5"/>
+                        </HBox.margin>
+                    </FlexLabel>
+                </FlexHBox>
             </FlexVBox>
         </FlexHBox>
         <FlexHBox flexWidth="100%" realHeight="50">
@@ -142,6 +180,34 @@
     </FlexVBox>
     <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+            <FlexLabel text="%base.nodeExists" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="25"/>
+                </VBox.margin>
+            </FlexLabel>
+            <fx:define>
+                <FXToggleGroup fx:id="existsPolicy"/>
+            </fx:define>
+            <FXRadioButton userData="0" toggleGroup="$existsPolicy" text="%base.skip" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton userData="1" toggleGroup="$existsPolicy" text="%base.update">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FlexLabel text="%base.nodeFilter" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="25"/>
+                </VBox.margin>
+            </FlexLabel>
+            <FXCheckBox fx:id="applyFilter" text="%base.apply">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXCheckBox>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep1" realHeight="30" iconSizePercent="0.75">
@@ -158,7 +224,7 @@
     </FlexVBox>
     <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
-            <MsgTextArea lineLimit="300" fx:id="transportMsg" flexWidth="100% - 60" flexHeight="100% - 30">
+            <MsgTextArea lineLimit="3000" fx:id="transportMsg" flexWidth="100% - 60" flexHeight="100% - 30">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>

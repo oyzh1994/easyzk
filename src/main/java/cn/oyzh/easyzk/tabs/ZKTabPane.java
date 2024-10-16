@@ -138,7 +138,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      *
      * @return 终端tab
      */
-    public ZKTerminalTab getTerminalTab(ZKInfo info) {
+    private ZKTerminalTab getTerminalTab(ZKInfo info) {
         if (info != null) {
             for (Tab tab : this.getTabs()) {
                 if (tab instanceof ZKTerminalTab terminalTab && terminalTab.info() == info) {
@@ -150,48 +150,22 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
     }
 
     /**
-     * 初始化终端tab
-     *
-     * @param info zk信息
-     */
-    public void initTerminalTab(ZKInfo info) {
-        ZKTerminalTab terminalTab = this.getTerminalTab(info);
-        if (terminalTab == null) {
-            terminalTab = new ZKTerminalTab();
-            terminalTab.init(info);
-            super.addTab(terminalTab);
-        } else {
-            terminalTab.flushGraphic();
-        }
-        if (!terminalTab.isSelected()) {
-            this.select(terminalTab);
-        }
-    }
-
-    /**
      * 终端打开事件
      *
      * @param event 事件
      */
     @Subscribe
     private void terminalOpen(ZKTerminalOpenEvent event) {
-        this.initTerminalTab(event.data());
-    }
-
-    /**
-     * 更新日志事件
-     *
-     * @param event 事件
-     */
-    @Subscribe
-    private void changelog(ChangelogEvent event) {
-        ChangelogTab tab = this.getTab(ChangelogTab.class);
-        if (tab == null) {
-            tab = new ChangelogTab();
-            super.addTab(tab);
+        ZKInfo info = event.data();
+        ZKTerminalTab terminalTab = this.getTerminalTab(info);
+        if (terminalTab == null) {
+            terminalTab = new ZKTerminalTab(info);
+            super.addTab(terminalTab);
+        } else {
+            terminalTab.flushGraphic();
         }
-        if (!tab.isSelected()) {
-            this.select(tab);
+        if (!terminalTab.isSelected()) {
+            this.select(terminalTab);
         }
     }
 
@@ -214,102 +188,45 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         }
     }
 
-    // /**
-    //  * 图标更换事件
-    //  *
-    //  * @param event 事件
-    //  */
-    // @Subscribe
-    // public void graphicChanged(TreeGraphicChangedEvent event) {
-    //     ZKNodeTab nodeTab = this.getNodeTab(event.data());
-    //     if (nodeTab != null) {
-    //         nodeTab.flushGraphic();
-    //         nodeTab.flushTitle();
-    //     }
-    // }
-    //
-    // /**
-    //  * 图标颜色更换事件
-    //  *
-    //  * @param event 事件
-    //  */
-    // @Subscribe
-    // public void graphicColorChanged(TreeGraphicColorChangedEvent event) {
-    //     ZKNodeTab nodeTab = this.getNodeTab(event.data());
-    //     if (nodeTab != null) {
-    //         nodeTab.flushGraphicColor();
-    //     }
-    // }
-    //
-    // /**
-    //  * 获取节点tab
-    //  *
-    //  * @param item 树节点
-    //  * @return 节点tab
-    //  */
-    // public ZKNodeTab getNodeTab(TreeItem<?> item) {
-    //     for (Tab tab : this.getTabs()) {
-    //         if (tab instanceof ZKNodeTab nodeTab && nodeTab.treeItem() == item) {
-    //             return nodeTab;
-    //         }
-    //     }
-    //     return null;
-    // }
-
-    // /**
-    //  * 获取节点tab列表
-    //  *
-    //  * @return 节点tab列表
-    //  */
-    // public List<ZKNodeTab> getNodeTabs() {
-    //     List<ZKNodeTab> list = new ArrayList<>();
-    //     for (Tab tab : this.getTabs()) {
-    //         if (tab instanceof ZKNodeTab nodeTab) {
-    //             list.add(nodeTab);
-    //         }
-    //     }
-    //     return list;
-    // }
-
-    // /**
-    //  * 初始化节点tab
-    //  *
-    //  * @param event 事件
-    //  */
-    // @Subscribe
-    // public void treeChildSelected(TreeChildSelectedEvent event) {
-    //     if (event != null && event.data() != null) {
-    //         ZKNodeTab nodeTab = this.getNodeTab(event.data());
-    //         if (nodeTab == null) {
-    //             nodeTab = new ZKNodeTab();
-    //             super.addTab(nodeTab);
-    //         }
-    //         // 选中节点
-    //         this.select(nodeTab);
-    //         // 初始化节点
-    //         nodeTab.init(event.data());
-    //     }
-    // }
-
     /**
-     * 连接关闭事件
+     * 更新日志事件
      *
      * @param event 事件
      */
     @Subscribe
-    public void connectionOpened(ZKConnectOpenedEvent event) {
-        boolean found = false;
+    private void changelog(ChangelogEvent event) {
+        ChangelogTab tab = this.getTab(ChangelogTab.class);
+        if (tab == null) {
+            tab = new ChangelogTab();
+            super.addTab(tab);
+        }
+        if (!tab.isSelected()) {
+            this.select(tab);
+        }
+    }
+
+    private ZKConnectTab getConnectTab(ZKInfo info) {
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKConnectTab connectTab && connectTab.treeItem() == event.data()) {
-                connectTab.selectTab();
-                found = true;
-                break;
+            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == info) {
+                return connectTab;
             }
         }
-        if (!found) {
-            ZKConnectTab connectTab = new ZKConnectTab();
+        return null;
+    }
+
+    /**
+     * 连接打开事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void connectionOpened(ZKConnectOpenedEvent event) {
+        ZKConnectTab connectTab = this.getConnectTab(event.info());
+        if (connectTab == null) {
+            connectTab = new ZKConnectTab(event.data());
             connectTab.init(event.data());
             super.addTab(connectTab);
+        } else {
             connectTab.selectTab();
         }
     }
@@ -320,17 +237,14 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      * @param event 事件
      */
     @Subscribe
-    public void connectionClosed(ZKConnectionClosedEvent event) {
-        // for (ZKNodeTab nodeTab : this.getNodeTabs()) {
-        //     if (nodeTab.client() == event.data()) {
-        //         nodeTab.closeTab();
-        //     }
-        // }
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKConnectTab connectTab && connectTab.client() == event.data()) {
-                connectTab.closeTab();
-                break;
-            }
+    private void connectionClosed(ZKConnectionClosedEvent event) {
+        ZKConnectTab connectTab = this.getConnectTab(event.info());
+        if (connectTab != null) {
+            connectTab.closeTab();
+        }
+        ZKTerminalTab terminalTab = this.getTerminalTab(event.info());
+        if (terminalTab != null) {
+            terminalTab.closeTab();
         }
     }
 
@@ -347,7 +261,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      * 初始化认证tab
      */
     @Subscribe
-    public void authMain(ZKAuthMainEvent event) {
+    private void authMain(ZKAuthMainEvent event) {
         ZKAuthTab tab = this.getAuthTab();
         if (tab == null) {
             tab = new ZKAuthTab();
@@ -361,7 +275,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      *
      * @return 过滤tab
      */
-    public ZKFilterTab getFilterTab() {
+    private ZKFilterTab getFilterTab() {
         return super.getTab(ZKFilterTab.class);
     }
 
@@ -369,7 +283,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      * 初始化过滤tab
      */
     @Subscribe
-    public void filterMain(ZKFilterMainEvent event) {
+    private void filterMain(ZKFilterMainEvent event) {
         ZKFilterTab tab = this.getFilterTab();
         if (tab == null) {
             tab = new ZKFilterTab();
@@ -386,76 +300,6 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
     //     ZKNodeTab tab = this.getNodeTab(event.item());
     //     if (tab != null) {
     //         tab.restoreData(event.data());
-    //     }
-    // }
-
-    // @Subscribe
-    // public void aclChanged(ZKNodeACLChangedEvent event) {
-    //     for (Tab tab : this.getTabs()) {
-    //         if (tab instanceof ZKConnectTab connectTab && connectTab.activeItem() == event.data()) {
-    //             connectTab.onNodeACLChanged();
-    //             break;
-    //         }
-    //     }
-    // }
-
-    // /**
-    //  * zk节点新增事件，手动操作
-    //  *
-    //  * @param event 消息
-    //  */
-    // @Subscribe
-    // private void nodeAdd(ZKNodeAddEvent event) {
-    //     for (Tab tab : this.getTabs()) {
-    //         if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
-    //             connectTab.onNodeAdd(event.data());
-    //             break;
-    //         }
-    //     }
-    // }
-    //
-    // /**
-    //  * zk节点已新增事件，消息监听
-    //  *
-    //  * @param event 消息
-    //  */
-    // @Subscribe
-    // private void nodeAdded(ZKNodeAddedEvent event) {
-    //     for (Tab tab : this.getTabs()) {
-    //         if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
-    //             connectTab.onNodeAdded(event.nodePath());
-    //             break;
-    //         }
-    //     }
-    // }
-    //
-    // /**
-    //  * zk节点删除事件
-    //  *
-    //  * @param event 消息
-    //  */
-    // @Subscribe
-    // private void nodeDeleted(ZKNodeDeletedEvent event) {
-    //     for (Tab tab : this.getTabs()) {
-    //         if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
-    //             connectTab.onNodeDeleted(event.nodePath());
-    //             break;
-    //         }
-    //     }
-    // }
-    //
-    // /**
-    //  * zk节点修改事件
-    //  *
-    //  * @param event 消息
-    //  */
-    // @Subscribe
-    // private void nodeUpdated(ZKNodeUpdatedEvent event) {
-    //     for (Tab tab : this.getTabs()) {
-    //         if (tab instanceof ZKConnectTab connectTab && connectTab.info() == event.info()) {
-    //             connectTab.onNodeUpdated(event.nodePath());
-    //             break;
-    //         }
     //     }
     // }
 }

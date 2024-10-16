@@ -19,6 +19,10 @@ import lombok.NonNull;
  */
 public class ZKConnectTab extends DynamicTab {
 
+    public ZKConnectTab(ZKConnectTreeItem treeItem) {
+        this.init(treeItem);
+    }
+
     /**
      * zk树节点
      */

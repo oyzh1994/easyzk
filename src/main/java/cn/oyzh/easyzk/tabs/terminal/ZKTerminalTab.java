@@ -15,6 +15,10 @@ import javafx.scene.Cursor;
  */
 public class ZKTerminalTab extends DynamicTab {
 
+    public ZKTerminalTab(ZKInfo zkInfo) {
+        this.init(zkInfo);
+    }
+
     @Override
     public void flushGraphic() {
         TerminalSVGGlyph glyph = (TerminalSVGGlyph) this.getGraphic();

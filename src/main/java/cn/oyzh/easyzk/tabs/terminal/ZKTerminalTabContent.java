@@ -16,9 +16,6 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/07/21
  */
-// @Lazy
-// @Component
-// @Scope(ScopeType.PROTOTYPE)
 public class ZKTerminalTabContent extends DynamicTabController {
 
     /**

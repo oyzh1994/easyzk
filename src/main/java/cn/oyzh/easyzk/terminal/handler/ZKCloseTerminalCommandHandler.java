@@ -16,12 +16,7 @@ import org.apache.zookeeper.cli.CloseCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKCloseTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
@@ -35,7 +30,6 @@ public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<T
 
     @Override
     public String commandDesc() {
-        // return "关闭连接";
         return I18nResourceBundle.i18nString("base.close", "base.connect");
     }
 

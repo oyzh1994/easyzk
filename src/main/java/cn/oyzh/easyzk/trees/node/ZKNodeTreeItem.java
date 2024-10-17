@@ -5,10 +5,12 @@ import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKCollectStore;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
+import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -25,7 +27,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
-import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -81,15 +82,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     private volatile boolean canceled;
 
     /**
-     * 连接节点
+     * 需要认证
      */
-    @Getter
-    @Accessors(fluent = true, chain = true)
-    private ZKInfo info;
-
-    @Getter
-    @Accessors(fluent = true, chain = true)
-    private ZKClient client;
+    private volatile boolean needAuth;
 
     /**
      * 设置被删除状态
@@ -206,103 +201,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.unsavedData != null;
     }
 
-    public ZKNodeTreeItem(@NonNull ZKNode value, RichTreeView treeView, ZKClient client) {
+    public ZKNodeTreeItem(@NonNull ZKNode value, ZKNodeTreeView treeView) {
         super(treeView);
         this.value = value;
-        this.client = client;
-        this.info = client.zkInfo();
         this.setFilterable(true);
         this.setValue(new ZKNodeTreeItemValue(this));
-        // this.initValue();
-        // this.flushValue();
-        // if (this.value.isRoot()) {
-        //     super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler());
-        // } else {
-        //     this.visibleProperty().addListener((observableValue, aBoolean, t1) -> super.addEventHandler(treeNotificationEvent(), this.treeEventEventHandler()));
-        // }
     }
-
-    // /**
-    //  * 事件处理
-    //  */
-    // private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler = null;
-    //
-    // private EventHandler<TreeModificationEvent<ZKNodeTreeItem>> treeEventEventHandler() {
-    //     if (this.treeEventEventHandler == null) {
-    //         this.treeEventEventHandler = event -> {
-    //             if (Objects.equals(this, event.getTreeItem())) {
-    //                 if (event.getEventType() == branchCollapsedEvent()) {
-    //                     this.clearChildValue();
-    //                 } else if (event.getEventType() == branchExpandedEvent()) {
-    //                     this.initChildValue();
-    //                 } else if (event.getEventType() == childrenModificationEvent()) {
-    //                     try {
-    //                         // 添加、移除则刷新状态
-    //                         if (event.wasAdded() || event.wasRemoved()) {
-    //                             this.refreshStat();
-    //                         }
-    //                         ZKEventUtil.treeChildChanged();
-    //                     } catch (Exception ex) {
-    //                         ex.printStackTrace();
-    //                     }
-    //                 }
-    //             }
-    //         };
-    //     }
-    //     return this.treeEventEventHandler;
-    // }
-
-    // /**
-    //  * 初始化值
-    //  */
-    // protected void initValue() {
-    //     try {
-    //         if (this.getValue().isChildEmpty()) {
-    //             this.getValue().flush();
-    //         }
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    // }
-
-    // /**
-    //  * 销毁值
-    //  */
-    // protected void clearValue() {
-    //     try {
-    //         if (!this.getValue().isChildEmpty()) {
-    //             this.getValue().clearChild();
-    //         }
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    // }
-
-    // /**
-    //  * 初始化子节点值
-    //  */
-    // protected void initChildValue() {
-    //     try {
-    //         for (ZKNodeTreeItem showChild : this.showChildren()) {
-    //             showChild.initValue();
-    //         }
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    // }
-
-    // /**
-    //  * 销毁子节点值
-    //  */
-    // protected void clearChildValue() {
-    //     try {
-    //         for (ZKNodeTreeItem showChild : this.showChildren()) {
-    //             showChild.clearValue();
-    //         }
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    // }
 
     @Override
     public void doFilter(RichTreeItemFilter itemFilter) {
@@ -345,15 +249,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .build();
         this.startWaiting(task);
     }
-
-    // @Override
-    // public void free() {
-    //     if (!this.loaded) {
-    //         super.free();
-    //     } else {
-    //         this.loadChild();
-    //     }
-    // }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -463,11 +358,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             // 创建模式
             CreateMode createMode = this.value.isEphemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
             // 创建新节点
-            if (this.client.create(newNodePath, this.nodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
+            if (this.client().create(newNodePath, this.nodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
                 // 删除旧节点
                 this.deleteNode();
                 // 发送事件
-                ZKEventUtil.nodeAdded(this.info, newNodePath);
+                ZKEventUtil.nodeAdded(this.info(), newNodePath);
             } else {// 操作失败
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -627,14 +522,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      *
      * @param path zk节点路径
      */
-    public void addChild(String path) {
+    public void addChild(String path) throws Exception {
         if (StringUtil.isNotBlank(path)) {
             ZKNode node = ZKNodeUtil.getNode(this.client(), path);
-            if (node != null) {
-                this.addChild(node);
-            } else {
-                JulLog.warn("获取zk节点:{} 失败", path);
-            }
+            this.addChild(node);
         }
     }
 
@@ -645,7 +536,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void addChild(ZKNode node) {
         if (node != null) {
-            this.addChild(new ZKNodeTreeItem(node, this.getTreeView(), this.client));
+            this.addChild(new ZKNodeTreeItem(node, this.getTreeView()));
         }
     }
 
@@ -654,45 +545,75 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return (ZKNodeTreeView) super.getTreeView();
     }
 
+    public ZKClient client() {
+        return this.getTreeView().client();
+    }
+
+    public ZKInfo info() {
+        return this.getTreeView().info();
+    }
+
     /**
      * 刷新zk节点
      */
-    public void refreshNode() {
-        ZKNodeUtil.refreshNode(this.client(), this.value);
-        this.clear();
+    public void refreshNode() throws Exception {
+        try {
+            ZKNodeUtil.refreshNode(this.client(), this.value);
+            this.clear();
+        } catch (KeeperException.NoAuthException ex) {
+            this.needAuth = true;
+        }
     }
 
     /**
      * 刷新zk节点数据
      */
     public void refreshData() throws Exception {
-        JulLog.debug("refreshData.");
-        ZKNodeUtil.refreshData(this.client(), this.value);
-        this.clear();
+        try {
+            JulLog.debug("refreshData.");
+            ZKNodeUtil.refreshData(this.client(), this.value);
+            this.clear();
+        } catch (KeeperException.NoAuthException ex) {
+            this.needAuth = true;
+        }
     }
 
     /**
      * 刷新zk节点权限
      */
     public void refreshACL() throws Exception {
-        JulLog.debug("refreshACL.");
-        ZKNodeUtil.refreshAcl(this.client(), this.value);
+        try {
+            JulLog.debug("refreshACL.");
+            ZKNodeUtil.refreshAcl(this.client(), this.value);
+        } catch (KeeperException.NoAuthException ex) {
+            this.needAuth = true;
+        }
     }
 
     /**
      * 刷新zk节点配额
      */
     public void refreshQuota() throws Exception {
-        JulLog.debug("refreshQuota.");
-        ZKNodeUtil.refreshQuota(this.client(), this.value);
+        try {
+            JulLog.debug("refreshQuota.");
+            ZKNodeUtil.refreshQuota(this.client(), this.value);
+        } catch (KeeperException.NoNodeException ignored) {
+            this.value.quota(null);
+        } catch (KeeperException.NoAuthException ex) {
+            this.needAuth = true;
+        }
     }
 
     /**
      * 刷新zk节点状态
      */
     public void refreshStat() throws Exception {
-        JulLog.debug("refreshStat.");
-        ZKNodeUtil.refreshStat(this.client(), this.value);
+        try {
+            JulLog.debug("refreshStat.");
+            ZKNodeUtil.refreshStat(this.client(), this.value);
+        } catch (KeeperException.NoAuthException ex) {
+            this.needAuth = true;
+        }
     }
 
     /**
@@ -702,8 +623,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public boolean saveData() {
         try {
-            // 保存数据历史
-            this.saveDataHistory();
             // 当前数据
             byte[] data = this.unsavedData;
             // 更新数据
@@ -712,6 +631,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 // 更新数据
                 this.value.stat(stat);
                 this.value.nodeData(data);
+                this.saveHistory();
                 this.clear();
                 return true;
             }
@@ -725,8 +645,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     @Override
     public void reloadChild() {
         if (!this.isWaiting() || !this.loading) {
-            this.refreshNode();
-            this.loadChildAsync();
+            try {
+                this.refreshNode();
+                this.loadChildAsync();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -764,7 +688,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                         }
                     }
                     // 添加到集合
-                    addList.add(new ZKNodeTreeItem(node, this.getTreeView(), this.client));
+                    addList.add(new ZKNodeTreeItem(node, this.getTreeView()));
                     // 预先加载一部分
                     if (addList.size() > 20 && !loadPre) {
                         this.addChild(addList);
@@ -794,9 +718,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                     item.loadChild(true);
                 }
             }
+        } catch (KeeperException.NoAuthException ex) {
+            this.loaded = false;
+            this.needAuth = true;
         } catch (Exception ex) {
             // 非取消、连接关闭情况下，则抛出异常
-            if (!this.canceled && !this.client.isConnected()) {
+            if (!this.canceled && !this.client().isConnected()) {
                 throw new RuntimeException(ex);
             }
             this.loaded = false;
@@ -860,30 +787,29 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      *
      * @return 结果
      */
-    public boolean needAuth() {
-        return ZKAuthUtil.isNeedAuth(this.value, this.client());
+    public boolean isNeedAuth() {
+        return this.needAuth || ZKAuthUtil.isNeedAuth(this.value, this.client());
     }
 
     /**
      * 节点是否被收藏
      */
     public boolean isCollect() {
-        return ZKCollectStore.INSTANCE.exist(this.info().getId(), this.nodePath());
+        return ZKCollectStore.INSTANCE.exist(this.info().getId(), this.decodeNodePath());
     }
 
     /**
      * 收藏节点
      */
     public void collect() {
-        this.info().addCollect(this.nodePath());
-        ZKCollectStore.INSTANCE.replace(this.info().getId(), this.nodePath());
+        ZKCollectStore.INSTANCE.replace(this.info().getId(), this.decodeNodePath());
     }
 
     /**
      * 取消收藏节点
      */
     public void unCollect() {
-        ZKCollectStore.INSTANCE.delete(this.info().getId(), this.nodePath());
+        ZKCollectStore.INSTANCE.delete(this.info().getId(), this.decodeNodePath());
     }
 
     /**
@@ -1027,26 +953,13 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @throws Exception 异常
      */
     public void saveQuota(long bytes, int count) throws Exception {
-        this.client().delQuota(this.nodePath(), true, true);
-        this.client().createQuota(this.nodePath(), bytes, count);
-    }
-
-    /**
-     * 清除子节点数量配额
-     *
-     * @throws Exception 异常
-     */
-    public void clearQuotaNum() throws Exception {
-        this.client().delQuota(this.nodePath(), false, true);
-    }
-
-    /**
-     * 清除节点数据配额
-     *
-     * @throws Exception 异常
-     */
-    public void clearQuotaBytes() throws Exception {
-        this.client().delQuota(this.nodePath(), true, false);
+        if (bytes == -1 && count == -1) {
+            this.client().delQuota(this.nodePath(), true, true);
+        } else {
+            this.client().delQuota(this.nodePath(), true, true);
+            this.client().createQuota(this.nodePath(), bytes, count);
+        }
+        this.refreshQuota();
     }
 
     /**
@@ -1099,7 +1012,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     /**
      * 保存数据历史
      */
-    public void saveDataHistory() {
+    private void saveHistory() {
         ZKDataHistory history = new ZKDataHistory();
         history.setData(this.unsavedData);
         history.setPath(this.nodePath());
@@ -1110,17 +1023,40 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void destroy() {
-        // if (this.treeEventEventHandler != null) {
-        //     this.removeEventHandler(treeNotificationEvent(), this.treeEventEventHandler);
-        //     this.treeEventEventHandler = null;
-        // }
-        this.info = null;
-        this.value = null;
-        this.client = null;
-        super.destroy();
+        if (!this.isRoot()) {
+            this.value = null;
+            this.nodeStatus = null;
+            this.unsavedData = null;
+            this.ignoreStatus = null;
+            super.destroy();
+        }
     }
 
     public Integer getNumChildren() {
         return this.value.getNumChildren();
+    }
+
+    /**
+     * 授权变化事件
+     */
+    public void authChanged() throws Exception {
+        this.needAuth = false;
+        this.refreshNode();
+        this.flushValue();
+        this.loadRoot();
+    }
+
+    /**
+     * 加载根节点
+     */
+    public void loadRoot() {
+        if (this.isRoot()) {
+            ZKSetting setting = ZKSettingStore2.SETTING;
+            if (setting.isLoadFirst()) {
+                this.loadChild();
+            } else if (setting.isLoadAll()) {
+                this.loadChildAll();
+            }
+        }
     }
 }

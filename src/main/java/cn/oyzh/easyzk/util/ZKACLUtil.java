@@ -1,9 +1,12 @@
 package cn.oyzh.easyzk.util;
 
+import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
+import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.common.util.NumberUtil;
 import cn.oyzh.fx.common.util.RegexUtil;
+import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -168,7 +171,7 @@ public class ZKACLUtil {
         }
         if (permsString.contains("c")) {
             valueBuilder.append("c");
-            friendlyValueBuilder.append(",").append(I18nHelper.create());
+            friendlyValueBuilder.append(",").append(ZKI18nHelper.aclC());
         }
         FriendlyInfo<ACL> perms = new FriendlyInfo<>();
         perms.name("perms");
@@ -292,5 +295,22 @@ public class ZKACLUtil {
         if (segments.length == 2 && !segments[0].endsWith("0")) {
             throw new ZKException(segments[0] + I18nResourceBundle.i18nString("zk.aclTip3"));
         }
+    }
+
+    /**
+     * 是否存在摘要权限
+     *
+     * @param aclList 权限列表
+     * @param user    摘要权限用户名
+     */
+    public static boolean existDigest(List<ZKACL> aclList, String user) {
+        if (CollectionUtil.isNotEmpty(aclList) && StringUtil.isNotBlank(user)) {
+            for (ZKACL acl : aclList) {
+                if (acl.isDigestACL() && StringUtil.equalsIgnoreCase(user, acl.digestUser())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -224,7 +224,6 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
         ZKConnectTab connectTab = this.getConnectTab(event.info());
         if (connectTab == null) {
             connectTab = new ZKConnectTab(event.data());
-            connectTab.init(event.data());
             super.addTab(connectTab);
         }
         connectTab.selectTab();

@@ -200,7 +200,8 @@ public class ZKAuthUtil {
         }
         Set<String> digestList = new HashSet<>();
         for (String s : set) {
-            digestList.add(digest(s.split(":")[0], s.split(":")[1]));
+            String[] arr = s.split(":");
+            digestList.add(digest(arr[0], arr[1]));
         }
         return digestList;
     }
@@ -233,28 +234,6 @@ public class ZKAuthUtil {
         }
         return false;
     }
-
-    // /**
-    //  * 触发认证添加事件
-    //  *
-    //  * @param auth 认证
-    //  */
-    // public static void fireAuthAddEvent(@NonNull ZKAuth auth) {
-    //     if (auth.getEnable()) {
-    //         EventUtil.fire(ZKEventTypes.ZK_AUTH_ADDED, auth);
-    //     }
-    // }
-    //
-    // /**
-    //  * 触发认证启用事件
-    //  *
-    //  * @param auth 认证
-    //  */
-    // public static void fireAuthEnableEvent(@NonNull ZKAuth auth) {
-    //     if (auth.getEnable()) {
-    //         EventUtil.fire(ZKEventTypes.ZK_AUTH_ENABLE, auth);
-    //     }
-    // }
 
     /**
      * 生成摘要信息

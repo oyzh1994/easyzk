@@ -970,10 +970,6 @@ public class ZKClient {
         if (path.equals("/")) {
             return false;
         }
-        // StatsTrack track = new StatsTrack();
-        // track.setBytes(bytes);
-        // track.setCount(num);
-        // return SetQuotaCommand.createQuota(this.getZooKeeper(), path.equals("/") ? "" : path, track);
         return SetQuotaCommand.createQuota(this.getZooKeeper(), path, bytes, num);
     }
 
@@ -982,27 +978,14 @@ public class ZKClient {
      *
      * @param path  路径
      * @param bytes 删除数据大小配额
-     * @param num   删除子节点数量配额
+     * @param count   删除子节点数量配额
      */
-    public boolean delQuota(@NonNull String path, boolean bytes, boolean num) throws Exception {
+    public boolean delQuota(@NonNull String path, boolean bytes, boolean count) throws Exception {
         this.throwReadonlyException();
         if (path.equals("/")) {
             return false;
         }
-        // // 清除全部配额
-        // if (bytes && num) {
-        //     return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, null);
-        // }
-        // // 清除指定配额
-        // StatsTrack track = new StatsTrack();
-        // if (bytes) {
-        //     track.setBytes(1L);
-        // }
-        // if (num) {
-        //     track.setCount(1L);
-        // }
-        // return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, track);
-        return DelQuotaCommand.delQuota(this.getZooKeeper(), path.equals("/") ? "" : path, bytes, num);
+        return DelQuotaCommand.delQuota(this.getZooKeeper(), path, bytes, count);
     }
 
     /**

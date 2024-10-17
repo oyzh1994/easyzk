@@ -300,6 +300,11 @@
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexFlowPane realHeight="32" flexWidth="100%">
+                    <SaveSVGGlyph size="16" onMousePrimaryClicked="#saveQuota" >
+                        <FlowPane.margin>
+                            <Insets top="5" left="8"/>
+                        </FlowPane.margin>
+                    </SaveSVGGlyph>
                     <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadQuota">
                         <FlowPane.margin>
                             <Insets left="5" top="7"/>
@@ -317,17 +322,12 @@
                             <Insets top="5" left="5"/>
                         </HBox.margin>
                     </SuccessLabel>
-                    <NumberTextField fx:id="quotaCount" realHeight="30" flexWidth="100% - 300" min="-1" value="-1"
+                    <NumberTextField fx:id="quotaCount" realHeight="30" flexWidth="100% - 270" min="-1" value="-1"
                                      tipText="%zk.node.main.quotaCountTip">
                         <HBox.margin>
                             <Insets top="5" left="5"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <SaveButton onAction="#saveQuota" realHeight="30">
-                        <HBox.margin>
-                            <Insets top="5" left="5"/>
-                        </HBox.margin>
-                    </SaveButton>
                     <ClearButton onAction="#clearQuotaCount" realHeight="30">
                         <HBox.margin>
                             <Insets top="5" left="5"/>
@@ -343,18 +343,13 @@
                             <Insets top="5" left="5"/>
                         </HBox.margin>
                     </SuccessLabel>
-                    <NumberTextField fx:id="quotaBytes" realHeight="30" flexWidth="100% - 300" min="-1"
+                    <NumberTextField fx:id="quotaBytes" realHeight="30" flexWidth="100% - 270" min="-1"
                                      value="-1"
                                      tipText="%zk.node.main.quotaBytesTip">
                         <HBox.margin>
                             <Insets top="5" left="5"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <SaveButton onAction="#saveQuota" realHeight="30">
-                        <HBox.margin>
-                            <Insets top="5" left="5"/>
-                        </HBox.margin>
-                    </SaveButton>
                     <ClearButton onAction="#clearQuotaBytes" realHeight="30">
                         <HBox.margin>
                             <Insets top="5" left="5"/>

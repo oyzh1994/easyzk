@@ -1,15 +1,10 @@
 package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
-import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.TreeChildFilterEvent;
 import cn.oyzh.easyzk.event.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.ZKAddGroupEvent;
-import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
-import cn.oyzh.easyzk.event.ZKAuthAuthedEvent;
-import cn.oyzh.easyzk.event.ZKAuthEnabledEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKSearchFinishEvent;
@@ -30,7 +25,6 @@ import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.List;
@@ -248,62 +242,62 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     //     }
     // }
 
-    /**
-     * 认证成功事件
-     *
-     * @param event 事件
-     */
-    private void authAuthed(ZKAuthAuthedEvent event) {
-        ZKNodeTreeItem authedItem = event == null ? null : event.data();
-        boolean activity = authedItem == this.getSelectedItem();
-        // 对所有需要认证执行节点刷新
-        for (ZKNodeTreeItem item : this.getAllNodeItem()) {
-            if (item.needAuth()) {
-                item.refreshNode();
-            }
-        }
-        // 对待认证节点执行图标刷新
-        if (authedItem != null) {
-            authedItem.flushGraphic();
-        }
-        // 如果是当前激活节点，则重新选中
-        if (activity) {
-            this.select(null);
-            this.select(authedItem);
-        }
-    }
-
-    @Subscribe
-    private void authAdded(ZKAuthAddedEvent event) {
-        this.authJoined(event.data());
-    }
-
-    @Subscribe
-    private void authAdded(ZKAuthEnabledEvent event) {
-        this.authJoined(event.data());
-    }
-
-    /**
-     * 认证加入事件
-     *
-     * @param auth 认证信息
-     */
-    private void authJoined(ZKAuth auth) {
-        if (this.setting.isAutoAuth()) {
-            try {
-                // 获取已连接的zk连接
-                List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
-                // 遍历添加认证信息，并手动触发认证事件
-                for (ZKConnectTreeItem item : connectTreeItems) {
-                    item.client().addAuth(auth.getUser(), auth.getPassword());
-                }
-                // 执行认证成功业务
-                this.authAuthed(null);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    // /**
+    //  * 认证成功事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // private void authAuthed(ZKAuthAuthedEvent event) {
+    //     ZKNodeTreeItem authedItem = event == null ? null : event.data();
+    //     boolean activity = authedItem == this.getSelectedItem();
+    //     // 对所有需要认证执行节点刷新
+    //     for (ZKNodeTreeItem item : this.getAllNodeItem()) {
+    //         if (item.needAuth()) {
+    //             item.refreshNode();
+    //         }
+    //     }
+    //     // 对待认证节点执行图标刷新
+    //     if (authedItem != null) {
+    //         authedItem.flushGraphic();
+    //     }
+    //     // 如果是当前激活节点，则重新选中
+    //     if (activity) {
+    //         this.select(null);
+    //         this.select(authedItem);
+    //     }
+    // }
+    //
+    // @Subscribe
+    // private void authAdded(ZKAuthAddedEvent event) {
+    //     this.authJoined(event.data());
+    // }
+    //
+    // @Subscribe
+    // private void authAdded(ZKAuthEnabledEvent event) {
+    //     this.authJoined(event.data());
+    // }
+    //
+    // /**
+    //  * 认证加入事件
+    //  *
+    //  * @param auth 认证信息
+    //  */
+    // private void authJoined(ZKAuth auth) {
+    //     if (this.setting.isAutoAuth()) {
+    //         try {
+    //             // 获取已连接的zk连接
+    //             List<ZKConnectTreeItem> connectTreeItems = this.getRoot().getConnectedItems();
+    //             // 遍历添加认证信息，并手动触发认证事件
+    //             for (ZKConnectTreeItem item : connectTreeItems) {
+    //                 item.client().addAuth(auth.getUser(), auth.getPassword());
+    //             }
+    //             // 执行认证成功业务
+    //             this.authAuthed(null);
+    //         } catch (Exception e) {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    // }
 
     /**
      * 搜索开始事件

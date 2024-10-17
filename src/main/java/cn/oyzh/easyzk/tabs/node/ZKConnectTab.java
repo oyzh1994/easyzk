@@ -43,12 +43,10 @@ public class ZKConnectTab extends DynamicTab {
      * @param treeItem zk树节点
      */
     public void init(@NonNull ZKConnectTreeItem treeItem) {
-        if (treeItem != this.treeItem()) {
-            // 初始化
-            this.controller().init(treeItem);
-            // 刷新tab
-            this.flush();
-        }
+        // 初始化
+        this.controller().init(treeItem);
+        // 刷新tab
+        this.flush();
     }
 
     @Override

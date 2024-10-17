@@ -3,10 +3,8 @@ package cn.oyzh.easyzk.util;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.exception.ZKException;
-import cn.oyzh.easyzk.exception.ZKNoAuthException;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.ArrayUtil;
 import cn.oyzh.fx.common.util.CollectionUtil;
@@ -69,7 +67,7 @@ public class ZKNodeUtil {
      * @param client zk操作器
      * @return zk节点
      */
-    public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path) {
+    public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path) throws Exception {
         return getNode(client, path, FULL_PROPERTIES);
     }
 
@@ -80,59 +78,54 @@ public class ZKNodeUtil {
      * @param client zk操作器
      * @return zk节点
      */
-    public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path, @NonNull String properties) {
+    public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path, @NonNull String properties) throws Exception {
         if (!path.contains("/")) {
             throw new ZKException("path:" + path + I18nHelper.invalid());
         }
-        try {
-            long start = System.currentTimeMillis();
-            // zk节点
-            ZKNode node = new ZKNode();
-            // 异常
-            AtomicReference<Exception> exceptionReference = new AtomicReference<>();
-            // 设置zk状态
-            if (properties.contains("s")) {
-                try {
-                    node.stat(client.checkExists(path));
-                } catch (KeeperException.NoAuthException ignored) {
-                } catch (Exception ex) {
-                    exceptionReference.set(ex);
-                }
+        long start = System.currentTimeMillis();
+        // zk节点
+        ZKNode node = new ZKNode();
+        // 异常
+        AtomicReference<Exception> exceptionReference = new AtomicReference<>();
+        // 设置zk状态
+        if (properties.contains("s")) {
+            try {
+                node.stat(client.checkExists(path));
+            } catch (KeeperException.NoAuthException ignored) {
+            } catch (Exception ex) {
+                exceptionReference.set(ex);
             }
-            // 设置zk访问控制
-            if (properties.contains("a")) {
-                try {
-                    node.acl(client.getACL(path));
-                } catch (KeeperException.NoAuthException ignored) {
-                } catch (Exception ex) {
-                    exceptionReference.set(ex);
-                }
-            }
-            // 设置zk数据
-            if (properties.contains("d")) {
-                try {
-                    node.nodeData(client.getData(path));
-                } catch (KeeperException.NoAuthException ignored) {
-                } catch (Exception ex) {
-                    exceptionReference.set(ex);
-                }
-            }
-            // 抛出异常
-            if (exceptionReference.get() != null) {
-                throw exceptionReference.get();
-            }
-            // 设置加载时间
-            long end = System.currentTimeMillis();
-            long loadTime = end - start;
-            node.loadTime((short) loadTime);
-            // 设置节点路径
-            node.nodePath(path);
-            // 返回节点
-            return node;
-        } catch (Exception ex) {
-            JulLog.warn("getZKNode:{} error", path, ex);
         }
-        return null;
+        // 设置zk访问控制
+        if (properties.contains("a")) {
+            try {
+                node.acl(client.getACL(path));
+            } catch (KeeperException.NoAuthException ignored) {
+            } catch (Exception ex) {
+                exceptionReference.set(ex);
+            }
+        }
+        // 设置zk数据
+        if (properties.contains("d")) {
+            try {
+                node.nodeData(client.getData(path));
+            } catch (KeeperException.NoAuthException ignored) {
+            } catch (Exception ex) {
+                exceptionReference.set(ex);
+            }
+        }
+        // 抛出异常
+        if (exceptionReference.get() != null) {
+            throw exceptionReference.get();
+        }
+        // 设置加载时间
+        long end = System.currentTimeMillis();
+        long loadTime = end - start;
+        node.loadTime((short) loadTime);
+        // 设置节点路径
+        node.nodePath(path);
+        // 返回节点
+        return node;
     }
 
     /**
@@ -185,15 +178,9 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshNode(@NonNull ZKClient client, @NonNull ZKNode node) {
-        try {
-            ZKNode n = ZKNodeUtil.getNode(client, node.nodePath());
-            if (n != null) {
-                node.copy(n);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public void refreshNode(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+        ZKNode n = ZKNodeUtil.getNode(client, node.nodePath());
+        node.copy(n);
     }
 
     /**
@@ -353,48 +340,45 @@ public class ZKNodeUtil {
      */
     public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, @NonNull String properties) throws Exception {
         List<ZKNode> list = new ArrayList<>();
-        try {
-            // 获取子节点
-            List<String> children = client.getChildren(parentPath);
-            // 为空，直接返回
-            if (CollectionUtil.isEmpty(children)) {
-                return Collections.emptyList();
+        // 获取子节点
+        List<String> children = client.getChildren(parentPath);
+        // 为空，直接返回
+        if (CollectionUtil.isEmpty(children)) {
+            return Collections.emptyList();
+        }
+        // 处理器核心数量
+        int pCount = RuntimeUtil.processorCount();
+        // 性能较差机器上同步执行
+        if (pCount < 4) {
+            // 获取节点数据
+            for (String sub : children) {
+                // 对节点路径做处理
+                String path = ZKNodeUtil.concatPath(parentPath, sub);
+                // 获取节点
+                list.add(getNode(client, path, properties));
             }
-            // 处理器核心数量
-            int pCount = RuntimeUtil.processorCount();
-            // 性能较差机器上同步执行
-            if (pCount < 4) {
-                // 获取节点数据
-                for (String sub : children) {
-                    // 对节点路径做处理
-                    String path = ZKNodeUtil.concatPath(parentPath, sub);
-                    // 获取节点
-                    list.add(getNode(client, path, properties));
-                }
-                children.clear();
-            } else {// 性能较好机器上异步执行
-                // 任务列表
-                List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
-                // 获取节点数据
-                for (String sub : children) {
-                    // 对节点路径做处理
-                    String path = ZKNodeUtil.concatPath(parentPath, sub);
-                    // 添加到任务列表
-                    tasks.add(() -> getNode(client, path, properties));
-                    // 分批获取，避免机器爆炸
-                    if (tasks.size() >= pCount) {
-                        list.addAll(ThreadUtil.invoke(tasks));
-                        tasks.clear();
-                    }
-                }
-                // 处理尾部数据
-                if (!tasks.isEmpty()) {
+            children.clear();
+        } else {// 性能较好机器上异步执行
+            // 任务列表
+            List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
+            // 获取节点数据
+            for (String sub : children) {
+                // 对节点路径做处理
+                String path = ZKNodeUtil.concatPath(parentPath, sub);
+                // 添加到任务列表
+                tasks.add(() -> getNode(client, path, properties));
+                // 分批获取，避免机器爆炸
+                if (tasks.size() >= pCount) {
                     list.addAll(ThreadUtil.invoke(tasks));
+                    tasks.clear();
                 }
-                tasks.clear();
-                children.clear();
             }
-        } catch (ZKNoAuthException ignored) {
+            // 处理尾部数据
+            if (!tasks.isEmpty()) {
+                list.addAll(ThreadUtil.invoke(tasks));
+            }
+            tasks.clear();
+            children.clear();
         }
         return list;
     }

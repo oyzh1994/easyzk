@@ -466,22 +466,22 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     //     return list;
     // }
 
-    /**
-     * 获取全部zk子节点列表
-     *
-     * @param item zk节点
-     * @param list zk子节点列表
-     */
-    private void getAllNodeItem(ZKNodeTreeItem item, List<ZKNodeTreeItem> list) {
-        if (item != null) {
-            list.add(item);
-            for (TreeItem<?> treeItem : item.getRealChildren()) {
-                if (treeItem instanceof ZKNodeTreeItem nodeTreeItem) {
-                    this.getAllNodeItem(nodeTreeItem, list);
-                }
-            }
-        }
-    }
+    // /**
+    //  * 获取全部zk子节点列表
+    //  *
+    //  * @param item zk节点
+    //  * @param list zk子节点列表
+    //  */
+    // private void getAllNodeItem(ZKNodeTreeItem item, List<ZKNodeTreeItem> list) {
+    //     if (item != null) {
+    //         list.add(item);
+    //         for (TreeItem<?> treeItem : item.getRealChildren()) {
+    //             if (treeItem instanceof ZKNodeTreeItem nodeTreeItem) {
+    //                 this.getAllNodeItem(nodeTreeItem, list);
+    //             }
+    //         }
+    //     }
+    // }
 
     // /**
     //  * 寻找zk节点

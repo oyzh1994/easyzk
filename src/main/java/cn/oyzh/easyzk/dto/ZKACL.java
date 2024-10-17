@@ -133,7 +133,7 @@ public class ZKACL extends ACL {
      * @return 结果
      */
     public boolean isIPACL() {
-        return "ip".equals(this.schemeVal());
+        return "ip".equalsIgnoreCase(this.schemeVal());
     }
 
     /**
@@ -142,7 +142,7 @@ public class ZKACL extends ACL {
      * @return 结果
      */
     public boolean isDigestACL() {
-        return "digest".equals(this.schemeVal());
+        return "digest".equalsIgnoreCase(this.schemeVal());
     }
 
     /**
@@ -160,7 +160,7 @@ public class ZKACL extends ACL {
      * @return 结果
      */
     public boolean isWorldACL() {
-        return "world".equals(this.schemeVal());
+        return "world".equalsIgnoreCase(this.schemeVal());
     }
 
     /**

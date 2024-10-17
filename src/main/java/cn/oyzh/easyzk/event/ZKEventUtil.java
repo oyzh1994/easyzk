@@ -312,11 +312,11 @@ public class ZKEventUtil {
     /**
      * 触发认证添加事件
      */
-    public static void authAuthed(@NonNull ZKNodeTreeItem item, boolean result, String user, String password) {
+    public static void authAuthed(@NonNull ZKNodeTreeItem item, boolean success, String user, String password) {
         ZKAuthAuthedEvent event = new ZKAuthAuthedEvent();
         event.data(item);
         event.user(user);
-        event.result(result);
+        event.success(success);
         event.password(password);
         EventUtil.post(event);
     }

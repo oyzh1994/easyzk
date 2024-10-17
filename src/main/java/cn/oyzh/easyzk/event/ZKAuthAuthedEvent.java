@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.event;
 
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import lombok.Data;
@@ -17,8 +18,12 @@ public class ZKAuthAuthedEvent extends Event<ZKNodeTreeItem> {
 
     private String user;
 
-    private boolean result;
+    private boolean success;
 
     private String password;
+
+    public ZKAuth auth() {
+        return new ZKAuth(this.user, this.password);
+    }
 
 }

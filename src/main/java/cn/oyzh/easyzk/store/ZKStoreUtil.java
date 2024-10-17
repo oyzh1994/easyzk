@@ -2,16 +2,19 @@ package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
+import cn.oyzh.easyzk.domain.ZKSSHInfo;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.fx.common.jdbc.JdbcConst;
 import cn.oyzh.fx.common.jdbc.JdbcDialect;
 import cn.oyzh.fx.common.log.JulLog;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.common.util.FileUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -149,7 +152,21 @@ public class ZKStoreUtil {
                 List<ZKInfo> list = ZKInfoStore.INSTANCE.load();
                 // 执行迁移
                 for (ZKInfo info : list) {
-                    ZKInfoStore2.INSTANCE.replace(info);
+                   boolean result= ZKInfoStore2.INSTANCE.replace(info);
+                    if (result) {
+                        // 处理收藏
+                        if (CollectionUtil.isNotEmpty(info.getCollects())) {
+                            for (String collect : info.getCollects()) {
+                                ZKCollectStore.INSTANCE.replace(new ZKCollect(info.getId(), collect));
+                            }
+                        }
+                        // 处理ssh
+                        ZKSSHInfo sshInfo = info.getSshInfo();
+                        if (sshInfo != null) {
+                            sshInfo.setIid(info.getId());
+                            ZKSSHInfoStore.INSTANCE.replace(sshInfo);
+                        }
+                    }
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKInfoStore.INSTANCE.filePath()), new File(ZKInfoStore.INSTANCE.filePath() + ".bak"), true);

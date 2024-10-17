@@ -108,6 +108,10 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
     }
 
     public boolean getEnable() {
+        return this.isEnable();
+    }
+
+    public boolean isEnable() {
         return this.enable == null || this.enable;
     }
 }

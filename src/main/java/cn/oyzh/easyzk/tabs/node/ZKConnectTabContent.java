@@ -3,15 +3,19 @@ package cn.oyzh.easyzk.tabs.node;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
+import cn.oyzh.easyzk.event.ZKAuthAuthedEvent;
+import cn.oyzh.easyzk.event.ZKAuthEnabledEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKNodeACLAddedEvent;
 import cn.oyzh.easyzk.event.ZKNodeACLUpdatedEvent;
 import cn.oyzh.easyzk.event.ZKNodeAddedEvent;
+import cn.oyzh.easyzk.event.ZKNodeChangedEvent;
 import cn.oyzh.easyzk.event.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.ZKNodeRemovedEvent;
-import cn.oyzh.easyzk.event.ZKNodeChangedEvent;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
 import cn.oyzh.easyzk.fx.ZKDataFormatComboBox;
@@ -23,9 +27,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
-import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -47,7 +49,6 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.ResizeHelper;
-import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -58,7 +59,6 @@ import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -73,7 +73,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 import javafx.util.Callback;
 import lombok.Getter;
-import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.Stat;
 
@@ -305,35 +304,27 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param item 树节点
      */
     public void init(ZKConnectTreeItem item) {
-        this.treeItem = item;
-        this.treeView.disable();
-        this.treeView.client(item.client());
-        this.client = item.client();
-        // 异步执行
-        ThreadUtil.start(() -> {
-            try {
-                // 获取根节点
-                ZKNode rootNode = ZKNodeUtil.getNode(item.client(), "/");
-                if (rootNode != null) {
-                    // 生成根节点
-                    ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this.treeView, item.client());
-                    // 设置根节点
-                    this.treeView.setRoot(rootItem);
-                    // 加载节点
-                    if (this.setting.isLoadFirst()) {
-                        rootItem.loadChild();
-                    } else if (this.setting.isLoadAll()) {
-                        rootItem.loadChildAll();
-                    }
+        try {
+            this.treeItem = item;
+            this.client = item.client();
+            this.treeView.client(this.client);
+            // 异步执行
+            ThreadUtil.start(() -> {
+                try {
+                    this.treeView.disable();
+                    // 加载根节点
+                    this.treeView.loadRoot();
                     // 监听选中变化
                     this.treeView.selectItemChanged(this::initItem);
-                } else {
-                    MessageBox.warn(item.value().getName() + I18nHelper.loadFail());
+                } catch (Exception ex) {
+                    MessageBox.exception(ex);
+                } finally {
+                    this.treeView.enable();
                 }
-            } finally {
-                this.treeView.enable();
-            }
-        }, 100);
+            }, 100);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -417,6 +408,10 @@ public class ZKConnectTabContent extends DynamicTabController {
                 } else {
                     this.activeItem.doIgnoreChildChanged();
                 }
+            }
+        } else if (this.activeItem.isNeedAuth()) { // 需要认证
+            if (MessageBox.confirm(ZKI18nHelper.nodeTip6())) {
+                this.activeItem.authNode();
             }
         }
     }
@@ -958,12 +953,12 @@ public class ZKConnectTabContent extends DynamicTabController {
         if (this.activeItem.isRoot()) {
             this.quotaTab.getContent().setDisable(true);
         } else {
-            try {
-                this.quotaTab.getContent().setDisable(false);
-                StatsTrack quota = this.activeItem.quota();
+            this.quotaTab.getContent().setDisable(false);
+            StatsTrack quota = this.activeItem.quota();
+            if (quota != null) {
                 this.quotaCount.setValue(quota.getCount());
                 this.quotaBytes.setValue(quota.getBytes());
-            } catch (KeeperException.NoNodeException ignore) {
+            } else {
                 this.quotaCount.setValue(-1);
                 this.quotaBytes.setValue(-1);
             }
@@ -1066,8 +1061,7 @@ public class ZKConnectTabContent extends DynamicTabController {
     @FXML
     private void saveQuota() {
         try {
-            this.activeItem.saveQuota(this.quotaBytes.getValue(), this.quotaCount.getValue().intValue());
-            MessageBox.info(I18nHelper.operationSuccess());
+            this.activeItem.saveQuota(this.quotaBytes.getLongValue(), this.quotaCount.getIntValue());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -1078,13 +1072,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void clearQuotaCount() {
-        try {
-            this.activeItem.clearQuotaNum();
-            this.quotaCount.setValue(-1);
-            MessageBox.info(I18nHelper.operationSuccess());
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
-        }
+        this.quotaCount.setValue(-1);
     }
 
     /**
@@ -1092,20 +1080,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     @FXML
     private void clearQuotaBytes() {
-        try {
-            this.activeItem.clearQuotaBytes();
-            this.quotaBytes.setValue(-1);
-            MessageBox.info(I18nHelper.operationSuccess());
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
-        }
-    }
-
-    @Override
-    public void onTabClose(DynamicTab tab, Event event) {
-        // 销毁节点
-        this.treeView.destroy();
-        super.onTabClose(tab, event);
+        this.quotaBytes.setValue(-1);
     }
 
     /**
@@ -1164,9 +1139,9 @@ public class ZKConnectTabContent extends DynamicTabController {
      * @param event 事件
      */
     @Subscribe
-    public void onNodeAdd(ZKNodeAddedEvent event) {
+    public void onNodeAdded(ZKNodeAddedEvent event) {
         if (event.info() == this.client.zkInfo()) {
-            this.treeView.onNodeAdd(event.data());
+            this.treeView.onNodeAdded(event.data());
         }
     }
 
@@ -1234,6 +1209,56 @@ public class ZKConnectTabContent extends DynamicTabController {
             if (curPage != null) {
                 this.renderACLView(curPage);
             }
+        }
+    }
+
+    /**
+     * 认证已执行事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void authAuthed(ZKAuthAuthedEvent event) {
+        try {
+            if (event.success()) {
+                this.treeView.authChanged(event.auth());
+                this.flushTab();
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 认证已添加事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void authAdded(ZKAuthAddedEvent event) {
+        try {
+            ZKAuth auth = event.data();
+            if (auth.isEnable()) {
+                this.treeView.authChanged(auth);
+                this.flushTab();
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 认证已启用事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void authEnabled(ZKAuthEnabledEvent event) {
+        try {
+            this.treeView.authChanged(event.data());
+            this.flushTab();
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 }

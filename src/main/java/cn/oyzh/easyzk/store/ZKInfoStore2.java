@@ -22,8 +22,6 @@ public class ZKInfoStore2 extends JdbcStore<ZKInfo> {
     public List<ZKInfo> load() {
         List<ZKInfo> list = super.selectList();
         for (ZKInfo info : list) {
-            // // 处理收藏
-            // info.setCollects(ZKCollectStore.INSTANCE.list(info.getId()));
             // 处理ssh
             info.setSshInfo(ZKSSHInfoStore.INSTANCE.find(info.getId()));
         }
@@ -37,21 +35,6 @@ public class ZKInfoStore2 extends JdbcStore<ZKInfo> {
                 result = this.update(info);
             } else {
                 result = this.insert(info);
-            }
-
-            if (result) {
-                // 处理收藏
-                if (CollectionUtil.isNotEmpty(info.getCollects())) {
-                    for (String collect : info.getCollects()) {
-                        ZKCollectStore.INSTANCE.replace(new ZKCollect(info.getId(), collect));
-                    }
-                }
-                // 处理ssh
-                ZKSSHInfo sshInfo = info.getSshInfo();
-                if (sshInfo != null) {
-                    sshInfo.setIid(info.getId());
-                    ZKSSHInfoStore.INSTANCE.replace(sshInfo);
-                }
             }
         }
         return result;

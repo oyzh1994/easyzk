@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.fx.plus.controls.svg.LockSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import javafx.geometry.Insets;
@@ -43,13 +44,18 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         boolean changed = false;
         if (glyph == null) {
             changed = true;
+        } else if (this.item().isNeedAuth() && StringUtil.notEquals(glyph.getProp("_type"), "3")) {
+            changed = true;
         } else if (this.item().isEphemeral() && StringUtil.notEquals(glyph.getProp("_type"), "2")) {
             changed = true;
         } else if (StringUtil.notEquals(glyph.getProp("_type"), "1")) {
             changed = true;
         }
         if (changed) {
-            if (this.item().isEphemeral()) {
+            if (this.item().isNeedAuth()) {
+                glyph = new LockSVGGlyph("11");
+                glyph.setProp("_type", "3");
+            } else if (this.item().isEphemeral()) {
                 glyph = new SVGGlyph("/font/temp.svg", 11);
                 glyph.setProp("_type", "2");
             } else {

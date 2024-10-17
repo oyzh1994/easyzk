@@ -7,8 +7,6 @@ import cn.oyzh.fx.common.dto.FriendlyInfo;
 import cn.oyzh.fx.common.util.CollectionUtil;
 import cn.oyzh.fx.common.util.StringUtil;
 import cn.oyzh.fx.common.util.TextUtil;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -18,7 +16,6 @@ import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
-import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,10 +131,10 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 当前对象
      */
     public ZKNode copy(@NonNull ZKNode node) {
-        this.acl(node.acl());
-        this.stat(node.stat());
+        this.acl = node.acl;
+        this.stat = node.stat;
         this.nodePath = node.nodePath;
-        this.nodeData(node.nodeData());
+        this.nodeData = node.nodeData;
         return this;
     }
 

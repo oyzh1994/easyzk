@@ -1,18 +1,24 @@
 package cn.oyzh.easyzk.trees.node;
 
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.TreeChildFilterEvent;
+import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.util.FXUtil;
 import com.google.common.eventbus.Subscribe;
+import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * zk树
@@ -20,17 +26,11 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/1/29
  */
-@Accessors(chain = true, fluent = true)
-public class ZKNodeTreeView extends RichTreeView implements EventListener {
-
-    /**
-     * 搜索中标志位
-     */
-    @Getter
-    private volatile boolean searching;
+public class ZKNodeTreeView extends RichTreeView {
 
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private ZKClient client;
 
     public ZKInfo info() {
@@ -135,7 +135,7 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
      *
      * @param nodePath 节点路径
      */
-    public void onNodeAdd(String nodePath) {
+    public void onNodeAdded(String nodePath) {
         try {
             String pPath = ZKNodeUtil.getParentPath(nodePath);
             // 寻找节点
@@ -169,15 +169,10 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
             }
             if (item != null) {
                 ZKNodeTreeItem finalItem = item;
-                FXUtil.runPulse(() -> this.select(finalItem));
+                FXUtil.runPulse(() -> this.selectAndScroll(finalItem));
             }
         } catch (Exception ex) {
             JulLog.warn("新增节点事件处理失败！", ex);
-        // } finally {
-        //     // 如果未开启节点监听，则清除新增标记
-        //     if (!this.client.isEnableListen()) {
-        //         this.client.clearLastCreate();
-        //     }
         }
     }
 
@@ -277,5 +272,66 @@ public class ZKNodeTreeView extends RichTreeView implements EventListener {
         } catch (Exception ex) {
             JulLog.warn("节点已修改事件处理失败！", ex);
         }
+    }
+
+    /**
+     * 获取全部zk子节点列表
+     *
+     * @return List<ZKNodeTreeItem>
+     */
+    private List<ZKNodeTreeItem> getAllNodeItem() {
+        List<ZKNodeTreeItem> list = new ArrayList<>();
+        this.getAllNodeItem(this.getRoot(), list);
+        return list;
+    }
+
+    /**
+     * 获取全部zk子节点列表
+     *
+     * @param item zk节点
+     * @param list zk子节点列表
+     */
+    private void getAllNodeItem(ZKNodeTreeItem item, List<ZKNodeTreeItem> list) {
+        if (item != null) {
+            list.add(item);
+            for (TreeItem<?> treeItem : item.getRealChildren()) {
+                if (treeItem instanceof ZKNodeTreeItem nodeTreeItem) {
+                    this.getAllNodeItem(nodeTreeItem, list);
+                }
+            }
+        }
+    }
+
+    /**
+     * 认证变更事件
+     *
+     * @param auth 认证信息
+     */
+    public void authChanged(ZKAuth auth) throws Exception {
+        this.client.addAuth(auth.getUser(), auth.getPassword());
+        for (ZKNodeTreeItem item : this.getAllNodeItem()) {
+            if (item.isNeedAuth() || ZKACLUtil.existDigest(item.acl(), auth.getUser())) {
+                item.authChanged();
+            }
+        }
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+    }
+
+    /**
+     * 加载根节点
+     */
+    public void loadRoot() throws Exception {
+        // 获取根节点
+        ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
+        // 生成根节点
+        ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this);
+        // 设置根节点
+        this.setRoot(rootItem);
+        // 加载根节点
+        rootItem.loadRoot();
     }
 }

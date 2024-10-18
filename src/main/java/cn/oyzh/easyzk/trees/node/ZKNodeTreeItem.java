@@ -82,7 +82,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     private volatile boolean canceled;
 
     /**
-     * 需要认证
+     * 需要认证标志位
      */
     private volatile boolean needAuth;
 

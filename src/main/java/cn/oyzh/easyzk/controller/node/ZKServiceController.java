@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.common.dto.Paging;
+import cn.oyzh.common.dto.Paging;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;

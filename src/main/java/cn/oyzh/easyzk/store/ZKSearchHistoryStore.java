@@ -2,13 +2,13 @@ package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
-import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.json.JSONUtil;
-import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.store.ArrayFileStore;
-import cn.oyzh.fx.common.util.CollectionUtil;
-import cn.oyzh.fx.common.util.FileUtil;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.common.dto.Paging;
+import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.store.json.ArrayFileStore;
 import lombok.NonNull;
 
 import java.util.ArrayList;

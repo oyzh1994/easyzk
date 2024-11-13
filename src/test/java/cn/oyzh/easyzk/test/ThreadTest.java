@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.test;
 
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.common.thread.ThreadUtil;
 import org.junit.Test;
 
 /**

@@ -13,7 +13,7 @@ import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;

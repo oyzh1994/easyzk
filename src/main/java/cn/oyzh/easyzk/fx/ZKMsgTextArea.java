@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.fx;
 
-import cn.oyzh.fx.common.Const;
+import cn.oyzh.common.Const;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import cn.oyzh.fx.plus.event.EventListener;

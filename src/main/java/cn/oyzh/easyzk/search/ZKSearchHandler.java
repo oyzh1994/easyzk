@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.fx.common.util.TextUtil;
+import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.search.SearchHandler;
 import cn.oyzh.fx.plus.controls.search.SearchParam;
 import cn.oyzh.fx.plus.controls.search.SearchValue;

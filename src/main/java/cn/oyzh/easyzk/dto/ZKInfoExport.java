@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.common.json.JSONUtil;
-import cn.oyzh.fx.common.log.JulLog;
+import cn.oyzh.common.dto.Project;
+import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.log.JulLog;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.NonNull;

@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoTransportController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;

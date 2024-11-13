@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.fx.common.jdbc.Column;
-import cn.oyzh.fx.common.jdbc.Table;
 import cn.oyzh.fx.plus.domain.Setting;
+import cn.oyzh.store.jdbc.Column;
+import cn.oyzh.store.jdbc.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

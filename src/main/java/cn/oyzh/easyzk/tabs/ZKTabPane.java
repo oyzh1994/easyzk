@@ -14,7 +14,7 @@ import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
-import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;

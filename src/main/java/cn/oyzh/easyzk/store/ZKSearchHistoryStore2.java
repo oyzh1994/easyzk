@@ -1,11 +1,12 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
-import cn.oyzh.fx.common.jdbc.DeleteParam;
-import cn.oyzh.fx.common.jdbc.JdbcStore;
-import cn.oyzh.fx.common.jdbc.OrderByParam;
-import cn.oyzh.fx.common.jdbc.QueryParam;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.store.jdbc.DeleteParam;
+import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.OrderByParam;
+import cn.oyzh.store.jdbc.QueryParam;
+import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.store.jdbc.DeleteParam;
 
 import java.util.List;
 import java.util.stream.Collectors;

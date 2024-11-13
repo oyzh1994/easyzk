@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
-import cn.oyzh.fx.common.Index;
+import cn.oyzh.common.Index;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;

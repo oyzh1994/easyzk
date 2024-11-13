@@ -2,11 +2,11 @@ package cn.oyzh.easyzk.util;
 
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.exception.ZKException;
-import cn.oyzh.fx.common.dto.FriendlyInfo;
-import cn.oyzh.fx.common.util.CollectionUtil;
-import cn.oyzh.fx.common.util.NumberUtil;
-import cn.oyzh.fx.common.util.RegexUtil;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.common.dto.FriendlyInfo;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.NumberUtil;
+import cn.oyzh.common.util.RegexUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;

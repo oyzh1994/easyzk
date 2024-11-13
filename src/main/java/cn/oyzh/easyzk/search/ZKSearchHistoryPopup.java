@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.search;
 
 import cn.oyzh.easyzk.store.ZKSearchHistoryStore2;
-import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.fx.plus.controls.popup.SearchHistoryPopup;
 
 import java.util.List;

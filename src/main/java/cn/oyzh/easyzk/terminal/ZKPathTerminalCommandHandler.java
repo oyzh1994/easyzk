@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.terminal;
 
 import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.fx.common.util.TextUtil;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.common.util.TextUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 
 import java.util.ArrayList;

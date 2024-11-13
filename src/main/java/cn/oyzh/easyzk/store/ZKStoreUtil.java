@@ -7,15 +7,15 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKPageInfo;
-import cn.oyzh.easyzk.domain.ZKSSHInfo;
+import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.fx.common.jdbc.JdbcConst;
-import cn.oyzh.fx.common.jdbc.JdbcDialect;
-import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.common.util.CollectionUtil;
-import cn.oyzh.fx.common.util.FileUtil;
+import cn.oyzh.store.jdbc.JdbcConst;
+import cn.oyzh.store.jdbc.JdbcDialect;
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.experimental.UtilityClass;
@@ -161,7 +161,7 @@ public class ZKStoreUtil {
                             }
                         }
                         // 处理ssh
-                        ZKSSHInfo sshInfo = info.getSshInfo();
+                        ZKSSHConnect sshInfo = info.getSshConnect();
                         if (sshInfo != null) {
                             sshInfo.setIid(info.getId());
                             ZKSSHInfoStore.INSTANCE.replace(sshInfo);

@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.test;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.common.ssh.SSHConnectInfo;
-import cn.oyzh.fx.common.ssh.SSHForwardInfo;
-import cn.oyzh.fx.common.ssh.SSHForwarder;
+import cn.oyzh.ssh.forward.SSHForwardConfig;
+import cn.oyzh.ssh.forward.SSHForwarder;
 import org.junit.Test;
 
 /**
@@ -15,12 +15,12 @@ public class SSHTest {
 
     @Test
     public void test() throws Exception {
-        SSHConnectInfo connectInfo = new SSHConnectInfo();
+        ZKSSHConnect connectInfo = new ZKSSHConnect();
         connectInfo.setHost("192.168.189.130");
         connectInfo.setUser("root");
         connectInfo.setPassword("123456");
 
-        SSHForwardInfo forwardInfo = new SSHForwardInfo();
+        SSHForwardConfig forwardInfo = new SSHForwardConfig();
         forwardInfo.setPort(2181);
         forwardInfo.setHost("192.168.189.134");
 

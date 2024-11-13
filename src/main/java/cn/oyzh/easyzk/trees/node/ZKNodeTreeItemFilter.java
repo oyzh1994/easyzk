@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.trees.node;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import lombok.Getter;

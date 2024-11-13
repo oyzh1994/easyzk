@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.fx.common.jdbc.Column;
-import cn.oyzh.fx.common.jdbc.PrimaryKey;
-import cn.oyzh.fx.common.jdbc.Table;
-import cn.oyzh.fx.common.util.BooleanUtil;
-import cn.oyzh.fx.common.util.CollectionUtil;
-import cn.oyzh.fx.common.util.ObjectComparator;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.store.jdbc.Column;
+import cn.oyzh.store.jdbc.PrimaryKey;
+import cn.oyzh.store.jdbc.Table;
+import cn.oyzh.common.util.BooleanUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.ObjectComparator;
+import cn.oyzh.common.util.StringUtil;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -126,7 +126,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
      * ssh信息
      */
     @Getter
-    private ZKSSHInfo sshInfo;
+    private ZKSSHConnect sshConnect;
 
     /**
      * 复制对象
@@ -141,10 +141,10 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
         this.listen = zkInfo.listen;
         // this.cluster = zkInfo.cluster;
         this.groupId = zkInfo.groupId;
-        this.sshInfo = zkInfo.sshInfo;
         this.readonly = zkInfo.readonly;
         this.collects = zkInfo.collects;
         this.sshForward = zkInfo.sshForward;
+        this.sshConnect = zkInfo.sshConnect;
         this.compatibility = zkInfo.compatibility;
         this.connectTimeOut = zkInfo.connectTimeOut;
         this.sessionTimeOut = zkInfo.sessionTimeOut;

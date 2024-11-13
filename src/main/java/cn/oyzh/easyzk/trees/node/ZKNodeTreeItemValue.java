@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.controls.svg.LockSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;

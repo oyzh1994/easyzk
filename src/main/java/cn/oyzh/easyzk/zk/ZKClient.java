@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.enums.ZKConnState;
@@ -15,10 +14,10 @@ import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
-import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.ssh.SSHForwardInfo;
-import cn.oyzh.fx.common.ssh.SSHForwarder;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.ssh.forward.SSHForwardConfig;
+import cn.oyzh.ssh.forward.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -162,7 +161,7 @@ public class ZKClient {
     public ZKClient(@NonNull ZKInfo zkInfo) {
         this.zkInfo = zkInfo;
         if (zkInfo.isSSHForward()) {
-            this.sshForwarder = new SSHForwarder(zkInfo.getSshInfo());
+            this.sshForwarder = new SSHForwarder(zkInfo.getSshConnect());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || !newValue.isConnected()) {
@@ -315,10 +314,10 @@ public class ZKClient {
         String host;
         // ssh端口转发
         if (this.zkInfo.isSSHForward()) {
-            SSHForwardInfo forwardInfo = new SSHForwardInfo();
-            forwardInfo.setHost(this.zkInfo.hostIp());
-            forwardInfo.setPort(this.zkInfo.hostPort());
-            int localPort = this.sshForwarder.forward(forwardInfo);
+            SSHForwardConfig forwardConfig = new SSHForwardConfig();
+            forwardConfig.setHost(this.zkInfo.hostIp());
+            forwardConfig.setPort(this.zkInfo.hostPort());
+            int localPort = this.sshForwarder.forward(forwardConfig);
             // 连接信息
             host = "127.0.0.1:" + localPort;
         } else {// 直连

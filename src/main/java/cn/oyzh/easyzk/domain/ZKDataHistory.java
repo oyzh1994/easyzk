@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.fx.common.jdbc.Column;
-import cn.oyzh.fx.common.jdbc.Table;
-import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.store.jdbc.Column;
+import cn.oyzh.store.jdbc.Table;
+import cn.oyzh.common.util.ObjectComparator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;

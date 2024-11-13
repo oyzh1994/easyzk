@@ -177,6 +177,11 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>cn.oyzh</groupId>
+            <artifactId>ssh</artifactId>
+        </dependency>
+
         <!-- 自定义类库，富文本相关 -->
         <dependency>
             <groupId>cn.oyzh</groupId>

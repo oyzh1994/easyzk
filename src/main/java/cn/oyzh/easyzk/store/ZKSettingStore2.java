@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.fx.common.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStore;
 
 
 /**

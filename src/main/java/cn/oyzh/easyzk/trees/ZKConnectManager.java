@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
-import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import lombok.NonNull;
 
 import java.util.List;

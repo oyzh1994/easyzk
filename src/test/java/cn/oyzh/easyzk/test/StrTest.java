@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.test;
 
-import cn.oyzh.fx.common.util.TextUtil;
+import cn.oyzh.common.util.TextUtil;
 import org.junit.Test;
 
 import java.util.ArrayList;

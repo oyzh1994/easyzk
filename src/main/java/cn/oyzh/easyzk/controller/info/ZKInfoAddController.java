@@ -3,11 +3,11 @@ package cn.oyzh.easyzk.controller.info;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.domain.ZKSSHInfo;
+import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
@@ -189,8 +189,8 @@ public class ZKInfoAddController extends StageController {
      *
      * @return ssh连接信息
      */
-    private ZKSSHInfo getSSHInfo() {
-        ZKSSHInfo sshConnectInfo = new ZKSSHInfo();
+    private ZKSSHConnect getSSHInfo() {
+        ZKSSHConnect sshConnectInfo = new ZKSSHConnect();
         sshConnectInfo.setHost(this.sshHost.getText());
         sshConnectInfo.setUser(this.sshUser.getText());
         sshConnectInfo.setPassword(this.sshPassword.getText());
@@ -215,7 +215,7 @@ public class ZKInfoAddController extends StageController {
             zkInfo.setConnectTimeOut(3);
             zkInfo.setSshForward(this.sshForward.isSelected());
             if (zkInfo.isSSHForward()) {
-                zkInfo.setSshInfo(this.getSSHInfo());
+                zkInfo.setSshConnect(this.getSSHInfo());
             }
             ZKConnectUtil.testConnect(this.stage, zkInfo);
         }
@@ -241,7 +241,7 @@ public class ZKInfoAddController extends StageController {
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number sessionTimeOut = this.sessionTimeOut.getValue();
             zkInfo.setHost(host);
-            zkInfo.setSshInfo(this.getSSHInfo());
+            zkInfo.setSshConnect(this.getSSHInfo());
             zkInfo.setListen(this.listen.isSelected());
             zkInfo.setRemark(this.remark.getTextTrim());
             zkInfo.setReadonly(this.readonly.isSelected());

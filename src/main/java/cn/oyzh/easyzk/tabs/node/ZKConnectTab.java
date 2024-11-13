@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.theme.ThemeManager;

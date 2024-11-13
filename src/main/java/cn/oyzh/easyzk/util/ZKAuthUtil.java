@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.curator.framework.AuthInfo;

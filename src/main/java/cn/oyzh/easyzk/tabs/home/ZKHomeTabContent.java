@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.home;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.fx.common.dto.Project;
+import cn.oyzh.common.dto.Project;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;

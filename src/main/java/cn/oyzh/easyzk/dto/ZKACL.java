@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.easyzk.util.ZKACLUtil;
-import cn.oyzh.fx.common.dto.FriendlyInfo;
+import cn.oyzh.common.dto.FriendlyInfo;
 import lombok.NonNull;
 import org.apache.zookeeper.data.ACL;
 

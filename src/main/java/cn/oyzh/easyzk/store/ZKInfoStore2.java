@@ -1,10 +1,7 @@
 package cn.oyzh.easyzk.store;
 
-import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.domain.ZKSSHInfo;
-import cn.oyzh.fx.common.jdbc.JdbcStore;
-import cn.oyzh.fx.common.util.CollectionUtil;
+import cn.oyzh.store.jdbc.JdbcStore;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class ZKInfoStore2 extends JdbcStore<ZKInfo> {
         List<ZKInfo> list = super.selectList();
         for (ZKInfo info : list) {
             // 处理ssh
-            info.setSshInfo(ZKSSHInfoStore.INSTANCE.find(info.getId()));
+            info.setSshConnect(ZKSSHInfoStore.INSTANCE.find(info.getId()));
         }
         return list;
     }

@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.fx.common.jdbc.JdbcStore;
-import cn.oyzh.fx.common.util.StringUtil;
+import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.common.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;

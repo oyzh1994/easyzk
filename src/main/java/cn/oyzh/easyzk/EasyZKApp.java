@@ -4,10 +4,10 @@ import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
-import cn.oyzh.fx.common.SysConst;
-import cn.oyzh.fx.common.date.LocalZoneRulesProvider;
-import cn.oyzh.fx.common.log.JulLog;
-import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.common.SysConst;
+import cn.oyzh.common.date.LocalZoneRulesProvider;
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.fx.plus.ext.ApplicationExt;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nManager;
@@ -28,7 +28,7 @@ import javafx.stage.Stage;
  */
 // @ComponentScan(
 //         lazyInit = true,
-//         value = {"cn.oyzh.fx.common", "cn.oyzh.easyzk"}
+//         value = {"cn.oyzh.common", "cn.oyzh.easyzk"}
 // )
 // @EnableSpringUtil
 public class EasyZKApp extends ApplicationExt {

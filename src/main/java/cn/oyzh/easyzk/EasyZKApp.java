@@ -1,13 +1,16 @@
 package cn.oyzh.easyzk;
 
-import cn.oyzh.easyzk.controller.MainController;
-import cn.oyzh.easyzk.exception.ZKExceptionParser;
-import cn.oyzh.easyzk.store.ZKSettingStore2;
-import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.common.SysConst;
 import cn.oyzh.common.date.LocalZoneRulesProvider;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.SystemUtil;
+import cn.oyzh.easyzk.controller.MainController;
+import cn.oyzh.easyzk.exception.ZKExceptionParser;
+import cn.oyzh.easyzk.store.ZKSettingStore2;
+import cn.oyzh.easyzk.store.ZKStoreUtil;
+import cn.oyzh.event.EventFactory;
+import cn.oyzh.fx.plus.event.FxEventBus;
+import cn.oyzh.fx.plus.event.FxEventConfig;
 import cn.oyzh.fx.plus.ext.ApplicationExt;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nManager;
@@ -42,6 +45,8 @@ public class EasyZKApp extends ApplicationExt {
         // 初始化时区处理器
         System.setProperty(SysConst.CACHE_DIR, ZKConst.CACHE_PATH);
         System.setProperty(TerminalConst.SCAN_BASE, "cn.oyzh.easyzk.terminal");
+        EventFactory.registerEventBus(FxEventBus.class);
+        EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
         System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
         launch(EasyZKApp.class, args);
     }

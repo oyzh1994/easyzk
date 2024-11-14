@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.event.Event;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

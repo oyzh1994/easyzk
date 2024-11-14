@@ -388,7 +388,7 @@
 //     /**
 //      * 刷新搜索结果
 //      */
-//     @Subscribe
+//     @EventSubscribe
 //     public void flushSearchResult(TreeChildChangedEvent event) {
 //         if (this.searchHandler.treeNode().searching()) {
 //             TaskManager.startDelay("zk:search:flushSearchResult", () -> {
@@ -401,7 +401,7 @@
 //     /**
 //      * 搜索触发
 //      */
-//     @Subscribe
+//     @EventSubscribe
 //     public void searchFire(ZKSearchFireEvent event) {
 //         if (this.searchMain.isVisible()) {
 //             this.searchMain.disappear();

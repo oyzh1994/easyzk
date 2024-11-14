@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.common.dto.Paging;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
@@ -150,7 +151,7 @@ public class ZKAuthTabContent extends DynamicTabController {
     /**
      * 认证新增事件
      */
-    @Subscribe
+    @EventSubscribe
     private void authAdded(ZKAuthAddedEvent event) {
         this.initDataList(this.pageData.currentPage());
     }

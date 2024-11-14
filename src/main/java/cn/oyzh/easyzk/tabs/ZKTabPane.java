@@ -15,8 +15,9 @@ import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
-import cn.oyzh.fx.plus.event.EventListener;
+import cn.oyzh.event.EventListener;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
 import com.google.common.eventbus.Subscribe;
 import javafx.collections.ListChangeListener;
@@ -154,7 +155,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void terminalOpen(ZKTerminalOpenEvent event) {
         ZKInfo info = event.data();
         ZKTerminalTab terminalTab = this.getTerminalTab(info);
@@ -174,7 +175,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void terminalClose(ZKTerminalCloseEvent event) {
         try {
             // 寻找节点
@@ -193,7 +194,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void changelog(ChangelogEvent event) {
         ChangelogTab tab = this.getTab(ChangelogTab.class);
         if (tab == null) {
@@ -219,7 +220,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void connectionOpened(ZKConnectOpenedEvent event) {
         ZKConnectTab connectTab = this.getConnectTab(event.info());
         if (connectTab == null) {
@@ -234,7 +235,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void connectionClosed(ZKConnectionClosedEvent event) {
         ZKConnectTab connectTab = this.getConnectTab(event.info());
         if (connectTab != null) {
@@ -258,7 +259,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
     /**
      * 初始化认证tab
      */
-    @Subscribe
+    @EventSubscribe
     private void authMain(ZKAuthMainEvent event) {
         ZKAuthTab tab = this.getAuthTab();
         if (tab == null) {
@@ -280,7 +281,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
     /**
      * 初始化过滤tab
      */
-    @Subscribe
+    @EventSubscribe
     private void filterMain(ZKFilterMainEvent event) {
         ZKFilterTab tab = this.getFilterTab();
         if (tab == null) {
@@ -295,7 +296,7 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void restoreData(ZKHistoryRestoreEvent event) {
         ZKConnectTab connectTab = this.getConnectTab(event.info());
         if (connectTab != null) {

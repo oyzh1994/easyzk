@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.common.dto.Paging;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
@@ -138,7 +139,7 @@ public class ZKFilterTabContent extends DynamicTabController {
     /**
      * 过滤新增事件
      */
-    @Subscribe
+    @EventSubscribe
     private void filterAdded(ZKFilterAddedEvent event) {
         this.initDataList(this.pageData.currentPage());
     }

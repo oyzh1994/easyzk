@@ -9,6 +9,7 @@ import cn.oyzh.easyzk.event.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
 import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
@@ -71,7 +72,7 @@ public class DataHistoryController extends SubStageController implements Initial
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void onTabClosed(TabClosedEvent event) {
         ZKNodeTreeItem item = this.item();
         if (item == null) {
@@ -89,7 +90,7 @@ public class DataHistoryController extends SubStageController implements Initial
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void onNodeSelected(ZKNodeSelectedEvent event) {
         if (event.data() == null) {
             this.itemReference = null;
@@ -107,7 +108,7 @@ public class DataHistoryController extends SubStageController implements Initial
     /**
      * 历史新增事件
      */
-    @Subscribe
+    @EventSubscribe
     private void historyAdded(ZKHistoryAddedEvent event) {
         ZKNodeTreeItem item = this.item();
         if (event.item() == item) {
@@ -199,7 +200,7 @@ public class DataHistoryController extends SubStageController implements Initial
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void show(ZKHistoryShowEvent event) {
         this.itemReference = new WeakReference<>(event.data());
         this.root.selectTab();

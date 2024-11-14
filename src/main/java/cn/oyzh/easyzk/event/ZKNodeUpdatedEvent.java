@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.event.Event;
+import cn.oyzh.event.EventFormatter;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

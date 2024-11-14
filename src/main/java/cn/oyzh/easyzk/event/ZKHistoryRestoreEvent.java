@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.event.Event;
+import cn.oyzh.event.EventFormatter;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.Getter;
 import lombok.Setter;

@@ -33,6 +33,7 @@ import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.TextUtil;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
@@ -1138,7 +1139,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void onNodeAdded(ZKNodeAddedEvent event) {
         if (event.info() == this.client.zkInfo()) {
             this.treeView.onNodeAdded(event.data());
@@ -1150,7 +1151,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void onNodeCreated(ZKNodeCreatedEvent event) {
         if (event.info() == this.client.zkInfo()) {
             this.treeView.onNodeCreated(event.data());
@@ -1162,7 +1163,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void onNodeRemoved(ZKNodeRemovedEvent event) {
         if (event.info() == this.client.zkInfo()) {
             this.treeView.onNodeRemoved(event.data());
@@ -1174,7 +1175,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void onNodeChanged(ZKNodeChangedEvent event) {
         if (event.info() == this.client.zkInfo()) {
             this.treeView.onNodeChanged(event.data());
@@ -1186,7 +1187,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void onNodeACLAdded(ZKNodeACLAddedEvent event) {
         if (event.data() == this.client.zkInfo()) {
             this.reloadACL();
@@ -1201,7 +1202,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void onNodeACLUpdated(ZKNodeACLUpdatedEvent event) {
         if (event.data() == this.client.zkInfo()) {
             Long curPage = this.aclPaging == null ? null : this.aclPaging.currentPage();
@@ -1217,7 +1218,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void authAuthed(ZKAuthAuthedEvent event) {
         try {
             if (event.success()) {
@@ -1234,7 +1235,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void authAdded(ZKAuthAddedEvent event) {
         try {
             ZKAuth auth = event.data();
@@ -1252,7 +1253,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void authEnabled(ZKAuthEnabledEvent event) {
         try {
             this.treeView.authChanged(event.data());

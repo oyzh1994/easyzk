@@ -10,11 +10,12 @@ import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeHelper;
@@ -241,7 +242,7 @@ public class ZKMainController extends ParentStageController {
     /**
      * 展开左侧
      */
-    @Subscribe
+    @EventSubscribe
     private void leftExtend(ZKLeftExtendEvent event) {
         this.tabPaneLeft.display();
         double w = this.tabPaneLeft.getMinWidth();
@@ -253,7 +254,7 @@ public class ZKMainController extends ParentStageController {
     /**
      * 收缩左侧
      */
-    @Subscribe
+    @EventSubscribe
     private void leftCollapse(ZKLeftCollapseEvent event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);

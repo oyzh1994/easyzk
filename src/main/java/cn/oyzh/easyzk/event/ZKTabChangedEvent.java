@@ -1,6 +1,6 @@
 // package cn.oyzh.easyzk.event;
 //
-// import cn.oyzh.fx.plus.event.Event;
+// import cn.oyzh.event.Event;
 // import javafx.scene.control.Tab;
 //
 // /**

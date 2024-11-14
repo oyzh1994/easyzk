@@ -14,7 +14,8 @@ import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.event.EventListener;
+import cn.oyzh.event.EventListener;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -134,7 +135,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     //  *
     //  * @param event 消息
     //  */
-    // @Subscribe
+    // @EventSubscribe
     // private void nodeAdded(ZKNodeAddedEvent event) {
     //     if (event.client().isLastCreate(event.nodePath())) {
     //         event.client().clearLastCreate();
@@ -148,7 +149,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     //  *
     //  * @param event 消息
     //  */
-    // @Subscribe
+    // @EventSubscribe
     // private void nodeAdd(ZKNodeAddEvent event) {
     //     this.nodeAdd(event.data(), event.info());
     // }
@@ -197,7 +198,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     //  *
     //  * @param event 消息
     //  */
-    // @Subscribe
+    // @EventSubscribe
     // private void nodeUpdated(ZKNodeUpdatedEvent event) {
     //     if (event.client().isLastUpdate(event.nodePath())) {
     //         event.client().clearLastUpdate();
@@ -222,7 +223,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     //  *
     //  * @param event 消息
     //  */
-    // @Subscribe
+    // @EventSubscribe
     // private void nodeDeleted(ZKNodeDeletedEvent event) {
     //     if (event.client().isLastDelete(event.nodePath())) {
     //         event.client().clearLastDelete();
@@ -267,12 +268,12 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     //     }
     // }
     //
-    // @Subscribe
+    // @EventSubscribe
     // private void authAdded(ZKAuthAddedEvent event) {
     //     this.authJoined(event.data());
     // }
     //
-    // @Subscribe
+    // @EventSubscribe
     // private void authAdded(ZKAuthEnabledEvent event) {
     //     this.authJoined(event.data());
     // }
@@ -304,7 +305,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void searchStart(ZKSearchStartEvent event) {
         this.searching = true;
         this.filter();
@@ -315,7 +316,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void searchFinish(ZKSearchFinishEvent event) {
         this.searching = false;
         this.filter();
@@ -324,7 +325,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     /**
      * 树节点过滤
      */
-    @Subscribe
+    @EventSubscribe
     private void treeChildFilter(TreeChildFilterEvent event) {
         this.itemFilter().initFilters();
         this.filter();
@@ -371,7 +372,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void addGroup(ZKAddGroupEvent event) {
         this.getRoot().addGroup();
     }
@@ -381,7 +382,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void infoAdded(ZKInfoAddedEvent event) {
         this.getRoot().infoAdded(event.data());
     }
@@ -391,7 +392,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void infoUpdated(ZKInfoUpdatedEvent event) {
         this.getRoot().infoUpdated(event.data());
     }
@@ -399,7 +400,7 @@ public class ZKTreeView extends RichTreeView implements EventListener {
     /**
      * 添加连接
      */
-    @Subscribe
+    @EventSubscribe
     private void addConnect(ZKAddConnectEvent event) {
         StageManager.showStage(ZKInfoAddController.class, this.window());
     }

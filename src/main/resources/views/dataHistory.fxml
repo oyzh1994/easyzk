@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.DeleteSVGGlyph?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.HistorySVGGlyph?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.RefreshSVGGlyph?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.HistorySVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.RefreshSVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.UndoSVGGlyph?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FXTab styleClass="root" xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
-       fx:controller="cn.oyzh.easyzk.controller.DataHistoryController" text="%base.his" disable="true">
+<FXTab xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
+       fx:controller="cn.oyzh.easyzk.controller.DataHistoryController" text="%base.his">
     <graphic>
         <HistorySVGGlyph initCursor="DEFAULT" size="12"/>
     </graphic>
@@ -41,9 +41,9 @@
         </FlexHBox>
         <FlexTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="15%"  text="%base.No" valueName="index"/>
-                <FlexTableColumn realWidth="120"  text="%base.saveTime" valueName="saveTimeFormated"/>
-                <FlexTableColumn flexWidth="85% - 135"  text="%base.size" valueName="dataSize"/>
+                <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
+                <FlexTableColumn realWidth="120" text="%base.saveTime" valueName="saveTimeFormated"/>
+                <FlexTableColumn flexWidth="85% - 135" text="%base.size" valueName="dataSize"/>
             </columns>
         </FlexTableView>
     </FlexVBox>

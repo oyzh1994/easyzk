@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.TerminalConst;
+import javafx.application.Application;
 
 import java.awt.event.MouseEvent;
 

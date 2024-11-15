@@ -3,9 +3,9 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
-<?import cn.oyzh.fx.plus.controls.svg.AddFillSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.CopySVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.AddFillSVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.CopySVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>

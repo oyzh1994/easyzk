@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.svg.AboutSVGLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.CollapseSVGLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.ExpandSVGLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.FilterSVGLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.QuitSVGLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.SearchSVGLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.SettingSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.label.AboutSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.CollapseSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.label.ExpandSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.label.FilterSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.label.QuitSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.SearchSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.label.SettingSVGLabel?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.TransportSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.TransportSVGLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"

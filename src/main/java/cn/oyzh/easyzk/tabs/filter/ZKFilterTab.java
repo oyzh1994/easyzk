@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.filter;
 
-import cn.oyzh.fx.plus.controls.svg.FilterSVGGlyph;
+import cn.oyzh.fx.plus.gui.svg.glyph.FilterSVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;

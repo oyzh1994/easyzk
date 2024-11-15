@@ -11,7 +11,7 @@
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <?import cn.oyzh.fx.plus.controls.button.TransportButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
-<?import cn.oyzh.fx.plus.controls.svg.RightSideSVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.RightSideSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.FlexLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>

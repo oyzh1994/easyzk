@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph;
+import cn.oyzh.fx.plus.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;

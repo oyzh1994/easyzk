@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.trees.group;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.GroupSVGGlyph;
+import cn.oyzh.fx.plus.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
 import lombok.NonNull;

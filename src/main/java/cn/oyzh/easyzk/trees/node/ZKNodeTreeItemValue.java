@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.fx.plus.controls.svg.LockSVGGlyph;
+import cn.oyzh.fx.plus.gui.svg.glyph.LockSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import javafx.geometry.Insets;

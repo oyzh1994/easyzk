@@ -8,9 +8,9 @@
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.JSONSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.JSONSVGGlyph?>
+<?import cn.oyzh.fx.plus.gui.svg.glyph.PasteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>

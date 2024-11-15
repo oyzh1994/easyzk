@@ -459,4 +459,7 @@ public class ZKEventUtil {
         event.data(info);
         EventUtil.post(event);
     }
+
+    public static void showMain() {
+    }
 }

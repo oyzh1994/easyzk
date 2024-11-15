@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.gui.svg.label.AboutSVGLabel?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.CollapseSVGLabel?>
+<?import cn.oyzh.fx.plus.gui.svg.label.CollapseSVGLabel?>
 <?import cn.oyzh.fx.plus.gui.svg.label.ExpandSVGLabel?>
 <?import cn.oyzh.fx.plus.gui.svg.label.FilterSVGLabel?>
 <?import cn.oyzh.fx.plus.gui.svg.label.QuitSVGLabel?>

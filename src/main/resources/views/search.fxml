@@ -1,94 +1,94 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
 
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.AnalyseSVGGlyph?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.NextSVGGlyph?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.PrevSVGGlyph?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.ReplaceSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.text.FlexText?>
-<?import cn.oyzh.fx.plus.controls.search.SearchTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<FlexVBox styleClass="root" fx:id="searchMain" xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="cn.oyzh.easyzk.controller.SearchController">
-    <FlexHBox realHeight="30" flexWidth="100%">
-        <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30"
-                         promptText="%base.searchTip4" tipText="%base.searchTip3" onKeyPressed="#onSearchKeyPressed">
-            <HBox.margin>
-                <Insets left="10" top="3"/>
-            </HBox.margin>
-        </SearchTextField>
-        <NextSVGGlyph fx:id="searchNext" disable="true" tipText="%base.searchTip1"
-                      onMousePrimaryClicked="#searchNext" size="12">
-            <HBox.margin>
-                <Insets left="5" top="9"/>
-            </HBox.margin>
-        </NextSVGGlyph>
-        <PrevSVGGlyph fx:id="searchPrev" disable="true" tipText="%base.searchTip2"
-                      onMousePrimaryClicked="#searchPrev" size="12">
-            <HBox.margin>
-                <Insets left="5" top="9"/>
-            </HBox.margin>
-        </PrevSVGGlyph>
-        <AnalyseSVGGlyph fx:id="searchAnalyse" disable="true" tipText="%base.searchAnalyse"
-                         onMousePrimaryClicked="#searchAnalyse" size="12">
-            <HBox.margin>
-                <Insets left="5" top="9"/>
-            </HBox.margin>
-        </AnalyseSVGGlyph>
-        <FlexText fx:id="searchResult" fontSize="11">
-            <HBox.margin>
-                <Insets left="5" top="9"/>
-            </HBox.margin>
-        </FlexText>
-    </FlexHBox>
-    <FlexHBox realHeight="30" flexWidth="100%">
-        <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="30"
-                         promptText="%base.replaceTip1" tipText="%base.replaceTip2" onKeyPressed="#onReplaceKeyPressed">
-            <HBox.margin>
-                <Insets left="10" top="3"/>
-            </HBox.margin>
-        </SearchTextField>
-        <ReplaceSVGGlyph fx:id="replace" disable="true" tipText="%base.replaceTip3" size="12"
-                         onMousePrimaryClicked="#replace">
-            <HBox.margin>
-                <Insets left="5" top="9"/>
-            </HBox.margin>
-        </ReplaceSVGGlyph>
-        <FlexText fx:id="replaceTips" fill="tomato" fontSize="11">
-            <HBox.margin>
-                <Insets left="5" top="9"/>
-            </HBox.margin>
-        </FlexText>
-    </FlexHBox>
-    <FlexHBox realHeight="30" flexWidth="100%" fontSize="10">
-        <FXCheckBox text="%base.filterMode" selected="true" fx:id="filterMode">
-            <HBox.margin>
-                <Insets left="10" top="3"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox text="%base.path" selected="true" fx:id="searchPath">
-            <HBox.margin>
-                <Insets left="5" top="3"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox text="%base.data" selected="true" fx:id="searchData">
-            <HBox.margin>
-                <Insets left="5" top="3"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox text="%base.matchCase" fx:id="matchCase">
-            <HBox.margin>
-                <Insets left="5" top="3"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox text="%base.matchFull" fx:id="matchFull">
-            <HBox.margin>
-                <Insets left="5" top="3"/>
-            </HBox.margin>
-        </FXCheckBox>
-    </FlexHBox>
-</FlexVBox>
+<!-- <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.plus.gui.svg.glyph.AnalyseSVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.plus.gui.svg.glyph.NextSVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.plus.gui.svg.glyph.PrevSVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.plus.gui.svg.glyph.ReplaceSVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.text.FlexText?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.search.SearchTextField?> -->
+<!-- <?import javafx.geometry.Insets?> -->
+<!-- <?import javafx.scene.layout.HBox?> -->
+<!-- <FlexVBox styleClass="root" fx:id="searchMain" xmlns="http://javafx.com/javafx" -->
+<!--           xmlns:fx="http://javafx.com/fxml" -->
+<!--           fx:controller="cn.oyzh.easyzk.controller.SearchController"> -->
+<!--     <FlexHBox realHeight="30" flexWidth="100%"> -->
+<!--         <SearchTextField onSearch="#searchNext" fx:id="searchKW" realHeight="24" realWidth="225" maxLen="30" -->
+<!--                          promptText="%base.searchTip4" tipText="%base.searchTip3" onKeyPressed="#onSearchKeyPressed"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="3"/> -->
+<!--             </HBox.margin> -->
+<!--         </SearchTextField> -->
+<!--         <NextSVGGlyph fx:id="searchNext" disable="true" tipText="%base.searchTip1" -->
+<!--                       onMousePrimaryClicked="#searchNext" size="12"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="9"/> -->
+<!--             </HBox.margin> -->
+<!--         </NextSVGGlyph> -->
+<!--         <PrevSVGGlyph fx:id="searchPrev" disable="true" tipText="%base.searchTip2" -->
+<!--                       onMousePrimaryClicked="#searchPrev" size="12"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="9"/> -->
+<!--             </HBox.margin> -->
+<!--         </PrevSVGGlyph> -->
+<!--         <AnalyseSVGGlyph fx:id="searchAnalyse" disable="true" tipText="%base.searchAnalyse" -->
+<!--                          onMousePrimaryClicked="#searchAnalyse" size="12"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="9"/> -->
+<!--             </HBox.margin> -->
+<!--         </AnalyseSVGGlyph> -->
+<!--         <FlexText fx:id="searchResult" fontSize="11"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="9"/> -->
+<!--             </HBox.margin> -->
+<!--         </FlexText> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox realHeight="30" flexWidth="100%"> -->
+<!--         <SearchTextField onSearch="#replace" fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="30" -->
+<!--                          promptText="%base.replaceTip1" tipText="%base.replaceTip2" onKeyPressed="#onReplaceKeyPressed"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="3"/> -->
+<!--             </HBox.margin> -->
+<!--         </SearchTextField> -->
+<!--         <ReplaceSVGGlyph fx:id="replace" disable="true" tipText="%base.replaceTip3" size="12" -->
+<!--                          onMousePrimaryClicked="#replace"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="9"/> -->
+<!--             </HBox.margin> -->
+<!--         </ReplaceSVGGlyph> -->
+<!--         <FlexText fx:id="replaceTips" fill="tomato" fontSize="11"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="9"/> -->
+<!--             </HBox.margin> -->
+<!--         </FlexText> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox realHeight="30" flexWidth="100%" fontSize="10"> -->
+<!--         <FXCheckBox text="%base.filterMode" selected="true" fx:id="filterMode"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="3"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox text="%base.path" selected="true" fx:id="searchPath"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="3"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox text="%base.data" selected="true" fx:id="searchData"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="3"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox text="%base.matchCase" fx:id="matchCase"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="3"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox text="%base.matchFull" fx:id="matchFull"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="3"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--     </FlexHBox> -->
+<!-- </FlexVBox> -->

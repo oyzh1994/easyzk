@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
 import lombok.Getter;
 import lombok.Setter;
 

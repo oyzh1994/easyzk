@@ -2,13 +2,10 @@ package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.common.Index;
-import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
-import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.gui.toggle.EnabledToggleSwitch;
+import cn.oyzh.fx.plus.gui.toggle.MatchToggleSwitch;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;

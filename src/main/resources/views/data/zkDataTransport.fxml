@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.fx.ZKInfoComboBox?>
 <?import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.button.NextStepButton?>
-<?import cn.oyzh.fx.plus.controls.button.PrevStepButton?>
-<?import cn.oyzh.fx.plus.controls.button.StopButton?>
-<?import cn.oyzh.fx.plus.controls.button.TransportButton?>
+<?import cn.oyzh.fx.plus.gui.button.NextStepButton?>
+<?import cn.oyzh.fx.plus.gui.button.PrevStepButton?>
+<?import cn.oyzh.fx.plus.gui.button.StopButton?>
+<?import cn.oyzh.fx.plus.gui.button.TransportButton?>
 <?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.gui.svg.glyph.RightSideSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.text.FlexLabel?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>

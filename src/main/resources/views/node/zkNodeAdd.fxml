@@ -2,10 +2,10 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLType2ComboBox?>
 <?import cn.oyzh.easyzk.fx.ZKCreateModeComboBox?>
-<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.textarea.FlexTextArea?>
+<?import cn.oyzh.fx.plus.gui.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.gui.svg.glyph.ClearSVGGlyph?>
@@ -13,8 +13,8 @@
 <?import cn.oyzh.fx.plus.gui.svg.glyph.PasteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
 <?import javafx.geometry.Insets?>

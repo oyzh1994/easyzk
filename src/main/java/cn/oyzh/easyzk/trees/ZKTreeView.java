@@ -19,7 +19,6 @@ import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.window.StageManager;
-import com.google.common.eventbus.Subscribe;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;

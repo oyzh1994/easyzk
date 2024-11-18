@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2024/04/23
  */
-public class DataHistoryController extends SubStageController implements Initializable {
+public class HistoryController extends SubStageController implements Initializable {
 
     /**
      * 根节点

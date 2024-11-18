@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.controller;
 
-import cn.oyzh.easyzk.controller.main.DataHistoryController;
+import cn.oyzh.easyzk.controller.main.HistoryController;
+import cn.oyzh.easyzk.controller.main.MessageController;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
 import cn.oyzh.easyzk.event.ZKLeftExtendEvent;
-import cn.oyzh.easyzk.fx.ZKMsgTextArea;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -82,13 +82,17 @@ public class ZKMainController extends ParentStageController {
     @FXML
     private ZKTabPane tabPane;
 
-
-
     /**
-     * zk历史Controller
+     * zk消息
      */
     @FXML
-    private DataHistoryController dataHistoryController;
+    private MessageController messageController;
+
+    /**
+     * zk历史
+     */
+    @FXML
+    private HistoryController historyController;
 
     /**
      * 对子节点排序，正序
@@ -252,7 +256,8 @@ public class ZKMainController extends ParentStageController {
     @Override
     public List<SubStageController> getSubControllers() {
         List<SubStageController> list = new ArrayList<>();
-        list.add(this.dataHistoryController);
+        list.add(this.messageController);
+        list.add(this.historyController);
         return list;
     }
 }

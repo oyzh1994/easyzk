@@ -52,7 +52,7 @@
             </FlexVBox>
         </FXTab>
         <fx:include fx:id="message" source="main/message.fxml"/>
-        <fx:include fx:id="dataHistory" source="main/dataHistory.fxml"/>
+        <fx:include fx:id="history" source="main/history.fxml"/>
     </FlexTabPane>
     <ZKTabPane fx:id="tabPane" layoutX="300" flexWidth="100% - 300" tabDragPolicy="FIXED" tabClosingPolicy="ALL_TABS"
                flexHeight="100%"/>

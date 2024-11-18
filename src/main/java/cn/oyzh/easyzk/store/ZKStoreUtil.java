@@ -1,5 +1,9 @@
 package cn.oyzh.easyzk.store;
 
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKCollect;
@@ -10,14 +14,10 @@ import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.jdbc.JdbcConst;
 import cn.oyzh.store.jdbc.JdbcDialect;
-import cn.oyzh.common.log.JulLog;
-import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.FileUtil;
-import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
@@ -35,6 +35,7 @@ public class ZKStoreUtil {
      */
     public static void init() {
         try {
+            System.setProperty(JdbcConst.DB_CACHE_SIZE, "512");
             System.setProperty(JdbcConst.DB_FILE, ZKConst.STORE_PATH + "db");
             System.setProperty(JdbcConst.DB_DIALECT, JdbcDialect.H2.toString());
         } catch (Exception ex) {
@@ -152,7 +153,7 @@ public class ZKStoreUtil {
                 List<ZKInfo> list = ZKInfoStore.INSTANCE.load();
                 // 执行迁移
                 for (ZKInfo info : list) {
-                   boolean result= ZKInfoStore2.INSTANCE.replace(info);
+                    boolean result = ZKInfoStore2.INSTANCE.replace(info);
                     if (result) {
                         // 处理收藏
                         if (CollectionUtil.isNotEmpty(info.getCollects())) {

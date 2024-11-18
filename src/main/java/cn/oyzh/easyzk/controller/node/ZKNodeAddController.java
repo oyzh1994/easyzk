@@ -219,11 +219,11 @@ public class ZKNodeAddController extends StageController {
         String text = this.nodeData.getTextTrim();
         try {
             if ("json".equals(this.nodeData.getUserData())) {
-                String jsonStr = JSONUtil.toJsonStr(text);
+                String jsonStr = JSONUtil.toJson(text);
                 this.nodeData.setText(jsonStr);
                 this.nodeData.setUserData("text");
             } else if (text.contains("{") || text.contains("[") || "text".equals(this.nodeData.getUserData())) {
-                String jsonStr = JSONUtil.toJsonPrettyStr(text);
+                String jsonStr = JSONUtil.toPretty(text);
                 this.nodeData.setText(jsonStr);
                 this.nodeData.setUserData("json");
             }

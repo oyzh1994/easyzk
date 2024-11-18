@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.dto;
 
+import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
-import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -60,12 +60,12 @@ public class ZKInfoExport {
      */
     public static ZKInfoExport fromJSON(@NonNull String json) {
         JulLog.info("json: {}", json);
-        JSONObject object = JSONUtil.parseObj(json);
+        JSONObject object = JSONUtil.parseObject(json);
         ZKInfoExport export = new ZKInfoExport();
         export.connects = new ArrayList<>();
         export.version = object.getString("version");
-        // export.connects = object.getJSONArray("connects", ZKInfo.class);
-        export.connects = JSONUtil.toList(object.getJSONArray("connects"), ZKInfo.class);
+        export.connects = object.getBeanList("connects", ZKInfo.class);
+        export.connects = JSONUtil.toBeanList(object.getJSONArray("connects"), ZKInfo.class);
         return export;
     }
 
@@ -75,6 +75,6 @@ public class ZKInfoExport {
      * @return json字符串
      */
     public String toJSONString() {
-        return JSONUtil.toJsonStr(this);
+        return JSONUtil.toJson(this);
     }
 }

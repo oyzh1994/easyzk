@@ -65,7 +65,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
                 return new ArrayList<>();
             }
             // 将文件内容解析为ZKInfo列表
-            List<ZKInfo> infos = JSONUtil.toList(text, ZKInfo.class);
+            List<ZKInfo> infos = JSONUtil.toBeanList(text, ZKInfo.class);
             // 如果ZKInfo列表非空
             if (CollectionUtil.isNotEmpty(infos)) {
                 // 对ZKInfo列表进行排序

@@ -62,9 +62,9 @@ public class ZKNodeExport {
      */
     public String toJSONString(boolean prettyFormat) {
         if (prettyFormat) {
-            return JSONUtil.toJsonPrettyStr(this);
+            return JSONUtil.toPretty(this);
         }
-        return JSONUtil.toJsonStr(this);
+        return JSONUtil.toJson(this);
     }
 
     /**

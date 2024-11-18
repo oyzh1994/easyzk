@@ -55,7 +55,7 @@ public class ZKSearchHistoryStore extends ArrayFileStore<ZKSearchHistory> {
             return new ArrayList<>();
         }
         // 将字符串解析为搜索历史记录列表
-        return JSONUtil.toList(text, ZKSearchHistory.class);
+        return JSONUtil.toBeanList(text, ZKSearchHistory.class);
     }
 
     /**

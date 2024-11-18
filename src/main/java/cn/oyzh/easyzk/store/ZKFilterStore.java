@@ -48,7 +48,7 @@ public class ZKFilterStore extends ArrayFileStore<ZKFilter> {
         if (StringUtil.isBlank(text)) {
             return new ArrayList<>();
         }
-        List<ZKFilter> filters = JSONUtil.toList(text, ZKFilter.class);
+        List<ZKFilter> filters = JSONUtil.toBeanList(text, ZKFilter.class);
         if (CollectionUtil.isNotEmpty(filters)) {
             filters = filters.parallelStream().filter(Objects::nonNull).sorted((o1, o2) -> o1.getKw().compareToIgnoreCase(o2.getKw())).collect(Collectors.toList());
         }

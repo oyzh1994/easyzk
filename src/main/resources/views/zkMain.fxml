@@ -1,56 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyzk.fx.ZKMsgTextArea?>
 <?import cn.oyzh.easyzk.tabs.ZKTabPane?>
-<?import cn.oyzh.easyzk.trees.ZKTreeView?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.ConnectionSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.MessageSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.SortDescSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
 <FlexPane xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.ZKMainController" flexWidth="100%" flexHeight="100% - 30">
     <FlexTabPane flexHeight="100%" prefWidth="300" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
-        <FXTab text="%base.connection">
-            <graphic>
-                <ConnectionSVGGlyph initCursor="DEFAULT" size="12"/>
-            </graphic>
-            <FlexVBox flexHeight="100%" flexWidth="100%"
-                      style="-fx-border-width: 0 1 0 0; -fx-border-color: #c0c0c0">
-                <FlexHBox realHeight="32" flexWidth="100%">
-                    <TerminalSVGGlyph size="15" onMousePrimaryClicked="#openTerminal">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </TerminalSVGGlyph>
-                    <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </SortAscSVGGlyph>
-                    <SortDescSVGGlyph fx:id="sortDesc" size="15" visible="false" managed="false"
-                                      onMousePrimaryClicked="#sortDesc">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </SortDescSVGGlyph>
-                    <PositioningSVGGlyph size="17" onMousePrimaryClicked="#positionNode">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </PositioningSVGGlyph>
-                </FlexHBox>
-                <ZKTreeView fx:id="tree" flexHeight="100% - 32" flexWidth="100%"/>
-            </FlexVBox>
-        </FXTab>
+        <fx:include fx:id="connect" source="main/connect.fxml"/>
         <fx:include fx:id="message" source="main/message.fxml"/>
         <fx:include fx:id="history" source="main/history.fxml"/>
     </FlexTabPane>

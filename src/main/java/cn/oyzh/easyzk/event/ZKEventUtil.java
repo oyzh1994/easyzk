@@ -460,6 +460,10 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    public static void showMain() {
+    public static void treeItemChanged(TreeItem<?> item) {
+        ZKTreeItemChangedEvent event = new ZKTreeItemChangedEvent();
+        event.data(item);
+        EventUtil.post(event);
+
     }
 }

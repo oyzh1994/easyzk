@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyzk.trees.ZKTreeView?>
+<?import cn.oyzh.fx.gui.svg.glyph.ConnectionSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.SortDescSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<FXTab xmlns:fx="http://javafx.com/fxml/1"
+       fx:controller="cn.oyzh.easyzk.controller.main.ConnectController" text="%base.connection">
+    <graphic>
+        <ConnectionSVGGlyph initCursor="DEFAULT" size="12"/>
+    </graphic>
+    <FlexVBox flexHeight="100%" flexWidth="100%"
+              style="-fx-border-width: 0 1 0 0; -fx-border-color: #c0c0c0">
+        <FlexHBox realHeight="32" flexWidth="100%">
+            <TerminalSVGGlyph size="15" onMousePrimaryClicked="#openTerminal">
+                <HBox.margin>
+                    <Insets left="10" top="10"/>
+                </HBox.margin>
+            </TerminalSVGGlyph>
+            <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
+                <HBox.margin>
+                    <Insets left="5" top="10"/>
+                </HBox.margin>
+            </SortAscSVGGlyph>
+            <SortDescSVGGlyph fx:id="sortDesc" size="15" visible="false" managed="false"
+                              onMousePrimaryClicked="#sortDesc">
+                <HBox.margin>
+                    <Insets left="5" top="10"/>
+                </HBox.margin>
+            </SortDescSVGGlyph>
+            <PositioningSVGGlyph size="17" onMousePrimaryClicked="#positionNode">
+                <HBox.margin>
+                    <Insets left="5" top="10"/>
+                </HBox.margin>
+            </PositioningSVGGlyph>
+        </FlexHBox>
+        <ZKTreeView fx:id="tree" flexHeight="100% - 32" flexWidth="100%"/>
+    </FlexVBox>
+</FXTab>
+

@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller;
 
+import cn.oyzh.easyzk.controller.main.ConnectController;
 import cn.oyzh.easyzk.controller.main.HistoryController;
 import cn.oyzh.easyzk.controller.main.MessageController;
 import cn.oyzh.easyzk.domain.ZKInfo;
@@ -7,21 +8,19 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
 import cn.oyzh.easyzk.event.ZKLeftExtendEvent;
+import cn.oyzh.easyzk.event.ZKTreeItemChangedEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
-import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
 
@@ -48,12 +47,6 @@ public class ZKMainController extends ParentStageController {
     private ZKInfo info;
 
     /**
-     * 左侧zk树
-     */
-    @FXML
-    private ZKTreeView tree;
-
-    /**
      * 左侧组件
      */
     @FXML
@@ -65,22 +58,16 @@ public class ZKMainController extends ParentStageController {
     private ResizeHelper resizeHelper;
 
     /**
-     * 节点排序(正序)
-     */
-    @FXML
-    private SVGGlyph sortAsc;
-
-    /**
-     * 节点排序(倒序)
-     */
-    @FXML
-    private SVGGlyph sortDesc;
-
-    /**
      * zk切换面板
      */
     @FXML
     private ZKTabPane tabPane;
+
+    /**
+     * zk连接
+     */
+    @FXML
+    private ConnectController connectController;
 
     /**
      * zk消息
@@ -93,34 +80,6 @@ public class ZKMainController extends ParentStageController {
      */
     @FXML
     private HistoryController historyController;
-
-    /**
-     * 对子节点排序，正序
-     */
-    @FXML
-    private void sortAsc() {
-        this.sortAsc.disappear();
-        this.sortDesc.display();
-        this.tree.sortAsc();
-    }
-
-    /**
-     * 对子节点排序，倒序
-     */
-    @FXML
-    private void sortDesc() {
-        this.sortDesc.disappear();
-        this.sortAsc.display();
-        this.tree.sortDesc();
-    }
-
-    /**
-     * 打开终端
-     */
-    @FXML
-    private void openTerminal() {
-        ZKEventUtil.terminalOpen();
-    }
 
     /**
      * 刷新窗口标题
@@ -148,12 +107,8 @@ public class ZKMainController extends ParentStageController {
     @Override
     public void onWindowHidden(WindowEvent event) {
         super.onWindowHidden(event);
-        // 关闭连接
-        this.tree.closeConnects();
         // 保存页面拉伸
         this.savePageResize();
-        // 取消F5按键监听
-        KeyListener.unListenReleased(this.tree, KeyCode.F5);
         KeyListener.unListenReleased(this.tabPane, KeyCode.F5);
     }
 
@@ -190,13 +145,6 @@ public class ZKMainController extends ParentStageController {
 
     @Override
     protected void bindListeners() {
-        this.sortAsc.managedBindVisible();
-        this.sortDesc.managedBindVisible();
-        // zk树变化事件
-        this.tree.selectItemChanged(this::treeItemChanged);
-
-        // 文件拖拽初始化
-        this.stage.initDragFile(this.tree.dragContent(), this.tree.getRoot()::dragFile);
         // 拖动改变redis树大小处理
         this.resizeHelper = new ResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeLeft);
         this.resizeHelper.widthLimit(240, 650);
@@ -204,30 +152,21 @@ public class ZKMainController extends ParentStageController {
         // 搜索触发事件
         KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));
         // 刷新触发事件
-        KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
-        // 刷新触发事件
         KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
     }
 
     /**
      * 树节点变化事件
      *
-     * @param item 节点
+     * @param event 事件
      */
-    private void treeItemChanged(TreeItem<?> item) {
-        if (item instanceof ZKConnectTreeItem treeItem) {
+    @EventSubscribe
+    private void treeItemChanged(ZKTreeItemChangedEvent event) {
+        if (event.data() instanceof ZKConnectTreeItem treeItem) {
             this.flushViewTitle(treeItem.value());
         } else {
             this.flushViewTitle(null);
         }
-    }
-
-    /**
-     * 定位节点
-     */
-    @FXML
-    private void positionNode() {
-        this.tree.scrollTo(this.tree.getSelectedItem());
     }
 
     /**
@@ -256,6 +195,7 @@ public class ZKMainController extends ParentStageController {
     @Override
     public List<SubStageController> getSubControllers() {
         List<SubStageController> list = new ArrayList<>();
+        list.add(this.connectController);
         list.add(this.messageController);
         list.add(this.historyController);
         return list;

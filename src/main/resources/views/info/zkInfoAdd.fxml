@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.gui.button.CancelButton?>
+<?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.gui.button.TestButton?>
+<?import cn.oyzh.fx.gui.button.SubmitButton?>
+<?import cn.oyzh.fx.gui.button.TestButton?>
 <?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
-<?import cn.oyzh.fx.plus.gui.textfield.PortTextField?>
+<?import cn.oyzh.fx.gui.textfield.PortTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.gui.toggle.SwitchToggleSwitch?>
+<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.gui.toggle.SwitchToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.plus.controls.textarea.FlexTextArea?>

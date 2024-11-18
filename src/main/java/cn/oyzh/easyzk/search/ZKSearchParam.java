@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.search;
 
-import cn.oyzh.fx.plus.controls.search.SearchParam;
+import cn.oyzh.fx.gui.textfield.search.SearchParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

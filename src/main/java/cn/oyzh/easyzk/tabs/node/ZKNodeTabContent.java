@@ -20,7 +20,7 @@
 // import cn.oyzh.fx.plus.controls.tab.FXTab;
 // import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 // import cn.oyzh.fx.plus.controls.label.FXLabel;
-// import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+// import cn.oyzh.fx.gui.textfield.ClearableTextField;
 // import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 // import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 // import cn.oyzh.fx.plus.i18n.I18nHelper;

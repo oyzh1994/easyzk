@@ -16,10 +16,9 @@ import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.event.EventListener;
-import cn.oyzh.fx.plus.tabs.DynamicTabPane;
-import com.google.common.eventbus.Subscribe;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 

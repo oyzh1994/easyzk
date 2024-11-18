@@ -10,6 +10,9 @@ import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.event.EventFactory;
+import cn.oyzh.fx.gui.tray.DesktopTrayItem;
+import cn.oyzh.fx.gui.tray.QuitTrayItem;
+import cn.oyzh.fx.gui.tray.SettingTrayItem;
 import cn.oyzh.fx.plus.event.FxEventBus;
 import cn.oyzh.fx.plus.event.FxEventConfig;
 import cn.oyzh.fx.plus.ext.FXApplication;
@@ -18,15 +21,11 @@ import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.theme.ThemeManager;
-import cn.oyzh.fx.plus.gui.tray.DesktopTrayItem;
-import cn.oyzh.fx.plus.gui.tray.QuitTrayItem;
-import cn.oyzh.fx.plus.gui.tray.SettingTrayItem;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.TerminalConst;
-import javafx.application.Application;
 
 import java.awt.event.MouseEvent;
 

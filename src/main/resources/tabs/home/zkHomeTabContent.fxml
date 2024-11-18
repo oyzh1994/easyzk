@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.gui.button.ChangelogButton?>
-<?import cn.oyzh.fx.plus.gui.button.AddConnectButton?>
-<?import cn.oyzh.fx.plus.gui.button.AddGroupButton?>
-<?import cn.oyzh.fx.plus.gui.button.OpenTerminalButton?>
+<?import cn.oyzh.fx.gui.button.ChangelogButton?>
+<?import cn.oyzh.fx.gui.button.AddConnectButton?>
+<?import cn.oyzh.fx.gui.button.AddGroupButton?>
+<?import cn.oyzh.fx.gui.button.OpenTerminalButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>

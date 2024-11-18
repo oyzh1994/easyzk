@@ -2,12 +2,12 @@
 
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.page.PageBox?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.AddFillSVGGlyph?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.gui.page.PageBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"

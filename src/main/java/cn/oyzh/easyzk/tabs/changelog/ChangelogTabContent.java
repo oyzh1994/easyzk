@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.tabs.changelog;
 
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.changelog.Changelog;
 import cn.oyzh.fx.plus.changelog.ChangelogListView;
 import cn.oyzh.fx.plus.changelog.ChangelogManager;
-import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 
 import java.net.URL;
@@ -16,8 +16,6 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2024/04/07
  */
-// @Lazy
-// @Component
 public class ChangelogTabContent extends DynamicTabController {
 
     /**

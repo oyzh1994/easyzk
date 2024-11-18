@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.gui.svg.label.AboutSVGLabel?>
-<?import cn.oyzh.fx.plus.gui.svg.label.CollapseSVGLabel?>
-<?import cn.oyzh.fx.plus.gui.svg.label.ExpandSVGLabel?>
-<?import cn.oyzh.fx.plus.gui.svg.label.FilterSVGLabel?>
-<?import cn.oyzh.fx.plus.gui.svg.label.QuitSVGLabel?>
-<?import cn.oyzh.fx.plus.gui.svg.label.SettingSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.AboutSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.CollapseSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.ExpandSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
-<?import cn.oyzh.fx.plus.gui.svg.glyph.TransportSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.glyph.TransportSVGLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <FlexFlowPane xmlns:fx="http://javafx.com/fxml/1"

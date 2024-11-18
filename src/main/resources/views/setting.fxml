@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.gui.button.CancelButton?>
+<?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.gui.button.ResetButton?>
-<?import cn.oyzh.fx.plus.gui.button.SaveButton?>
+<?import cn.oyzh.fx.gui.button.ResetButton?>
+<?import cn.oyzh.fx.gui.button.SaveButton?>
 <?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
 <?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
 <?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
 <?import cn.oyzh.fx.plus.i18n.LocaleComboBox?>
-<?import cn.oyzh.fx.plus.tabs.TabStrategyComboBox?>
+<?import cn.oyzh.fx.gui.tabs.TabStrategyComboBox?>
 <?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>

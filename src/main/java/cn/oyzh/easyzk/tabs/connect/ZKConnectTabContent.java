@@ -289,11 +289,6 @@ public class ZKConnectTabContent extends DynamicTabController {
     protected NumberTextField quotaBytes;
 
     /**
-     * 配置储存对象
-     */
-    private final ZKSetting setting = ZKSettingStore2.SETTING;
-
-    /**
      * zk客户端
      */
     private ZKClient client;

@@ -127,7 +127,7 @@ public class ZKConnectTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/node/zkConnectTabContent.fxml";
+        return "/tabs/connect/zkConnectTabContent.fxml";
     }
 
     /**

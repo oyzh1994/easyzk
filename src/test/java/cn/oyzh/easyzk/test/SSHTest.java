@@ -3,8 +3,8 @@ package cn.oyzh.easyzk.test;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.ssh.forward.SSHForwardConfig;
-import cn.oyzh.ssh.forward.SSHForwarder;
+import cn.oyzh.ssh.SSHForwardConfig;
+import cn.oyzh.ssh.SSHForwarder;
 import org.junit.Test;
 
 /**

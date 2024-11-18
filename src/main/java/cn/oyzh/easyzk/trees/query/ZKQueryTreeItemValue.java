@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees.query;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Node;
 
 

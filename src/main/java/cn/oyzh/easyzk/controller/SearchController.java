@@ -19,7 +19,7 @@
 // import cn.oyzh.fx.plus.controls.search.SearchTextField;
 // import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 // import cn.oyzh.fx.plus.controls.text.FlexText;
-// import cn.oyzh.fx.plus.i18n.I18nHelper;
+// import cn.oyzh.i18n.I18nHelper;
 // import cn.oyzh.fx.plus.information.MessageBox;
 // import com.google.common.eventbus.Subscribe;
 // import javafx.fxml.FXML;

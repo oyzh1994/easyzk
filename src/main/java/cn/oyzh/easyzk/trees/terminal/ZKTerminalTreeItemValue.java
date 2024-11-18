@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees.terminal;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Node;
 
 

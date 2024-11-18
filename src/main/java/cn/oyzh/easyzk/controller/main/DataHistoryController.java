@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.controller;
+package cn.oyzh.easyzk.controller.main;
 
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.dto.ZKDataHistoryVO;
@@ -15,7 +15,7 @@ import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

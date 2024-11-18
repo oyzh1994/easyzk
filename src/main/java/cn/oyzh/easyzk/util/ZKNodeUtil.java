@@ -12,7 +12,7 @@ import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.common.util.MD5Util;
 import cn.oyzh.common.util.RuntimeUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.KeeperException;

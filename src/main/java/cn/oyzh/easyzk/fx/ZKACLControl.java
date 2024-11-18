@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;

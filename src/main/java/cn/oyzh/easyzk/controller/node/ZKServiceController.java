@@ -8,7 +8,7 @@ import cn.oyzh.common.dto.Paging;
 import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;

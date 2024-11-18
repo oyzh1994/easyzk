@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.dto;
 
-import cn.oyzh.fx.plus.i18n.I18nManager;
+import cn.oyzh.i18n.I18nManager;
 import lombok.Data;
 import lombok.NonNull;
 import org.apache.zookeeper.server.quorum.QuorumPeer;

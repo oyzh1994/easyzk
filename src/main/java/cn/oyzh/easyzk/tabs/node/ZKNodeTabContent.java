@@ -23,7 +23,7 @@
 // import cn.oyzh.fx.gui.textfield.ClearableTextField;
 // import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 // import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-// import cn.oyzh.fx.plus.i18n.I18nHelper;
+// import cn.oyzh.i18n.I18nHelper;
 // import cn.oyzh.fx.plus.information.MessageBox;
 // import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 // import cn.oyzh.fx.plus.tabs.DynamicTab;

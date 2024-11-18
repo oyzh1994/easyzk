@@ -12,7 +12,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FXTab xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
-       fx:controller="cn.oyzh.easyzk.controller.DataHistoryController" text="%base.his">
+       fx:controller="cn.oyzh.easyzk.controller.main.DataHistoryController" text="%base.his">
     <graphic>
         <HistorySVGGlyph initCursor="DEFAULT" size="12"/>
     </graphic>

@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
 import java.net.URL;

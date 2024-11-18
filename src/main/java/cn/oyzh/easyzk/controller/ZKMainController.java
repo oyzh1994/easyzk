@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller;
 
+import cn.oyzh.easyzk.controller.main.DataHistoryController;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -15,11 +16,9 @@ import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeHelper;
-import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -83,11 +82,7 @@ public class ZKMainController extends ParentStageController {
     @FXML
     private ZKTabPane tabPane;
 
-    /**
-     * 消息文本框
-     */
-    @FXML
-    private ZKMsgTextArea msgArea;
+
 
     /**
      * zk历史Controller
@@ -259,13 +254,5 @@ public class ZKMainController extends ParentStageController {
         List<SubStageController> list = new ArrayList<>();
         list.add(this.dataHistoryController);
         return list;
-    }
-
-    /**
-     * 清空节点消息
-     */
-    @FXML
-    private void clearMsg() {
-        this.msgArea.clear();
     }
 }

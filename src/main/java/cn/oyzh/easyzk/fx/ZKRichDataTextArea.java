@@ -3,7 +3,7 @@
 // import cn.hutool.core.util.StrUtil;
 // import cn.oyzh.common.util.StringUtil;
 // import cn.oyzh.common.util.TextUtil;
-// import cn.oyzh.fx.plus.i18n.I18nHelper;
+// import cn.oyzh.i18n.I18nHelper;
 // import cn.oyzh.fx.plus.theme.ThemeManager;
 // import cn.oyzh.fx.plus.util.FXUtil;
 // import cn.oyzh.fx.rich.RichTextStyle;

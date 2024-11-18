@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.common.Const;
 import cn.oyzh.common.dto.FriendlyInfo;
-import cn.oyzh.fx.plus.i18n.I18nManager;
+import cn.oyzh.i18n.I18nManager;
 import lombok.NonNull;
 import org.apache.zookeeper.data.Stat;
 

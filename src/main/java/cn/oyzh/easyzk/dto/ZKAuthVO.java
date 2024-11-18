@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.common.Index;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

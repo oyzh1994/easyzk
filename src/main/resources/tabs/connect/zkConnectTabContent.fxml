@@ -47,7 +47,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.node.ZKConnectTabContent">
+          fx:controller="cn.oyzh.easyzk.tabs.connect.ZKConnectTabContent">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="32" flexWidth="100%">
             <ZKNodeSearchTypeComboBox initIndex="0" realHeight="24" realWidth="100" fx:id="searchType">

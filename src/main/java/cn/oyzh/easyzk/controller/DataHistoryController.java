@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.event.ZKHistoryAddedEvent;
 import cn.oyzh.easyzk.event.ZKHistoryShowEvent;
 import cn.oyzh.easyzk.event.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
-import cn.oyzh.easyzk.tabs.node.ZKConnectTab;
+import cn.oyzh.easyzk.tabs.connect.ZKConnectTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.TabClosedEvent;

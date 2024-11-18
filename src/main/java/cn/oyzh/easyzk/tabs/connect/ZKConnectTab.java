@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.tabs.node;
+package cn.oyzh.easyzk.tabs.connect;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;

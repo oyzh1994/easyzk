@@ -19,6 +19,7 @@ import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.event.EventListener;
+import cn.oyzh.fx.plus.event.FXEventListener;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 
@@ -28,7 +29,7 @@ import javafx.scene.control.Tab;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKTabPane extends DynamicTabPane implements EventListener {
+public class ZKTabPane extends DynamicTabPane implements FXEventListener {
 
     @Override
     protected void initTabPane() {
@@ -39,14 +40,9 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
             while (c.next()) {
                 if (c.wasAdded() || c.wasRemoved()) {
                     TaskManager.startDelay("zk:homeTab:flush", this::flushHomeTab, 100);
-                    // if (c.wasAdded()) {
-                    //     TaskManager.startDelay("zk:nodeTab:flush", this::flushNodeTab, 100);
-                    // }
                 }
             }
         });
-        // // 监听ba变化
-        // this.selectedTabChanged((observable, oldValue, newValue) -> ZKEventUtil.tabChanged(newValue));
     }
 
     /**
@@ -59,54 +55,6 @@ public class ZKTabPane extends DynamicTabPane implements EventListener {
             this.closeHomeTab();
         }
     }
-
-    // /**
-    //  * 刷新节点标签
-    //  */
-    // private void flushNodeTab() {
-    //     // 获取设置
-    //     ZKSetting setting = ZKSettingStore2.SETTING;
-    //     // 判断是否需要处理tab限制
-    //     if (setting.isTabUnLimit()) {
-    //         return;
-    //     }
-    //     // 获取全部节点tab
-    //     List<ZKNodeTab> tabs = this.getNodeTabs();
-    //     // 数据不满足限制要求，则直接忽略
-    //     if (tabs.size() <= setting.getTabLimit()) {
-    //         return;
-    //     }
-    //     // tab处理函数
-    //     Consumer<List<ZKNodeTab>> func = tabList -> {
-    //         // 数据满足限制要求才处理
-    //         if (tabList.size() > setting.getTabLimit()) {
-    //             // 进行排序
-    //             tabList.sort((o1, o2) -> Comparator.comparingLong(ZKNodeTab::getOpenedTime).compare(o2, o1));
-    //             // 跳过指定数量
-    //             List<ZKNodeTab> list = tabList.stream().skip(setting.getTabLimit()).toList();
-    //             // 移除tab
-    //             if (!list.isEmpty()) {
-    //                 FXUtil.runLater(() -> this.getTabs().removeAll(list));
-    //             }
-    //         }
-    //     };
-    //     // 限制全部连接
-    //     if (setting.isAllTabLimitStrategy()) {
-    //         func.accept(tabs);
-    //     } else if (setting.isSingleTabLimitStrategy()) {// 限制单个连接
-    //         // 分组处理
-    //         Map<ZKClient, List<ZKNodeTab>> map = new HashMap<>();
-    //         // 按分组添加到map
-    //         for (ZKNodeTab tab : tabs) {
-    //             List<ZKNodeTab> list = map.computeIfAbsent(tab.client(), k -> new ArrayList<>());
-    //             list.add(tab);
-    //         }
-    //         // 处理值
-    //         for (List<ZKNodeTab> tabList : map.values()) {
-    //             func.accept(tabList);
-    //         }
-    //     }
-    // }
 
     /**
      * 获取主页tab

@@ -21,8 +21,6 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2022/1/26
  */
-//@Lazy
-//@Component
 public class HeaderController extends SubStageController {
 
     /**

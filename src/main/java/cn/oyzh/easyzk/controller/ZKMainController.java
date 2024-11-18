@@ -36,8 +36,6 @@ import java.util.List;
  * @author oyzh
  * @since 2020/9/16
  */
-// @Lazy
-// @Component
 public class ZKMainController extends ParentStageController {
 
     /**
@@ -142,9 +140,6 @@ public class ZKMainController extends ParentStageController {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        EventUtil.register(this.tree);
-        EventUtil.register(this.tabPane);
-        EventUtil.register(this.msgArea);
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
             this.resizeLeft(this.setting.getPageLeftWidth());
@@ -154,9 +149,6 @@ public class ZKMainController extends ParentStageController {
     @Override
     public void onWindowHidden(WindowEvent event) {
         super.onWindowHidden(event);
-        EventUtil.unregister(this.tree);
-        EventUtil.unregister(this.tabPane);
-        EventUtil.unregister(this.msgArea);
         // 关闭连接
         this.tree.closeConnects();
         // 保存页面拉伸

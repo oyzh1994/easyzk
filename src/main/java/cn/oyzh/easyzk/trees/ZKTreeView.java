@@ -14,8 +14,8 @@ import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -36,7 +36,7 @@ import java.util.List;
  * @since 2023/1/29
  */
 @Accessors(chain = true, fluent = true)
-public class ZKTreeView extends RichTreeView implements EventListener {
+public class ZKTreeView extends RichTreeView implements FXEventListener {
 
     /**
      * 搜索中标志位

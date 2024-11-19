@@ -84,7 +84,7 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         if (this.isInvalid()) {
             return;
         }
-        // 获取图形符号
+        // 获取图形
         SVGGlyph glyph = this.graphic();
         // 节点已删除
         if (this.item().isBeDeleted()) {

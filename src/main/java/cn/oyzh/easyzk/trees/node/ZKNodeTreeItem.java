@@ -1,5 +1,10 @@
 package cn.oyzh.easyzk.trees.node;
 
+import cn.oyzh.common.dto.FriendlyInfo;
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.Task;
+import cn.oyzh.common.thread.TaskBuilder;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAuthController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
@@ -16,20 +21,15 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.common.dto.FriendlyInfo;
-import cn.oyzh.common.log.JulLog;
-import cn.oyzh.common.thread.Task;
-import cn.oyzh.common.thread.TaskBuilder;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -235,7 +235,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     /**
      * 加载子节点
      */
-    private void loadChildAsync() {
+    private void loadChildSync() {
         this.loading = true;
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> this.loadChild(false))
@@ -243,11 +243,17 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onFinish(() -> {
                     this.loading = false;
                     this.flushValue();
-                    // this.stopWaiting();
                 })
                 .onError(MessageBox::exception)
                 .build();
-        this.startWaiting(task);
+        task.run();
+    }
+
+    /**
+     * 加载子节点
+     */
+    private void loadChildAsync() {
+        this.startWaiting(this::loadChildSync);
     }
 
     @Override
@@ -278,7 +284,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             // 父节点
             if (this.value.isParent()) {
                 FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
-                FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
+                FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAllAsync);
                 FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);
                 FXMenuItem collapseAll = MenuItemHelper.collapseAll("12", this::collapseAll);
                 items.add(unload);
@@ -432,14 +438,20 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     /**
      * 加载全部
      */
-    public void loadChildAll() {
+    private void loadChildAllSync() {
         Task task = TaskBuilder.newBuilder()
-                // .onFinish(this::stopWaiting)
                 .onSuccess(this::flushValue)
                 .onStart(() -> this.loadChild(true))
-                .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))
+                .onError(MessageBox::exception)
                 .build();
-        this.startWaiting(task);
+        task.run();
+    }
+
+    /**
+     * 加载全部
+     */
+    public void loadChildAllAsync() {
+        this.startWaiting(this::loadChildAllSync);
     }
 
     /**
@@ -1053,9 +1065,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         if (this.isRoot()) {
             ZKSetting setting = ZKSettingStore2.SETTING;
             if (setting.isLoadFirst()) {
-                this.loadChild();
+                this.loadChildSync();
             } else if (setting.isLoadAll()) {
-                this.loadChildAll();
+                this.loadChildAllSync();
             }
         }
     }

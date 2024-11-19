@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.trees.node;
 
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.TreeChildFilterEvent;
@@ -7,11 +8,9 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.common.log.JulLog;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.util.FXUtil;
-import com.google.common.eventbus.Subscribe;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
@@ -326,13 +325,20 @@ public class ZKNodeTreeView extends RichTreeView {
      * 加载根节点
      */
     public void loadRoot() throws Exception {
+        // 禁用树
+        this.disable();
         // 获取根节点
         ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
         // 生成根节点
         ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this);
         // 设置根节点
         this.setRoot(rootItem);
-        // 加载根节点
-        rootItem.loadRoot();
+        // 开启动画
+        rootItem.startWaiting(() -> {
+            // 加载根节点
+            rootItem.loadRoot();
+            // 启用树
+            this.enable();
+        });
     }
 }

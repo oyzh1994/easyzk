@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.tabs.connect;
 
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.dto.Paging;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
@@ -301,22 +300,10 @@ public class ZKConnectTabContent extends DynamicTabController {
             this.treeItem = item;
             this.client = item.client();
             this.treeView.client(this.client);
-            // 异步执行
-            ThreadUtil.start(() -> {
-                try {
-                    this.treeView.disable();
-                    // 加载根节点
-                    this.treeView.loadRoot();
-                    // 监听选中变化
-                    this.treeView.selectItemChanged(this::initItem);
-                } catch (Exception ex) {
-                    MessageBox.exception(ex);
-                } finally {
-                    this.treeView.enable();
-                }
-            }, 100);
+            // 加载根节点
+            this.treeView.loadRoot();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
     }
 
@@ -961,6 +948,8 @@ public class ZKConnectTabContent extends DynamicTabController {
     @Override
     protected void bindListeners() {
         super.bindListeners();
+        // 监听选中变化
+        this.treeView.selectItemChanged(this::initItem);
         // 收藏处理
         this.collect.managedProperty().bind(this.collect.visibleProperty());
         this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());

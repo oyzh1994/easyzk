@@ -243,7 +243,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 .onFinish(() -> {
                     this.loading = false;
                     this.flushValue();
-                    this.stopWaiting();
+                    // this.stopWaiting();
                 })
                 .onError(MessageBox::exception)
                 .build();
@@ -303,7 +303,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void cancel() {
         this.canceled = true;
-        this.stopWaiting();
+        // this.stopWaiting();
     }
 
     /**
@@ -384,7 +384,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         // 创建任务
         Task task = TaskBuilder.newBuilder()
                 .onStart(this::deleteNode)
-                .onFinish(this::stopWaiting)
+                // .onFinish(this::stopWaiting)
                 .onError(MessageBox::exception)
                 .build();
         this.startWaiting(task);
@@ -434,7 +434,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void loadChildAll() {
         Task task = TaskBuilder.newBuilder()
-                .onFinish(this::stopWaiting)
+                // .onFinish(this::stopWaiting)
                 .onSuccess(this::flushValue)
                 .onStart(() -> this.loadChild(true))
                 .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))
@@ -447,7 +447,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void collapseAll() {
         Task task = TaskBuilder.newBuilder()
-                .onFinish(this::stopWaiting)
+                // .onFinish(this::stopWaiting)
                 .onStart(() -> this.collapseAll(this))
                 .onSuccess(() -> this.getTreeView().select(this))
                 .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))
@@ -460,7 +460,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void expandAll() {
         Task task = TaskBuilder.newBuilder()
-                .onFinish(this::stopWaiting)
+                // .onFinish(this::stopWaiting)
                 .onStart(() -> this.expandAll(this))
                 .onSuccess(() -> this.getTreeView().select(this))
                 .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))

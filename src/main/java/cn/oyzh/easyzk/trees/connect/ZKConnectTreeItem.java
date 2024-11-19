@@ -201,7 +201,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         this.canceled = true;
         ThreadUtil.startVirtual(() -> {
             this.client.close();
-            this.stopWaiting();
+            // this.stopWaiting();
         });
     }
 
@@ -230,7 +230,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                     }
                     this.flushGraphic();
                 })
-                .onFinish(this::stopWaiting)
+                // .onFinish(this::stopWaiting)
                 .onSuccess(this::flushLocal)
                 .onError(MessageBox::exception)
                 .build();
@@ -287,7 +287,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
                     .onFinish(() -> {
-                        this.stopWaiting();
+                        // this.stopWaiting();
                         this.flushGraphic();
                     })
                     .onSuccess(this::flushLocal)

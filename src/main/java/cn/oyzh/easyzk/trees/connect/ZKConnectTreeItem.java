@@ -72,8 +72,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public ZKConnectTreeItem(@NonNull ZKInfo value, @NonNull RichTreeView treeView) {
         super(treeView);
         this.value(value);
-        // 监听变化
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> ZKEventUtil.treeChildChanged());
+        // // 监听变化
+        // super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> ZKEventUtil.treeChildChanged());
     }
 
     /**

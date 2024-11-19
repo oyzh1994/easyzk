@@ -102,32 +102,36 @@
             </exclusions>
         </dependency>
 
-        <!-- 手动引入zookeeper，以兼容早期版本 -->
-        <!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
-        <dependency>
-            <groupId>org.apache.zookeeper</groupId>
-            <artifactId>zookeeper</artifactId>
-            <!-- <version>3.9.2</version> -->
-            <version>3.5.2-alpha</version>
-            <exclusions>
-                <!-- <exclusion> -->
-                <!--     <groupId>org.slf4j</groupId> -->
-                <!--     <artifactId>slf4j-api</artifactId> -->
-                <!-- </exclusion> -->
-                <!-- <exclusion> -->
-                <!--     <groupId>log4j</groupId> -->
-                <!--     <artifactId>log4j</artifactId> -->
-                <!-- </exclusion> -->
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-reload4j</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.java.dev.javacc</groupId>
-                    <artifactId>javacc</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!-- &lt;!&ndash; 手动引入zookeeper，以兼容早期版本 &ndash;&gt; -->
+        <!-- &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper &ndash;&gt; -->
+        <!-- <dependency> -->
+        <!--     <groupId>org.apache.zookeeper</groupId> -->
+        <!--     <artifactId>zookeeper</artifactId> -->
+        <!--     &lt;!&ndash; <version>3.9.2</version> &ndash;&gt; -->
+        <!--     <version>3.5.2-alpha</version> -->
+        <!--     <exclusions> -->
+        <!--         &lt;!&ndash; <exclusion> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <groupId>org.slf4j</groupId> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <artifactId>slf4j-api</artifactId> &ndash;&gt; -->
+        <!--         &lt;!&ndash; </exclusion> &ndash;&gt; -->
+        <!--         &lt;!&ndash; <exclusion> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <groupId>log4j</groupId> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <artifactId>log4j</artifactId> &ndash;&gt; -->
+        <!--         &lt;!&ndash; </exclusion> &ndash;&gt; -->
+        <!--         <exclusion> -->
+        <!--             <groupId>org.slf4j</groupId> -->
+        <!--             <artifactId>slf4j-reload4j</artifactId> -->
+        <!--         </exclusion> -->
+        <!--         <exclusion> -->
+        <!--             <groupId>net.java.dev.javacc</groupId> -->
+        <!--             <artifactId>javacc</artifactId> -->
+        <!--         </exclusion> -->
+        <!--         <exclusion> -->
+        <!--             <groupId>io.netty</groupId> -->
+        <!--             <artifactId>netty</artifactId> -->
+        <!--         </exclusion> -->
+        <!--     </exclusions> -->
+        <!-- </dependency> -->
 
         <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
         <dependency>

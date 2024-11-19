@@ -59,11 +59,11 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         this.setValue(new ZKRootTreeItemValue());
         // 初始化子节点
         this.initChildes();
-        // 监听变化
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            ZKEventUtil.treeChildChanged();
-            this.flushLocal();
-        });
+        // // 监听变化
+        // super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+        //     ZKEventUtil.treeChildChanged();
+        //     this.flushLocal();
+        // });
     }
 
     /**

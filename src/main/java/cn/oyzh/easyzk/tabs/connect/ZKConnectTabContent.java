@@ -1,10 +1,14 @@
 package cn.oyzh.easyzk.tabs.connect;
 
+import cn.oyzh.common.dto.FriendlyInfo;
+import cn.oyzh.common.dto.Paging;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
 import cn.oyzh.easyzk.event.ZKAuthAuthedEvent;
@@ -21,18 +25,12 @@ import cn.oyzh.easyzk.fx.ZKACLTableView;
 import cn.oyzh.easyzk.fx.ZKDataFormatComboBox;
 import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
 import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
-import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.common.dto.FriendlyInfo;
-import cn.oyzh.common.dto.Paging;
-import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
@@ -40,14 +38,13 @@ import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.ResizeHelper;
@@ -59,6 +56,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -963,6 +961,11 @@ public class ZKConnectTabContent extends DynamicTabController {
     @Override
     protected void bindListeners() {
         super.bindListeners();
+        // 收藏处理
+        this.collect.managedProperty().bind(this.collect.visibleProperty());
+        this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
+        // 搜索处理
+        this.searchType.selectedIndexChanged((observable, oldValue, newValue) -> this.doSearch());
         // undo监听
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
         // redo监听
@@ -1007,6 +1010,22 @@ public class ZKConnectTabContent extends DynamicTabController {
         resizeHelper.initResizeEvent();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
+        // acl处理
+        this.aclId.setCellValueFactory(new PropertyValueFactory<>("idControl"));
+        this.aclPerms.setCellValueFactory(new PropertyValueFactory<>("permsControl"));
+        this.aclSchema.setCellValueFactory(new PropertyValueFactory<>("schemaControl"));
+        this.aclStatus.setCellValueFactory(new PropertyValueFactory<>("statusControl"));
+        // 设置cell工厂
+        Callback<TableColumn<String, String>, TableCell<String, String>> cellFactory = param -> TableViewUtil.newCell(18, Pos.CENTER_LEFT);
+        this.aclId.setCellFactory(cellFactory);
+        this.aclPerms.setCellFactory(cellFactory);
+        this.aclSchema.setCellFactory(cellFactory);
+        this.aclStatus.setCellFactory(cellFactory);
+    }
+
     /**
      * 左侧组件重新布局
      *
@@ -1020,25 +1039,6 @@ public class ZKConnectTabContent extends DynamicTabController {
             this.tabPane.setFlexWidth("100% - " + newWidth);
             this.leftBox.parentAutosize();
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        super.initialize(url, resourceBundle);
-        // 收藏处理
-        this.collect.managedProperty().bind(this.collect.visibleProperty());
-        this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
-        // acl处理
-        this.aclId.setCellValueFactory(new PropertyValueFactory<>("idControl"));
-        this.aclPerms.setCellValueFactory(new PropertyValueFactory<>("permsControl"));
-        this.aclSchema.setCellValueFactory(new PropertyValueFactory<>("schemaControl"));
-        this.aclStatus.setCellValueFactory(new PropertyValueFactory<>("statusControl"));
-        // 设置cell工厂
-        Callback<TableColumn<String, String>, TableCell<String, String>> cellFactory = param -> TableViewUtil.newCell(18, Pos.CENTER_LEFT);
-        this.aclId.setCellFactory(cellFactory);
-        this.aclPerms.setCellFactory(cellFactory);
-        this.aclSchema.setCellFactory(cellFactory);
-        this.aclStatus.setCellFactory(cellFactory);
     }
 
     /**

@@ -18,10 +18,10 @@
 
 package org.apache.zookeeper.server.admin;
 
+import org.apache.zookeeper.server.ZooKeeperServer;
+
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.zookeeper.server.ZooKeeperServer;
 
 /**
  * Interface implemented by all commands runnable by JettyAdminServer.

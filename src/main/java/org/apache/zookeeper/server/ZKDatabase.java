@@ -32,6 +32,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
@@ -65,7 +66,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ZKDatabase {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZKDatabase.class);
 
     /**
      * make sure on a clear you take care of
@@ -255,7 +255,7 @@ public class ZKDatabase {
                 }
                 baos.close();
             } catch (IOException e) {
-                LOG.error("This really should be impossible", e);
+                JulLog.error("This really should be impossible", e);
             }
             QuorumPacket pp = new QuorumPacket(Leader.PROPOSAL, request.zxid,
                     baos.toByteArray(), null);
@@ -278,7 +278,7 @@ public class ZKDatabase {
         try {
             snapSize = snapLog.findMostRecentSnapshot().length();
         } catch (IOException e) {
-            LOG.error("Unable to get size of most recent snapshot");
+            JulLog.error("Unable to get size of most recent snapshot");
         }
         return (long) (snapSize * snapshotSizeFactor);
     }
@@ -294,7 +294,7 @@ public class ZKDatabase {
     public Iterator<Proposal> getProposalsFromTxnLog(long startZxid,
                                                      long sizeLimit) {
         if (sizeLimit < 0) {
-            LOG.debug("Negative size limit - retrieving proposal via txnlog is disabled");
+            JulLog.debug("Negative size limit - retrieving proposal via txnlog is disabled");
             return TxnLogProposalIterator.EMPTY_ITERATOR;
         }
 
@@ -307,7 +307,7 @@ public class ZKDatabase {
             // after a given zxid, we should fail.
             if ((itr.getHeader() != null)
                     && (itr.getHeader().getZxid() > startZxid)) {
-                LOG.warn("Unable to find proposals from txnlog for zxid: "
+                JulLog.warn("Unable to find proposals from txnlog for zxid: "
                         + startZxid);
                 itr.close();
                 return TxnLogProposalIterator.EMPTY_ITERATOR;
@@ -316,20 +316,20 @@ public class ZKDatabase {
             if (sizeLimit > 0) {
                 long txnSize = itr.getStorageSize();
                 if (txnSize > sizeLimit) {
-                    LOG.info("Txnlog size: " + txnSize + " exceeds sizeLimit: "
+                    JulLog.info("Txnlog size: " + txnSize + " exceeds sizeLimit: "
                             + sizeLimit);
                     itr.close();
                     return TxnLogProposalIterator.EMPTY_ITERATOR;
                 }
             }
         } catch (IOException e) {
-            LOG.error("Unable to read txnlog from disk", e);
+            JulLog.error("Unable to read txnlog from disk", e);
             try {
                 if (itr != null) {
                     itr.close();
                 }
             } catch (IOException ioe) {
-                LOG.warn("Error closing file iterator", ioe);
+                JulLog.warn("Error closing file iterator", ioe);
             }
             return TxnLogProposalIterator.EMPTY_ITERATOR;
         }
@@ -570,7 +570,7 @@ public class ZKDatabase {
         try {
             if (this.dataTree.getNode(ZooDefs.CONFIG_NODE) == null) {
                 // should only happen during upgrade
-                LOG.warn("configuration znode missing (hould only happen during upgrade), creating the node");
+                JulLog.warn("configuration znode missing (hould only happen during upgrade), creating the node");
                 this.dataTree.addConfigNode();
             }
             this.dataTree.setData(ZooDefs.CONFIG_NODE, qv.toString().getBytes(), -1, qv.getVersion(), Time.currentWallTime());

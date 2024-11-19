@@ -17,8 +17,7 @@
  */
 package org.apache.zookeeper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.oyzh.common.log.JulLog;
 
 /***
  *  CreateMode value determines how the znode is created on ZooKeeper.
@@ -53,8 +52,6 @@ public enum CreateMode {
      * when creating children inside of this container node.
      */
     CONTAINER (4, false, false, true);
-
-    private static final Logger LOG = LoggerFactory.getLogger(CreateMode.class);
 
     private boolean ephemeral;
     private boolean sequential;
@@ -103,7 +100,7 @@ public enum CreateMode {
         default:
             String errMsg = "Received an invalid flag value: " + flag
                     + " to convert to a CreateMode";
-            LOG.error(errMsg);
+            JulLog.error(errMsg);
             throw new KeeperException.BadArgumentsException(errMsg);
         }
     }

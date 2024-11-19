@@ -16,9 +16,10 @@
  */
 
 package org.apache.zookeeper.common;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 public class StringUtils {
 
@@ -41,13 +42,13 @@ public class StringUtils {
         }
         return Collections.unmodifiableList(results);
     }
-    
+
     /**
      * This method takes a List<String> and a delimiter and joins the strings
-     * into a single string, where the original strings are separated using 
+     * into a single string, where the original strings are separated using
      * the given delimiter.
      *
-     */ 
+     */
     public static String joinStrings(List<String> list, String delim)
     {
         if (list == null)

@@ -17,14 +17,14 @@
  */
 package org.apache.zookeeper.common;
 
+import cn.oyzh.common.log.JulLog;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /*
  * This code is originally from HDFS, see the similarly named files there
@@ -35,19 +35,16 @@ import org.slf4j.LoggerFactory;
  * A FileOutputStream that has the property that it will only show up at its
  * destination once it has been entirely written and flushed to disk. While
  * being written, it will use a .tmp suffix.
- * 
+ *
  * When the output stream is closed, it is flushed, fsynced, and will be moved
  * into place, overwriting any file that already exists at that location.
- * 
+ *
  * <b>NOTE</b>: on Windows platforms, it will not atomically replace the target
  * file - instead the target file is deleted before this one is moved into
  * place.
  */
 public class AtomicFileOutputStream extends FilterOutputStream {
     private static final String TMP_EXTENSION = ".tmp";
-
-    private final static Logger LOG = LoggerFactory
-            .getLogger(AtomicFileOutputStream.class);
 
     private final File origFile;
     private final File tmpFile;
@@ -92,7 +89,7 @@ public class AtomicFileOutputStream extends FilterOutputStream {
                 }
                 // close wasn't successful, try to delete the tmp file
                 if (!tmpFile.delete()) {
-                    LOG.warn("Unable to delete tmp file " + tmpFile);
+                    JulLog.warn("Unable to delete tmp file " + tmpFile);
                 }
             }
         }
@@ -106,10 +103,10 @@ public class AtomicFileOutputStream extends FilterOutputStream {
         try {
             super.close();
         } catch (IOException ioe) {
-            LOG.warn("Unable to abort file " + tmpFile, ioe);
+            JulLog.warn("Unable to abort file " + tmpFile, ioe);
         }
         if (!tmpFile.delete()) {
-            LOG.warn("Unable to delete tmp file during abort " + tmpFile);
+            JulLog.warn("Unable to delete tmp file during abort " + tmpFile);
         }
     }
 }

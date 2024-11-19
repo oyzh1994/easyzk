@@ -18,20 +18,17 @@
 
 package org.apache.zookeeper.server.auth;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.server.ServerCnxn;
 
-public class DigestAuthenticationProvider implements AuthenticationProvider {
-    private static final Logger LOG =
-        LoggerFactory.getLogger(DigestAuthenticationProvider.class);
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-    /** specify a command line property with key of 
+public class DigestAuthenticationProvider implements AuthenticationProvider {
+
+    /** specify a command line property with key of
      * "zookeeper.DigestAuthenticationProvider.superDigest"
      * and value of "super:<base64encoded(SHA1(password))>" to enable
      * super user access (i.e. acls disabled)
@@ -96,7 +93,7 @@ public class DigestAuthenticationProvider implements AuthenticationProvider {
         return parts[0] + ":" + base64Encode(digest);
     }
 
-    public KeeperException.Code 
+    public KeeperException.Code
         handleAuthentication(ServerCnxn cnxn, byte[] authData)
     {
         String id = new String(authData);
@@ -108,7 +105,7 @@ public class DigestAuthenticationProvider implements AuthenticationProvider {
             cnxn.addAuthInfo(new Id(getScheme(), digest));
             return KeeperException.Code.OK;
         } catch (NoSuchAlgorithmException e) {
-            LOG.error("Missing algorithm",e);
+            JulLog.error("Missing algorithm",e);
         }
         return KeeperException.Code.AUTHFAILED;
     }
@@ -127,7 +124,7 @@ public class DigestAuthenticationProvider implements AuthenticationProvider {
     }
 
     /** Call with a single argument of user:pass to generate authdata.
-     * Authdata output can be used when setting superDigest for example. 
+     * Authdata output can be used when setting superDigest for example.
      * @param args single argument of user:pass
      * @throws NoSuchAlgorithmException
      */

@@ -18,16 +18,16 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.util.Date;
-
 import org.apache.zookeeper.jmx.ZKMBeanInfo;
+
+import java.util.Date;
 
 /**
  * An abstract base class for the leader and follower MBeans.
  */
 public abstract class ServerBean implements ServerMXBean, ZKMBeanInfo {
     private final Date startTime=new Date();
-    
+
     public boolean isHidden() {
         return false;
     }

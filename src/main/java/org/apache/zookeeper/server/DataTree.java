@@ -18,6 +18,7 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
 import org.apache.jute.Record;
@@ -49,8 +50,6 @@ import org.apache.zookeeper.txn.SetACLTxn;
 import org.apache.zookeeper.txn.SetDataTxn;
 import org.apache.zookeeper.txn.Txn;
 import org.apache.zookeeper.txn.TxnHeader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -76,7 +75,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * through the hashtable. The tree is traversed only when serializing to disk.
  */
 public class DataTree {
-    private static final Logger LOG = LoggerFactory.getLogger(DataTree.class);
 
     public static final long CONTAINER_EPHEMERAL_OWNER = Long.MIN_VALUE;
 
@@ -241,7 +239,7 @@ public class DataTree {
          if (zookeeperZnode!=null) { // should always be the case
         	 zookeeperZnode.addChild(configChildZookeeper);
          } else {
-        	 LOG.error("There's no /zookeeper znode - this should never happen");
+        	 JulLog.error("There's no /zookeeper znode - this should never happen");
          }
          nodes.put(configZookeeper, configDataNode);
      }
@@ -301,7 +299,7 @@ public class DataTree {
         StatsTrack updatedStat = null;
         if (node == null) {
             // should not happen
-            LOG.error("Missing count node for stat " + statNode);
+            JulLog.error("Missing count node for stat " + statNode);
             return;
         }
         synchronized (node) {
@@ -315,15 +313,14 @@ public class DataTree {
         StatsTrack thisStats = null;
         if (node == null) {
             // should not happen
-            LOG.error("Missing count node for quota " + quotaNode);
+            JulLog.error("Missing count node for quota " + quotaNode);
             return;
         }
         synchronized (node) {
             thisStats = new StatsTrack(new String(node.data));
         }
         if (thisStats.getCount() > -1 && (thisStats.getCount() < updatedStat.getCount())) {
-            LOG
-            .warn("Quota exceeded: " + lastPrefix + " count="
+            JulLog.warn("Quota exceeded: " + lastPrefix + " count="
                     + updatedStat.getCount() + " limit="
                     + thisStats.getCount());
         }
@@ -345,7 +342,7 @@ public class DataTree {
         if (node == null) {
             // should never be null but just to make
             // findbugs happy
-            LOG.error("Missing stat node for bytes " + statNode);
+            JulLog.error("Missing stat node for bytes " + statNode);
             return;
         }
         StatsTrack updatedStat = null;
@@ -360,7 +357,7 @@ public class DataTree {
         if (node == null) {
             // should never be null but just to make
             // findbugs happy
-            LOG.error("Missing quota node for bytes " + quotaNode);
+            JulLog.error("Missing quota node for bytes " + quotaNode);
             return;
         }
         StatsTrack thisStats = null;
@@ -368,8 +365,7 @@ public class DataTree {
             thisStats = new StatsTrack(new String(node.data));
         }
         if (thisStats.getBytes() > -1 && (thisStats.getBytes() < updatedStat.getBytes())) {
-            LOG
-            .warn("Quota exceeded: " + lastPrefix + " bytes="
+            JulLog.warn("Quota exceeded: " + lastPrefix + " bytes="
                     + updatedStat.getBytes() + " limit="
                     + thisStats.getBytes());
         }
@@ -554,10 +550,10 @@ public class DataTree {
             }
             updateBytes(lastPrefix, bytes);
         }
-        if (LOG.isTraceEnabled()) {
-            ZooTrace.logTraceMessage(LOG, ZooTrace.EVENT_DELIVERY_TRACE_MASK,
+        if (JulLog.isTraceEnabled()) {
+            ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.EVENT_DELIVERY_TRACE_MASK,
                     "dataWatches.triggerWatch " + path);
-            ZooTrace.logTraceMessage(LOG, ZooTrace.EVENT_DELIVERY_TRACE_MASK,
+            ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.EVENT_DELIVERY_TRACE_MASK,
                     "childWatches.triggerWatch " + parentName);
         }
         Set<Watcher> processed = dataWatches.triggerWatch(path,
@@ -902,13 +898,13 @@ public class DataTree {
                     break;
             }
         } catch (KeeperException e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Failed: " + header + ":" + txn, e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("Failed: " + header + ":" + txn, e);
             }
             rc.err = e.code().intValue();
         } catch (IOException e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Failed: " + header + ":" + txn, e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("Failed: " + header + ":" + txn, e);
             }
         }
         /*
@@ -945,7 +941,7 @@ public class DataTree {
          */
         if (header.getType() == OpCode.create &&
                 rc.err == Code.NODEEXISTS.intValue()) {
-            LOG.debug("Adjusting parent cversion for Txn: " + header.getType() +
+            JulLog.debug("Adjusting parent cversion for Txn: " + header.getType() +
                     " path:" + rc.path + " err: " + rc.err);
             int lastSlash = rc.path.lastIndexOf('/');
             String parentName = rc.path.substring(0, lastSlash);
@@ -954,12 +950,12 @@ public class DataTree {
                 setCversionPzxid(parentName, cTxn.getParentCVersion(),
                         header.getZxid());
             } catch (NoNodeException e) {
-                LOG.error("Failed to set parent cversion for: " +
+                JulLog.error("Failed to set parent cversion for: " +
                       parentName, e);
                 rc.err = e.code().intValue();
             }
         } else if (rc.err != Code.OK.intValue()) {
-            LOG.debug("Ignoring processTxn failure hdr: " + header.getType() +
+            JulLog.debug("Ignoring processTxn failure hdr: " + header.getType() +
                   " : error: " + rc.err);
         }
         return rc;
@@ -977,14 +973,13 @@ public class DataTree {
             for (String path : list) {
                 try {
                     deleteNode(path, zxid);
-                    if (LOG.isDebugEnabled()) {
-                        LOG
-                                .debug("Deleting ephemeral node " + path
+                    if (JulLog.isDebugEnabled()) {
+                        JulLog.debug("Deleting ephemeral node " + path
                                         + " for session 0x"
                                         + Long.toHexString(session));
                     }
                 } catch (NoNodeException e) {
-                    LOG.warn("Ignoring NoNodeException for path " + path
+                    JulLog.warn("Ignoring NoNodeException for path " + path
                             + " while removing ephemeral for dead session 0x"
                             + Long.toHexString(session));
                 }
@@ -1049,7 +1044,7 @@ public class DataTree {
         DataNode node = getNode(statPath);
         // it should exist
         if (node == null) {
-            LOG.warn("Missing quota stat node " + statPath);
+            JulLog.warn("Missing quota stat node " + statPath);
             return;
         }
         synchronized (node) {

@@ -18,6 +18,7 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.Index;
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
@@ -36,7 +37,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ReferenceCountedACLCache {
-    private static final Logger LOG = LoggerFactory.getLogger(ReferenceCountedACLCache.class);
 
     final Map<Long, List<ACL>> longKeyMap =
             new HashMap<Long, List<ACL>>();
@@ -89,7 +89,7 @@ public class ReferenceCountedACLCache {
             return ZooDefs.Ids.OPEN_ACL_UNSAFE;
         List<ACL> acls = longKeyMap.get(longVal);
         if (acls == null) {
-            LOG.error("ERROR: ACL not available for long " + longVal);
+            JulLog.error("ERROR: ACL not available for long " + longVal);
             throw new RuntimeException("Failed to fetch acls for " + longVal);
         }
         return acls;
@@ -152,7 +152,7 @@ public class ReferenceCountedACLCache {
         }
 
         if (!longKeyMap.containsKey(acl)) {
-            LOG.info("Ignoring acl " + acl + " as it does not exist in the cache");
+            JulLog.info("Ignoring acl " + acl + " as it does not exist in the cache");
             return;
         }
 
@@ -170,7 +170,7 @@ public class ReferenceCountedACLCache {
         }
 
         if (!longKeyMap.containsKey(acl)) {
-            LOG.info("Ignoring acl " + acl + " as it does not exist in the cache");
+            JulLog.info("Ignoring acl " + acl + " as it does not exist in the cache");
             return;
         }
 

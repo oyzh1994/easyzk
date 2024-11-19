@@ -18,39 +18,35 @@
 
 package org.apache.zookeeper.common;
 
+import cn.oyzh.common.log.JulLog;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * a class that implements prefix matching for 
+ * a class that implements prefix matching for
  * components of a filesystem path. the trie
- * looks like a tree with edges mapping to 
+ * looks like a tree with edges mapping to
  * the component of a path.
  * example /ab/bc/cf would map to a trie
  *           /
  *        ab/
  *        (ab)
  *      bc/
- *       / 
+ *       /
  *      (bc)
  *   cf/
  *   (cf)
- */    
+ */
 public class PathTrie {
-    /**
-     * the logger for this class
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(PathTrie.class);
-    
+
     /**
      * the root node of PathTrie
      */
     private final TrieNode rootNode ;
-    
+
     static class TrieNode {
         boolean property = false;
         final HashMap<String, TrieNode> children;
@@ -64,7 +60,7 @@ public class PathTrie {
             children = new HashMap<String, TrieNode>();
             this.parent = parent;
         }
-        
+
         /**
          * get the parent of this node
          * @return the parent node
@@ -72,7 +68,7 @@ public class PathTrie {
         TrieNode getParent() {
             return this.parent;
         }
-        
+
         /**
          * set the parent of this node
          * @param parent the parent to set to
@@ -80,18 +76,18 @@ public class PathTrie {
         void setParent(TrieNode parent) {
             this.parent = parent;
         }
-        
+
         /**
-         * a property that is set 
-         * for a node - making it 
+         * a property that is set
+         * for a node - making it
          * special.
          */
         void setProperty(boolean prop) {
             this.property = prop;
         }
-        
+
         /** the property of this
-         * node 
+         * node
          * @return the property for this
          * node
          */
@@ -111,10 +107,10 @@ public class PathTrie {
                 children.put(childName, node);
             }
         }
-     
+
         /**
          * delete child from this node
-         * @param childName the string name of the child to 
+         * @param childName the string name of the child to
          * be deleted
          */
         void deleteChild(String childName) {
@@ -124,7 +120,7 @@ public class PathTrie {
                 }
                 TrieNode childNode = children.get(childName);
                 // this is the only child node.
-                if (childNode.getChildren().length == 1) { 
+                if (childNode.getChildren().length == 1) {
                     childNode.setParent(null);
                     children.remove(childName);
                 }
@@ -135,7 +131,7 @@ public class PathTrie {
                 }
             }
         }
-        
+
         /**
          * return the child of a node mapping
          * to the input childname
@@ -154,7 +150,7 @@ public class PathTrie {
         }
 
         /**
-         * get the list of children of this 
+         * get the list of children of this
          * trienode.
          * @param node to get its children
          * @return the string list of its children
@@ -164,7 +160,7 @@ public class PathTrie {
                return children.keySet().toArray(new String[0]);
            }
         }
-        
+
         /**
          * get the string representation
          * for this node
@@ -180,7 +176,7 @@ public class PathTrie {
             return sb.toString();
         }
     }
-    
+
     /**
      * construct a new PathTrie with
      * a root node of /
@@ -188,9 +184,9 @@ public class PathTrie {
     public PathTrie() {
         this.rootNode = new TrieNode(null);
     }
-    
+
     /**
-     * add a path to the path trie 
+     * add a path to the path trie
      * @param path
      */
     public void addPath(String path) {
@@ -212,7 +208,7 @@ public class PathTrie {
         }
         parent.setProperty(true);
     }
-    
+
     /**
      * delete a path from the trie
      * @param path the path to be deleted
@@ -224,22 +220,22 @@ public class PathTrie {
         String[] pathComponents = path.split("/");
         TrieNode parent = rootNode;
         String part = null;
-        if (pathComponents.length <= 1) { 
+        if (pathComponents.length <= 1) {
             throw new IllegalArgumentException("Invalid path " + path);
         }
         for (int i=1; i<pathComponents.length; i++) {
             part = pathComponents[i];
             if (parent.getChild(part) == null) {
-                //the path does not exist 
+                //the path does not exist
                 return;
             }
             parent = parent.getChild(part);
-            LOG.info("{}",parent);
+            JulLog.info("{}",parent);
         }
         TrieNode realParent  = parent.getParent();
         realParent.deleteChild(part);
     }
-    
+
     /**
      * return the largest prefix for the input path.
      * @param path the input path

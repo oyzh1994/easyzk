@@ -18,8 +18,7 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.io.PrintWriter;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.jmx.MBeanRegistry;
 import org.apache.zookeeper.server.DataTreeBean;
 import org.apache.zookeeper.server.FinalRequestProcessor;
@@ -29,6 +28,8 @@ import org.apache.zookeeper.server.ZKDatabase;
 import org.apache.zookeeper.server.ZooKeeperServer;
 import org.apache.zookeeper.server.ZooKeeperServerBean;
 import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
+
+import java.io.PrintWriter;
 
 /**
  * A ZooKeeperServer which comes into play when peer is partitioned from the
@@ -63,14 +64,14 @@ public class ReadOnlyZooKeeperServer extends ZooKeeperServer {
     public synchronized void startup() {
         // check to avoid startup follows shutdown
         if (shutdown) {
-            LOG.warn("Not starting Read-only server as startup follows shutdown!");
+            JulLog.warn("Not starting Read-only server as startup follows shutdown!");
             return;
         }
         registerJMX(new ReadOnlyBean(this), self.jmxLocalPeerBean);
         super.startup();
         self.setZooKeeperServer(this);
         self.adminServer.setZooKeeperServer(this);
-        LOG.info("Read-only server started");
+        JulLog.info("Read-only server started");
     }
 
     @Override
@@ -80,7 +81,7 @@ public class ReadOnlyZooKeeperServer extends ZooKeeperServer {
             jmxDataTreeBean = new DataTreeBean(getZKDatabase().getDataTree());
             MBeanRegistry.getInstance().register(jmxDataTreeBean, jmxServerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             jmxDataTreeBean = null;
         }
     }
@@ -91,7 +92,7 @@ public class ReadOnlyZooKeeperServer extends ZooKeeperServer {
             jmxServerBean = serverBean;
             MBeanRegistry.getInstance().register(serverBean, localPeerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             jmxServerBean = null;
         }
     }
@@ -104,7 +105,7 @@ public class ReadOnlyZooKeeperServer extends ZooKeeperServer {
                 MBeanRegistry.getInstance().unregister(jmxDataTreeBean);
             }
         } catch (Exception e) {
-            LOG.warn("Failed to unregister with JMX", e);
+            JulLog.warn("Failed to unregister with JMX", e);
         }
         jmxDataTreeBean = null;
     }
@@ -116,7 +117,7 @@ public class ReadOnlyZooKeeperServer extends ZooKeeperServer {
                 MBeanRegistry.getInstance().unregister(jmxServerBean);
             }
         } catch (Exception e) {
-            LOG.warn("Failed to unregister with JMX", e);
+            JulLog.warn("Failed to unregister with JMX", e);
         }
         jmxServerBean = null;
     }
@@ -138,7 +139,7 @@ public class ReadOnlyZooKeeperServer extends ZooKeeperServer {
     @Override
     public synchronized void shutdown() {
         if (!isRunning()) {
-            LOG.debug("ZooKeeper server is not running, so not proceeding to shutdown!");
+            JulLog.debug("ZooKeeper server is not running, so not proceeding to shutdown!");
             return;
         }
         shutdown = true;

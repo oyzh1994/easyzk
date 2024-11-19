@@ -18,6 +18,7 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.common.Time;
 import org.slf4j.Logger;
@@ -37,7 +38,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * If the proposal fails or the container node is not empty there's no harm.
  */
 public class ContainerManager {
-    private static final Logger LOG = LoggerFactory.getLogger(ContainerManager.class);
     private final ZKDatabase zkDb;
     private final RequestProcessor requestProcessor;
     private final int checkIntervalMs;
@@ -61,7 +61,7 @@ public class ContainerManager {
         this.maxPerMinute = maxPerMinute;
         timer = new Timer("ContainerManagerTask", true);
 
-        LOG.info(String.format("Using checkIntervalMs=%d maxPerMinute=%d",
+        JulLog.info(String.format("Using checkIntervalMs=%d maxPerMinute=%d",
                 checkIntervalMs, maxPerMinute));
     }
 
@@ -78,10 +78,10 @@ public class ContainerManager {
                         checkContainers();
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
-                        LOG.info("interrupted");
+                        JulLog.info("interrupted");
                         cancel();
                     } catch ( Throwable e ) {
-                        LOG.error("Error checking containers", e);
+                        JulLog.error("Error checking containers", e);
                     }
                 }
             };
@@ -116,11 +116,11 @@ public class ContainerManager {
             Request request = new Request(null, 0, 0,
                     ZooDefs.OpCode.deleteContainer, path, null);
             try {
-                LOG.info("Attempting to delete candidate container: %s",
+                JulLog.info("Attempting to delete candidate container: %s",
                         containerPath);
                 requestProcessor.processRequest(request);
             } catch (Exception e) {
-                LOG.error(String.format("Could not delete container: %s" ,
+                JulLog.error(String.format("Could not delete container: %s" ,
                         containerPath), e);
             }
 

@@ -18,10 +18,10 @@
 
 package org.apache.zookeeper.server.command;
 
+import org.apache.zookeeper.server.ServerCnxn;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import org.apache.zookeeper.server.ServerCnxn;
 
 public class DirsCommand extends AbstractFourLetterCommand {
 

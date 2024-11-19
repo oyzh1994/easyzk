@@ -17,9 +17,10 @@
  */
 package org.apache.zookeeper.cli;
 
-import java.io.IOException;
 import org.apache.commons.cli.ParseException;
 import org.apache.zookeeper.KeeperException;
+
+import java.io.IOException;
 
 /**
  * close command for cli
@@ -29,8 +30,8 @@ public class CloseCommand extends CliCommand {
     public CloseCommand() {
         super("close", "");
     }
-    
-    
+
+
     @Override
     public CliCommand parse(String[] cmdArgs) throws ParseException {
         return this;
@@ -39,8 +40,8 @@ public class CloseCommand extends CliCommand {
     @Override
     public boolean exec() throws KeeperException, IOException, InterruptedException {
         zk.close();
-        
+
         return false;
     }
-    
+
 }

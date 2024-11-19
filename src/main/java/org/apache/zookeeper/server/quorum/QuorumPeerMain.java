@@ -17,21 +17,17 @@
  */
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-
-import javax.management.JMException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.zookeeper.jmx.ManagedUtil;
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.server.DatadirCleanupManager;
 import org.apache.zookeeper.server.ServerCnxnFactory;
 import org.apache.zookeeper.server.ZKDatabase;
-import org.apache.zookeeper.server.DatadirCleanupManager;
 import org.apache.zookeeper.server.ZooKeeperServerMain;
 import org.apache.zookeeper.server.admin.AdminServer.AdminServerException;
 import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
 import org.apache.zookeeper.server.persistence.FileTxnSnapLog.DatadirException;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
+
+import java.io.IOException;
 
 /**
  *
@@ -62,7 +58,6 @@ import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
  *
  */
 public class QuorumPeerMain {
-    private static final Logger LOG = LoggerFactory.getLogger(QuorumPeerMain.class);
 
     private static final String USAGE = "Usage: QuorumPeerMain configfile";
 
@@ -78,27 +73,27 @@ public class QuorumPeerMain {
         try {
             main.initializeAndRun(args);
         } catch (IllegalArgumentException e) {
-            LOG.error("Invalid arguments, exiting abnormally", e);
-            LOG.info(USAGE);
+            JulLog.error("Invalid arguments, exiting abnormally", e);
+            JulLog.info(USAGE);
             System.err.println(USAGE);
             System.exit(2);
         } catch (ConfigException e) {
-            LOG.error("Invalid config, exiting abnormally", e);
+            JulLog.error("Invalid config, exiting abnormally", e);
             System.err.println("Invalid config, exiting abnormally");
             System.exit(2);
         } catch (DatadirException e) {
-            LOG.error("Unable to access datadir, exiting abnormally", e);
+            JulLog.error("Unable to access datadir, exiting abnormally", e);
             System.err.println("Unable to access datadir, exiting abnormally");
             System.exit(3);
         } catch (AdminServerException e) {
-            LOG.error("Unable to start AdminServer, exiting abnormally", e);
+            JulLog.error("Unable to start AdminServer, exiting abnormally", e);
             System.err.println("Unable to start AdminServer, exiting abnormally");
             System.exit(4);
         } catch (Exception e) {
-            LOG.error("Unexpected exception, exiting abnormally", e);
+            JulLog.error("Unexpected exception, exiting abnormally", e);
             System.exit(1);
         }
-        LOG.info("Exiting normally");
+        JulLog.info("Exiting normally");
         System.exit(0);
     }
 
@@ -119,7 +114,7 @@ public class QuorumPeerMain {
         if (args.length == 1 && config.isDistributed()) {
             runFromConfig(config);
         } else {
-            LOG.warn("Either no config or no quorum defined in config, running "
+            JulLog.warn("Either no config or no quorum defined in config, running "
                     + " in standalone mode");
             // there is only server in the quorum -- run as standalone
             ZooKeeperServerMain.main(args);
@@ -127,13 +122,13 @@ public class QuorumPeerMain {
     }
 
     public void runFromConfig(QuorumPeerConfig config) throws IOException, AdminServerException {
-      try {
-          ManagedUtil.registerLog4jMBeans();
-      } catch (JMException e) {
-          LOG.warn("Unable to register log4j JMX control", e);
-      }
+      // try {
+      //     ManagedUtil.registerLog4jMBeans();
+      // } catch (JMException e) {
+      //     JulLog.warn("Unable to register log4j JMX control", e);
+      // }
 
-      LOG.info("Starting quorum peer");
+      JulLog.info("Starting quorum peer");
       try {
           ServerCnxnFactory cnxnFactory = null;
           ServerCnxnFactory secureCnxnFactory = null;
@@ -179,12 +174,12 @@ public class QuorumPeerMain {
           quorumPeer.setLearnerType(config.getPeerType());
           quorumPeer.setSyncEnabled(config.getSyncEnabled());
           quorumPeer.setQuorumListenOnAllIPs(config.getQuorumListenOnAllIPs());
-          
+
           quorumPeer.start();
           quorumPeer.join();
       } catch (InterruptedException e) {
           // warn, but generally this is ok
-          LOG.warn("Quorum Peer interrupted", e);
+          JulLog.warn("Quorum Peer interrupted", e);
       }
     }
 }

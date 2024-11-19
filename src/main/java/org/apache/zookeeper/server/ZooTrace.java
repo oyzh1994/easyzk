@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,10 +18,12 @@
 
 package org.apache.zookeeper.server;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import cn.oyzh.common.log.JulLevel;
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.server.quorum.QuorumPacket;
+
+import java.util.logging.Logger;
 
 /**
  * This class encapsulates and centralizes tracing for the ZooKeeper server.
@@ -58,23 +60,21 @@ public class ZooTrace {
 
     public static synchronized void setTextTraceLevel(long mask) {
         traceMask = mask;
-        final Logger LOG = LoggerFactory.getLogger(ZooTrace.class);
-        LOG.info("Set text trace mask to 0x" + Long.toHexString(mask));
+        JulLog.info("Set text trace mask to 0x" + Long.toHexString(mask));
     }
 
     public static synchronized boolean isTraceEnabled(Logger log, long mask) {
-        return log.isTraceEnabled() && (mask & traceMask) != 0;
+        return log.isLoggable(JulLevel.TRACE.toLevel()) && (mask & traceMask) != 0;
     }
 
     public static void logTraceMessage(Logger log, long mask, String msg) {
         if (isTraceEnabled(log, mask)) {
-            log.trace(msg);
+            log.log(JulLevel.TRACE.toLevel(), msg);
         }
     }
 
     static public void logQuorumPacket(Logger log, long mask,
-            char direction, QuorumPacket qp)
-    {
+                                       char direction, QuorumPacket qp) {
         return;
 
         // if (isTraceEnabled(log, mask)) {
@@ -84,10 +84,9 @@ public class ZooTrace {
     }
 
     static public void logRequest(Logger log, long mask,
-            char rp, Request request, String header)
-    {
+                                  char rp, Request request, String header) {
         if (isTraceEnabled(log, mask)) {
-            log.trace(header + ":" + rp + request.toString());
+            log.log(JulLevel.TRACE.toLevel(), header + ":" + rp + request.toString());
         }
     }
 }

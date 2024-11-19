@@ -18,10 +18,10 @@
 
 package org.apache.zookeeper.server.command;
 
-import java.io.PrintWriter;
-
 import org.apache.zookeeper.server.NIOServerCnxnFactory;
 import org.apache.zookeeper.server.ServerCnxn;
+
+import java.io.PrintWriter;
 
 public class DumpCommand extends AbstractFourLetterCommand {
     public DumpCommand(PrintWriter pw, ServerCnxn serverCnxn) {

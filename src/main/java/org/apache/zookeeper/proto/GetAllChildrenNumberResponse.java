@@ -19,8 +19,12 @@
 
 package org.apache.zookeeper.proto;
 
-import org.apache.jute.*;
-import org.apache.jute.Record; // JDK14 needs explicit import due to clash with java.lang.Record
+import org.apache.jute.BinaryInputArchive;
+import org.apache.jute.BinaryOutputArchive;
+import org.apache.jute.CsvOutputArchive;
+import org.apache.jute.InputArchive;
+import org.apache.jute.OutputArchive;
+import org.apache.jute.Record;
 public class GetAllChildrenNumberResponse implements Record {
   private int totalNumber;
   public GetAllChildrenNumberResponse() {

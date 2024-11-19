@@ -18,9 +18,7 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-import java.util.concurrent.LinkedBlockingQueue;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.KeeperException.Code;
 import org.apache.zookeeper.ZooDefs.OpCode;
 import org.apache.zookeeper.proto.ReplyHeader;
@@ -30,8 +28,9 @@ import org.apache.zookeeper.server.ZooKeeperCriticalThread;
 import org.apache.zookeeper.server.ZooKeeperServer;
 import org.apache.zookeeper.server.ZooTrace;
 import org.apache.zookeeper.server.quorum.Leader.XidRolloverException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This processor is at the beginning of the ReadOnlyZooKeeperServer's
@@ -42,7 +41,6 @@ import org.slf4j.LoggerFactory;
 public class ReadOnlyRequestProcessor extends ZooKeeperCriticalThread implements
         RequestProcessor {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ReadOnlyRequestProcessor.class);
 
     private final LinkedBlockingQueue<Request> queuedRequests = new LinkedBlockingQueue<Request>();
 
@@ -70,8 +68,8 @@ public class ReadOnlyRequestProcessor extends ZooKeeperCriticalThread implements
                 if (request.type == OpCode.ping) {
                     traceMask = ZooTrace.CLIENT_PING_TRACE_MASK;
                 }
-                if (LOG.isTraceEnabled()) {
-                    ZooTrace.logRequest(LOG, traceMask, 'R', request, "");
+                if (JulLog.isTraceEnabled()) {
+                    ZooTrace.logRequest(JulLog.getLogger(), traceMask, 'R', request, "");
                 }
                 if (Request.requestOfDeath == request) {
                     break;
@@ -95,7 +93,7 @@ public class ReadOnlyRequestProcessor extends ZooKeeperCriticalThread implements
                     try {
                         request.cnxn.sendResponse(hdr, null, null);
                     } catch (IOException e) {
-                        LOG.error("IO exception while sending response", e);
+                        JulLog.error("IO exception while sending response", e);
                     }
                     continue;
                 }
@@ -107,13 +105,13 @@ public class ReadOnlyRequestProcessor extends ZooKeeperCriticalThread implements
             }
         } catch (RequestProcessorException e) {
             if (e.getCause() instanceof XidRolloverException) {
-                LOG.info(e.getCause().getMessage());
+                JulLog.info(e.getCause().getMessage());
             }
             handleException(this.getName(), e);
         } catch (Exception e) {
             handleException(this.getName(), e);
         }
-        LOG.info("ReadOnlyRequestProcessor exited loop!");
+        JulLog.info("ReadOnlyRequestProcessor exited loop!");
     }
 
     @Override

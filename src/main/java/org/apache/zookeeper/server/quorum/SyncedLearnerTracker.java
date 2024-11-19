@@ -18,14 +18,14 @@
 
 package org.apache.zookeeper.server.quorum;
 
+import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
-
 public class SyncedLearnerTracker {
 
-    protected ArrayList<QuorumVerifierAcksetPair> qvAcksetPairs = 
+    protected ArrayList<QuorumVerifierAcksetPair> qvAcksetPairs =
                 new ArrayList<QuorumVerifierAcksetPair>();
 
     public void addQuorumVerifier(QuorumVerifier qv) {
@@ -51,14 +51,14 @@ public class SyncedLearnerTracker {
         }
         return true;
     }
-        
+
     public String ackSetsToString(){
         StringBuilder sb = new StringBuilder();
-            
+
         for (QuorumVerifierAcksetPair qvAckset : qvAcksetPairs) {
             sb.append(qvAckset.getAckset().toString()).append(",");
         }
-            
+
         return sb.substring(0, sb.length()-1);
     }
 
@@ -66,7 +66,7 @@ public class SyncedLearnerTracker {
         private final QuorumVerifier qv;
         private final HashSet<Long> ackset;
 
-        public QuorumVerifierAcksetPair(QuorumVerifier qv, HashSet<Long> ackset) {                
+        public QuorumVerifierAcksetPair(QuorumVerifier qv, HashSet<Long> ackset) {
             this.qv = qv;
             this.ackset = ackset;
         }

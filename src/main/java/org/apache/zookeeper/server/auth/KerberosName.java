@@ -27,16 +27,16 @@
 
 package org.apache.zookeeper.server.auth;
 
+import org.apache.zookeeper.server.util.KerberosUtil;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.zookeeper.server.util.KerberosUtil;
-
 /**
- * This class implements parsing and handling of Kerberos principal names. In 
+ * This class implements parsing and handling of Kerberos principal names. In
  * particular, it splits them apart and translates them down into local
  * operating system names.
  */
@@ -51,14 +51,14 @@ public class KerberosName {
   /**
    * A pattern that matches a Kerberos name with at most 2 components.
    */
-  private static final Pattern nameParser = 
+  private static final Pattern nameParser =
     Pattern.compile("([^/@]*)(/([^/@]*))?@([^/@]*)");
 
-  /** 
+  /**
    * A pattern that matches a string with out '$' and then a single
    * parameter with $n.
    */
-  private static Pattern parameterPattern = 
+  private static Pattern parameterPattern =
     Pattern.compile("([^$]*)(\\$(\\d*))?");
 
   /**
@@ -67,19 +67,19 @@ public class KerberosName {
   private static final Pattern ruleParser =
     Pattern.compile("\\s*((DEFAULT)|(RULE:\\[(\\d*):([^\\]]*)](\\(([^)]*)\\))?"+
                     "(s/([^/]*)/([^/]*)/(g)?)?))");
-  
+
   /**
    * A pattern that recognizes simple/non-simple names.
    */
   private static final Pattern nonSimplePattern = Pattern.compile("[/@]");
-  
+
   /**
    * The list of translation rules.
    */
   private static List<Rule> rules;
 
   private static String defaultRealm;
-  
+
   static {
     try {
       defaultRealm = KerberosUtil.getDefaultRealm();
@@ -165,7 +165,7 @@ public class KerberosName {
   public String getHostName() {
     return hostName;
   }
-  
+
   /**
    * Get the realm of the name.
    * @return the realm of the name, may be null
@@ -173,7 +173,7 @@ public class KerberosName {
   public String getRealm() {
     return realm;
   }
-  
+
   /**
    * An encoding of a rule for translating kerberos names.
    */
@@ -202,12 +202,12 @@ public class KerberosName {
       this.numOfComponents = numOfComponents;
       this.format = format;
       this.match = match == null ? null : Pattern.compile(match);
-      this.fromPattern = 
+      this.fromPattern =
         fromPattern == null ? null : Pattern.compile(fromPattern);
       this.toPattern = toPattern;
       this.repeat = repeat;
     }
-    
+
     @Override
     public String toString() {
       StringBuilder buf = new StringBuilder();
@@ -237,9 +237,9 @@ public class KerberosName {
       }
       return buf.toString();
     }
-    
+
     /**
-     * Replace the numbered parameters of the form $n where n is from 1 to 
+     * Replace the numbered parameters of the form $n where n is from 1 to
      * the length of params. Normal text is copied directly and $n is replaced
      * by the corresponding parameter.
      * @param format the string to replace parameters again
@@ -247,7 +247,7 @@ public class KerberosName {
      * @return the generated string with the parameter references replaced.
      * @throws BadFormatString
      */
-    static String replaceParameters(String format, 
+    static String replaceParameters(String format,
                                     String[] params) throws BadFormatString {
       Matcher match = parameterPattern.matcher(format);
       int start = 0;
@@ -265,10 +265,10 @@ public class KerberosName {
             }
             result.append(params[num]);
           } catch (NumberFormatException nfe) {
-            throw new BadFormatString("bad format in username mapping in " + 
+            throw new BadFormatString("bad format in username mapping in " +
                                       paramNum, nfe);
           }
-          
+
         }
         start = match.end();
       }
@@ -284,7 +284,7 @@ public class KerberosName {
      * @param repeat whether the substitution should be repeated
      * @return
      */
-    static String replaceSubstitution(String base, Pattern from, String to, 
+    static String replaceSubstitution(String base, Pattern from, String to,
                                       boolean repeat) {
       Matcher match = from.matcher(base);
       if (repeat) {

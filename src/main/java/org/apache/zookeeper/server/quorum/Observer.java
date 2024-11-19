@@ -18,22 +18,18 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.Record;
-import org.apache.zookeeper.ZooDefs.OpCode;
 import org.apache.zookeeper.server.ObserverBean;
 import org.apache.zookeeper.server.Request;
-import org.apache.zookeeper.server.quorum.QuorumPeer.LearnerType;
-import org.apache.zookeeper.server.quorum.QuorumPeer.QuorumServer;
-import org.apache.zookeeper.server.quorum.QuorumPeer.ServerState;
-import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
 import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
 import org.apache.zookeeper.server.util.SerializeUtils;
 import org.apache.zookeeper.txn.SetDataTxn;
 import org.apache.zookeeper.txn.TxnHeader;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 
 /**
  * Observers are peers that do not take part in the atomic broadcast protocol.
@@ -62,20 +58,20 @@ public class Observer extends Learner{
 
     /**
      * the main method called by the observer to observe the leader
-     * @throws Exception 
+     * @throws Exception
      */
     void observeLeader() throws Exception {
         zk.registerJMX(new ObserverBean(this, zk), self.jmxLocalPeerBean);
 
         try {
             InetSocketAddress addr = findLeader();
-            LOG.info("Observing " + addr);
+            JulLog.info("Observing " + addr);
             try {
                 connectToLeader(addr);
                 long newLeaderZxid = registerWithLeader(Leader.OBSERVERINFO);
                 if (self.isReconfigStateChange())
                    throw new Exception("learned about role change");
- 
+
                 syncWithLeader(newLeaderZxid);
                 QuorumPacket qp = new QuorumPacket();
                 while (self.isRunning()) {
@@ -83,7 +79,7 @@ public class Observer extends Learner{
                     processPacket(qp);
                 }
             } catch (Exception e) {
-                LOG.warn("Exception when observing the leader", e);
+                JulLog.warn("Exception when observing the leader", e);
                 try {
                     sock.close();
                 } catch (IOException e1) {
@@ -101,7 +97,7 @@ public class Observer extends Learner{
     /**
      * Controls the response of an observer to the receipt of a quorumpacket
      * @param qp
-     * @throws Exception 
+     * @throws Exception
      */
     protected void processPacket(QuorumPacket qp) throws Exception{
         switch (qp.getType()) {
@@ -109,13 +105,13 @@ public class Observer extends Learner{
             ping(qp);
             break;
         case Leader.PROPOSAL:
-            LOG.warn("Ignoring proposal");
+            JulLog.warn("Ignoring proposal");
             break;
         case Leader.COMMIT:
-            LOG.warn("Ignoring commit");
+            JulLog.warn("Ignoring commit");
             break;
         case Leader.UPTODATE:
-            LOG.error("Received an UPTODATE message after Observer started");
+            JulLog.error("Received an UPTODATE message after Observer started");
             break;
         case Leader.REVALIDATE:
             revalidate(qp);
@@ -130,32 +126,32 @@ public class Observer extends Learner{
             ObserverZooKeeperServer obs = (ObserverZooKeeperServer)zk;
             obs.commitRequest(request);
             break;
-        case Leader.INFORMANDACTIVATE:            
+        case Leader.INFORMANDACTIVATE:
             hdr = new TxnHeader();
-            
+
            // get new designated leader from (current) leader's message
-            ByteBuffer buffer = ByteBuffer.wrap(qp.getData());    
+            ByteBuffer buffer = ByteBuffer.wrap(qp.getData());
            long suggestedLeaderId = buffer.getLong();
-           
+
             byte[] remainingdata = new byte[buffer.remaining()];
             buffer.get(remainingdata);
             txn = SerializeUtils.deserializeTxn(remainingdata, hdr);
             QuorumVerifier qv = self.configFromString(new String(((SetDataTxn)txn).getData()));
-            
+
             request = new Request (hdr.getClientId(),  hdr.getCxid(), hdr.getType(), hdr, txn, 0);
             obs = (ObserverZooKeeperServer)zk;
-                        
-            boolean majorChange = 
+
+            boolean majorChange =
                 self.processReconfig(qv, suggestedLeaderId, qp.getZxid(), true);
-           
-            obs.commitRequest(request);                                 
+
+            obs.commitRequest(request);
 
             if (majorChange) {
                throw new Exception("changes proposed in reconfig");
-           }            
+           }
             break;
         default:
-            LOG.warn("Unknown packet type: {}", LearnerHandler.packetToString(qp));
+            JulLog.warn("Unknown packet type: {}", LearnerHandler.packetToString(qp));
             break;
         }
     }
@@ -164,7 +160,7 @@ public class Observer extends Learner{
      * Shutdown the Observer.
      */
     public void shutdown() {
-        LOG.info("shutdown called", new Exception("shutdown Observer"));
+        JulLog.info("shutdown called", new Exception("shutdown Observer"));
         super.shutdown();
     }
 }

@@ -17,7 +17,11 @@
  */
 package org.apache.zookeeper.cli;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.Parser;
+import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.data.Stat;
 
@@ -33,12 +37,12 @@ public class StatCommand extends CliCommand {
     static {
         options.addOption("w", false, "watch");
     }
-    
+
     public StatCommand() {
         super("stat", "[-w] path");
     }
 
-    
+
     @Override
     public CliCommand parse(String[] cmdArgs) throws ParseException {
         Parser parser = new PosixParser();
@@ -46,8 +50,8 @@ public class StatCommand extends CliCommand {
         args = cl.getArgs();
         if(args.length < 2) {
             throw new ParseException(getUsageStr());
-        }    
-        
+        }
+
         retainCompatibility(cmdArgs);
 
         return this;
@@ -65,7 +69,7 @@ public class StatCommand extends CliCommand {
             args = cl.getArgs();
         }
     }
-    
+
     @Override
     public boolean exec() throws KeeperException,
             InterruptedException {

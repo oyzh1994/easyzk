@@ -19,7 +19,11 @@
 
 package org.apache.zookeeper.proto;
 
-import org.apache.jute.*;
+import org.apache.jute.BinaryInputArchive;
+import org.apache.jute.BinaryOutputArchive;
+import org.apache.jute.CsvOutputArchive;
+import org.apache.jute.InputArchive;
+import org.apache.jute.OutputArchive;
 import org.apache.jute.Record;
 
 public class GetMaxChildrenRequest implements Record {

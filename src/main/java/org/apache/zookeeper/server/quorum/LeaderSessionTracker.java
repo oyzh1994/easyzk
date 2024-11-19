@@ -17,25 +17,23 @@
  */
 package org.apache.zookeeper.server.quorum;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.KeeperException.SessionExpiredException;
+import org.apache.zookeeper.KeeperException.SessionMovedException;
+import org.apache.zookeeper.KeeperException.UnknownSessionException;
+import org.apache.zookeeper.server.SessionTrackerImpl;
+import org.apache.zookeeper.server.ZooKeeperServerListener;
+
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.zookeeper.KeeperException.SessionExpiredException;
-import org.apache.zookeeper.KeeperException.SessionMovedException;
-import org.apache.zookeeper.KeeperException.UnknownSessionException;
-import org.apache.zookeeper.server.SessionTrackerImpl;
-import org.apache.zookeeper.server.ZooKeeperServerListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * The leader session tracker tracks local and global sessions on the leader.
  */
 public class LeaderSessionTracker extends UpgradeableSessionTracker {
-    private static final Logger LOG = LoggerFactory.getLogger(LeaderSessionTracker.class);
 
     private final boolean localSessionsEnabled;
     private final SessionTrackerImpl globalSessionTracker;
@@ -91,7 +89,7 @@ public class LeaderSessionTracker extends UpgradeableSessionTracker {
         if (localSessionsEnabled && added) {
             // Only do extra logging so we know what kind of session this is
             // if we're supporting both kinds of sessions
-            LOG.info("Adding global session 0x" + Long.toHexString(sessionId));
+            JulLog.info("Adding global session 0x" + Long.toHexString(sessionId));
         }
         return added;
     }
@@ -105,7 +103,7 @@ public class LeaderSessionTracker extends UpgradeableSessionTracker {
                 added = false;
                 localSessionTracker.removeSession(sessionId);
             } else if (added) {
-              LOG.info("Adding local session 0x" + Long.toHexString(sessionId));
+              JulLog.info("Adding local session 0x" + Long.toHexString(sessionId));
             }
         } else {
             added = addGlobalSession(sessionId, sessionTimeout);

@@ -23,6 +23,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import cn.oyzh.common.log.JulLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DatadirCleanupManager {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DatadirCleanupManager.class);
 
     /**
      * Status of the dataDir purge task
@@ -59,7 +59,7 @@ public class DatadirCleanupManager {
     /**
      * Constructor of DatadirCleanupManager. It takes the parameters to schedule
      * the purge task.
-     * 
+     *
      * @param snapDir
      *            snapshot directory
      * @param dataLogDir
@@ -75,8 +75,8 @@ public class DatadirCleanupManager {
         this.dataLogDir = dataLogDir;
         this.snapRetainCount = snapRetainCount;
         this.purgeInterval = purgeInterval;
-        LOG.info("autopurge.snapRetainCount set to " + snapRetainCount);
-        LOG.info("autopurge.purgeInterval set to " + purgeInterval);
+        JulLog.info("autopurge.snapRetainCount set to " + snapRetainCount);
+        JulLog.info("autopurge.purgeInterval set to " + purgeInterval);
     }
 
     /**
@@ -88,17 +88,17 @@ public class DatadirCleanupManager {
      * <code>purgeInterval</code> of <code>0</code> or
      * <code>negative integer</code> will not schedule the purge task.
      * </p>
-     * 
+     *
      * @see PurgeTxnLog#purge(File, File, int)
      */
     public void start() {
         if (PurgeTaskStatus.STARTED == purgeTaskStatus) {
-            LOG.warn("Purge task is already running.");
+            JulLog.warn("Purge task is already running.");
             return;
         }
         // Don't schedule the purge task with zero or negative purge interval.
         if (purgeInterval <= 0) {
-            LOG.info("Purge task is not scheduled.");
+            JulLog.info("Purge task is not scheduled.");
             return;
         }
 
@@ -114,11 +114,11 @@ public class DatadirCleanupManager {
      */
     public void shutdown() {
         if (PurgeTaskStatus.STARTED == purgeTaskStatus) {
-            LOG.info("Shutting down purge task.");
+            JulLog.info("Shutting down purge task.");
             timer.cancel();
             purgeTaskStatus = PurgeTaskStatus.COMPLETED;
         } else {
-            LOG.warn("Purge task not started. Ignoring shutdown!");
+            JulLog.warn("Purge task not started. Ignoring shutdown!");
         }
     }
 
@@ -135,19 +135,19 @@ public class DatadirCleanupManager {
 
         @Override
         public void run() {
-            LOG.info("Purge task started.");
+            JulLog.info("Purge task started.");
             try {
                 PurgeTxnLog.purge(logsDir, snapsDir, snapRetainCount);
             } catch (Exception e) {
-                LOG.error("Error occured while purging.", e);
+                JulLog.error("Error occured while purging.", e);
             }
-            LOG.info("Purge task completed.");
+            JulLog.info("Purge task completed.");
         }
     }
 
     /**
      * Returns the status of the purge task.
-     * 
+     *
      * @return the status of the purge task
      */
     public PurgeTaskStatus getPurgeTaskStatus() {
@@ -156,7 +156,7 @@ public class DatadirCleanupManager {
 
     /**
      * Returns the snapshot directory.
-     * 
+     *
      * @return the snapshot directory.
      */
     public File getSnapDir() {
@@ -165,7 +165,7 @@ public class DatadirCleanupManager {
 
     /**
      * Returns transaction log directory.
-     * 
+     *
      * @return the transaction log directory.
      */
     public File getDataLogDir() {
@@ -174,7 +174,7 @@ public class DatadirCleanupManager {
 
     /**
      * Returns purge interval in hours.
-     * 
+     *
      * @return the purge interval in hours.
      */
     public int getPurgeInterval() {
@@ -183,7 +183,7 @@ public class DatadirCleanupManager {
 
     /**
      * Returns the number of snapshots to be retained after purge.
-     * 
+     *
      * @return the number of snapshots to be retained after purge.
      */
     public int getSnapRetainCount() {

@@ -19,8 +19,13 @@
 
 package org.apache.zookeeper.proto;
 
-import org.apache.jute.*;
-import org.apache.jute.Record; // JDK14 needs explicit import due to clash with java.lang.Record
+import org.apache.jute.BinaryInputArchive;
+import org.apache.jute.BinaryOutputArchive;
+import org.apache.jute.CsvOutputArchive;
+import org.apache.jute.Index;
+import org.apache.jute.InputArchive;
+import org.apache.jute.OutputArchive;
+import org.apache.jute.Record;
 public class WhoAmIResponse implements Record {
   private java.util.List<org.apache.zookeeper.data.ClientInfo> clientInfo;
   public WhoAmIResponse() {

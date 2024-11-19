@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.Adler32;
 import java.util.zip.Checksum;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryInputArchive;
 import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.InputArchive;
@@ -43,8 +44,6 @@ import org.apache.jute.Record;
 import org.apache.zookeeper.server.persistence.TxnLog.TxnIterator;
 import org.apache.zookeeper.server.util.SerializeUtils;
 import org.apache.zookeeper.txn.TxnHeader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class implements the TxnLog interface. It provides api's
@@ -89,7 +88,6 @@ import org.slf4j.LoggerFactory;
  * </pre></blockquote>
  */
 public class FileTxnLog implements TxnLog {
-    private static final Logger LOG;
 
     static long preAllocSize =  65536 * 1024;
 
@@ -102,14 +100,13 @@ public class FileTxnLog implements TxnLog {
     private final static long fsyncWarningThresholdMS;
 
     static {
-        LOG = LoggerFactory.getLogger(FileTxnLog.class);
 
         String size = System.getProperty("zookeeper.preAllocSize");
         if (size != null) {
             try {
                 preAllocSize = Long.parseLong(size) * 1024;
             } catch (NumberFormatException e) {
-                LOG.warn(size + " is not a valid value for preAllocSize");
+                JulLog.warn(size + " is not a valid value for preAllocSize");
             }
         }
         /** Local variable to read fsync.warningthresholdms into */
@@ -195,13 +192,13 @@ public class FileTxnLog implements TxnLog {
     {
         if (hdr != null) {
             if (hdr.getZxid() <= lastZxidSeen) {
-                LOG.warn("Current zxid " + hdr.getZxid()
+                JulLog.warn("Current zxid " + hdr.getZxid()
                         + " is <= " + lastZxidSeen + " for "
                         + hdr.getType());
             }
             if (logStream==null) {
-               if(LOG.isInfoEnabled()){
-                    LOG.info("Creating new log file: log." +
+               if(JulLog.isInfoEnabled()){
+                    JulLog.info("Creating new log file: log." +
                             Long.toHexString(hdr.getZxid()));
                }
 
@@ -301,7 +298,7 @@ public class FileTxnLog implements TxnLog {
                 zxid = hdr.getZxid();
             }
         } catch (IOException e) {
-            LOG.warn("Unexpected exception", e);
+            JulLog.warn("Unexpected exception", e);
         } finally {
             close(itr);
         }
@@ -313,7 +310,7 @@ public class FileTxnLog implements TxnLog {
             try {
                 itr.close();
             } catch (IOException ioe) {
-                LOG.warn("Error closing file iterator", ioe);
+                JulLog.warn("Error closing file iterator", ioe);
             }
         }
     }
@@ -336,7 +333,7 @@ public class FileTxnLog implements TxnLog {
                 long syncElapsedMS =
                     TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startSyncNS);
                 if (syncElapsedMS > fsyncWarningThresholdMS) {
-                    LOG.warn("fsync-ing the write ahead log in "
+                    JulLog.warn("fsync-ing the write ahead log in "
                             + Thread.currentThread().getName()
                             + " took " + syncElapsedMS
                             + "ms which will adversely effect operation latency. "
@@ -394,7 +391,7 @@ public class FileTxnLog implements TxnLog {
             raf.close();
             while(itr.goToNextLog()) {
                 if (!itr.logFile.delete()) {
-                    LOG.warn("Unable to truncate {}", itr.logFile);
+                    JulLog.warn("Unable to truncate {}", itr.logFile);
                 }
             }
         } finally {
@@ -421,7 +418,7 @@ public class FileTxnLog implements TxnLog {
              try {
                  if (is != null) is.close();
              } catch (IOException e) {
-                 LOG.warn("Ignoring exception during close", e);
+                 JulLog.warn("Ignoring exception during close", e);
              }
          }
     }
@@ -642,10 +639,10 @@ public class FileTxnLog implements TxnLog {
         protected InputArchive createInputArchive(File logFile) throws IOException {
             if(inputStream==null){
                 inputStream= new PositionInputStream(new BufferedInputStream(new FileInputStream(logFile)));
-                LOG.debug("Created new input stream " + logFile);
+                JulLog.debug("Created new input stream " + logFile);
                 ia  = BinaryInputArchive.getArchive(inputStream);
                 inStreamCreated(ia,inputStream);
-                LOG.debug("Created new input archive " + logFile);
+                JulLog.debug("Created new input archive " + logFile);
             }
             return ia;
         }
@@ -683,7 +680,7 @@ public class FileTxnLog implements TxnLog {
                 hdr = new TxnHeader();
                 record = SerializeUtils.deserializeTxn(bytes, hdr);
             } catch (EOFException e) {
-                LOG.debug("EOF excepton " + e);
+                JulLog.debug("EOF excepton " + e);
                 inputStream.close();
                 inputStream = null;
                 ia = null;

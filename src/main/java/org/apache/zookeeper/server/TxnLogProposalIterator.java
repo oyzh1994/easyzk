@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.Record;
 import org.apache.zookeeper.server.persistence.TxnLog.TxnIterator;
@@ -41,8 +42,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class TxnLogProposalIterator implements Iterator<Proposal> {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(TxnLogProposalIterator.class);
 
     public static final TxnLogProposalIterator EMPTY_ITERATOR = new TxnLogProposalIterator();
 
@@ -83,7 +82,7 @@ public class TxnLogProposalIterator implements Iterator<Proposal> {
             hasNext = itr.next();
 
         } catch (IOException e) {
-            LOG.error("Unable to read txnlog from disk", e);
+            JulLog.error("Unable to read txnlog from disk", e);
             hasNext = false;
         }
 
@@ -104,7 +103,7 @@ public class TxnLogProposalIterator implements Iterator<Proposal> {
             try {
                 itr.close();
             } catch (IOException ioe) {
-                LOG.warn("Error closing file iterator", ioe);
+                JulLog.warn("Error closing file iterator", ioe);
             }
         }
     }

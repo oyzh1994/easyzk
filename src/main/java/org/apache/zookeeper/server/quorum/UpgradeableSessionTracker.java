@@ -17,20 +17,18 @@
  */
 package org.apache.zookeeper.server.quorum;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.server.SessionTracker;
 import org.apache.zookeeper.server.ZooKeeperServerListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * A session tracker that supports upgradeable local sessions.
  */
 public abstract class UpgradeableSessionTracker implements SessionTracker {
-    private static final Logger LOG = LoggerFactory.getLogger(UpgradeableSessionTracker.class);
 
     private ConcurrentMap<Long, Integer> localSessionsWithTimeouts;
     protected LocalSessionTracker localSessionTracker;
@@ -73,7 +71,7 @@ public abstract class UpgradeableSessionTracker implements SessionTracker {
         // will get the timeout from the map
         Integer timeout = localSessionsWithTimeouts.remove(sessionId);
         if (timeout != null) {
-            LOG.info("Upgrading session 0x" + Long.toHexString(sessionId));
+            JulLog.info("Upgrading session 0x" + Long.toHexString(sessionId));
             // Add as global before removing as local
             addGlobalSession(sessionId, timeout);
             localSessionTracker.removeSession(sessionId);

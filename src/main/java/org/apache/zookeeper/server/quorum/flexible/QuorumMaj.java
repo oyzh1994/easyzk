@@ -18,20 +18,20 @@
 
 package org.apache.zookeeper.server.quorum.flexible;
 
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Map.Entry;
-
 import org.apache.zookeeper.server.quorum.QuorumPeer.LearnerType;
 import org.apache.zookeeper.server.quorum.QuorumPeer.QuorumServer;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
+
 /**
  * This class implements a validator for majority quorums. The implementation is
  * straightforward.
- * 
+ *
  */
 public class QuorumMaj implements QuorumVerifier {
     private Map<Long, QuorumServer> allMembers = new HashMap<Long, QuorumServer>();
@@ -64,7 +64,7 @@ public class QuorumMaj implements QuorumVerifier {
 
     /**
      * Defines a majority to avoid computing it every time.
-     * 
+     *
      */
     public QuorumMaj(Map<Long, QuorumServer> allMembers) {
         this.allMembers = allMembers;
@@ -102,7 +102,7 @@ public class QuorumMaj implements QuorumVerifier {
 
     /**
      * Returns weight of 1 by default.
-     * 
+     *
      * @param id
      */
     public long getWeight(long id) {
@@ -124,7 +124,7 @@ public class QuorumMaj implements QuorumVerifier {
         sw.append("version=");
         sw.append(hexVersion);
         return sw.toString();
-    }    
+    }
 
     /**
      * Verifies if a set is a majority. Assumes that ackSet contains acks only
@@ -149,7 +149,7 @@ public class QuorumMaj implements QuorumVerifier {
     public long getVersion() {
         return version;
     }
-    
+
     public void setVersion(long ver) {
         version = ver;
     }

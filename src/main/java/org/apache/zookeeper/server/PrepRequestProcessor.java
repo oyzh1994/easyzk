@@ -18,6 +18,7 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.Record;
 import org.apache.zookeeper.CreateMode;
@@ -89,13 +90,12 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         RequestProcessor {
-    private static final Logger LOG = LoggerFactory.getLogger(PrepRequestProcessor.class);
 
     static boolean skipACL;
     static {
         skipACL = System.getProperty("zookeeper.skipACL", "no").equals("yes");
         if (skipACL) {
-            LOG.info("zookeeper.skipACL==\"yes\", ACL checks will be skipped");
+            JulLog.info("zookeeper.skipACL==\"yes\", ACL checks will be skipped");
         }
     }
 
@@ -135,8 +135,8 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 if (request.type == OpCode.ping) {
                     traceMask = ZooTrace.CLIENT_PING_TRACE_MASK;
                 }
-                if (LOG.isTraceEnabled()) {
-                    ZooTrace.logRequest(LOG, traceMask, 'P', request, "");
+                if (JulLog.isTraceEnabled()) {
+                    ZooTrace.logRequest(JulLog.getLogger(), traceMask, 'P', request, "");
                 }
                 if (Request.requestOfDeath == request) {
                     break;
@@ -145,13 +145,13 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
             }
         } catch (RequestProcessorException e) {
             if (e.getCause() instanceof XidRolloverException) {
-                LOG.info(e.getCause().getMessage());
+                JulLog.info(e.getCause().getMessage());
             }
             handleException(this.getName(), e);
         } catch (Exception e) {
             handleException(this.getName(), e);
         }
-        LOG.info("PrepRequestProcessor exited loop!");
+        JulLog.info("PrepRequestProcessor exited loop!");
     }
 
     private ChangeRecord getRecordForPath(String path) throws KeeperException.NoNodeException {
@@ -294,10 +294,10 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         if (skipACL) {
             return;
         }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Permission requested: {} ", perm);
-            LOG.debug("ACLs for node: {}", acl);
-            LOG.debug("Client credentials: {}", ids);
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("Permission requested: {} ", perm);
+            JulLog.debug("ACLs for node: {}", acl);
+            JulLog.debug("Client credentials: {}", ids);
         }
         if (acl == null || acl.size() == 0) {
             return;
@@ -338,7 +338,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
             throws BadArgumentsException {
         int lastSlash = path.lastIndexOf('/');
         if (lastSlash == -1 || path.indexOf('\0') != -1 || failCreate) {
-            LOG.info("Invalid path %s with session 0x%s",
+            JulLog.info("Invalid path %s with session 0x%s",
                     path, Long.toHexString(sessionId));
             throw new BadArgumentsException(path);
         }
@@ -491,7 +491,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 String newMembers = reconfigRequest.getNewMembers();
 
                 if (newMembers != null) { //non-incremental membership change
-                   LOG.info("Non-incremental reconfig");
+                   JulLog.info("Non-incremental reconfig");
 
                    // Input may be delimited by either commas or newlines so convert to common newline separated format
                    newMembers = newMembers.replaceAll(",", "\n");
@@ -507,7 +507,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                        throw new BadArgumentsException(e.getMessage());
                    }
                 } else { //incremental change - must be a majority quorum system
-                   LOG.info("Incremental reconfig");
+                   JulLog.info("Incremental reconfig");
 
                    List<String> joiningServers = null;
                    String joiningServersString = reconfigRequest.getJoiningServers();
@@ -525,7 +525,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
 
                    if (!(lastSeenQV instanceof QuorumMaj)) {
                            String msg = "Incremental reconfiguration requested but last configuration seen has a non-majority quorum system";
-                           LOG.warn(msg);
+                           JulLog.warn(msg);
                            throw new BadArgumentsException(msg);
                    }
                    Map<Long, QuorumServer> nextServers = new HashMap<Long, QuorumServer>(lastSeenQV.getAllMembers());
@@ -570,17 +570,17 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 }
                 if (QuorumPeerConfig.isStandaloneEnabled() && request.qv.getVotingMembers().size() < 2) {
                    String msg = "Reconfig failed - new configuration must include at least 2 followers";
-                   LOG.warn(msg);
+                   JulLog.warn(msg);
                    throw new BadArgumentsException(msg);
                 } else if (request.qv.getVotingMembers().size() < 1) {
                    String msg = "Reconfig failed - new configuration must include at least 1 follower";
-                   LOG.warn(msg);
+                   JulLog.warn(msg);
                    throw new BadArgumentsException(msg);
                 }
 
                 if (!lzks.getLeader().isQuorumSynced(request.qv)) {
                    String msg2 = "Reconfig failed - there must be a connected and synced quorum in new configuration";
-                   LOG.warn(msg2);
+                   JulLog.warn(msg2);
                    throw new KeeperException.NewConfigNoQuorum();
                 }
 
@@ -644,7 +644,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                     zks.sessionTracker.setSessionClosing(request.sessionId);
                 }
 
-                LOG.info("Processed session termination for sessionid: 0x"
+                JulLog.info("Processed session termination for sessionid: 0x"
                         + Long.toHexString(request.sessionId));
                 break;
             case OpCode.check:
@@ -660,7 +660,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                         checkVersionRequest.getVersion(), path)));
                 break;
             default:
-                LOG.warn("unknown type " + type);
+                JulLog.warn("unknown type " + type);
                 break;
         }
     }
@@ -669,7 +669,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         try {
             PathUtils.validatePath(path);
         } catch(IllegalArgumentException ie) {
-            LOG.info("Invalid path {} with session 0x{}, reason: {}",
+            JulLog.info("Invalid path {} with session 0x{}, reason: {}",
                     path, Long.toHexString(sessionId), ie.getMessage());
             throw new BadArgumentsException(path);
         }
@@ -700,7 +700,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
      * @param request
      */
     protected void pRequest(Request request) throws RequestProcessorException {
-        // LOG.info("Prep>>> cxid = " + request.cxid + " type = " +
+        // JulLog.info("Prep>>> cxid = " + request.cxid + " type = " +
         // request.type + " id = 0x" + Long.toHexString(request.sessionId));
         request.setHdr(null);
         request.setTxn(null);
@@ -777,7 +777,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                             type = OpCode.error;
                             txn = new ErrorTxn(e.code().intValue());
 
-                            LOG.info("Got user-level KeeperException when processing "
+                            JulLog.info("Got user-level KeeperException when processing "
                                     + request.toString() + " aborting remaining multi ops."
                                     + " Error Path:" + e.getPath()
                                     + " Error:" + e.getMessage());
@@ -830,7 +830,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                         request.getOwner());
                 break;
             default:
-                LOG.warn("unknown type " + request.type);
+                JulLog.warn("unknown type " + request.type);
                 break;
             }
         } catch (KeeperException e) {
@@ -838,7 +838,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 request.getHdr().setType(OpCode.error);
                 request.setTxn(new ErrorTxn(e.code().intValue()));
             }
-            LOG.info("Got user-level KeeperException when processing "
+            JulLog.info("Got user-level KeeperException when processing "
                     + request.toString()
                     + " Error Path:" + e.getPath()
                     + " Error:" + e.getMessage());
@@ -846,7 +846,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         } catch (Exception e) {
             // log at error level as we are returning a marshalling
             // error to the user
-            LOG.error("Failed to process " + request, e);
+            JulLog.error("Failed to process " + request, e);
 
             StringBuilder sb = new StringBuilder();
             ByteBuffer bb = request.request;
@@ -859,7 +859,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 sb.append("request buffer is null");
             }
 
-            LOG.error("Dumping request buffer: 0x" + sb.toString());
+            JulLog.error("Dumping request buffer: 0x" + sb.toString());
             if (request.getHdr() != null) {
                 request.getHdr().setType(OpCode.error);
                 request.setTxn(new ErrorTxn(Code.MARSHALLINGERROR.intValue()));
@@ -918,7 +918,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
             throw new KeeperException.InvalidACLException(path);
         }
         for (ACL a: uniqacls) {
-            LOG.debug("Processing ACL: {}", a);
+            JulLog.debug("Processing ACL: {}", a);
             if (a == null) {
                 throw new KeeperException.InvalidACLException(path);
             }
@@ -936,7 +936,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                     AuthenticationProvider ap =
                         ProviderRegistry.getProvider(cid.getScheme());
                     if (ap == null) {
-                        LOG.error("Missing AuthenticationProvider for "
+                        JulLog.error("Missing AuthenticationProvider for "
                             + cid.getScheme());
                     } else if (ap.isAuthenticated()) {
                         authIdValid = true;
@@ -962,7 +962,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
     }
 
     public void shutdown() {
-        LOG.info("Shutting down");
+        JulLog.info("Shutting down");
         submittedRequests.clear();
         submittedRequests.add(Request.requestOfDeath);
         nextProcessor.shutdown();

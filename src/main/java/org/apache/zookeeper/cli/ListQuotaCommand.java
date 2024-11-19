@@ -17,7 +17,11 @@
  */
 package org.apache.zookeeper.cli;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.Parser;
+import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Quotas;
 import org.apache.zookeeper.StatsTrack;
@@ -30,7 +34,7 @@ public class ListQuotaCommand extends CliCommand {
 
     private static Options options = new Options();
     private String[] args;
-    
+
     public ListQuotaCommand() {
         super("listquota", "path");
     }
@@ -42,11 +46,11 @@ public class ListQuotaCommand extends CliCommand {
         args = cl.getArgs();
         if(args.length < 2) {
             throw new ParseException(getUsageStr());
-        }    
-        
+        }
+
         return this;
     }
-    
+
     @Override
     public boolean exec() throws KeeperException,
             InterruptedException {
@@ -68,7 +72,7 @@ public class ListQuotaCommand extends CliCommand {
         } catch (KeeperException.NoNodeException ne) {
             err.println("quota for " + path + " does not exist.");
         }
-        
+
         return false;
     }
 }

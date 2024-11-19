@@ -31,16 +31,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.ClientCnxn.EndOfStreamException;
 import org.apache.zookeeper.ClientCnxn.Packet;
 import org.apache.zookeeper.ZooDefs.OpCode;
 import org.apache.zookeeper.client.ZKClientConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ClientCnxnSocketNIO extends ClientCnxnSocket {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ClientCnxnSocketNIO.class);
 
     private final Selector selector = Selector.open();
 
@@ -59,7 +56,7 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
     boolean isConnected() {
         return sockKey != null;
     }
-    
+
     /**
      * @return true if a packet was received
      * @throws InterruptedException
@@ -183,7 +180,7 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
             } else {
                 // Non-priming packet: defer it until later, leaving it in the queue
                 // until authentication completes.
-                LOG.debug("deferring non-priming packet {} until SASL authentation completes.", p);
+                JulLog.debug("deferring non-priming packet {} until SASL authentation completes.", p);
             }
         }
         return null;
@@ -197,58 +194,58 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
             try {
                 sock.socket().shutdownInput();
             } catch (IOException e) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Ignoring exception during shutdown input", e);
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Ignoring exception during shutdown input", e);
                 }
             }
             try {
                 sock.socket().shutdownOutput();
             } catch (IOException e) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Ignoring exception during shutdown output",
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Ignoring exception during shutdown output",
                             e);
                 }
             }
             try {
                 sock.socket().close();
             } catch (IOException e) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Ignoring exception during socket close", e);
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Ignoring exception during socket close", e);
                 }
             }
             try {
                 sock.close();
             } catch (IOException e) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Ignoring exception during channel close", e);
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Ignoring exception during channel close", e);
                 }
             }
         }
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("SendThread interrupted during sleep, ignoring");
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("SendThread interrupted during sleep, ignoring");
             }
         }
         sockKey = null;
     }
- 
+
     @Override
     void close() {
         try {
-            if (LOG.isTraceEnabled()) {
-                LOG.trace("Doing client selector close");
+            if (JulLog.isTraceEnabled()) {
+                JulLog.trace("Doing client selector close");
             }
             selector.close();
-            if (LOG.isTraceEnabled()) {
-                LOG.trace("Closed client selector");
+            if (JulLog.isTraceEnabled()) {
+                JulLog.trace("Closed client selector");
             }
         } catch (IOException e) {
-            LOG.warn("Ignoring exception during selector close", e);
+            JulLog.warn("Ignoring exception during selector close", e);
         }
     }
-    
+
     /**
      * create a socket channel.
      * @return the created socket channel
@@ -265,11 +262,11 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
 
     /**
      * register with the selection and connect
-     * @param sock the {@link SocketChannel} 
+     * @param sock the {@link SocketChannel}
      * @param addr the address of remote host
      * @throws IOException
      */
-    void registerAndConnect(SocketChannel sock, InetSocketAddress addr) 
+    void registerAndConnect(SocketChannel sock, InetSocketAddress addr)
     throws IOException {
         sockKey = sock.register(selector, SelectionKey.OP_CONNECT);
         boolean immediateConnect = sock.connect(addr);
@@ -277,14 +274,14 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
             sendThread.primeConnection();
         }
     }
-    
+
     @Override
     void connect(InetSocketAddress addr) throws IOException {
         SocketChannel sock = createSock();
         try {
            registerAndConnect(sock, addr);
       } catch (IOException e) {
-            LOG.error("Unable to open socket to " + addr);
+            JulLog.error("Unable to open socket to " + addr);
             sock.close();
             throw e;
         }
@@ -299,7 +296,7 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
 
     /**
      * Returns the address to which the socket is connected.
-     * 
+     *
      * @return ip address of the remote side of the connection or null if not
      *         connected
      */
@@ -310,7 +307,7 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
 
     /**
      * Returns the local address to which the socket is bound.
-     * 
+     *
      * @return ip address of the remote side of the connection or null if not
      *         connected
      */
@@ -318,7 +315,7 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
     SocketAddress getLocalSocketAddress() {
         return localSocketAddress;
     }
-    
+
     private void updateSocketAddresses() {
         Socket socket = ((SocketChannel) sockKey.channel()).socket();
         localSocketAddress = socket.getLocalSocketAddress();
@@ -338,7 +335,7 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
     private synchronized void wakeupCnxn() {
         selector.wakeup();
     }
-    
+
     @Override
     void doTransport(int waitTimeOut, List<Packet> pendingQueue, ClientCnxn cnxn)
             throws IOException, InterruptedException {
@@ -375,7 +372,7 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
     //TODO should this be synchronized?
     @Override
     void testableCloseSocket() throws IOException {
-        LOG.info("testableCloseSocket() called");
+        JulLog.info("testableCloseSocket() called");
         // sockKey may be concurrently accessed by multiple
         // threads. We use tmp here to avoid a race condition
         SelectionKey tmp = sockKey;

@@ -18,17 +18,14 @@
 
 package org.apache.zookeeper.server.command;
 
-import java.io.PrintWriter;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.Version;
 import org.apache.zookeeper.server.ServerCnxn;
 import org.apache.zookeeper.server.quorum.ReadOnlyZooKeeperServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.io.PrintWriter;
 
 public class StatCommand extends AbstractFourLetterCommand {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(AbstractFourLetterCommand.class);
     private int len;
     public StatCommand(PrintWriter pw, ServerCnxn serverCnxn, int len) {
         super(pw, serverCnxn);
@@ -46,7 +43,7 @@ public class StatCommand extends AbstractFourLetterCommand {
                 pw.println("READ-ONLY mode; serving only read-only clients");
             }
             if (len == FourLetterCommands.statCmd) {
-                LOG.info("Stat command output");
+                JulLog.info("Stat command output");
                 pw.println("Clients:");
                 for(ServerCnxn c : factory.getConnections()){
                     c.dumpConnectionInfo(pw, true);

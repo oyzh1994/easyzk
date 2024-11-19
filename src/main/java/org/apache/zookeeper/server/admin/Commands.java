@@ -18,13 +18,7 @@
 
 package org.apache.zookeeper.server.admin;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.Environment;
 import org.apache.zookeeper.Environment.Entry;
 import org.apache.zookeeper.Version;
@@ -37,8 +31,13 @@ import org.apache.zookeeper.server.quorum.Leader;
 import org.apache.zookeeper.server.quorum.LeaderZooKeeperServer;
 import org.apache.zookeeper.server.quorum.ReadOnlyZooKeeperServer;
 import org.apache.zookeeper.server.util.OSMXBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class containing static methods for registering and running Commands, as well
@@ -48,7 +47,6 @@ import org.slf4j.LoggerFactory;
  * @see JettyAdminServer
  */
 public class Commands {
-    static final Logger LOG = LoggerFactory.getLogger(Commands.class);
 
     /** Maps command names to Command instances */
     private static Map<String, Command> commands = new HashMap<String, Command>();
@@ -62,7 +60,7 @@ public class Commands {
         for (String name : command.getNames()) {
             Command prev = commands.put(name, command);
             if (prev != null) {
-                LOG.warn("Re-registering command %s (primary name = %s)", name, command.getPrimaryName());
+                JulLog.warn("Re-registering command %s (primary name = %s)", name, command.getPrimaryName());
             }
         }
         primaryNames.add(command.getPrimaryName());
@@ -410,7 +408,7 @@ public class Commands {
         @Override
         public CommandResponse run(ZooKeeperServer zkServer, Map<String, String> kwargs) {
             CommandResponse response = initializeResponse();
-            LOG.info("running stat");
+            JulLog.info("running stat");
             response.put("version", Version.getFullVersion());
             response.put("read_only", zkServer instanceof ReadOnlyZooKeeperServer);
             response.put("server_stats", zkServer.serverStats());

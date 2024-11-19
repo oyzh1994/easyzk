@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,9 +18,11 @@
 
 package org.apache.zookeeper.server.util;
 
-import java.io.File;
 
-import org.slf4j.Logger;
+import cn.oyzh.common.log.JulLevel;
+
+import java.io.File;
+import java.util.logging.Logger;
 
 public final class VerifyingFileFactory {
 
@@ -28,11 +30,11 @@ public final class VerifyingFileFactory {
     private final boolean failForNonExistingPath;
     private final Logger log;
 
-    public VerifyingFileFactory(Builder builder){
+    public VerifyingFileFactory(Builder builder) {
         warnForRelativePath = builder.warnForRelativePathOption;
-        failForNonExistingPath  = builder.failForNonExistingPathOption;
+        failForNonExistingPath = builder.failForNonExistingPathOption;
         log = builder.log;
-        assert(log != null);
+        assert (log != null);
     }
 
     public File create(String path) {
@@ -41,8 +43,8 @@ public final class VerifyingFileFactory {
     }
 
     public File validate(File file) {
-        if(warnForRelativePath) doWarnForRelativePath(file);
-        if(failForNonExistingPath) doFailForNonExistingPath(file);
+        if (warnForRelativePath) doWarnForRelativePath(file);
+        if (failForNonExistingPath) doFailForNonExistingPath(file);
         return file;
     }
 
@@ -54,10 +56,10 @@ public final class VerifyingFileFactory {
     }
 
     private void doWarnForRelativePath(File file) {
-        if(file.isAbsolute()) return;
-        if(file.getPath().substring(0, 2).equals("."+File.separator)) return;
-        log.warn(file.getPath()+" is relative. Prepend ."
-                +File.separator+" to indicate that you're sure!");
+        if (file.isAbsolute()) return;
+        if (file.getPath().substring(0, 2).equals("." + File.separator)) return;
+        log.log(JulLevel.WARN.toLevel(), file.getPath() + " is relative. Prepend ."
+                + File.separator + " to indicate that you're sure!");
     }
 
     public static class Builder {
@@ -65,7 +67,7 @@ public final class VerifyingFileFactory {
         private boolean failForNonExistingPathOption = false;
         private final Logger log;
 
-        public Builder(Logger log){
+        public Builder(Logger log) {
             this.log = log;
         }
 

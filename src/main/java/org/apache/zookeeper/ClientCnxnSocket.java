@@ -25,6 +25,7 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryInputArchive;
 import org.apache.zookeeper.ClientCnxn.Packet;
 import org.apache.zookeeper.client.ZKClientConfig;
@@ -32,19 +33,16 @@ import org.apache.zookeeper.common.ZKConfig;
 import org.apache.zookeeper.common.Time;
 import org.apache.zookeeper.proto.ConnectResponse;
 import org.apache.zookeeper.server.ByteBufferInputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A ClientCnxnSocket does the lower level communication with a socket
  * implementation.
- * 
+ *
  * This code has been moved out of ClientCnxn so that a Netty implementation can
  * be provided as an alternative to the NIO socket code.
- * 
+ *
  */
 abstract class ClientCnxnSocket {
-    private static final Logger LOG = LoggerFactory.getLogger(ClientCnxnSocket.class);
 
     protected boolean initialized;
 
@@ -123,13 +121,13 @@ abstract class ClientCnxnSocket {
     }
 
     void readConnectResult() throws IOException {
-        if (LOG.isTraceEnabled()) {
+        if (JulLog.isTraceEnabled()) {
             StringBuilder buf = new StringBuilder("0x[");
             for (byte b : incomingBuffer.array()) {
                 buf.append(Integer.toHexString(b) + ",");
             }
             buf.append("]");
-            LOG.trace("readConnectResult " + incomingBuffer.remaining() + " "
+            JulLog.trace("readConnectResult " + incomingBuffer.remaining() + " "
                     + buf.toString());
         }
         ByteBufferInputStream bbis = new ByteBufferInputStream(incomingBuffer);
@@ -144,7 +142,7 @@ abstract class ClientCnxnSocket {
         } catch (IOException e) {
             // this is ok -- just a packet from an old server which
             // doesn't contain readOnly field
-            LOG.warn("Connected to an old server; r-o mode will be unavailable");
+            JulLog.warn("Connected to an old server; r-o mode will be unavailable");
         }
 
         this.sessionId = conRsp.getSessionId();
@@ -232,8 +230,8 @@ abstract class ClientCnxnSocket {
         packetLen = Integer.getInteger(
                 clientConfig.getProperty(ZKConfig.JUTE_MAXBUFFER),
                 ZKClientConfig.CLIENT_MAX_PACKET_LENGTH_DEFAULT);
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("{} is {}", ZKConfig.JUTE_MAXBUFFER, packetLen);
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("{} is {}", ZKConfig.JUTE_MAXBUFFER, packetLen);
         }
     }
 

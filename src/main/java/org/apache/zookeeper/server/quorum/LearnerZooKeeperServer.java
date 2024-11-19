@@ -17,18 +17,18 @@
  */
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Map;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.jmx.MBeanRegistry;
 import org.apache.zookeeper.server.DataTreeBean;
-import org.apache.zookeeper.server.quorum.LearnerSessionTracker;
 import org.apache.zookeeper.server.ServerCnxn;
 import org.apache.zookeeper.server.SyncRequestProcessor;
 import org.apache.zookeeper.server.ZKDatabase;
 import org.apache.zookeeper.server.ZooKeeperServerBean;
 import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Parent class for all ZooKeeperServers for Learners
@@ -104,7 +104,7 @@ public abstract class LearnerZooKeeperServer extends QuorumZooKeeperServer {
             jmxDataTreeBean = new DataTreeBean(getZKDatabase().getDataTree());
             MBeanRegistry.getInstance().register(jmxDataTreeBean, jmxServerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             jmxDataTreeBean = null;
         }
     }
@@ -117,7 +117,7 @@ public abstract class LearnerZooKeeperServer extends QuorumZooKeeperServer {
             try {
                 MBeanRegistry.getInstance().unregister(self.jmxLeaderElectionBean);
             } catch (Exception e) {
-                LOG.warn("Failed to register with JMX", e);
+                JulLog.warn("Failed to register with JMX", e);
             }
             self.jmxLeaderElectionBean = null;
         }
@@ -126,7 +126,7 @@ public abstract class LearnerZooKeeperServer extends QuorumZooKeeperServer {
             jmxServerBean = serverBean;
             MBeanRegistry.getInstance().register(serverBean, localPeerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             jmxServerBean = null;
         }
     }
@@ -139,7 +139,7 @@ public abstract class LearnerZooKeeperServer extends QuorumZooKeeperServer {
                 MBeanRegistry.getInstance().unregister(jmxDataTreeBean);
             }
         } catch (Exception e) {
-            LOG.warn("Failed to unregister with JMX", e);
+            JulLog.warn("Failed to unregister with JMX", e);
         }
         jmxDataTreeBean = null;
     }
@@ -151,7 +151,7 @@ public abstract class LearnerZooKeeperServer extends QuorumZooKeeperServer {
                 MBeanRegistry.getInstance().unregister(jmxServerBean);
             }
         } catch (Exception e) {
-            LOG.warn("Failed to unregister with JMX", e);
+            JulLog.warn("Failed to unregister with JMX", e);
         }
         jmxServerBean = null;
     }
@@ -159,21 +159,21 @@ public abstract class LearnerZooKeeperServer extends QuorumZooKeeperServer {
     @Override
     public synchronized void shutdown() {
         if (!isRunning()) {
-            LOG.debug("ZooKeeper server is not running, so not proceeding to shutdown!");
+            JulLog.debug("ZooKeeper server is not running, so not proceeding to shutdown!");
             return;
         }
-        LOG.info("Shutting down");
+        JulLog.info("Shutting down");
         try {
             super.shutdown();
         } catch (Exception e) {
-            LOG.warn("Ignoring unexpected exception during shutdown", e);
+            JulLog.warn("Ignoring unexpected exception during shutdown", e);
         }
         try {
             if (syncProcessor != null) {
                 syncProcessor.shutdown();
             }
         } catch (Exception e) {
-            LOG.warn("Ignoring unexpected exception in syncprocessor shutdown",
+            JulLog.warn("Ignoring unexpected exception in syncprocessor shutdown",
                     e);
         }
     }

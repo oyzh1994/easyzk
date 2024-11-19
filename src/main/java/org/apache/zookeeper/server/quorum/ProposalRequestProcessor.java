@@ -18,20 +18,17 @@
 
 package org.apache.zookeeper.server.quorum;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.RequestProcessor;
 import org.apache.zookeeper.server.SyncRequestProcessor;
 import org.apache.zookeeper.server.quorum.Leader.XidRolloverException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This RequestProcessor simply forwards requests to an AckRequestProcessor and
  * SyncRequestProcessor.
  */
 public class ProposalRequestProcessor implements RequestProcessor {
-    private static final Logger LOG =
-        LoggerFactory.getLogger(ProposalRequestProcessor.class);
 
     LeaderZooKeeperServer zks;
 
@@ -55,7 +52,7 @@ public class ProposalRequestProcessor implements RequestProcessor {
     }
 
     public void processRequest(Request request) throws RequestProcessorException {
-        // LOG.warn("Ack>>> cxid = " + request.cxid + " type = " +
+        // JulLog.warn("Ack>>> cxid = " + request.cxid + " type = " +
         // request.type + " id = " + request.sessionId);
         // request.addRQRec(">prop");
 
@@ -85,7 +82,7 @@ public class ProposalRequestProcessor implements RequestProcessor {
     }
 
     public void shutdown() {
-        LOG.info("Shutting down");
+        JulLog.info("Shutting down");
         nextProcessor.shutdown();
         syncProcessor.shutdown();
     }

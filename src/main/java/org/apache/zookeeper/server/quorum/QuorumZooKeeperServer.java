@@ -17,10 +17,7 @@
  */
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.ByteBuffer;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs.OpCode;
@@ -30,6 +27,10 @@ import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.ZKDatabase;
 import org.apache.zookeeper.server.ZooKeeperServer;
 import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.ByteBuffer;
 
 /**
  * Abstract base class for all ZooKeeperServers that participate in
@@ -106,7 +107,7 @@ public abstract class QuorumZooKeeperServer extends ZooKeeperServer {
     public void upgrade(long sessionId) {
         Request request = makeUpgradeRequest(sessionId);
         if (request != null) {
-            LOG.info("Upgrading session 0x" + Long.toHexString(sessionId));
+            JulLog.info("Upgrading session 0x" + Long.toHexString(sessionId));
             // This must be a global request
             submitRequest(request);
         }
@@ -129,7 +130,7 @@ public abstract class QuorumZooKeeperServer extends ZooKeeperServer {
                 si.setLocalSession(true);
                 reqType = "local";
             }
-            LOG.info("Submitting " + reqType + " closeSession request"
+            JulLog.info("Submitting " + reqType + " closeSession request"
                     + " for session 0x" + Long.toHexString(si.sessionId));
             break;
         default:

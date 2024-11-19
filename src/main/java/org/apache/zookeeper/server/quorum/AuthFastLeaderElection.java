@@ -18,6 +18,13 @@
 
 package org.apache.zookeeper.server.quorum;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.common.Time;
+import org.apache.zookeeper.jmx.MBeanRegistry;
+import org.apache.zookeeper.server.ZooKeeperThread;
+import org.apache.zookeeper.server.quorum.QuorumPeer.QuorumServer;
+import org.apache.zookeeper.server.quorum.QuorumPeer.ServerState;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -27,32 +34,19 @@ import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
-
 import java.util.concurrent.TimeUnit;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
-
-import org.apache.zookeeper.common.Time;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.apache.zookeeper.jmx.MBeanRegistry;
-import org.apache.zookeeper.server.ZooKeeperThread;
-import org.apache.zookeeper.server.quorum.Election;
-import org.apache.zookeeper.server.quorum.Vote;
-import org.apache.zookeeper.server.quorum.QuorumPeer.QuorumServer;
-import org.apache.zookeeper.server.quorum.QuorumPeer.ServerState;
 
 /**
  * @deprecated This class has been deprecated as of release 3.4.0.
  */
 @Deprecated
 public class AuthFastLeaderElection implements Election {
-    private static final Logger LOG = LoggerFactory.getLogger(AuthFastLeaderElection.class);
 
     /* Sequence numbers for messages */
     static int sequencer = 0;
@@ -231,7 +225,7 @@ public class AuthFastLeaderElection implements Election {
 
                         s.release();
                 } else {
-                    LOG.error("No challenge mutex object");
+                    JulLog.error("No challenge mutex object");
                 }
 
 
@@ -249,11 +243,11 @@ public class AuthFastLeaderElection implements Election {
                         responseBuffer.clear();
                         mySocket.receive(responsePacket);
                     } catch (IOException e) {
-                        LOG.warn("Ignoring exception receiving", e);
+                        JulLog.warn("Ignoring exception receiving", e);
                     }
                     // Receive new message
                     if (responsePacket.getLength() != responseBytes.length) {
-                        LOG.warn("Got a short response: "
+                        JulLog.warn("Got a short response: "
                                 + responsePacket.getLength() + " "
                                 + responsePacket.toString());
                         continue;
@@ -261,7 +255,7 @@ public class AuthFastLeaderElection implements Election {
                     responseBuffer.clear();
                     int type = responseBuffer.getInt();
                     if ((type > 3) || (type < 0)) {
-                        LOG.warn("Got bad Msg type: " + type);
+                        JulLog.warn("Got bad Msg type: " + type);
                         continue;
                     }
                     long tag = responseBuffer.getLong();
@@ -278,7 +272,7 @@ public class AuthFastLeaderElection implements Election {
                         ackstate = ServerState.FOLLOWING;
                         break;
                     default:
-                        LOG.warn("unknown type " + responseBuffer.getInt());
+                        JulLog.warn("unknown type " + responseBuffer.getInt());
                         break;
                     }
 
@@ -338,12 +332,12 @@ public class AuthFastLeaderElection implements Election {
 
                                         sendqueue.offer(a);
                                     } else {
-                                        LOG.warn("Incorrect challenge: "
+                                        JulLog.warn("Incorrect challenge: "
                                                 + recChallenge + ", "
                                                 + addrChallengeMap.toString());
                                     }
                                 } else {
-                                    LOG.warn("No challenge for host: " + addr
+                                    JulLog.warn("No challenge for host: " + addr
                                             + " " + tag);
                                 }
                             }
@@ -367,7 +361,7 @@ public class AuthFastLeaderElection implements Election {
 
                         if(s != null)
                             s.release();
-                        else LOG.error("Empty ack semaphore");
+                        else JulLog.error("Empty ack semaphore");
 
                         ackset.add(tag);
 
@@ -377,7 +371,7 @@ public class AuthFastLeaderElection implements Election {
                             if(tmpMap != null) {
                                 tmpMap.remove(tag);
                             } else {
-                                LOG.warn("No such address in the ensemble configuration " + responsePacket
+                                JulLog.warn("No such address in the ensemble configuration " + responsePacket
                                     .getSocketAddress());
                             }
                         }
@@ -397,7 +391,7 @@ public class AuthFastLeaderElection implements Election {
                         break;
                     // Default case
                     default:
-                        LOG.warn("Received message of incorrect type " + type);
+                        JulLog.warn("Received message of incorrect type " + type);
                         break;
                     }
                 }
@@ -497,7 +491,7 @@ public class AuthFastLeaderElection implements Election {
                             mySocket.send(requestPacket);
                         }
                     } catch (IOException e) {
-                        LOG.warn("Exception while sending challenge: ", e);
+                        JulLog.warn("Exception while sending challenge: ", e);
                     }
 
                     break;
@@ -543,10 +537,10 @@ public class AuthFastLeaderElection implements Election {
                         try {
                             mySocket.send(requestPacket);
                         } catch (IOException e) {
-                            LOG.warn("Exception while sending challenge: ", e);
+                            JulLog.warn("Exception while sending challenge: ", e);
                         }
                     } else {
-                        LOG.error("Address is not in the configuration: " + m.addr);
+                        JulLog.error("Address is not in the configuration: " + m.addr);
                     }
 
                     break;
@@ -609,7 +603,7 @@ public class AuthFastLeaderElection implements Election {
                                                 .containsKey(m.tag);
                                     }
                                 } catch (InterruptedException e) {
-                                    LOG.warn("Challenge request exception: ", e);
+                                    JulLog.warn("Challenge request exception: ", e);
                                 }
                             }
 
@@ -629,7 +623,7 @@ public class AuthFastLeaderElection implements Election {
                                 if(tmpLong != null){
                                     requestBuffer.putLong(tmpLong);
                                 } else {
-                                    LOG.warn("No challenge with tag: " + m.tag);
+                                    JulLog.warn("No challenge with tag: " + m.tag);
                                 }
                             }
                             mySocket.send(requestPacket);
@@ -640,7 +634,7 @@ public class AuthFastLeaderElection implements Election {
                                 ackMutex.put(m.tag, s);
                                 s.tryAcquire((int) timeout, TimeUnit.MILLISECONDS);
                             } catch (InterruptedException e) {
-                                LOG.warn("Ack exception: ", e);
+                                JulLog.warn("Ack exception: ", e);
                             }
 
                             if(ackset.remove(m.tag)){
@@ -648,7 +642,7 @@ public class AuthFastLeaderElection implements Election {
                             }
 
                         } catch (IOException e) {
-                            LOG.warn("Sending exception: ", e);
+                            JulLog.warn("Sending exception: ", e);
                             /*
                              * Do nothing, just try again
                              */
@@ -699,11 +693,11 @@ public class AuthFastLeaderElection implements Election {
                     try {
                         mySocket.send(requestPacket);
                     } catch (IOException e) {
-                        LOG.warn("Exception while sending ack: ", e);
+                        JulLog.warn("Exception while sending ack: ", e);
                     }
                     break;
                 default:
-                    LOG.warn("unknown type " + m.type);
+                    JulLog.warn("unknown type " + m.type);
                     break;
                 }
             }
@@ -840,7 +834,7 @@ public class AuthFastLeaderElection implements Election {
             MBeanRegistry.getInstance().register(
                     self.jmxLeaderElectionBean, self.jmxLocalPeerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             self.jmxLeaderElectionBean = null;
         }
 
@@ -856,7 +850,7 @@ public class AuthFastLeaderElection implements Election {
             proposedLeader = self.getId();
             proposedZxid = self.getLastLoggedZxid();
 
-            LOG.info("Election tally");
+            JulLog.info("Election tally");
             sendNotifications();
 
             /*
@@ -913,7 +907,7 @@ public class AuthFastLeaderElection implements Election {
                         } else if (termPredicate(recvset, proposedLeader,
                                 proposedZxid)) {
                             // Otherwise, wait for a fixed amount of time
-                            LOG.info("Passed predicate");
+                            JulLog.info("Passed predicate");
                             Thread.sleep(finalizeWait);
 
                             // Notification probe = recvqueue.peek();
@@ -926,7 +920,7 @@ public class AuthFastLeaderElection implements Election {
                                 recvqueue.poll();
                             }
                             if (recvqueue.isEmpty()) {
-                                // LOG.warn("Proposed leader: " +
+                                // JulLog.warn("Proposed leader: " +
                                 // proposedLeader);
                                 self.setPeerState(
                                         (proposedLeader == self.getId()) ?
@@ -975,7 +969,7 @@ public class AuthFastLeaderElection implements Election {
                             self.jmxLeaderElectionBean);
                 }
             } catch (Exception e) {
-                LOG.warn("Failed to unregister with JMX", e);
+                JulLog.warn("Failed to unregister with JMX", e);
             }
             self.jmxLeaderElectionBean = null;
         }

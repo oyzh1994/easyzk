@@ -18,9 +18,7 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-import java.util.concurrent.LinkedBlockingQueue;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs.OpCode;
 import org.apache.zookeeper.server.Request;
@@ -28,8 +26,9 @@ import org.apache.zookeeper.server.RequestProcessor;
 import org.apache.zookeeper.server.ZooKeeperCriticalThread;
 import org.apache.zookeeper.server.ZooTrace;
 import org.apache.zookeeper.txn.ErrorTxn;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This RequestProcessor forwards any requests that modify the state of the
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 public class FollowerRequestProcessor extends ZooKeeperCriticalThread implements
         RequestProcessor {
-    private static final Logger LOG = LoggerFactory.getLogger(FollowerRequestProcessor.class);
 
     FollowerZooKeeperServer zks;
 
@@ -60,10 +58,8 @@ public class FollowerRequestProcessor extends ZooKeeperCriticalThread implements
         try {
             while (!finished) {
                 Request request = queuedRequests.take();
-                if (LOG.isTraceEnabled()) {
-                    ZooTrace.logRequest(LOG, ZooTrace.CLIENT_REQUEST_TRACE_MASK,
+                    ZooTrace.logRequest(JulLog.getLogger(), ZooTrace.CLIENT_REQUEST_TRACE_MASK,
                             'F', request, "");
-                }
                 if (request == Request.requestOfDeath) {
                     break;
                 }
@@ -106,7 +102,7 @@ public class FollowerRequestProcessor extends ZooKeeperCriticalThread implements
         } catch (Exception e) {
             handleException(this.getName(), e);
         }
-        LOG.info("FollowerRequestProcessor exited loop!");
+        JulLog.getLogger().info("FollowerRequestProcessor exited loop!");
     }
 
     public void processRequest(Request request) {
@@ -123,9 +119,9 @@ public class FollowerRequestProcessor extends ZooKeeperCriticalThread implements
                     request.setTxn(new ErrorTxn(ke.code().intValue()));
                 }
                 request.setException(ke);
-                LOG.info("Error creating upgrade request",  ke);
+                JulLog.info("Error creating upgrade request",  ke);
             } catch (IOException ie) {
-                LOG.error("Unexpected error in upgrade", ie);
+                JulLog.error("Unexpected error in upgrade", ie);
             }
             if (upgradeRequest != null) {
                 queuedRequests.add(upgradeRequest);
@@ -135,7 +131,7 @@ public class FollowerRequestProcessor extends ZooKeeperCriticalThread implements
     }
 
     public void shutdown() {
-        LOG.info("Shutting down");
+        JulLog.info("Shutting down");
         finished = true;
         queuedRequests.clear();
         queuedRequests.add(Request.requestOfDeath);

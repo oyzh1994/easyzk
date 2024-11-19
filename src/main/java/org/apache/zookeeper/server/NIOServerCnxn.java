@@ -35,6 +35,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryInputArchive;
 import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.Record;
@@ -47,15 +48,12 @@ import org.apache.zookeeper.server.NIOServerCnxnFactory.SelectorThread;
 import org.apache.zookeeper.server.command.CommandExecutor;
 import org.apache.zookeeper.server.command.FourLetterCommands;
 import org.apache.zookeeper.server.command.SetTraceMaskCommand;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class handles communication with clients using NIO. There is one per
  * client, but only one thread doing the communication.
  */
 public class NIOServerCnxn extends ServerCnxn {
-    private static final Logger LOG = LoggerFactory.getLogger(NIOServerCnxn.class);
 
     private final NIOServerCnxnFactory factory;
 
@@ -142,7 +140,7 @@ public class NIOServerCnxn extends ServerCnxn {
                packetSent();
            }
        } catch (IOException ie) {
-           LOG.error("Error sending data synchronously ", ie);
+           JulLog.error("Error sending data synchronously ", ie);
        }
     }
 
@@ -151,8 +149,8 @@ public class NIOServerCnxn extends ServerCnxn {
      * asynchronous writes.
      */
     public void sendBuffer(ByteBuffer bb) {
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("Add a buffer to outgoingBuffers, sk " + sk
+        if (JulLog.isTraceEnabled()) {
+            JulLog.trace("Add a buffer to outgoingBuffers, sk " + sk
                       + " is valid: " + sk.isValid());
         }
         outgoingBuffers.add(bb);
@@ -311,7 +309,7 @@ public class NIOServerCnxn extends ServerCnxn {
     void doIO(SelectionKey k) throws InterruptedException {
         try {
             if (isSocketOpen() == false) {
-                LOG.warn("trying to do i/o on a null socket for session:0x"
+                JulLog.warn("trying to do i/o on a null socket for session:0x"
                          + Long.toHexString(sessionId));
 
                 return;
@@ -352,24 +350,24 @@ public class NIOServerCnxn extends ServerCnxn {
                 }
             }
         } catch (CancelledKeyException e) {
-            LOG.warn("CancelledKeyException causing close of session 0x"
+            JulLog.warn("CancelledKeyException causing close of session 0x"
                      + Long.toHexString(sessionId));
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("CancelledKeyException stack trace", e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("CancelledKeyException stack trace", e);
             }
             close();
         } catch (CloseRequestException e) {
             // expecting close to log session closure
             close();
         } catch (EndOfStreamException e) {
-            LOG.warn(e.getMessage());
+            JulLog.warn(e.getMessage());
             // expecting close to log session closure
             close();
         } catch (IOException e) {
-            LOG.warn("Exception causing close of session 0x"
+            JulLog.warn("Exception causing close of session 0x"
                      + Long.toHexString(sessionId) + ": " + e.getMessage());
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("IOException stack trace", e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("IOException stack trace", e);
             }
             close();
         }
@@ -386,8 +384,8 @@ public class NIOServerCnxn extends ServerCnxn {
             // check throttling
             int inProcess = zkServer.getInProcess();
             if (inProcess > outstandingLimit) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Throttling recv " + inProcess);
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Throttling recv " + inProcess);
                 }
                 disableRecv();
             }
@@ -482,7 +480,7 @@ public class NIOServerCnxn extends ServerCnxn {
         if (cmd == null) {
             return false;
         }
-        LOG.info("Processing " + cmd + " command from "
+        JulLog.info("Processing " + cmd + " command from "
                 + sock.socket().getRemoteSocketAddress());
         packetReceived();
 
@@ -499,7 +497,7 @@ public class NIOServerCnxn extends ServerCnxn {
             try {
                 k.cancel();
             } catch(Exception e) {
-                LOG.error("Error cancelling command selection key ", e);
+                JulLog.error("Error cancelling command selection key ", e);
             }
         }
 
@@ -587,8 +585,8 @@ public class NIOServerCnxn extends ServerCnxn {
                 // need to cancel this selection key from the selector
                 sk.cancel();
             } catch (Exception e) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("ignoring exception during selectionkey cancel", e);
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("ignoring exception during selectionkey cancel", e);
                 }
             }
         }
@@ -604,7 +602,7 @@ public class NIOServerCnxn extends ServerCnxn {
             return;
         }
 
-        LOG.info("Closed socket connection for client "
+        JulLog.info("Closed socket connection for client "
                 + sock.socket().getRemoteSocketAddress()
                 + (sessionId != 0 ?
                         " which had sessionid 0x" + Long.toHexString(sessionId) :
@@ -630,30 +628,30 @@ public class NIOServerCnxn extends ServerCnxn {
             sock.socket().shutdownOutput();
         } catch (IOException e) {
             // This is a relatively common exception that we can't avoid
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("ignoring exception during output shutdown", e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("ignoring exception during output shutdown", e);
             }
         }
         try {
             sock.socket().shutdownInput();
         } catch (IOException e) {
             // This is a relatively common exception that we can't avoid
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("ignoring exception during input shutdown", e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("ignoring exception during input shutdown", e);
             }
         }
         try {
             sock.socket().close();
         } catch (IOException e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("ignoring exception during socket close", e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("ignoring exception during socket close", e);
             }
         }
         try {
             sock.close();
         } catch (IOException e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("ignoring exception during socketchannel close", e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("ignoring exception during socketchannel close", e);
             }
         }
     }
@@ -680,7 +678,7 @@ public class NIOServerCnxn extends ServerCnxn {
                 }
                 baos.close();
             } catch (IOException e) {
-                LOG.error("Error serializing response");
+                JulLog.error("Error serializing response");
             }
             byte b[] = baos.toByteArray();
             ByteBuffer bb = ByteBuffer.wrap(b);
@@ -694,7 +692,7 @@ public class NIOServerCnxn extends ServerCnxn {
                 }
             }
          } catch(Exception e) {
-            LOG.warn("Unexpected exception. Destruction averted.", e);
+            JulLog.warn("Unexpected exception. Destruction averted.", e);
          }
     }
 
@@ -706,8 +704,8 @@ public class NIOServerCnxn extends ServerCnxn {
     @Override
     public void process(WatchedEvent event) {
         ReplyHeader h = new ReplyHeader(-1, -1L, 0);
-        if (LOG.isTraceEnabled()) {
-            ZooTrace.logTraceMessage(LOG, ZooTrace.EVENT_DELIVERY_TRACE_MASK,
+        if (JulLog.isTraceEnabled()) {
+            ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.EVENT_DELIVERY_TRACE_MASK,
                                      "Deliver event " + event + " to 0x"
                                      + Long.toHexString(this.sessionId)
                                      + " through " + this);

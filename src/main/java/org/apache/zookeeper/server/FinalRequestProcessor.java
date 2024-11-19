@@ -18,6 +18,7 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.Record;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.KeeperException.Code;
@@ -78,7 +79,6 @@ import java.util.Locale;
  * outstandingRequests member of ZooKeeperServer.
  */
 public class FinalRequestProcessor implements RequestProcessor {
-    private static final Logger LOG = LoggerFactory.getLogger(FinalRequestProcessor.class);
 
     ZooKeeperServer zks;
 
@@ -87,16 +87,16 @@ public class FinalRequestProcessor implements RequestProcessor {
     }
 
     public void processRequest(Request request) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Processing request:: " + request);
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("Processing request:: " + request);
         }
         // request.addRQRec(">final");
         long traceMask = ZooTrace.CLIENT_REQUEST_TRACE_MASK;
         if (request.type == OpCode.ping) {
             traceMask = ZooTrace.SERVER_PING_TRACE_MASK;
         }
-        if (LOG.isTraceEnabled()) {
-            ZooTrace.logRequest(LOG, traceMask, 'E', request, "");
+        if (JulLog.isTraceEnabled()) {
+            ZooTrace.logRequest(JulLog.getLogger(), traceMask, 'E', request, "");
         }
         ProcessTxnResult rc = null;
         synchronized (zks.outstandingChanges) {
@@ -113,7 +113,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                        && zks.outstandingChanges.get(0).zxid <= zxid) {
                     ChangeRecord cr = zks.outstandingChanges.remove(0);
                     if (cr.zxid < zxid) {
-                        LOG.warn("Zxid outstanding " + cr.zxid
+                        JulLog.warn("Zxid outstanding " + cr.zxid
                                  + " is less than current " + zxid);
                     }
                     if (zks.outstandingChangesForPath.get(cr.path) == cr) {
@@ -174,8 +174,8 @@ public class FinalRequestProcessor implements RequestProcessor {
                 throw ke;
             }
 
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("{}",request);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("{}",request);
             }
             switch (request.type) {
             case OpCode.ping: {
@@ -434,14 +434,14 @@ public class FinalRequestProcessor implements RequestProcessor {
         } catch (Exception e) {
             // log at error level as we are returning a marshalling
             // error to the user
-            LOG.error("Failed to process " + request, e);
+            JulLog.error("Failed to process " + request, e);
             StringBuilder sb = new StringBuilder();
             ByteBuffer bb = request.request;
             bb.rewind();
             while (bb.hasRemaining()) {
                 sb.append(Integer.toHexString(bb.get() & 0xff));
             }
-            LOG.error("Dumping request buffer: 0x" + sb.toString());
+            JulLog.error("Dumping request buffer: 0x" + sb.toString());
             err = Code.MARSHALLINGERROR;
         }
 
@@ -459,7 +459,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                 cnxn.sendCloseSession();
             }
         } catch (IOException e) {
-            LOG.error("FIXMSG",e);
+            JulLog.error("FIXMSG",e);
         }
     }
 
@@ -476,7 +476,7 @@ public class FinalRequestProcessor implements RequestProcessor {
 
     public void shutdown() {
         // we are the final link in the chain
-        LOG.info("shutdown of request processor complete");
+        JulLog.info("shutdown of request processor complete");
     }
 
 }

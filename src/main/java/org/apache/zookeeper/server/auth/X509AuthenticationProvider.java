@@ -18,22 +18,20 @@
 
 package org.apache.zookeeper.server.auth;
 
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.common.X509Exception.KeyManagerException;
+import org.apache.zookeeper.common.X509Exception.TrustManagerException;
+import org.apache.zookeeper.common.X509Util;
+import org.apache.zookeeper.common.ZKConfig;
+import org.apache.zookeeper.data.Id;
+import org.apache.zookeeper.server.ServerCnxn;
 
 import javax.net.ssl.X509KeyManager;
 import javax.net.ssl.X509TrustManager;
 import javax.security.auth.x500.X500Principal;
-
-import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.common.ZKConfig;
-import org.apache.zookeeper.common.X509Exception.KeyManagerException;
-import org.apache.zookeeper.common.X509Exception.TrustManagerException;
-import org.apache.zookeeper.common.X509Util;
-import org.apache.zookeeper.data.Id;
-import org.apache.zookeeper.server.ServerCnxn;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 /**
  * An AuthenticationProvider backed by an X509TrustManager and an X509KeyManager
@@ -51,8 +49,6 @@ import org.slf4j.LoggerFactory;
 public class X509AuthenticationProvider implements AuthenticationProvider {
     static final String ZOOKEEPER_X509AUTHENTICATIONPROVIDER_SUPERUSER
             = "zookeeper.X509AuthenticationProvider.superUser";
-    private static final Logger LOG
-            = LoggerFactory.getLogger(X509AuthenticationProvider.class);
     private final X509TrustManager trustManager;
     private final X509KeyManager keyManager;
 
@@ -76,7 +72,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
             km = X509Util.createKeyManager(
                     keyStoreLocationProp, keyStorePasswordProp);
         } catch (KeyManagerException e) {
-            LOG.error("Failed to create key manager", e);
+            JulLog.error("Failed to create key manager", e);
         }
 
         String trustStoreLocationProp = System.getProperty(
@@ -88,7 +84,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
             tm = X509Util.createTrustManager(
                     trustStoreLocationProp, trustStorePasswordProp);
         } catch (TrustManagerException e) {
-            LOG.error("Failed to create trust manager", e);
+            JulLog.error("Failed to create trust manager", e);
         }
 
         this.keyManager = km;
@@ -126,7 +122,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
         }
 
         if (trustManager == null) {
-            LOG.error("No trust manager available to authenticate session 0x{}",
+            JulLog.error("No trust manager available to authenticate session 0x{}",
                     Long.toHexString(cnxn.getSessionId()));
             return KeeperException.Code.AUTHFAILED;
         }
@@ -138,7 +134,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
             trustManager.checkClientTrusted(certChain,
                     clientCert.getPublicKey().getAlgorithm());
         } catch (CertificateException ce) {
-            LOG.error("Failed to trust certificate for session 0x" +
+            JulLog.error("Failed to trust certificate for session 0x" +
                     Long.toHexString(cnxn.getSessionId()), ce);
             return KeeperException.Code.AUTHFAILED;
         }
@@ -148,13 +144,13 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
         if (clientId.equals(System.getProperty(
                 ZOOKEEPER_X509AUTHENTICATIONPROVIDER_SUPERUSER))) {
             cnxn.addAuthInfo(new Id("super", clientId));
-            LOG.info("Authenticated Id '{}' as super user", clientId);
+            JulLog.info("Authenticated Id '{}' as super user", clientId);
         }
 
         Id authInfo = new Id(getScheme(), clientId);
         cnxn.addAuthInfo(authInfo);
 
-        LOG.info("Authenticated Id '{}' for Scheme '{}'",
+        JulLog.info("Authenticated Id '{}' for Scheme '{}'",
                 authInfo.getId(), authInfo.getScheme());
         return KeeperException.Code.OK;
     }

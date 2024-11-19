@@ -18,6 +18,12 @@
 
 package org.apache.zookeeper.server.quorum;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.jmx.MBeanRegistry;
+import org.apache.zookeeper.server.quorum.QuorumPeer.LearnerType;
+import org.apache.zookeeper.server.quorum.QuorumPeer.QuorumServer;
+import org.apache.zookeeper.server.quorum.QuorumPeer.ServerState;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -27,24 +33,14 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Random;
 import java.util.Map.Entry;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.apache.zookeeper.jmx.MBeanRegistry;
-import org.apache.zookeeper.server.quorum.Vote;
-import org.apache.zookeeper.server.quorum.QuorumPeer.LearnerType;
-import org.apache.zookeeper.server.quorum.QuorumPeer.QuorumServer;
-import org.apache.zookeeper.server.quorum.QuorumPeer.ServerState;
+import java.util.Random;
 
 /**
  * @deprecated This class has been deprecated as of release 3.4.0.
  */
 @Deprecated
 public class LeaderElection implements Election  {
-    private static final Logger LOG = LoggerFactory.getLogger(LeaderElection.class);
     protected static final Random epochGen = new Random();
 
     protected QuorumPeer self;
@@ -119,13 +115,13 @@ public class LeaderElection implements Election  {
             }
         }
         result.winningCount = 0;
-        LOG.info("Election tally: ");
+        JulLog.info("Election tally: ");
         for (Entry<Vote, Integer> entry : countTable.entrySet()) {
             if (entry.getValue() > result.winningCount) {
                 result.winningCount = entry.getValue();
                 result.winner = entry.getKey();
             }
-            LOG.info(entry.getKey().getId() + "\t-> " + entry.getValue());
+            JulLog.info(entry.getKey().getId() + "\t-> " + entry.getValue());
         }
         return result;
     }
@@ -147,7 +143,7 @@ public class LeaderElection implements Election  {
             MBeanRegistry.getInstance().register(
                     self.jmxLeaderElectionBean, self.jmxLocalPeerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             self.jmxLeaderElectionBean = null;
         }
 
@@ -165,7 +161,7 @@ public class LeaderElection implements Election  {
                 s = new DatagramSocket();
                 s.setSoTimeout(200);
             } catch (SocketException e1) {
-                LOG.error("Socket exception when creating socket for leader election", e1);
+                JulLog.error("Socket exception when creating socket for leader election", e1);
                 System.exit(4);
             }
             DatagramPacket requestPacket = new DatagramPacket(requestBytes,
@@ -182,7 +178,7 @@ public class LeaderElection implements Election  {
                 requestPacket.setLength(4);
                 HashSet<Long> heardFrom = new HashSet<Long>();
                 for (QuorumServer server : self.getVotingView().values()) {
-                    LOG.info("Server address: " + server.addr);
+                    JulLog.info("Server address: " + server.addr);
                     try {
                         requestPacket.setSocketAddress(server.addr);
                     } catch (IllegalArgumentException e) {
@@ -200,14 +196,14 @@ public class LeaderElection implements Election  {
                         responsePacket.setLength(responseBytes.length);
                         s.receive(responsePacket);
                         if (responsePacket.getLength() != responseBytes.length) {
-                            LOG.error("Got a short response: "
+                            JulLog.error("Got a short response: "
                                     + responsePacket.getLength());
                             continue;
                         }
                         responseBuffer.clear();
                         int recvedXid = responseBuffer.getInt();
                         if (recvedXid != xid) {
-                            LOG.error("Got bad xid: expected " + xid
+                            JulLog.error("Got bad xid: expected " + xid
                                     + " got " + recvedXid);
                             continue;
                         }
@@ -222,7 +218,7 @@ public class LeaderElection implements Election  {
                             votes.put(addr, vote);
                         //}
                     } catch (IOException e) {
-                        LOG.warn("Ignoring exception while looking for leader",
+                        JulLog.warn("Ignoring exception while looking for leader",
                                 e);
                         // Errors are okay, since hosts may be
                         // down
@@ -245,7 +241,7 @@ public class LeaderElection implements Election  {
                             self.setCurrentVote(result.winner);
                             s.close();
                             Vote current = self.getCurrentVote();
-                            LOG.info("Found leader: my type is: " + self.getLearnerType());
+                            JulLog.info("Found leader: my type is: " + self.getLearnerType());
                             /*
                              * We want to make sure we implement the state machine
                              * correctly. If we are a PARTICIPANT, once a leader
@@ -256,7 +252,7 @@ public class LeaderElection implements Election  {
                             if (self.getLearnerType() == LearnerType.OBSERVER) {
                                 if (current.getId() == self.getId()) {
                                     // This should never happen!
-                                    LOG.error("OBSERVER elected as leader!");
+                                    JulLog.error("OBSERVER elected as leader!");
                                     Thread.sleep(100);
                                 }
                                 else {
@@ -285,7 +281,7 @@ public class LeaderElection implements Election  {
                             self.jmxLeaderElectionBean);
                 }
             } catch (Exception e) {
-                LOG.warn("Failed to unregister with JMX", e);
+                JulLog.warn("Failed to unregister with JMX", e);
             }
             self.jmxLeaderElectionBean = null;
         }

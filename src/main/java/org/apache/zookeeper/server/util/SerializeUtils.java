@@ -18,6 +18,7 @@
 
 package org.apache.zookeeper.server.util;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryInputArchive;
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
@@ -35,8 +36,6 @@ import org.apache.zookeeper.txn.MultiTxn;
 import org.apache.zookeeper.txn.SetACLTxn;
 import org.apache.zookeeper.txn.SetDataTxn;
 import org.apache.zookeeper.txn.TxnHeader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;
@@ -46,8 +45,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class SerializeUtils {
-    private static final Logger LOG = LoggerFactory.getLogger(SerializeUtils.class);
-    
+
     public static Record deserializeTxn(byte txnBytes[], TxnHeader hdr)
             throws IOException {
         final ByteArrayInputStream bais = new ByteArrayInputStream(txnBytes);
@@ -123,8 +121,8 @@ public class SerializeUtils {
             long id = ia.readLong("id");
             int to = ia.readInt("timeout");
             sessions.put(id, to);
-            if (LOG.isTraceEnabled()) {
-                ZooTrace.logTraceMessage(LOG, ZooTrace.SESSION_TRACE_MASK,
+            if (JulLog.isTraceEnabled()) {
+                ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.SESSION_TRACE_MASK,
                         "loadData --- session in archive: " + id
                         + " with timeout: " + to);
             }

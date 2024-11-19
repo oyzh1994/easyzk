@@ -34,26 +34,24 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
 import org.apache.jute.Record;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.txn.TxnHeader;
 
 /**
- * A collection of utility methods for dealing with file name parsing, 
+ * A collection of utility methods for dealing with file name parsing,
  * low level I/O file operations and marshalling/unmarshalling.
  */
 public class Util {
-    private static final Logger LOG = LoggerFactory.getLogger(Util.class);
     private static final String SNAP_DIR="snapDir";
     private static final String LOG_DIR="logDir";
     private static final String DB_FORMAT_CONV="dbFormatConversion";
     private static final ByteBuffer fill = ByteBuffer.allocateDirect(1);
-    
-    public static String makeURIString(String dataDir, String dataLogDir, 
+
+    public static String makeURIString(String dataDir, String dataLogDir,
             String convPolicy){
         String uri="file:"+SNAP_DIR+"="+dataDir+";"+LOG_DIR+"="+dataLogDir;
         if(convPolicy!=null)
@@ -61,11 +59,11 @@ public class Util {
         return uri.replace('\\', '/');
     }
     /**
-     * Given two directory files the method returns a well-formed 
+     * Given two directory files the method returns a well-formed
      * logfile provider URI. This method is for backward compatibility with the
      * existing code that only supports logfile persistence and expects these two
      * parameters passed either on the command-line or in the configuration file.
-     * 
+     *
      * @param dataDir snapshot directory
      * @param dataLogDir transaction log directory
      * @return logfile provider URI
@@ -73,14 +71,14 @@ public class Util {
     public static URI makeFileLoggerURL(File dataDir, File dataLogDir){
         return URI.create(makeURIString(dataDir.getPath(),dataLogDir.getPath(),null));
     }
-    
+
     public static URI makeFileLoggerURL(File dataDir, File dataLogDir,String convPolicy){
         return URI.create(makeURIString(dataDir.getPath(),dataLogDir.getPath(),convPolicy));
     }
 
     /**
-     * Creates a valid transaction log file name. 
-     * 
+     * Creates a valid transaction log file name.
+     *
      * @param zxid used as a file name suffix (extention)
      * @return file name
      */
@@ -90,17 +88,17 @@ public class Util {
 
     /**
      * Creates a snapshot file name.
-     * 
+     *
      * @param zxid used as a suffix
      * @return file name
      */
     public static String makeSnapshotName(long zxid) {
         return "snapshot." + Long.toHexString(zxid);
     }
-    
+
     /**
      * Extracts snapshot directory property value from the container.
-     * 
+     *
      * @param props properties container
      * @return file representing the snapshot directory
      */
@@ -110,28 +108,28 @@ public class Util {
 
     /**
      * Extracts transaction log directory property value from the container.
-     * 
+     *
      * @param props properties container
      * @return file representing the txn log directory
      */
     public static File getLogDir(Properties props){
         return new File(props.getProperty(LOG_DIR));
     }
-    
+
     /**
      * Extracts the value of the dbFormatConversion attribute.
-     * 
+     *
      * @param props properties container
      * @return value of the dbFormatConversion attribute
      */
     public static String getFormatConversionPolicy(Properties props){
         return props.getProperty(DB_FORMAT_CONV);
     }
-   
+
     /**
      * Extracts zxid from the file name. The file name should have been created
      * using one of the {@link makeLogName} or {@link makeSnapshotName}.
-     * 
+     *
      * @param name the file name to parse
      * @param prefix the file name prefix (snapshot or log)
      * @return zxid
@@ -149,11 +147,11 @@ public class Util {
     }
 
     /**
-     * Verifies that the file is a valid snapshot. Snapshot may be invalid if 
+     * Verifies that the file is a valid snapshot. Snapshot may be invalid if
      * it's incomplete as in a situation when the server dies while in the process
-     * of storing a snapshot. Any file that is not a snapshot is also 
-     * an invalid snapshot. 
-     * 
+     * of storing a snapshot. Any file that is not a snapshot is also
+     * an invalid snapshot.
+     *
      * @param f file to verify
      * @return true if the snapshot is valid
      * @throws IOException
@@ -179,7 +177,7 @@ public class Util {
                 readlen += l;
             }
             if (readlen != bytes.length) {
-                LOG.info("Invalid snapshot " + f
+                JulLog.info("Invalid snapshot " + f
                         + " too short, len = " + readlen);
                 return false;
             }
@@ -187,7 +185,7 @@ public class Util {
             int len = bb.getInt();
             byte b = bb.get();
             if (len != 1 || b != '/') {
-                LOG.info("Invalid snapshot " + f + " len = " + len
+                JulLog.info("Invalid snapshot " + f + " len = " + len
                         + " byte = " + (b & 0xff));
                 return false;
             }
@@ -199,10 +197,10 @@ public class Util {
     }
 
     /**
-     * Grows the file to the specified number of bytes. This only happenes if 
-     * the current file position is sufficiently close (less than 4K) to end of 
-     * file. 
-     * 
+     * Grows the file to the specified number of bytes. This only happenes if
+     * the current file position is sufficiently close (less than 4K) to end of
+     * file.
+     *
      * @param f output stream to pad
      * @param currentSize application keeps track of the cuurent file size
      * @param preAllocSize how many bytes to pad
@@ -236,18 +234,18 @@ public class Util {
             if (bytes.length == 0)
                 return bytes;
             if (ia.readByte("EOF") != 'B') {
-                LOG.error("Last transaction was partial.");
+                JulLog.error("Last transaction was partial.");
                 return null;
             }
             return bytes;
         }catch(EOFException e){}
         return null;
     }
-    
+
 
     /**
      * Serializes transaction header and transaction data into a byte buffer.
-     *  
+     *
      * @param hdr transaction header
      * @param txn transaction data
      * @return serialized transaction record
@@ -267,7 +265,7 @@ public class Util {
 
     /**
      * Write the serialized transaction record to the output archive.
-     *  
+     *
      * @param oa output archive
      * @param bytes serialized trasnaction record
      * @throws IOException
@@ -277,8 +275,8 @@ public class Util {
         oa.writeBuffer(bytes, "txnEntry");
         oa.writeByte((byte) 0x42, "EOR"); // 'B'
     }
-    
-    
+
+
     /**
      * Compare file file names of form "prefix.version". Sort order result
      * returned in order of version.
@@ -302,7 +300,7 @@ public class Util {
             return ascending ? result : -result;
         }
     }
-    
+
     /**
      * Sort the list of files. Recency as determined by the version component
      * of the file name.
@@ -322,5 +320,5 @@ public class Util {
         Collections.sort(filelist, new DataDirFileComparator(prefix, ascending));
         return filelist;
     }
-    
+
 }

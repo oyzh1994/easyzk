@@ -18,26 +18,25 @@
 
 package org.apache.jute;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 /**
  *
  */
 class XmlInputArchive implements InputArchive {
-    
+
     static private class Value {
         private String type;
         private StringBuffer sb;
-        
+
         public Value(String t) {
             type = t;
             sb = new StringBuffer();
@@ -48,20 +47,20 @@ class XmlInputArchive implements InputArchive {
         public String getValue() { return sb.toString(); }
         public String getType() { return type; }
     }
-    
+
     private static class XMLParser extends DefaultHandler {
         private boolean charsValid = false;
-        
+
         private ArrayList<Value> valList;
-        
+
         private XMLParser(ArrayList<Value> vlist) {
             valList = vlist;
         }
-        
+
         public void startDocument() throws SAXException {}
-        
+
         public void endDocument() throws SAXException {}
-        
+
         public void startElement(String ns,
                 String sname,
                 String qname,
@@ -82,7 +81,7 @@ class XmlInputArchive implements InputArchive {
                 valList.add(new Value(qname));
             }
         }
-        
+
         public void endElement(String ns,
                 String sname,
                 String qname) throws SAXException {
@@ -92,7 +91,7 @@ class XmlInputArchive implements InputArchive {
                 valList.add(new Value("/"+qname));
             }
         }
-        
+
         public void characters(char buf[], int offset, int len)
         throws SAXException {
             if (charsValid) {
@@ -100,9 +99,9 @@ class XmlInputArchive implements InputArchive {
                 v.addChars(buf, offset,len);
             }
         }
-        
+
     }
-    
+
     private class XmlIndex implements Index {
         public boolean done() {
             Value v = valList.get(vIdx);
@@ -116,11 +115,11 @@ class XmlInputArchive implements InputArchive {
         }
         public void incr() {}
     }
-    
+
     private ArrayList<Value> valList;
     private int vLen;
     private int vIdx;
-    
+
     private Value next() throws IOException {
         if (vIdx < vLen) {
             Value v = valList.get(vIdx);
@@ -131,12 +130,12 @@ class XmlInputArchive implements InputArchive {
             throw new IOException("Error in deserialization.");
         }
     }
-    
+
     static XmlInputArchive getArchive(InputStream strm)
     throws ParserConfigurationException, SAXException, IOException {
         return new XmlInputArchive(strm);
     }
-    
+
     /** Creates a new instance of BinaryInputArchive */
     public XmlInputArchive(InputStream in)
     throws ParserConfigurationException, SAXException, IOException {
@@ -148,7 +147,7 @@ class XmlInputArchive implements InputArchive {
         vLen = valList.size();
         vIdx = 0;
     }
-    
+
     public byte readByte(String tag) throws IOException {
         Value v = next();
         if (!"ex:i1".equals(v.getType())) {
@@ -156,7 +155,7 @@ class XmlInputArchive implements InputArchive {
         }
         return Byte.parseByte(v.getValue());
     }
-    
+
     public boolean readBool(String tag) throws IOException {
         Value v = next();
         if (!"boolean".equals(v.getType())) {
@@ -164,7 +163,7 @@ class XmlInputArchive implements InputArchive {
         }
         return "1".equals(v.getValue());
     }
-    
+
     public int readInt(String tag) throws IOException {
         Value v = next();
         if (!"i4".equals(v.getType()) &&
@@ -173,7 +172,7 @@ class XmlInputArchive implements InputArchive {
         }
         return Integer.parseInt(v.getValue());
     }
-    
+
     public long readLong(String tag) throws IOException {
         Value v = next();
         if (!"ex:i8".equals(v.getType())) {
@@ -181,7 +180,7 @@ class XmlInputArchive implements InputArchive {
         }
         return Long.parseLong(v.getValue());
     }
-    
+
     public float readFloat(String tag) throws IOException {
         Value v = next();
         if (!"ex:float".equals(v.getType())) {
@@ -189,7 +188,7 @@ class XmlInputArchive implements InputArchive {
         }
         return Float.parseFloat(v.getValue());
     }
-    
+
     public double readDouble(String tag) throws IOException {
         Value v = next();
         if (!"double".equals(v.getType())) {
@@ -197,7 +196,7 @@ class XmlInputArchive implements InputArchive {
         }
         return Double.parseDouble(v.getValue());
     }
-    
+
     public String readString(String tag) throws IOException {
         Value v = next();
         if (!"string".equals(v.getType())) {
@@ -205,7 +204,7 @@ class XmlInputArchive implements InputArchive {
         }
         return Utils.fromXMLString(v.getValue());
     }
-    
+
     public byte[] readBuffer(String tag) throws IOException {
         Value v = next();
         if (!"string".equals(v.getType())) {
@@ -213,25 +212,25 @@ class XmlInputArchive implements InputArchive {
         }
         return Utils.fromXMLBuffer(v.getValue());
     }
-    
+
     public void readRecord(Record r, String tag) throws IOException {
         r.deserialize(this, tag);
     }
-    
+
     public void startRecord(String tag) throws IOException {
         Value v = next();
         if (!"struct".equals(v.getType())) {
             throw new IOException("Error deserializing "+tag+".");
         }
     }
-    
+
     public void endRecord(String tag) throws IOException {
         Value v = next();
         if (!"/struct".equals(v.getType())) {
             throw new IOException("Error deserializing "+tag+".");
         }
     }
-    
+
     public Index startVector(String tag) throws IOException {
         Value v = next();
         if (!"array".equals(v.getType())) {
@@ -239,13 +238,13 @@ class XmlInputArchive implements InputArchive {
         }
         return new XmlIndex();
     }
-    
+
     public void endVector(String tag) throws IOException {}
-    
+
     public Index startMap(String tag) throws IOException {
         return startVector(tag);
     }
-    
+
     public void endMap(String tag) throws IOException { endVector(tag); }
 
 }

@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,8 +18,10 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLevel;
 import org.apache.zookeeper.common.Time;
-import org.slf4j.Logger;
+
+import java.util.logging.Logger;
 
 public class RateLogger {
     public RateLogger(Logger log) {
@@ -34,9 +36,9 @@ public class RateLogger {
     public void flush() {
         if (msg != null) {
             if (count > 1) {
-                LOG.warn("[" + count + " times] " + msg);
+                LOG.log(JulLevel.WARN.toLevel(), "[" + count + " times] " + msg);
             } else if (count == 1) {
-                LOG.warn(msg);
+                LOG.log(JulLevel.WARN.toLevel(), msg);
             }
         }
         msg = null;
@@ -56,7 +58,7 @@ public class RateLogger {
             flush();
             msg = newMsg;
             timestamp = now;
-            LOG.warn(msg);
+            LOG.log(JulLevel.WARN.toLevel(), msg);
         }
     }
 }

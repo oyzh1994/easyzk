@@ -18,12 +18,9 @@
 
 package org.apache.zookeeper.server.auth;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.server.ZooKeeperSaslServer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.NameCallback;
@@ -33,12 +30,12 @@ import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
 import javax.security.sasl.AuthorizeCallback;
 import javax.security.sasl.RealmCallback;
-
-import org.apache.zookeeper.server.ZooKeeperSaslServer;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SaslServerCallbackHandler implements CallbackHandler {
     private static final String USER_PREFIX = "user_";
-    private static final Logger LOG = LoggerFactory.getLogger(SaslServerCallbackHandler.class);
     private static final String SYSPROP_SUPER_PASSWORD = "zookeeper.SASLAuthenticationProvider.superPassword";
     private static final String SYSPROP_REMOVE_HOST = "zookeeper.kerberos.removeHostFromPrincipal";
     private static final String SYSPROP_REMOVE_REALM = "zookeeper.kerberos.removeRealmFromPrincipal";
@@ -53,7 +50,7 @@ public class SaslServerCallbackHandler implements CallbackHandler {
 
         if (configurationEntries == null) {
             String errorMessage = "Could not find a 'Server' entry in this configuration: Server cannot start.";
-            LOG.error(errorMessage);
+            JulLog.error(errorMessage);
             throw new IOException(errorMessage);
         }
         credentials.clear();
@@ -88,7 +85,7 @@ public class SaslServerCallbackHandler implements CallbackHandler {
     private void handleNameCallback(NameCallback nc) {
         // check to see if this user is in the user password database.
         if (credentials.get(nc.getDefaultName()) == null) {
-            LOG.warn("User '" + nc.getDefaultName() + "' not found in list of DIGEST-MD5 authenticateable users.");
+            JulLog.warn("User '" + nc.getDefaultName() + "' not found in list of DIGEST-MD5 authenticateable users.");
             return;
         }
         nc.setName(nc.getDefaultName());
@@ -102,12 +99,12 @@ public class SaslServerCallbackHandler implements CallbackHandler {
         } else if (credentials.containsKey(userName) ) {
             pc.setPassword(credentials.get(userName).toCharArray());
         } else {
-            LOG.warn("No password found for user: " + userName);
+            JulLog.warn("No password found for user: " + userName);
         }
     }
 
     private void handleRealmCallback(RealmCallback rc) {
-        LOG.debug("client supplied realm: " + rc.getDefaultText());
+        JulLog.debug("client supplied realm: " + rc.getDefaultText());
         rc.setText(rc.getDefaultText());
     }
 
@@ -115,7 +112,7 @@ public class SaslServerCallbackHandler implements CallbackHandler {
         String authenticationID = ac.getAuthenticationID();
         String authorizationID = ac.getAuthorizationID();
 
-        LOG.info("Successfully authenticated client: authenticationID=" + authenticationID
+        JulLog.info("Successfully authenticated client: authenticationID=" + authenticationID
                 + ";  authorizationID=" + authorizationID + ".");
         ac.setAuthorized(true);
 
@@ -131,10 +128,10 @@ public class SaslServerCallbackHandler implements CallbackHandler {
             if (shouldAppendRealm(kerberosName)) {
                 userNameBuilder.append("@").append(kerberosName.getRealm());
             }
-            LOG.info("Setting authorizedID: " + userNameBuilder);
+            JulLog.info("Setting authorizedID: " + userNameBuilder);
             ac.setAuthorizedID(userNameBuilder.toString());
         } catch (IOException e) {
-            LOG.error("Failed to set name based on Kerberos authentication rules.");
+            JulLog.error("Failed to set name based on Kerberos authentication rules.");
         }
     }
 

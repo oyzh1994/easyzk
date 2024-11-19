@@ -17,6 +17,7 @@
  */
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,6 @@ import org.slf4j.LoggerFactory;
  * thread this will exit the system.
  */
 public class ZooKeeperCriticalThread extends ZooKeeperThread {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ZooKeeperCriticalThread.class);
     private final ZooKeeperServerListener listener;
 
     public ZooKeeperCriticalThread(String threadName, ZooKeeperServerListener listener) {
@@ -45,7 +44,7 @@ public class ZooKeeperCriticalThread extends ZooKeeperThread {
      */
     @Override
     protected void handleException(String threadName, Throwable e) {
-        LOG.error("Severe unrecoverable error, from thread : {}", threadName, e);
+        JulLog.error("Severe unrecoverable error, from thread : {}", threadName, e);
         listener.notifyStopping(threadName, ExitCode.UNEXPECTED_ERROR);
     }
 }

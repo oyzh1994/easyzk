@@ -17,13 +17,14 @@
  */
 package org.apache.zookeeper.cli;
 
-import java.io.IOException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.Parser;
 import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.KeeperException;
+
+import java.io.IOException;
 
 /**
  * addAuth command for cli
@@ -50,7 +51,7 @@ public class AddAuthCommand extends CliCommand {
     }
 
     @Override
-    public boolean exec() throws KeeperException, IOException, 
+    public boolean exec() throws KeeperException, IOException,
                                  InterruptedException {
         byte[] b = null;
         if (args.length >= 3) {

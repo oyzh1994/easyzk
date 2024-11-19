@@ -17,6 +17,26 @@
  */
 package org.apache.zookeeper.server.quorum;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.KeeperException.BadArgumentsException;
+import org.apache.zookeeper.common.AtomicFileWritingIdiom;
+import org.apache.zookeeper.common.AtomicFileWritingIdiom.WriterStatement;
+import org.apache.zookeeper.common.Time;
+import org.apache.zookeeper.jmx.MBeanRegistry;
+import org.apache.zookeeper.jmx.ZKMBeanInfo;
+import org.apache.zookeeper.server.ServerCnxnFactory;
+import org.apache.zookeeper.server.ZKDatabase;
+import org.apache.zookeeper.server.ZooKeeperServer;
+import org.apache.zookeeper.server.ZooKeeperThread;
+import org.apache.zookeeper.server.admin.AdminServer;
+import org.apache.zookeeper.server.admin.AdminServer.AdminServerException;
+import org.apache.zookeeper.server.admin.AdminServerFactory;
+import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
+import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
+import org.apache.zookeeper.server.quorum.flexible.QuorumMaj;
+import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
+import org.apache.zookeeper.server.util.ZxidUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,27 +62,6 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.apache.zookeeper.KeeperException.BadArgumentsException;
-import org.apache.zookeeper.common.AtomicFileWritingIdiom;
-import org.apache.zookeeper.common.AtomicFileWritingIdiom.WriterStatement;
-import org.apache.zookeeper.common.Time;
-import org.apache.zookeeper.jmx.MBeanRegistry;
-import org.apache.zookeeper.jmx.ZKMBeanInfo;
-import org.apache.zookeeper.server.ServerCnxnFactory;
-import org.apache.zookeeper.server.ZKDatabase;
-import org.apache.zookeeper.server.ZooKeeperServer;
-import org.apache.zookeeper.server.ZooKeeperThread;
-import org.apache.zookeeper.server.admin.AdminServer;
-import org.apache.zookeeper.server.admin.AdminServer.AdminServerException;
-import org.apache.zookeeper.server.admin.AdminServerFactory;
-import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
-import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
-import org.apache.zookeeper.server.quorum.flexible.QuorumMaj;
-import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
-import org.apache.zookeeper.server.util.ZxidUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class manages the quorum protocol. There are three states this server
@@ -92,7 +91,6 @@ import org.slf4j.LoggerFactory;
  * The request for the current leader will consist solely of an xid: int xid;
  */
 public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider {
-    private static final Logger LOG = LoggerFactory.getLogger(QuorumPeer.class);
 
     private QuorumBean jmxQuorumBean;
     LocalPeerBean jmxLocalPeerBean;
@@ -144,11 +142,11 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
          */
         public void recreateSocketAddresses() {
             if (this.addr == null) {
-                LOG.warn("Server address has not been initialized");
+                JulLog.warn("Server address has not been initialized");
                 return;
             }
             if (this.electionAddr == null) {
-                LOG.warn("Election address has not been initialized");
+                JulLog.warn("Election address has not been initialized");
                 return;
             }
             String host = this.addr.getHostString();
@@ -156,10 +154,10 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             try {
                 address = InetAddress.getByName(host);
             } catch (UnknownHostException ex) {
-                LOG.warn("Failed to resolve address: {}", host, ex);
+                JulLog.warn("Failed to resolve address: {}", host, ex);
                 return;
             }
-            LOG.debug("Resolved address for {}: {}", host, address);
+            JulLog.debug("Resolved address for {}: {}", host, address);
             int port = this.addr.getPort();
             this.addr = new InetSocketAddress(address, port);
             port = this.electionAddr.getPort();
@@ -201,7 +199,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         " where server_config is host:port:port or host:port:port:type and client_config is port or host:port";
 
         public QuorumServer(long sid, String addressStr) throws ConfigException {
-            // LOG.warn("sid = " + sid + " addressStr = " + addressStr);
+            // JulLog.warn("sid = " + sid + " addressStr = " + addressStr);
             this.id = sid;
             String serverClientParts[] = addressStr.split(";");
             String serverParts[] = splitWithLeadingHostname(serverClientParts[0]);
@@ -211,7 +209,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             }
 
             if (serverClientParts.length == 2) {
-                //LOG.warn("ClientParts: " + serverClientParts[1]);
+                //JulLog.warn("ClientParts: " + serverClientParts[1]);
                 String clientParts[] = splitWithLeadingHostname(serverClientParts[1]);
                 if (clientParts.length > 2) {
                     throw new ConfigException(addressStr + wrongFormat);
@@ -222,7 +220,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 try {
                     clientAddr = new InetSocketAddress(hostname,
                             Integer.parseInt(clientParts[clientParts.length - 1]));
-                    //LOG.warn("Set clientAddr to " + clientAddr);
+                    //JulLog.warn("Set clientAddr to " + clientAddr);
                 } catch (NumberFormatException e) {
                     throw new ConfigException("Address unresolved: " + hostname + ":" + clientParts[clientParts.length - 1]);
                 }
@@ -551,7 +549,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 while (running) {
                     udpSocket.receive(packet);
                     if (packet.getLength() != 4) {
-                        LOG.warn("Got more than just an xid! Len = "
+                        JulLog.warn("Got more than just an xid! Len = "
                                 + packet.getLength());
                     } else {
                         responseBuffer.clear();
@@ -596,11 +594,11 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                     packet.setLength(b.length);
                 }
             } catch (RuntimeException e) {
-                LOG.warn("Unexpected runtime exception in ResponderThread",e);
+                JulLog.warn("Unexpected runtime exception in ResponderThread",e);
             } catch (IOException e) {
-                LOG.warn("Unexpected IO exception in ResponderThread",e);
+                JulLog.warn("Unexpected IO exception in ResponderThread",e);
             } finally {
-                LOG.warn("QuorumPeer responder thread exited");
+                JulLog.warn("QuorumPeer responder thread exited");
             }
         }
     }
@@ -752,7 +750,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         try {
             adminServer.start();
         } catch (AdminServerException e) {
-            LOG.warn("Problem starting AdminServer", e);
+            JulLog.warn("Problem starting AdminServer", e);
             System.out.println(e);
         }
         startLeaderElection();
@@ -773,7 +771,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             	// this should only happen once when moving to a
             	// new code version
             	currentEpoch = epochOfZxid;
-            	LOG.info(CURRENT_EPOCH_FILENAME
+            	JulLog.info(CURRENT_EPOCH_FILENAME
             	        + " not found! Creating with a reasonable default of {}. This should only happen when you are upgrading your installation",
             	        currentEpoch);
             	writeLongToFile(CURRENT_EPOCH_FILENAME, currentEpoch);
@@ -788,7 +786,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             	// this should only happen once when moving to a
             	// new code version
             	acceptedEpoch = epochOfZxid;
-            	LOG.info(ACCEPTED_EPOCH_FILENAME
+            	JulLog.info(ACCEPTED_EPOCH_FILENAME
             	        + " not found! Creating with a reasonable default of {}. This should only happen when you are upgrading your installation",
             	        acceptedEpoch);
             	writeLongToFile(ACCEPTED_EPOCH_FILENAME, acceptedEpoch);
@@ -797,7 +795,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 throw new IOException("The accepted epoch, " + ZxidUtils.zxidToString(acceptedEpoch) + " is less than the current epoch, " + ZxidUtils.zxidToString(currentEpoch));
             }
         } catch(IOException ie) {
-            LOG.error("Unable to load database on disk", ie);
+            JulLog.error("Unable to load database on disk", ie);
             throw new RuntimeException("Unable to run quorum server ", ie);
         }
     }
@@ -948,7 +946,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 fle.start();
                 le = fle;
             } else {
-                LOG.error("Null listener when initializing cnx manager");
+                JulLog.error("Null listener when initializing cnx manager");
             }
             break;
         default:
@@ -959,7 +957,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
 
     @SuppressWarnings("deprecation")
     protected Election makeLEStrategy(){
-        LOG.debug("Initializing leader election protocol...");
+        JulLog.debug("Initializing leader election protocol...");
         if (getElectionType() == 0) {
             electionAlg = new LeaderElection(this);
         }
@@ -994,7 +992,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
     public void run() {
         updateThreadName();
 
-        LOG.debug("Starting quorum peer");
+        JulLog.debug("Starting quorum peer");
         try {
             jmxQuorumBean = new QuorumBean(this);
             MBeanRegistry.getInstance().register(jmxQuorumBean, null);
@@ -1005,7 +1003,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                     try {
                         MBeanRegistry.getInstance().register(p, jmxQuorumBean);
                     } catch (Exception e) {
-                        LOG.warn("Failed to register with JMX", e);
+                        JulLog.warn("Failed to register with JMX", e);
                         jmxLocalPeerBean = null;
                     }
                 } else {
@@ -1014,12 +1012,12 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                         MBeanRegistry.getInstance().register(rBean, jmxQuorumBean);
                         jmxRemotePeerBean.put(s.id, rBean);
                     } catch (Exception e) {
-                        LOG.warn("Failed to register with JMX", e);
+                        JulLog.warn("Failed to register with JMX", e);
                     }
                 }
             }
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             jmxQuorumBean = null;
         }
 
@@ -1030,10 +1028,10 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             while (running) {
                 switch (getPeerState()) {
                 case LOOKING:
-                    LOG.info("LOOKING");
+                    JulLog.info("LOOKING");
 
                     if (Boolean.getBoolean("readonlymode.enabled")) {
-                        LOG.info("Attempting to start ReadOnlyZooKeeperServer");
+                        JulLog.info("Attempting to start ReadOnlyZooKeeperServer");
 
                         // Create read-only server but don't start it immediately
                         final ReadOnlyZooKeeperServer roZk =
@@ -1054,9 +1052,9 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                                         roZk.startup();
                                     }
                                 } catch (InterruptedException e) {
-                                    LOG.info("Interrupted while attempting to start ReadOnlyZooKeeperServer, not started");
+                                    JulLog.info("Interrupted while attempting to start ReadOnlyZooKeeperServer, not started");
                                 } catch (Exception e) {
-                                    LOG.error("FAILED to start ReadOnlyZooKeeperServer", e);
+                                    JulLog.error("FAILED to start ReadOnlyZooKeeperServer", e);
                                 }
                             }
                         };
@@ -1069,7 +1067,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                             }
                             setCurrentVote(makeLEStrategy().lookForLeader());
                         } catch (Exception e) {
-                            LOG.warn("Unexpected exception", e);
+                            JulLog.warn("Unexpected exception", e);
                             setPeerState(ServerState.LOOKING);
                         } finally {
                             // If the thread is in the the grace period, interrupt
@@ -1086,18 +1084,18 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                                }
                             setCurrentVote(makeLEStrategy().lookForLeader());
                         } catch (Exception e) {
-                            LOG.warn("Unexpected exception", e);
+                            JulLog.warn("Unexpected exception", e);
                             setPeerState(ServerState.LOOKING);
                         }
                     }
                     break;
                 case OBSERVING:
                     try {
-                        LOG.info("OBSERVING");
+                        JulLog.info("OBSERVING");
                         setObserver(makeObserver(logFactory));
                         observer.observeLeader();
                     } catch (Exception e) {
-                        LOG.warn("Unexpected exception",e );
+                        JulLog.warn("Unexpected exception",e );
                     } finally {
                         observer.shutdown();
                         setObserver(null);
@@ -1106,11 +1104,11 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                     break;
                 case FOLLOWING:
                     try {
-                       LOG.info("FOLLOWING");
+                       JulLog.info("FOLLOWING");
                         setFollower(makeFollower(logFactory));
                         follower.followLeader();
                     } catch (Exception e) {
-                       LOG.warn("Unexpected exception",e);
+                       JulLog.warn("Unexpected exception",e);
                     } finally {
                        follower.shutdown();
                        setFollower(null);
@@ -1118,13 +1116,13 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                     }
                     break;
                 case LEADING:
-                    LOG.info("LEADING");
+                    JulLog.info("LEADING");
                     try {
                         setLeader(makeLeader(logFactory));
                         leader.lead();
                         setLeader(null);
                     } catch (Exception e) {
-                        LOG.warn("Unexpected exception",e);
+                        JulLog.warn("Unexpected exception",e);
                     } finally {
                         if (leader != null) {
                             leader.shutdown("Forcing shutdown");
@@ -1137,7 +1135,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 start_fle = Time.currentElapsedTime();
             }
         } finally {
-            LOG.warn("QuorumPeer main thread exited");
+            JulLog.warn("QuorumPeer main thread exited");
             MBeanRegistry instance = MBeanRegistry.getInstance();
             instance.unregister(jmxQuorumBean);
             instance.unregister(jmxLocalPeerBean);
@@ -1155,22 +1153,22 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
     private synchronized void updateServerState(){
        if (!reconfigFlag) {
            setPeerState(ServerState.LOOKING);
-           LOG.warn("PeerState set to LOOKING");
+           JulLog.warn("PeerState set to LOOKING");
            return;
        }
 
        if (getId() == getCurrentVote().getId()) {
            setPeerState(ServerState.LEADING);
-           LOG.debug("PeerState set to LEADING");
+           JulLog.debug("PeerState set to LEADING");
        } else if (getLearnerType() == LearnerType.PARTICIPANT) {
            setPeerState(ServerState.FOLLOWING);
-           LOG.debug("PeerState set to FOLLOWING");
+           JulLog.debug("PeerState set to FOLLOWING");
        } else if (getLearnerType() == LearnerType.OBSERVER) {
            setPeerState(ServerState.OBSERVING);
-           LOG.debug("PeerState set to OBSERVER");
+           JulLog.debug("PeerState set to OBSERVER");
        } else { // currently shouldn't happen since there are only 2 learner types
            setPeerState(ServerState.LOOKING);
-           LOG.debug("Shouldn't be here");
+           JulLog.debug("Shouldn't be here");
        }
        reconfigFlag = false;
     }
@@ -1191,7 +1189,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         try {
             adminServer.shutdown();
         } catch (AdminServerException e) {
-            LOG.warn("Problem stopping AdminServer", e);
+            JulLog.warn("Problem stopping AdminServer", e);
         }
 
         if(getElectionAlg() != null){
@@ -1201,7 +1199,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         try {
             zkDb.close();
         } catch (IOException ie) {
-            LOG.warn("Error closing logs ", ie);
+            JulLog.warn("Error closing logs ", ie);
         }
     }
 
@@ -1302,7 +1300,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
      * Set the number of milliseconds of each tick
      */
     public void setTickTime(int tickTime) {
-        LOG.info("tickTime set to " + tickTime);
+        JulLog.info("tickTime set to " + tickTime);
         this.tickTime = tickTime;
     }
 
@@ -1324,7 +1322,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
 
     /** Whether to enable local sessions */
     public void enableLocalSessions(boolean flag) {
-        LOG.info("Local sessions " + (flag ? "enabled" : "disabled"));
+        JulLog.info("Local sessions " + (flag ? "enabled" : "disabled"));
         localSessionsEnabled = flag;
     }
 
@@ -1335,7 +1333,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
 
     /** Whether to allow local sessions to upgrade to global sessions */
     public void enableLocalSessionsUpgrading(boolean flag) {
-        LOG.info("Local session upgrading " + (flag ? "enabled" : "disabled"));
+        JulLog.info("Local session upgrading " + (flag ? "enabled" : "disabled"));
         localSessionsUpgradingEnabled = flag;
     }
 
@@ -1346,7 +1344,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
 
     /** minimum session timeout in milliseconds */
     public void setMinSessionTimeout(int min) {
-        LOG.info("minSessionTimeout set to " + min);
+        JulLog.info("minSessionTimeout set to " + min);
         this.minSessionTimeout = min;
     }
 
@@ -1357,7 +1355,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
 
     /** maximum session timeout in milliseconds */
     public void setMaxSessionTimeout(int max) {
-        LOG.info("maxSessionTimeout set to " + max);
+        JulLog.info("maxSessionTimeout set to " + max);
         this.maxSessionTimeout = max;
     }
 
@@ -1372,7 +1370,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
      * Set the number of ticks that the initial synchronization phase can take
      */
     public void setInitLimit(int initLimit) {
-        LOG.info("initLimit set to " + initLimit);
+        JulLog.info("initLimit set to " + initLimit);
         this.initLimit = initLimit;
     }
 
@@ -1414,7 +1412,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
 
     public synchronized void restartLeaderElection(QuorumVerifier qvOLD, QuorumVerifier qvNEW){
         if (qvOLD == null || !qvOLD.equals(qvNEW)) {
-            LOG.warn("Restarting Leader Election");
+            JulLog.warn("Restarting Leader Election");
             getElectionAlg().shutdown();
             shuttingDownLE = false;
             startLeaderElection();
@@ -1427,7 +1425,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
 
     public synchronized void setLastSeenQuorumVerifier(QuorumVerifier qv, boolean writeToDisk){
         if (lastSeenQuorumVerifier!=null && lastSeenQuorumVerifier.getVersion() > qv.getVersion()) {
-           LOG.error("setLastSeenQuorumVerifier called with stale config " + qv.getVersion() +
+           JulLog.error("setLastSeenQuorumVerifier called with stale config " + qv.getVersion() +
                    ". Current version: " + quorumVerifier.getVersion());
 
         }
@@ -1444,7 +1442,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 QuorumPeerConfig.writeDynamicConfig(
                         getNextDynamicConfigFilename(), qv, true);
            } catch(IOException e){
-                LOG.error("Error writing next dynamic config file to disk: ", e.getMessage());
+                JulLog.error("Error writing next dynamic config file to disk: ", e.getMessage());
             }
         }
 
@@ -1454,7 +1452,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         if ((quorumVerifier != null) && (quorumVerifier.getVersion() >= qv.getVersion())) {
             // this is normal. For example - server found out about new config through FastLeaderElection gossiping
            // and then got the same config in UPTODATE message so its already known
-           LOG.debug(getId() + " setQuorumVerifier called with known or old config " + qv.getVersion() +
+           JulLog.debug(getId() + " setQuorumVerifier called with known or old config " + qv.getVersion() +
                    ". Current version: " + quorumVerifier.getVersion());
            return quorumVerifier;
         }
@@ -1475,10 +1473,10 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                             dynamicConfigFilename,
                             needEraseClientInfoFromStaticConfig());
                 } catch (IOException e) {
-                    LOG.error("Error closing file: ", e.getMessage());
+                    JulLog.error("Error closing file: ", e.getMessage());
                 }
             } else {
-                LOG.info("writeToDisk == true but configFilename == null");
+                JulLog.info("writeToDisk == true but configFilename == null");
             }
         }
 
@@ -1537,7 +1535,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
      */
     public boolean getSyncEnabled() {
         if (System.getProperty(SYNC_ENABLED) != null) {
-            LOG.info(SYNC_ENABLED + "=" + Boolean.getBoolean(SYNC_ENABLED));
+            JulLog.info(SYNC_ENABLED + "=" + Boolean.getBoolean(SYNC_ENABLED));
             return Boolean.getBoolean(SYNC_ENABLED);
         } else {
             return syncEnabled;
@@ -1799,7 +1797,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 MBeanRegistry.getInstance().register(rBean, jmxQuorumBean);
                 jmxRemotePeerBean.put(qs.id, rBean);
             } catch (Exception e) {
-                LOG.warn("Failed to register with JMX", e);
+                JulLog.warn("Failed to register with JMX", e);
             }
         }
 
@@ -1810,7 +1808,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             try {
                 MBeanRegistry.getInstance().unregister(rBean);
             } catch (Exception e) {
-                LOG.warn("Failed to unregister with JMX", e);
+                JulLog.warn("Failed to unregister with JMX", e);
             }
         }
     }
@@ -1820,7 +1818,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
        if (newQV.getObservingMembers().containsKey(getId())) {
            if (getLearnerType()!=LearnerType.OBSERVER){
                setLearnerType(LearnerType.OBSERVER);
-               LOG.info("Becoming an observer");
+               JulLog.info("Becoming an observer");
                reconfigFlagSet();
                return true;
            } else {
@@ -1829,7 +1827,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
        } else if (newQV.getVotingMembers().containsKey(getId())) {
            if (getLearnerType()!=LearnerType.PARTICIPANT){
                setLearnerType(LearnerType.PARTICIPANT);
-               LOG.info("Becoming a voting participant");
+               JulLog.info("Becoming a voting participant");
                reconfigFlagSet();
                return true;
            } else {
@@ -1839,7 +1837,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
        // I'm not in the view
       if (getLearnerType()!=LearnerType.PARTICIPANT){
           setLearnerType(LearnerType.PARTICIPANT);
-          LOG.info("Becoming a non-voting participant");
+          JulLog.info("Becoming a non-voting participant");
           reconfigFlagSet();
           return true;
       }
@@ -1851,7 +1849,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
        if (currentVote!=null && designatedLeader != currentVote.getId()) {
            setCurrentVote(new Vote(designatedLeader, zxid));
            reconfigFlagSet();
-           LOG.warn("Suggested leader: " + designatedLeader);
+           JulLog.warn("Suggested leader: " + designatedLeader);
            return true;
        }
        return false;

@@ -16,7 +16,6 @@
  */
 package org.apache.zookeeper.cli;
 
-import java.io.IOException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -24,6 +23,8 @@ import org.apache.commons.cli.Parser;
 import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.AsyncCallback;
 import org.apache.zookeeper.KeeperException;
+
+import java.io.IOException;
 
 /**
  * sync command for cli

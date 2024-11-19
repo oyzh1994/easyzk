@@ -18,13 +18,8 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.Record;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.server.FinalRequestProcessor;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.RequestProcessor;
@@ -32,6 +27,10 @@ import org.apache.zookeeper.server.SyncRequestProcessor;
 import org.apache.zookeeper.server.ZKDatabase;
 import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
 import org.apache.zookeeper.txn.TxnHeader;
+
+import java.io.IOException;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Just like the standard ZooKeeperServer. We just replace the request
@@ -41,8 +40,6 @@ import org.apache.zookeeper.txn.TxnHeader;
  * A SyncRequestProcessor is also spawned off to log proposals from the leader.
  */
 public class FollowerZooKeeperServer extends LearnerZooKeeperServer {
-    private static final Logger LOG =
-        LoggerFactory.getLogger(FollowerZooKeeperServer.class);
 
     /*
      * Pending sync requests
@@ -96,13 +93,13 @@ public class FollowerZooKeeperServer extends LearnerZooKeeperServer {
      */
     public void commit(long zxid) {
         if (pendingTxns.size() == 0) {
-            LOG.warn("Committing " + Long.toHexString(zxid)
+            JulLog.warn("Committing " + Long.toHexString(zxid)
                     + " without seeing txn");
             return;
         }
         long firstElementZxid = pendingTxns.element().zxid;
         if (firstElementZxid != zxid) {
-            LOG.error("Committing zxid 0x" + Long.toHexString(zxid)
+            JulLog.error("Committing zxid 0x" + Long.toHexString(zxid)
                     + " but next pending txn 0x"
                     + Long.toHexString(firstElementZxid));
             System.exit(12);
@@ -113,7 +110,7 @@ public class FollowerZooKeeperServer extends LearnerZooKeeperServer {
 
     synchronized public void sync(){
         if(pendingSyncs.size() ==0){
-            LOG.warn("Not expecting a sync.");
+            JulLog.warn("Not expecting a sync.");
             return;
         }
 

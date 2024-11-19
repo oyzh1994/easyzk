@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,13 +17,15 @@
  */
 package org.apache.zookeeper.common;
 
+import cn.oyzh.common.log.JulLevel;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.logging.Logger;
 
-import org.slf4j.Logger;
 
 /*
  * This code is originally from HDFS, see the similarly named files there
@@ -34,7 +36,7 @@ public class IOUtils {
     /**
      * Closes the stream ignoring {@link IOException}. Must only be called in
      * cleaning up from exception handlers.
-     * 
+     *
      * @param stream
      *            the Stream to close
      */
@@ -45,7 +47,7 @@ public class IOUtils {
     /**
      * Close the Closeable objects and <b>ignore</b> any {@link IOException} or
      * null pointers. Must only be used for cleanup in exception handlers.
-     * 
+     *
      * @param log
      *            the log to record problems to at debug level. Can be null.
      * @param closeables
@@ -58,7 +60,7 @@ public class IOUtils {
                     c.close();
                 } catch (IOException e) {
                     if (log != null) {
-                        log.warn("Exception in closing " + c, e);
+                        log.log(JulLevel.WARN.toLevel(), "Exception in closing " + c, e);
                     }
                 }
             }
@@ -67,7 +69,7 @@ public class IOUtils {
 
     /**
      * Copies from one stream to another.
-     * 
+     *
      * @param in
      *            InputStrem to read from
      * @param out
@@ -79,7 +81,7 @@ public class IOUtils {
      *            end. The streams are closed in the finally clause.
      */
     public static void copyBytes(InputStream in, OutputStream out,
-            int buffSize, boolean close) throws IOException {
+                                 int buffSize, boolean close) throws IOException {
         try {
             copyBytes(in, out, buffSize);
             if (close) {
@@ -98,7 +100,7 @@ public class IOUtils {
 
     /**
      * Copies from one stream to another.
-     * 
+     *
      * @param in
      *            InputStrem to read from
      * @param out

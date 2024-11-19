@@ -16,10 +16,15 @@
  */
 package org.apache.zookeeper.cli;
 
-import java.util.List;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.Parser;
+import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.data.Stat;
+
+import java.util.List;
 
 /**
  * ls2 command for cli
@@ -28,11 +33,11 @@ public class Ls2Command extends CliCommand {
 
     private static Options options = new Options();
     private String args[];
-    
+
     public Ls2Command() {
         super("ls2", "path [watch]");
     }
-    
+
     @Override
     public CliCommand parse(String[] cmdArgs) throws ParseException {
         Parser parser = new PosixParser();
@@ -40,8 +45,8 @@ public class Ls2Command extends CliCommand {
         args = cl.getArgs();
         if (args.length < 2) {
             throw new ParseException(getUsageStr());
-        }    
-        
+        }
+
         return this;
     }
 

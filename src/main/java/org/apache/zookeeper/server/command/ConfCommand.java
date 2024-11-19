@@ -18,9 +18,9 @@
 
 package org.apache.zookeeper.server.command;
 
-import java.io.PrintWriter;
-
 import org.apache.zookeeper.server.ServerCnxn;
+
+import java.io.PrintWriter;
 
 public class ConfCommand extends AbstractFourLetterCommand {
     ConfCommand(PrintWriter pw, ServerCnxn serverCnxn) {

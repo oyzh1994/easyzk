@@ -18,6 +18,9 @@
 
 package org.apache.zookeeper.server.quorum;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.server.ZooKeeperThread;
+
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -30,15 +33,11 @@ import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.channels.UnresolvedAddressException;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.apache.zookeeper.server.ZooKeeperThread;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class implements a connection manager for leader election using TCP. It
@@ -61,7 +60,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class QuorumCnxManager {
-    private static final Logger LOG = LoggerFactory.getLogger(QuorumCnxManager.class);
 
     /*
      * Maximum capacity of thread queues
@@ -237,8 +235,8 @@ public class QuorumCnxManager {
      * @param sid
      */
     public void testInitiateConnection(long sid) throws Exception {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Opening channel to server " + sid);
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("Opening channel to server " + sid);
         }
         Socket sock = new Socket();
         setSockOpts(sock);
@@ -268,14 +266,14 @@ public class QuorumCnxManager {
             dout.write(addr_bytes);
             dout.flush();
         } catch (IOException e) {
-            LOG.warn("Ignoring exception reading or writing challenge: ", e);
+            JulLog.warn("Ignoring exception reading or writing challenge: ", e);
             closeSocket(sock);
             return false;
         }
 
         // If lost the challenge, then drop the new connection
         if (sid > self.getId()) {
-            LOG.info("Have smaller server identifier, so dropping the " +
+            JulLog.info("Have smaller server identifier, so dropping the " +
                      "connection: (" + sid + ", " + self.getId() + ")");
             closeSocket(sock);
             // Otherwise proceed with the connection
@@ -326,7 +324,7 @@ public class QuorumCnxManager {
                     sid = init.sid;
                     electionAddr = init.electionAddr;
                 } catch (InitialMessage.InitialMessageException ex) {
-                    LOG.error(ex.toString());
+                    JulLog.error(ex.toString());
                     closeSocket(sock);
                     return;
                 }
@@ -339,11 +337,11 @@ public class QuorumCnxManager {
                  */
 
                 sid = observerCounter--;
-                LOG.info("Setting arbitrary identifier to observer: {}", sid);
+                JulLog.info("Setting arbitrary identifier to observer: {}", sid);
             }
         } catch (IOException e) {
             closeSocket(sock);
-            LOG.warn("Exception reading or writing challenge: {}", e.toString());
+            JulLog.warn("Exception reading or writing challenge: {}", e.toString());
             return;
         }
 
@@ -362,7 +360,7 @@ public class QuorumCnxManager {
             /*
              * Now we start a new connection
              */
-            LOG.debug("Create new connection to server: {}", sid);
+            JulLog.debug("Create new connection to server: {}", sid);
             closeSocket(sock);
 
             if (electionAddr != null) {
@@ -431,19 +429,19 @@ public class QuorumCnxManager {
      */
     synchronized private boolean connectOne(long sid, InetSocketAddress electionAddr){
         if (senderWorkerMap.get(sid) != null) {
-            LOG.debug("There is a connection already for server " + sid);
+            JulLog.debug("There is a connection already for server " + sid);
             return true;
         }
         try {
 
-             if (LOG.isDebugEnabled()) {
-                 LOG.debug("Opening channel to server " + sid);
+             if (JulLog.isDebugEnabled()) {
+                 JulLog.debug("Opening channel to server " + sid);
              }
              Socket sock = new Socket();
              setSockOpts(sock);
              sock.connect(electionAddr, cnxTO);
-             if (LOG.isDebugEnabled()) {
-                 LOG.debug("Connected to server " + sid);
+             if (JulLog.isDebugEnabled()) {
+                 JulLog.debug("Connected to server " + sid);
              }
              initiateConnection(sock, sid);
              return true;
@@ -452,11 +450,11 @@ public class QuorumCnxManager {
              // exception to be thrown, also UAE cannot be wrapped cleanly
              // so we log the exception in order to capture this critical
              // detail.
-             LOG.warn("Cannot open channel to " + sid
+             JulLog.warn("Cannot open channel to " + sid
                      + " at election address " + electionAddr, e);
              throw e;
          } catch (IOException e) {
-             LOG.warn("Cannot open channel to " + sid
+             JulLog.warn("Cannot open channel to " + sid
                      + " at election address " + electionAddr,
                      e);
              return false;
@@ -472,7 +470,7 @@ public class QuorumCnxManager {
 
     synchronized void connectOne(long sid){
         if (senderWorkerMap.get(sid) != null) {
-             LOG.debug("There is a connection already for server " + sid);
+             JulLog.debug("There is a connection already for server " + sid);
              return;
         }
         synchronized(self) {
@@ -493,7 +491,7 @@ public class QuorumCnxManager {
                    return;
             }
             if (!knownId) {
-                LOG.warn("Invalid server id: " + sid);
+                JulLog.warn("Invalid server id: " + sid);
                 return;
             }
         }
@@ -520,7 +518,7 @@ public class QuorumCnxManager {
      */
     boolean haveDelivered() {
         for (ArrayBlockingQueue<ByteBuffer> queue : queueSendMap.values()) {
-            LOG.debug("Queue size: " + queue.size());
+            JulLog.debug("Queue size: " + queue.size());
             if (queue.size() == 0) {
                 return true;
             }
@@ -534,14 +532,14 @@ public class QuorumCnxManager {
      */
     public void halt() {
         shutdown = true;
-        LOG.debug("Halting listener");
+        JulLog.debug("Halting listener");
         listener.halt();
 
         // Wait for the listener to terminate.
         try {
             listener.join();
         } catch (InterruptedException ex) {
-            LOG.warn("Got interrupted before joining the listener", ex);
+            JulLog.warn("Got interrupted before joining the listener", ex);
         }
         softHalt();
     }
@@ -551,7 +549,7 @@ public class QuorumCnxManager {
      */
     public void softHalt() {
         for (SendWorker sw : senderWorkerMap.values()) {
-            LOG.debug("Halting sender: " + sw);
+            JulLog.debug("Halting sender: " + sw);
             sw.finish();
         }
     }
@@ -577,7 +575,7 @@ public class QuorumCnxManager {
         try {
             sock.close();
         } catch (IOException ie) {
-            LOG.error("Exception while closing", ie);
+            JulLog.error("Exception while closing", ie);
         }
     }
 
@@ -628,13 +626,13 @@ public class QuorumCnxManager {
                         self.recreateSocketAddresses(self.getId());
                         addr = self.getElectionAddress();
                     }
-                    LOG.info("My election bind port: " + addr.toString());
+                    JulLog.info("My election bind port: " + addr.toString());
                     setName(addr.toString());
                     ss.bind(addr);
                     while (!shutdown) {
                         Socket client = ss.accept();
                         setSockOpts(client);
-                        LOG.info("Received connection request "
+                        JulLog.info("Received connection request "
                                 + client.getRemoteSocketAddress());
                         receiveConnection(client);
                         numRetries = 0;
@@ -643,22 +641,22 @@ public class QuorumCnxManager {
                     if (shutdown) {
                         break;
                     }
-                    LOG.error("Exception while listening", e);
+                    JulLog.error("Exception while listening", e);
                     numRetries++;
                     try {
                         ss.close();
                         Thread.sleep(1000);
                     } catch (IOException ie) {
-                        LOG.error("Error closing server socket", ie);
+                        JulLog.error("Error closing server socket", ie);
                     } catch (InterruptedException ie) {
-                        LOG.error("Interrupted while sleeping. " +
+                        JulLog.error("Interrupted while sleeping. " +
                             "Ignoring exception", ie);
                     }
                 }
             }
-            LOG.info("Leaving listener");
+            JulLog.info("Leaving listener");
             if (!shutdown) {
-                LOG.error("As I'm leaving the listener thread, "
+                JulLog.error("As I'm leaving the listener thread, "
                         + "I won't be able to participate in leader "
                         + "election any longer: "
                         + self.getElectionAddress());
@@ -668,7 +666,7 @@ public class QuorumCnxManager {
                     ss.close();
                 } catch (IOException ie) {
                     // Don't log an error for shutdown.
-                    LOG.debug("Error closing server socket", ie);
+                    JulLog.debug("Error closing server socket", ie);
                 }
             }
         }
@@ -678,13 +676,13 @@ public class QuorumCnxManager {
          */
         void halt(){
             try{
-                LOG.debug("Trying to close listener: " + ss);
+                JulLog.debug("Trying to close listener: " + ss);
                 if(ss != null) {
-                    LOG.debug("Closing listener: " + self.getId());
+                    JulLog.debug("Closing listener: " + self.getId());
                     ss.close();
                 }
             } catch (IOException e){
-                LOG.warn("Exception when shutting down listener: " + e);
+                JulLog.warn("Exception when shutting down listener: " + e);
             }
         }
     }
@@ -718,11 +716,11 @@ public class QuorumCnxManager {
             try {
                 dout = new DataOutputStream(sock.getOutputStream());
             } catch (IOException e) {
-                LOG.error("Unable to access socket output stream", e);
+                JulLog.error("Unable to access socket output stream", e);
                 closeSocket(sock);
                 running = false;
             }
-            LOG.debug("Address of remote peer: " + this.sid);
+            JulLog.debug("Address of remote peer: " + this.sid);
         }
 
         synchronized void setRecv(RecvWorker recvWorker) {
@@ -739,8 +737,8 @@ public class QuorumCnxManager {
         }
 
         synchronized boolean finish() {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Calling finish for " + sid);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("Calling finish for " + sid);
             }
 
             if(!running){
@@ -759,8 +757,8 @@ public class QuorumCnxManager {
                 recvWorker.finish();
             }
 
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Removing entry from senderWorkerMap sid=" + sid);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("Removing entry from senderWorkerMap sid=" + sid);
             }
             senderWorkerMap.remove(sid, this);
             threadCnt.decrementAndGet();
@@ -773,7 +771,7 @@ public class QuorumCnxManager {
                 b.position(0);
                 b.get(msgBytes);
             } catch (BufferUnderflowException be) {
-                LOG.error("BufferUnderflowException ", be);
+                JulLog.error("BufferUnderflowException ", be);
                 return;
             }
             dout.writeInt(b.capacity());
@@ -802,12 +800,12 @@ public class QuorumCnxManager {
                 if (bq == null || isSendQueueEmpty(bq)) {
                    ByteBuffer b = lastMessageSent.get(sid);
                    if (b != null) {
-                       LOG.debug("Attempting to send lastMessage to sid=" + sid);
+                       JulLog.debug("Attempting to send lastMessage to sid=" + sid);
                        send(b);
                    }
                 }
             } catch (IOException e) {
-                LOG.error("Failed to send last message. Shutting down thread.", e);
+                JulLog.error("Failed to send last message. Shutting down thread.", e);
                 this.finish();
             }
 
@@ -821,7 +819,7 @@ public class QuorumCnxManager {
                         if (bq != null) {
                             b = pollSendQueue(bq, 1000, TimeUnit.MILLISECONDS);
                         } else {
-                            LOG.error("No queue of incoming messages for " +
+                            JulLog.error("No queue of incoming messages for " +
                                       "server " + sid);
                             break;
                         }
@@ -831,16 +829,16 @@ public class QuorumCnxManager {
                             send(b);
                         }
                     } catch (InterruptedException e) {
-                        LOG.warn("Interrupted while waiting for message on queue",
+                        JulLog.warn("Interrupted while waiting for message on queue",
                                 e);
                     }
                 }
             } catch (Exception e) {
-                LOG.warn("Exception when using channel: for id " + sid + " my id = " +
+                JulLog.warn("Exception when using channel: for id " + sid + " my id = " +
                         self.getId() + " error = " + e);
             }
             this.finish();
-            LOG.warn("Send worker leaving thread " + " id " + sid + " my id = " + self.getId());
+            JulLog.warn("Send worker leaving thread " + " id " + sid + " my id = " + self.getId());
         }
     }
 
@@ -865,7 +863,7 @@ public class QuorumCnxManager {
                 // OK to wait until socket disconnects while reading.
                 sock.setSoTimeout(0);
             } catch (IOException e) {
-                LOG.error("Error while accessing socket for " + sid, e);
+                JulLog.error("Error while accessing socket for " + sid, e);
                 closeSocket(sock);
                 running = false;
             }
@@ -914,10 +912,10 @@ public class QuorumCnxManager {
                     addToRecvQueue(new Message(message.duplicate(), sid));
                 }
             } catch (Exception e) {
-                LOG.warn("Connection broken for id " + sid + ", my id = " +
+                JulLog.warn("Connection broken for id " + sid + ", my id = " +
                         self.getId() + ", error = " , e);
             } finally {
-                LOG.warn("Interrupting SendWorker");
+                JulLog.warn("Interrupting SendWorker");
                 sw.finish();
                 if (sock != null) {
                     closeSocket(sock);
@@ -951,7 +949,7 @@ public class QuorumCnxManager {
                 queue.remove();
             } catch (NoSuchElementException ne) {
                 // element could be removed by poll()
-                LOG.debug("Trying to remove from an empty " +
+                JulLog.debug("Trying to remove from an empty " +
                         "Queue. Ignoring exception " + ne);
             }
         }
@@ -959,7 +957,7 @@ public class QuorumCnxManager {
             queue.add(buffer);
         } catch (IllegalStateException ie) {
             // This should never happen
-            LOG.error("Unable to insert an element in the queue " + ie);
+            JulLog.error("Unable to insert an element in the queue " + ie);
         }
     }
 
@@ -1013,7 +1011,7 @@ public class QuorumCnxManager {
                     recvQueue.remove();
                 } catch (NoSuchElementException ne) {
                     // element could be removed by poll()
-                     LOG.debug("Trying to remove from an empty " +
+                     JulLog.debug("Trying to remove from an empty " +
                          "recvQueue. Ignoring exception " + ne);
                 }
             }
@@ -1021,7 +1019,7 @@ public class QuorumCnxManager {
                 recvQueue.add(msg);
             } catch (IllegalStateException ie) {
                 // This should never happen
-                LOG.error("Unable to insert element in the recvQueue " + ie);
+                JulLog.error("Unable to insert element in the recvQueue " + ie);
             }
         }
     }

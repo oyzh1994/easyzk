@@ -17,7 +17,11 @@
  */
 package org.apache.zookeeper.cli;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.Parser;
+import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.server.util.ConfigUtils;
@@ -56,7 +60,7 @@ public class GetConfigCommand extends CliCommand {
 
     @Override
     public boolean exec() throws KeeperException, InterruptedException {
-        boolean watch = cl.hasOption("w");        
+        boolean watch = cl.hasOption("w");
         Stat stat = new Stat();
         byte data[] = zk.getConfig(watch, stat);
         data = (data == null) ? "null".getBytes() : data;
@@ -65,11 +69,11 @@ public class GetConfigCommand extends CliCommand {
         } else {
             out.println(new String(data));
         }
-        
+
         if (cl.hasOption("s")) {
             new StatPrinter(out).print(stat);
-        }                
-        
+        }
+
         return watch;
     }
 }

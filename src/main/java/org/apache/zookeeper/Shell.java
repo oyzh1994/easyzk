@@ -39,21 +39,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.common.Time;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A base class for running a Unix command.
  *
  * <code>Shell</code> can be used to run unix commands like <code>du</code> or
- * <code>df</code>. It also offers facilities to gate commands by 
+ * <code>df</code>. It also offers facilities to gate commands by
  * time-intervals.
  */
 abstract public class Shell {
-  
-    private static final Logger LOG = LoggerFactory.getLogger(Shell.class);
-  
+
+
   /** a Unix command to get the current user's name */
   public final static String USER_NAME_COMMAND = "whoami";
   /** a Unix command to get the current user's groups list */
@@ -83,17 +81,17 @@ abstract public class Shell {
 
   /** a Unix command to get ulimit of a process. */
   public static final String ULIMIT_COMMAND = "ulimit";
-  
-  /** 
+
+  /**
    * Get the Unix command for setting the maximum virtual memory available
    * to a given child process. This is only relevant when we are forking a
    * process from within the Mapper or the Reducer implementations.
    * Also see Hadoop Pipes and Hadoop Streaming.
-   * 
-   * It also checks to ensure that we are running on a *nix platform else 
+   *
+   * It also checks to ensure that we are running on a *nix platform else
    * (e.g. in Cygwin/Windows) it returns <code>null</code>.
    * @param memoryLimit virtual memory limit
-   * @return a <code>String[]</code> with the ulimit command arguments or 
+   * @return a <code>String[]</code> with the ulimit command arguments or
    *         <code>null</code> if we are running on a non *nix platform or
    *         if the limit is unspecified.
    */
@@ -102,14 +100,14 @@ abstract public class Shell {
     if (WINDOWS) {
       return null;
     }
-    
+
     return new String[] {ULIMIT_COMMAND, "-v", String.valueOf(memoryLimit)};
   }
 
   /** Set to true on Windows platforms */
   public static final boolean WINDOWS /* borrowed from Path.WINDOWS */
                 = System.getProperty("os.name").startsWith("Windows");
-  
+
   private long    interval;   // refresh interval in msec
   private long    lastTime;   // last time the command was performed
   private Map<String, String> environment; // env for the command execution
@@ -119,28 +117,28 @@ abstract public class Shell {
 
   /**If or not script finished executing*/
   private volatile AtomicBoolean completed;
-  
+
   public Shell() {
     this(0L);
   }
-  
+
   /**
-   * @param interval the minimum duration to wait before re-executing the 
+   * @param interval the minimum duration to wait before re-executing the
    *        command.
    */
   public Shell( long interval ) {
     this.interval = interval;
     this.lastTime = (interval<0) ? 0 : -interval;
   }
-  
-  /** set the environment for the command 
+
+  /** set the environment for the command
    * @param env Mapping of environment variables
    */
   protected void setEnvironment(Map<String, String> env) {
     this.environment = env;
   }
 
-  /** set the working directory 
+  /** set the working directory
    * @param dir The directory where the command would be executed
    */
   protected void setWorkingDirectory(File dir) {
@@ -156,20 +154,20 @@ abstract public class Shell {
   }
 
   /** Run a command */
-  private void runCommand() throws IOException { 
+  private void runCommand() throws IOException {
     ProcessBuilder builder = new ProcessBuilder(getExecString());
     Timer timeOutTimer = null;
     ShellTimeoutTimerTask timeoutTimerTask = null;
     timedOut = new AtomicBoolean(false);
     completed = new AtomicBoolean(false);
-    
+
     if (environment != null) {
       builder.environment().putAll(this.environment);
     }
     if (dir != null) {
       builder.directory(this.dir);
     }
-    
+
     process = builder.start();
     if (timeOutInterval > 0) {
       timeOutTimer = new Timer();
@@ -178,14 +176,14 @@ abstract public class Shell {
       //One time scheduling.
       timeOutTimer.schedule(timeoutTimerTask, timeOutInterval);
     }
-    final BufferedReader errReader = 
+    final BufferedReader errReader =
             new BufferedReader(new InputStreamReader(process
                                                      .getErrorStream()));
-    BufferedReader inReader = 
+    BufferedReader inReader =
             new BufferedReader(new InputStreamReader(process
                                                      .getInputStream()));
     final StringBuffer errMsg = new StringBuffer();
-    
+
     // read error and input streams as this would free up the buffers
     // free the error stream buffer
     Thread errThread = new Thread() {
@@ -199,7 +197,7 @@ abstract public class Shell {
             line = errReader.readLine();
           }
         } catch(IOException ioe) {
-          LOG.warn("Error reading the error stream", ioe);
+          JulLog.warn("Error reading the error stream", ioe);
         }
       }
     };
@@ -210,7 +208,7 @@ abstract public class Shell {
       parseExecResult(inReader); // parse the output
       // clear the input stream buffer
       String line = inReader.readLine();
-      while(line != null) { 
+      while(line != null) {
         line = inReader.readLine();
       }
       // wait for the process to finish and check the exit code
@@ -219,7 +217,7 @@ abstract public class Shell {
         // make sure that the error thread exits
         errThread.join();
       } catch (InterruptedException ie) {
-        LOG.warn("Interrupted while reading the error stream", ie);
+        JulLog.warn("Interrupted while reading the error stream", ie);
       }
       completed.set(true);
       //the timeout thread handling
@@ -237,7 +235,7 @@ abstract public class Shell {
       try {
         inReader.close();
       } catch (IOException ioe) {
-        LOG.warn("Error while closing the input stream", ioe);
+        JulLog.warn("Error while closing the input stream", ioe);
       }
       if (!completed.get()) {
         errThread.interrupt();
@@ -245,28 +243,28 @@ abstract public class Shell {
       try {
         errReader.close();
       } catch (IOException ioe) {
-        LOG.warn("Error while closing the error stream", ioe);
+        JulLog.warn("Error while closing the error stream", ioe);
       }
       process.destroy();
       lastTime = Time.currentElapsedTime();
     }
   }
 
-  /** return an array containing the command name & its parameters */ 
+  /** return an array containing the command name & its parameters */
   protected abstract String[] getExecString();
-  
+
   /** Parse the execution result */
   protected abstract void parseExecResult(BufferedReader lines)
   throws IOException;
 
-  /** get the current sub-process executing the given command 
+  /** get the current sub-process executing the given command
    * @return process executing the command
    */
   public Process getProcess() {
     return process;
   }
 
-  /** get the exit code 
+  /** get the exit code
    * @return the exit code of the process
    */
   public int getExitCode() {
@@ -279,47 +277,47 @@ abstract public class Shell {
   @SuppressWarnings("serial")
   public static class ExitCodeException extends IOException {
     int exitCode;
-    
+
     public ExitCodeException(int exitCode, String message) {
       super(message);
       this.exitCode = exitCode;
     }
-    
+
     public int getExitCode() {
       return exitCode;
     }
   }
-  
+
   /**
    * A simple shell command executor.
-   * 
-   * <code>ShellCommandExecutor</code>should be used in cases where the output 
-   * of the command needs no explicit parsing and where the command, working 
-   * directory and the environment remains unchanged. The output of the command 
+   *
+   * <code>ShellCommandExecutor</code>should be used in cases where the output
+   * of the command needs no explicit parsing and where the command, working
+   * directory and the environment remains unchanged. The output of the command
    * is stored as-is and is expected to be small.
    */
   public static class ShellCommandExecutor extends Shell {
-    
+
     private String[] command;
     private StringBuffer output;
-    
-    
+
+
     public ShellCommandExecutor(String[] execString) {
       this(execString, null);
     }
-    
+
     public ShellCommandExecutor(String[] execString, File dir) {
       this(execString, dir, null);
     }
-   
-    public ShellCommandExecutor(String[] execString, File dir, 
+
+    public ShellCommandExecutor(String[] execString, File dir,
                                  Map<String, String> env) {
       this(execString, dir, env , 0L);
     }
 
     /**
      * Create a new instance of the ShellCommandExecutor to execute a command.
-     * 
+     *
      * @param execString The command to execute with arguments
      * @param dir If not-null, specifies the directory which should be set
      *            as the current working directory for the command.
@@ -329,9 +327,9 @@ abstract public class Shell {
      *            environment is not modified.
      * @param timeout Specifies the time in milliseconds, after which the
      *                command will be killed and the status marked as timedout.
-     *                If 0, the command will not be timed out. 
+     *                If 0, the command will not be timed out.
      */
-    public ShellCommandExecutor(String[] execString, File dir, 
+    public ShellCommandExecutor(String[] execString, File dir,
         Map<String, String> env, long timeout) {
       command = execString.clone();
       if (dir != null) {
@@ -342,11 +340,11 @@ abstract public class Shell {
       }
       timeOutInterval = timeout;
     }
-        
+
 
     /** Execute the shell command. */
     public void execute() throws IOException {
-      this.run();    
+      this.run();
     }
 
     protected String[] getExecString() {
@@ -361,7 +359,7 @@ abstract public class Shell {
         output.append(buf, 0, nRead);
       }
     }
-    
+
     /** Get the output of the shell command.*/
     public String getOutput() {
       return (output == null) ? "" : output.toString();
@@ -388,28 +386,28 @@ abstract public class Shell {
       return builder.toString();
     }
   }
-  
+
   /**
    * To check if the passed script to shell command executor timed out or
    * not.
-   * 
+   *
    * @return if the script timed out.
    */
   public boolean isTimedOut() {
     return timedOut.get();
   }
-  
+
   /**
    * Set if the command has timed out.
-   * 
+   *
    */
   private void setTimedOut() {
     this.timedOut.set(true);
   }
-  
-  /** 
-   * Static method to execute a shell command. 
-   * Covers most of the simple cases without requiring the user to implement  
+
+  /**
+   * Static method to execute a shell command.
+   * Covers most of the simple cases without requiring the user to implement
    * the <code>Shell</code> interface.
    * @param cmd shell command to execute.
    * @return the output of the executed command.
@@ -417,38 +415,38 @@ abstract public class Shell {
   public static String execCommand(String ... cmd) throws IOException {
     return execCommand(null, cmd, 0L);
   }
-  
-  /** 
-   * Static method to execute a shell command. 
-   * Covers most of the simple cases without requiring the user to implement  
+
+  /**
+   * Static method to execute a shell command.
+   * Covers most of the simple cases without requiring the user to implement
    * the <code>Shell</code> interface.
    * @param env the map of environment key=value
    * @param cmd shell command to execute.
    * @param timeout time in milliseconds after which script should be marked timeout
    * @return the output of the executed command.o
    */
-  
+
   public static String execCommand(Map<String, String> env, String[] cmd,
       long timeout) throws IOException {
-    ShellCommandExecutor exec = new ShellCommandExecutor(cmd, null, env, 
+    ShellCommandExecutor exec = new ShellCommandExecutor(cmd, null, env,
                                                           timeout);
     exec.execute();
     return exec.getOutput();
   }
 
-  /** 
-   * Static method to execute a shell command. 
-   * Covers most of the simple cases without requiring the user to implement  
+  /**
+   * Static method to execute a shell command.
+   * Covers most of the simple cases without requiring the user to implement
    * the <code>Shell</code> interface.
    * @param env the map of environment key=value
    * @param cmd shell command to execute.
    * @return the output of the executed command.
    */
-  public static String execCommand(Map<String,String> env, String ... cmd) 
+  public static String execCommand(Map<String,String> env, String ... cmd)
   throws IOException {
     return execCommand(env, cmd, 0L);
   }
-  
+
   /**
    * Timer which is used to timeout scripts spawned off by shell.
    */
@@ -467,7 +465,7 @@ abstract public class Shell {
         p.exitValue();
       } catch (Exception e) {
         //Process has not terminated.
-        //So check if it has completed 
+        //So check if it has completed
         //if not just destroy it.
         if (p != null && !shell.completed.get()) {
           shell.setTimedOut();

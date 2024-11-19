@@ -18,9 +18,9 @@
 
 package org.apache.zookeeper.server.command;
 
-import java.io.PrintWriter;
-
 import org.apache.zookeeper.server.ServerCnxn;
+
+import java.io.PrintWriter;
 
 public class RuokCommand extends AbstractFourLetterCommand {
     public RuokCommand(PrintWriter pw, ServerCnxn serverCnxn) {

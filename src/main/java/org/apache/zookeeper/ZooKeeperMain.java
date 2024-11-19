@@ -34,8 +34,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.data.Stat;
 
@@ -70,9 +69,8 @@ import org.apache.zookeeper.client.ZKClientConfig;
  *
  */
 public class ZooKeeperMain {
-    private static final Logger LOG = LoggerFactory.getLogger(ZooKeeperMain.class);
     protected static final Map<String,String> commandMap = new HashMap<String,String>( );
-    protected static final Map<String,CliCommand> commandMapCli = 
+    protected static final Map<String,CliCommand> commandMapCli =
             new HashMap<String,CliCommand>( );
 
     protected MyCommandOptions cl = new MyCommandOptions();
@@ -115,7 +113,7 @@ public class ZooKeeperMain {
         new ReconfigCommand().addToMap(commandMapCli);
         new GetConfigCommand().addToMap(commandMapCli);
         new RemoveWatchesCommand().addToMap(commandMapCli);
-        
+
         // add all to commandMap
         for (Entry<String, CliCommand> entry : commandMapCli.entrySet()) {
             commandMap.put(entry.getKey(), entry.getValue().getOptionStr());
@@ -260,7 +258,7 @@ public class ZooKeeperMain {
         return cmdList;
     }
 
-    protected String getPrompt() {       
+    protected String getPrompt() {
         return "[zk: " + host + "("+zk.getState()+")" + " " + commandCount + "] ";
     }
 
@@ -282,7 +280,7 @@ public class ZooKeeperMain {
                  Integer.parseInt(cl.getOption("timeout")),
                  new MyWatcher(), readOnly);
     }
-    
+
     public static void main(String args[])
         throws KeeperException, IOException, InterruptedException
     {
@@ -330,19 +328,19 @@ public class ZooKeeperMain {
                     executeLine(line);
                 }
             } catch (ClassNotFoundException e) {
-                LOG.debug("Unable to start jline", e);
+                JulLog.debug("Unable to start jline", e);
                 jlinemissing = true;
             } catch (NoSuchMethodException e) {
-                LOG.debug("Unable to start jline", e);
+                JulLog.debug("Unable to start jline", e);
                 jlinemissing = true;
             } catch (InvocationTargetException e) {
-                LOG.debug("Unable to start jline", e);
+                JulLog.debug("Unable to start jline", e);
                 jlinemissing = true;
             } catch (IllegalAccessException e) {
-                LOG.debug("Unable to start jline", e);
+                JulLog.debug("Unable to start jline", e);
                 jlinemissing = true;
             } catch (InstantiationException e) {
-                LOG.debug("Unable to start jline", e);
+                JulLog.debug("Unable to start jline", e);
                 jlinemissing = true;
             }
 
@@ -466,7 +464,7 @@ public class ZooKeeperMain {
             try {
                 children = zk.getChildren(quotaPath, false);
             } catch(KeeperException.NoNodeException ne) {
-                LOG.debug("child removed during quota check", ne);
+                JulLog.debug("child removed during quota check", ne);
                 return;
             }
             if (children.size() == 0) {
@@ -631,10 +629,10 @@ public class ZooKeeperMain {
             usage();
             return false;
         }
-        
+
         boolean watch = false;
-        LOG.debug("Processing " + cmd);
-        
+        JulLog.debug("Processing " + cmd);
+
         try {
         if (cmd.equals("quit")) {
             zk.close();
@@ -667,16 +665,16 @@ public class ZooKeeperMain {
             if (args.length >=2) {
                 connectToZK(args[1]);
             } else {
-                connectToZK(host);                
+                connectToZK(host);
             }
-        } 
-        
+        }
+
         // Below commands all need a live connection
         if (zk == null || !zk.getState().isAlive()) {
             System.out.println("Not connected");
             return false;
         }
-        
+
         // execute from commandMap
         CliCommand cliCmd = commandMapCli.get(cmd);
         if(cliCmd != null) {

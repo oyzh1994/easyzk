@@ -43,6 +43,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.security.auth.login.LoginException;
 import javax.security.sasl.SaslException;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryInputArchive;
 import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.Record;
@@ -86,8 +87,6 @@ import org.apache.zookeeper.proto.WatcherEvent;
 import org.apache.zookeeper.server.ByteBufferInputStream;
 import org.apache.zookeeper.server.ZooKeeperThread;
 import org.apache.zookeeper.server.ZooTrace;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
@@ -97,7 +96,6 @@ import org.slf4j.MDC;
  *
  */
 public class ClientCnxn {
-    private static final Logger LOG = LoggerFactory.getLogger(ClientCnxn.class);
 
     /* ZOOKEEPER-706: If a session has a large number of watches set then
      * attempting to re-establish those watches after a connection loss may
@@ -305,7 +303,7 @@ public class ClientCnxn {
                 this.bb.putInt(this.bb.capacity() - 4);
                 this.bb.rewind();
             } catch (IOException e) {
-                LOG.warn("Ignoring unexpected exception", e);
+                JulLog.warn("Ignoring unexpected exception", e);
             }
         }
 
@@ -507,10 +505,10 @@ public class ClientCnxn {
                     }
               }
            } catch (InterruptedException e) {
-              LOG.error("Event thread exiting due to interruption", e);
+              JulLog.error("Event thread exiting due to interruption", e);
            }
 
-            LOG.info("EventThread shut down for session: 0x{}",
+            JulLog.info("EventThread shut down for session: 0x{}",
                      Long.toHexString(getSessionId()));
         }
 
@@ -523,7 +521,7 @@ public class ClientCnxn {
                       try {
                           watcher.process(pair.event);
                       } catch (Throwable t) {
-                          LOG.error("Error while calling watcher ", t);
+                          JulLog.error("Error while calling watcher ", t);
                       }
                   }
                 } else if (event instanceof LocalCallback) {
@@ -558,7 +556,7 @@ public class ClientCnxn {
                       rc = p.replyHeader.getErr();
                   }
                   if (p.cb == null) {
-                      LOG.warn("Somehow a null cb got to EventThread!");
+                      JulLog.warn("Somehow a null cb got to EventThread!");
                   } else if (p.response instanceof ExistsResponse
                           || p.response instanceof SetDataResponse
                           || p.response instanceof SetACLResponse) {
@@ -665,7 +663,7 @@ public class ClientCnxn {
                   }
               }
           } catch (Throwable t) {
-              LOG.error("Caught unexpected throwable", t);
+              JulLog.error("Caught unexpected throwable", t);
           }
        }
     }
@@ -693,10 +691,10 @@ public class ClientCnxn {
                     }
                 }
             } catch (KeeperException.NoWatcherException nwe) {
-                LOG.error("Failed to find watcher!", nwe);
+                JulLog.error("Failed to find watcher!", nwe);
                 p.replyHeader.setErr(nwe.code().intValue());
             } catch (KeeperException ke) {
-                LOG.error("Exception when removing watcher", ke);
+                JulLog.error("Exception when removing watcher", ke);
                 p.replyHeader.setErr(ke.code().intValue());
             }
         }
@@ -807,8 +805,8 @@ public class ClientCnxn {
             replyHdr.deserialize(bbia, "header");
             if (replyHdr.getXid() == -2) {
                 // -2 is the xid for pings
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Got ping response for sessionid: 0x"
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Got ping response for sessionid: 0x"
                             + Long.toHexString(sessionId)
                             + " after "
                             + ((System.nanoTime() - lastPingSentNs) / 1000000)
@@ -823,16 +821,16 @@ public class ClientCnxn {
                     eventThread.queueEvent( new WatchedEvent(EventType.None,
                             KeeperState.AuthFailed, null) );
                 }
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Got auth sessionid:0x"
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Got auth sessionid:0x"
                             + Long.toHexString(sessionId));
                 }
                 return;
             }
             if (replyHdr.getXid() == -1) {
                 // -1 means notification
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Got notification sessionid:0x"
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Got notification sessionid:0x"
                         + Long.toHexString(sessionId));
                 }
                 WatcherEvent event = new WatcherEvent();
@@ -846,15 +844,15 @@ public class ClientCnxn {
                     else if (serverPath.length() > chrootPath.length())
                         event.setPath(serverPath.substring(chrootPath.length()));
                     else {
-                    	LOG.warn("Got server path " + event.getPath()
+                    	JulLog.warn("Got server path " + event.getPath()
                     			+ " which is too short for chroot path "
                     			+ chrootPath);
                     }
                 }
 
                 WatchedEvent we = new WatchedEvent(event);
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Got " + we + " for sessionid 0x"
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Got " + we + " for sessionid 0x"
                             + Long.toHexString(sessionId));
                 }
 
@@ -908,8 +906,8 @@ public class ClientCnxn {
                     packet.response.deserialize(bbia, "response");
                 }
 
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Reading reply sessionid:0x"
+                if (JulLog.isDebugEnabled()) {
+                    JulLog.debug("Reading reply sessionid:0x"
                             + Long.toHexString(sessionId) + ", packet:: " + packet);
                 }
             } finally {
@@ -945,7 +943,7 @@ public class ClientCnxn {
          * Setup session, previous watches, authentication.
          */
         void primeConnection() throws IOException {
-            LOG.info("Socket connection established, initiating session, client: {}, server: {}",
+            JulLog.info("Socket connection established, initiating session, client: {}, server: {}",
                     clientCnxnSocket.getLocalSocketAddress(),
                     clientCnxnSocket.getRemoteSocketAddress());
             isFirstConnect = false;
@@ -1012,8 +1010,8 @@ public class ClientCnxn {
             outgoingQueue.addFirst(new Packet(null, null, conReq,
                     null, null, readOnly));
             clientCnxnSocket.connectionPrimed();
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Session establishment request sent on "
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("Session establishment request sent on "
                         + clientCnxnSocket.getRemoteSocketAddress());
             }
         }
@@ -1058,7 +1056,7 @@ public class ClientCnxn {
                 try {
                     Thread.sleep(r.nextInt(1000));
                 } catch (InterruptedException e) {
-                    LOG.warn("Unexpected exception", e);
+                    JulLog.warn("Unexpected exception", e);
                 }
             }
             state = States.CONNECTING;
@@ -1085,7 +1083,7 @@ public class ClientCnxn {
                     // for Kerberos this means that the client failed to authenticate with the KDC.
                     // This is different from an authentication error that occurs during communication
                     // with the Zookeeper server, which is handled below.
-                    LOG.warn("SASL configuration failed: " + e + " Will continue connection to Zookeeper server without "
+                    JulLog.warn("SASL configuration failed: " + e + " Will continue connection to Zookeeper server without "
                       + "SASL authentication, if Zookeeper server allows it.");
                     eventThread.queueEvent(new WatchedEvent(
                       EventType.None,
@@ -1110,7 +1108,7 @@ public class ClientCnxn {
             if (zooKeeperSaslClient != null) {
               msg += ". " + zooKeeperSaslClient.getConfigStatus();
             }
-            LOG.info(msg);
+            JulLog.info(msg);
         }
 
         private static final String RETRY_CONN_MSG =
@@ -1142,7 +1140,7 @@ public class ClientCnxn {
                                 try {
                                     zooKeeperSaslClient.initialize(ClientCnxn.this);
                                 } catch (SaslException e) {
-                                   LOG.error("SASL authentication with Zookeeper Quorum member failed: " + e);
+                                   JulLog.error("SASL authentication with Zookeeper Quorum member failed: " + e);
                                     state = States.AUTH_FAILED;
                                     sendAuthEvent = true;
                                 }
@@ -1178,7 +1176,7 @@ public class ClientCnxn {
                             + "ms"
                             + " for sessionid 0x"
                             + Long.toHexString(sessionId);
-                        LOG.warn(warnInfo);
+                        JulLog.warn(warnInfo);
                         throw new SessionTimeoutException(warnInfo);
                     }
                     if (state.isConnected()) {
@@ -1214,9 +1212,9 @@ public class ClientCnxn {
                     clientCnxnSocket.doTransport(to, pendingQueue, ClientCnxn.this);
                 } catch (Throwable e) {
                     if (closing) {
-                        if (LOG.isDebugEnabled()) {
+                        if (JulLog.isDebugEnabled()) {
                             // closing so this is expected
-                            LOG.debug("An exception was thrown while closing send thread for session 0x"
+                            JulLog.debug("An exception was thrown while closing send thread for session 0x"
                                     + Long.toHexString(getSessionId())
                                     + " : " + e.getMessage());
                         }
@@ -1224,15 +1222,15 @@ public class ClientCnxn {
                     } else {
                         // this is ugly, you have a better way speak up
                         if (e instanceof SessionExpiredException) {
-                            LOG.info(e.getMessage() + ", closing socket connection");
+                            JulLog.info(e.getMessage() + ", closing socket connection");
                         } else if (e instanceof SessionTimeoutException) {
-                            LOG.info(e.getMessage() + RETRY_CONN_MSG);
+                            JulLog.info(e.getMessage() + RETRY_CONN_MSG);
                         } else if (e instanceof EndOfStreamException) {
-                            LOG.info(e.getMessage() + RETRY_CONN_MSG);
+                            JulLog.info(e.getMessage() + RETRY_CONN_MSG);
                         } else if (e instanceof RWServerFoundException) {
-                            LOG.info(e.getMessage());
+                            JulLog.info(e.getMessage());
                         } else {
-                            LOG.warn(
+                            JulLog.warn(
                                     "Session 0x"
                                             + Long.toHexString(getSessionId())
                                             + " for server "
@@ -1264,7 +1262,7 @@ public class ClientCnxn {
                 eventThread.queueEvent(new WatchedEvent(EventType.None,
                         KeeperState.Disconnected, null));
             }
-            ZooTrace.logTraceMessage(LOG, ZooTrace.getTextTraceLevel(),
+            ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.getTextTraceLevel(),
                     "SendThread exited loop for session: 0x"
                            + Long.toHexString(getSessionId()));
         }
@@ -1272,7 +1270,7 @@ public class ClientCnxn {
         private void pingRwServer() throws RWServerFoundException {
             String result = null;
             InetSocketAddress addr = hostProvider.next(0);
-            LOG.info("Checking server " + addr + " for being r/w." +
+            JulLog.info("Checking server " + addr + " for being r/w." +
                     " Timeout " + pingRwTimeout);
 
             Socket sock = null;
@@ -1292,21 +1290,21 @@ public class ClientCnxn {
                 // ignore, this just means server is not up
             } catch (IOException e) {
                 // some unexpected error, warn about it
-                LOG.warn("Exception while seeking for r/w server " +
+                JulLog.warn("Exception while seeking for r/w server " +
                         e.getMessage(), e);
             } finally {
                 if (sock != null) {
                     try {
                         sock.close();
                     } catch (IOException e) {
-                        LOG.warn("Unexpected exception", e);
+                        JulLog.warn("Unexpected exception", e);
                     }
                 }
                 if (br != null) {
                     try {
                         br.close();
                     } catch (IOException e) {
-                        LOG.warn("Unexpected exception", e);
+                        JulLog.warn("Unexpected exception", e);
                     }
                 }
             }
@@ -1364,11 +1362,11 @@ public class ClientCnxn {
                 String warnInfo;
                 warnInfo = "Unable to reconnect to ZooKeeper service, session 0x"
                     + Long.toHexString(sessionId) + " has expired";
-                LOG.warn(warnInfo);
+                JulLog.warn(warnInfo);
                 throw new SessionExpiredException(warnInfo);
             }
             if (!readOnly && isRO) {
-                LOG.error("Read/write client got connected to read-only server");
+                JulLog.error("Read/write client got connected to read-only server");
             }
             readTimeout = negotiatedSessionTimeout * 2 / 3;
             connectTimeout = negotiatedSessionTimeout / hostProvider.size();
@@ -1378,7 +1376,7 @@ public class ClientCnxn {
             state = (isRO) ?
                     States.CONNECTEDREADONLY : States.CONNECTED;
             seenRwServerBefore |= !isRO;
-            LOG.info("Session establishment complete on server "
+            JulLog.info("Session establishment complete on server "
                     + clientCnxnSocket.getRemoteSocketAddress()
                     + ", sessionid = 0x" + Long.toHexString(sessionId)
                     + ", negotiated timeout = " + negotiatedSessionTimeout
@@ -1432,8 +1430,8 @@ public class ClientCnxn {
      * behavior.
      */
     public void disconnect() {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Disconnecting client for session: 0x"
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("Disconnecting client for session: 0x"
                       + Long.toHexString(getSessionId()));
         }
 
@@ -1451,8 +1449,8 @@ public class ClientCnxn {
      * @throws IOException
      */
     public void close() throws IOException {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Closing client for session: 0x"
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("Closing client for session: 0x"
                       + Long.toHexString(getSessionId()));
         }
 

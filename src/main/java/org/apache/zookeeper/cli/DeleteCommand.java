@@ -17,7 +17,11 @@
  */
 package org.apache.zookeeper.cli;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.Parser;
+import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.KeeperException;
 
 /**
@@ -45,7 +49,7 @@ public class DeleteCommand extends CliCommand {
         if (args.length < 2) {
             throw new ParseException(getUsageStr());
         }
-        
+
         retainCompatibility(cmdArgs);
 
         return this;
@@ -59,7 +63,7 @@ public class DeleteCommand extends CliCommand {
             newCmd[0] = cmdArgs[0];
             newCmd[1] = "-v";
             newCmd[2] = cmdArgs[2]; // version
-            newCmd[3] = cmdArgs[1]; // path            
+            newCmd[3] = cmdArgs[1]; // path
             err.println("'delete path [version]' has been deprecated. "
                     + "Please use 'delete [-v version] path' instead.");
             Parser parser = new PosixParser();
@@ -77,7 +81,7 @@ public class DeleteCommand extends CliCommand {
         } else {
             version = -1;
         }
-        
+
         try {
         zk.delete(path, version);
         } catch(KeeperException.BadVersionException ex) {

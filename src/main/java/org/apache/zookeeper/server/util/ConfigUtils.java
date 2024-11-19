@@ -18,18 +18,18 @@
 
 package org.apache.zookeeper.server.util;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Properties;
-import java.util.Map.Entry;
-
 import org.apache.zookeeper.server.quorum.QuorumPeer;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 
 public class ConfigUtils {
 	static public String getClientConfigStr(String configData) {
-        Properties props = new Properties();    	
+        Properties props = new Properties();
         try {
           props.load(new StringReader(configData));
 		} catch (IOException e) {
@@ -43,11 +43,11 @@ public class ConfigUtils {
              String key = entry.getKey().toString().trim();
              String value = entry.getValue().toString().trim();
              if (key.equals("version")) version = value;
-             if (!key.startsWith("server.")) continue;	         
+             if (!key.startsWith("server.")) continue;
              QuorumPeer.QuorumServer qs;
              try {
                qs = new QuorumPeer.QuorumServer(-1, value);
-             } catch (ConfigException e) {				
+             } catch (ConfigException e) {
                     e.printStackTrace();
                     continue;
              }

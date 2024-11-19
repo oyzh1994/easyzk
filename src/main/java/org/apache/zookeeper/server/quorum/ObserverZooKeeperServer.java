@@ -17,11 +17,7 @@
  */
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.server.FinalRequestProcessor;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.RequestProcessor;
@@ -29,65 +25,66 @@ import org.apache.zookeeper.server.SyncRequestProcessor;
 import org.apache.zookeeper.server.ZKDatabase;
 import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
 
+import java.io.IOException;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * A ZooKeeperServer for the Observer node type. Not much is different, but
- * we anticipate specializing the request processors in the future. 
+ * we anticipate specializing the request processors in the future.
  *
  */
 public class ObserverZooKeeperServer extends LearnerZooKeeperServer {
-    private static final Logger LOG =
-        LoggerFactory.getLogger(ObserverZooKeeperServer.class);        
-    
+
     /**
      * Enable since request processor for writing txnlog to disk and
      * take periodic snapshot. Default is ON.
      */
-    
+
     private boolean syncRequestProcessorEnabled = this.self.getSyncEnabled();
-    
+
     /*
      * Pending sync requests
      */
-    ConcurrentLinkedQueue<Request> pendingSyncs = 
+    ConcurrentLinkedQueue<Request> pendingSyncs =
         new ConcurrentLinkedQueue<Request>();
 
     ObserverZooKeeperServer(FileTxnSnapLog logFactory, QuorumPeer self, ZKDatabase zkDb) throws IOException {
         super(logFactory, self.tickTime, self.minSessionTimeout, self.maxSessionTimeout, zkDb, self);
-        LOG.info("syncEnabled =" + syncRequestProcessorEnabled);
+        JulLog.info("syncEnabled =" + syncRequestProcessorEnabled);
     }
-    
+
     public Observer getObserver() {
         return self.observer;
     }
-    
+
     @Override
     public Learner getLearner() {
         return self.observer;
-    }       
-    
+    }
+
     /**
      * Unlike a Follower, which sees a full request only during the PROPOSAL
-     * phase, Observers get all the data required with the INFORM packet. 
+     * phase, Observers get all the data required with the INFORM packet.
      * This method commits a request that has been unpacked by from an INFORM
-     * received from the Leader. 
-     *      
+     * received from the Leader.
+     *
      * @param request
      */
-    public void commitRequest(Request request) {     
+    public void commitRequest(Request request) {
         if (syncRequestProcessorEnabled) {
             // Write to txnlog and take periodic snapshot
             syncProcessor.processRequest(request);
         }
-        commitProcessor.commit(request);        
+        commitProcessor.commit(request);
     }
-    
+
     /**
      * Set up the request processors for an Observer:
      * firstProcesor->commitProcessor->finalProcessor
      */
     @Override
-    protected void setupRequestProcessors() {      
-        // We might consider changing the processor behaviour of 
+    protected void setupRequestProcessors() {
+        // We might consider changing the processor behaviour of
         // Observers to, for example, remove the disk sync requirements.
         // Currently, they behave almost exactly the same as followers.
         RequestProcessor finalProcessor = new FinalRequestProcessor(this);
@@ -117,23 +114,23 @@ public class ObserverZooKeeperServer extends LearnerZooKeeperServer {
      */
     synchronized public void sync(){
         if(pendingSyncs.size() ==0){
-            LOG.warn("Not expecting a sync.");
+            JulLog.warn("Not expecting a sync.");
             return;
         }
-                
+
         Request r = pendingSyncs.remove();
         commitProcessor.commit(r);
     }
-    
+
     @Override
     public String getState() {
         return "observer";
-    };    
+    };
 
     @Override
     public synchronized void shutdown() {
         if (!isRunning()) {
-            LOG.debug("ZooKeeper server is not running, so not proceeding to shutdown!");
+            JulLog.debug("ZooKeeper server is not running, so not proceeding to shutdown!");
             return;
         }
         super.shutdown();

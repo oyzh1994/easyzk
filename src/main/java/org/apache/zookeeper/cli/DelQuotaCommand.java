@@ -17,14 +17,21 @@
  */
 package org.apache.zookeeper.cli;
 
-import java.io.IOException;
-import java.util.List;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.Parser;
+import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Quotas;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * delQuota command for cli
@@ -57,7 +64,7 @@ public class DelQuotaCommand extends CliCommand {
     }
 
     @Override
-    public boolean exec() throws KeeperException, IOException, 
+    public boolean exec() throws KeeperException, IOException,
                                  InterruptedException {
         //if neither option -n or -b is specified, we delete
         // the quota node for thsi node.
@@ -90,7 +97,7 @@ public class DelQuotaCommand extends CliCommand {
             boolean bytes, boolean numNodes)
             throws KeeperException, IOException, InterruptedException {
         String parentPath = Quotas.quotaZookeeper + path;
-        String quotaPath = Quotas.quotaZookeeper + path + "/" + 
+        String quotaPath = Quotas.quotaZookeeper + path + "/" +
                 Quotas.limitNode;
         if (zk.exists(quotaPath, false) == null) {
             System.out.println("Quota does not exist for " + path);

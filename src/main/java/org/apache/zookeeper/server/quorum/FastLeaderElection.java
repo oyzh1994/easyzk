@@ -19,15 +19,7 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
-
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.common.Time;
 import org.apache.zookeeper.jmx.MBeanRegistry;
 import org.apache.zookeeper.server.ZooKeeperThread;
@@ -37,8 +29,14 @@ import org.apache.zookeeper.server.quorum.QuorumPeer.ServerState;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
 import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
 import org.apache.zookeeper.server.util.ZxidUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 /**
@@ -53,7 +51,6 @@ import org.slf4j.LoggerFactory;
 
 
 public class FastLeaderElection implements Election {
-    private static final Logger LOG = LoggerFactory.getLogger(FastLeaderElection.class);
 
     /**
      * Determine how much time a process has to wait
@@ -237,7 +234,7 @@ public class FastLeaderElection implements Election {
 
                         // The current protocol and two previous generations all send at least 28 bytes
                         if (response.buffer.capacity() < 28) {
-                            LOG.error("Got a short response: " + response.buffer.capacity());
+                            JulLog.error("Got a short response: " + response.buffer.capacity());
                             continue;
                         }
 
@@ -270,10 +267,10 @@ public class FastLeaderElection implements Election {
 
                                 version = response.buffer.getInt();
                             } else {
-                                LOG.info("Backward compatibility mode (36 bits), server id: {}", response.sid);
+                                JulLog.info("Backward compatibility mode (36 bits), server id: {}", response.sid);
                             }
                         } else {
-                            LOG.info("Backward compatibility mode (28 bits), server id: {}", response.sid);
+                            JulLog.info("Backward compatibility mode (28 bits), server id: {}", response.sid);
                             rpeerepoch = ZxidUtils.getEpochFromZxid(rzxid);
                         }
 
@@ -291,31 +288,31 @@ public class FastLeaderElection implements Election {
                                     rqv = self.configFromString(new String(b));
                                     QuorumVerifier curQV = self.getQuorumVerifier();
                                     if (rqv.getVersion() > curQV.getVersion()) {
-                                        LOG.info("{} Received version: {} my version: {}", self.getId(),
+                                        JulLog.info("{} Received version: {} my version: {}", self.getId(),
                                                 Long.toHexString(rqv.getVersion()),
                                                 Long.toHexString(self.getQuorumVerifier().getVersion()));
                                         if (self.getPeerState() == ServerState.LOOKING) {
-                                            LOG.debug("Invoking processReconfig(), state: {}", self.getServerState());
+                                            JulLog.debug("Invoking processReconfig(), state: {}", self.getServerState());
                                             self.processReconfig(rqv, null, null, false);
                                             if (!rqv.equals(curQV)) {
-                                                LOG.info("restarting leader election");
+                                                JulLog.info("restarting leader election");
                                                 self.shuttingDownLE = true;
                                                 self.getElectionAlg().shutdown();
 
                                                 break;
                                             }
                                         } else {
-                                            LOG.debug("Skip processReconfig(), state: {}", self.getServerState());
+                                            JulLog.debug("Skip processReconfig(), state: {}", self.getServerState());
                                         }
                                     }
                                 } catch (IOException e) {
-                                    LOG.error("Something went wrong while processing config received from {}", response.sid);
+                                    JulLog.error("Something went wrong while processing config received from {}", response.sid);
                                } catch (ConfigException e) {
-                                   LOG.error("Something went wrong while processing config received from {}", response.sid);
+                                   JulLog.error("Something went wrong while processing config received from {}", response.sid);
                                }
                             }
                         } else {
-                            LOG.info("Backward compatibility mode (before reconfig), server id: {}", response.sid);
+                            JulLog.info("Backward compatibility mode (before reconfig), server id: {}", response.sid);
                         }
 
                         /*
@@ -337,8 +334,8 @@ public class FastLeaderElection implements Election {
                             sendqueue.offer(notmsg);
                         } else {
                             // Receive new message
-                            if (LOG.isDebugEnabled()) {
-                                LOG.debug("Receive new notification message. My id = "
+                            if (JulLog.isDebugEnabled()) {
+                                JulLog.debug("Receive new notification message. My id = "
                                         + self.getId());
                             }
 
@@ -372,7 +369,7 @@ public class FastLeaderElection implements Election {
                             /*
                              * Print notification info
                              */
-                            if(LOG.isInfoEnabled()){
+                            if(JulLog.isInfoEnabled()){
                                 printNotification(n);
                             }
 
@@ -409,8 +406,8 @@ public class FastLeaderElection implements Election {
                                  */
                                 Vote current = self.getCurrentVote();
                                 if(ackstate == ServerState.LOOKING){
-                                    if(LOG.isDebugEnabled()){
-                                        LOG.debug("Sending new notification. My id ={} recipient={} zxid=0x{} leader={} config version = {}",
+                                    if(JulLog.isDebugEnabled()){
+                                        JulLog.debug("Sending new notification. My id ={} recipient={} zxid=0x{} leader={} config version = {}",
                                                 self.getId(),
                                                 response.sid,
                                                 Long.toHexString(current.getZxid()),
@@ -433,11 +430,11 @@ public class FastLeaderElection implements Election {
                             }
                         }
                     } catch (InterruptedException e) {
-                        LOG.warn("Interrupted Exception while waiting for new message" +
+                        JulLog.warn("Interrupted Exception while waiting for new message" +
                                 e.toString());
                     }
                 }
-                LOG.info("WorkerReceiver is down");
+                JulLog.info("WorkerReceiver is down");
             }
         }
 
@@ -467,7 +464,7 @@ public class FastLeaderElection implements Election {
                         break;
                     }
                 }
-                LOG.info("WorkerSender is down");
+                JulLog.info("WorkerSender is down");
             }
 
             /**
@@ -638,8 +635,8 @@ public class FastLeaderElection implements Election {
     }
 
     private void leaveInstance(Vote v) {
-        if(LOG.isDebugEnabled()){
-            LOG.debug("About to leave FLE instance: leader={}, zxid=0x{}, my id={}, my state={}",
+        if(JulLog.isDebugEnabled()){
+            JulLog.debug("About to leave FLE instance: leader={}, zxid=0x{}, my id={}, my state={}",
                 v.getId(), Long.toHexString(v.getZxid()), self.getId(), self.getPeerState());
         }
         recvqueue.clear();
@@ -654,11 +651,11 @@ public class FastLeaderElection implements Election {
         stop = true;
         proposedLeader = -1;
         proposedZxid = -1;
-        LOG.debug("Shutting down connection manager");
+        JulLog.debug("Shutting down connection manager");
         manager.halt();
-        LOG.debug("Shutting down messenger");
+        JulLog.debug("Shutting down messenger");
         messenger.halt();
-        LOG.debug("FLE is down");
+        JulLog.debug("FLE is down");
     }
 
     /**
@@ -674,8 +671,8 @@ public class FastLeaderElection implements Election {
                     ServerState.LOOKING,
                     sid,
                     proposedEpoch, qv.toString().getBytes());
-            if(LOG.isDebugEnabled()){
-                LOG.debug("Sending Notification: " + proposedLeader + " (n.leader), 0x"  +
+            if(JulLog.isDebugEnabled()){
+                JulLog.debug("Sending Notification: " + proposedLeader + " (n.leader), 0x"  +
                       Long.toHexString(proposedZxid) + " (n.zxid), 0x" + Long.toHexString(logicalclock.get())  +
                       " (n.round), " + sid + " (recipient), " + self.getId() +
                       " (myid), 0x" + Long.toHexString(proposedEpoch) + " (n.peerEpoch)");
@@ -685,7 +682,7 @@ public class FastLeaderElection implements Election {
     }
 
     private void printNotification(Notification n){
-        LOG.info("Notification: "
+        JulLog.info("Notification: "
                 + Long.toHexString(n.version) + " (message format version), "
                 + n.leader + " (n.leader), 0x"
                 + Long.toHexString(n.zxid) + " (n.zxid), 0x"
@@ -705,7 +702,7 @@ public class FastLeaderElection implements Election {
      * @param zxid  Last zxid observed by the issuer of this vote
      */
     protected boolean totalOrderPredicate(long newId, long newZxid, long newEpoch, long curId, long curZxid, long curEpoch) {
-        LOG.debug("id: " + newId + ", proposed id: " + curId + ", zxid: 0x" +
+        JulLog.debug("id: " + newId + ", proposed id: " + curId + ", zxid: 0x" +
                 Long.toHexString(newZxid) + ", proposed zxid: 0x" + Long.toHexString(curZxid));
         if(self.getQuorumVerifier().getWeight(newId) == 0){
             return false;
@@ -791,8 +788,8 @@ public class FastLeaderElection implements Election {
     }
 
     synchronized void updateProposal(long leader, long zxid, long epoch){
-        if(LOG.isDebugEnabled()){
-            LOG.debug("Updating proposal: " + leader + " (newleader), 0x"
+        if(JulLog.isDebugEnabled()){
+            JulLog.debug("Updating proposal: " + leader + " (newleader), 0x"
                     + Long.toHexString(zxid) + " (newzxid), " + proposedLeader
                     + " (oldleader), 0x" + Long.toHexString(proposedZxid) + " (oldzxid)");
         }
@@ -814,11 +811,11 @@ public class FastLeaderElection implements Election {
      */
     private ServerState learningState(){
         if(self.getLearnerType() == LearnerType.PARTICIPANT){
-            LOG.debug("I'm a participant: " + self.getId());
+            JulLog.debug("I'm a participant: " + self.getId());
             return ServerState.FOLLOWING;
         }
         else{
-            LOG.debug("I'm an observer: " + self.getId());
+            JulLog.debug("I'm an observer: " + self.getId());
             return ServerState.OBSERVING;
         }
     }
@@ -873,7 +870,7 @@ public class FastLeaderElection implements Election {
             MBeanRegistry.getInstance().register(
                     self.jmxLeaderElectionBean, self.jmxLocalPeerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             self.jmxLeaderElectionBean = null;
         }
         if (self.start_fle == 0) {
@@ -891,7 +888,7 @@ public class FastLeaderElection implements Election {
                 updateProposal(getInitId(), getInitLastLoggedZxid(), getPeerEpoch());
             }
 
-            LOG.info("New election. My id =  " + self.getId() +
+            JulLog.info("New election. My id =  " + self.getId() +
                     ", proposed zxid=0x" + Long.toHexString(proposedZxid));
             sendNotifications();
 
@@ -925,7 +922,7 @@ public class FastLeaderElection implements Election {
                     int tmpTimeOut = notTimeout*2;
                     notTimeout = (tmpTimeOut < maxNotificationInterval?
                             tmpTimeOut : maxNotificationInterval);
-                    LOG.info("Notification time out: " + notTimeout);
+                    JulLog.info("Notification time out: " + notTimeout);
                 }
                 else if (self.getCurrentAndNextConfigVoters().contains(n.sid)) {
                     /*
@@ -948,8 +945,8 @@ public class FastLeaderElection implements Election {
                             }
                             sendNotifications();
                         } else if (n.electionEpoch < logicalclock.get()) {
-                            if(LOG.isDebugEnabled()){
-                                LOG.debug("Notification election epoch is smaller than logicalclock. n.electionEpoch = 0x"
+                            if(JulLog.isDebugEnabled()){
+                                JulLog.debug("Notification election epoch is smaller than logicalclock. n.electionEpoch = 0x"
                                         + Long.toHexString(n.electionEpoch)
                                         + ", logicalclock=0x" + Long.toHexString(logicalclock.get()));
                             }
@@ -960,8 +957,8 @@ public class FastLeaderElection implements Election {
                             sendNotifications();
                         }
 
-                        if(LOG.isDebugEnabled()){
-                            LOG.debug("Adding vote: from=" + n.sid +
+                        if(JulLog.isDebugEnabled()){
+                            JulLog.debug("Adding vote: from=" + n.sid +
                                     ", proposed leader=" + n.leader +
                                     ", proposed zxid=0x" + Long.toHexString(n.zxid) +
                                     ", proposed election epoch=0x" + Long.toHexString(n.electionEpoch));
@@ -999,7 +996,7 @@ public class FastLeaderElection implements Election {
                         }
                         break;
                     case OBSERVING:
-                        LOG.debug("Notification from observer: " + n.sid);
+                        JulLog.debug("Notification from observer: " + n.sid);
                         break;
                     case FOLLOWING:
                     case LEADING:
@@ -1051,12 +1048,12 @@ public class FastLeaderElection implements Election {
                         }
                         break;
                     default:
-                        LOG.warn("Notification state unrecoginized: " + n.state
+                        JulLog.warn("Notification state unrecoginized: " + n.state
                               + " (n.state), " + n.sid + " (n.sid)");
                         break;
                     }
                 } else {
-                    LOG.warn("Ignoring notification from non-cluster member " + n.sid);
+                    JulLog.warn("Ignoring notification from non-cluster member " + n.sid);
                 }
             }
             return null;
@@ -1067,7 +1064,7 @@ public class FastLeaderElection implements Election {
                             self.jmxLeaderElectionBean);
                 }
             } catch (Exception e) {
-                LOG.warn("Failed to unregister with JMX", e);
+                JulLog.warn("Failed to unregister with JMX", e);
             }
             self.jmxLeaderElectionBean = null;
         }

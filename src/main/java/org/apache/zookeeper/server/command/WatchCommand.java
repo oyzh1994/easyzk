@@ -18,10 +18,10 @@
 
 package org.apache.zookeeper.server.command;
 
-import java.io.PrintWriter;
-
 import org.apache.zookeeper.server.DataTree;
 import org.apache.zookeeper.server.ServerCnxn;
+
+import java.io.PrintWriter;
 
 public class WatchCommand extends AbstractFourLetterCommand {
     int len = 0;

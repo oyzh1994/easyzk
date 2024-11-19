@@ -18,6 +18,11 @@
 
 package org.apache.zookeeper.common;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.Environment;
+import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
+import org.apache.zookeeper.server.util.VerifyingFileFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,12 +30,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-
-import org.apache.zookeeper.Environment;
-import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
-import org.apache.zookeeper.server.util.VerifyingFileFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class is a base class for the configurations of both client and server.
@@ -41,7 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ZKConfig {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZKConfig.class);
     @SuppressWarnings("deprecation")
     public static final String SSL_KEYSTORE_LOCATION = X509Util.SSL_KEYSTORE_LOCATION;
     @SuppressWarnings("deprecation")
@@ -154,7 +152,7 @@ public class ZKConfig {
      * key can not be <code>null</code>. If key is already mapped then the old
      * value of the <code>key</code> is replaced by the specified
      * <code>value</code>.
-     * 
+     *
      * @param key
      * @param value
      */
@@ -163,9 +161,9 @@ public class ZKConfig {
             throw new IllegalArgumentException("property key is null.");
         }
         String oldValue = properties.put(key, value);
-        if (LOG.isDebugEnabled()) {
+        if (JulLog.isDebugEnabled()) {
             if (null != oldValue && !oldValue.equals(value)) {
-                LOG.debug("key {}'s value {} is replaced with new value {}", key, oldValue, value);
+                JulLog.debug("key {}'s value {} is replaced with new value {}", key, oldValue, value);
             }
         }
     }
@@ -178,9 +176,9 @@ public class ZKConfig {
      *            Configuration file.
      */
     public void addConfiguration(File configFile) throws ConfigException {
-        LOG.info("Reading configuration from: {}", configFile.getAbsolutePath());
+        JulLog.info("Reading configuration from: {}", configFile.getAbsolutePath());
         try {
-            configFile = (new VerifyingFileFactory.Builder(LOG).warnForRelativePath().failForNonExistingPath().build())
+            configFile = (new VerifyingFileFactory.Builder(JulLog.getLogger()).warnForRelativePath().failForNonExistingPath().build())
                     .validate(configFile);
             Properties cfg = new Properties();
             FileInputStream in = new FileInputStream(configFile);
@@ -191,7 +189,7 @@ public class ZKConfig {
             }
             parseProperties(cfg);
         } catch (IOException | IllegalArgumentException e) {
-            LOG.error("Error while configuration from: {}", configFile.getAbsolutePath(), e);
+            JulLog.error("Error while configuration from: {}", configFile.getAbsolutePath(), e);
             throw new ConfigException("Error while processing " + configFile.getAbsolutePath(), e);
         }
     }

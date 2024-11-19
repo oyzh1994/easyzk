@@ -18,13 +18,10 @@
 
 package org.apache.zookeeper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import cn.oyzh.common.log.JulLog;
 
 class ZooKeeperTestable implements Testable {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ZooKeeperTestable.class);
-
     private final ZooKeeper zooKeeper;
     private final ClientCnxn clientCnxn;
 
@@ -35,7 +32,7 @@ class ZooKeeperTestable implements Testable {
 
     @Override
     public void injectSessionExpiration() {
-        LOG.info("injectSessionExpiration() called");
+        JulLog.info("injectSessionExpiration() called");
 
         clientCnxn.eventThread.queueEvent(new WatchedEvent(
                 Watcher.Event.EventType.None,

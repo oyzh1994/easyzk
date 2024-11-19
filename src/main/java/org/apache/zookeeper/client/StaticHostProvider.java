@@ -18,6 +18,8 @@
 
 package org.apache.zookeeper.client;
 
+import cn.oyzh.common.log.JulLog;
+
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -27,16 +29,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Most simple HostProvider, resolves only on instantiation.
- * 
+ *
  */
 public final class StaticHostProvider implements HostProvider {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(StaticHostProvider.class);
 
     private List<InetSocketAddress> serverAddresses = new ArrayList<InetSocketAddress>(
             5);
@@ -64,7 +62,7 @@ public final class StaticHostProvider implements HostProvider {
 
     /**
      * Constructs a SimpleHostSet.
-     * 
+     *
      * @param serverAddresses
      *            possibly unresolved ZooKeeper server addresses
      * @throws IllegalArgumentException
@@ -77,15 +75,15 @@ public final class StaticHostProvider implements HostProvider {
         if (this.serverAddresses.isEmpty()) {
             throw new IllegalArgumentException(
                     "A HostProvider may not be empty!");
-        }       
+        }
         currentIndex = -1;
-        lastIndex = -1;              
+        lastIndex = -1;
     }
 
     /**
      * Constructs a SimpleHostSet. This constructor is used from StaticHostProviderTest to produce deterministic test results
      * by initializing sourceOfRandomness with the same seed
-     * 
+     *
      * @param serverAddresses
      *            possibly unresolved ZooKeeper server addresses
      * @param randomnessSeed a seed used to initialize sourceOfRandomnes
@@ -100,13 +98,13 @@ public final class StaticHostProvider implements HostProvider {
         if (this.serverAddresses.isEmpty()) {
             throw new IllegalArgumentException(
                     "A HostProvider may not be empty!");
-        }       
+        }
         currentIndex = -1;
-        lastIndex = -1;              
+        lastIndex = -1;
     }
 
     private List<InetSocketAddress> resolveAndShuffle(Collection<InetSocketAddress> serverAddresses) {
-        List<InetSocketAddress> tmpList = new ArrayList<InetSocketAddress>(serverAddresses.size());       
+        List<InetSocketAddress> tmpList = new ArrayList<InetSocketAddress>(serverAddresses.size());
         for (InetSocketAddress address : serverAddresses) {
             try {
                 InetAddress ia = address.getAddress();
@@ -117,33 +115,33 @@ public final class StaticHostProvider implements HostProvider {
                     tmpList.add(new InetSocketAddress(taddr, address.getPort()));
                 }
             } catch (UnknownHostException ex) {
-                LOG.warn("No IP address found for server: {}", address, ex);
+                JulLog.warn("No IP address found for server: {}", address, ex);
             }
         }
         Collections.shuffle(tmpList, sourceOfRandomness);
         return tmpList;
-    } 
+    }
 
 
     /**
      * Update the list of servers. This returns true if changing connections is necessary for load-balancing, false
-	 * otherwise. Changing connections is necessary if one of the following holds: 
+	 * otherwise. Changing connections is necessary if one of the following holds:
      * a) the host to which this client is currently connected is not in serverAddresses.
-     *    Otherwise (if currentHost is in the new list serverAddresses):   
+     *    Otherwise (if currentHost is in the new list serverAddresses):
      * b) the number of servers in the cluster is increasing - in this case the load on currentHost should decrease,
      *    which means that SOME of the clients connected to it will migrate to the new servers. The decision whether
-     *    this client migrates or not (i.e., whether true or false is returned) is probabilistic so that the expected 
+     *    this client migrates or not (i.e., whether true or false is returned) is probabilistic so that the expected
      *    number of clients connected to each server is the same.
-     *    
+     *
      * If true is returned, the function sets pOld and pNew that correspond to the probability to migrate to ones of the
      * new servers in serverAddresses or one of the old servers (migrating to one of the old servers is done only
      * if our client's currentHost is not in serverAddresses). See nextHostInReconfigMode for the selection logic.
-     * 
+     *
      * See {@link https://issues.apache.org/jira/browse/ZOOKEEPER-1355} for the protocol and its evaluation, and
 	 * StaticHostProviderTest for the tests that illustrate how load balancing works with this policy.
      * @param serverAddresses new host list
      * @param currentHost the host to which this client is currently connected
-     * @return true if changing connections is necessary for load-balancing, false otherwise  
+     * @return true if changing connections is necessary for load-balancing, false otherwise
      */
 
 
@@ -256,7 +254,7 @@ public final class StaticHostProvider implements HostProvider {
     	if (i < 0 || i >= serverAddresses.size()) return null;
     	return serverAddresses.get(i);
     }
-    
+
     public synchronized InetSocketAddress getServerAtCurrentIndex() {
     	return getServerAtIndex(currentIndex);
     }
@@ -266,11 +264,11 @@ public final class StaticHostProvider implements HostProvider {
     }
 
     /**
-     * Get the next server to connect to, when in "reconfigMode", which means that 
-     * you've just updated the server list, and now trying to find some server to connect to. 
+     * Get the next server to connect to, when in "reconfigMode", which means that
+     * you've just updated the server list, and now trying to find some server to connect to.
      * Once onConnected() is called, reconfigMode is set to false. Similarly, if we tried to connect
      * to all servers in new config and failed, reconfigMode is set to false.
-     * 
+     *
      * While in reconfigMode, we should connect to a server in newServers with probability pNew and to servers in
      * oldServers with probability pOld (which is just 1-pNew). If we tried out all servers in either oldServers
      * or newServers we continue to try servers from the other set, regardless of pNew or pOld. If we tried all servers
@@ -310,19 +308,19 @@ public final class StaticHostProvider implements HostProvider {
                 addr = nextHostInReconfigMode();
                 if (addr != null) {
                 	currentIndex = serverAddresses.indexOf(addr);
-                	return addr;                
+                	return addr;
                 }
                 //tried all servers and couldn't connect
                 reconfigMode = false;
                 needToSleep = (spinDelay > 0);
-            }        
+            }
             ++currentIndex;
             if (currentIndex == serverAddresses.size()) {
                 currentIndex = 0;
-            }            
+            }
             addr = serverAddresses.get(currentIndex);
             needToSleep = needToSleep || (currentIndex == lastIndex && spinDelay > 0);
-            if (lastIndex == -1) { 
+            if (lastIndex == -1) {
                 // We don't want to sleep on the first ever connect attempt.
                 lastIndex = 0;
             }
@@ -331,7 +329,7 @@ public final class StaticHostProvider implements HostProvider {
             try {
                 Thread.sleep(spinDelay);
             } catch (InterruptedException e) {
-                LOG.warn("Unexpected exception", e);
+                JulLog.warn("Unexpected exception", e);
             }
         }
 

@@ -18,21 +18,20 @@
 
 package org.apache.zookeeper.jmx;
 
-import java.lang.management.ManagementFactory;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.concurrent.ConcurrentHashMap;
+import cn.oyzh.common.log.JulLog;
 
 import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import java.lang.management.ManagementFactory;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class provides a unified interface for registering/unregistering of
@@ -41,15 +40,14 @@ import org.slf4j.LoggerFactory;
  * will be stored in the zookeeper data tree instance as a virtual data tree.
  */
 public class MBeanRegistry {
-    private static final Logger LOG = LoggerFactory.getLogger(MBeanRegistry.class);
-    
+
     private static volatile MBeanRegistry instance = new MBeanRegistry();
-    
+
     private final Object LOCK = new Object();
-    
+
     private Map<ZKMBeanInfo, String> mapBean2Path =
         new ConcurrentHashMap<ZKMBeanInfo, String>();
-    
+
     private MBeanServer mBeanServer;
 
     /**
@@ -67,7 +65,7 @@ public class MBeanRegistry {
 
     public MBeanRegistry () {
         try {
-            mBeanServer = ManagementFactory.getPlatformMBeanServer();        
+            mBeanServer = ManagementFactory.getPlatformMBeanServer();
         } catch (Error e) {
             // Account for running within IKVM and create a new MBeanServer
             // if the PlatformMBeanServer does not exist.
@@ -85,7 +83,7 @@ public class MBeanRegistry {
     }
 
     /**
-     * Registers a new MBean with the platform MBean server. 
+     * Registers a new MBean with the platform MBean server.
      * @param bean the bean being registered
      * @param parent if not null, the new bean will be registered as a child
      * node of this parent.
@@ -109,7 +107,7 @@ public class MBeanRegistry {
                 mapBean2Path.put(bean, path);
             }
         } catch (JMException e) {
-            LOG.warn("Failed to register MBean " + bean.getName());
+            JulLog.warn("Failed to register MBean " + bean.getName());
             throw e;
         }
     }
@@ -124,15 +122,15 @@ public class MBeanRegistry {
             return;
         if (!bean.isHidden()) {
             final ObjectName objName = makeObjectName(path, bean);
-            if (LOG.isInfoEnabled()) {
-                LOG.info("Unregister MBean [{}]", objName);
+            if (JulLog.isInfoEnabled()) {
+                JulLog.info("Unregister MBean [{}]", objName);
             }
             synchronized (LOCK) {
                mBeanServer.unregisterMBean(objName);
             }
-        }        
+        }
     }
-    
+
     /**
      * @return a {@link Collection} with the {@link ZKMBeanInfo} instances not
      *         unregistered. Mainly for testing purposes.
@@ -152,9 +150,9 @@ public class MBeanRegistry {
         try {
             unregister(path,bean);
         } catch (JMException e) {
-            LOG.warn("Error during unregister of [{}]", bean.getName(), e);
+            JulLog.warn("Error during unregister of [{}]", bean.getName(), e);
         } catch (Throwable t) {
-            LOG.error("Unexpected exception during unregister of [{}]. It should be reviewed and fixed.", bean.getName(), t);
+            JulLog.error("Unexpected exception during unregister of [{}]. It should be reviewed and fixed.", bean.getName(), t);
         }
     }
 
@@ -177,13 +175,13 @@ public class MBeanRegistry {
         }
         return sb.toString();
     }
-    
+
     protected String makeFullPath(String prefix, ZKMBeanInfo bean) {
         return makeFullPath(prefix, bean == null ? null : bean.getName());
     }
 
     /**
-     * This takes a path, such as /a/b/c, and converts it to 
+     * This takes a path, such as /a/b/c, and converts it to
      * name0=a,name1=b,name2=c
      */
     private int tokenize(StringBuilder sb, String path, int index){
@@ -197,7 +195,7 @@ public class MBeanRegistry {
         return index;
     }
     /**
-     * Builds an MBean path and creates an ObjectName instance using the path. 
+     * Builds an MBean path and creates an ObjectName instance using the path.
      * @param path MBean path
      * @param bean the MBean instance
      * @return ObjectName to be registered with the platform MBean server
@@ -215,7 +213,7 @@ public class MBeanRegistry {
         try {
             return new ObjectName(beanName.toString());
         } catch (MalformedObjectNameException e) {
-            LOG.warn("Invalid name \"" + beanName.toString() + "\" for class "
+            JulLog.warn("Invalid name \"" + beanName.toString() + "\" for class "
                     + bean.getClass().toString());
             throw e;
         }

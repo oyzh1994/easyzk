@@ -18,17 +18,16 @@
 
 package org.apache.zookeeper;
 
+import cn.oyzh.common.log.JulLog;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ServerAdminClient {
-    private static final Logger LOG = LoggerFactory.getLogger(ServerAdminClient.class);
 
     public static void ruok(String host, int port) {
         Socket s = null;
@@ -52,13 +51,13 @@ public class ServerAdminClient {
             String retv = new String(resBytes);
             System.out.println("rc=" + rc + " retv=" + retv);
         } catch (IOException e) {
-            LOG.warn("Unexpected exception", e);
+            JulLog.warn("Unexpected exception", e);
         } finally {
             if (s != null) {
                 try {
                     s.close();
                 } catch (IOException e) {
-                    LOG.warn("Unexpected exception", e);
+                    JulLog.warn("Unexpected exception", e);
                 }
             }
         }
@@ -86,13 +85,13 @@ public class ServerAdminClient {
             String retv = new String(resBytes);
             System.out.println("rc=" + rc + " retv=" + retv);
         } catch (IOException e) {
-            LOG.warn("Unexpected exception", e);
+            JulLog.warn("Unexpected exception", e);
         } finally {
             if (s != null) {
                 try {
                     s.close();
                 } catch (IOException e) {
-                    LOG.warn("Unexpected exception", e);
+                    JulLog.warn("Unexpected exception", e);
                 }
             }
         }
@@ -120,13 +119,13 @@ public class ServerAdminClient {
             String retv = new String(resBytes);
             System.out.println("rc=" + rc + " retv=" + retv);
         } catch (IOException e) {
-            LOG.warn("Unexpected exception", e);
+            JulLog.warn("Unexpected exception", e);
         } finally {
             if (s != null) {
                 try {
                     s.close();
                 } catch (IOException e) {
-                    LOG.warn("Unexpected exception", e);
+                    JulLog.warn("Unexpected exception", e);
                 }
             }
         }
@@ -153,13 +152,13 @@ public class ServerAdminClient {
             String retv = new String(resBytes);
             System.out.println("rc=" + rc + " retv=" + retv);
         } catch (IOException e) {
-            LOG.warn("Unexpected exception", e);
+            JulLog.warn("Unexpected exception", e);
         } finally {
             if (s != null) {
                 try {
                     s.close();
                 } catch (IOException e) {
-                    LOG.warn("Unexpected exception", e);
+                    JulLog.warn("Unexpected exception", e);
                 }
             }
         }
@@ -194,13 +193,13 @@ public class ServerAdminClient {
                     + Long.toOctalString(traceMask));
             assert (retv == traceMask);
         } catch (IOException e) {
-            LOG.warn("Unexpected exception", e);
+            JulLog.warn("Unexpected exception", e);
         } finally {
             if (s != null) {
                 try {
                     s.close();
                 } catch (IOException e) {
-                    LOG.warn("Unexpected exception", e);
+                    JulLog.warn("Unexpected exception", e);
                 }
             }
         }
@@ -231,13 +230,13 @@ public class ServerAdminClient {
             System.out.println("rc=" + rc + " retv=0"
                     + Long.toOctalString(retv));
         } catch (IOException e) {
-            LOG.warn("Unexpected exception", e);
+            JulLog.warn("Unexpected exception", e);
         } finally {
             if (s != null) {
                 try {
                     s.close();
                 } catch (IOException e) {
-                    LOG.warn("Unexpected exception", e);
+                    JulLog.warn("Unexpected exception", e);
                 }
             }
         }

@@ -18,10 +18,10 @@
 
 package org.apache.zookeeper.server.command;
 
-import java.io.PrintWriter;
-
 import org.apache.zookeeper.server.ServerCnxn;
 import org.apache.zookeeper.server.quorum.ReadOnlyZooKeeperServer;
+
+import java.io.PrintWriter;
 
 public class IsroCommand extends AbstractFourLetterCommand {
 

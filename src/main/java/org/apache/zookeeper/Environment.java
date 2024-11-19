@@ -20,8 +20,8 @@ package org.apache.zookeeper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-import org.slf4j.Logger;
 
 /**
  * Provide insight into the runtime environment.

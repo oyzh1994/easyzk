@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.zip.Adler32;
 import java.util.zip.Checksum;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.BinaryInputArchive;
 import org.apache.jute.Record;
 import org.slf4j.Logger;
@@ -36,7 +37,6 @@ import org.apache.zookeeper.server.util.SerializeUtils;
 import org.apache.zookeeper.txn.TxnHeader;
 
 public class LogFormatter {
-    private static final Logger LOG = LoggerFactory.getLogger(LogFormatter.class);
 
     /**
      * @param args
@@ -95,7 +95,7 @@ public class LogFormatter {
                     + Long.toHexString(hdr.getZxid())
                     + " " + TraceFormatter.op2String(hdr.getType()) + " " + txn);
             if (logStream.readByte("EOR") != 'B') {
-                LOG.error("Last transaction was partial.");
+                JulLog.error("Last transaction was partial.");
                 throw new EOFException("Last transaction was partial.");
             }
             count++;

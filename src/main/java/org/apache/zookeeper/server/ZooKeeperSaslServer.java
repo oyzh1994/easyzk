@@ -27,6 +27,7 @@ import javax.security.sasl.Sasl;
 import javax.security.sasl.SaslException;
 import javax.security.sasl.SaslServer;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.Login;
 import org.ietf.jgss.GSSContext;
 import org.ietf.jgss.GSSCredential;
@@ -41,7 +42,6 @@ public class ZooKeeperSaslServer {
     public static final String LOGIN_CONTEXT_NAME_KEY = "zookeeper.sasl.serverconfig";
     public static final String DEFAULT_LOGIN_CONTEXT_NAME = "Server";
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZooKeeperSaslServer.class);
     private SaslServer saslServer;
 
     ZooKeeperSaslServer(final Login login) {
@@ -79,12 +79,12 @@ public class ZooKeeperSaslServer {
                             servicePrincipalName = servicePrincipalNameAndHostname.substring(0, indexOfAt);
                             serviceHostname = null;
                         }
-                        
+
                         final String mech = "GSSAPI";   // TODO: should depend on zoo.cfg specified mechs, but if subject is non-null, it can be assumed to be GSSAPI.
 
-                        LOG.debug("serviceHostname is '"+ serviceHostname + "'");
-                        LOG.debug("servicePrincipalName is '"+ servicePrincipalName + "'");
-                        LOG.debug("SASL mechanism(mech) is '"+ mech +"'");
+                        JulLog.debug("serviceHostname is '"+ serviceHostname + "'");
+                        JulLog.debug("servicePrincipalName is '"+ servicePrincipalName + "'");
+                        JulLog.debug("SASL mechanism(mech) is '"+ mech +"'");
 
                         boolean usingNativeJgss =
                         		Boolean.getBoolean("sun.security.jgss.native");
@@ -109,11 +109,11 @@ public class ZooKeeperSaslServer {
                         				krb5Mechanism,
                         				GSSCredential.ACCEPT_ONLY);
                         		subject.getPrivateCredentials().add(cred);
-                        		if (LOG.isDebugEnabled()) {
-                        			LOG.debug("Added private credential to subject: " + cred);
+                        		if (JulLog.isDebugEnabled()) {
+                        			JulLog.debug("Added private credential to subject: " + cred);
                         		}
                         	} catch (GSSException ex) {
-                        		LOG.warn("Cannot add private credential to subject; " +
+                        		JulLog.warn("Cannot add private credential to subject; " +
                         				"clients authentication may fail", ex);
                         	}
                         }
@@ -126,7 +126,7 @@ public class ZooKeeperSaslServer {
                                         return saslServer;
                                     }
                                     catch (SaslException e) {
-                                        LOG.error("Zookeeper Server failed to create a SaslServer to interact with a client during session initiation: " + e);
+                                        JulLog.error("Zookeeper Server failed to create a SaslServer to interact with a client during session initiation: " + e);
                                         e.printStackTrace();
                                         return null;
                                     }
@@ -136,12 +136,12 @@ public class ZooKeeperSaslServer {
                         }
                         catch (PrivilegedActionException e) {
                             // TODO: exit server at this point(?)
-                            LOG.error("Zookeeper Quorum member experienced a PrivilegedActionException exception while creating a SaslServer using a JAAS principal context:" + e);
+                            JulLog.error("Zookeeper Quorum member experienced a PrivilegedActionException exception while creating a SaslServer using a JAAS principal context:" + e);
                             e.printStackTrace();
                         }
                     }
                     catch (IndexOutOfBoundsException e) {
-                        LOG.error("server principal name/hostname determination error: ", e);
+                        JulLog.error("server principal name/hostname determination error: ", e);
                     }
                 }
                 else {
@@ -152,12 +152,12 @@ public class ZooKeeperSaslServer {
                         return saslServer;
                     }
                     catch (SaslException e) {
-                        LOG.error("Zookeeper Quorum member failed to create a SaslServer to interact with a client during session initiation", e);
+                        JulLog.error("Zookeeper Quorum member failed to create a SaslServer to interact with a client during session initiation", e);
                     }
                 }
             }
         }
-        LOG.error("failed to create saslServer object.");
+        JulLog.error("failed to create saslServer object.");
         return null;
     }
 

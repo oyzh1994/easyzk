@@ -17,27 +17,37 @@
  */
 package org.apache.zookeeper.cli;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.Parser;
+import org.apache.commons.cli.PosixParser;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.Quotas;
+import org.apache.zookeeper.StatsTrack;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.data.Stat;
+
 import java.io.IOException;
 import java.util.List;
-import org.apache.commons.cli.*;
-import org.apache.zookeeper.*;
-import org.apache.zookeeper.data.Stat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * setQuota command for cli
  */
 public class SetQuotaCommand extends CliCommand {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SetQuotaCommand.class);
     private Options options = new Options();
     private String[] args;
     private CommandLine cl;
 
     public SetQuotaCommand() {
         super("setquota", "-n|-b val path");
-        
+
         OptionGroup og1 = new OptionGroup();
         og1.addOption(new Option("b", true, "bytes quota"));
         og1.addOption(new Option("n", true, "num quota"));
@@ -183,7 +193,7 @@ public class SetQuotaCommand extends CliCommand {
             try {
                 children = zk.getChildren(quotaPath, false);
             } catch (KeeperException.NoNodeException ne) {
-                LOG.debug("child removed during quota check", ne);
+                JulLog.debug("child removed during quota check", ne);
                 return;
             }
             if (children.size() == 0) {

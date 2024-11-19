@@ -31,6 +31,7 @@ import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
 import javax.security.auth.login.LoginException;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.Environment;
 import org.apache.zookeeper.Login;
 import org.apache.zookeeper.common.ZKConfig;
@@ -43,8 +44,7 @@ import org.slf4j.LoggerFactory;
 public abstract class ServerCnxnFactory {
 
     public static final String ZOOKEEPER_SERVER_CNXN_FACTORY = "zookeeper.serverCnxnFactory";
-    
-    private static final Logger LOG = LoggerFactory.getLogger(ServerCnxnFactory.class);
+
 
     // Tells whether SSL is enabled on this ServerCnxnFactory
     protected boolean secure;
@@ -55,7 +55,7 @@ public abstract class ServerCnxnFactory {
     static final ByteBuffer closeConn = ByteBuffer.allocate(0);
 
     public abstract int getLocalPort();
-    
+
     public abstract Iterable<ServerCnxn> getConnections();
 
     public int getNumAliveConnections() {
@@ -122,7 +122,7 @@ public abstract class ServerCnxnFactory {
     }
 
     public abstract void closeAll();
-    
+
     static public ServerCnxnFactory createFactory() throws IOException {
         String serverCnxnFactoryName =
             System.getProperty(ZOOKEEPER_SERVER_CNXN_FACTORY);
@@ -139,7 +139,7 @@ public abstract class ServerCnxnFactory {
             throw ioe;
         }
     }
-    
+
     static public ServerCnxnFactory createFactory(int clientPort,
             int maxClientCnxns) throws IOException
     {
@@ -173,7 +173,7 @@ public abstract class ServerCnxnFactory {
             MBeanRegistry.getInstance().unregister(jmxConnectionBean);
         }
     }
-    
+
     public void registerConnection(ServerCnxn serverCnxn) {
         if (zkServer != null) {
             ConnectionBean jmxConnectionBean = new ConnectionBean(serverCnxn, zkServer);
@@ -181,7 +181,7 @@ public abstract class ServerCnxnFactory {
                 MBeanRegistry.getInstance().register(jmxConnectionBean, zkServer.jmxServerBean);
                 connectionBeans.put(serverCnxn, jmxConnectionBean);
             } catch (JMException e) {
-                LOG.warn("Could not register connection", e);
+                JulLog.warn("Could not register connection", e);
             }
         }
 
@@ -226,7 +226,7 @@ public abstract class ServerCnxnFactory {
                 if (loginContextName != null) {
                     errorMessage += " But " + ZooKeeperSaslServer.LOGIN_CONTEXT_NAME_KEY + " was set.";
                 }
-                LOG.error(errorMessage);
+                JulLog.error(errorMessage);
                 throw new IOException(errorMessage);
             }
             return;

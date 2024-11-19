@@ -17,15 +17,17 @@
  */
 package org.apache.zookeeper.cli;
 
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.Parser;
+import org.apache.commons.cli.PosixParser;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
+
+import java.io.FileInputStream;
+import java.util.Properties;
 
 /**
  * reconfig command for cli
@@ -35,7 +37,7 @@ public class ReconfigCommand extends CliCommand {
     private static Options options = new Options();
 
     /* joining - comma separated list of server config strings for servers to be added to the ensemble.
-     * Each entry is identical in syntax as it would appear in a configuration file. Only used for 
+     * Each entry is identical in syntax as it would appear in a configuration file. Only used for
      * incremental reconfigurations.
      */
     private String joining;
@@ -89,7 +91,7 @@ public class ReconfigCommand extends CliCommand {
             throw new ParseException(getUsageStr());
         }
         if (cl.hasOption("v")) {
-            try{ 
+            try{
                 version = Long.parseLong(cl.getOptionValue("v"), 16);
             } catch (NumberFormatException e){
                 throw new ParseException("-v must be followed by a long (configuration version)");
@@ -119,7 +121,7 @@ public class ReconfigCommand extends CliCommand {
            members = cl.getOptionValue("members").toLowerCase();
         }
         if (cl.hasOption("file")) {
-            try {           
+            try {
                 FileInputStream inConfig = new FileInputStream(cl.getOptionValue("file"));
                 Properties dynamicCfg = new Properties();
                 try {
@@ -128,12 +130,12 @@ public class ReconfigCommand extends CliCommand {
                     inConfig.close();
                 }
                 //check that membership makes sense; leader will make these checks again
-                //don't check for leader election ports since 
+                //don't check for leader election ports since
                 //client doesn't know what leader election alg is used
                 members = QuorumPeerConfig.parseDynamicConfig(dynamicCfg, 0, true, false).toString();
             } catch (Exception e) {
-                throw new ParseException("Error processing " + cl.getOptionValue("file") + e.getMessage());                
-            } 
+                throw new ParseException("Error processing " + cl.getOptionValue("file") + e.getMessage());
+            }
         }
         return this;
     }
@@ -145,7 +147,7 @@ public class ReconfigCommand extends CliCommand {
             byte[] curConfig = zk.reconfig(joining,
                     leaving, members, version, stat);
             out.println("Committed new configuration:\n" + new String(curConfig));
-            
+
             if (cl.hasOption("s")) {
                 new StatPrinter(out).print(stat);
             }

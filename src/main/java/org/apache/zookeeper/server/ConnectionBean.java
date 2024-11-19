@@ -25,9 +25,8 @@ import java.util.Arrays;
 
 import javax.management.ObjectName;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.common.Time;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.jmx.MBeanRegistry;
 import org.apache.zookeeper.jmx.ZKMBeanInfo;
 
@@ -35,13 +34,12 @@ import org.apache.zookeeper.jmx.ZKMBeanInfo;
  * Implementation of connection MBean interface.
  */
 public class ConnectionBean implements ConnectionMXBean, ZKMBeanInfo {
-    private static final Logger LOG = LoggerFactory.getLogger(ConnectionBean.class);
 
     private final ServerCnxn connection;
     private final Stats stats;
 
     private final ZooKeeperServer zk;
-    
+
     private final String remoteIP;
     private final long sessionId;
 
@@ -49,7 +47,7 @@ public class ConnectionBean implements ConnectionMXBean, ZKMBeanInfo {
         this.connection = connection;
         this.stats = connection;
         this.zk = zk;
-        
+
         InetSocketAddress sockAddr = connection.getRemoteSocketAddress();
         if (sockAddr == null) {
             remoteIP = "Unknown";
@@ -63,7 +61,7 @@ public class ConnectionBean implements ConnectionMXBean, ZKMBeanInfo {
         }
         sessionId = connection.getSessionId();
     }
-    
+
     public String getSessionId() {
         return "0x" + Long.toHexString(sessionId);
     }
@@ -81,11 +79,11 @@ public class ConnectionBean implements ConnectionMXBean, ZKMBeanInfo {
         return MBeanRegistry.getInstance().makeFullPath("Connections", remoteIP,
                 getSessionId());
     }
-    
+
     public boolean isHidden() {
         return false;
     }
-    
+
     public String[] getEphemeralNodes() {
         if(zk.getZKDatabase()  !=null){
             String[] res = zk.getZKDatabase().getEphemerals(sessionId)
@@ -95,20 +93,20 @@ public class ConnectionBean implements ConnectionMXBean, ZKMBeanInfo {
         }
         return null;
     }
-    
+
     public String getStartedTime() {
         return stats.getEstablished().toString();
     }
-    
+
     public void terminateSession() {
         try {
             zk.closeSession(sessionId);
         } catch (Exception e) {
-            LOG.warn("Unable to closeSession() for session: 0x" 
+            JulLog.warn("Unable to closeSession() for session: 0x"
                     + getSessionId(), e);
         }
     }
-    
+
     public void terminateConnection() {
         connection.sendCloseSession();
     }
@@ -122,19 +120,19 @@ public class ConnectionBean implements ConnectionMXBean, ZKMBeanInfo {
         return "ConnectionBean{ClientIP=" + ObjectName.quote(getSourceIP())
             + ",SessionId=0x" + getSessionId() + "}";
     }
-    
+
     public long getOutstandingRequests() {
         return stats.getOutstandingRequests();
     }
-    
+
     public long getPacketsReceived() {
         return stats.getPacketsReceived();
     }
-    
+
     public long getPacketsSent() {
         return stats.getPacketsSent();
     }
-    
+
     public int getSessionTimeout() {
         return connection.getSessionTimeout();
     }
@@ -150,7 +148,7 @@ public class ConnectionBean implements ConnectionMXBean, ZKMBeanInfo {
     public long getMaxLatency() {
         return stats.getMaxLatency();
     }
-    
+
     public String getLastOperation() {
         return stats.getLastOperation();
     }

@@ -39,6 +39,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import cn.oyzh.common.log.JulLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +64,6 @@ import org.slf4j.LoggerFactory;
  * 1 connection expiration thread, 4 selector threads, and 64 worker threads.
  */
 public class NIOServerCnxnFactory extends ServerCnxnFactory {
-    private static final Logger LOG = LoggerFactory.getLogger(NIOServerCnxnFactory.class);
 
     /** Default sessionless connection timeout in ms: 10000 (10s) */
     public static final String ZOOKEEPER_NIO_SESSIONLESS_CNXN_TIMEOUT =
@@ -89,7 +89,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
     static {
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
                 public void uncaughtException(Thread t, Throwable e) {
-                    LOG.error("Thread " + t + " died", e);
+                    JulLog.error("Thread " + t + " died", e);
                 }
             });
         /**
@@ -100,7 +100,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         try {
             Selector.open().close();
         } catch(IOException ie) {
-            LOG.error("Selector failed to open", ie);
+            JulLog.error("Selector failed to open", ie);
         }
 
         /**
@@ -141,7 +141,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
             try {
                 selector.close();
             } catch (IOException e) {
-                LOG.warn("ignored exception during selector close "
+                JulLog.warn("ignored exception during selector close "
                         + e.getMessage());
             }
         }
@@ -151,8 +151,8 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                 try {
                     key.cancel();
                 } catch (Exception ex) {
-                    if (LOG.isDebugEnabled()) {
-                        LOG.debug("ignoring exception during selectionkey cancel", ex);
+                    if (JulLog.isDebugEnabled()) {
+                        JulLog.debug("ignoring exception during selectionkey cancel", ex);
                     }
                 }
             }
@@ -164,7 +164,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                     // Hard close immediately, discarding buffers
                     sc.socket().setSoLinger(true, 0);
                 } catch (SocketException e) {
-                    LOG.warn("Unable to set socket linger to 0, socket close"
+                    JulLog.warn("Unable to set socket linger to 0, socket close"
                              + " may stall in CLOSE_WAIT", e);
                 }
                 NIOServerCnxn.closeSock(sc);
@@ -182,11 +182,11 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
     private class AcceptThread extends AbstractSelectThread {
         private final ServerSocketChannel acceptSocket;
         private final SelectionKey acceptKey;
-        private final RateLogger acceptErrorLogger = new RateLogger(LOG);
+        private final RateLogger acceptErrorLogger = new RateLogger(JulLog.getLogger());
         private final Collection<SelectorThread> selectorThreads;
         private Iterator<SelectorThread> selectorIterator;
         private volatile boolean reconfiguring = false;
-        
+
         public AcceptThread(ServerSocketChannel ss, InetSocketAddress addr,
                 Set<SelectorThread> selectorThreads) throws IOException {
             super("NIOServerCxnFactory.AcceptThread:" + addr);
@@ -204,22 +204,22 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                     try {
                         select();
                     } catch (RuntimeException e) {
-                        LOG.warn("Ignoring unexpected runtime exception", e);
+                        JulLog.warn("Ignoring unexpected runtime exception", e);
                     } catch (Exception e) {
-                        LOG.warn("Ignoring unexpected exception", e);
+                        JulLog.warn("Ignoring unexpected exception", e);
                     }
                 }
             } finally {
                 closeSelector();
                 // This will wake up the selector threads, and tell the
                 // worker thread pool to begin shutdown.
-            	if (!reconfiguring) {                    
+            	if (!reconfiguring) {
                     NIOServerCnxnFactory.this.stop();
                 }
-                LOG.info("accept thread exitted run method");
+                JulLog.info("accept thread exitted run method");
             }
         }
-        
+
         public void setReconfiguring() {
         	reconfiguring = true;
         }
@@ -246,12 +246,12 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                             pauseAccept(10);
                         }
                     } else {
-                        LOG.warn("Unexpected ops in accept select "
+                        JulLog.warn("Unexpected ops in accept select "
                                  + key.readyOps());
                     }
                 }
             } catch (IOException e) {
-                LOG.warn("Ignoring IOException while selecting", e);
+                JulLog.warn("Ignoring IOException while selecting", e);
             }
         }
 
@@ -293,7 +293,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                                           + " - max is " + maxClientCnxns );
                 }
 
-                LOG.info("Accepted socket connection from "
+                JulLog.info("Accepted socket connection from "
                          + sc.socket().getRemoteSocketAddress());
                 sc.configureBlocking(false);
 
@@ -392,9 +392,9 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                         processAcceptedConnections();
                         processInterestOpsUpdateRequests();
                     } catch (RuntimeException e) {
-                        LOG.warn("Ignoring unexpected runtime exception", e);
+                        JulLog.warn("Ignoring unexpected runtime exception", e);
                     } catch (Exception e) {
-                        LOG.warn("Ignoring unexpected exception", e);
+                        JulLog.warn("Ignoring unexpected exception", e);
                     }
                 }
 
@@ -417,7 +417,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                 // This will wake up the accept thread and the other selector
                 // threads, and tell the worker thread pool to begin shutdown.
                 NIOServerCnxnFactory.this.stop();
-                LOG.info("selector thread exitted run method");
+                JulLog.info("selector thread exitted run method");
             }
         }
 
@@ -441,11 +441,11 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                     if (key.isReadable() || key.isWritable()) {
                         handleIO(key);
                     } else {
-                        LOG.warn("Unexpected ops in select " + key.readyOps());
+                        JulLog.warn("Unexpected ops in select " + key.readyOps());
                     }
                 }
             } catch (IOException e) {
-                LOG.warn("Ignoring IOException while selecting", e);
+                JulLog.warn("Ignoring IOException while selecting", e);
             }
         }
 
@@ -580,7 +580,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                 }
 
             } catch (InterruptedException e) {
-                  LOG.info("ConnnectionExpirerThread interrupted");
+                  JulLog.info("ConnnectionExpirerThread interrupted");
             }
         }
     }
@@ -670,7 +670,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         workerShutdownTimeoutMS = Long.getLong(
             ZOOKEEPER_NIO_SHUTDOWN_TIMEOUT, 5000);
 
-        LOG.info("Configuring NIO connection handler with "
+        JulLog.info("Configuring NIO connection handler with "
                  + (sessionlessCnxnTimeout/1000) + "s sessionless connection"
                  + " timeout, " + numSelectorThreads + " selector thread(s), "
                  + (numWorkerThreads > 0 ? numWorkerThreads : "no")
@@ -683,7 +683,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
 
         this.ss = ServerSocketChannel.open();
         ss.socket().setReuseAddress(true);
-        LOG.info("binding to port " + addr);
+        JulLog.info("binding to port " + addr);
         ss.socket().bind(addr);
         ss.configureBlocking(false);
         acceptThread = new AcceptThread(ss, addr, selectorThreads);
@@ -693,17 +693,17 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         try {
             s.close();
         } catch (IOException sse) {
-            LOG.error("Error while closing server socket.", sse);
+            JulLog.error("Error while closing server socket.", sse);
         }
     }
 
     @Override
     public void reconfigure(InetSocketAddress addr) {
-        ServerSocketChannel oldSS = ss;        
+        ServerSocketChannel oldSS = ss;
         try {
             this.ss = ServerSocketChannel.open();
             ss.socket().setReuseAddress(true);
-            LOG.info("binding to port " + addr);
+            JulLog.info("binding to port " + addr);
             ss.socket().bind(addr);
             ss.configureBlocking(false);
             acceptThread.setReconfiguring();
@@ -712,14 +712,14 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
             try {
                 acceptThread.join();
             } catch (InterruptedException e) {
-                LOG.error("Error joining old acceptThread when reconfiguring client port {}",
+                JulLog.error("Error joining old acceptThread when reconfiguring client port {}",
                             e.getMessage());
                 Thread.currentThread().interrupt();
             }
             acceptThread = new AcceptThread(ss, addr, selectorThreads);
             acceptThread.start();
         } catch(IOException e) {
-            LOG.error("Error reconfiguring client port to {} {}", addr, e.getMessage());
+            JulLog.error("Error reconfiguring client port to {} {}", addr, e.getMessage());
             tryClose(oldSS);
         }
     }
@@ -864,7 +864,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                 // This will remove the cnxn from cnxns
                 cnxn.close();
             } catch (Exception e) {
-                LOG.warn("Ignoring exception closing cnxn sessionid 0x"
+                JulLog.warn("Ignoring exception closing cnxn sessionid 0x"
                          + Long.toHexString(cnxn.getSessionId()), e);
             }
         }
@@ -877,7 +877,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         try {
             ss.close();
         } catch (IOException e) {
-            LOG.warn("Error closing listen socket", e);
+            JulLog.warn("Error closing listen socket", e);
         }
 
         if (acceptThread != null) {
@@ -909,9 +909,9 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                 login.shutdown();
             }
         } catch (InterruptedException e) {
-            LOG.warn("Ignoring interrupted exception during shutdown", e);
+            JulLog.warn("Ignoring interrupted exception during shutdown", e);
         } catch (Exception e) {
-            LOG.warn("Ignoring unexpected exception during shutdown", e);
+            JulLog.warn("Ignoring unexpected exception during shutdown", e);
         }
 
         if (zkServer != null) {

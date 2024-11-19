@@ -17,11 +17,12 @@
  */
 package org.apache.zookeeper.cli;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Id;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * a parser for ACL strings
@@ -31,7 +32,7 @@ public class AclParser {
     /**
      * parse string into list of ACL
      * @param aclString
-     * @return 
+     * @return
      */
     public static List<ACL> parse(String aclString) {
         List<ACL> acl;

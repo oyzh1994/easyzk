@@ -26,19 +26,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class manages watches. It allows watches to be associated with a string
  * and removes watchers and their watches in addition to managing triggers.
  */
 class WatchManager {
-    private static final Logger LOG = LoggerFactory.getLogger(WatchManager.class);
 
     private final HashMap<String, HashSet<Watcher>> watchTable =
         new HashMap<String, HashSet<Watcher>>();
@@ -101,8 +99,8 @@ class WatchManager {
         synchronized (this) {
             watchers = watchTable.remove(path);
             if (watchers == null || watchers.isEmpty()) {
-                if (LOG.isTraceEnabled()) {
-                    ZooTrace.logTraceMessage(LOG,
+                if (JulLog.isTraceEnabled()) {
+                    ZooTrace.logTraceMessage(JulLog.getLogger(),
                             ZooTrace.EVENT_DELIVERY_TRACE_MASK,
                             "No watchers for " + path);
                 }

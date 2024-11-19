@@ -18,8 +18,6 @@
 
 package org.apache.zookeeper.server.command;
 
-import java.io.PrintWriter;
-
 import org.apache.zookeeper.Version;
 import org.apache.zookeeper.server.ServerCnxn;
 import org.apache.zookeeper.server.ServerStats;
@@ -27,6 +25,8 @@ import org.apache.zookeeper.server.ZKDatabase;
 import org.apache.zookeeper.server.quorum.Leader;
 import org.apache.zookeeper.server.quorum.LeaderZooKeeperServer;
 import org.apache.zookeeper.server.util.OSMXBean;
+
+import java.io.PrintWriter;
 
 public class MonitorCommand extends AbstractFourLetterCommand {
 

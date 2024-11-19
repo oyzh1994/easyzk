@@ -26,6 +26,7 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.common.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +46,6 @@ import org.slf4j.LoggerFactory;
  * useful even with a single thread.
  */
 public class WorkerService {
-    private static final Logger LOG =
-        LoggerFactory.getLogger(WorkerService.class);
 
     private final ArrayList<ExecutorService> workers =
         new ArrayList<ExecutorService>();
@@ -127,7 +126,7 @@ public class WorkerService {
                 ExecutorService worker = workers.get(workerNum);
                 worker.execute(scheduledWorkRequest);
             } catch (RejectedExecutionException e) {
-                LOG.warn("ExecutorService rejected execution", e);
+                JulLog.warn("ExecutorService rejected execution", e);
                 workRequest.cleanup();
             }
         } else {
@@ -137,7 +136,7 @@ public class WorkerService {
             try {
                 scheduledWorkRequest.join();
             } catch (InterruptedException e) {
-                LOG.warn("Unexpected exception", e);
+                JulLog.warn("Unexpected exception", e);
                 Thread.currentThread().interrupt();
             }
         }
@@ -161,7 +160,7 @@ public class WorkerService {
                 }
                 workRequest.doWork();
             } catch (Exception e) {
-                LOG.warn("Unexpected exception", e);
+                JulLog.warn("Unexpected exception", e);
                 workRequest.cleanup();
             }
         }

@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import cn.oyzh.common.log.JulLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SyncRequestProcessor extends ZooKeeperCriticalThread implements
         RequestProcessor {
-    private static final Logger LOG = LoggerFactory.getLogger(SyncRequestProcessor.class);
     private final ZooKeeperServer zks;
     private final LinkedBlockingQueue<Request> queuedRequests =
         new LinkedBlockingQueue<Request>();
@@ -127,14 +127,14 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements
                             zks.getZKDatabase().rollLog();
                             // take a snapshot
                             if (snapInProcess != null && snapInProcess.isAlive()) {
-                                LOG.warn("Too busy to snap, skipping");
+                                JulLog.warn("Too busy to snap, skipping");
                             } else {
                                 snapInProcess = new ZooKeeperThread("Snapshot Thread") {
                                         public void run() {
                                             try {
                                                 zks.takeSnapshot();
                                             } catch(Exception e) {
-                                                LOG.warn("Unexpected exception", e);
+                                                JulLog.warn("Unexpected exception", e);
                                             }
                                         }
                                     };
@@ -166,7 +166,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements
         } finally{
             running = false;
         }
-        LOG.info("SyncRequestProcessor exited!");
+        JulLog.info("SyncRequestProcessor exited!");
     }
 
     private void flush(LinkedList<Request> toFlush)
@@ -188,7 +188,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements
     }
 
     public void shutdown() {
-        LOG.info("Shutting down");
+        JulLog.info("Shutting down");
         queuedRequests.add(requestOfDeath);
         try {
             if(running){
@@ -198,11 +198,11 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements
                 flush(toFlush);
             }
         } catch(InterruptedException e) {
-            LOG.warn("Interrupted while wating for " + this + " to finish");
+            JulLog.warn("Interrupted while wating for " + this + " to finish");
         } catch (IOException e) {
-            LOG.warn("Got IO exception during shutdown");
+            JulLog.warn("Got IO exception during shutdown");
         } catch (RequestProcessorException e) {
-            LOG.warn("Got request processor exception during shutdown");
+            JulLog.warn("Got request processor exception during shutdown");
         }
         if (nextProcessor != null) {
             nextProcessor.shutdown();

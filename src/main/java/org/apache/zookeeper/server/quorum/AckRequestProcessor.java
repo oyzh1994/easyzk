@@ -18,9 +18,8 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.RequestProcessor;
 
@@ -30,7 +29,6 @@ import org.apache.zookeeper.server.RequestProcessor;
  * previous stage to the leader as an ACK.
  */
 class AckRequestProcessor implements RequestProcessor {
-    private static final Logger LOG = LoggerFactory.getLogger(AckRequestProcessor.class);
     Leader leader;
 
     AckRequestProcessor(Leader leader) {
@@ -45,7 +43,7 @@ class AckRequestProcessor implements RequestProcessor {
         if(self != null)
             leader.processAck(self.getId(), request.zxid, null);
         else
-            LOG.error("Null QuorumPeer");
+            JulLog.error("Null QuorumPeer");
     }
 
     public void shutdown() {

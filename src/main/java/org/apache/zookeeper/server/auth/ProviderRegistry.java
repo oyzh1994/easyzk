@@ -18,16 +18,13 @@
 
 package org.apache.zookeeper.server.auth;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.server.ZooKeeperServer;
+
 import java.util.Enumeration;
 import java.util.HashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.apache.zookeeper.server.ZooKeeperServer;
-
 public class ProviderRegistry {
-    private static final Logger LOG = LoggerFactory.getLogger(ProviderRegistry.class);
 
     private static boolean initialized = false;
     private static HashMap<String, AuthenticationProvider> authenticationProviders =
@@ -53,7 +50,7 @@ public class ProviderRegistry {
                                 .newInstance();
                         authenticationProviders.put(ap.getScheme(), ap);
                     } catch (Exception e) {
-                        LOG.warn("Problems loading " + className,e);
+                        JulLog.warn("Problems loading " + className,e);
                     }
                 }
             }

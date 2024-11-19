@@ -18,9 +18,8 @@
 
 package org.apache.zookeeper.server.quorum;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.common.Time;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utility class to limit the number of concurrent snapshots from a leader to
@@ -30,8 +29,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LearnerSnapshotThrottler {
-    private static final Logger LOG =
-            LoggerFactory.getLogger(LearnerSnapshotThrottler.class);
 
     private final Object snapCountSyncObject = new Object();
     private int snapsInProgress;
@@ -130,7 +127,7 @@ public class LearnerSnapshotThrottler {
             String errorMsg =
                     "endSnapshot() called incorrectly; current snapshot count is "
                             + newCount;
-            LOG.error(errorMsg);
+            JulLog.error(errorMsg);
         }
     }
 }

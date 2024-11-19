@@ -19,25 +19,24 @@
 package org.apache.zookeeper.server.quorum;
 
 import org.apache.zookeeper.jmx.ZKMBeanInfo;
-import org.apache.zookeeper.server.quorum.QuorumPeer;
 
 public class QuorumBean implements QuorumMXBean, ZKMBeanInfo {
     private final QuorumPeer peer;
     private final String name;
-    
+
     public QuorumBean(QuorumPeer peer){
         this.peer = peer;
         name = "ReplicatedServer_id" + peer.getId();
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public boolean isHidden() {
         return false;
     }
-    
+
     public int getQuorumSize() {
         return peer.getQuorumSize();
     }

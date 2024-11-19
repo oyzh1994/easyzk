@@ -18,18 +18,17 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.ZooDefs.OpCode;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.RequestProcessor;
 import org.apache.zookeeper.server.WorkerService;
 import org.apache.zookeeper.server.ZooKeeperCriticalThread;
 import org.apache.zookeeper.server.ZooKeeperServerListener;
+
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * This RequestProcessor matches the incoming committed requests with the
@@ -66,7 +65,6 @@ import org.apache.zookeeper.server.ZooKeeperServerListener;
  */
 public class CommitProcessor extends ZooKeeperCriticalThread implements
         RequestProcessor {
-    private static final Logger LOG = LoggerFactory.getLogger(CommitProcessor.class);
 
     /** Default: numCores */
     public static final String ZOOKEEPER_COMMIT_PROC_NUM_WORKER_THREADS =
@@ -142,7 +140,7 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
             case OpCode.setACL:
                 return true;
             case OpCode.sync:
-                return matchSyncs;    
+                return matchSyncs;
             case OpCode.createSession:
             case OpCode.closeSession:
                 return !request.isLocalSession();
@@ -190,7 +188,7 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
         } catch (Throwable e) {
             handleException(this.getName(), e);
         }
-        LOG.info("CommitProcessor exited loop!");
+        JulLog.info("CommitProcessor exited loop!");
     }
 
     /*
@@ -206,7 +204,7 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
             /*
              * ZOOKEEPER-1863: continue only if there is no new request
              * waiting in queuedRequests or it is waiting for a
-             * commit. 
+             * commit.
              */
             if ( !isWaitingForCommit() && !queuedRequests.isEmpty()) {
                 return;
@@ -240,7 +238,7 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
                 currentlyCommitting.set(request);
                 sendToNextProcessor(request);
             }
-        }      
+        }
     }
 
     @Override
@@ -251,7 +249,7 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
         workerShutdownTimeoutMS = Long.getLong(
             ZOOKEEPER_COMMIT_PROC_SHUTDOWN_TIMEOUT, 5000);
 
-        LOG.info("Configuring CommitProcessor with "
+        JulLog.info("Configuring CommitProcessor with "
                  + (numWorkerThreads > 0 ? numWorkerThreads : "no")
                  + " worker threads.");
         if (workerPool == null) {
@@ -285,7 +283,7 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
         @Override
         public void cleanup() {
             if (!stopped) {
-                LOG.error("Exception thrown by downstream processor,"
+                JulLog.error("Exception thrown by downstream processor,"
                           + " unable to continue.");
                 CommitProcessor.this.halt();
             }
@@ -323,8 +321,8 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
         if (stopped || request == null) {
             return;
         }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Committing request:: " + request);
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("Committing request:: " + request);
         }
         committedRequests.add(request);
         if (!isProcessingCommit()) {
@@ -336,8 +334,8 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
         if (stopped) {
             return;
         }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Processing request:: " + request);
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("Processing request:: " + request);
         }
         queuedRequests.add(request);
         if (!isWaitingForCommit()) {
@@ -355,7 +353,7 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements
     }
 
     public void shutdown() {
-        LOG.info("Shutting down");
+        JulLog.info("Shutting down");
 
         halt();
 

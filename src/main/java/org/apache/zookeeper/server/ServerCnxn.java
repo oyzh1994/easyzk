@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.Record;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -49,8 +50,7 @@ public abstract class ServerCnxn implements Stats, Watcher {
     // This is just an arbitrary object to represent requests issued by
     // (aka owned by) this class
     final public static Object me = new Object();
-    private static final Logger LOG = LoggerFactory.getLogger(ServerCnxn.class);
-    
+
     protected ArrayList<Id> authInfo = new ArrayList<Id>();
 
     /**
@@ -138,7 +138,7 @@ public abstract class ServerCnxn implements Stats, Watcher {
     }
 
     protected abstract ServerStats serverStats();
-    
+
     protected final Date established = new Date();
 
     protected final AtomicLong packetsReceived = new AtomicLong();
@@ -173,7 +173,7 @@ public abstract class ServerCnxn implements Stats, Watcher {
     protected long incrPacketsReceived() {
         return packetsReceived.incrementAndGet();
     }
-    
+
     protected void incrOutstandingRequests(RequestHeader h) {
     }
 
@@ -270,7 +270,7 @@ public abstract class ServerCnxn implements Stats, Watcher {
     public abstract boolean isSecure();
     public abstract Certificate[] getClientCertificateChain();
     public abstract void setClientCertificateChain(Certificate[] chain);
-    
+
     /**
      * Print information about the connection.
      * @param brief iff true prints brief details, otw full detail
@@ -360,12 +360,12 @@ public abstract class ServerCnxn implements Stats, Watcher {
                 pwriter.close();
             }
         } catch (Exception e) {
-            LOG.info("Error closing PrintWriter ", e);
+            JulLog.info("Error closing PrintWriter ", e);
         } finally {
             try {
                 close();
             } catch (Exception e) {
-                LOG.error("Error closing a command socket ", e);
+                JulLog.error("Error closing a command socket ", e);
             }
         }
     }

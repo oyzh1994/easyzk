@@ -18,6 +18,7 @@
 
 package org.apache.zookeeper.server.quorum;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.KeeperException.SessionExpiredException;
 import org.apache.zookeeper.jmx.MBeanRegistry;
 import org.apache.zookeeper.server.ContainerManager;
@@ -112,7 +113,7 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
     public void createSessionTracker() {
         sessionTracker = new LeaderSessionTracker(
                 this, getZKDatabase().getSessionWithTimeOuts(),
-                tickTime, self.getId(), self.areLocalSessionsEnabled(), 
+                tickTime, self.getId(), self.areLocalSessionsEnabled(),
                 getZooKeeperServerListener());
     }
 
@@ -157,7 +158,7 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
             jmxDataTreeBean = new DataTreeBean(getZKDatabase().getDataTree());
             MBeanRegistry.getInstance().register(jmxDataTreeBean, jmxServerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             jmxDataTreeBean = null;
         }
     }
@@ -170,7 +171,7 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
             try {
                 MBeanRegistry.getInstance().unregister(self.jmxLeaderElectionBean);
             } catch (Exception e) {
-                LOG.warn("Failed to register with JMX", e);
+                JulLog.warn("Failed to register with JMX", e);
             }
             self.jmxLeaderElectionBean = null;
         }
@@ -179,7 +180,7 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
             jmxServerBean = leaderBean;
             MBeanRegistry.getInstance().register(leaderBean, localPeerBean);
         } catch (Exception e) {
-            LOG.warn("Failed to register with JMX", e);
+            JulLog.warn("Failed to register with JMX", e);
             jmxServerBean = null;
         }
     }
@@ -192,7 +193,7 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
                 MBeanRegistry.getInstance().unregister(jmxDataTreeBean);
             }
         } catch (Exception e) {
-            LOG.warn("Failed to unregister with JMX", e);
+            JulLog.warn("Failed to unregister with JMX", e);
         }
         jmxDataTreeBean = null;
     }
@@ -204,7 +205,7 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
                 MBeanRegistry.getInstance().unregister(jmxServerBean);
             }
         } catch (Exception e) {
-            LOG.warn("Failed to unregister with JMX", e);
+            JulLog.warn("Failed to unregister with JMX", e);
         }
         jmxServerBean = null;
     }

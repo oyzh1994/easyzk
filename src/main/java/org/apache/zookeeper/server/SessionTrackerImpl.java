@@ -30,6 +30,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.KeeperException.SessionExpiredException;
 import org.apache.zookeeper.common.Time;
@@ -44,7 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
         SessionTracker {
-    private static final Logger LOG = LoggerFactory.getLogger(SessionTrackerImpl.class);
 
     protected final ConcurrentHashMap<Long, SessionImpl> sessionsById =
         new ConcurrentHashMap<Long, SessionImpl>();
@@ -155,7 +155,7 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
         } catch (InterruptedException e) {
             handleException(this.getName(), e);
         }
-        LOG.info("SessionTrackerImpl exited loop!");
+        JulLog.info("SessionTrackerImpl exited loop!");
     }
 
     synchronized public boolean touchSession(long sessionId, int timeout) {
@@ -181,14 +181,14 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
     }
 
     private void logTraceTouchSession(long sessionId, int timeout, String sessionStatus){
-        if (!LOG.isTraceEnabled())
+        if (!JulLog.isTraceEnabled())
             return;
 
         String msg = MessageFormat.format(
                 "SessionTrackerImpl --- Touch {0}session: 0x{1} with timeout {2}",
                 sessionStatus, Long.toHexString(sessionId), Integer.toString(timeout));
 
-        ZooTrace.logTraceMessage(LOG, ZooTrace.CLIENT_PING_TRACE_MASK, msg);
+        ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.CLIENT_PING_TRACE_MASK, msg);
     }
 
     private void logTraceTouchInvalidSession(long sessionId, int timeout) {
@@ -204,8 +204,8 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
     }
 
     synchronized public void setSessionClosing(long sessionId) {
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("Session closing: 0x" + Long.toHexString(sessionId));
+        if (JulLog.isTraceEnabled()) {
+            JulLog.trace("Session closing: 0x" + Long.toHexString(sessionId));
         }
         SessionImpl s = sessionsById.get(sessionId);
         if (s == null) {
@@ -215,11 +215,11 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
     }
 
     synchronized public void removeSession(long sessionId) {
-        LOG.debug("Removing session 0x" + Long.toHexString(sessionId));
+        JulLog.debug("Removing session 0x" + Long.toHexString(sessionId));
         SessionImpl s = sessionsById.remove(sessionId);
         sessionsWithTimeout.remove(sessionId);
-        if (LOG.isTraceEnabled()) {
-            ZooTrace.logTraceMessage(LOG, ZooTrace.SESSION_TRACE_MASK,
+        if (JulLog.isTraceEnabled()) {
+            ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.SESSION_TRACE_MASK,
                     "SessionTrackerImpl --- Removing session 0x"
                     + Long.toHexString(sessionId));
         }
@@ -229,11 +229,11 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
     }
 
     public void shutdown() {
-        LOG.info("Shutting down");
+        JulLog.info("Shutting down");
 
         running = false;
-        if (LOG.isTraceEnabled()) {
-            ZooTrace.logTraceMessage(LOG, ZooTrace.getTextTraceLevel(),
+        if (JulLog.isTraceEnabled()) {
+            ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.getTextTraceLevel(),
                                      "Shutdown SessionTrackerImpl!");
         }
     }
@@ -266,12 +266,12 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
             session = existedSession;
         } else {
             added = true;
-            LOG.debug("Adding session 0x" + Long.toHexString(id));
+            JulLog.debug("Adding session 0x" + Long.toHexString(id));
         }
 
-        if (LOG.isTraceEnabled()) {
+        if (JulLog.isTraceEnabled()) {
             String actionStr = added ? "Adding" : "Existing";
-            ZooTrace.logTraceMessage(LOG, ZooTrace.SESSION_TRACE_MASK,
+            ZooTrace.logTraceMessage(JulLog.getLogger(), ZooTrace.SESSION_TRACE_MASK,
                     "SessionTrackerImpl --- " + actionStr + " session 0x"
                     + Long.toHexString(id) + " " + sessionTimeout);
         }
@@ -288,7 +288,7 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
             throws SessionExpiredException,
             KeeperException.SessionMovedException,
             KeeperException.UnknownSessionException {
-        LOG.debug("Checking session 0x" + Long.toHexString(sessionId));
+        JulLog.debug("Checking session 0x" + Long.toHexString(sessionId));
         SessionImpl session = sessionsById.get(sessionId);
 
         if (session == null) {

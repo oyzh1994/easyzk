@@ -18,6 +18,8 @@
 package org.apache.zookeeper.common;
 
 
+import cn.oyzh.common.log.JulLog;
+
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -30,9 +32,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyStore;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static org.apache.zookeeper.common.X509Exception.KeyManagerException;
 import static org.apache.zookeeper.common.X509Exception.SSLContextException;
 import static org.apache.zookeeper.common.X509Exception.TrustManagerException;
@@ -41,7 +40,6 @@ import static org.apache.zookeeper.common.X509Exception.TrustManagerException;
  * Utility code for X509 handling
  */
 public class X509Util {
-    private static final Logger LOG = LoggerFactory.getLogger(X509Util.class);
 
     /**
      * @deprecated Use {@link ZKConfig#SSL_KEYSTORE_LOCATION}
@@ -95,7 +93,7 @@ public class X509Util {
         // But if a user wanna specify one, location and password are required.
 
         if (keyStoreLocationProp == null && keyStorePasswordProp == null) {
-            LOG.warn("keystore not specified for client connection");
+            JulLog.warn("keystore not specified for client connection");
         } else {
             if (keyStoreLocationProp == null) {
                 throw new SSLContextException("keystore location not specified for client connection");
@@ -115,7 +113,7 @@ public class X509Util {
         String trustStorePasswordProp = config.getProperty(ZKConfig.SSL_TRUSTSTORE_PASSWD);
 
         if (trustStoreLocationProp == null && trustStorePasswordProp == null) {
-            LOG.warn("keystore not specified for client connection");
+            JulLog.warn("keystore not specified for client connection");
         } else {
             if (trustStoreLocationProp == null) {
                 throw new SSLContextException("keystore location not specified for client connection");

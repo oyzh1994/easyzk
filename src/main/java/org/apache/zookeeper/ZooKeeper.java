@@ -18,6 +18,7 @@
 
 package org.apache.zookeeper;
 
+import cn.oyzh.common.log.JulLog;
 import org.apache.jute.Record;
 import org.apache.zookeeper.AsyncCallback.ACLCallback;
 import org.apache.zookeeper.AsyncCallback.Children2Callback;
@@ -73,8 +74,6 @@ import org.apache.zookeeper.proto.SyncRequest;
 import org.apache.zookeeper.proto.SyncResponse;
 import org.apache.zookeeper.proto.WhoAmIResponse;
 import org.apache.zookeeper.server.DataTree;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -153,11 +152,9 @@ public class ZooKeeper {
     public static final String SECURE_CLIENT = "zookeeper.client.secure";
 
     protected final ClientCnxn cnxn;
-    private static final Logger LOG;
     static {
         //Keep these two lines together to keep the initialization order explicit
-        LOG = LoggerFactory.getLogger(ZooKeeper.class);
-        Environment.logEnv("Client environment:", LOG);
+        Environment.logEnv("Client environment:", JulLog.getLogger());
     }
 
     private final HostProvider hostProvider;
@@ -512,7 +509,7 @@ public class ZooKeeper {
                     Set<Watcher> list = existWatches.remove(clientPath);
                     if (list != null) {
                         addTo(existWatches.remove(clientPath), result);
-                        LOG.warn("We are triggering an exists watch for delete! Shouldn't happen!");
+                        JulLog.warn("We are triggering an exists watch for delete! Shouldn't happen!");
                     }
                 }
                 synchronized (childWatches) {
@@ -522,7 +519,7 @@ public class ZooKeeper {
             default:
                 String msg = "Unhandled watch event type " + type
                     + " with state " + state + " on path " + clientPath;
-                LOG.error(msg);
+                JulLog.error(msg);
                 throw new RuntimeException(msg);
             }
 
@@ -858,7 +855,7 @@ public class ZooKeeper {
     public ZooKeeper(String connectString, int sessionTimeout, Watcher watcher,
             boolean canBeReadOnly, HostProvider aHostProvider,
             ZKClientConfig clientConfig) throws IOException {
-        LOG.info("Initiating client connection, connectString=" + connectString
+        JulLog.info("Initiating client connection, connectString=" + connectString
                 + " sessionTimeout=" + sessionTimeout + " watcher=" + watcher);
 
         if (clientConfig == null) {
@@ -1121,7 +1118,7 @@ public class ZooKeeper {
     public ZooKeeper(String connectString, int sessionTimeout, Watcher watcher,
             long sessionId, byte[] sessionPasswd, boolean canBeReadOnly,
             HostProvider aHostProvider) throws IOException {
-        LOG.info("Initiating client connection, connectString=" + connectString
+        JulLog.info("Initiating client connection, connectString=" + connectString
                 + " sessionTimeout=" + sessionTimeout
                 + " watcher=" + watcher
                 + " sessionId=" + Long.toHexString(sessionId)
@@ -1298,25 +1295,25 @@ public class ZooKeeper {
      */
     public synchronized void close() throws InterruptedException {
         if (!cnxn.getState().isAlive()) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Close called on already closed client");
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("Close called on already closed client");
             }
             return;
         }
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Closing session: 0x" + Long.toHexString(getSessionId()));
+        if (JulLog.isDebugEnabled()) {
+            JulLog.debug("Closing session: 0x" + Long.toHexString(getSessionId()));
         }
 
         try {
             cnxn.close();
         } catch (IOException e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Ignoring unexpected exception during close", e);
+            if (JulLog.isDebugEnabled()) {
+                JulLog.debug("Ignoring unexpected exception during close", e);
             }
         }
 
-        LOG.info("Session: 0x" + Long.toHexString(getSessionId()) + " closed");
+        JulLog.info("Session: 0x" + Long.toHexString(getSessionId()) + " closed");
     }
 
     /**
@@ -1683,14 +1680,14 @@ public class ZooKeeper {
             try {
                 op.validate();
             } catch (IllegalArgumentException iae) {
-                LOG.error("IllegalArgumentException: " + iae.getMessage());
+                JulLog.error("IllegalArgumentException: " + iae.getMessage());
                 ErrorResult err = new ErrorResult(
                         KeeperException.Code.BADARGUMENTS.intValue());
                 results.add(err);
                 error = true;
                 continue;
             } catch (KeeperException ke) {
-                LOG.error("KeeperException: " + ke.getMessage());
+                JulLog.error("KeeperException: " + ke.getMessage());
                 ErrorResult err = new ErrorResult(ke.code().intValue());
                 results.add(err);
                 error = true;
@@ -2953,7 +2950,7 @@ public class ZooKeeper {
             request = rmReq;
             break;
         default:
-            LOG.warn("unknown type " + opCode);
+            JulLog.warn("unknown type " + opCode);
             break;
         }
         return request;

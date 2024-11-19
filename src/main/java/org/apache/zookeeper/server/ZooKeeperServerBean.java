@@ -18,10 +18,10 @@
 
 package org.apache.zookeeper.server;
 
-import java.util.Date;
-
 import org.apache.zookeeper.Version;
 import org.apache.zookeeper.jmx.ZKMBeanInfo;
+
+import java.util.Date;
 
 /**
  * This class implements the ZooKeeper server MBean interface.
@@ -29,47 +29,47 @@ import org.apache.zookeeper.jmx.ZKMBeanInfo;
 public class ZooKeeperServerBean implements ZooKeeperServerMXBean, ZKMBeanInfo {
     private final Date startTime;
     private final String name;
-    
+
     protected final ZooKeeperServer zks;
-    
+
     public ZooKeeperServerBean(ZooKeeperServer zks) {
         startTime = new Date();
         this.zks = zks;
         name = "StandaloneServer_port" + zks.getClientPort();
     }
-    
+
     public String getClientPort() {
         return Integer.toString(zks.getClientPort());
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public boolean isHidden() {
         return false;
     }
-    
+
     public String getStartTime() {
         return startTime.toString();
     }
-    
+
     public String getVersion() {
         return Version.getFullVersion();
     }
-    
+
     public long getAvgRequestLatency() {
         return zks.serverStats().getAvgLatency();
     }
-    
+
     public long getMaxRequestLatency() {
         return zks.serverStats().getMaxLatency();
     }
-    
+
     public long getMinRequestLatency() {
         return zks.serverStats().getMinLatency();
     }
-    
+
     public long getOutstandingRequests() {
         return zks.serverStats().getOutstandingRequests();
     }
@@ -118,19 +118,19 @@ public class ZooKeeperServerBean implements ZooKeeperServerMXBean, ZKMBeanInfo {
     public long getLogDirSize() {
         return zks.getLogDirSize();
     }
-    
+
     public long getPacketsReceived() {
         return zks.serverStats().getPacketsReceived();
     }
-    
+
     public long getPacketsSent() {
         return zks.serverStats().getPacketsSent();
     }
-    
+
     public void resetLatency() {
         zks.serverStats().resetLatency();
     }
-    
+
     public void resetMaxLatency() {
         zks.serverStats().resetMaxLatency();
     }

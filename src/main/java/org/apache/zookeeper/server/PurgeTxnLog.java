@@ -18,6 +18,9 @@
 
 package org.apache.zookeeper.server;
 
+import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
+import org.apache.zookeeper.server.persistence.Util;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -26,11 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
-import org.apache.zookeeper.server.persistence.Util;
-
 /**
- * this class is used to clean up the 
+ * this class is used to clean up the
  * snapshot and data log dir's. This is usually
  * run as a cronjob on the zookeeper server machine.
  * Invocation of this class will clean up the datalogdir
@@ -117,7 +117,7 @@ public class PurgeTxnLog {
         }
 
     }
-    
+
     /**
      * @param args dataLogDir [snapDir] -n count
      * dataLogDir -- path to the txn log directory

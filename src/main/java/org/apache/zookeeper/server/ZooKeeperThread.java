@@ -18,8 +18,6 @@
 package org.apache.zookeeper.server;
 
 import cn.oyzh.common.log.JulLog;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is the main class for catching all the uncaught exceptions thrown by the

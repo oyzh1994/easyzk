@@ -18,9 +18,6 @@
 
 package org.apache.zookeeper.server;
 
-import java.nio.ByteBuffer;
-import java.util.List;
-
 import org.apache.jute.Record;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs.OpCode;
@@ -28,6 +25,9 @@ import org.apache.zookeeper.common.Time;
 import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
 import org.apache.zookeeper.txn.TxnHeader;
+
+import java.nio.ByteBuffer;
+import java.util.List;
 
 /**
  * This is the structure that represents a request moving through a chain of
@@ -83,7 +83,7 @@ public class Request {
     private KeeperException e;
 
     public QuorumVerifier qv = null;
-    
+
     /**
      * If this is a create or close request for a local-only session.
      */

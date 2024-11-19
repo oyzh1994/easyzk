@@ -20,7 +20,11 @@ package org.apache.zookeeper;
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
 import org.apache.jute.Record;
-import org.apache.zookeeper.proto.*;
+import org.apache.zookeeper.proto.CheckVersionRequest;
+import org.apache.zookeeper.proto.CreateRequest;
+import org.apache.zookeeper.proto.DeleteRequest;
+import org.apache.zookeeper.proto.MultiHeader;
+import org.apache.zookeeper.proto.SetDataRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;

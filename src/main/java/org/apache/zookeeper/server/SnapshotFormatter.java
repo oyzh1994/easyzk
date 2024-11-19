@@ -18,6 +18,11 @@
 
 package org.apache.zookeeper.server;
 
+import org.apache.jute.BinaryInputArchive;
+import org.apache.jute.InputArchive;
+import org.apache.zookeeper.data.StatPersisted;
+import org.apache.zookeeper.server.persistence.FileSnap;
+
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,11 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedInputStream;
-
-import org.apache.jute.BinaryInputArchive;
-import org.apache.jute.InputArchive;
-import org.apache.zookeeper.data.StatPersisted;
-import org.apache.zookeeper.server.persistence.FileSnap;
 
 /**
  * Dump a snapshot file to stdout.
@@ -50,18 +50,18 @@ public class SnapshotFormatter {
 
         new SnapshotFormatter().run(args[0]);
     }
-    
+
     public void run(String snapshotFileName) throws IOException {
         InputStream is = new CheckedInputStream(
                 new BufferedInputStream(new FileInputStream(snapshotFileName)),
                 new Adler32());
         InputArchive ia = BinaryInputArchive.getArchive(is);
-        
+
         FileSnap fileSnap = new FileSnap(null);
 
         DataTree dataTree = new DataTree();
         Map<Long, Integer> sessions = new HashMap<Long, Integer>();
-        
+
         fileSnap.deserialize(dataTree, sessions, ia);
 
         printDetails(dataTree, sessions);
@@ -75,7 +75,7 @@ public class SnapshotFormatter {
     private void printZnodeDetails(DataTree dataTree) {
         System.out.println(String.format("ZNode Details (count=%d):",
                 dataTree.getNodeCount()));
-        
+
         printZnode(dataTree, "/");
         System.out.println("----");
     }

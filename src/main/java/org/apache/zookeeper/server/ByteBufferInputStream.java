@@ -18,12 +18,12 @@
 
 package org.apache.zookeeper.server;
 
+import org.apache.jute.BinaryInputArchive;
+import org.apache.jute.Record;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-
-import org.apache.jute.BinaryInputArchive;
-import org.apache.jute.Record;
 
 public class ByteBufferInputStream extends InputStream {
     ByteBuffer bb;

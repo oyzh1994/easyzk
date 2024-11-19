@@ -18,16 +18,15 @@
 
 package org.apache.zookeeper.server;
 
+import org.apache.zookeeper.common.Time;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.zookeeper.common.Time;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * ExpiryQueue tracks elements in time sorted fixed duration buckets.

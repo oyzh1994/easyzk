@@ -18,12 +18,12 @@
 
 package org.apache.zookeeper.server;
 
+import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
+import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
+
 import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
-
-import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
-import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
 
 /**
  * Server configuration storage.

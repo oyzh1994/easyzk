@@ -18,13 +18,13 @@
 
 package org.apache.zookeeper.server;
 
-import java.io.PrintWriter;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.KeeperException.SessionExpiredException;
 import org.apache.zookeeper.KeeperException.SessionMovedException;
+
+import java.io.PrintWriter;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This is the basic interface that ZooKeeperServer uses to track sessions. The

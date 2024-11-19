@@ -18,10 +18,10 @@
 
 package org.apache.zookeeper.server;
 
-import java.io.IOException;
-
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.proto.ReplyHeader;
+
+import java.io.IOException;
 
 /**
  * Manages the unknown requests (i.e. unknown OpCode), by:

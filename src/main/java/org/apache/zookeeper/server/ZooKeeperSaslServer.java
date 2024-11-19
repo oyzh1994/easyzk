@@ -18,15 +18,6 @@
 
 package org.apache.zookeeper.server;
 
-import java.security.Principal;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-
-import javax.security.auth.Subject;
-import javax.security.sasl.Sasl;
-import javax.security.sasl.SaslException;
-import javax.security.sasl.SaslServer;
-
 import cn.oyzh.common.log.JulLog;
 import org.apache.zookeeper.Login;
 import org.ietf.jgss.GSSContext;
@@ -35,8 +26,14 @@ import org.ietf.jgss.GSSException;
 import org.ietf.jgss.GSSManager;
 import org.ietf.jgss.GSSName;
 import org.ietf.jgss.Oid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import javax.security.auth.Subject;
+import javax.security.sasl.Sasl;
+import javax.security.sasl.SaslException;
+import javax.security.sasl.SaslServer;
+import java.security.Principal;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
 public class ZooKeeperSaslServer {
     public static final String LOGIN_CONTEXT_NAME_KEY = "zookeeper.sasl.serverconfig";

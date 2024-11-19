@@ -18,18 +18,16 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
+import org.apache.zookeeper.common.Time;
+
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-
-import cn.oyzh.common.log.JulLog;
-import org.apache.zookeeper.common.Time;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * WorkerService is a worker thread pool for running tasks and is implemented

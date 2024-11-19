@@ -18,14 +18,12 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
+
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-
-import cn.oyzh.common.log.JulLog;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class manages the cleanup of snapshots and corresponding transaction

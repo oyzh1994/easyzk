@@ -18,15 +18,13 @@
 
 package org.apache.zookeeper.server;
 
+import cn.oyzh.common.log.JulLog;
+
 import java.io.Flushable;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import cn.oyzh.common.log.JulLog;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This RequestProcessor logs requests to disk. It batches the requests to do

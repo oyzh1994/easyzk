@@ -18,23 +18,23 @@
 
 package org.apache.zookeeper.server;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Collections;
-
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
 import org.apache.jute.Record;
 import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.data.StatPersisted;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * This class contains the data for a node in the data tree.
  * <p>
  * A data node contains a reference to its parent, a byte array as its data, an
  * array of ACLs, a stat object, and a set of its children's paths.
- * 
+ *
  */
 public class DataNode implements Record {
     /** the data for this datanode */
@@ -66,7 +66,7 @@ public class DataNode implements Record {
 
     /**
      * create a DataNode with parent, data, acls and stat
-     * 
+     *
      * @param parent
      *            the parent of this DataNode
      * @param data
@@ -84,7 +84,7 @@ public class DataNode implements Record {
 
     /**
      * Method that inserts a child into the children set
-     * 
+     *
      * @param child
      *            to be inserted
      * @return true if this set did not already contain the specified element
@@ -99,7 +99,7 @@ public class DataNode implements Record {
 
     /**
      * Method that removes a child from the children set
-     * 
+     *
      * @param child
      * @return true if this set contained the specified element
      */
@@ -112,7 +112,7 @@ public class DataNode implements Record {
 
     /**
      * convenience method for setting the children for this datanode
-     * 
+     *
      * @param children
      */
     public synchronized void setChildren(HashSet<String> children) {
@@ -121,7 +121,7 @@ public class DataNode implements Record {
 
     /**
      * convenience methods to get the children
-     * 
+     *
      * @return the children of this datanode
      */
     public synchronized Set<String> getChildren() {

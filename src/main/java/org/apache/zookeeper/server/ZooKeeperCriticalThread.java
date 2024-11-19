@@ -18,8 +18,6 @@
 package org.apache.zookeeper.server;
 
 import cn.oyzh.common.log.JulLog;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents critical thread. When there is an uncaught exception thrown by the

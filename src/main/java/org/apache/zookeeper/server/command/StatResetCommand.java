@@ -18,9 +18,9 @@
 
 package org.apache.zookeeper.server.command;
 
-import java.io.PrintWriter;
-
 import org.apache.zookeeper.server.ServerCnxn;
+
+import java.io.PrintWriter;
 
 public class StatResetCommand extends AbstractFourLetterCommand {
     public StatResetCommand(PrintWriter pw, ServerCnxn serverCnxn) {

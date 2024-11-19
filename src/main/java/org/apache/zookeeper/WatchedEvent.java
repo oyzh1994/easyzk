@@ -17,9 +17,9 @@
  */
 package org.apache.zookeeper;
 
-import org.apache.zookeeper.proto.WatcherEvent;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
+import org.apache.zookeeper.proto.WatcherEvent;
 
 /**
  *  A WatchedEvent represents a change on the ZooKeeper that a Watcher
@@ -31,7 +31,7 @@ public class WatchedEvent {
     final private KeeperState keeperState;
     final private EventType eventType;
     private String path;
-    
+
     /**
      * Create a WatchedEvent with specified type, state and path
      */
@@ -40,7 +40,7 @@ public class WatchedEvent {
         this.eventType = eventType;
         this.path = path;
     }
-    
+
     /**
      * Convert a WatcherEvent sent over the wire into a full-fledged WatcherEvent
      */
@@ -49,15 +49,15 @@ public class WatchedEvent {
         eventType = EventType.fromInt(eventMessage.getType());
         path = eventMessage.getPath();
     }
-    
+
     public KeeperState getState() {
         return keeperState;
     }
-    
+
     public EventType getType() {
         return eventType;
     }
-    
+
     public String getPath() {
         return path;
     }
@@ -72,8 +72,8 @@ public class WatchedEvent {
      *  Convert WatchedEvent to type that can be sent over network
      */
     public WatcherEvent getWrapper() {
-        return new WatcherEvent(eventType.getIntValue(), 
-                                keeperState.getIntValue(), 
+        return new WatcherEvent(eventType.getIntValue(),
+                                keeperState.getIntValue(),
                                 path);
     }
 }

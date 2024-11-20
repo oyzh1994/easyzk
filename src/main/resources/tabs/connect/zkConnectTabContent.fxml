@@ -174,16 +174,16 @@
                     <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
                                      onMousePrimaryClicked="#showHistory">
                         <HBox.margin>
-                            <Insets left="5" top="7"/>
+                            <Insets left="5" top="10"/>
                         </HBox.margin>
                     </HistorySVGGlyph>
-                    <ZKDataFormatComboBox fx:id="dataFormat" initIndex="0" fontSize="11" prefWidth="100"
+                    <ZKDataFormatComboBox realHeight="24" fx:id="dataFormat" initIndex="0" fontSize="11" prefWidth="100"
                                           style="-fx-padding: 0;">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </ZKDataFormatComboBox>
-                    <CharsetComboBox initDefault="true" fx:id="charset" fontSize="11" prefWidth="120"
+                    <CharsetComboBox  realHeight="24" initDefault="true" fx:id="charset" fontSize="11" prefWidth="120"
                                      style="-fx-padding: 0;">
                         <HBox.margin>
                             <Insets left="5" top="5"/>

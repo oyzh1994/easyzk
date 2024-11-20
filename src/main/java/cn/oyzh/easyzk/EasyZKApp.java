@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk;
 
 import cn.oyzh.common.SysConst;
-import cn.oyzh.common.date.LocalZoneRulesProvider;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.controller.MainController;
@@ -44,11 +43,12 @@ public class EasyZKApp extends FXApplication {
     private final Project project = Project.load();
 
     public static void main(String[] args) {
-        // 初始化时区处理器
-        System.setProperty(SysConst.CACHE_DIR, ZKConst.CACHE_PATH);
-        System.setProperty(TerminalConst.SCAN_BASE, "cn.oyzh.easyzk.terminal");
+        SysConst.storeDir(ZKConst.STORE_PATH);
+        SysConst.cacheDir(ZKConst.CACHE_PATH);
+        TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
         EventFactory.registerEventBus(FxEventBus.class);
         EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
+        // 初始化时区处理器
         // System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
         launch(EasyZKApp.class, args);
     }
@@ -58,6 +58,8 @@ public class EasyZKApp extends FXApplication {
         try {
             // 储存初始化
             ZKStoreUtil.init();
+            // 禁用fx的css日志
+            FXUtil.disableCSSLogger();
             // 应用区域
             I18nManager.apply(ZKSettingStore2.SETTING.getLocale());
             // 应用字体

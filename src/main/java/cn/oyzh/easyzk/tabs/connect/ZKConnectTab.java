@@ -1,10 +1,10 @@
 package cn.oyzh.easyzk.tabs.connect;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.theme.ThemeManager;
@@ -54,7 +54,7 @@ public class ZKConnectTab extends DynamicTab {
         if (this.activeItem() == null) {
             return this.treeItem().infoName();
         }
-        return this.activeItem().decodeNodePath() + "#" + this.treeItem().infoName();
+        return this.treeItem().infoName() + "#" + this.activeItem().decodeNodePath();
     }
 
     @Override

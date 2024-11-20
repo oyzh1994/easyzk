@@ -35,11 +35,9 @@ public class ZKStoreUtil {
      */
     public static void init() {
         try {
-            System.setProperty(JdbcConst.DB_PAGE_SIZE, "4096");
-            System.setProperty(JdbcConst.DB_CACHE_SIZE, "1024");
-            System.setProperty(JdbcConst.DB_CACHE_TYPE, "SOFT_LRU");
-            System.setProperty(JdbcConst.DB_FILE, ZKConst.STORE_PATH + "db");
-            System.setProperty(JdbcConst.DB_DIALECT, JdbcDialect.H2.toString());
+            JdbcConst.dbCacheSize(1024);
+            JdbcConst.dbDialect(JdbcDialect.H2);
+            JdbcConst.dbFile( ZKConst.STORE_PATH + "db");
         } catch (Exception ex) {
             ex.printStackTrace();
             // 提示

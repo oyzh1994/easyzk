@@ -49,7 +49,7 @@ public class EasyZKApp extends FXApplication {
         System.setProperty(TerminalConst.SCAN_BASE, "cn.oyzh.easyzk.terminal");
         EventFactory.registerEventBus(FxEventBus.class);
         EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
-        System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
+        // System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
         launch(EasyZKApp.class, args);
     }
 

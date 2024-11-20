@@ -189,8 +189,8 @@ public class ZooKeeperSaslClient {
                     throw new LoginException(
                             "Zookeeper client cannot authenticate using the '"
                                     + clientConfig.getProperty(
-                                            ZKClientConfig.LOGIN_CONTEXT_NAME_KEY,
-                                            ZKClientConfig.LOGIN_CONTEXT_NAME_KEY_DEFAULT)
+                                    ZKClientConfig.LOGIN_CONTEXT_NAME_KEY,
+                                    ZKClientConfig.LOGIN_CONTEXT_NAME_KEY_DEFAULT)
                                     + "' section of the supplied JAAS configuration: '"
                                     + clientConfig.getJaasConfKey() + "' because of a "
                                     + "RuntimeException: " + runtimeException);
@@ -198,8 +198,8 @@ public class ZooKeeperSaslClient {
                     throw new LoginException(
                             "No JAAS configuration section named '"
                                     + clientConfig.getProperty(
-                                            ZKClientConfig.LOGIN_CONTEXT_NAME_KEY,
-                                            ZKClientConfig.LOGIN_CONTEXT_NAME_KEY_DEFAULT)
+                                    ZKClientConfig.LOGIN_CONTEXT_NAME_KEY,
+                                    ZKClientConfig.LOGIN_CONTEXT_NAME_KEY_DEFAULT)
                                     + "' was found in specified JAAS configuration file: '"
                                     + clientConfig.getJaasConfKey() + "'.");
                 }
@@ -278,31 +278,31 @@ public class ZooKeeperSaslClient {
             }
             else { // GSSAPI.
                 boolean usingNativeJgss = clientConfig.getBoolean(ZKConfig.JGSS_NATIVE);
-            	if (usingNativeJgss) {
-            		// http://docs.oracle.com/javase/6/docs/technotes/guides/security/jgss/jgss-features.html
-            		// """
-            		// In addition, when performing operations as a particular
-            		// Subject, e.g. Subject.doAs(...) or Subject.doAsPrivileged(...),
-            		// the to-be-used GSSCredential should be added to Subject's
-            		// private credential set. Otherwise, the GSS operations will
-            		// fail since no credential is found.
-            		// """
-            		try {
-            			GSSManager manager = GSSManager.getInstance();
-            			Oid krb5Mechanism = new Oid("1.2.840.113554.1.2.2");
-            			GSSCredential cred = manager.createCredential(null,
-            					GSSContext.DEFAULT_LIFETIME,
-            					krb5Mechanism,
-            					GSSCredential.INITIATE_ONLY);
-            			subject.getPrivateCredentials().add(cred);
-            			if (JulLog.isDebugEnabled()) {
-            				JulLog.debug("Added private credential to subject: " + cred);
-            			}
-            		} catch (GSSException ex) {
-            			JulLog.warn("Cannot add private credential to subject; " +
-            					"authentication at the server may fail", ex);
-            		}
-            	}
+                if (usingNativeJgss) {
+                    // http://docs.oracle.com/javase/6/docs/technotes/guides/security/jgss/jgss-features.html
+                    // """
+                    // In addition, when performing operations as a particular
+                    // Subject, e.g. Subject.doAs(...) or Subject.doAsPrivileged(...),
+                    // the to-be-used GSSCredential should be added to Subject's
+                    // private credential set. Otherwise, the GSS operations will
+                    // fail since no credential is found.
+                    // """
+                    try {
+                        GSSManager manager = GSSManager.getInstance();
+                        Oid krb5Mechanism = new Oid("1.2.840.113554.1.2.2");
+                        GSSCredential cred = manager.createCredential(null,
+                                GSSContext.DEFAULT_LIFETIME,
+                                krb5Mechanism,
+                                GSSCredential.INITIATE_ONLY);
+                        subject.getPrivateCredentials().add(cred);
+                        if (JulLog.isDebugEnabled()) {
+                            JulLog.debug("Added private credential to subject: " + cred);
+                        }
+                    } catch (GSSException ex) {
+                        JulLog.warn("Cannot add private credential to subject; " +
+                                "authentication at the server may fail", ex);
+                    }
+                }
                 final Object[] principals = subject.getPrincipals().toArray();
                 // determine client principal from subject.
                 final Principal clientPrincipal = (Principal)principals[0];
@@ -329,7 +329,7 @@ public class ZooKeeperSaslClient {
                     return saslClient;
                 }
                 catch (Exception e) {
-                	JulLog.error("Exception while trying to create SASL client", e);
+                    JulLog.error("Exception while trying to create SASL client", e);
                     e.printStackTrace();
                     return null;
                 }
@@ -397,7 +397,7 @@ public class ZooKeeperSaslClient {
             synchronized(login) {
                 try {
                     final byte[] retval =
-                        Subject.doAs(subject, new PrivilegedExceptionAction<byte[]>() {
+                            Subject.doAs(subject, new PrivilegedExceptionAction<byte[]>() {
                                 public byte[] run() throws SaslException {
                                     JulLog.debug("saslClient.evaluateChallenge(len="+saslToken.length+")");
                                     return saslClient.evaluateChallenge(saslToken);
@@ -407,15 +407,15 @@ public class ZooKeeperSaslClient {
                 }
                 catch (PrivilegedActionException e) {
                     String error = "An error: (" + e + ") occurred when evaluating Zookeeper Quorum Member's " +
-                      " received SASL token.";
+                            " received SASL token.";
                     // Try to provide hints to use about what went wrong so they can fix their configuration.
                     // TODO: introspect about e: look for GSS information.
                     final String UNKNOWN_SERVER_ERROR_TEXT =
-                      "(Mechanism level: Server not found in Kerberos database (7) - UNKNOWN_SERVER)";
+                            "(Mechanism level: Server not found in Kerberos database (7) - UNKNOWN_SERVER)";
                     if (e.toString().indexOf(UNKNOWN_SERVER_ERROR_TEXT) > -1) {
                         error += " This may be caused by Java's being unable to resolve the Zookeeper Quorum Member's" +
-                          " hostname correctly. You may want to try to adding" +
-                          " '-Dsun.net.spi.nameservice.provider.1=dns,sun' to your client's JVMFLAGS environment.";
+                                " hostname correctly. You may want to try to adding" +
+                                " '-Dsun.net.spi.nameservice.provider.1=dns,sun' to your client's JVMFLAGS environment.";
                     }
                     error += " Zookeeper Client will go to AUTH_FAILED state.";
                     JulLog.error(error);
@@ -426,12 +426,12 @@ public class ZooKeeperSaslClient {
         }
         else {
             throw new SaslException("Cannot make SASL token without subject defined. " +
-              "For diagnosis, please look for WARNs and ERRORs in your log related to the Login class.");
+                    "For diagnosis, please look for WARNs and ERRORs in your log related to the Login class.");
         }
     }
 
     private void sendSaslPacket(byte[] saslToken, ClientCnxn cnxn)
-      throws SaslException{
+            throws SaslException{
         if (JulLog.isDebugEnabled()) {
             JulLog.debug("ClientCnxn:sendSaslPacket:length="+saslToken.length);
         }
@@ -445,7 +445,7 @@ public class ZooKeeperSaslClient {
             cnxn.sendPacket(request,response,cb, ZooDefs.OpCode.sasl);
         } catch (IOException e) {
             throw new SaslException("Failed to send SASL packet to server.",
-                e);
+                    e);
         }
     }
 
@@ -461,7 +461,7 @@ public class ZooKeeperSaslClient {
             cnxn.sendPacket(request,response,cb, ZooDefs.OpCode.sasl);
         } catch (IOException e) {
             throw new SaslException("Failed to send SASL packet to server due " +
-              "to IOException:", e);
+                    "to IOException:", e);
         }
     }
 
@@ -470,7 +470,7 @@ public class ZooKeeperSaslClient {
     public KeeperState getKeeperState() {
         if (saslClient != null) {
             if (saslState == SaslState.FAILED) {
-              return KeeperState.AuthFailed;
+                return KeeperState.AuthFailed;
             }
             if (saslClient.isComplete()) {
                 if (saslState == SaslState.INTERMEDIATE) {
@@ -514,7 +514,7 @@ public class ZooKeeperSaslClient {
         }
 
         public void handle(Callback[] callbacks) throws
-          UnsupportedCallbackException {
+                UnsupportedCallbackException {
             for (Callback callback : callbacks) {
                 if (callback instanceof NameCallback) {
                     NameCallback nc = (NameCallback) callback;
@@ -527,19 +527,19 @@ public class ZooKeeperSaslClient {
                             pc.setPassword(this.password.toCharArray());
                         } else {
                             JulLog.warn("Could not login: the client is being asked for a password, but the Zookeeper" +
-                              " client code does not currently support obtaining a password from the user." +
-                              " Make sure that the client is configured to use a ticket cache (using" +
-                              " the JAAS configuration setting 'useTicketCache=true)' and restart the client. If" +
-                              " you still get this message after that, the TGT in the ticket cache has expired and must" +
-                              " be manually refreshed. To do so, first determine if you are using a password or a" +
-                              " keytab. If the former, run kinit in a Unix shell in the environment of the user who" +
-                              " is running this Zookeeper client using the command" +
-                              " 'kinit <princ>' (where <princ> is the name of the client's Kerberos principal)." +
-                              " If the latter, do" +
-                              " 'kinit -k -t <keytab> <princ>' (where <princ> is the name of the Kerberos principal, and" +
-                              " <keytab> is the location of the keytab file). After manually refreshing your cache," +
-                              " restart this client. If you continue to see this message after manually refreshing" +
-                              " your cache, ensure that your KDC host's clock is in sync with this host's clock.");
+                                    " client code does not currently support obtaining a password from the user." +
+                                    " Make sure that the client is configured to use a ticket cache (using" +
+                                    " the JAAS configuration setting 'useTicketCache=true)' and restart the client. If" +
+                                    " you still get this message after that, the TGT in the ticket cache has expired and must" +
+                                    " be manually refreshed. To do so, first determine if you are using a password or a" +
+                                    " keytab. If the former, run kinit in a Unix shell in the environment of the user who" +
+                                    " is running this Zookeeper client using the command" +
+                                    " 'kinit <princ>' (where <princ> is the name of the client's Kerberos principal)." +
+                                    " If the latter, do" +
+                                    " 'kinit -k -t <keytab> <princ>' (where <princ> is the name of the Kerberos principal, and" +
+                                    " <keytab> is the location of the keytab file). After manually refreshing your cache," +
+                                    " restart this client. If you continue to see this message after manually refreshing" +
+                                    " your cache, ensure that your KDC host's clock is in sync with this host's clock.");
                         }
                     }
                     else {
@@ -572,8 +572,8 @@ public class ZooKeeperSaslClient {
     }
 
     public boolean clientTunneledAuthenticationInProgress() {
-    	if (!isSASLConfigured) {
-    	    return false;
+        if (!isSASLConfigured) {
+            return false;
         }
         // TODO: Rather than checking a disjunction here, should be a single member
         // variable or method in this class to determine whether the client is
@@ -581,14 +581,14 @@ public class ZooKeeperSaslClient {
         try {
             if ((clientConfig.getJaasConfKey() != null)
                     || ((Configuration.getConfiguration() != null) && (Configuration.getConfiguration()
-                            .getAppConfigurationEntry(clientConfig.getProperty(ZKClientConfig.LOGIN_CONTEXT_NAME_KEY,
-                                    ZKClientConfig.LOGIN_CONTEXT_NAME_KEY_DEFAULT)) != null))) {
+                    .getAppConfigurationEntry(clientConfig.getProperty(ZKClientConfig.LOGIN_CONTEXT_NAME_KEY,
+                            ZKClientConfig.LOGIN_CONTEXT_NAME_KEY_DEFAULT)) != null))) {
                 // Client is configured to use a valid login Configuration, so
                 // authentication is either in progress, successful, or failed.
 
                 // 1. Authentication hasn't finished yet: we must wait for it to do so.
                 if ((isComplete() == false) &&
-                    (isFailed() == false)) {
+                        (isFailed() == false)) {
                     return true;
                 }
 
@@ -597,7 +597,7 @@ public class ZooKeeperSaslClient {
                     if (gotLastPacket == false) {
                         // ..but still in progress, because there is a final SASL
                         // message from server which must be received.
-                    return true;
+                        return true;
                     }
                 }
             }

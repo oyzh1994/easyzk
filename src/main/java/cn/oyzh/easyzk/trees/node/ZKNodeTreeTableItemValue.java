@@ -1,15 +1,16 @@
 package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.trees.ZKTreeTableItemValue;
 import cn.oyzh.fx.gui.svg.glyph.LockSVGGlyph;
+import cn.oyzh.fx.gui.treeTable.RichTreeTableItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.text.FXText;
-import javafx.geometry.Insets;
-import javafx.scene.layout.HBox;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.paint.Color;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 
 
 /**
@@ -21,23 +22,16 @@ import lombok.NonNull;
 public class ZKNodeTreeTableItemValue extends ZKTreeTableItemValue {
 
     public ZKNodeTreeTableItemValue(@NonNull ZKNodeTreeTableItem item) {
-        super.setProp("_item", item);
-        this.flush();
+        super(item);
     }
 
-    private ZKNodeTreeTableItem item() {
-        return this.getProp("_item");
-    }
-
-    private boolean isInvalid() {
-        return !this.hasProp("_item");
+    @Override
+    public ZKNodeTreeTableItem item() {
+        return (ZKNodeTreeTableItem) super.item();
     }
 
     @Override
     public void flushGraphic() {
-        if (this.isInvalid()) {
-            return;
-        }
         SVGGlyph glyph = this.graphic();
         if (glyph != null && glyph.isWaiting()) {
             return;
@@ -69,12 +63,25 @@ public class ZKNodeTreeTableItemValue extends ZKTreeTableItemValue {
     }
 
     @Override
-    public void flush() {
-        if (this.isInvalid()) {
-            return;
+    public void flushColumn() {
+        if (this.pathProperty == null) {
+            this.pathProperty = new SimpleStringProperty(this.item().decodeNodeName());
         }
-        super.flush();
-        this.flushNum(this.item().getNumChildren(), this.item().getChildrenSize());
+        String extra;
+        Integer totalNum = this.item().getNumChildren();
+        Integer showNum = this.item().getChildrenSize();
+        if (totalNum == null || totalNum == 0) {
+            extra = "";
+        } else if (showNum.intValue() == totalNum.intValue()) {
+            extra = "" + totalNum;
+        } else {
+            extra = showNum + "/" + totalNum;
+        }
+        if (this.extraProperty == null) {
+            this.extraProperty = new SimpleStringProperty(extra);
+        } else {
+            this.extraProperty.set(extra);
+        }
     }
 
     /**
@@ -82,9 +89,6 @@ public class ZKNodeTreeTableItemValue extends ZKTreeTableItemValue {
      */
     @Override
     public void flushGraphicColor() {
-        if (this.isInvalid()) {
-            return;
-        }
         // 获取图形
         SVGGlyph glyph = this.graphic();
         // 节点已删除
@@ -106,37 +110,21 @@ public class ZKNodeTreeTableItemValue extends ZKTreeTableItemValue {
         return (SVGGlyph) super.graphic();
     }
 
-    /**
-     * 刷新节点数量
-     *
-     * @param totalNum 子节点总数量
-     * @param showNum  子节点显示数量
-     */
-    public void flushNum(Integer totalNum, Integer showNum) {
-        // 寻找组件
-        FXText text = (FXText) this.lookup("#num");
-        if (text == null) {
-            text = new FXText();
-            text.disableTheme();
-            this.addChild(text);
-            text.setId("num");
-            text.setFill(Color.valueOf("#228B22"));
-            HBox.setMargin(text, new Insets(0, 0, 0, 3));
+    private SimpleStringProperty pathProperty;
+
+    public ObservableValue<String> pathProperty() {
+        if (this.pathProperty == null) {
+            this.pathProperty = new SimpleStringProperty();
         }
-        if (totalNum == null || totalNum == 0) {
-            text.setText("");
-        } else if (showNum == null || showNum.intValue() == totalNum.intValue()) {
-            text.setText("(" + totalNum + ")");
-        } else {
-            text.setText("(" + showNum + "/" + totalNum + ")");
-        }
+        return this.pathProperty;
     }
 
-    @Override
-    public String name() {
-        if (this.isInvalid()) {
-            return null;
+    private SimpleStringProperty extraProperty;
+
+    public ObservableValue<String> extraProperty() {
+        if (this.extraProperty == null) {
+            this.extraProperty = new SimpleStringProperty();
         }
-        return this.item().decodeNodeName();
+        return this.extraProperty;
     }
 }

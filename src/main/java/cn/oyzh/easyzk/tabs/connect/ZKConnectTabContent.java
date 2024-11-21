@@ -26,7 +26,8 @@ import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
 import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeTableItem;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeTableView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -104,7 +105,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 节点数
      */
     @FXML
-    private ZKNodeTreeView treeView;
+    private ZKNodeTreeTableView treeView;
 
     /**
      * 节点排序(正序)
@@ -163,7 +164,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 当前激活的节点
      */
     @Getter
-    private ZKNodeTreeItem activeItem;
+    private ZKNodeTreeTableItem activeItem;
 
     /**
      * 右侧acl分页组件
@@ -314,7 +315,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      */
     private void initItem(TreeItem<?> treeItem) {
         try {
-            this.activeItem = (ZKNodeTreeItem) treeItem;
+            this.activeItem = (ZKNodeTreeTableItem) treeItem;
             if (this.activeItem != null) {
                 // 初始化数据
                 this.initData();

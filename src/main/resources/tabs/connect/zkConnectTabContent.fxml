@@ -4,7 +4,7 @@
 <?import cn.oyzh.easyzk.fx.ZKDataFormatComboBox?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
-<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
+<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeTableView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.label.SuccessLabel?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
@@ -64,9 +64,9 @@
                 </HBox.margin>
             </SearchSVGGlyph>
         </FlexHBox>
-        <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 67">
+        <ZKNodeTreeTableView flexWidth="100%" fx:id="treeView" flexHeight="100% - 67">
 
-        </ZKNodeTreeView>
+        </ZKNodeTreeTableView>
         <FlexHBox flexWidth="100%" flexHeight="35">
             <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
                 <HBox.margin>

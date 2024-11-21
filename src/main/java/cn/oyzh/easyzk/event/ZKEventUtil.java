@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
+import cn.oyzh.easyzk.trees.node.ZKNodeTreeTableItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
@@ -394,7 +395,7 @@ public class ZKEventUtil {
      *
      * @param item zk树节点
      */
-    public static void historyShow(ZKNodeTreeItem item) {
+    public static void historyShow(ZKNodeTreeTableItem item) {
         ZKHistoryShowEvent event = new ZKHistoryShowEvent();
         event.data(item);
         EventUtil.post(event);
@@ -406,7 +407,7 @@ public class ZKEventUtil {
      * @param data 历史
      * @param item zk树节点
      */
-    public static void historyRestore(byte[] data, ZKNodeTreeItem item) {
+    public static void historyRestore(byte[] data, ZKNodeTreeTableItem item) {
         ZKHistoryRestoreEvent event = new ZKHistoryRestoreEvent();
         event.data(data);
         event.item(item);
@@ -426,23 +427,12 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    // /**
-    //  * zk面板tab变更事件
-    //  *
-    //  * @param tab 面板
-    //  */
-    // public static void tabChanged(Tab tab) {
-    //     ZKTabChangedEvent event = new ZKTabChangedEvent();
-    //     event.data(tab);
-    //     EventUtil.post(event);
-    // }
-
     /**
      * zk节点选中事件
      *
      * @param item 节点
      */
-    public static void nodeSelected(ZKNodeTreeItem item) {
+    public static void nodeSelected(ZKNodeTreeTableItem item) {
         ZKNodeSelectedEvent event = new ZKNodeSelectedEvent();
         event.data(item);
         EventUtil.post(event);

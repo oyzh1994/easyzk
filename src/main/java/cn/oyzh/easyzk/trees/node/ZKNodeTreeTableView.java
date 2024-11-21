@@ -10,6 +10,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeTable.RichTreeTableView;
+import cn.oyzh.fx.plus.controls.tree.FlexTreeTableColumn;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -35,6 +36,22 @@ public class ZKNodeTreeTableView extends RichTreeTableView {
 
     public ZKInfo info() {
         return this.client.zkInfo();
+    }
+
+    @Override
+    protected void initTreeView() {
+        super.initTreeView();
+        // 创建第一列
+        FlexTreeTableColumn<ZKNodeTreeTableItemValue, String> column1 = new FlexTreeTableColumn<>("路径");
+        column1.setFlexWidth("100% - 80");
+        column1.setCellValueFactory(cellData -> cellData.getValue().getValue().pathProperty());
+
+        // 创建第二列
+        FlexTreeTableColumn<ZKNodeTreeTableItemValue, String> column2 = new FlexTreeTableColumn<>("信息");
+        column2.realWidth(80);
+        column2.setCellValueFactory(cellData -> cellData.getValue().getValue().extraProperty());
+
+        this.getColumns().addAll(column1, column2);
     }
 
     @Override

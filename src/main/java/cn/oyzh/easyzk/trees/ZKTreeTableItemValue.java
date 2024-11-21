@@ -1,7 +1,9 @@
 package cn.oyzh.easyzk.trees;
 
+import cn.oyzh.fx.gui.treeTable.RichTreeTableItem;
 import cn.oyzh.fx.gui.treeTable.RichTreeTableItemValue;
 import cn.oyzh.fx.plus.trees.RichTreeItemValue;
+import lombok.NonNull;
 
 
 /**
@@ -12,4 +14,7 @@ import cn.oyzh.fx.plus.trees.RichTreeItemValue;
  */
 public abstract class ZKTreeTableItemValue extends RichTreeTableItemValue {
 
+    public ZKTreeTableItemValue(@NonNull RichTreeTableItem<?> item) {
+        super(item);
+    }
 }

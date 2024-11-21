@@ -4,7 +4,7 @@
 <?import cn.oyzh.easyzk.fx.ZKDataFormatComboBox?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
-<?import cn.oyzh.easyzk.trees.ZKNodeTreeView?>
+<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.label.SuccessLabel?>
 <?import cn.oyzh.fx.gui.page.PageBox?>

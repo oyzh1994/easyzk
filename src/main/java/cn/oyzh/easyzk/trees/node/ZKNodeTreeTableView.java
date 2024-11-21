@@ -1,17 +1,15 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.TreeChildFilterEvent;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItemFilter;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.plus.trees.RichTreeView;
+import cn.oyzh.fx.gui.treeTable.RichTreeTableView;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -28,7 +26,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKNodeTreeView extends RichTreeView {
+public class ZKNodeTreeTableView extends RichTreeTableView {
 
     @Getter
     @Setter
@@ -40,28 +38,28 @@ public class ZKNodeTreeView extends RichTreeView {
     }
 
     @Override
-    public ZKNodeTreeItemFilter itemFilter() {
+    public ZKNodeTreeTableItemFilter itemFilter() {
         try {
             // 初始化过滤器
             if (this.itemFilter == null) {
-                ZKNodeTreeItemFilter filter = new ZKNodeTreeItemFilter();
+                ZKNodeTreeTableItemFilter filter = new ZKNodeTreeTableItemFilter();
                 filter.initFilters();
                 this.itemFilter = filter;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return (ZKNodeTreeItemFilter) this.itemFilter;
+        return (ZKNodeTreeTableItemFilter) this.itemFilter;
     }
 
     @Override
-    public ZKNodeTreeItem getRoot() {
-        return (ZKNodeTreeItem) super.getRoot();
+    public ZKNodeTreeTableItem getRoot() {
+        return (ZKNodeTreeTableItem) super.getRoot();
     }
 
     @Override
-    public ZKNodeTreeItem getSelectedItem() {
-        return (ZKNodeTreeItem) super.getSelectedItem();
+    public ZKNodeTreeTableItem getSelectedItem() {
+        return (ZKNodeTreeTableItem) super.getSelectedItem();
     }
 
     /**
@@ -70,7 +68,7 @@ public class ZKNodeTreeView extends RichTreeView {
      * @param targetPath 目标路径
      * @return zk节点
      */
-    public ZKNodeTreeItem findNodeItem(@NonNull String targetPath) {
+    public ZKNodeTreeTableItem findNodeItem(@NonNull String targetPath) {
         return this.findNodeItem(this.getRoot(), targetPath);
     }
 
@@ -81,7 +79,7 @@ public class ZKNodeTreeView extends RichTreeView {
      * @param targetPath 目标路径
      * @return zk节点
      */
-    public ZKNodeTreeItem findNodeItem(@NonNull ZKNodeTreeItem root, @NonNull String targetPath) {
+    public ZKNodeTreeTableItem findNodeItem(@NonNull ZKNodeTreeTableItem root, @NonNull String targetPath) {
         // 节点对应，返回数据
         if (targetPath.equals(root.nodePath())) {
             return root;
@@ -95,8 +93,8 @@ public class ZKNodeTreeView extends RichTreeView {
             return null;
         }
         // 遍历子节点，寻找匹配节点
-        for (ZKNodeTreeItem item : root.showChildren()) {
-            ZKNodeTreeItem treeItem = this.findNodeItem(item, targetPath);
+        for (ZKNodeTreeTableItem item : root.showChildren()) {
+            ZKNodeTreeTableItem treeItem = this.findNodeItem(item, targetPath);
             // 返回节点信息
             if (treeItem != null) {
                 return treeItem;
@@ -116,7 +114,7 @@ public class ZKNodeTreeView extends RichTreeView {
 
     @Override
     public void expand() {
-        ZKNodeTreeItem item = this.getSelectedItem();
+        ZKNodeTreeTableItem item = this.getSelectedItem();
         if (item != null) {
             item.expandAll();
             this.select(item);
@@ -125,7 +123,7 @@ public class ZKNodeTreeView extends RichTreeView {
 
     @Override
     public void collapse() {
-        ZKNodeTreeItem item = this.getSelectedItem();
+        ZKNodeTreeTableItem item = this.getSelectedItem();
         if (item != null) {
             item.collapseAll();
             this.select(item);
@@ -141,14 +139,14 @@ public class ZKNodeTreeView extends RichTreeView {
         try {
             String pPath = ZKNodeUtil.getParentPath(nodePath);
             // 寻找节点
-            ZKNodeTreeItem parent = this.findNodeItem(pPath);
+            ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
             // 父节点不存在
             if (parent == null) {
                 JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
                 return;
             }
             // 获取节点
-            ZKNodeTreeItem item = parent.getNodeItem(pPath);
+            ZKNodeTreeTableItem item = parent.getNodeItem(pPath);
             // 刷新节点
             if (item != null) {
                 item.refreshNode();
@@ -170,7 +168,7 @@ public class ZKNodeTreeView extends RichTreeView {
                 item = parent.getNodeItem(nodePath);
             }
             if (item != null) {
-                ZKNodeTreeItem finalItem = item;
+                ZKNodeTreeTableItem finalItem = item;
                 FXUtil.runPulse(() -> this.selectAndScroll(finalItem));
             }
         } catch (Exception ex) {
@@ -191,14 +189,14 @@ public class ZKNodeTreeView extends RichTreeView {
         try {
             String pPath = ZKNodeUtil.getParentPath(nodePath);
             // 寻找节点
-            ZKNodeTreeItem parent = this.findNodeItem(pPath);
+            ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
             // 父节点不存在
             if (parent == null) {
                 JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
                 return;
             }
             // 获取节点
-            ZKNodeTreeItem item = parent.getNodeItem(nodePath);
+            ZKNodeTreeTableItem item = parent.getNodeItem(nodePath);
             // 刷新节点
             if (item != null) {
                 item.refreshNode();
@@ -230,14 +228,14 @@ public class ZKNodeTreeView extends RichTreeView {
         try {
             String pPath = ZKNodeUtil.getParentPath(nodePath);
             // 寻找节点
-            ZKNodeTreeItem parent = this.findNodeItem(pPath);
+            ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
             // 父节点不存在
             if (parent == null) {
                 JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
                 return;
             }
             // 寻找节点
-            ZKNodeTreeItem item = parent.getNodeItem(nodePath);
+            ZKNodeTreeTableItem item = parent.getNodeItem(nodePath);
             // 更新信息
             if (item != null) {
                 item.setBeDeleted();
@@ -264,7 +262,7 @@ public class ZKNodeTreeView extends RichTreeView {
         }
         try {
             // 寻找节点
-            ZKNodeTreeItem item = this.findNodeItem(nodePath);
+            ZKNodeTreeTableItem item = this.findNodeItem(nodePath);
             // 更新信息
             if (item != null) {
                 item.setBeChanged();
@@ -279,10 +277,10 @@ public class ZKNodeTreeView extends RichTreeView {
     /**
      * 获取全部zk子节点列表
      *
-     * @return List<ZKNodeTreeItem>
+     * @return List<ZKNodeTreeTableItem>
      */
-    private List<ZKNodeTreeItem> getAllNodeItem() {
-        List<ZKNodeTreeItem> list = new ArrayList<>();
+    private List<ZKNodeTreeTableItem> getAllNodeItem() {
+        List<ZKNodeTreeTableItem> list = new ArrayList<>();
         this.getAllNodeItem(this.getRoot(), list);
         return list;
     }
@@ -293,11 +291,11 @@ public class ZKNodeTreeView extends RichTreeView {
      * @param item zk节点
      * @param list zk子节点列表
      */
-    private void getAllNodeItem(ZKNodeTreeItem item, List<ZKNodeTreeItem> list) {
+    private void getAllNodeItem(ZKNodeTreeTableItem item, List<ZKNodeTreeTableItem> list) {
         if (item != null) {
             list.add(item);
             for (TreeItem<?> treeItem : item.getRealChildren()) {
-                if (treeItem instanceof ZKNodeTreeItem nodeTreeItem) {
+                if (treeItem instanceof ZKNodeTreeTableItem nodeTreeItem) {
                     this.getAllNodeItem(nodeTreeItem, list);
                 }
             }
@@ -311,7 +309,7 @@ public class ZKNodeTreeView extends RichTreeView {
      */
     public void authChanged(ZKAuth auth) throws Exception {
         this.client.addAuth(auth.getUser(), auth.getPassword());
-        for (ZKNodeTreeItem item : this.getAllNodeItem()) {
+        for (ZKNodeTreeTableItem item : this.getAllNodeItem()) {
             if (item.isNeedAuth() || ZKACLUtil.existDigest(item.acl(), auth.getUser())) {
                 item.authChanged();
             }
@@ -332,7 +330,7 @@ public class ZKNodeTreeView extends RichTreeView {
         // 获取根节点
         ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
         // 生成根节点
-        ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this);
+        ZKNodeTreeTableItem rootItem = new ZKNodeTreeTableItem(rootNode, this);
         // 设置根节点
         this.setRoot(rootItem);
         // 开启动画

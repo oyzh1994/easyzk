@@ -419,7 +419,7 @@ public class ZKEventUtil {
      * @param history 数据历史
      * @param item    zk树节点
      */
-    public static void dataHistoryAdded(ZKDataHistory history, ZKNodeTreeItem item) {
+    public static void dataHistoryAdded(ZKDataHistory history, TreeItem<?> item) {
         ZKHistoryAddedEvent event = new ZKHistoryAddedEvent();
         event.data(history);
         event.item(item);

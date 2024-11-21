@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.event;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.event.Event;
+import javafx.scene.control.TreeItem;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,6 +17,6 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ZKHistoryAddedEvent extends Event<ZKDataHistory> {
 
-    private ZKNodeTreeItem item;
+    private TreeItem<?> item;
 
 }

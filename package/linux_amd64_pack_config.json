@@ -66,8 +66,8 @@
             ".*.kotlin_module",
             ".*.dll",
             ".*.dylib",
-            "javafx-graphics.*-mac.jar",
-            "javafx-graphics.*-win.jar",
+            "javafx-graphics.*-mac*.jar",
+            "javafx-graphics.*-win*.jar",
             "javafx-graphics.*-linux-aarch64.jar"
         ]
     }

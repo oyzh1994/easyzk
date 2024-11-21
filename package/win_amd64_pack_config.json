@@ -118,8 +118,8 @@
             ".*.kotlin_module",
             ".*.dylib",
             ".*.so",
-            "javafx-graphics.*-mac.jar",
-            "javafx-graphics.*-linux.jar"
+            "javafx-graphics.*-mac*.jar",
+            "javafx-graphics.*-linux*.jar"
         ]
     }
 }

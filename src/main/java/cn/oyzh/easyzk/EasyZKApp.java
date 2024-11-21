@@ -40,14 +40,15 @@ public class EasyZKApp extends FXApplication {
     /**
      * 项目信息
      */
-    private final Project project = Project.load();
+    private static final Project PROJECT = Project.load();
 
     public static void main(String[] args) {
         SysConst.storeDir(ZKConst.STORE_PATH);
         SysConst.cacheDir(ZKConst.CACHE_PATH);
-        TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
+        SysConst.projectName(PROJECT.getName());
         EventFactory.registerEventBus(FxEventBus.class);
         EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
+        TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
         // 初始化时区处理器
         // System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
         launch(EasyZKApp.class, args);
@@ -95,7 +96,7 @@ public class EasyZKApp extends FXApplication {
             // 初始化
             TrayManager.init(this.appIcon());
             // 设置标题
-            TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
+            TrayManager.setTitle(PROJECT.getName() + " v" + PROJECT.getVersion());
             // 打开主页
             TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
             // 打开设置
@@ -126,7 +127,7 @@ public class EasyZKApp extends FXApplication {
 
     @Override
     protected String appName() {
-        return this.project.getName();
+        return PROJECT.getName();
     }
 
     /**

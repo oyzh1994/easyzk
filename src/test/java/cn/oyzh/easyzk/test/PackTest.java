@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.test;
 
-import cn.hutool.core.util.JdkUtil;
 import cn.oyzh.fx.pkg.Packer;
 import org.junit.Test;
 
@@ -28,21 +27,27 @@ public class PackTest {
     public void easyzk_win_amd64_pack() throws Exception {
         String packagePath = this.getPackagePath();
         String win_pack_config = packagePath + "win_amd64_pack_config.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
 
         Packer packer = new Packer();
         packer.registerProjectHandler();
         packer.registerJdepsHandler();
-        packer.pack(win_pack_config);
+        packer.pack(win_pack_config, properties);
     }
 
     @Test
     public void easyzk_linux_amd64_pack() throws Exception {
         String packagePath = this.getPackagePath();
         String linux_pack_config = packagePath + "linux_amd64_pack_config.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
 
         Packer packer = new Packer();
         packer.registerProjectHandler();
-        packer.pack(linux_pack_config);
+        packer.pack(linux_pack_config, properties);
     }
 
     @Test
@@ -59,10 +64,13 @@ public class PackTest {
     public void easyzk_macos_amd64_pack() throws Exception {
         String packagePath = this.getPackagePath();
         String macos_pack_config = packagePath + "macos_amd64_pack_config.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
 
         Packer packer = new Packer();
         packer.registerProjectHandler();
-        packer.pack(macos_pack_config);
+        packer.pack(macos_pack_config, properties);
     }
 
     @Test

@@ -49,6 +49,7 @@ public class EasyZKApp extends FXApplication {
         EventFactory.registerEventBus(FxEventBus.class);
         EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
         TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
+        JulLog.info("项目启动中...");
         // 初始化时区处理器
         // System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
         launch(EasyZKApp.class, args);

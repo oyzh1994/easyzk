@@ -26,7 +26,7 @@ import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
 import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
+import cn.oyzh.easyzk.trees.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;

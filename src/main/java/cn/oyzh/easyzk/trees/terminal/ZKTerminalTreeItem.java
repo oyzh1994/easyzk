@@ -3,8 +3,6 @@ package cn.oyzh.easyzk.trees.terminal;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
-import cn.oyzh.easyzk.trees.data.ZKDataTreeItemValue;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import javafx.scene.control.TreeItem;
 

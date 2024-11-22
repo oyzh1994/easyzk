@@ -5,20 +5,18 @@ import cn.oyzh.easyzk.controller.main.HistoryController;
 import cn.oyzh.easyzk.controller.main.MessageController;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.ZKLeftCollapseEvent;
-import cn.oyzh.easyzk.event.ZKLeftExtendEvent;
 import cn.oyzh.easyzk.event.ZKTreeItemChangedEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.event.Layout1Event;
+import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.node.ResizeHelper;
+import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
@@ -55,7 +53,7 @@ public class ZKMainController extends ParentStageController {
     /**
      * 大小调整增强
      */
-    private ResizeHelper resizeHelper;
+    private NodeResizeHelper resizeHelper;
 
     /**
      * zk切换面板
@@ -117,7 +115,7 @@ public class ZKMainController extends ParentStageController {
      *
      * @param newWidth 新宽度
      */
-    private void resizeLeft(Double newWidth) {
+    private void resizeLeft(Float newWidth) {
         if (newWidth != null && !Double.isNaN(newWidth)) {
             // 设置组件宽
             this.tabPaneLeft.setRealWidth(newWidth);
@@ -138,7 +136,7 @@ public class ZKMainController extends ParentStageController {
      */
     private void savePageResize() {
         if (this.setting.isRememberPageResize()) {
-            this.setting.setPageLeftWidth(this.tabPaneLeft.getMinWidth());
+            this.setting.setPageLeftWidth((float) this.tabPaneLeft.getMinWidth());
             ZKSettingStore2.INSTANCE.replace(this.setting);
         }
     }
@@ -146,8 +144,8 @@ public class ZKMainController extends ParentStageController {
     @Override
     protected void bindListeners() {
         // 拖动改变redis树大小处理
-        this.resizeHelper = new ResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeLeft);
-        this.resizeHelper.widthLimit(240, 650);
+        this.resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeLeft);
+        this.resizeHelper.widthLimit(240f, 650f);
         this.resizeHelper.initResizeEvent();
         // // 搜索触发事件
         // KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));
@@ -173,7 +171,7 @@ public class ZKMainController extends ParentStageController {
      * 展开左侧
      */
     @EventSubscribe
-    private void leftExtend(ZKLeftExtendEvent event) {
+    private void layout1(Layout1Event event) {
         this.tabPaneLeft.display();
         double w = this.tabPaneLeft.getMinWidth();
         this.tabPane.setLayoutX(w);
@@ -185,7 +183,7 @@ public class ZKMainController extends ParentStageController {
      * 收缩左侧
      */
     @EventSubscribe
-    private void leftCollapse(ZKLeftCollapseEvent event) {
+    private void layout2(Layout2Event event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");

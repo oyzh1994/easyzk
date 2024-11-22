@@ -1,62 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.TransportSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.AboutSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.CollapseSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.ExpandSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
-<?import cn.oyzh.fx.gui.svg.glyph.TransportSVGLabel?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.FlowPane?>
-<FlexFlowPane xmlns:fx="http://javafx.com/fxml/1"
-              fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
+<?import javafx.scene.layout.HBox?>
+<FlexHBox xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
     <SVGLabel text="%base.auth" onMousePrimaryClicked="#auth" url="/font/audit.svg"
               size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </SVGLabel>
     <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </FilterSVGLabel>
     <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </TransportSVGLabel>
     <SVGLabel text="%base.tool" onMousePrimaryClicked="#tool"
               url="/font/Tool.svg" size="13">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </SVGLabel>
     <SettingSVGLabel onMousePrimaryClicked="#setting" size="14">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </SettingSVGLabel>
     <AboutSVGLabel onMousePrimaryClicked="#about" size="14">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </AboutSVGLabel>
-    <CollapseSVGLabel fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" size="12">
-        <FlowPane.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
-    </CollapseSVGLabel>
-    <ExpandSVGLabel visible="false" managed="false" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">
-        <FlowPane.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
-    </ExpandSVGLabel>
+<!--    <CollapseSVGLabel fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" size="12">-->
+<!--        <HBox.margin>-->
+<!--            <Insets left="10" top="5" bottom="5"/>-->
+<!--        </HBox.margin>-->
+<!--    </CollapseSVGLabel>-->
+<!--    <ExpandSVGLabel visible="false" managed="false" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">-->
+<!--        <HBox.margin>-->
+<!--            <Insets left="10" top="5" bottom="5"/>-->
+<!--        </HBox.margin>-->
+<!--    </ExpandSVGLabel>-->
     <QuitSVGLabel onMousePrimaryClicked="#quit" size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </QuitSVGLabel>
-</FlexFlowPane>
+<!--    &lt;!&ndash; 占位符，将右边的组件推到右边 &ndash;&gt;-->
+<!--    <Region HBox.hgrow="ALWAYS"/>-->
+    <Layout1SVGGlyph sizeStr="16" onMousePrimaryClicked="#layout1" size="12">
+        <HBox.margin>
+            <Insets top="7" left="35"/>
+        </HBox.margin>
+    </Layout1SVGGlyph>
+    <Layout2SVGGlyph sizeStr="16" onMousePrimaryClicked="#layout2" size="12">
+        <HBox.margin>
+            <Insets top="7" left="10" />
+        </HBox.margin>
+    </Layout2SVGGlyph>
+</FlexHBox>

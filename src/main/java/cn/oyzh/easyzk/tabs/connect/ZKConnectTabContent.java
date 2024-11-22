@@ -46,7 +46,7 @@ import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
-import cn.oyzh.fx.plus.node.ResizeHelper;
+import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -994,8 +994,8 @@ public class ZKConnectTabContent extends DynamicTabController {
             }
         });
         // 拉伸辅助
-        ResizeHelper resizeHelper = new ResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
-        resizeHelper.widthLimit(240, 750);
+        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        resizeHelper.widthLimit(240f, 750f);
         resizeHelper.initResizeEvent();
     }
 
@@ -1020,8 +1020,8 @@ public class ZKConnectTabContent extends DynamicTabController {
      *
      * @param newWidth 新宽度
      */
-    private void resizeLeft(Double newWidth) {
-        if (newWidth != null && !Double.isNaN(newWidth)) {
+    private void resizeLeft(Float newWidth) {
+        if (newWidth != null && !Float.isNaN(newWidth)) {
             // 设置组件宽
             this.leftBox.setRealWidth(newWidth);
             this.tabPane.setLayoutX(newWidth);

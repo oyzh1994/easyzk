@@ -7,6 +7,8 @@ import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.gui.event.Layout1Event;
+import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.event.EventUtil;
 import javafx.scene.control.TreeItem;
@@ -359,19 +361,19 @@ public class ZKEventUtil {
         EventUtil.post(new ZKAddConnectEvent());
     }
 
-    /**
-     * 展开左侧
-     */
-    public static void leftExtend() {
-        EventUtil.post(new ZKLeftExtendEvent());
-    }
-
-    /**
-     * 收缩左侧
-     */
-    public static void leftCollapse() {
-        EventUtil.post(new ZKLeftCollapseEvent());
-    }
+//    /**
+//     * 展开左侧
+//     */
+//    public static void leftExtend() {
+//        EventUtil.post(new ZKLeftExtendEvent());
+//    }
+//
+//    /**
+//     * 收缩左侧
+//     */
+//    public static void leftCollapse() {
+//        EventUtil.post(new ZKLeftCollapseEvent());
+//    }
 
     /**
      * 添加过滤配置
@@ -457,4 +459,18 @@ public class ZKEventUtil {
     //     event.data(client);
     //     EventUtil.post(event);
     // }
+
+    /**
+     * 布局1
+     */
+    public static void layout1() {
+        EventUtil.post(new Layout1Event());
+    }
+
+    /**
+     * 布局2
+     */
+    public static void layout2() {
+        EventUtil.post(new Layout2Event());
+    }
 }

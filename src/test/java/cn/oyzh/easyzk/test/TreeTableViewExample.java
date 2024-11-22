@@ -1,12 +1,15 @@
 package cn.oyzh.easyzk.test;
 
+import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -15,7 +18,9 @@ public class TreeTableViewExample extends Application {
     @Override
     public void start(Stage primaryStage) {
         TreeTableView<Person> treeTableView = new TreeTableView<>();
-
+        treeTableView.setOnContextMenuRequested(event -> {
+            System.out.println("11111");
+        });
         // 创建第一列
         TreeTableColumn<Person, String> firstNameColumn = new TreeTableColumn<>("First Name");
         firstNameColumn.setPrefWidth(150);
@@ -32,6 +37,7 @@ public class TreeTableViewExample extends Application {
 
         Person person1 = new Person("aaa", "111");
         TreeItem<Person> rootItem = new TreeItem<>(person1);
+        rootItem.setGraphic(new ZookeeperSVGGlyph());
         for (int i = 0; i < 10; i++) {
             Person person2 = new Person("bbb" + i, "111");
             rootItem.getChildren().add(new TreeItem<>(person2));

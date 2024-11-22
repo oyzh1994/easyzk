@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeTableItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -19,7 +18,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ZKHistoryRestoreEvent extends Event<byte[]> implements EventFormatter {
 
-    private ZKNodeTreeTableItem item;
+    private ZKNodeTreeItem item;
 
     @Override
     public String eventFormat() {

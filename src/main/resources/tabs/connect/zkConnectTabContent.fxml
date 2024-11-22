@@ -4,7 +4,6 @@
 <?import cn.oyzh.easyzk.fx.ZKDataFormatComboBox?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
-<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeTableView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.label.SuccessLabel?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
@@ -43,6 +42,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.connect.ZKConnectTabContent">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -64,9 +64,9 @@
                 </HBox.margin>
             </SearchSVGGlyph>
         </FlexHBox>
-        <ZKNodeTreeTableView flexWidth="100%" fx:id="treeView" flexHeight="100% - 67">
+        <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 67">
 
-        </ZKNodeTreeTableView>
+        </ZKNodeTreeView>
         <FlexHBox flexWidth="100%" flexHeight="35">
             <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
                 <HBox.margin>

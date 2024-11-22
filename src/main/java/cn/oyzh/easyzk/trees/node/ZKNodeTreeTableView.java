@@ -1,361 +1,377 @@
-package cn.oyzh.easyzk.trees.node;
-
-import cn.oyzh.common.log.JulLog;
-import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.event.TreeChildFilterEvent;
-import cn.oyzh.easyzk.util.ZKACLUtil;
-import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.treeTable.RichTreeTableView;
-import cn.oyzh.fx.plus.controls.tree.FlexTreeTableColumn;
-import cn.oyzh.fx.plus.util.FXUtil;
-import javafx.scene.control.TreeItem;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * zk树
- *
- * @author oyzh
- * @since 2023/1/29
- */
-public class ZKNodeTreeTableView extends RichTreeTableView {
-
-    @Getter
-    @Setter
-    @Accessors(fluent = true)
-    private ZKClient client;
-
-    public ZKInfo info() {
-        return this.client.zkInfo();
-    }
-
-    @Override
-    protected void initTreeView() {
-        super.initTreeView();
-        // 创建第一列
-        FlexTreeTableColumn<ZKNodeTreeTableItemValue, String> column1 = new FlexTreeTableColumn<>("路径");
-        column1.setFlexWidth("100% - 80");
-        column1.setCellValueFactory(cellData -> cellData.getValue().getValue().pathProperty());
-
-        // 创建第二列
-        FlexTreeTableColumn<ZKNodeTreeTableItemValue, String> column2 = new FlexTreeTableColumn<>("信息");
-        column2.realWidth(80);
-        column2.setCellValueFactory(cellData -> cellData.getValue().getValue().extraProperty());
-
-        this.getColumns().addAll(column1, column2);
-    }
-
-    @Override
-    public ZKNodeTreeTableItemFilter itemFilter() {
-        try {
-            // 初始化过滤器
-            if (this.itemFilter == null) {
-                ZKNodeTreeTableItemFilter filter = new ZKNodeTreeTableItemFilter();
-                filter.initFilters();
-                this.itemFilter = filter;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return (ZKNodeTreeTableItemFilter) this.itemFilter;
-    }
-
-    @Override
-    public ZKNodeTreeTableItem getRoot() {
-        return (ZKNodeTreeTableItem) super.getRoot();
-    }
-
-    @Override
-    public ZKNodeTreeTableItem getSelectedItem() {
-        return (ZKNodeTreeTableItem) super.getSelectedItem();
-    }
-
-    /**
-     * 寻找zk节点
-     *
-     * @param targetPath 目标路径
-     * @return zk节点
-     */
-    public ZKNodeTreeTableItem findNodeItem(@NonNull String targetPath) {
-        return this.findNodeItem(this.getRoot(), targetPath);
-    }
-
-    /**
-     * 寻找zk节点
-     *
-     * @param root       根节点
-     * @param targetPath 目标路径
-     * @return zk节点
-     */
-    public ZKNodeTreeTableItem findNodeItem(@NonNull ZKNodeTreeTableItem root, @NonNull String targetPath) {
-        // 节点对应，返回数据
-        if (targetPath.equals(root.nodePath())) {
-            return root;
-        }
-        // 互相不包含，返回null
-        if (!targetPath.contains(root.nodePath()) && !root.nodePath().startsWith(targetPath)) {
-            return null;
-        }
-        // 子节点为空，返回null
-        if (root.isChildEmpty()) {
-            return null;
-        }
-        // 遍历子节点，寻找匹配节点
-        for (ZKNodeTreeTableItem item : root.showChildren()) {
-            ZKNodeTreeTableItem treeItem = this.findNodeItem(item, targetPath);
-            // 返回节点信息
-            if (treeItem != null) {
-                return treeItem;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 树节点过滤
-     */
-    @EventSubscribe
-    private void treeChildFilter(TreeChildFilterEvent event) {
-        this.itemFilter().initFilters();
-        this.filter();
-    }
-
-    @Override
-    public void expand() {
-        ZKNodeTreeTableItem item = this.getSelectedItem();
-        if (item != null) {
-            item.expandAll();
-            this.select(item);
-        }
-    }
-
-    @Override
-    public void collapse() {
-        ZKNodeTreeTableItem item = this.getSelectedItem();
-        if (item != null) {
-            item.collapseAll();
-            this.select(item);
-        }
-    }
-
-    /**
-     * 节点添加
-     *
-     * @param nodePath 节点路径
-     */
-    public void onNodeAdded(String nodePath) {
-        try {
-            String pPath = ZKNodeUtil.getParentPath(nodePath);
-            // 寻找节点
-            ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
-            // 父节点不存在
-            if (parent == null) {
-                JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
-                return;
-            }
-            // 获取节点
-            ZKNodeTreeTableItem item = parent.getNodeItem(pPath);
-            // 刷新节点
-            if (item != null) {
-                item.refreshNode();
-                JulLog.info("节点已存在, 更新节点.");
-            } else if (parent.loaded()) {// 添加节点
-                parent.refreshStat();
-                parent.addChild(nodePath);
-                JulLog.info("节点不存在, 添加节点.");
-            } else {// 加载子节点
-                parent.refreshStat();
-                parent.loadChild(false);
-                parent.flushValue();
-                JulLog.info("父节点未加载, 加载父节点.");
-            }
-            // 过滤节点
-            parent.doFilter(this.itemFilter());
-            // 选中此节点
-            if (item == null) {
-                item = parent.getNodeItem(nodePath);
-            }
-            if (item != null) {
-                ZKNodeTreeTableItem finalItem = item;
-                FXUtil.runPulse(() -> this.selectAndScroll(finalItem));
-            }
-        } catch (Exception ex) {
-            JulLog.warn("新增节点事件处理失败！", ex);
-        }
-    }
-
-    /**
-     * 节点已添加
-     *
-     * @param nodePath 节点路径
-     */
-    public void onNodeCreated(String nodePath) {
-        if (this.client.isLastCreate(nodePath)) {
-            this.client.clearLastCreate();
-            return;
-        }
-        try {
-            String pPath = ZKNodeUtil.getParentPath(nodePath);
-            // 寻找节点
-            ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
-            // 父节点不存在
-            if (parent == null) {
-                JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
-                return;
-            }
-            // 获取节点
-            ZKNodeTreeTableItem item = parent.getNodeItem(nodePath);
-            // 刷新节点
-            if (item != null) {
-                item.refreshNode();
-                JulLog.info("节点已存在, 更新节点.");
-            } else if (parent.loaded()) {// 更新父节点状态，并标记状态
-                parent.refreshStat();
-                parent.setBeChildChanged();
-                JulLog.info("节点不存在, 父节点已加载, 标记父节点状态.");
-            } else {// 更新父节点状态
-                parent.refreshStat();
-                parent.flushValue();
-                JulLog.info("节点不存在, 父节点未加载, 更新父节点状态.");
-            }
-        } catch (Exception ex) {
-            JulLog.warn("节点已新增事件处理失败！", ex);
-        }
-    }
-
-    /**
-     * 节点已删除
-     *
-     * @param nodePath 节点路径
-     */
-    public void onNodeRemoved(String nodePath) {
-        if (this.client.isLastDelete(nodePath)) {
-            this.client.clearLastDelete();
-            return;
-        }
-        try {
-            String pPath = ZKNodeUtil.getParentPath(nodePath);
-            // 寻找节点
-            ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
-            // 父节点不存在
-            if (parent == null) {
-                JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
-                return;
-            }
-            // 寻找节点
-            ZKNodeTreeTableItem item = parent.getNodeItem(nodePath);
-            // 更新信息
-            if (item != null) {
-                item.setBeDeleted();
-                JulLog.info("节点存在, 标记节点状态为删除.");
-            } else {// 更新父节点状态
-                parent.refreshStat();
-                parent.flushValue();
-                JulLog.info("节点不存在, 父节点未加载, 更新父节点状态.");
-            }
-        } catch (Exception ex) {
-            JulLog.warn("节点已删除事件处理失败！", ex);
-        }
-    }
-
-    /**
-     * 节点已变更
-     *
-     * @param nodePath 节点路径
-     */
-    public void onNodeChanged(String nodePath) {
-        if (this.client.isLastUpdate(nodePath)) {
-            this.client.clearLastUpdate();
-            return;
-        }
-        try {
-            // 寻找节点
-            ZKNodeTreeTableItem item = this.findNodeItem(nodePath);
-            // 更新信息
-            if (item != null) {
-                item.setBeChanged();
-            } else {
-                JulLog.warn("{}: 未找到被修改节点，无法处理节点！", nodePath);
-            }
-        } catch (Exception ex) {
-            JulLog.warn("节点已修改事件处理失败！", ex);
-        }
-    }
-
-    /**
-     * 获取全部zk子节点列表
-     *
-     * @return List<ZKNodeTreeTableItem>
-     */
-    private List<ZKNodeTreeTableItem> getAllNodeItem() {
-        List<ZKNodeTreeTableItem> list = new ArrayList<>();
-        this.getAllNodeItem(this.getRoot(), list);
-        return list;
-    }
-
-    /**
-     * 获取全部zk子节点列表
-     *
-     * @param item zk节点
-     * @param list zk子节点列表
-     */
-    private void getAllNodeItem(ZKNodeTreeTableItem item, List<ZKNodeTreeTableItem> list) {
-        if (item != null) {
-            list.add(item);
-            for (TreeItem<?> treeItem : item.getRealChildren()) {
-                if (treeItem instanceof ZKNodeTreeTableItem nodeTreeItem) {
-                    this.getAllNodeItem(nodeTreeItem, list);
-                }
-            }
-        }
-    }
-
-    /**
-     * 认证变更事件
-     *
-     * @param auth 认证信息
-     */
-    public void authChanged(ZKAuth auth) throws Exception {
-        this.client.addAuth(auth.getUser(), auth.getPassword());
-        for (ZKNodeTreeTableItem item : this.getAllNodeItem()) {
-            if (item.isNeedAuth() || ZKACLUtil.existDigest(item.acl(), auth.getUser())) {
-                item.authChanged();
-            }
-        }
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
-
-    /**
-     * 加载根节点
-     */
-    public void loadRoot() throws Exception {
-        // 禁用树
-        this.disable();
-        // 获取根节点
-        ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
-        // 生成根节点
-        ZKNodeTreeTableItem rootItem = new ZKNodeTreeTableItem(rootNode, this);
-        // 设置根节点
-        this.setRoot(rootItem);
-        // 开启动画
-        rootItem.startWaiting(() -> {
-            // 加载根节点
-            rootItem.loadRoot();
-            // 启用树
-            this.enable();
-        });
-    }
-}
+// package cn.oyzh.easyzk.trees.node;
+//
+// import cn.oyzh.common.log.JulLog;
+// import cn.oyzh.easyzk.domain.ZKAuth;
+// import cn.oyzh.easyzk.domain.ZKInfo;
+// import cn.oyzh.easyzk.event.TreeChildFilterEvent;
+// import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph;
+// import cn.oyzh.easyzk.util.ZKACLUtil;
+// import cn.oyzh.easyzk.util.ZKNodeUtil;
+// import cn.oyzh.easyzk.zk.ZKClient;
+// import cn.oyzh.easyzk.zk.ZKNode;
+// import cn.oyzh.event.EventSubscribe;
+// import cn.oyzh.fx.gui.treeTable.RichTreeTableView;
+// import cn.oyzh.fx.plus.controls.tree.FlexTreeTableColumn;
+// import cn.oyzh.fx.plus.util.FXUtil;
+// import javafx.beans.value.ObservableValue;
+// import javafx.scene.control.TreeItem;
+// import javafx.scene.control.TreeTableCell;
+// import lombok.Getter;
+// import lombok.NonNull;
+// import lombok.Setter;
+// import lombok.experimental.Accessors;
+//
+// import java.util.ArrayList;
+// import java.util.List;
+//
+// /**
+//  * zk树
+//  *
+//  * @author oyzh
+//  * @since 2023/1/29
+//  */
+// public class ZKNodeTreeTableView extends RichTreeTableView {
+//
+//     @Getter
+//     @Setter
+//     @Accessors(fluent = true)
+//     private ZKClient client;
+//
+//     public ZKInfo info() {
+//         return this.client.zkInfo();
+//     }
+//
+//     @Override
+//     protected void initTreeView() {
+//         super.initTreeView();
+//         // 创建第一列
+//         FlexTreeTableColumn<ZKNodeTreeTableItemValue, String> column1 = new FlexTreeTableColumn<>("路径");
+//         column1.setFlexWidth("100% - 80");
+//         column1.setCellValueFactory(cellData -> cellData.getValue().getValue().pathProperty());
+//
+//         // 创建第二列
+//         FlexTreeTableColumn<ZKNodeTreeTableItemValue, String> column2 = new FlexTreeTableColumn<>("信息");
+//         column2.realWidth(80);
+//         column2.setCellValueFactory(cellData -> cellData.getValue().getValue().extraProperty());
+//
+//         // 设置单元格工厂
+//         column1.setCellFactory(col -> {
+//             TreeTableCell<ZKNodeTreeTableItemValue, String> cell = new TreeTableCell<>();
+//             ObservableValue<String> observableValue = col.getCellObservableValue(cell.getIndex());
+//             if (observableValue != null) {
+//                 cell.setGraphic(new ZookeeperSVGGlyph());
+//                 cell.setText(observableValue.getValue());
+//             }
+//             return cell;
+//         });
+//
+//         this.getColumns().addAll(column1, column2);
+//
+//
+//     }
+//
+//     @Override
+//     public ZKNodeTreeTableItemFilter itemFilter() {
+//         try {
+//             // 初始化过滤器
+//             if (this.itemFilter == null) {
+//                 ZKNodeTreeTableItemFilter filter = new ZKNodeTreeTableItemFilter();
+//                 filter.initFilters();
+//                 this.itemFilter = filter;
+//             }
+//         } catch (Exception ex) {
+//             ex.printStackTrace();
+//         }
+//         return (ZKNodeTreeTableItemFilter) this.itemFilter;
+//     }
+//
+//     @Override
+//     public ZKNodeTreeTableItem getRoot() {
+//         return (ZKNodeTreeTableItem) super.getRoot();
+//     }
+//
+//     @Override
+//     public ZKNodeTreeTableItem getSelectedItem() {
+//         return (ZKNodeTreeTableItem) super.getSelectedItem();
+//     }
+//
+//     /**
+//      * 寻找zk节点
+//      *
+//      * @param targetPath 目标路径
+//      * @return zk节点
+//      */
+//     public ZKNodeTreeTableItem findNodeItem(@NonNull String targetPath) {
+//         return this.findNodeItem(this.getRoot(), targetPath);
+//     }
+//
+//     /**
+//      * 寻找zk节点
+//      *
+//      * @param root       根节点
+//      * @param targetPath 目标路径
+//      * @return zk节点
+//      */
+//     public ZKNodeTreeTableItem findNodeItem(@NonNull ZKNodeTreeTableItem root, @NonNull String targetPath) {
+//         // 节点对应，返回数据
+//         if (targetPath.equals(root.nodePath())) {
+//             return root;
+//         }
+//         // 互相不包含，返回null
+//         if (!targetPath.contains(root.nodePath()) && !root.nodePath().startsWith(targetPath)) {
+//             return null;
+//         }
+//         // 子节点为空，返回null
+//         if (root.isChildEmpty()) {
+//             return null;
+//         }
+//         // 遍历子节点，寻找匹配节点
+//         for (ZKNodeTreeTableItem item : root.showChildren()) {
+//             ZKNodeTreeTableItem treeItem = this.findNodeItem(item, targetPath);
+//             // 返回节点信息
+//             if (treeItem != null) {
+//                 return treeItem;
+//             }
+//         }
+//         return null;
+//     }
+//
+//     /**
+//      * 树节点过滤
+//      */
+//     @EventSubscribe
+//     private void treeChildFilter(TreeChildFilterEvent event) {
+//         this.itemFilter().initFilters();
+//         this.filter();
+//     }
+//
+//     @Override
+//     public void expand() {
+//         ZKNodeTreeTableItem item = this.getSelectedItem();
+//         if (item != null) {
+//             item.expandAll();
+//             this.select(item);
+//         }
+//     }
+//
+//     @Override
+//     public void collapse() {
+//         ZKNodeTreeTableItem item = this.getSelectedItem();
+//         if (item != null) {
+//             item.collapseAll();
+//             this.select(item);
+//         }
+//     }
+//
+//     /**
+//      * 节点添加
+//      *
+//      * @param nodePath 节点路径
+//      */
+//     public void onNodeAdded(String nodePath) {
+//         try {
+//             String pPath = ZKNodeUtil.getParentPath(nodePath);
+//             // 寻找节点
+//             ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
+//             // 父节点不存在
+//             if (parent == null) {
+//                 JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
+//                 return;
+//             }
+//             // 获取节点
+//             ZKNodeTreeTableItem item = parent.getNodeItem(pPath);
+//             // 刷新节点
+//             if (item != null) {
+//                 item.refreshNode();
+//                 JulLog.info("节点已存在, 更新节点.");
+//             } else if (parent.loaded()) {// 添加节点
+//                 parent.refreshStat();
+//                 parent.addChild(nodePath);
+//                 JulLog.info("节点不存在, 添加节点.");
+//             } else {// 加载子节点
+//                 parent.refreshStat();
+//                 parent.loadChild(false);
+//                 parent.flushValue();
+//                 JulLog.info("父节点未加载, 加载父节点.");
+//             }
+//             // 过滤节点
+//             parent.doFilter(this.itemFilter());
+//             // 选中此节点
+//             if (item == null) {
+//                 item = parent.getNodeItem(nodePath);
+//             }
+//             if (item != null) {
+//                 ZKNodeTreeTableItem finalItem = item;
+//                 FXUtil.runPulse(() -> this.selectAndScroll(finalItem));
+//             }
+//         } catch (Exception ex) {
+//             JulLog.warn("新增节点事件处理失败！", ex);
+//         }
+//     }
+//
+//     /**
+//      * 节点已添加
+//      *
+//      * @param nodePath 节点路径
+//      */
+//     public void onNodeCreated(String nodePath) {
+//         if (this.client.isLastCreate(nodePath)) {
+//             this.client.clearLastCreate();
+//             return;
+//         }
+//         try {
+//             String pPath = ZKNodeUtil.getParentPath(nodePath);
+//             // 寻找节点
+//             ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
+//             // 父节点不存在
+//             if (parent == null) {
+//                 JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
+//                 return;
+//             }
+//             // 获取节点
+//             ZKNodeTreeTableItem item = parent.getNodeItem(nodePath);
+//             // 刷新节点
+//             if (item != null) {
+//                 item.refreshNode();
+//                 JulLog.info("节点已存在, 更新节点.");
+//             } else if (parent.loaded()) {// 更新父节点状态，并标记状态
+//                 parent.refreshStat();
+//                 parent.setBeChildChanged();
+//                 JulLog.info("节点不存在, 父节点已加载, 标记父节点状态.");
+//             } else {// 更新父节点状态
+//                 parent.refreshStat();
+//                 parent.flushValue();
+//                 JulLog.info("节点不存在, 父节点未加载, 更新父节点状态.");
+//             }
+//         } catch (Exception ex) {
+//             JulLog.warn("节点已新增事件处理失败！", ex);
+//         }
+//     }
+//
+//     /**
+//      * 节点已删除
+//      *
+//      * @param nodePath 节点路径
+//      */
+//     public void onNodeRemoved(String nodePath) {
+//         if (this.client.isLastDelete(nodePath)) {
+//             this.client.clearLastDelete();
+//             return;
+//         }
+//         try {
+//             String pPath = ZKNodeUtil.getParentPath(nodePath);
+//             // 寻找节点
+//             ZKNodeTreeTableItem parent = this.findNodeItem(pPath);
+//             // 父节点不存在
+//             if (parent == null) {
+//                 JulLog.warn("{}: 未找到节点的父节点，无法处理节点！", nodePath);
+//                 return;
+//             }
+//             // 寻找节点
+//             ZKNodeTreeTableItem item = parent.getNodeItem(nodePath);
+//             // 更新信息
+//             if (item != null) {
+//                 item.setBeDeleted();
+//                 JulLog.info("节点存在, 标记节点状态为删除.");
+//             } else {// 更新父节点状态
+//                 parent.refreshStat();
+//                 parent.flushValue();
+//                 JulLog.info("节点不存在, 父节点未加载, 更新父节点状态.");
+//             }
+//         } catch (Exception ex) {
+//             JulLog.warn("节点已删除事件处理失败！", ex);
+//         }
+//     }
+//
+//     /**
+//      * 节点已变更
+//      *
+//      * @param nodePath 节点路径
+//      */
+//     public void onNodeChanged(String nodePath) {
+//         if (this.client.isLastUpdate(nodePath)) {
+//             this.client.clearLastUpdate();
+//             return;
+//         }
+//         try {
+//             // 寻找节点
+//             ZKNodeTreeTableItem item = this.findNodeItem(nodePath);
+//             // 更新信息
+//             if (item != null) {
+//                 item.setBeChanged();
+//             } else {
+//                 JulLog.warn("{}: 未找到被修改节点，无法处理节点！", nodePath);
+//             }
+//         } catch (Exception ex) {
+//             JulLog.warn("节点已修改事件处理失败！", ex);
+//         }
+//     }
+//
+//     /**
+//      * 获取全部zk子节点列表
+//      *
+//      * @return List<ZKNodeTreeTableItem>
+//      */
+//     private List<ZKNodeTreeTableItem> getAllNodeItem() {
+//         List<ZKNodeTreeTableItem> list = new ArrayList<>();
+//         this.getAllNodeItem(this.getRoot(), list);
+//         return list;
+//     }
+//
+//     /**
+//      * 获取全部zk子节点列表
+//      *
+//      * @param item zk节点
+//      * @param list zk子节点列表
+//      */
+//     private void getAllNodeItem(ZKNodeTreeTableItem item, List<ZKNodeTreeTableItem> list) {
+//         if (item != null) {
+//             list.add(item);
+//             for (TreeItem<?> treeItem : item.getRealChildren()) {
+//                 if (treeItem instanceof ZKNodeTreeTableItem nodeTreeItem) {
+//                     this.getAllNodeItem(nodeTreeItem, list);
+//                 }
+//             }
+//         }
+//     }
+//
+//     /**
+//      * 认证变更事件
+//      *
+//      * @param auth 认证信息
+//      */
+//     public void authChanged(ZKAuth auth) throws Exception {
+//         this.client.addAuth(auth.getUser(), auth.getPassword());
+//         for (ZKNodeTreeTableItem item : this.getAllNodeItem()) {
+//             if (item.isNeedAuth() || ZKACLUtil.existDigest(item.acl(), auth.getUser())) {
+//                 item.authChanged();
+//             }
+//         }
+//     }
+//
+//     @Override
+//     public void destroy() {
+//         super.destroy();
+//     }
+//
+//     /**
+//      * 加载根节点
+//      */
+//     public void loadRoot() throws Exception {
+//         // 禁用树
+//         this.disable();
+//         // 获取根节点
+//         ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
+//         // 生成根节点
+//         ZKNodeTreeTableItem rootItem = new ZKNodeTreeTableItem(rootNode, this);
+//         // 设置根节点
+//         this.setRoot(rootItem);
+//         // 开启动画
+//         rootItem.startWaiting(() -> {
+//             // 加载根节点
+//             rootItem.loadRoot();
+//             // 启用树
+//             this.enable();
+//         });
+//     }
+// }

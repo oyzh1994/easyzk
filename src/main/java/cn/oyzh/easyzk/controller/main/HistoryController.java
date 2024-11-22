@@ -9,7 +9,6 @@ import cn.oyzh.easyzk.event.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
 import cn.oyzh.easyzk.tabs.connect.ZKConnectTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeTableItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.TabClosedEvent;
 import cn.oyzh.fx.plus.controller.SubStageController;
@@ -56,14 +55,14 @@ public class HistoryController extends SubStageController implements Initializab
     /**
      * zk树节点
      */
-    private WeakReference<ZKNodeTreeTableItem> itemReference;
+    private WeakReference<ZKNodeTreeItem> itemReference;
 
     /**
      * 存储对象
      */
     private final ZKDataHistoryStore2 historyStore = ZKDataHistoryStore2.INSTANCE;
 
-    private ZKNodeTreeTableItem item() {
+    private ZKNodeTreeItem item() {
         return this.itemReference == null ? null : this.itemReference.get();
     }
 
@@ -74,7 +73,7 @@ public class HistoryController extends SubStageController implements Initializab
      */
     @EventSubscribe
     private void onTabClosed(TabClosedEvent event) {
-        ZKNodeTreeTableItem item = this.item();
+        ZKNodeTreeItem item = this.item();
         if (item == null) {
             return;
         }
@@ -110,7 +109,7 @@ public class HistoryController extends SubStageController implements Initializab
      */
     @EventSubscribe
     private void historyAdded(ZKHistoryAddedEvent event) {
-        ZKNodeTreeTableItem item = this.item();
+        ZKNodeTreeItem item = this.item();
         if (event.item() == item) {
             this.refresh();
         }
@@ -123,7 +122,7 @@ public class HistoryController extends SubStageController implements Initializab
     private void refresh() {
         if (this.root.isSelected()) {
             this.listTable.clearItems();
-            ZKNodeTreeTableItem item = this.item();
+            ZKNodeTreeItem item = this.item();
             if (item == null) {
                 return;
             }
@@ -144,7 +143,7 @@ public class HistoryController extends SubStageController implements Initializab
      */
     @FXML
     private void delete() {
-        ZKNodeTreeTableItem item = this.item();
+        ZKNodeTreeItem item = this.item();
         if (item == null) {
             return;
         }
@@ -172,7 +171,7 @@ public class HistoryController extends SubStageController implements Initializab
      */
     @FXML
     private void restore() {
-        ZKNodeTreeTableItem item = this.item();
+        ZKNodeTreeItem item = this.item();
         if (item == null) {
             return;
         }

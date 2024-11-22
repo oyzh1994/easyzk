@@ -4,7 +4,6 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeTableItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -34,7 +33,7 @@ public class ZKConnectTab extends DynamicTab {
     /**
      * zk树节点
      */
-    public ZKNodeTreeTableItem activeItem() {
+    public ZKNodeTreeItem activeItem() {
         return this.controller().getActiveItem();
     }
 

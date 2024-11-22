@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
+import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -65,7 +66,7 @@ public class ZKInfoExport {
         export.connects = new ArrayList<>();
         export.version = object.getString("version");
         export.connects = object.getBeanList("connects", ZKInfo.class);
-        export.connects = JSONUtil.toBeanList(object.getJSONArray("connects"), ZKInfo.class);
+//        export.connects = JSONUtil.toBeanList(object.getJSONArray("connects"), ZKInfo.class);
         return export;
     }
 

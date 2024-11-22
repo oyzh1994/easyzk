@@ -52,6 +52,7 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
 
     public void onIndexSelected(int index) {
         this.closePopup();
+        this.onSearch(this.getSkinnable().getText());
         this.getSkinnable().setPromptText(this.popup.getItems().get(index));
     }
 
@@ -83,6 +84,8 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
                 this.onSearch(this.getText());
             }
         });
+        // 文本变化监听
+        this.getSkinnable().textProperty().addListener((observable, oldValue, newValue) -> this.onSearch(this.getText()));
     }
 
     public void onSearch(String text) {

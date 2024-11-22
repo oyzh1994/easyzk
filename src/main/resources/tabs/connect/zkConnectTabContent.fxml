@@ -4,6 +4,7 @@
 <?import cn.oyzh.easyzk.fx.ZKDataFormatComboBox?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
+<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.label.SuccessLabel?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
@@ -21,7 +22,6 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.SearchSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortDescSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
@@ -42,27 +42,26 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.connect.ZKConnectTabContent">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="32" flexWidth="100%">
-            <ZKNodeSearchTypeComboBox initIndex="0" realHeight="24" realWidth="100" fx:id="searchType" >
+            <ZKNodeSearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType" >
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeSearchTypeComboBox>
-            <ZKNodeSearchTextField onAction="#doSearch" fx:id="searchKW" realHeight="24"
-                                   flexWidth="100% - 150" maxLen="30">
+            <ZKNodeSearchTextField onAction="#doSearch" onSearch="#doSearch" fx:id="searchKW" realHeight="24"
+                                   flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeSearchTextField>
-            <SearchSVGGlyph sizeStr="16" onMousePrimaryClicked="#doSearch">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </SearchSVGGlyph>
+<!--            <SearchSVGGlyph sizeStr="16" onMousePrimaryClicked="#doSearch">-->
+<!--                <HBox.margin>-->
+<!--                    <Insets left="5" top="10"/>-->
+<!--                </HBox.margin>-->
+<!--            </SearchSVGGlyph>-->
         </FlexHBox>
         <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 67">
 
@@ -95,7 +94,7 @@
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="32" flexWidth="100%">
-                    <SaveSVGGlyph fx:id="saveNodeData" size="16" tipText="%base.pasteTip1"
+                    <SaveSVGGlyph fx:id="saveNodeData" size="16" tipText="%base.saveTip1"
                                   onMousePrimaryClicked="#saveNodeData">
                         <HBox.margin>
                             <Insets left="5" top="7"/>

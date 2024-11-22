@@ -168,10 +168,10 @@ public class ZKMainController extends ParentStageController {
     }
 
     /**
-     * 展开左侧
+     * 布局2
      */
     @EventSubscribe
-    private void layout1(Layout1Event event) {
+    private void layout2(Layout2Event event) {
         this.tabPaneLeft.display();
         double w = this.tabPaneLeft.getMinWidth();
         this.tabPane.setLayoutX(w);
@@ -180,10 +180,10 @@ public class ZKMainController extends ParentStageController {
     }
 
     /**
-     * 收缩左侧
+     * 布局1
      */
     @EventSubscribe
-    private void layout2(Layout2Event event) {
+    private void layout1(Layout1Event event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");

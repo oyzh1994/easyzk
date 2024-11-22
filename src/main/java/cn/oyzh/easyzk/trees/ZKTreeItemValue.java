@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.trees;
 
+import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemValue;
 
 
@@ -11,4 +12,10 @@ import cn.oyzh.fx.plus.trees.RichTreeItemValue;
  */
 public abstract class ZKTreeItemValue extends RichTreeItemValue {
 
+    public ZKTreeItemValue() {
+    }
+
+    public ZKTreeItemValue(RichTreeItem<?> item) {
+        super(item);
+    }
 }

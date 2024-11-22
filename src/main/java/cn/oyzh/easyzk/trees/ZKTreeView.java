@@ -7,8 +7,6 @@ import cn.oyzh.easyzk.event.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
-import cn.oyzh.easyzk.event.ZKSearchFinishEvent;
-import cn.oyzh.easyzk.event.ZKSearchStartEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
@@ -299,27 +297,27 @@ public class ZKTreeView extends RichTreeView implements FXEventListener {
     //     }
     // }
 
-    /**
-     * 搜索开始事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void searchStart(ZKSearchStartEvent event) {
-        this.searching = true;
-        this.filter();
-    }
-
-    /**
-     * 搜索结束事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void searchFinish(ZKSearchFinishEvent event) {
-        this.searching = false;
-        this.filter();
-    }
+    // /**
+    //  * 搜索开始事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void searchStart(ZKSearchStartEvent event) {
+    //     this.searching = true;
+    //     this.filter();
+    // }
+    //
+    // /**
+    //  * 搜索结束事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void searchFinish(ZKSearchFinishEvent event) {
+    //     this.searching = false;
+    //     this.filter();
+    // }
 
     /**
      * 树节点过滤

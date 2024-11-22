@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.trees.group;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
+import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
@@ -15,35 +16,36 @@ import lombok.NonNull;
  */
 public class ZKGroupTreeItemValue extends ZKTreeItemValue {
 
-    private final ZKGroupTreeItem item;
-
     public ZKGroupTreeItemValue(@NonNull ZKGroupTreeItem item) {
-        this.item = item;
-        this.flushGraphic();
-        this.flushText();
+        super(item);
+    }
+
+    @Override
+    protected ZKGroupTreeItem item() {
+        return (ZKGroupTreeItem) super.item();
     }
 
     @Override
     public String name() {
-        return this.item.value().getName();
+        return this.item().value().getName();
     }
 
     @Override
-    public void flushGraphic() {
-        GroupSVGGlyph glyph = (GroupSVGGlyph) this.graphic();
+    public SVGGlyph graphic() {
+        GroupSVGGlyph glyph = (GroupSVGGlyph) this.item().getGraphic();
         if (glyph == null) {
             glyph = new GroupSVGGlyph("10");
             glyph.disableTheme();
-            this.graphic(glyph);
+            return glyph;
         }
+        return null;
     }
 
     @Override
-    public void flushGraphicColor() {
-        if (this.item.isChildEmpty()) {
-            super.flushGraphicColor();
-        } else if (this.graphic() instanceof SVGGlyph glyph) {
-            glyph.setColor(Color.DEEPSKYBLUE);
+    public Color graphicColor() {
+        if (this.item().isChildEmpty()) {
+           return super.graphicColor();
         }
+        return Color.DEEPSKYBLUE;
     }
 }

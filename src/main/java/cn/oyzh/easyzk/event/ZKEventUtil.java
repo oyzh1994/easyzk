@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.event;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -284,30 +283,30 @@ public class ZKEventUtil {
         EventUtil.post(new ZKFilterMainEvent());
     }
 
-    /**
-     * 搜索开始事件
-     */
-    public static void searchStart(ZKSearchParam searchParam) {
-        ZKSearchStartEvent event = new ZKSearchStartEvent();
-        event.data(searchParam);
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 搜索开始事件
+    //  */
+    // public static void searchStart(ZKSearchParam searchParam) {
+    //     ZKSearchStartEvent event = new ZKSearchStartEvent();
+    //     event.data(searchParam);
+    //     EventUtil.post(event);
+    // }
+    //
+    // /**
+    //  * 搜索结束事件
+    //  */
+    // public static void searchFinish(ZKSearchParam searchParam) {
+    //     ZKSearchFinishEvent event = new ZKSearchFinishEvent();
+    //     event.data(searchParam);
+    //     EventUtil.post(event);
+    // }
 
-    /**
-     * 搜索结束事件
-     */
-    public static void searchFinish(ZKSearchParam searchParam) {
-        ZKSearchFinishEvent event = new ZKSearchFinishEvent();
-        event.data(searchParam);
-        EventUtil.post(event);
-    }
-
-    /**
-     * 搜索触发事件
-     */
-    public static void searchFire() {
-        EventUtil.post(new ZKSearchFireEvent());
-    }
+    // /**
+    //  * 搜索触发事件
+    //  */
+    // public static void searchFire() {
+    //     EventUtil.post(new ZKSearchFireEvent());
+    // }
 
     /**
      * 触发认证添加事件

@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -17,19 +16,13 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true, fluent = true)
 public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
-    /**
-     * 状态监听器
-     */
-    private ChangeListener<Object> statListener = (obs, oldValue, newValue) -> this.flushGraphicColor();
-
     public ZKConnectTreeItemValue(@NonNull ZKConnectTreeItem item) {
-        this.setProp("_item", item);
-        this.flush();
-        item.stateProperty().addListener(this.statListener);
+        super(item);
     }
 
-    private ZKConnectTreeItem item() {
-        return this.getProp("_item");
+    @Override
+    protected ZKConnectTreeItem item() {
+        return (ZKConnectTreeItem) super.item();
     }
 
     @Override
@@ -38,41 +31,21 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
     }
 
     @Override
-    public void flushGraphic() {
-        if (this.graphic() == null) {
+    public SVGGlyph graphic() {
+        if (this.item().getGraphic() == null) {
             SVGGlyph glyph = new SVGGlyph("/font/Zookeeper1.svg", 12);
             glyph.disableTheme();
-            this.graphic(glyph);
+            return glyph;
         }
+        return super.graphic();
     }
 
     @Override
-    public void flushGraphicColor() {
-        // 获取当前图形符号
-        SVGGlyph glyph = this.graphic();
-        if (glyph == null) {
-            return;
-        }
+    public Color graphicColor() {
         ZKConnectTreeItem item = this.item();
         if (item.isConnected() || item.isConnecting()) {
-            glyph.setColor(Color.GREEN);
-        } else {
-            super.flushGraphicColor();
+            return Color.GREEN;
         }
-    }
-
-    @Override
-    public SVGGlyph graphic() {
-        return (SVGGlyph) super.graphic();
-    }
-
-    @Override
-    public void destroy() {
-        ZKConnectTreeItem item = this.item();
-        if (item != null && this.statListener != null) {
-            item.stateProperty().removeListener(this.statListener);
-            this.statListener = null;
-        }
-        super.destroy();
+        return super.graphicColor();
     }
 }

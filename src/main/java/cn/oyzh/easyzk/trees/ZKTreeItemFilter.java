@@ -1,8 +1,6 @@
 package cn.oyzh.easyzk.trees;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.search.ZKSearchHandler;
-import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -46,12 +44,12 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     @Getter
     private boolean excludeEphemeral;
 
-    /**
-     * zk主页搜索处理
-     */
-    // @Autowired
-    @Setter
-    private ZKSearchHandler searchHandler;
+    // /**
+    //  * zk主页搜索处理
+    //  */
+    // // @Autowired
+    // @Setter
+    // private ZKSearchHandler searchHandler;
 
     /**
      * 过滤内容列表
@@ -96,11 +94,11 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
         }
-        // 判断是否满足搜索要求
-        ZKSearchParam param = this.searchHandler.searchParam();
-        if (param != null && param.isFilterMode() && !param.isEmpty()) {
-            return this.searchHandler.getMatchType(item) != null;
-        }
+        // // 判断是否满足搜索要求
+        // ZKSearchParam param = this.searchHandler.searchParam();
+        // if (param != null && param.isFilterMode() && !param.isEmpty()) {
+        //     return this.searchHandler.getMatchType(item) != null;
+        // }
         return true;
     }
 }

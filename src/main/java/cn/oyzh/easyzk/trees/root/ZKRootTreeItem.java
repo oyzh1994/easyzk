@@ -56,7 +56,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
 
     public ZKRootTreeItem(@NonNull ZKTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKRootTreeItemValue());
+        this.setValue(new ZKRootTreeItemValue(this));
         // 初始化子节点
         this.initChildes();
         // // 监听变化

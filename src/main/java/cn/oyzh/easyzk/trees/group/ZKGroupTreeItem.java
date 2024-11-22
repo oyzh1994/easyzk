@@ -118,9 +118,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
 
         // 修改名称
         this.value.setName(groupName);
-        if (this.groupStore.replace(this.value)) {
-            this.getValue().flushText();
-        } else {
+        if (!this.groupStore.replace(this.value)) {
             MessageBox.warn(I18nHelper.operationFail());
         }
     }

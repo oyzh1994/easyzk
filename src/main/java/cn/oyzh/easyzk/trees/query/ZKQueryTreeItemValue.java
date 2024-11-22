@@ -1,9 +1,12 @@
 package cn.oyzh.easyzk.trees.query;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
+import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Node;
+import lombok.NonNull;
 
 
 /**
@@ -14,19 +17,19 @@ import javafx.scene.Node;
  */
 public class ZKQueryTreeItemValue extends ZKTreeItemValue {
 
-    public ZKQueryTreeItemValue(){
-        this.flushText();
-        this.flushGraphic();
+    public ZKQueryTreeItemValue(@NonNull ZKQueryTreeItem item) {
+        super(item);
     }
 
     @Override
-    public void flushGraphic() {
-        Node glyph = this.graphic();
+    public SVGGlyph graphic() {
+        SVGGlyph glyph = (SVGGlyph) this.item().getGraphic();
         // 设置图标
         if (glyph == null ) {
             glyph = new QuerySVGGlyph("10");
-            this.graphic(glyph);
+            return glyph;
         }
+        return super.graphic();
     }
 
     @Override

@@ -1,12 +1,9 @@
 package cn.oyzh.easyzk.trees.node;
 
-import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.gui.svg.glyph.LockSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.text.FXText;
-import javafx.geometry.Insets;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 
@@ -20,26 +17,19 @@ import lombok.NonNull;
 public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
-        super.setProp("_item", item);
-        this.flush();
-    }
-
-    private ZKNodeTreeItem item() {
-        return this.getProp("_item");
-    }
-
-    private boolean isInvalid() {
-        return !this.hasProp("_item");
+        super(item);
     }
 
     @Override
-    public void flushGraphic() {
-        if (this.isInvalid()) {
-            return;
-        }
-        SVGGlyph glyph = this.graphic();
+    protected ZKNodeTreeItem item() {
+        return (ZKNodeTreeItem) super.item();
+    }
+
+    @Override
+    public SVGGlyph graphic() {
+        SVGGlyph glyph = (SVGGlyph) this.item().getGraphic();
         if (glyph != null && glyph.isWaiting()) {
-            return;
+            return null;
         }
         boolean changed = false;
         if (glyph == null) {
@@ -63,79 +53,46 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
                 glyph.setProp("_type", "1");
             }
             glyph.disableTheme();
-            this.graphic(glyph);
+            return glyph;
         }
+        return null;
     }
 
     @Override
-    public void flush() {
-        if (this.isInvalid()) {
-            return;
+    public String extra() {
+        String extra;
+        int showNum = this.item().getChildrenSize();
+        Integer totalNum = this.item().getNumChildren();
+        if (totalNum == null || totalNum == 0) {
+            extra = null;
+        } else if (showNum == totalNum) {
+            extra = "(" + totalNum + ")";
+        } else {
+            extra = "(" + showNum + "/" + totalNum + ")";
         }
-        super.flush();
-        this.flushNum(this.item().getNumChildren(), this.item().getChildrenSize());
+        return extra;
     }
 
     /**
      * 刷新图形颜色
      */
     @Override
-    public void flushGraphicColor() {
-        if (this.isInvalid()) {
-            return;
-        }
-        // 获取图形
-        SVGGlyph glyph = this.graphic();
+    public Color graphicColor() {
         // 节点已删除
         if (this.item().isBeDeleted()) {
-            glyph.setColor(Color.RED);
+            return Color.RED;
         } else if (this.item().isDataUnsaved()) { // 节点数据未保存
-            glyph.setColor(Color.ORANGE);
+            return Color.ORANGE;
         } else if (this.item().isBeChanged()) { // 节点已更新
-            glyph.setColor(Color.PURPLE);
+            return Color.PURPLE;
         } else if (this.item().isBeChildChanged()) { // 子节点已更新
-            glyph.setColor(Color.BROWN);
-        } else {
-            super.flushGraphicColor();
+            return Color.BROWN;
         }
-    }
-
-    @Override
-    public SVGGlyph graphic() {
-        return (SVGGlyph) super.graphic();
-    }
-
-    /**
-     * 刷新节点数量
-     *
-     * @param totalNum 子节点总数量
-     * @param showNum  子节点显示数量
-     */
-    public void flushNum(Integer totalNum, Integer showNum) {
-        // 寻找组件
-        FXText text = (FXText) this.lookup("#num");
-        if (text == null) {
-            text = new FXText();
-            text.disableTheme();
-            this.addChild(text);
-            text.setId("num");
-            text.setFill(Color.valueOf("#228B22"));
-            HBox.setMargin(text, new Insets(0, 0, 0, 3));
-        }
-        if (totalNum == null || totalNum == 0) {
-            text.setText("");
-        } else if (showNum == null || showNum.intValue() == totalNum.intValue()) {
-            text.setText("(" + totalNum + ")");
-        } else {
-            text.setText("(" + showNum + "/" + totalNum + ")");
-        }
+        return super.graphicColor();
     }
 
     @Override
     public String name() {
-        if (this.isInvalid()) {
-            return null;
-        }
         return this.item().decodeNodeName();
     }
 }

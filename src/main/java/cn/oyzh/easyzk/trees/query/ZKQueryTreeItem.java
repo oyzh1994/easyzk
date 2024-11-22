@@ -14,7 +14,7 @@ public class ZKQueryTreeItem extends ZKTreeItem<ZKQueryTreeItemValue> {
 
     public ZKQueryTreeItem(RichTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKQueryTreeItemValue());
+        this.setValue(new ZKQueryTreeItemValue(this));
     }
 
     /**
@@ -23,7 +23,7 @@ public class ZKQueryTreeItem extends ZKTreeItem<ZKQueryTreeItemValue> {
      * @return 父zk节点
      */
     public ZKConnectTreeItem parent() {
-        TreeItem parent = this.getParent();
+        TreeItem<?> parent = this.getParent();
         return (ZKConnectTreeItem) parent;
     }
 

@@ -13,9 +13,8 @@ import cn.oyzh.i18n.I18nHelper;
  */
 public class ZKRootTreeItemValue extends ZKTreeItemValue {
 
-    public ZKRootTreeItemValue() {
-        this.flushGraphic();
-        this.flushText();
+    public ZKRootTreeItemValue(ZKRootTreeItem item){
+        super(item);
     }
 
     @Override
@@ -24,10 +23,10 @@ public class ZKRootTreeItemValue extends ZKTreeItemValue {
     }
 
     @Override
-    public void flushGraphic() {
-        if (this.graphic() == null) {
-            SVGGlyph glyph = new SVGGlyph("/font/Zookeeper1.svg", 12);
-            this.graphic(glyph);
+    public SVGGlyph graphic() {
+        if (this.item().getGraphic() == null) {
+            return new SVGGlyph("/font/Zookeeper1.svg", 12);
         }
+        return null;
     }
 }

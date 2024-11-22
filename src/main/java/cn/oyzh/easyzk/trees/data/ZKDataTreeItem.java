@@ -14,7 +14,7 @@ public class ZKDataTreeItem extends ZKTreeItem<ZKDataTreeItemValue> {
 
     public ZKDataTreeItem(RichTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKDataTreeItemValue());
+        this.setValue(new ZKDataTreeItemValue(this));
     }
 
     /**

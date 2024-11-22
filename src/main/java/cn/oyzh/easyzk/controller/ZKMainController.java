@@ -149,8 +149,8 @@ public class ZKMainController extends ParentStageController {
         this.resizeHelper = new ResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeLeft);
         this.resizeHelper.widthLimit(240, 650);
         this.resizeHelper.initResizeEvent();
-        // 搜索触发事件
-        KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));
+        // // 搜索触发事件
+        // KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));
         // 刷新触发事件
         KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
     }

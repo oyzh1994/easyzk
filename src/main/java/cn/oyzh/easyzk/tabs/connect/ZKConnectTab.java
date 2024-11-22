@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.theme.ThemeManager;
-import javafx.scene.paint.Color;
 import lombok.NonNull;
 
 /**
@@ -62,43 +61,30 @@ public class ZKConnectTab extends DynamicTab {
         if (this.treeItem() == null) {
             return;
         }
-        boolean changed = false;
-        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
-        if (glyph == null) {
-            changed = true;
-        } else if (this.activeItem() == null) {
-            SVGGlyph glyph1 = this.treeItem().graphic();
-            if (StringUtil.notEquals(glyph.getUrl(), glyph1.getUrl())) {
-                changed = true;
-            }
-        } else {
-            SVGGlyph glyph1 = this.activeItem().valueGraphic();
-            if (StringUtil.notEquals(glyph.getUrl(), glyph1.getUrl())) {
-                changed = true;
-            }
+        SVGGlyph graphic1 = (SVGGlyph) this.treeItem().getGraphic();
+        if (graphic1 == null) {
+            return;
         }
-        if (changed) {
-            if (this.activeItem() == null) {
-                glyph = this.treeItem().graphic().clone();
-                glyph.disableTheme();
-            } else {
-                glyph = this.activeItem().valueGraphic().clone();
-                glyph.disableTheme();
-            }
+        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        if (glyph == null || !StringUtil.notEquals(glyph.getUrl(), graphic1.getUrl())) {
+            glyph = graphic1.clone();
+            glyph.disableTheme();
             this.setGraphic(glyph);
         }
     }
 
     @Override
     public void flushGraphicColor() {
+        SVGGlyph graphic1 = (SVGGlyph) this.treeItem().getGraphic();
+        if (graphic1 == null) {
+            return;
+        }
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
-        if (this.activeItem() != null) {
-            SVGGlyph glyph2 = this.activeItem().valueGraphic();
-            glyph.setColor(glyph2.getColor());
-        } else if (ThemeManager.isDarkMode()) {
-            glyph.setColor(Color.WHITE);
-        } else {
-            glyph.setColor(Color.BLACK);
+        if (glyph == null) {
+            return;
+        }
+        if (graphic1.getColor() != glyph.getColor()) {
+            glyph.setColor(graphic1.getColor());
         }
     }
 

@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.trees.data;
 
+import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
@@ -19,19 +20,16 @@ import lombok.NonNull;
  */
 public class ZKDataTreeItemValue extends ZKTreeItemValue {
 
-    public ZKDataTreeItemValue(){
-        this.flushText();
-        this.flushGraphic();
+    public ZKDataTreeItemValue(@NonNull final ZKDataTreeItem item) {
+        super(item);
     }
 
     @Override
-    public void flushGraphic() {
-        Node glyph = this.graphic();
-        // 设置图标
-        if (glyph == null ) {
-            glyph = new SVGGlyph("/font/file-text.svg", 10);
-            this.graphic(glyph);
+    public SVGGlyph graphic() {
+        if (this.item().getGraphic() == null ) {
+           return new SVGGlyph("/font/file-text.svg", 10);
         }
+        return null;
     }
 
     @Override

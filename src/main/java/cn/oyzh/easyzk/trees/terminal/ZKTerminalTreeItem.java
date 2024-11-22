@@ -14,7 +14,7 @@ public class ZKTerminalTreeItem extends ZKTreeItem<ZKTerminalTreeItemValue> {
 
     public ZKTerminalTreeItem(RichTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKTerminalTreeItemValue(this));
+        this.setValue(new ZKTerminalTreeItemValue());
     }
 
     /**

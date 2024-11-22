@@ -30,9 +30,8 @@ public class ZKEventUtil {
     public static void connectionOpened(ZKConnectTreeItem item) {
         ZKConnectOpenedEvent event = new ZKConnectOpenedEvent();
         event.data(item);
-        EventUtil.post(event);
+        EventUtil.postSync(event);
     }
-
 
     /**
      * 连接丢失事件
@@ -451,7 +450,11 @@ public class ZKEventUtil {
     public static void treeItemChanged(TreeItem<?> item) {
         ZKTreeItemChangedEvent event = new ZKTreeItemChangedEvent();
         event.data(item);
-        EventUtil.post(event);
-
     }
+
+    // public static void dataOpened(ZKClient client) {
+    //     ZKDataOpenedEvent event = new ZKDataOpenedEvent();
+    //     event.data(client);
+    //     EventUtil.post(event);
+    // }
 }

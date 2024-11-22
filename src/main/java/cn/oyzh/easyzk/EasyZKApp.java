@@ -47,6 +47,8 @@ public class EasyZKApp extends FXApplication {
         SysConst.cacheDir(ZKConst.CACHE_PATH);
         SysConst.projectName(PROJECT.getName());
         EventFactory.registerEventBus(FxEventBus.class);
+        EventFactory.syncEventConfig(FxEventConfig.SYNC);
+        EventFactory.asyncEventConfig(FxEventConfig.ASYNC);
         EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
         TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
         JulLog.info("项目启动中...");

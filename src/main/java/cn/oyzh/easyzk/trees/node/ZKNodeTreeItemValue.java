@@ -27,35 +27,33 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public SVGGlyph graphic() {
-        SVGGlyph glyph = (SVGGlyph) this.item().getGraphic();
-        if (glyph != null && glyph.isWaiting()) {
-            return null;
+        if (this.graphic != null && this.graphic.isWaiting()) {
+            return this.graphic;
         }
         boolean changed = false;
-        if (glyph == null) {
+        if (this.graphic == null) {
             changed = true;
-        } else if (this.item().isNeedAuth() && StringUtil.notEquals(glyph.getProp("_type"), "3")) {
+        } else if (this.item().isNeedAuth() && StringUtil.notEquals(this.graphic.getProp("_type"), "3")) {
             changed = true;
-        } else if (this.item().isEphemeral() && StringUtil.notEquals(glyph.getProp("_type"), "2")) {
+        } else if (this.item().isEphemeral() && StringUtil.notEquals(this.graphic.getProp("_type"), "2")) {
             changed = true;
-        } else if (StringUtil.notEquals(glyph.getProp("_type"), "1")) {
+        } else if (StringUtil.notEquals(this.graphic.getProp("_type"), "1")) {
             changed = true;
         }
         if (changed) {
             if (this.item().isNeedAuth()) {
-                glyph = new LockSVGGlyph("11");
-                glyph.setProp("_type", "3");
+                this.graphic = new LockSVGGlyph("11");
+                this.graphic.setProp("_type", "3");
             } else if (this.item().isEphemeral()) {
-                glyph = new SVGGlyph("/font/temp.svg", 11);
-                glyph.setProp("_type", "2");
+                this.graphic = new SVGGlyph("/font/temp.svg", 11);
+                this.graphic.setProp("_type", "2");
             } else {
-                glyph = new SVGGlyph("/font/file-text.svg", 11);
-                glyph.setProp("_type", "1");
+                this.graphic = new SVGGlyph("/font/file-text.svg", 11);
+                this.graphic.setProp("_type", "1");
             }
-            glyph.disableTheme();
-            return glyph;
+            this.graphic.disableTheme();
         }
-        return null;
+        return super.graphic();
     }
 
     @Override
@@ -73,9 +71,6 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         return extra;
     }
 
-    /**
-     * 刷新图形颜色
-     */
     @Override
     public Color graphicColor() {
         // 节点已删除

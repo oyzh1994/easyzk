@@ -32,10 +32,8 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public SVGGlyph graphic() {
-        if (this.item().getGraphic() == null) {
-            SVGGlyph glyph = new SVGGlyph("/font/Zookeeper1.svg", 12);
-            glyph.disableTheme();
-            return glyph;
+        if (this.graphic == null) {
+            this.graphic = new SVGGlyph("/font/Zookeeper1.svg", 12);
         }
         return super.graphic();
     }

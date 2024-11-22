@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.tabs;
 
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.event.ZKAuthMainEvent;
 import cn.oyzh.easyzk.event.ZKConnectOpenedEvent;
@@ -10,11 +11,10 @@ import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.auth.ZKAuthTab;
 import cn.oyzh.easyzk.tabs.changelog.ChangelogTab;
+import cn.oyzh.easyzk.tabs.connect.ZKConnectTab;
 import cn.oyzh.easyzk.tabs.filter.ZKFilterTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
-import cn.oyzh.easyzk.tabs.connect.ZKConnectTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
-import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;

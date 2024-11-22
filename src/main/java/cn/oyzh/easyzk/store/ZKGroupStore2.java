@@ -1,8 +1,10 @@
 package cn.oyzh.easyzk.store;
 
-import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.store.jdbc.JdbcStore;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.store.jdbc.DeleteParam;
+import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.QueryParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,9 +39,9 @@ public class ZKGroupStore2 extends JdbcStore<ZKGroup> {
 
     public boolean delete(String name) {
         if (StringUtil.isNotBlank(name)) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("name", name);
-            return this.delete(params);
+            DeleteParam param = new DeleteParam();
+            param.addQueryParam(new QueryParam("name", name));
+            return this.delete(param);
         }
         return false;
     }

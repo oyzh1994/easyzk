@@ -14,21 +14,16 @@ public class ZKDataTreeItem extends ZKTreeItem<ZKDataTreeItemValue> {
 
     public ZKDataTreeItem(RichTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKDataTreeItemValue(this));
+        this.setValue(new ZKDataTreeItemValue());
     }
 
-    /**
-     * 当前节点的父zk节点
-     *
-     * @return 父zk节点
-     */
     public ZKConnectTreeItem parent() {
-        TreeItem parent = this.getParent();
-        return (ZKConnectTreeItem) parent;
+        TreeItem<?> treeItem = super.getParent();
+        return (ZKConnectTreeItem) treeItem;
     }
 
     @Override
     public void onPrimaryDoubleClick() {
-        ZKEventUtil.connectionOpened(this.parent());
+        super.startWaiting(() -> ZKEventUtil.connectionOpened(this.parent()));
     }
 }

@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.trees;
 
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.TreeChildFilterEvent;
@@ -11,7 +12,6 @@ import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -63,8 +63,8 @@ public class ZKTreeView extends RichTreeView implements FXEventListener {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof ZKConnectTreeItem treeItem) {
                 treeItem.closeConnect();
-            // } else if (item instanceof ZKNodeTreeItem nodeTreeItem) {
-            //     nodeTreeItem.root().closeConnect();
+                // } else if (item instanceof ZKNodeTreeItem nodeTreeItem) {
+                //     nodeTreeItem.root().closeConnect();
             }
         });
     }
@@ -401,4 +401,17 @@ public class ZKTreeView extends RichTreeView implements FXEventListener {
     private void addConnect(ZKAddConnectEvent event) {
         StageManager.showStage(ZKInfoAddController.class, this.window());
     }
+
+    // @EventSubscribe
+    // private void onDataOpened(ZKDataOpenedEvent event) {
+    //     for (ZKConnectTreeItem item : this.getRoot().getConnectedItems()) {
+    //         if (item.client() == event.data()) {
+    //             ZKDataTreeItem treeItem = item.dataChild();
+    //             if (treeItem != null) {
+    //                 treeItem.stopWaiting();
+    //             }
+    //             break;
+    //         }
+    //     }
+    // }
 }

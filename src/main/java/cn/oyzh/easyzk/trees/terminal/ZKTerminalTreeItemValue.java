@@ -4,7 +4,6 @@ import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.scene.Node;
 
 
 /**
@@ -15,19 +14,12 @@ import javafx.scene.Node;
  */
 public class ZKTerminalTreeItemValue extends ZKTreeItemValue {
 
-    public ZKTerminalTreeItemValue(ZKTerminalTreeItem item) {
-        super(item);
-    }
-
     @Override
     public SVGGlyph graphic() {
-        SVGGlyph glyph = (SVGGlyph) this.item().getGraphic();
-        // 设置图标
-        if (glyph == null) {
-            glyph = new TerminalSVGGlyph("10");
-            return glyph;
+        if (this.graphic == null) {
+            this.graphic = new TerminalSVGGlyph("10");
         }
-        return null;
+        return super.graphic();
     }
 
     @Override

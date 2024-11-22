@@ -228,9 +228,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         this.setChild(List.of(dataItem, queryItem, terminalItem));
                         this.extend();
                     }
-                    this.flushGraphic();
                 })
-                // .onFinish(this::stopWaiting)
                 .onSuccess(this::flushLocal)
                 .onError(MessageBox::exception)
                 .build();
@@ -281,15 +279,10 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         Runnable func = () -> {
             this.client.close();
             this.clearChild();
-            this.flushGraphic();
         };
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
-                    .onFinish(() -> {
-                        // this.stopWaiting();
-                        this.flushGraphic();
-                    })
                     .onSuccess(this::flushLocal)
                     .onError(MessageBox::exception)
                     .build();
@@ -410,6 +403,15 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         });
         super.setValue(new ZKConnectTreeItemValue(this));
     }
+
+    // public ZKDataTreeItem dataChild(){
+    //     for (TreeItem<?> realChild : this.getRealChildren()) {
+    //         if(realChild instanceof ZKDataTreeItem){
+    //             return (ZKDataTreeItem) realChild;
+    //         }
+    //     }
+    //     return null;
+    // }
 
     /**
      * 是否已连接
@@ -576,14 +578,5 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     public String infoName() {
         return this.value.getName();
-    }
-
-    /**
-     * 获取图标
-     *
-     * @return 图标
-     */
-    public SVGGlyph graphic() {
-        return this.getValue().graphic();
     }
 }

@@ -937,14 +937,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.value.decodeNodeName();
     }
 
-    @Override
-    public SVGGlyph valueGraphic() {
-        if (this.getValue() != null) {
-            return this.getValue().graphic();
-        }
-        return null;
-    }
-
     /**
      * 获取配额
      *

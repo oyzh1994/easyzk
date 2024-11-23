@@ -381,6 +381,12 @@ public class ZKDataTransportController extends StageController {
                 return;
             }
 
+            if (sourceInfo.compare(targetInfo)) {
+                this.sourceInfo.requestFocus();
+                MessageBox.warn(I18nHelper.connectionsCannotBeTheSame());
+                return;
+            }
+
             this.getStage().appendTitle("===" + I18nHelper.connectIng() + "===");
             this.getStage().disable();
 

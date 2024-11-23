@@ -169,7 +169,6 @@ public class ZKNodeTreeView extends RichTreeView {
             } else {// 加载子节点
                 parent.refreshStat();
                 parent.loadChild(false);
-                parent.flushValue();
                 JulLog.info("父节点未加载, 加载父节点.");
             }
             // 过滤节点
@@ -218,7 +217,6 @@ public class ZKNodeTreeView extends RichTreeView {
                 JulLog.info("节点不存在, 父节点已加载, 标记父节点状态.");
             } else {// 更新父节点状态
                 parent.refreshStat();
-                parent.flushValue();
                 JulLog.info("节点不存在, 父节点未加载, 更新父节点状态.");
             }
         } catch (Exception ex) {
@@ -253,7 +251,6 @@ public class ZKNodeTreeView extends RichTreeView {
                 JulLog.info("节点存在, 标记节点状态为删除.");
             } else {// 更新父节点状态
                 parent.refreshStat();
-                parent.flushValue();
                 JulLog.info("节点不存在, 父节点未加载, 更新父节点状态.");
             }
         } catch (Exception ex) {

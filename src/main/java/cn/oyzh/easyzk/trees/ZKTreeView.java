@@ -52,7 +52,7 @@ public class ZKTreeView extends RichTreeView implements FXEventListener {
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new ZKTreeCell());
         // 初始化根节点
         super.setRoot(new ZKRootTreeItem(this));
-        this.getRoot().extend();
+        this.getRoot().expend();
     }
 
     @Override
@@ -334,12 +334,9 @@ public class ZKTreeView extends RichTreeView implements FXEventListener {
         if (item instanceof ZKNodeTreeItem treeItem) {
             treeItem.expandAll();
         } else if (item instanceof ZKConnectTreeItem treeItem) {
-            treeItem.extend();
-            // if (!treeItem.isChildEmpty()) {
-            //     treeItem.firstChild().expandAll(); // 展开第一个子项的所有子项
-            // }
+            treeItem.expend();
         } else if (item instanceof ZKTreeItem<?> treeItem) {
-            treeItem.extend();
+            treeItem.expend();
         }
         if (item != null) {
             this.select(item);

@@ -21,7 +21,6 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -30,9 +29,7 @@ import cn.oyzh.fx.plus.trees.RichTreeView;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -226,7 +223,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
                         ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
                         ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
                         this.setChild(List.of(dataItem, queryItem, terminalItem));
-                        this.extend();
+                        this.expend();
                     }
                 })
                 .onSuccess(this::flushLocal)
@@ -340,7 +337,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         zkInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         zkInfo.setCollects(Collections.emptyList());
         if (ZKInfoStore2.INSTANCE.replace(zkInfo)) {
-            this.parent().addConnect(zkInfo);
+            this.connectManager().addConnect(zkInfo);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -350,10 +347,8 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
     public void delete() {
         if (MessageBox.confirm(I18nHelper.delete() + " [" + this.value().getName() + "]")) {
             this.closeConnect(false);
-            if (this.parent().delConnectItem(this)) {
+            if (this.connectManager().delConnectItem(this)) {
                 ZKEventUtil.infoDeleted(this.value);
-//                // 删除历史记录
-//                ZKDataHistoryStore2.INSTANCE.delete(this.value.getId());
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -554,7 +549,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      *
      * @return 父节点
      */
-    public ZKConnectManager parent() {
+    public ZKConnectManager connectManager() {
         Object object = this.getParent();
         if (object instanceof ZKConnectManager connectManager) {
             return connectManager;

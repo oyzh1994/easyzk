@@ -17,13 +17,9 @@ public class ZKTerminalTreeItem extends ZKTreeItem<ZKTerminalTreeItemValue> {
         this.setValue(new ZKTerminalTreeItemValue());
     }
 
-    /**
-     * 当前节点的父zk节点
-     *
-     * @return 父zk节点
-     */
+    @Override
     public ZKConnectTreeItem parent() {
-        TreeItem parent = this.getParent();
+        TreeItem<?> parent = this.getParent();
         return (ZKConnectTreeItem) parent;
     }
 

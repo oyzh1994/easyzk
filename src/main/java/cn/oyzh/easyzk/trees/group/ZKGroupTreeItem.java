@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.trees.group;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKGroupStore2;
 import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
@@ -157,11 +156,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         fxView.display();
     }
 
-    /**
-     * 父节点
-     *
-     * @return 根节点
-     */
+    @Override
     public ZKRootTreeItem parent() {
         TreeItem<?> treeItem = this.getParent();
         return (ZKRootTreeItem) treeItem;

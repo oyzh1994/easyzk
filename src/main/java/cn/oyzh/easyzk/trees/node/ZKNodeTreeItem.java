@@ -91,7 +91,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void setBeChanged() {
         this.nodeStatus = 1;
-        this.flushValue();
     }
 
     /**
@@ -99,7 +98,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void setBeDeleted() {
         this.nodeStatus = 2;
-        this.flushValue();
     }
 
     /**
@@ -107,7 +105,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void setBeChildChanged() {
         this.nodeStatus = 3;
-        this.flushValue();
     }
 
     public boolean isBeChanged() {
@@ -179,7 +176,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void nodeData(byte[] data) {
         this.unsavedData = data;
-        this.flushValue();
     }
 
     /**
@@ -189,7 +185,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.nodeStatus = null;
         this.unsavedData = null;
         this.ignoreStatus = null;
-        this.flushValue();
     }
 
     /**
@@ -211,7 +206,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     @Override
     public void doFilter(RichTreeItemFilter itemFilter) {
         super.doFilter(itemFilter);
-        this.flushValue();
     }
 
     /**
@@ -239,11 +233,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.loading = true;
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> this.loadChild(false))
-                .onSuccess(this::extend)
-                .onFinish(() -> {
-                    this.loading = false;
-                    this.flushValue();
-                })
+                .onSuccess(this::expend)
+                .onFinish(() -> this.loading = false)
                 .onError(MessageBox::exception)
                 .build();
         task.run();
@@ -390,7 +381,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         // 创建任务
         Task task = TaskBuilder.newBuilder()
                 .onStart(this::deleteNode)
-                // .onFinish(this::stopWaiting)
                 .onError(MessageBox::exception)
                 .build();
         this.startWaiting(task);
@@ -421,10 +411,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 父zk节点
      */
     public ZKNodeTreeItem parent() {
-        if (this.getParent() instanceof ZKNodeTreeItem treeItem) {
-            return treeItem;
-        }
-        return null;
+        return (ZKNodeTreeItem) this.getParent();
     }
 
     /**
@@ -440,7 +427,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     private void loadChildAllSync() {
         Task task = TaskBuilder.newBuilder()
-                .onSuccess(this::flushValue)
                 .onStart(() -> this.loadChild(true))
                 .onError(MessageBox::exception)
                 .build();
@@ -517,8 +503,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             this.unCollect();
             // 移除此节点
             parent.removeChild(this);
-            // 刷新父节点值
-            parent.flushValue();
             // 选中节点
             if (nextItem != null) {
                 TreeItem<?> finalNextItem = nextItem;
@@ -704,7 +688,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                     // 预先加载一部分
                     if (addList.size() > 20 && !loadPre) {
                         this.addChild(addList);
-                        this.extend();
+                        this.expend();
                         addList.clear();
                         loadPre = true;
                     }
@@ -1046,7 +1030,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void authChanged() throws Exception {
         this.needAuth = false;
         this.refreshNode();
-        this.flushValue();
         this.loadRoot();
     }
 

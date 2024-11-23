@@ -299,7 +299,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         ZKGroupTreeItem groupItem = this.getGroupItem(info.getGroupId());
         if (groupItem == null) {
             super.addChild(new ZKConnectTreeItem(info, this.getTreeView()));
-            this.extend();
+            this.expend();
         } else {
             groupItem.addConnect(info);
         }
@@ -313,7 +313,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
                 this.infoStore.update(item.value());
             }
             super.addChild(item);
-            this.extend();
+            this.expend();
         }
     }
 
@@ -321,7 +321,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
         if (CollectionUtil.isNotEmpty(items)) {
             this.addChild((List) items);
-            this.extend();
+            this.expend();
         }
     }
 

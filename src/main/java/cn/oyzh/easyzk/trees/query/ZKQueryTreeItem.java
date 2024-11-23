@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.trees.query;
 
-import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeView;
@@ -17,11 +16,7 @@ public class ZKQueryTreeItem extends ZKTreeItem<ZKQueryTreeItemValue> {
         this.setValue(new ZKQueryTreeItemValue());
     }
 
-    /**
-     * 当前节点的父zk节点
-     *
-     * @return 父zk节点
-     */
+    @Override
     public ZKConnectTreeItem parent() {
         TreeItem<?> parent = this.getParent();
         return (ZKConnectTreeItem) parent;

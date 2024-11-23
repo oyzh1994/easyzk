@@ -15,7 +15,7 @@ import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.trees.RichTreeView;
+import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;

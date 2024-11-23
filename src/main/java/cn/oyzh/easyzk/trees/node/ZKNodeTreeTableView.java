@@ -11,7 +11,7 @@
 // import cn.oyzh.easyzk.zk.ZKNode;
 // import cn.oyzh.event.EventSubscribe;
 // import cn.oyzh.fx.gui.treeTable.RichTreeTableView;
-// import cn.oyzh.fx.plus.controls.tree.FlexTreeTableColumn;
+// import cn.oyzh.fx.plus.controls.treeTable.FlexTreeTableColumn;
 // import cn.oyzh.fx.plus.util.FXUtil;
 // import javafx.beans.value.ObservableValue;
 // import javafx.scene.control.TreeItem;

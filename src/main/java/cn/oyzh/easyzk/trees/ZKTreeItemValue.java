@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.trees;
 
-import cn.oyzh.fx.plus.trees.RichTreeItem;
-import cn.oyzh.fx.plus.trees.RichTreeItemValue;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 
 
 /**

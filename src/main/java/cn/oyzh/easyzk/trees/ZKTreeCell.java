@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.trees;
 
-import cn.oyzh.fx.plus.trees.RichTreeCell;
+import cn.oyzh.fx.gui.treeView.RichTreeCell;
 
 /**
  * zk树节点工厂

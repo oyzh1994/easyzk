@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.trees;
 
-import cn.oyzh.fx.plus.trees.RichTreeItem;
-import cn.oyzh.fx.plus.trees.RichTreeView;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeView;
 import lombok.NonNull;
 
 /**

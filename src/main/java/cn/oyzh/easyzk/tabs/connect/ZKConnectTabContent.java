@@ -104,6 +104,7 @@ public class ZKConnectTabContent extends DynamicTabController {
      * 节点数
      */
     @FXML
+    @Getter
     private ZKNodeTreeView treeView;
 
     /**

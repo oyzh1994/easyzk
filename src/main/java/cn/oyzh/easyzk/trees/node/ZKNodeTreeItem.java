@@ -22,7 +22,6 @@ import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
@@ -176,6 +175,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void nodeData(byte[] data) {
         this.unsavedData = data;
+        this.refresh();
     }
 
     /**
@@ -634,6 +634,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
+        } finally {
+            this.refresh();
         }
         return false;
     }

@@ -19,8 +19,6 @@ import java.util.List;
  * @author oyzh
  * @since 2023/3/28
  */
-// @Lazy
-// @Component
 public class ZKTreeItemFilter implements RichTreeItemFilter {
 
     /**

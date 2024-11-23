@@ -25,5 +25,4 @@ public class ZKDataTreeItemValue extends ZKTreeItemValue {
     public String name() {
         return I18nHelper.data();
     }
-
 }

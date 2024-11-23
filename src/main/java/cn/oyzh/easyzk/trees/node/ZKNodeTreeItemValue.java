@@ -76,11 +76,14 @@ public class ZKNodeTreeItemValue extends ZKTreeItemValue {
         // 节点已删除
         if (this.item().isBeDeleted()) {
             return Color.RED;
-        } else if (this.item().isDataUnsaved()) { // 节点数据未保存
+        }
+        if (this.item().isDataUnsaved()) { // 节点数据未保存
             return Color.ORANGE;
-        } else if (this.item().isBeChanged()) { // 节点已更新
+        }
+        if (this.item().isBeChanged()) { // 节点已更新
             return Color.PURPLE;
-        } else if (this.item().isBeChildChanged()) { // 子节点已更新
+        }
+        if (this.item().isBeChildChanged()) { // 子节点已更新
             return Color.BROWN;
         }
         return super.graphicColor();

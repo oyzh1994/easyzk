@@ -351,4 +351,19 @@ public class ZKNodeTreeView extends RichTreeView {
             this.enable();
         }
     }
+
+    /**
+     * 是否有未保存数据的节点
+     *
+     * @return 结果
+     */
+    public boolean hasUnsavedData() {
+         List<ZKNodeTreeItem> items = this.getAllNodeItem();
+         for (ZKNodeTreeItem item : items) {
+             if (item.isDataUnsaved()) {
+                 return true;
+             }
+         }
+        return false;
+    }
 }

@@ -7,7 +7,9 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.theme.ThemeManager;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.i18n.I18nHelper;
+import javafx.event.Event;
 import lombok.NonNull;
 
 /**
@@ -61,13 +63,13 @@ public class ZKConnectTab extends DynamicTab {
         if (this.treeItem() == null) {
             return;
         }
-        SVGGlyph graphic1 = (SVGGlyph) this.treeItem().getGraphic();
-        if (graphic1 == null) {
+        SVGGlyph graphic = this.treeItem().itemGraphic();
+        if (graphic == null) {
             return;
         }
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
-        if (glyph == null || !StringUtil.notEquals(glyph.getUrl(), graphic1.getUrl())) {
-            glyph = graphic1.clone();
+        if (glyph == null || !StringUtil.notEquals(glyph.getUrl(), graphic.getUrl())) {
+            glyph = graphic.clone();
             glyph.disableTheme();
             this.setGraphic(glyph);
         }
@@ -75,16 +77,16 @@ public class ZKConnectTab extends DynamicTab {
 
     @Override
     public void flushGraphicColor() {
-        SVGGlyph graphic1 = (SVGGlyph) this.treeItem().getGraphic();
-        if (graphic1 == null) {
+        SVGGlyph graphic = this.treeItem().itemGraphic();
+        if (graphic == null) {
             return;
         }
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         if (glyph == null) {
             return;
         }
-        if (graphic1.getColor() != glyph.getColor()) {
-            glyph.setColor(graphic1.getColor());
+        if (graphic.getColor() != glyph.getColor()) {
+            glyph.setColor(graphic.getColor());
         }
     }
 
@@ -108,7 +110,7 @@ public class ZKConnectTab extends DynamicTab {
 
     @Override
     public ZKConnectTabContent controller() {
-        return super.controller();
+        return (ZKConnectTabContent) super.controller();
     }
 
     @Override
@@ -123,5 +125,14 @@ public class ZKConnectTab extends DynamicTab {
      */
     public void restoreData(byte[] data) {
         this.controller().restoreData(data);
+    }
+
+    @Override
+    protected void onTabCloseRequest(Event event) {
+        if (this.controller().getTreeView().hasUnsavedData() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+            event.consume();
+        } else {
+            super.onTabCloseRequest(event);
+        }
     }
 }

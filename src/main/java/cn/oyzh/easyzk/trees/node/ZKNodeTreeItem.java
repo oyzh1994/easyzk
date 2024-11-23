@@ -221,7 +221,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 加载子节点
      */
     public void loadChild() {
-        if (!this.isWaiting() && !this.loaded && !this.loading) {
+        if (!this.isWaiting() && !this.isLoaded() && !this.isLoading()) {
             this.loadChildAsync();
         }
     }
@@ -230,11 +230,11 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 加载子节点
      */
     private void loadChildSync() {
-        this.loading = true;
+        this.setLoaded(true);
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> this.loadChild(false))
                 .onSuccess(this::expend)
-                .onFinish(() -> this.loading = false)
+                .onFinish(() -> this.setLoaded(false))
                 .onError(MessageBox::exception)
                 .build();
         task.run();
@@ -250,7 +250,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        if (this.loading) {
+        if (this.isLoading()) {
             FXMenuItem cancel = MenuItemHelper.cancelOperation("11", this::cancel);
             items.add(cancel);
         } else {
@@ -419,7 +419,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void unloadChild() {
         this.clearChild();
-        this.loaded = false;
+        this.setLoaded(false);
     }
 
     /**
@@ -474,7 +474,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public ZKNodeTreeItem getNodeItem(String path) {
         if (StringUtil.isNotBlank(path) && !this.isChildEmpty()) {
-            for (TreeItem<?> child : this.getRealChildren()) {
+            for (TreeItem<?> child : this.unfilteredChildren()) {
                 if (child instanceof ZKNodeTreeItem treeItem) {
                     if (treeItem.decodeNodePath().equals(path)) {
                         return treeItem;
@@ -642,7 +642,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void reloadChild() {
-        if (!this.isWaiting() || !this.loading) {
+        if (!this.isWaiting() || !this.isLoading()) {
             try {
                 this.refreshNode();
                 this.loadChildAsync();
@@ -662,7 +662,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             return;
         }
         try {
-            this.loaded = true;
+            this.setLoaded(true);
             // 没有子节点
             if (!this.value.hasChildren()) {
                 this.clearChild();
@@ -679,7 +679,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 f1:
                 for (ZKNode node : list) {
                     // 判断节点是否存在
-                    for (ZKNodeTreeItem item : this.showChildren()) {
+                    for (ZKNodeTreeItem item : this.itemChildren()) {
                         if (item.nodeEquals(node)) {
                             item.copy(node);
                             continue f1;
@@ -696,7 +696,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                     }
                 }
                 // 遍历列表寻找待删除节点
-                for (ZKNodeTreeItem item : this.showChildren()) {
+                for (ZKNodeTreeItem item : this.itemChildren()) {
                     // 判断节点是否不存在
                     if (list.parallelStream().noneMatch(item::nodeEquals)) {
                         delList.add(item);
@@ -709,7 +709,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             }
             // 递归处理
             if (loop && !this.isChildEmpty()) {
-                for (ZKNodeTreeItem item : this.showChildren()) {
+                for (ZKNodeTreeItem item : this.itemChildren()) {
                     if (this.canceled && item.canceled) {
                         break;
                     }
@@ -717,14 +717,14 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 }
             }
         } catch (KeeperException.NoAuthException ex) {
-            this.loaded = false;
+            this.setLoaded(false);
             this.needAuth = true;
         } catch (Exception ex) {
             // 非取消、连接关闭情况下，则抛出异常
             if (!this.canceled && !this.client().isConnected()) {
                 throw new RuntimeException(ex);
             }
-            this.loaded = false;
+            this.setSorting(false);
         }
     }
 
@@ -752,8 +752,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      *
      * @return 节点内容
      */
-    public List<ZKNodeTreeItem> showChildren() {
-        return (List) super.getRealChildren();
+    public List<ZKNodeTreeItem> itemChildren() {
+      return  (List) super.unfilteredChildren();
     }
 
     @Override
@@ -768,7 +768,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void sortAsc() {
         if (super.isSortable()) {
             super.sortAsc();
-            this.showChildren().forEach(ZKNodeTreeItem::sortAsc);
+            this.itemChildren().forEach(ZKNodeTreeItem::sortAsc);
         }
     }
 
@@ -776,7 +776,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void sortDesc() {
         if (super.isSortable()) {
             super.sortDesc();
-            this.showChildren().forEach(ZKNodeTreeItem::sortDesc);
+            this.itemChildren().forEach(ZKNodeTreeItem::sortDesc);
         }
     }
 
@@ -992,7 +992,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void onPrimaryDoubleClick() {
-        if (!this.loaded) {
+        if (!this.isLoaded()) {
             this.loadChild();
         } else {
             super.onPrimaryDoubleClick();

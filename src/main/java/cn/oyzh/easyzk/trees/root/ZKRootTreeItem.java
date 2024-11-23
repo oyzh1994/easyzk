@@ -251,7 +251,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      */
     private List<ZKGroupTreeItem> getGroupItems() {
         List<ZKGroupTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getRealChildren()) {
+        for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof ZKGroupTreeItem groupTreeItem) {
                 items.add(groupTreeItem);
             }
@@ -275,7 +275,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      */
     public void infoUpdated(ZKInfo info) {
         f1:
-        for (TreeItem<?> item : this.getRealChildren()) {
+        for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.value() == info) {
                     connectTreeItem.value(info);
@@ -336,7 +336,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     @Override
     public List<ZKConnectTreeItem> getConnectItems() {
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> child : this.getRealChildren()) {
+        for (TreeItem<?> child : this.unfilteredChildren()) {
             if (child instanceof ZKConnectTreeItem connectTreeItem) {
                 items.add(connectTreeItem);
             } else if (child instanceof ZKGroupTreeItem groupTreeItem) {
@@ -349,7 +349,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     @Override
     public List<ZKConnectTreeItem> getConnectedItems() {
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getRealChildren()) {
+        for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.isConnected()) {
                     items.add(connectTreeItem);

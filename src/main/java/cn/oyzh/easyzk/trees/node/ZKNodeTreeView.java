@@ -104,7 +104,7 @@ public class ZKNodeTreeView extends RichTreeView {
             return null;
         }
         // 遍历子节点，寻找匹配节点
-        for (ZKNodeTreeItem item : root.showChildren()) {
+        for (ZKNodeTreeItem item : root.itemChildren()) {
             ZKNodeTreeItem treeItem = this.findNodeItem(item, targetPath);
             // 返回节点信息
             if (treeItem != null) {
@@ -162,7 +162,7 @@ public class ZKNodeTreeView extends RichTreeView {
             if (item != null) {
                 item.refreshNode();
                 JulLog.info("节点已存在, 更新节点.");
-            } else if (parent.loaded()) {// 添加节点
+            } else if (parent.isLoaded()) {// 添加节点
                 parent.refreshStat();
                 parent.addChild(nodePath);
                 JulLog.info("节点不存在, 添加节点.");
@@ -211,7 +211,7 @@ public class ZKNodeTreeView extends RichTreeView {
             if (item != null) {
                 item.refreshNode();
                 JulLog.info("节点已存在, 更新节点.");
-            } else if (parent.loaded()) {// 更新父节点状态，并标记状态
+            } else if (parent.isLoaded()) {// 更新父节点状态，并标记状态
                 parent.refreshStat();
                 parent.setBeChildChanged();
                 JulLog.info("节点不存在, 父节点已加载, 标记父节点状态.");
@@ -302,7 +302,7 @@ public class ZKNodeTreeView extends RichTreeView {
     private void getAllNodeItem(ZKNodeTreeItem item, List<ZKNodeTreeItem> list) {
         if (item != null) {
             list.add(item);
-            for (TreeItem<?> treeItem : item.getRealChildren()) {
+            for (TreeItem<?> treeItem : item.unfilteredChildren()) {
                 if (treeItem instanceof ZKNodeTreeItem nodeTreeItem) {
                     this.getAllNodeItem(nodeTreeItem, list);
                 }

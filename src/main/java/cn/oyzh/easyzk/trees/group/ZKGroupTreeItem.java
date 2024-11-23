@@ -193,7 +193,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     @Override
     public List<ZKConnectTreeItem> getConnectItems() {
         List<ZKConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getRealChildren()) {
+        for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof ZKConnectTreeItem treeItem) {
                 items.add(treeItem);
             }

@@ -229,22 +229,26 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     /**
      * 加载子节点
      */
-    private void loadChildSync() {
-        this.setLoaded(true);
-        Task task = TaskBuilder.newBuilder()
-                .onStart(() -> this.loadChild(false))
-                .onSuccess(this::expend)
-                .onFinish(() -> this.setLoaded(false))
-                .onError(MessageBox::exception)
-                .build();
-        task.run();
+    private void loadChildAsync() {
+        this.startWaiting(this::loadChildSync);
     }
 
     /**
      * 加载子节点
      */
-    private void loadChildAsync() {
-        this.startWaiting(this::loadChildSync);
+    private void loadChildSync() {
+        this.setLoaded(true);
+        this.setLoading(true);
+        Task task = TaskBuilder.newBuilder()
+                .onStart(() -> this.loadChild(false))
+                .onSuccess(this::expend)
+                .onFinish(() -> {
+                    this.setLoaded(false);
+                    this.setLoading(false);
+                })
+                .onError(MessageBox::exception)
+                .build();
+        task.run();
     }
 
     @Override

@@ -153,42 +153,42 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%base.label">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%base.strategy" realHeight="30" realWidth="80">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <TabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" fx:id="tabStrategy">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </TabStrategyComboBox>
-                    <VBox.margin>
-                        <Insets top="10"/>
-                    </VBox.margin>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%base.limit" realHeight="30" realWidth="80">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140"
-                                     realHeight="30"
-                                     tipText="%base.tabLimitTip">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </NumberTextField>
-                    <VBox.margin>
-                        <Insets top="10"/>
-                    </VBox.margin>
-                </FlexHBox>
-            </FlexVBox>
-        </FXTab>
+        <!-- <FXTab text="%base.label"> -->
+        <!--     <FlexVBox flexWidth="100%" flexHeight="100%"> -->
+        <!--         <FlexHBox flexWidth="100%" realHeight="50"> -->
+        <!--             <AccentLabel text="%base.strategy" realHeight="30" realWidth="80"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="20" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </AccentLabel> -->
+        <!--             <TabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" fx:id="tabStrategy"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </TabStrategyComboBox> -->
+        <!--             <VBox.margin> -->
+        <!--                 <Insets top="10"/> -->
+        <!--             </VBox.margin> -->
+        <!--         </FlexHBox> -->
+        <!--         <FlexHBox flexWidth="100%" realHeight="50"> -->
+        <!--             <AccentLabel text="%base.limit" realHeight="30" realWidth="80"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="20" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </AccentLabel> -->
+        <!--             <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140" -->
+        <!--                              realHeight="30" -->
+        <!--                              tipText="%base.tabLimitTip"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </NumberTextField> -->
+        <!--             <VBox.margin> -->
+        <!--                 <Insets top="10"/> -->
+        <!--             </VBox.margin> -->
+        <!--         </FlexHBox> -->
+        <!--     </FlexVBox> -->
+        <!-- </FXTab> -->
         <FXTab text="%base.font">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">

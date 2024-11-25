@@ -1,31 +1,29 @@
 package cn.oyzh.easyzk.controller;
 
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
-import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.fx.gui.tabs.TabStrategyComboBox;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.FlexSlider;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
-import cn.oyzh.fx.plus.i18n.LocaleComboBox;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.theme.ThemeComboBox;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.i18n.I18nManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -119,17 +117,17 @@ public class SettingController extends StageController {
     @FXML
     private FlexCheckBox authMode;
 
-    /**
-     * 标签数量限制
-     */
-    @FXML
-    private NumberTextField tabLimit;
-
-    /**
-     * 标签策略
-     */
-    @FXML
-    private TabStrategyComboBox tabStrategy;
+    // /**
+    //  * 标签数量限制
+    //  */
+    // @FXML
+    // private NumberTextField tabLimit;
+    //
+    // /**
+    //  * 标签策略
+    //  */
+    // @FXML
+    // private TabStrategyComboBox tabStrategy;
 
     /**
      * 主题
@@ -253,13 +251,13 @@ public class SettingController extends StageController {
         this.fgColor.setColor(StringUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
         this.bgColor.setColor(StringUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
         this.accentColor.setColor(StringUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
-        // 标签相关处理
-        this.tabLimit.setValue(this.setting.getTabLimit());
-        this.tabStrategy.select(this.setting.getTabStrategy());
+        // // 标签相关处理
+        // this.tabLimit.setValue(this.setting.getTabLimit());
+        // this.tabStrategy.select(this.setting.getTabStrategy());
         // 字体相关处理
         this.fontSize.select(this.setting.getFontSize());
         this.fontFamily.select(this.setting.getFontFamily());
-        this.fontWeight.selectWeight(this.setting.getFontWeight());
+        this.fontWeight.selectWeight(Integer.valueOf(this.setting.getFontWeight()));
         // 区域相关处理
         this.locale.select(this.setting.getLocale());
         // 透明度相关处理
@@ -278,8 +276,8 @@ public class SettingController extends StageController {
             byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
             String locale = this.locale.name();
             Integer fontSize = this.fontSize.getValue();
+            int fontWeight = this.fontWeight.getWeight();
             String fontFamily = this.fontFamily.getValue();
-            Integer fontWeight = this.fontWeight.getWeight();
 
             // 提示文字
             String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
@@ -287,9 +285,9 @@ public class SettingController extends StageController {
             this.setting.setLoadMode(loadMode);
             this.setting.setAuthMode(authMode);
             // 字体相关
-            this.setting.setFontSize(fontSize);
-            this.setting.setFontWeight(fontWeight);
             this.setting.setFontFamily(fontFamily);
+            this.setting.setFontWeight((short) fontWeight);
+            this.setting.setFontSize(fontSize == null ? null : fontSize.byteValue());
             // 主题相关
             this.setting.setTheme(this.theme.name());
             this.setting.setBgColor(this.bgColor.getColor());
@@ -298,14 +296,15 @@ public class SettingController extends StageController {
             // 区域相关处理
             this.setting.setLocale(locale);
             // 透明度相关处理
-            this.setting.setOpacity(this.opacity.getValue());
-            // 其他设置
-            this.setting.setRememberPageSize(this.pageSize.isSelected() ? 1 : 0);
-            this.setting.setTabStrategy(this.tabStrategy.getStrategy());
-            this.setting.setTabLimit(this.tabLimit.getValue().intValue());
-            this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
-            this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
-            this.setting.setExitMode(Integer.parseInt(this.exitMode.selectedUserData()));
+            this.setting.setOpacity((float) this.opacity.getValue());
+            // 标签设置
+            // this.setting.setTabStrategy(this.tabStrategy.getStrategy());
+            // this.setting.setTabLimit(this.tabLimit.getValue().intValue());
+            // 页面设置
+            this.setting.setRememberPageSize((byte) (this.pageSize.isSelected() ? 1 : 0));
+            this.setting.setRememberPageResize((byte) (this.pageResize.isSelected() ? 1 : 0));
+            this.setting.setRememberPageLocation((byte) (this.pageLocation.isSelected() ? 1 : 0));
+            this.setting.setExitMode((byte) Integer.parseInt(this.exitMode.selectedUserData()));
             this.settingStore.replace(this.setting);
             // 清除认证列表
             if (!this.setting.isAutoAuth()) {
@@ -317,10 +316,10 @@ public class SettingController extends StageController {
             I18nManager.apply(this.setting.getLocale());
             // 应用字体配置
             FontManager.apply(this.setting.fontConfig());
-            // 应用透明度配置
-            OpacityManager.apply(this.opacity.getValue());
             // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
+            // 应用透明度配置
+            OpacityManager.apply((float) this.opacity.getValue());
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

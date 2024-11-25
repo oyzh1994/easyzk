@@ -1,5 +1,9 @@
 package cn.oyzh.easyzk.store;
 
+import cn.oyzh.common.SysConst;
+import cn.oyzh.common.json.JSONArray;
+import cn.oyzh.common.json.JSONObject;
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
@@ -21,6 +25,7 @@ import cn.oyzh.store.jdbc.JdbcDialect;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +42,7 @@ public class ZKStoreUtil {
         try {
             JdbcConst.dbCacheSize(1024);
             JdbcConst.dbDialect(JdbcDialect.H2);
-            JdbcConst.dbFile( ZKConst.STORE_PATH + "db");
+            JdbcConst.dbFile(ZKConst.STORE_PATH + "db");
         } catch (Exception ex) {
             ex.printStackTrace();
             // 提示
@@ -180,5 +185,32 @@ public class ZKStoreUtil {
             // 退出程序
             ThreadUtil.start(() -> System.exit(-1), 3000);
         }
+    }
+
+    public static List<ZKGroup> loadGroups() {
+        List<ZKGroup> groups = new ArrayList<>();
+        String storePath = SysConst.storeDir();
+        String file = storePath + File.separator + "zk_group.json";
+        String json = FileUtil.readUtf8String(file);
+        JSONArray array = JSONUtil.parseArray(json);
+        if (array == null) {
+            JulLog.warn("未找到分组数据");
+        } else {
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                ZKGroup group = new ZKGroup();
+                if (obj.containsKey("gid")) {
+                    group.setGid(obj.getString("gid"));
+                }
+                if (obj.containsKey("name")) {
+                    group.setName(obj.getString("name"));
+                }
+                if (obj.containsKey("expand")) {
+                    group.setExpand(obj.getBooleanValue("Expand"));
+                }
+                groups.add(group);
+            }
+        }
+        return groups;
     }
 }

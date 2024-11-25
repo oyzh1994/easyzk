@@ -1,5 +1,8 @@
 package cn.oyzh.easyzk.controller.data;
 
+import cn.oyzh.common.thread.DownLatch;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.fx.ZKInfoComboBox;
@@ -7,31 +10,26 @@ import cn.oyzh.easyzk.handler.ZKDataTransportHandler;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
-import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.label.FlexLabel;
+import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
-import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-
-import java.util.concurrent.CountDownLatch;
 
 
 /**
@@ -348,7 +346,7 @@ public class ZKDataTransportController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("base.title.transport");
+        return I18nHelper.transportTitle();
     }
 
     @Override
@@ -391,7 +389,8 @@ public class ZKDataTransportController extends StageController {
             this.getStage().disable();
 
             if (this.sourceClient == null || this.sourceClient.isClosed()) {
-                CountDownLatch latch = new CountDownLatch(1);
+                DownLatch latch = DownLatch.of();
+                sourceInfo.setConnectTimeOut(3);
                 ThreadUtil.start(() -> {
                     try {
                         this.sourceClient = ZKClientUtil.newClient(sourceInfo);
@@ -399,9 +398,8 @@ public class ZKDataTransportController extends StageController {
                     } finally {
                         latch.countDown();
                     }
-                }, 500);
-                ThreadUtil.await(latch);
-                if (!this.sourceClient.isConnected()) {
+                }, 100);
+                if (!latch.await(3000) || !this.sourceClient.isConnected()) {
                     this.sourceClient.close();
                     this.sourceClient = null;
                     this.sourceInfo.requestFocus();
@@ -411,7 +409,8 @@ public class ZKDataTransportController extends StageController {
             }
 
             if (this.targetClient == null || this.targetClient.isClosed()) {
-                CountDownLatch latch = new CountDownLatch(1);
+                DownLatch latch = DownLatch.of();
+                targetInfo.setConnectTimeOut(3);
                 ThreadUtil.start(() -> {
                     try {
                         this.targetClient = ZKClientUtil.newClient(targetInfo);
@@ -420,8 +419,7 @@ public class ZKDataTransportController extends StageController {
                         latch.countDown();
                     }
                 }, 100);
-                ThreadUtil.await(latch);
-                if (!this.targetClient.isConnected()) {
+                if (!latch.await(3000) || !this.targetClient.isConnected()) {
                     this.targetClient.close();
                     this.targetClient = null;
                     this.targetInfo.requestFocus();

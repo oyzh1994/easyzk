@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.gui.button.MigrationButton?>
+<?import cn.oyzh.fx.gui.button.NextStepButton?>
+<?import cn.oyzh.fx.gui.button.PrevStepButton?>
+<?import cn.oyzh.fx.gui.svg.glyph.MigrationSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
+<?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.data.ZKDataMigrationController" realWidth="800" realHeight="600">
+    <FlexHBox flexWidth="100%" realHeight="100">
+        <FlexHBox flexHeight="100%" flexWidth="100%">
+            <MigrationSVGGlyph sizeStr="40,40" color="yellowgreen">
+                <HBox.margin>
+                    <Insets left="10" top="20"/>
+                </HBox.margin>
+            </MigrationSVGGlyph>
+            <FXText realHeight="25" text="迁移数据" fontSize="15">
+                <HBox.margin>
+                    <Insets left="15" top="28"/>
+                </HBox.margin>
+            </FXText>
+        </FlexHBox>
+    </FlexHBox>
+    <FlexVBox fx:id="step1" flexHeight="100% - 100" flexWidth="100%">
+        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+            <FlexLabel text="%base.data" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="25"/>
+                </VBox.margin>
+            </FlexLabel>
+            <FXCheckBox fx:id="groups" text="%base.groups" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXCheckBox>
+            <FXCheckBox fx:id="connections" text="%base.connections" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXCheckBox>
+            <FlexLabel text="%base.setting" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="25"/>
+                </VBox.margin>
+            </FlexLabel>
+            <FXCheckBox fx:id="applicationSetting" text="%base.applicationSetting" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXCheckBox>
+            <FXCheckBox fx:id="filters" text="%base.filters" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXCheckBox>
+            <FXCheckBox fx:id="authInfos" text="%base.authInfo" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXCheckBox>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <NextStepButton onAction="#showStep2" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </NextStepButton>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%">
+        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+            <FlexLabel text="数据处理方式" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="25"/>
+                </VBox.margin>
+            </FlexLabel>
+            <fx:define>
+                <FXToggleGroup fx:id="dataPolicy"/>
+            </fx:define>
+            <FXRadioButton userData="1" toggleGroup="$dataPolicy" text="%base.merge">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton userData="2" toggleGroup="$dataPolicy" text="%base.cover" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <PrevStepButton onAction="#showStep1" groupId="exec" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </PrevStepButton>
+            <NextStepButton onAction="#showStep3" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </NextStepButton>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
+        <FlexVBox flexWidth="100%" flexHeight="100% - 60">
+            <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="migrationMsg" flexWidth="100% - 60" flexHeight="100% - 30">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </MsgTextArea>
+            <FXLabel fx:id="migrationStatus" realHeight="30">
+                <VBox.margin>
+                    <Insets left="30"/>
+                </VBox.margin>
+            </FXLabel>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </PrevStepButton>
+            <MigrationButton tipText="%base.start" groupId="exec" onAction="#doMigration" realHeight="30">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </MigrationButton>
+        </FlexHBox>
+    </FlexVBox>
+</FlexVBox>

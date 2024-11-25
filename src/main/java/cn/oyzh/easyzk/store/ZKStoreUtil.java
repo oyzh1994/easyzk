@@ -221,7 +221,7 @@ public class ZKStoreUtil {
         String json = FileUtil.readUtf8String(file);
         JSONArray array = JSONUtil.parseArray(json);
         if (array == null) {
-            JulLog.warn("未找到分组数据");
+            JulLog.warn("未找到连接数据");
         } else {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject obj = array.getJSONObject(i);
@@ -287,5 +287,35 @@ public class ZKStoreUtil {
             }
         }
         return connects;
+    }
+
+    public static List<ZKFilter> loadFilters() {
+        List<ZKFilter> filters = new ArrayList<>();
+        String storePath = SysConst.storeDir();
+        String file = storePath + File.separator + "zk_filter.json";
+        String json = FileUtil.readUtf8String(file);
+        JSONArray array = JSONUtil.parseArray(json);
+        if (array == null) {
+            JulLog.warn("未找到过滤数据");
+        } else {
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                ZKFilter filter = new ZKFilter();
+                if (obj.containsKey("kw")) {
+                    filter.setKw(obj.getString("kw"));
+                }
+                if (obj.containsKey("uid")) {
+                    filter.setUid(obj.getString("uid"));
+                }
+                if (obj.containsKey("enable")) {
+                    filter.setEnable(obj.getBooleanValue("enable"));
+                }
+                if (obj.containsKey("partMatch")) {
+                    filter.setPartMatch(obj.getBooleanValue("partMatch"));
+                }
+                filters.add(filter);
+            }
+        }
+        return filters;
     }
 }

@@ -48,6 +48,11 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXCheckBox>
+            <FXCheckBox fx:id="terminalHistory" text="%base.terminalHistory" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXCheckBox>
             <FlexLabel text="%base.setting" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
                     <Insets left="30" top="25"/>
@@ -87,7 +92,7 @@
             <fx:define>
                 <FXToggleGroup fx:id="dataPolicy"/>
             </fx:define>
-            <FXRadioButton userData="1" toggleGroup="$dataPolicy" text="%base.skip">
+            <FXRadioButton userData="1" toggleGroup="$dataPolicy" text="%base.merge">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>

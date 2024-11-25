@@ -10,7 +10,7 @@ import cn.oyzh.fx.terminal.histroy.TerminalHistoryStore;
  * @author oyzh
  * @since 2023/7/21
  */
-//@Slf4j
+@Deprecated
 public class ZKTerminalHistoryStore extends TerminalHistoryStore {
 
     /**

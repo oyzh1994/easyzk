@@ -18,6 +18,7 @@ import cn.oyzh.easyzk.domain.ZKPageInfo;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.domain.ZKSearchHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.jdbc.JdbcConst;
@@ -347,6 +348,33 @@ public class ZKStoreUtil {
             }
         }
         return auths;
+    }
+
+    public static List<ZKTerminalHistory> loadTerminalHistory() {
+        List<ZKTerminalHistory> histories = new ArrayList<>();
+        String storePath = SysConst.storeDir();
+        String file = storePath + File.separator + "zk_shell_history.json";
+        String json = FileUtil.readUtf8String(file);
+        JSONArray array = JSONUtil.parseArray(json);
+        if (array == null) {
+            JulLog.warn("未找到终端历史数据");
+        } else {
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                ZKTerminalHistory history = new ZKTerminalHistory();
+                if (obj.containsKey("tid")) {
+                    history.setTid(obj.getString("tid"));
+                }
+                if (obj.containsKey("line")) {
+                    history.setLine(obj.getString("line"));
+                }
+                if (obj.containsKey("saveTime")) {
+                    history.setSaveTime(obj.getLongValue("saveTime"));
+                }
+                histories.add(history);
+            }
+        }
+        return histories;
     }
 
     public static ZKSetting loadSetting() {

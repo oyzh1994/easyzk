@@ -96,6 +96,12 @@ public class ZKDataMigrationController extends StageController {
     private FXCheckBox connections;
 
     /**
+     * 终端历史
+     */
+    @FXML
+    private FXCheckBox terminalHistory;
+
+    /**
      * 应用配置
      */
     @FXML
@@ -157,6 +163,8 @@ public class ZKDataMigrationController extends StageController {
         this.dataMigrationHandler.authInfos(this.authInfos.isSelected());
         // 连接
         this.dataMigrationHandler.connections(this.connections.isSelected());
+        // 终端历史
+        this.dataMigrationHandler.terminalHistory(this.terminalHistory.isSelected());
         // 应用配置
         this.dataMigrationHandler.applicationSetting(this.applicationSetting.isSelected());
         // 开始处理

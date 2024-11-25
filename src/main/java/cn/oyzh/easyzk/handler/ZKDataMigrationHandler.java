@@ -1,7 +1,9 @@
 package cn.oyzh.easyzk.handler;
 
 import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.store.ZKGroupStore2;
+import cn.oyzh.easyzk.store.ZKInfoStore2;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.store.jdbc.DeleteParam;
 import lombok.Setter;
@@ -43,6 +45,7 @@ public class ZKDataMigrationHandler extends DataHandler {
     @Accessors(chain = false, fluent = true)
     private String dataPolicy;
 
+    private ZKInfoStore2 infoStore = new ZKInfoStore2();
 
     private ZKGroupStore2 groupStore = new ZKGroupStore2();
 
@@ -51,18 +54,32 @@ public class ZKDataMigrationHandler extends DataHandler {
      */
     public void doMigration() {
         this.message("正在执行迁移");
-        this.message("正在寻找分组");
 
+        this.message("正在迁移分组...");
         List<ZKGroup> groups = ZKStoreUtil.loadGroups();
         this.message("已找到分组:" + groups.size());
-        this.message("正在迁移分组...");
+        // 清空分组
         if ("2".equals(this.dataPolicy)) {
             this.groupStore.delete((DeleteParam) null);
+            this.message("旧分组数据已清空...");
         }
         for (ZKGroup group : groups) {
             this.groupStore.replace(group);
         }
         this.message("迁移分组成功...");
+
+        this.message("正在迁移连接...");
+        List<ZKInfo> connects = ZKStoreUtil.loadConnects();
+        this.message("已找到连接:" + connects.size());
+        // 清空分组
+        if ("2".equals(this.dataPolicy)) {
+            this.infoStore.delete((DeleteParam) null);
+            this.message("旧连接数据已清空...");
+        }
+        for (ZKInfo connect : connects) {
+            this.infoStore.replace(connect);
+        }
+        this.message("迁移连接成功...");
     }
 }
 

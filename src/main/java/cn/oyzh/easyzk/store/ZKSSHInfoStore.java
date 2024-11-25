@@ -4,9 +4,6 @@ import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.store.jdbc.JdbcStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author oyzh
  * @since 2024/09/26
@@ -26,9 +23,10 @@ public class ZKSSHInfoStore extends JdbcStore<ZKSSHConnect> {
     }
 
     public boolean replace(ZKSSHConnect model) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("iid", model.getIid());
-        super.delete(params);
+        String iid = model.getIid();
+        if (super.exist(iid)) {
+            super.update(model);
+        }
         return this.insert(model);
     }
 

@@ -21,7 +21,7 @@
         <FlexHBox flexHeight="100%" flexWidth="100%">
             <MigrationSVGGlyph sizeStr="40,40" color="yellowgreen">
                 <HBox.margin>
-                    <Insets left="10" top="20"/>
+                    <Insets left="30" top="20"/>
                 </HBox.margin>
             </MigrationSVGGlyph>
             <FXText realHeight="25" text="迁移数据" fontSize="15">
@@ -87,7 +87,7 @@
             <fx:define>
                 <FXToggleGroup fx:id="dataPolicy"/>
             </fx:define>
-            <FXRadioButton userData="1" toggleGroup="$dataPolicy" text="%base.merge">
+            <FXRadioButton userData="1" toggleGroup="$dataPolicy" text="%base.skip">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>

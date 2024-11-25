@@ -213,4 +213,79 @@ public class ZKStoreUtil {
         }
         return groups;
     }
+
+    public static List<ZKInfo> loadConnects() {
+        List<ZKInfo> connects = new ArrayList<>();
+        String storePath = SysConst.storeDir();
+        String file = storePath + File.separator + "zk_info.json";
+        String json = FileUtil.readUtf8String(file);
+        JSONArray array = JSONUtil.parseArray(json);
+        if (array == null) {
+            JulLog.warn("未找到分组数据");
+        } else {
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                ZKInfo connect = new ZKInfo();
+
+                if (obj.containsKey("id")) {
+                    connect.setId(obj.getString("id"));
+                }
+                if (obj.containsKey("name")) {
+                    connect.setName(obj.getString("name"));
+                }
+                if (obj.containsKey("host")) {
+                    connect.setHost(obj.getString("host"));
+                }
+                if (obj.containsKey("listen")) {
+                    connect.setListen(obj.getBooleanValue("listen"));
+                }
+                if (obj.containsKey("sshForward")) {
+                    connect.setSshForward(obj.getBooleanValue("sshForward"));
+                }
+                if (obj.containsKey("collects")) {
+                    connect.setCollects(obj.getBeanList("collects", String.class));
+                }
+                if (obj.containsKey("remark")) {
+                    connect.setRemark(obj.getString("remark"));
+                }
+                if (obj.containsKey("groupId")) {
+                    connect.setGroupId(obj.getString("groupId"));
+                }
+                if (obj.containsKey("readonly")) {
+                    connect.setReadonly(obj.getBooleanValue("readonly"));
+                }
+                if (obj.containsKey("compatibility")) {
+                    connect.setCompatibility(obj.getIntValue("compatibility"));
+                }
+                if (obj.containsKey("sessionTimeOut")) {
+                    connect.setSessionTimeOut(obj.getIntValue("sessionTimeOut"));
+                }
+                if (obj.containsKey("connectTimeOut")) {
+                    connect.setConnectTimeOut(obj.getIntValue("connectTimeOut"));
+                }
+                if (obj.containsKey("sshInfo")) {
+                    JSONObject object = obj.getJSONObject("sshInfo");
+                    ZKSSHConnect sshConnect = new ZKSSHConnect();
+                    if(object.containsKey("port")){
+                        sshConnect.setPort(object.getInt("port"));
+                    }
+                    if(object.containsKey("host")){
+                        sshConnect.setHost(object.getString("host"));
+                    }
+                    if(object.containsKey("user")){
+                        sshConnect.setUser(object.getString("user"));
+                    }
+                    if(object.containsKey("timeout")){
+                        sshConnect.setTimeout(object.getInt("timeout"));
+                    }
+                    if(object.containsKey("password")){
+                        sshConnect.setPassword(object.getString("password"));
+                    }
+                    connect.setSshConnect(sshConnect);
+                }
+                connects.add(connect);
+            }
+        }
+        return connects;
+    }
 }

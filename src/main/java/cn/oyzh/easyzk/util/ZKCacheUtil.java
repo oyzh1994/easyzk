@@ -21,46 +21,6 @@ public class ZKCacheUtil {
     }
 
     /**
-     * 缓存节点数据
-     *
-     * @param hashCode hash码
-     * @param path     路径
-     * @param data     数据
-     * @return 缓存结果
-     */
-    public static boolean cacheData(int hashCode, String path, byte[] data) {
-        try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".data";
-            FileUtil.writeBytes(data, fileName);
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * 加载节点数据
-     *
-     * @param hashCode hash码
-     * @param path     路径
-     * @return 节点数据
-     */
-    public static byte[] loadData(int hashCode, String path) {
-        try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".data";
-            if (FileUtil.exist(fileName)) {
-                return FileUtil.readBytes(fileName);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
      * 缓存未保存数据
      *
      * @param hashCode hash码
@@ -86,7 +46,7 @@ public class ZKCacheUtil {
      *
      * @param hashCode hash码
      * @param path     路径
-     * @return 节点数据
+     * @return 未保存数据
      */
     public static byte[] loadUnsavedData(int hashCode, String path) {
         try {
@@ -139,6 +99,96 @@ public class ZKCacheUtil {
         try {
             String baseDir = baseDir(hashCode, path);
             String fileName = baseDir + ".unsaved";
+            File file = new File(fileName);
+            if (file.exists()) {
+                return file.length();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+
+
+    /**
+     * 缓存节点数据
+     *
+     * @param hashCode hash码
+     * @param path     路径
+     * @param data     数据
+     * @return 缓存结果
+     */
+    public static boolean cacheNodeData(int hashCode, String path, byte[] data) {
+        try {
+            String baseDir = baseDir(hashCode, path);
+            String fileName = baseDir + ".data";
+            FileUtil.touch(fileName);
+            FileUtil.writeBytes(data, fileName);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 加载节点数据
+     *
+     * @param hashCode hash码
+     * @param path     路径
+     * @return 节点数据
+     */
+    public static byte[] loadNodeData(int hashCode, String path) {
+        try {
+            String baseDir = baseDir(hashCode, path);
+            String fileName = baseDir + ".data";
+            if (FileUtil.exist(fileName)) {
+                return FileUtil.readBytes(fileName);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 删除节点数据
+     *
+     * @param hashCode hash码
+     * @param path     路径
+     */
+    public static void deleteNodeData(int hashCode, String path) {
+        try {
+            String baseDir = baseDir(hashCode, path);
+            String fileName = baseDir + ".unsaved";
+            FileUtil.del(fileName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 是否有节点数据
+     *
+     * @param hashCode hash码
+     * @param path     路径
+     * @return 结果
+     */
+    public static boolean hasNodeData(int hashCode, String path) {
+        return getUnsavedDataSize(hashCode, path) > 0;
+    }
+
+    /**
+     * 获取节点数据长度
+     *
+     * @param hashCode hash码
+     * @param path     路径
+     * @return 节点数据长度
+     */
+    public static long getNodeDataSize(int hashCode, String path) {
+        try {
+            String baseDir = baseDir(hashCode, path);
+            String fileName = baseDir + ".data";
             File file = new File(fileName);
             if (file.exists()) {
                 return file.length();

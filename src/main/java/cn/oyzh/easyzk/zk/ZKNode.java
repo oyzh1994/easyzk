@@ -88,12 +88,25 @@ public class ZKNode implements Comparable<ZKNode> {
     @Setter
     private String nodePath;
 
-    /**
-     * 节点数据
-     */
-    @Getter
-    @Setter
-    private byte[] nodeData;
+    public void setNodeData(byte[] nodeData) {
+        ZKCacheUtil.cacheNodeData(this.hashCode(), this.nodePath(), nodeData);
+    }
+
+    public byte[] getNodeData() {
+        return ZKCacheUtil.loadNodeData(this.hashCode(), this.nodePath());
+    }
+
+    public boolean hasNodeData() {
+        return ZKCacheUtil.hasNodeData(this.hashCode(), this.nodePath());
+    }
+
+    public long getNodeDataSize() {
+        return ZKCacheUtil.getNodeDataSize(this.hashCode(), this.nodePath());
+    }
+
+    public void clearNodeData() {
+        ZKCacheUtil.deleteNodeData(this.hashCode(), this.nodePath());
+    }
 
     public void setUnsavedData(byte[] unsavedData) {
         ZKCacheUtil.cacheUnsavedData(this.hashCode(), this.nodePath(), unsavedData);
@@ -104,11 +117,11 @@ public class ZKNode implements Comparable<ZKNode> {
     }
 
     public boolean hasUnsavedData() {
-       return ZKCacheUtil.hasUnsavedData(this.hashCode(), this.nodePath());
+        return ZKCacheUtil.hasUnsavedData(this.hashCode(), this.nodePath());
     }
 
     public long getUnsavedDataSize() {
-       return ZKCacheUtil.getUnsavedDataSize(this.hashCode(), this.nodePath());
+        return ZKCacheUtil.getUnsavedDataSize(this.hashCode(), this.nodePath());
     }
 
     public void clearUnsavedData() {
@@ -132,7 +145,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @return 节点值字符串
      */
     public String nodeDataStr(Charset charset) {
-        byte[] bytes = this.nodeData();
+        byte[] bytes = this.getNodeData();
         if (bytes == null) {
             return null;
         }
@@ -155,7 +168,7 @@ public class ZKNode implements Comparable<ZKNode> {
         this.acl = node.acl;
         this.stat = node.stat;
         this.nodePath = node.nodePath;
-        this.nodeData = node.nodeData;
+        this.setNodeData(node.getNodeData());
         return this;
     }
 

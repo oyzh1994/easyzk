@@ -213,7 +213,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 数据
      */
     public byte[] nodeData() {
-        return this.value.nodeData();
+        return this.value.getNodeData();
     }
 
     /**
@@ -670,7 +670,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             if (stat != null) {
                 // 更新数据
                 this.value.stat(stat);
-                this.value.nodeData(data);
+                this.value.setNodeData(data);
                 this.saveHistory();
                 this.clear();
                 return true;

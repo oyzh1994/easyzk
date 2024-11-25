@@ -80,6 +80,8 @@ public class ZKNodeUtil {
         long start = System.currentTimeMillis();
         // zk节点
         ZKNode node = new ZKNode();
+        // 设置节点路径
+        node.nodePath(path);
         // 异常
         AtomicReference<Exception> exceptionReference = new AtomicReference<>();
         // 设置zk状态
@@ -103,7 +105,7 @@ public class ZKNodeUtil {
         // 设置zk数据
         if (properties.contains("d")) {
             try {
-                node.nodeData(client.getData(path));
+                node.setNodeData(client.getData(path));
             } catch (KeeperException.NoAuthException ignored) {
             } catch (Exception ex) {
                 exceptionReference.set(ex);
@@ -117,8 +119,6 @@ public class ZKNodeUtil {
         long end = System.currentTimeMillis();
         long loadTime = end - start;
         node.loadTime((short) loadTime);
-        // 设置节点路径
-        node.nodePath(path);
         // 返回节点
         return node;
     }
@@ -131,7 +131,7 @@ public class ZKNodeUtil {
      */
     public void refreshData(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
         long start = System.currentTimeMillis();
-        node.nodeData(client.getData(node.nodePath()));
+        node.setNodeData(client.getData(node.nodePath()));
         long end = System.currentTimeMillis();
         long loadTime = end - start;
         node.loadTime((short) loadTime);

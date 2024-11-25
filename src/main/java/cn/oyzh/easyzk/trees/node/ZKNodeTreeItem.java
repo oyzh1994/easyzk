@@ -1046,16 +1046,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         ZKEventUtil.dataHistoryAdded(history, this);
     }
 
-    @Override
-    public void destroy() {
-        this.value.clearUnsavedData();
-        if (!this.isRoot()) {
-            this.bitValue = null;
-            this.value = null;
-            super.destroy();
-        }
-    }
-
     public Integer getNumChildren() {
         return this.value.getNumChildren();
     }
@@ -1085,5 +1075,16 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     public byte[] unsavedData() {
         return this.value.getUnsavedData();
+    }
+
+    @Override
+    public void destroy() {
+        this.value.clearNodeData();
+        this.value.clearUnsavedData();
+        if (!this.isRoot()) {
+            this.value = null;
+            this.bitValue = null;
+            super.destroy();
+        }
     }
 }

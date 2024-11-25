@@ -24,8 +24,8 @@ package org.apache.zookeeper;
 public class StatsTrack {
     private int count;
     private long bytes;
-    private String countStr = "count";
-    private String byteStr = "bytes";
+    private static final String countStr = "count";
+    private static final String byteStr = "bytes";
 
     /**
      * a default constructor for

@@ -29,16 +29,18 @@ public class ZKCacheUtil {
      * @return 缓存结果
      */
     public static boolean cacheUnsavedData(int hashCode, String path, byte[] data) {
-        try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".unsaved";
-            FileUtil.touch(fileName);
-            FileUtil.writeBytes(data, fileName);
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (data != null) {
+            try {
+                String baseDir = baseDir(hashCode, path);
+                String fileName = baseDir + ".unsaved";
+                FileUtil.touch(fileName);
+                FileUtil.writeBytes(data, fileName);
+                return true;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
-        return false;
+        return deleteUnsavedData(hashCode, path);
     }
 
     /**
@@ -67,14 +69,16 @@ public class ZKCacheUtil {
      * @param hashCode hash码
      * @param path     路径
      */
-    public static void deleteUnsavedData(int hashCode, String path) {
+    public static boolean deleteUnsavedData(int hashCode, String path) {
         try {
             String baseDir = baseDir(hashCode, path);
             String fileName = baseDir + ".unsaved";
             FileUtil.del(fileName);
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 
     /**
@@ -119,16 +123,19 @@ public class ZKCacheUtil {
      * @return 缓存结果
      */
     public static boolean cacheNodeData(int hashCode, String path, byte[] data) {
-        try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".data";
-            FileUtil.touch(fileName);
-            FileUtil.writeBytes(data, fileName);
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (data != null) {
+            try {
+                String baseDir = baseDir(hashCode, path);
+                String fileName = baseDir + ".data";
+                FileUtil.touch(fileName);
+                FileUtil.writeBytes(data, fileName);
+                return true;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return false;
         }
-        return false;
+        return deleteNodeData(hashCode, path);
     }
 
     /**
@@ -157,14 +164,16 @@ public class ZKCacheUtil {
      * @param hashCode hash码
      * @param path     路径
      */
-    public static void deleteNodeData(int hashCode, String path) {
+    public static boolean deleteNodeData(int hashCode, String path) {
         try {
             String baseDir = baseDir(hashCode, path);
             String fileName = baseDir + ".unsaved";
             FileUtil.del(fileName);
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 
     /**

@@ -6,7 +6,7 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.controller.SettingController;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
-import cn.oyzh.easyzk.store.ZKSettingStore2;
+import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.event.EventFactory;
 import cn.oyzh.fx.gui.tray.DesktopTrayItem;
@@ -65,13 +65,13 @@ public class EasyZKApp extends FXApplication {
             // 禁用fx的css日志
             FXUtil.disableCSSLogger();
             // 应用区域
-            I18nManager.apply(ZKSettingStore2.SETTING.getLocale());
+            I18nManager.apply(ZKSettingJdbcStore.SETTING.getLocale());
             // 应用字体
-            FontManager.apply(ZKSettingStore2.SETTING.fontConfig());
+            FontManager.apply(ZKSettingJdbcStore.SETTING.fontConfig());
             // 应用主题
-            ThemeManager.apply(ZKSettingStore2.SETTING.themeConfig());
+            ThemeManager.apply(ZKSettingJdbcStore.SETTING.themeConfig());
             // 应用透明度
-            OpacityManager.apply(ZKSettingStore2.SETTING.getOpacity());
+            OpacityManager.apply(ZKSettingJdbcStore.SETTING.getOpacity());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             super.init();

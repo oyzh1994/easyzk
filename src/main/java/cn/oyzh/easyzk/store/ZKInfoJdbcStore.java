@@ -24,7 +24,7 @@ public class ZKInfoJdbcStore extends JdbcStore<ZKInfo> {
         List<ZKInfo> list = super.selectList();
         // 处理ssh
         for (ZKInfo info : list) {
-            info.setSshConnect(ZKSSHInfoStore.INSTANCE.find(info.getId()));
+            info.setSshConnect(ZKSSHInfoJdbcStore.INSTANCE.find(info.getId()));
         }
         return list;
     }
@@ -40,11 +40,11 @@ public class ZKInfoJdbcStore extends JdbcStore<ZKInfo> {
             // ssh处理
             ZKSSHConnect connect = info.getSshConnect();
             if (info.getSshConnect() != null) {
-                ZKSSHInfoStore.INSTANCE.replace(connect);
+                ZKSSHInfoJdbcStore.INSTANCE.replace(connect);
             } else {
                 DeleteParam param = new DeleteParam();
                 param.addQueryParam(new QueryParam("iid", info.getId()));
-                ZKSSHInfoStore.INSTANCE.delete(connect);
+                ZKSSHInfoJdbcStore.INSTANCE.delete(connect);
             }
 
             // 收藏处理

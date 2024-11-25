@@ -12,7 +12,7 @@ import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
 import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
-import cn.oyzh.easyzk.store.ZKSettingStore2;
+import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ThreadUtil;
@@ -288,7 +288,7 @@ public class ZKClient {
                 // 更新连接状态
                 this.state.set(ZKConnState.CONNECTED);
                 // 设置认证信息为已认证
-                if (ZKSettingStore2.SETTING.isAutoAuth()) {
+                if (ZKSettingJdbcStore.SETTING.isAutoAuth()) {
                     ZKAuthUtil.setAuthed(this, ZKAuthUtil.loadEnableAuths());
                 }
             } else {// 连接未成功则关闭
@@ -327,7 +327,7 @@ public class ZKClient {
         // 认证信息列表
         List<AuthInfo> authInfos = List.of();
         // 开启自动认证
-        if (ZKSettingStore2.SETTING.isAutoAuth()) {
+        if (ZKSettingJdbcStore.SETTING.isAutoAuth()) {
             // 加载已启用的认证
             authInfos = ZKAuthUtil.toAuthInfo(ZKAuthUtil.loadEnableAuths());
             JulLog.info("auto authorization, auths: {}.", authInfos);

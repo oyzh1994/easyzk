@@ -62,9 +62,9 @@ public class ZKStoreUtil {
                 // 读取配置
                 ZKSetting setting = ZKSettingStore.INSTANCE.load();
                 // 复制配置
-                ZKSettingStore2.SETTING.copy(setting);
+                ZKSettingJdbcStore.SETTING.copy(setting);
                 // 执行迁移
-                ZKSettingStore2.INSTANCE.replace(setting);
+                ZKSettingJdbcStore.INSTANCE.replace(setting);
                 // 转移旧文件
                 FileUtil.move(new File(ZKSettingStore.INSTANCE.filePath()), new File(ZKSettingStore.INSTANCE.filePath() + ".bak"), true);
                 JulLog.info("配置数据迁移成功");
@@ -77,7 +77,7 @@ public class ZKStoreUtil {
                 // 读取配置
                 ZKPageInfo pageInfo = ZKPageInfoStore.INSTANCE.load();
                 // 设置配置
-                ZKSetting setting = ZKSettingStore2.SETTING;
+                ZKSetting setting = ZKSettingJdbcStore.SETTING;
                 setting.setPageWidth(pageInfo.getWidth());
                 setting.setPageHeight(pageInfo.getHeight());
                 setting.setPageScreenX(pageInfo.getScreenX());
@@ -85,7 +85,7 @@ public class ZKStoreUtil {
                 setting.setPageMaximized(pageInfo.isMaximized());
                 setting.setPageLeftWidth(pageInfo.getMainLeftWidth());
                 // 执行迁移
-                ZKSettingStore2.INSTANCE.replace(setting);
+                ZKSettingJdbcStore.INSTANCE.replace(setting);
                 // 转移旧文件
                 FileUtil.move(new File(ZKPageInfoStore.INSTANCE.filePath()), new File(ZKPageInfoStore.INSTANCE.filePath() + ".bak"), true);
                 JulLog.info("页面数据迁移成功");
@@ -171,7 +171,7 @@ public class ZKStoreUtil {
                         ZKSSHConnect sshInfo = info.getSshConnect();
                         if (sshInfo != null) {
                             sshInfo.setIid(info.getId());
-                            ZKSSHInfoStore.INSTANCE.replace(sshInfo);
+                            ZKSSHInfoJdbcStore.INSTANCE.replace(sshInfo);
                         }
                     }
                 }

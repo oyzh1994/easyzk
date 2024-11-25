@@ -8,12 +8,12 @@ import cn.oyzh.store.jdbc.JdbcStore;
  * @author oyzh
  * @since 2024/09/23
  */
-public class ZKSettingStore2 extends JdbcStore<ZKSetting> {
+public class ZKSettingJdbcStore extends JdbcStore<ZKSetting> {
 
     /**
      * 当前实例
      */
-    public static final ZKSettingStore2 INSTANCE = new ZKSettingStore2();
+    public static final ZKSettingJdbcStore INSTANCE = new ZKSettingJdbcStore();
 
     /**
      * 当前设置

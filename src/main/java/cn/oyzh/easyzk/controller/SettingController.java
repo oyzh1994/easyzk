@@ -4,7 +4,7 @@ package cn.oyzh.easyzk.controller;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.store.ZKSettingStore2;
+import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.FlexSlider;
@@ -204,12 +204,12 @@ public class SettingController extends StageController {
     /**
      * 配置对象
      */
-    private final ZKSetting setting = ZKSettingStore2.SETTING;
+    private final ZKSetting setting = ZKSettingJdbcStore.SETTING;
 
     /**
      * 配置持久化对象
      */
-    private final ZKSettingStore2 settingStore = ZKSettingStore2.INSTANCE;
+    private final ZKSettingJdbcStore settingStore = ZKSettingJdbcStore.INSTANCE;
 
     @Override
     public void onWindowShowing(WindowEvent event) {

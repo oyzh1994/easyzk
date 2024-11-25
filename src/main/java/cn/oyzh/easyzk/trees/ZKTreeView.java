@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.event.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
-import cn.oyzh.easyzk.store.ZKSettingStore2;
+import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
@@ -45,7 +45,7 @@ public class ZKTreeView extends RichTreeView implements FXEventListener {
     /**
      * 配置储存对象
      */
-    private final ZKSetting setting = ZKSettingStore2.SETTING;
+    private final ZKSetting setting = ZKSettingJdbcStore.SETTING;
 
     public ZKTreeView() {
         this.dragContent = "zk_tree_drag";

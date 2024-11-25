@@ -8,12 +8,12 @@ import cn.oyzh.store.jdbc.QueryParam;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKSSHInfoStore extends JdbcStore<ZKSSHConnect> {
+public class ZKSSHInfoJdbcStore extends JdbcStore<ZKSSHConnect> {
 
     /**
      * 当前实例
      */
-    public static final ZKSSHInfoStore INSTANCE = new ZKSSHInfoStore();
+    public static final ZKSSHInfoJdbcStore INSTANCE = new ZKSSHInfoJdbcStore();
 
     public ZKSSHConnect find(String iid) {
         QueryParam param = new QueryParam();

@@ -15,7 +15,7 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKCollectJdbcStore;
 import cn.oyzh.easyzk.store.ZKDataHistoryJdbcStore;
-import cn.oyzh.easyzk.store.ZKSettingStore2;
+import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -1064,7 +1064,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void loadRoot() {
         if (this.isRoot()) {
-            ZKSetting setting = ZKSettingStore2.SETTING;
+            ZKSetting setting = ZKSettingJdbcStore.SETTING;
             if (setting.isLoadFirst()) {
                 this.loadChildSync();
             } else if (setting.isLoadAll()) {

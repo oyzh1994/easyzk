@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.terminal;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.dto.ZKConnect;
+import cn.oyzh.easyzk.dto.ZKConnectInfo;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
@@ -44,7 +44,7 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
     /**
      * zk连接
      */
-    private ZKConnect connect;
+    private ZKConnectInfo connect;
 
     /**
      * 客户端连接状态监听器

@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.util;
 
 import cn.oyzh.easyzk.domain.ZKInfo;
-import cn.oyzh.easyzk.dto.ZKConnect;
+import cn.oyzh.easyzk.dto.ZKConnectInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.i18n.I18nHelper;
@@ -82,11 +82,11 @@ public class ZKConnectUtil {
      * @param input 输入内容
      * @return 连接
      */
-    public static ZKConnect parse(String input) {
+    public static ZKConnectInfo parse(String input) {
         if (input != null) {
             try {
                 String[] words = input.split(" ");
-                ZKConnect connect = new ZKConnect();
+                ZKConnectInfo connect = new ZKConnectInfo();
                 connect.setInput(input);
                 for (int i = 0; i < words.length; i++) {
                     String word = words[i];
@@ -128,7 +128,7 @@ public class ZKConnectUtil {
      * @param connect 连接对象
      * @param info    zk对象
      */
-    public static void copyConnect(ZKConnect connect, ZKInfo info) {
+    public static void copyConnect(ZKConnectInfo connect, ZKInfo info) {
         if (connect != null && info != null) {
             info.setReadonly(connect.isReadonly());
             info.setConnectTimeOut(connect.getTimeout());

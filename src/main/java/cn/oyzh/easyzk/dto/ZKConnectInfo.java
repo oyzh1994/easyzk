@@ -10,7 +10,7 @@ import lombok.Setter;
  * @since 2023/9/20
  */
 @Getter
-public class ZKConnect {
+public class ZKConnectInfo {
 
     /**
      * 原始输入内容

@@ -203,11 +203,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         this.setValue(new ZKNodeTreeItemValue(this));
     }
 
-    @Override
-    public void doFilter(RichTreeItemFilter itemFilter) {
-        super.doFilter(itemFilter);
-    }
-
     /**
      * 获取节点路径
      *

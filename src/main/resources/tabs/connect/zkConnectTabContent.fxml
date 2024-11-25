@@ -282,8 +282,8 @@
                 </FlexHBox>
                 <ZKACLTableView fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 32">
                     <columns>
-                        <FlexTableColumn flexWidth="44%" fx:id="aclId" text="%base.identify" sortable="false"/>
-                        <FlexTableColumn flexWidth="32%" fx:id="aclPerms" text="%base.perms" sortable="false"/>
+                        <FlexTableColumn flexWidth="40%" fx:id="aclId" text="%base.identify" sortable="false"/>
+                        <FlexTableColumn flexWidth="36%" fx:id="aclPerms" text="%base.perms" sortable="false"/>
                         <FlexTableColumn flexWidth="12%" fx:id="aclSchema" text="%base.schema" sortable="false"/>
                         <FlexTableColumn flexWidth="12% - 6" fx:id="aclStatus" text="%base.status"
                                          sortable="false"/>

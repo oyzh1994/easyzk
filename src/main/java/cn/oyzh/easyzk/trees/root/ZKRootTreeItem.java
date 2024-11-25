@@ -4,8 +4,8 @@ import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.dto.ZKInfoExport;
-import cn.oyzh.easyzk.store.ZKGroupStore2;
-import cn.oyzh.easyzk.store.ZKInfoStore2;
+import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
+import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.ZKTreeView;
@@ -45,12 +45,12 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     /**
      * zk信息储存
      */
-    private final ZKInfoStore2 infoStore = ZKInfoStore2.INSTANCE;
+    private final ZKInfoJdbcStore infoStore = ZKInfoJdbcStore.INSTANCE;
 
     /**
      * zk分组储存
      */
-    private final ZKGroupStore2 groupStore = ZKGroupStore2.INSTANCE;
+    private final ZKGroupJdbcStore groupStore = ZKGroupJdbcStore.INSTANCE;
 
     public ZKRootTreeItem(@NonNull ZKTreeView treeView) {
         super(treeView);

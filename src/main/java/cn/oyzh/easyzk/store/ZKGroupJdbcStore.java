@@ -16,12 +16,12 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/5/12
  */
-public class ZKGroupStore2 extends JdbcStore<ZKGroup> {
+public class ZKGroupJdbcStore extends JdbcStore<ZKGroup> {
 
     /**
      * 当前实例
      */
-    public static final ZKGroupStore2 INSTANCE = new ZKGroupStore2();
+    public static final ZKGroupJdbcStore INSTANCE = new ZKGroupJdbcStore();
 
     public List<ZKGroup> load() {
         return super.selectList();

@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.dto.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
-import cn.oyzh.easyzk.store.ZKFilterStore2;
+import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.page.PageBox;
@@ -54,7 +54,7 @@ public class ZKFilterTabContent extends DynamicTabController {
     /**
      * zk过滤配置储存
      */
-    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
+    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
 
     /**
      * 初始化数据列表

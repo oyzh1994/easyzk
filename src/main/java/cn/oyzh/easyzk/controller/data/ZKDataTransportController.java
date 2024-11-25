@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.fx.ZKInfoComboBox;
 import cn.oyzh.easyzk.handler.ZKDataTransportHandler;
-import cn.oyzh.easyzk.store.ZKFilterStore2;
+import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
 import cn.oyzh.fx.plus.FXConst;
@@ -181,7 +181,7 @@ public class ZKDataTransportController extends StageController {
     /**
      * 过滤配置储存
      */
-    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
+    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
 
     /**
      * 执行传输

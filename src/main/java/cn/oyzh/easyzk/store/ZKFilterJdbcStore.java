@@ -17,12 +17,12 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class ZKFilterStore2 extends JdbcStore<ZKFilter> {
+public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
 
     /**
      * 当前实例
      */
-    public static final ZKFilterStore2 INSTANCE = new ZKFilterStore2();
+    public static final ZKFilterJdbcStore INSTANCE = new ZKFilterJdbcStore();
 
     public List<ZKFilter> load() {
         return super.selectList();

@@ -15,12 +15,12 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class ZKAuthStore2 extends JdbcStore<ZKAuth> {
+public class ZKAuthJdbcStore extends JdbcStore<ZKAuth> {
 
     /**
      * 当前实例
      */
-    public static final ZKAuthStore2 INSTANCE = new ZKAuthStore2();
+    public static final ZKAuthJdbcStore INSTANCE = new ZKAuthJdbcStore();
 
     public List<ZKAuth> load() {
         return super.selectList();

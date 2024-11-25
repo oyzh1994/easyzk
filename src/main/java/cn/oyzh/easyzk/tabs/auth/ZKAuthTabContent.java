@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.controller.auth.ZKAuthAddController;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKAuthVO;
 import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
-import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.page.PageBox;
@@ -54,7 +54,7 @@ public class ZKAuthTabContent extends DynamicTabController {
     /**
      * 认证信息储存
      */
-    private final ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
+    private final ZKAuthJdbcStore authStore = ZKAuthJdbcStore.INSTANCE;
 
     /**
      * 初始化数据列表

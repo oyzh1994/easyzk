@@ -13,12 +13,12 @@ import java.util.List;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKInfoStore2 extends JdbcStore<ZKInfo> {
+public class ZKInfoJdbcStore extends JdbcStore<ZKInfo> {
 
     /**
      * 当前实例
      */
-    public static final ZKInfoStore2 INSTANCE = new ZKInfoStore2();
+    public static final ZKInfoJdbcStore INSTANCE = new ZKInfoJdbcStore();
 
     public List<ZKInfo> load() {
         List<ZKInfo> list = super.selectList();
@@ -51,10 +51,10 @@ public class ZKInfoStore2 extends JdbcStore<ZKInfo> {
             List<String> collects = info.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
                 for (String collect : collects) {
-                    ZKCollectStore.INSTANCE.replace(info.getId(), collect);
+                    ZKCollectJdbcStore.INSTANCE.replace(info.getId(), collect);
                 }
             } else {
-                ZKCollectStore.INSTANCE.delete(info.getId());
+                ZKCollectJdbcStore.INSTANCE.delete(info.getId());
             }
         }
         return result;

@@ -99,7 +99,7 @@ public class ZKStoreUtil {
                 List<ZKGroup> groups = ZKGroupStore.INSTANCE.load();
                 // 执行迁移
                 for (ZKGroup group : groups) {
-                    ZKGroupStore2.INSTANCE.replace(group);
+                    ZKGroupJdbcStore.INSTANCE.replace(group);
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKGroupStore.INSTANCE.filePath()), new File(ZKGroupStore.INSTANCE.filePath() + ".bak"), true);
@@ -114,7 +114,7 @@ public class ZKStoreUtil {
                 List<ZKAuth> list = ZKAuthStore.INSTANCE.load();
                 // 执行迁移
                 for (ZKAuth auth : list) {
-                    ZKAuthStore2.INSTANCE.replace(auth);
+                    ZKAuthJdbcStore.INSTANCE.replace(auth);
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKAuthStore.INSTANCE.filePath()), new File(ZKAuthStore.INSTANCE.filePath() + ".bak"), true);
@@ -129,7 +129,7 @@ public class ZKStoreUtil {
                 List<ZKFilter> list = ZKFilterStore.INSTANCE.load();
                 // 执行迁移
                 for (ZKFilter filter : list) {
-                    ZKFilterStore2.INSTANCE.replace(filter);
+                    ZKFilterJdbcStore.INSTANCE.replace(filter);
                 }
                 // 转移旧文件
                 FileUtil.move(new File(ZKFilterStore.INSTANCE.filePath()), new File(ZKFilterStore.INSTANCE.filePath() + ".bak"), true);
@@ -159,12 +159,12 @@ public class ZKStoreUtil {
                 List<ZKInfo> list = ZKInfoStore.INSTANCE.load();
                 // 执行迁移
                 for (ZKInfo info : list) {
-                    boolean result = ZKInfoStore2.INSTANCE.replace(info);
+                    boolean result = ZKInfoJdbcStore.INSTANCE.replace(info);
                     if (result) {
                         // 处理收藏
                         if (CollectionUtil.isNotEmpty(info.getCollects())) {
                             for (String collect : info.getCollects()) {
-                                ZKCollectStore.INSTANCE.replace(new ZKCollect(info.getId(), collect));
+                                ZKCollectJdbcStore.INSTANCE.replace(new ZKCollect(info.getId(), collect));
                             }
                         }
                         // 处理ssh

@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.controller.auth;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -43,7 +43,7 @@ public class ZKAuthAddController extends StageController {
     /**
      * 认证储存
      */
-    private final ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
+    private final ZKAuthJdbcStore authStore = ZKAuthJdbcStore.INSTANCE;
 
     /**
      * 新增认证信息

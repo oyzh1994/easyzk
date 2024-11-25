@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKInfoStore2;
+import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
@@ -249,7 +249,7 @@ public class ZKInfoUpdateController extends StageController {
         this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
         this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
         // 保存数据
-        if (ZKInfoStore2.INSTANCE.replace(this.zkInfo)) {
+        if (ZKInfoJdbcStore.INSTANCE.replace(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
             MessageBox.okToast(I18nHelper.operationSuccess());
             this.closeWindow();

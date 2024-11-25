@@ -6,10 +6,10 @@ import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
-import cn.oyzh.easyzk.store.ZKAuthStore2;
-import cn.oyzh.easyzk.store.ZKFilterStore2;
-import cn.oyzh.easyzk.store.ZKGroupStore2;
-import cn.oyzh.easyzk.store.ZKInfoStore2;
+import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
+import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
+import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistoryJdbcStore;
@@ -58,13 +58,13 @@ public class ZKDataMigrationHandler extends DataHandler {
     @Accessors(chain = false, fluent = true)
     private String dataPolicy;
 
-    private ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
+    private ZKAuthJdbcStore authStore = ZKAuthJdbcStore.INSTANCE;
 
-    private ZKInfoStore2 infoStore = ZKInfoStore2.INSTANCE;
+    private ZKInfoJdbcStore infoStore = ZKInfoJdbcStore.INSTANCE;
 
-    private ZKGroupStore2 groupStore = ZKGroupStore2.INSTANCE;
+    private ZKGroupJdbcStore groupStore = ZKGroupJdbcStore.INSTANCE;
 
-    private ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
+    private ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
 
     private ZKSettingStore2 settingStore = ZKSettingStore2.INSTANCE;
 

@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKFilterStore2;
+import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.common.Index;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
@@ -61,7 +61,7 @@ public class ZKFilterVO extends ZKFilter implements Index {
     /**
      * 过滤储存
      */
-    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
+    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
 
     /**
      * 匹配模式控件

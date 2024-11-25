@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.controller.filter;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKFilterStore2;
+import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -51,7 +51,7 @@ public class ZKFilterAddController extends StageController {
     /**
      * zk过滤配置储存
      */
-    private final ZKFilterStore2 filterStore = ZKFilterStore2.INSTANCE;
+    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
 
     /**
      * 添加过滤配置

@@ -13,8 +13,8 @@ import cn.oyzh.easyzk.domain.ZKInfo;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKCollectStore;
-import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
+import cn.oyzh.easyzk.store.ZKCollectJdbcStore;
+import cn.oyzh.easyzk.store.ZKDataHistoryJdbcStore;
 import cn.oyzh.easyzk.store.ZKSettingStore2;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
@@ -828,21 +828,21 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 节点是否被收藏
      */
     public boolean isCollect() {
-        return ZKCollectStore.INSTANCE.exist(this.info().getId(), this.decodeNodePath());
+        return ZKCollectJdbcStore.INSTANCE.exist(this.info().getId(), this.decodeNodePath());
     }
 
     /**
      * 收藏节点
      */
     public void collect() {
-        ZKCollectStore.INSTANCE.replace(this.info().getId(), this.decodeNodePath());
+        ZKCollectJdbcStore.INSTANCE.replace(this.info().getId(), this.decodeNodePath());
     }
 
     /**
      * 取消收藏节点
      */
     public void unCollect() {
-        ZKCollectStore.INSTANCE.delete(this.info().getId(), this.decodeNodePath());
+        ZKCollectJdbcStore.INSTANCE.delete(this.info().getId(), this.decodeNodePath());
     }
 
     /**
@@ -1042,7 +1042,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         history.setData(this.unsavedData());
         history.setPath(this.nodePath());
         history.setInfoId(this.info().getId());
-        ZKDataHistoryStore2.INSTANCE.replace(history, this.client());
+        ZKDataHistoryJdbcStore.INSTANCE.replace(history, this.client());
         ZKEventUtil.dataHistoryAdded(history, this);
     }
 

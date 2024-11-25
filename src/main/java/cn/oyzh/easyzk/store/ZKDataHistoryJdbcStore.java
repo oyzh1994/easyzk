@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 //@Slf4j
-public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
+public class ZKDataHistoryJdbcStore extends JdbcStore<ZKDataHistory> {
 
     /**
      * 最大历史数量
@@ -39,7 +39,7 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
     /**
      * 当前实例
      */
-    public static final ZKDataHistoryStore2 INSTANCE = new ZKDataHistoryStore2();
+    public static final ZKDataHistoryJdbcStore INSTANCE = new ZKDataHistoryJdbcStore();
 
     /**
      * 服务端路径

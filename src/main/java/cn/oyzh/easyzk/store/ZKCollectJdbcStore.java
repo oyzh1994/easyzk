@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKCollectStore extends JdbcStore<ZKCollect> {
+public class ZKCollectJdbcStore extends JdbcStore<ZKCollect> {
 
     /**
      * 当前实例
      */
-    public static final ZKCollectStore INSTANCE = new ZKCollectStore();
+    public static final ZKCollectJdbcStore INSTANCE = new ZKCollectJdbcStore();
 
     public List<String> list(String iid) {
         QueryParam param = new QueryParam();

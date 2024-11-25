@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKHistoryAddedEvent;
 import cn.oyzh.easyzk.event.ZKHistoryShowEvent;
 import cn.oyzh.easyzk.event.ZKNodeSelectedEvent;
-import cn.oyzh.easyzk.store.ZKDataHistoryStore2;
+import cn.oyzh.easyzk.store.ZKDataHistoryJdbcStore;
 import cn.oyzh.easyzk.tabs.connect.ZKConnectTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.event.EventSubscribe;
@@ -60,7 +60,7 @@ public class HistoryController extends SubStageController implements Initializab
     /**
      * 存储对象
      */
-    private final ZKDataHistoryStore2 historyStore = ZKDataHistoryStore2.INSTANCE;
+    private final ZKDataHistoryJdbcStore historyStore = ZKDataHistoryJdbcStore.INSTANCE;
 
     private ZKNodeTreeItem item() {
         return this.itemReference == null ? null : this.itemReference.get();

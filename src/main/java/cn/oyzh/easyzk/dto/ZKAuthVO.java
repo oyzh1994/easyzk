@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKAuthStore2;
+import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
 import cn.oyzh.common.Index;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -63,7 +63,7 @@ public class ZKAuthVO extends ZKAuth implements Index {
     /**
      * 认证储存
      */
-    private final ZKAuthStore2 authStore = ZKAuthStore2.INSTANCE;
+    private final ZKAuthJdbcStore authStore = ZKAuthJdbcStore.INSTANCE;
 
     /**
      * 状态控件

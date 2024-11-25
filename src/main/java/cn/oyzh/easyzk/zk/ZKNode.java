@@ -1,12 +1,13 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.easyzk.util.ZKACLUtil;
-import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
+import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.util.ZKACLUtil;
+import cn.oyzh.easyzk.util.ZKCacheUtil;
+import cn.oyzh.easyzk.util.ZKNodeUtil;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -88,11 +89,31 @@ public class ZKNode implements Comparable<ZKNode> {
     private String nodePath;
 
     /**
-     * 节点数据属性
+     * 节点数据
      */
     @Getter
     @Setter
     private byte[] nodeData;
+
+    public void setUnsavedData(byte[] unsavedData) {
+        ZKCacheUtil.cacheUnsavedData(this.hashCode(), this.nodePath(), unsavedData);
+    }
+
+    public byte[] getUnsavedData() {
+        return ZKCacheUtil.loadUnsavedData(this.hashCode(), this.nodePath());
+    }
+
+    public boolean hasUnsavedData() {
+       return ZKCacheUtil.hasUnsavedData(this.hashCode(), this.nodePath());
+    }
+
+    public long getUnsavedDataSize() {
+       return ZKCacheUtil.getUnsavedDataSize(this.hashCode(), this.nodePath());
+    }
+
+    public void clearUnsavedData() {
+        ZKCacheUtil.deleteUnsavedData(this.hashCode(), this.nodePath());
+    }
 
     /**
      * 节点值字符串

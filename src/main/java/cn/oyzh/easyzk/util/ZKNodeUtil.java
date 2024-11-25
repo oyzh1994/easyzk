@@ -36,11 +36,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ZKNodeUtil {
 
     /**
-     * 数据缓存阈值
-     */
-    public static int Data_Cache_Threshold = 10_000;
-
-    /**
      * 权限属性
      */
     public static final String ACL_PROPERTIES = "a";
@@ -260,65 +255,6 @@ public class ZKNodeUtil {
             return "";
         }
         return "/".equals(path) ? "/" : ArrayUtil.last(path.split("/"));
-    }
-
-    /**
-     * 缓存节点数据
-     *
-     * @param host 地址
-     * @param path 路径
-     * @param data 数据
-     * @return 缓存结果
-     */
-    public static boolean cacheData(@NonNull String host, @NonNull String path, byte[] data) {
-        try {
-            if (data == null || data.length < Data_Cache_Threshold) {
-                return false;
-            }
-            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + MD5Util.md5Hex(host) + File.separator;
-            String fileName = baseDir + MD5Util.md5Hex(path);
-            FileUtil.writeBytes(data, fileName);
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * 加载节点数据
-     *
-     * @param host 地址
-     * @param path 路径
-     * @return 节点数据
-     */
-    public static byte[] loadData(String host, String path) {
-        try {
-            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + MD5Util.md5Hex(host) + File.separator;
-            String fileName = baseDir + MD5Util.md5Hex(path);
-            if (FileUtil.exist(fileName)) {
-                return FileUtil.readBytes(fileName);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 删除节点缓存
-     *
-     * @param host 地址
-     * @param path 路径
-     */
-    public static void deleteData(String host, String path) {
-        try {
-            String baseDir = ZKConst.NODE_DATA_CACHE_PATH + MD5Util.md5Hex(host) + File.separator;
-            String fileName = baseDir + MD5Util.md5Hex(path);
-            FileUtil.del(fileName);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     /**

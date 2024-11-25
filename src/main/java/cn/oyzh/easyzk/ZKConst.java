@@ -30,9 +30,9 @@ public class ZKConst {
     public static final String CACHE_PATH = STORE_PATH + "cache" + File.separator;
 
     /**
-     * 节点数据缓存路径
+     * 节点缓存路径
      */
-    public static final String NODE_DATA_CACHE_PATH = STORE_PATH + "node_data_cache" + File.separator;
+    public static final String NODE_CACHE_PATH = CACHE_PATH + "node_cache" + File.separator;
 
     /**
      * icon地址

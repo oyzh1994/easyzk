@@ -32,7 +32,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
@@ -209,14 +208,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     }
 
     /**
-     * 数据属性
-     */
-    @Getter
-    @Setter
-    @Accessors(fluent = true, chain = true)
-    private byte[] unsavedData;
-
-    /**
      * 获取数据
      *
      * @return 数据
@@ -231,7 +222,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @param data 数据
      */
     public void nodeData(byte[] data) {
-        this.unsavedData = data;
+        this.value.setUnsavedData(data);
         this.refresh();
     }
 
@@ -239,7 +230,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 清理
      */
     public void clear() {
-        this.unsavedData = null;
+        this.value.clearUnsavedData();
     }
 
     /**
@@ -248,7 +239,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 结果
      */
     public boolean isDataUnsaved() {
-        return this.unsavedData != null;
+        return this.value.hasUnsavedData();
     }
 
     public ZKNodeTreeItem(@NonNull ZKNode value, ZKNodeTreeView treeView) {
@@ -673,7 +664,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public boolean saveData() {
         try {
             // 当前数据
-            byte[] data = this.unsavedData;
+            byte[] data = this.unsavedData();
             // 更新数据
             Stat stat = this.client().setData(this.nodePath(), data);
             if (stat != null) {
@@ -861,7 +852,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public boolean isDataTooLong() {
         if (this.isDataUnsaved()) {
-            return this.unsavedData.length > 1024 * 1024;
+            return this.value.getUnsavedDataSize() > 1024 * 1024;
         }
         return this.nodeData().length > 1024 * 1024;
     }
@@ -1048,7 +1039,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     private void saveHistory() {
         ZKDataHistory history = new ZKDataHistory();
-        history.setData(this.unsavedData);
+        history.setData(this.unsavedData());
         history.setPath(this.nodePath());
         history.setInfoId(this.info().getId());
         ZKDataHistoryStore2.INSTANCE.replace(history, this.client());
@@ -1057,10 +1048,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public void destroy() {
+        this.value.clearUnsavedData();
         if (!this.isRoot()) {
-            this.value = null;
             this.bitValue = null;
-            this.unsavedData = null;
+            this.value = null;
             super.destroy();
         }
     }
@@ -1090,5 +1081,9 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 this.loadChildAllSync();
             }
         }
+    }
+
+    public byte[] unsavedData() {
+        return this.value.getUnsavedData();
     }
 }

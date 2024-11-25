@@ -6,8 +6,6 @@ import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author oyzh
@@ -21,8 +19,6 @@ public class ZKTerminalHistory extends TerminalHistory {
     /**
      * 数据id
      */
-    @Getter
-    @Setter
     @Column
     @PrimaryKey
     private String tid;

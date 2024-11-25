@@ -34,7 +34,7 @@ public class ZKDataHistoryStore2 extends JdbcStore<ZKDataHistory> {
     /**
      * 最大历史数量
      */
-    public static int His_Max_Size = 5;
+    public static int His_Max_Size = 50;
 
     /**
      * 当前实例

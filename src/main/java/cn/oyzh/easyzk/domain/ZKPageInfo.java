@@ -8,6 +8,7 @@ import cn.oyzh.fx.plus.domain.PageInfo;
  * @author oyzh
  * @since 2023/1/17
  */
+@Deprecated
 public class ZKPageInfo extends PageInfo {
 
 }

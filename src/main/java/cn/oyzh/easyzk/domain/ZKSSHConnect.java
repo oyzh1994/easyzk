@@ -20,8 +20,10 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class ZKSSHConnect extends SSHConnect implements Serializable {
 
-    @Getter
-    @Setter
+    /**
+     * 连接id
+     * @see ZKInfo
+     */
     @Column
     @PrimaryKey
     private String iid;

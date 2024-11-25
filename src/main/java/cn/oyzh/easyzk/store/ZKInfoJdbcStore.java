@@ -22,7 +22,7 @@ public class ZKInfoJdbcStore extends JdbcStore<ZKInfo> {
 
     public List<ZKInfo> load() {
         List<ZKInfo> list = super.selectList();
-        // 处理ssh
+        // 处理ssh信息
         for (ZKInfo info : list) {
             info.setSshConnect(ZKSSHInfoJdbcStore.INSTANCE.find(info.getId()));
         }
@@ -37,7 +37,8 @@ public class ZKInfoJdbcStore extends JdbcStore<ZKInfo> {
             } else {
                 result = this.insert(info);
             }
-            // ssh处理
+
+            // ssh信息处理
             ZKSSHConnect connect = info.getSshConnect();
             if (info.getSshConnect() != null) {
                 ZKSSHInfoJdbcStore.INSTANCE.replace(connect);

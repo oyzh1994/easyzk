@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 public class ZKNodeAddedEvent extends Event<String> implements EventFormatter {
 
-    private ZKInfo info;
+    private ZKConnect info;
 
     @Override
     public String eventFormat() {

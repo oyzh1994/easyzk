@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.fx;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
@@ -13,19 +13,19 @@ import java.util.List;
  * @author oyzh
  * @since 2023/04/08
  */
-public class ZKInfoComboBox extends FlexComboBox<ZKInfo> {
+public class ZKInfoComboBox extends FlexComboBox<ZKConnect> {
 
     {
         this.setConverter(new SimpleStringConverter<>() {
             @Override
-            public String toString(ZKInfo o) {
+            public String toString(ZKConnect o) {
                 if (o == null) {
                     return "";
                 }
                 return o.getName();
             }
         });
-        List<ZKInfo> infos = ZKInfoJdbcStore.INSTANCE.load();
+        List<ZKConnect> infos = ZKInfoJdbcStore.INSTANCE.load();
         this.setItem(infos);
     }
 }

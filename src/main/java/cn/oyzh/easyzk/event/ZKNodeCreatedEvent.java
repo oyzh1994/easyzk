@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class ZKNodeCreatedEvent extends Event<String> {
 
     private ZKClient client;
 
-    public ZKInfo info(){
+    public ZKConnect info(){
         return this.client.zkInfo();
     }
 

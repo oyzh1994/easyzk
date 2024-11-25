@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.util;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKConnectInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.common.thread.ThreadUtil;
@@ -24,7 +24,7 @@ public class ZKConnectUtil {
      * @param view 页面
      * @param info zk信息
      */
-    public static void testConnect(StageAdapter view, ZKInfo info) {
+    public static void testConnect(StageAdapter view, ZKConnect info) {
         ThreadUtil.startVirtual(() -> {
             try {
                 view.disable();
@@ -128,7 +128,7 @@ public class ZKConnectUtil {
      * @param connect 连接对象
      * @param info    zk对象
      */
-    public static void copyConnect(ZKConnectInfo connect, ZKInfo info) {
+    public static void copyConnect(ZKConnectInfo connect, ZKConnect info) {
         if (connect != null && info != null) {
             info.setReadonly(connect.isReadonly());
             info.setConnectTimeOut(connect.getTimeout());

@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
@@ -17,7 +17,7 @@ public class ZKConnectionClosedEvent extends Event<ZKClient> implements EventFor
         return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().infoName());
     }
 
-    public ZKInfo info() {
+    public ZKConnect info() {
         return this.data().zkInfo();
     }
 }

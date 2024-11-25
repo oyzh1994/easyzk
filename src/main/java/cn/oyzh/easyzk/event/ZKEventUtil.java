@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -74,7 +74,7 @@ public class ZKEventUtil {
      * @param info zk客户端
      * @param path 路径
      */
-    public static void nodeAdded(ZKInfo info, String path) {
+    public static void nodeAdded(ZKConnect info, String path) {
         ZKNodeAddedEvent event = new ZKNodeAddedEvent();
         event.data(path);
         event.info(info);
@@ -172,7 +172,7 @@ public class ZKEventUtil {
      *
      * @param info zk信息
      */
-    public static void infoAdded(ZKInfo info) {
+    public static void infoAdded(ZKConnect info) {
         ZKInfoAddedEvent event = new ZKInfoAddedEvent();
         event.data(info);
         EventUtil.post(event);
@@ -183,7 +183,7 @@ public class ZKEventUtil {
      *
      * @param info zk信息
      */
-    public static void infoUpdated(ZKInfo info) {
+    public static void infoUpdated(ZKConnect info) {
         ZKInfoUpdatedEvent event = new ZKInfoUpdatedEvent();
         event.data(info);
         EventUtil.post(event);
@@ -194,7 +194,7 @@ public class ZKEventUtil {
      *
      * @param info zk信息
      */
-    public static void infoDeleted(ZKInfo info) {
+    public static void infoDeleted(ZKConnect info) {
         ZKInfoDeletedEvent event = new ZKInfoDeletedEvent();
         event.data(info);
         EventUtil.post(event);
@@ -253,7 +253,7 @@ public class ZKEventUtil {
      *
      * @param info zk信息
      */
-    public static void terminalOpen(ZKInfo info) {
+    public static void terminalOpen(ZKConnect info) {
         ZKTerminalOpenEvent event = new ZKTerminalOpenEvent();
         event.data(info);
         EventUtil.post(event);
@@ -264,7 +264,7 @@ public class ZKEventUtil {
      *
      * @param info zk信息
      */
-    public static void terminalClose(ZKInfo info) {
+    public static void terminalClose(ZKConnect info) {
         ZKTerminalCloseEvent event = new ZKTerminalCloseEvent();
         event.data(info);
         EventUtil.post(event);
@@ -437,13 +437,13 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    public static void nodeACLAdded(ZKInfo info) {
+    public static void nodeACLAdded(ZKConnect info) {
         ZKNodeACLAddedEvent event = new ZKNodeACLAddedEvent();
         event.data(info);
         EventUtil.post(event);
     }
 
-    public static void nodeACLUpdated(ZKInfo info) {
+    public static void nodeACLUpdated(ZKConnect info) {
         ZKNodeACLUpdatedEvent event = new ZKNodeACLUpdatedEvent();
         event.data(info);
         EventUtil.post(event);

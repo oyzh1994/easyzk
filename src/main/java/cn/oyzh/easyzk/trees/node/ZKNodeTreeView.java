@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.TreeChildFilterEvent;
 import cn.oyzh.easyzk.trees.ZKTreeCell;
 import cn.oyzh.easyzk.util.ZKACLUtil;
@@ -38,7 +38,7 @@ public class ZKNodeTreeView extends RichTreeView {
     @Accessors(fluent = true)
     private ZKClient client;
 
-    public ZKInfo info() {
+    public ZKConnect info() {
         return this.client.zkInfo();
     }
 

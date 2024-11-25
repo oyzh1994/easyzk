@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.terminal;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
@@ -15,7 +15,7 @@ import javafx.scene.Cursor;
  */
 public class ZKTerminalTab extends DynamicTab {
 
-    public ZKTerminalTab(ZKInfo zkInfo) {
+    public ZKTerminalTab(ZKConnect zkInfo) {
         this.init(zkInfo);
     }
 
@@ -34,10 +34,10 @@ public class ZKTerminalTab extends DynamicTab {
      *
      * @param info zk信息
      */
-    public void init(ZKInfo info) {
+    public void init(ZKConnect info) {
         try {
             if (info == null) {
-                info = new ZKInfo();
+                info = new ZKConnect();
                 info.setName(I18nHelper.unnamedConnection());
             }
             // 刷新图标
@@ -65,7 +65,7 @@ public class ZKTerminalTab extends DynamicTab {
      *
      * @return zk信息
      */
-    public ZKInfo info() {
+    public ZKConnect info() {
         return this.controller().info();
     }
 

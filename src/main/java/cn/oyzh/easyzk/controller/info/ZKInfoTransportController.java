@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.controller.info;
 
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.fx.ZKInfoComboBox;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
@@ -100,7 +100,7 @@ public class ZKInfoTransportController extends StageController {
     /**
      * 来源信息
      */
-    private ZKInfo formInfo;
+    private ZKConnect formInfo;
 
     /**
      * 传输字符集
@@ -164,8 +164,8 @@ public class ZKInfoTransportController extends StageController {
             MessageBox.tipMsg(I18nHelper.chooseTargetConnection(), this.targetConnect);
             return;
         }
-        ZKInfo formInfo = this.formConnect.getValue();
-        ZKInfo targetInfo = this.targetConnect.getValue();
+        ZKConnect formInfo = this.formConnect.getValue();
+        ZKConnect targetInfo = this.targetConnect.getValue();
         if (formInfo == targetInfo) {
             MessageBox.tipMsg(I18nHelper.invalidOperation(), this.formConnect);
             return;

@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.controller.info;
 
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
@@ -210,7 +210,7 @@ public class ZKInfoAddController extends StageController {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
             // 创建zk信息
-            ZKInfo zkInfo = new ZKInfo();
+            ZKConnect zkInfo = new ZKConnect();
             zkInfo.setHost(host);
             zkInfo.setConnectTimeOut(3);
             zkInfo.setSshForward(this.sshForward.isSelected());
@@ -236,7 +236,7 @@ public class ZKInfoAddController extends StageController {
         }
         try {
             String name = this.name.getTextTrim();
-            ZKInfo zkInfo = new ZKInfo();
+            ZKConnect zkInfo = new ZKConnect();
             zkInfo.setName(name);
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number sessionTimeOut = this.sessionTimeOut.getValue();

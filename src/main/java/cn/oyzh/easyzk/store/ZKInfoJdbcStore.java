@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStore;
@@ -13,23 +13,23 @@ import java.util.List;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKInfoJdbcStore extends JdbcStore<ZKInfo> {
+public class ZKInfoJdbcStore extends JdbcStore<ZKConnect> {
 
     /**
      * 当前实例
      */
     public static final ZKInfoJdbcStore INSTANCE = new ZKInfoJdbcStore();
 
-    public List<ZKInfo> load() {
-        List<ZKInfo> list = super.selectList();
+    public List<ZKConnect> load() {
+        List<ZKConnect> list = super.selectList();
         // 处理ssh信息
-        for (ZKInfo info : list) {
+        for (ZKConnect info : list) {
             info.setSshConnect(ZKSSHInfoJdbcStore.INSTANCE.find(info.getId()));
         }
         return list;
     }
 
-    public boolean replace(ZKInfo info) {
+    public boolean replace(ZKConnect info) {
         boolean result = false;
         if (info != null) {
             if (super.exist(info.getId())) {
@@ -62,12 +62,12 @@ public class ZKInfoJdbcStore extends JdbcStore<ZKInfo> {
     }
 
     @Override
-    protected ZKInfo newModel() {
-        return new ZKInfo();
+    protected ZKConnect newModel() {
+        return new ZKConnect();
     }
 
     @Override
-    protected Class<ZKInfo> modelClass() {
-        return ZKInfo.class;
+    protected Class<ZKConnect> modelClass() {
+        return ZKConnect.class;
     }
 }

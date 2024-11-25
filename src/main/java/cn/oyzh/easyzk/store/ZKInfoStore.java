@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 @Deprecated
 //@Slf4j
-public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
+public class ZKInfoStore extends ArrayFileStore<ZKConnect> {
 
     /**
      * 当前实例
@@ -35,7 +35,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     /**
      * 已加载的zk节点
      */
-    private List<ZKInfo> infos;
+    private List<ZKConnect> infos;
 
     // {
     //     this.filePath(ZKConst.STORE_PATH + "zk_info.json");
@@ -54,7 +54,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     }
 
     @Override
-    public synchronized List<ZKInfo> load() {
+    public synchronized List<ZKConnect> load() {
         // 如果zkInfos为空
         if (this.infos == null) {
             // 读取storeFile文件的内容
@@ -65,7 +65,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
                 return new ArrayList<>();
             }
             // 将文件内容解析为ZKInfo列表
-            List<ZKInfo> infos = JSONUtil.toBeanList(text, ZKInfo.class);
+            List<ZKConnect> infos = JSONUtil.toBeanList(text, ZKConnect.class);
             // 如果ZKInfo列表非空
             if (CollectionUtil.isNotEmpty(infos)) {
                 // 对ZKInfo列表进行排序
@@ -79,7 +79,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     }
 
     @Override
-    public synchronized boolean add(@NonNull ZKInfo zkInfo) {
+    public synchronized boolean add(@NonNull ZKConnect zkInfo) {
         try {
             if (!this.infos.contains(zkInfo)) {
                 if (StringUtil.isBlank(zkInfo.getId())) {
@@ -97,7 +97,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     }
 
     @Override
-    public synchronized boolean update(@NonNull ZKInfo zkInfo) {
+    public synchronized boolean update(@NonNull ZKConnect zkInfo) {
         try {
             // 更新数据
             if (this.infos.contains(zkInfo)) {
@@ -110,7 +110,7 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     }
 
     @Override
-    public synchronized boolean delete(@NonNull ZKInfo zkInfo) {
+    public synchronized boolean delete(@NonNull ZKConnect zkInfo) {
         try {
             // 删除数据
             if (this.infos.remove(zkInfo)) {
@@ -124,11 +124,11 @@ public class ZKInfoStore extends ArrayFileStore<ZKInfo> {
     }
 
     @Override
-    public synchronized Paging<ZKInfo> getPage(int limit, Map<String, Object> params) {
+    public synchronized Paging<ZKConnect> getPage(int limit, Map<String, Object> params) {
         // 加载数据
-        List<ZKInfo> infos = this.load();
+        List<ZKConnect> infos = this.load();
         // 分页对象
-        Paging<ZKInfo> paging = new Paging<>(infos, limit);
+        Paging<ZKConnect> paging = new Paging<>(infos, limit);
         // 数据为空
         if (CollectionUtil.isNotEmpty(infos)) {
             String searchKeyWord = params == null ? null : (String) params.get("searchKeyWord");

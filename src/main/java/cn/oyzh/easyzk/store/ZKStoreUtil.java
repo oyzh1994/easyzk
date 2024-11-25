@@ -11,7 +11,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
@@ -211,8 +211,8 @@ public class ZKStoreUtil {
         return groups;
     }
 
-    public static List<ZKInfo> loadConnects() {
-        List<ZKInfo> connects = new ArrayList<>();
+    public static List<ZKConnect> loadConnects() {
+        List<ZKConnect> connects = new ArrayList<>();
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "zk_info.json";
         String json = FileUtil.readUtf8String(file);
@@ -222,7 +222,7 @@ public class ZKStoreUtil {
         } else {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                ZKInfo connect = new ZKInfo();
+                ZKConnect connect = new ZKConnect();
 
                 if (obj.containsKey("id")) {
                     connect.setId(obj.getString("id"));

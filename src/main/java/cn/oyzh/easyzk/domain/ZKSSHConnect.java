@@ -6,8 +6,6 @@ import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -22,7 +20,7 @@ public class ZKSSHConnect extends SSHConnect implements Serializable {
 
     /**
      * 连接id
-     * @see ZKInfo
+     * @see ZKConnect
      */
     @Column
     @PrimaryKey

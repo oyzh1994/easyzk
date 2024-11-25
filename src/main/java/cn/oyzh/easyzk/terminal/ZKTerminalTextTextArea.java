@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.terminal;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKConnectInfo;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
@@ -269,7 +269,7 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
         }
     }
 
-    public ZKInfo info() {
+    public ZKConnect info() {
         return this.client().zkInfo();
     }
 }

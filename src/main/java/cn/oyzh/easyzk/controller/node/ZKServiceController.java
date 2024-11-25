@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.controller.node;
 
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.common.dto.Paging;
@@ -133,7 +133,7 @@ public class ZKServiceController extends StageController {
         this.clientAddr.setCellValueFactory(new PropertyValueFactory<>("clientAddr"));
         this.electionAddr.setCellValueFactory(new PropertyValueFactory<>("electionAddr"));
 
-        ZKInfo zkInfo = this.getWindowProp("zkInfo");
+        ZKConnect zkInfo = this.getWindowProp("zkInfo");
         this.zkInfoName.setText(zkInfo.getName());
         this.zkInfoHost.setText(zkInfo.getHost());
         this.sdkVersion.setText(Version.getFullVersion());

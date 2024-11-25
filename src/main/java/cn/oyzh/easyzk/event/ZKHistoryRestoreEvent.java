@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
@@ -25,7 +25,7 @@ public class ZKHistoryRestoreEvent extends Event<byte[]> implements EventFormatt
         return String.format("[%s] " + I18nResourceBundle.i18nString("base.data", "base.restored"), this.item.nodePath());
     }
 
-    public ZKInfo info(){
+    public ZKConnect info(){
         return item.info();
     }
 }

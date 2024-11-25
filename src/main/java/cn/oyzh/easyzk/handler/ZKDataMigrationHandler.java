@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.handler;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
 import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
@@ -93,12 +93,12 @@ public class ZKDataMigrationHandler extends DataHandler {
 
         if (this.connections) {
             this.message("正在迁移连接...");
-            List<ZKInfo> connects = ZKStoreUtil.loadConnects();
+            List<ZKConnect> connects = ZKStoreUtil.loadConnects();
             this.message("已找到连接:" + connects.size());
             if ("2".equals(this.dataPolicy)) {
                 this.infoStore.clear();
                 this.message("旧连接数据已清空...");
-                for (ZKInfo connect : connects) {
+                for (ZKConnect connect : connects) {
                     this.infoStore.replace(connect);
                 }
                 this.processedIncr(connects.size());

@@ -18,15 +18,15 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * zk信息
+ * zk连接
  *
  * @author oyzh
  * @since 2020/3/6
  */
 @Setter
 @ToString
-@Table("t_info")
-public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Serializable {
+@Table("t_connect")
+public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConnect>, Serializable {
 
     /**
      * 数据id
@@ -134,7 +134,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
      * @param zkInfo zk信息
      * @return 当前对象
      */
-    public ZKInfo copy(@NonNull ZKInfo zkInfo) {
+    public ZKConnect copy(@NonNull ZKConnect zkInfo) {
         this.name = zkInfo.name;
         this.host = zkInfo.host;
         this.remark = zkInfo.remark;
@@ -261,7 +261,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
     }
 
     @Override
-    public int compareTo(ZKInfo o) {
+    public int compareTo(ZKConnect o) {
         if (o == null) {
             return 1;
         }
@@ -306,7 +306,7 @@ public class ZKInfo implements Comparable<ZKInfo>, ObjectComparator<ZKInfo>, Ser
     }
 
     @Override
-    public boolean compare(ZKInfo t1) {
+    public boolean compare(ZKConnect t1) {
         if (t1 == null) {
             return false;
         }

@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -85,7 +85,7 @@ public class ZKClient {
      * zk信息
      */
     @Getter
-    private final ZKInfo zkInfo;
+    private final ZKConnect zkInfo;
 
     /**
      * 树监听对象
@@ -158,7 +158,7 @@ public class ZKClient {
         return this.state.getReadOnlyProperty();
     }
 
-    public ZKClient(@NonNull ZKInfo zkInfo) {
+    public ZKClient(@NonNull ZKConnect zkInfo) {
         this.zkInfo = zkInfo;
         if (zkInfo.isSSHForward()) {
             this.sshForwarder = new SSHForwarder(zkInfo.getSshConnect());

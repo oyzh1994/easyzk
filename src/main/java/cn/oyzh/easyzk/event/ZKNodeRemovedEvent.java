@@ -1,8 +1,7 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.event.Event;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +18,7 @@ public class ZKNodeRemovedEvent extends Event<String>   {
 
     private ZKClient client;
 
-    public ZKInfo info(){
+    public ZKConnect info(){
         return this.client.zkInfo();
     }
 }

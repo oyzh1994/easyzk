@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees.group;
 
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
@@ -158,7 +158,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     }
 
     @Override
-    public void addConnect(@NonNull ZKInfo zkInfo) {
+    public void addConnect(@NonNull ZKConnect zkInfo) {
         this.addConnectItem(new ZKConnectTreeItem(zkInfo, this.getTreeView()));
     }
 

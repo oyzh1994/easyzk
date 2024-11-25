@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.test;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.ssh.SSHForwardConfig;
@@ -27,7 +27,7 @@ public class SSHTest {
         SSHForwarder forwarder = new SSHForwarder(connectInfo);
         int localPort = forwarder.forward(forwardInfo);
 
-        ZKInfo info = new ZKInfo();
+        ZKConnect info = new ZKConnect();
         info.setHost("127.0.0.1:" + localPort);
         info.setConnectTimeOut(3000);
         ZKClient client = new ZKClient(info);

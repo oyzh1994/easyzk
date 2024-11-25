@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.connect;
 
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -104,7 +104,7 @@ public class ZKConnectTab extends DynamicTab {
      *
      * @return zk信息
      */
-    public ZKInfo info() {
+    public ZKConnect info() {
         return this.treeItem() == null ? null : this.treeItem().value();
     }
 

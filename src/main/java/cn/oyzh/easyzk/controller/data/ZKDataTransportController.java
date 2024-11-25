@@ -4,7 +4,7 @@ import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.fx.ZKInfoComboBox;
 import cn.oyzh.easyzk.handler.ZKDataTransportHandler;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
@@ -318,7 +318,7 @@ public class ZKDataTransportController extends StageController {
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
         // 来源连接不为null，则禁用来源选项
-        ZKInfo sourceInfo = this.stage.getProp("sourceInfo");
+        ZKConnect sourceInfo = this.stage.getProp("sourceInfo");
         if (sourceInfo != null) {
             this.sourceInfo.select(sourceInfo);
             this.sourceInfo.disable();
@@ -366,8 +366,8 @@ public class ZKDataTransportController extends StageController {
     @FXML
     private void showStep2() {
         try {
-            ZKInfo sourceInfo = this.sourceInfo.getSelectedItem();
-            ZKInfo targetInfo = this.targetInfo.getSelectedItem();
+            ZKConnect sourceInfo = this.sourceInfo.getSelectedItem();
+            ZKConnect targetInfo = this.targetInfo.getSelectedItem();
             if (sourceInfo == null) {
                 this.sourceInfo.requestFocus();
                 MessageBox.warn(I18nHelper.pleaseSelectSourceConnect());

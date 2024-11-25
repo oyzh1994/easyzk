@@ -1,11 +1,9 @@
 package cn.oyzh.easyzk.event;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
-import cn.oyzh.event.EventFormatter;
-import cn.oyzh.i18n.I18nHelper;
 
 /**
  * @author oyzh
@@ -17,7 +15,7 @@ public class ZKConnectOpenedEvent extends Event<ZKConnectTreeItem>  {
         return this.data().client();
     }
 
-    public ZKInfo info() {
+    public ZKConnect info() {
         return this.data().client().zkInfo();
     }
 }

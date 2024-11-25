@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.trees;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.common.util.CollectionUtil;
 import lombok.NonNull;
@@ -21,16 +21,16 @@ public interface ZKConnectManager {
      *
      * @param zkInfo 连接信息
      */
-    void addConnect(@NonNull ZKInfo zkInfo);
+    void addConnect(@NonNull ZKConnect zkInfo);
 
     /**
      * 删除多个连接
      *
      * @param zkInfos 连接列表
      */
-    default void addConnects(List<ZKInfo> zkInfos) {
+    default void addConnects(List<ZKConnect> zkInfos) {
         if (CollectionUtil.isNotEmpty(zkInfos)) {
-            for (ZKInfo zkInfo : zkInfos) {
+            for (ZKConnect zkInfo : zkInfos) {
                 this.addConnect(zkInfo);
             }
         }

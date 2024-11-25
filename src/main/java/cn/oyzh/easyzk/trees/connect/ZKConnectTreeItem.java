@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
 import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
 import cn.oyzh.easyzk.controller.node.ZKServiceController;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
@@ -51,7 +51,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private ZKInfo value;
+    private ZKConnect value;
 
     /**
      * zk客户端
@@ -65,7 +65,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      */
     private boolean canceled;
 
-    public ZKConnectTreeItem(@NonNull ZKInfo value, @NonNull RichTreeView treeView) {
+    public ZKConnectTreeItem(@NonNull ZKConnect value, @NonNull RichTreeView treeView) {
         super(treeView);
         this.value(value);
     }
@@ -253,7 +253,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 复制连接
      */
     private void repeatConnect() {
-        ZKInfo zkInfo = new ZKInfo();
+        ZKConnect zkInfo = new ZKConnect();
         zkInfo.copy(this.value);
         zkInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         zkInfo.setCollects(Collections.emptyList());
@@ -302,7 +302,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      *
      * @param value zk信息
      */
-    public void value(@NonNull ZKInfo value) {
+    public void value(@NonNull ZKConnect value) {
         this.value = value;
         this.client = new ZKClient(value);
         this.client.stateProperty().addListener((observable, o, n) -> {

@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.controller;
 import cn.oyzh.easyzk.controller.main.ConnectController;
 import cn.oyzh.easyzk.controller.main.HistoryController;
 import cn.oyzh.easyzk.controller.main.MessageController;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKTreeItemChangedEvent;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
@@ -40,20 +40,10 @@ public class ZKMainController extends ParentStageController {
     private final ZKSetting setting = ZKSettingJdbcStore.SETTING;
 
     /**
-     * 当前激活的zk信息
-     */
-    private ZKInfo info;
-
-    /**
      * 左侧组件
      */
     @FXML
     private FlexTabPane tabPaneLeft;
-
-    /**
-     * 大小调整增强
-     */
-    private NodeResizeHelper resizeHelper;
 
     /**
      * zk切换面板
@@ -82,15 +72,14 @@ public class ZKMainController extends ParentStageController {
     /**
      * 刷新窗口标题
      *
-     * @param info zk信息
+     * @param connect zk连接
      */
-    private void flushViewTitle(ZKInfo info) {
-        if (info != null) {
-            this.stage.appendTitle(" (" + info.getName() + ")");
+    private void flushViewTitle(ZKConnect connect) {
+        if (connect != null) {
+            this.stage.appendTitle(" (" + connect.getName() + ")");
         } else {
             this.stage.restoreTitle();
         }
-        this.info = info;
     }
 
     @Override
@@ -143,10 +132,10 @@ public class ZKMainController extends ParentStageController {
 
     @Override
     protected void bindListeners() {
-        // 拖动改变redis树大小处理
-        this.resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeLeft);
-        this.resizeHelper.widthLimit(240f, 650f);
-        this.resizeHelper.initResizeEvent();
+        // 大小调整增强
+        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeLeft);
+        resizeHelper.widthLimit(240f, 650f);
+        resizeHelper.initResizeEvent();
         // // 搜索触发事件
         // KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));
         // 刷新触发事件

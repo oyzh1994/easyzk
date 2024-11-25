@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKAuthMainEvent;
 import cn.oyzh.easyzk.event.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.ZKConnectionClosedEvent;
@@ -85,7 +85,7 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      *
      * @return 终端tab
      */
-    private ZKTerminalTab getTerminalTab(ZKInfo info) {
+    private ZKTerminalTab getTerminalTab(ZKConnect info) {
         if (info != null) {
             for (Tab tab : this.getTabs()) {
                 if (tab instanceof ZKTerminalTab terminalTab && terminalTab.info() == info) {
@@ -103,7 +103,7 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void terminalOpen(ZKTerminalOpenEvent event) {
-        ZKInfo info = event.data();
+        ZKConnect info = event.data();
         ZKTerminalTab terminalTab = this.getTerminalTab(info);
         if (terminalTab == null) {
             terminalTab = new ZKTerminalTab(info);
@@ -152,7 +152,7 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         }
     }
 
-    private ZKConnectTab getConnectTab(ZKInfo info) {
+    private ZKConnectTab getConnectTab(ZKConnect info) {
         for (Tab tab : this.getTabs()) {
             if (tab instanceof ZKConnectTab connectTab && connectTab.info() == info) {
                 return connectTab;

@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.trees.root;
 
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKInfoExport;
 import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
@@ -73,7 +73,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
             this.addChild(list);
         }
         // 初始化连接
-        List<ZKInfo> infos = this.infoStore.load();
+        List<ZKConnect> infos = this.infoStore.load();
         if (CollectionUtil.isNotEmpty(infos)) {
             this.addConnects(infos);
         }
@@ -100,7 +100,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      * 导出连接
      */
     private void exportConnect() {
-        List<ZKInfo> infos = this.infoStore.load();
+        List<ZKConnect> infos = this.infoStore.load();
         if (infos.isEmpty()) {
             MessageBox.warn(I18nHelper.connectionIsEmpty());
             return;
@@ -174,9 +174,9 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         try {
             String text = FileUtil.readUtf8String(file);
             ZKInfoExport export = ZKInfoExport.fromJSON(text);
-            List<ZKInfo> infos = export.getConnects();
+            List<ZKConnect> infos = export.getConnects();
             if (CollectionUtil.isNotEmpty(infos)) {
-                for (ZKInfo info : infos) {
+                for (ZKConnect info : infos) {
                     if (this.infoStore.replace(info)) {
                         this.addConnect(info);
                     } else {
@@ -264,7 +264,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      *
      * @param info 连接
      */
-    public void infoAdded(ZKInfo info) {
+    public void infoAdded(ZKConnect info) {
         this.addConnect(info);
     }
 
@@ -273,7 +273,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
      *
      * @param info 连接
      */
-    public void infoUpdated(ZKInfo info) {
+    public void infoUpdated(ZKConnect info) {
         f1:
         for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
@@ -293,7 +293,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
     }
 
     @Override
-    public void addConnect(@NonNull ZKInfo info) {
+    public void addConnect(@NonNull ZKConnect info) {
         ZKGroupTreeItem groupItem = this.getGroupItem(info.getGroupId());
         if (groupItem == null) {
             super.addChild(new ZKConnectTreeItem(info, this.getTreeView()));

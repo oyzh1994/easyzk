@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.terminal;
 
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -47,7 +47,7 @@ public class ZKTerminalTabContent extends DynamicTabController {
      *
      * @return zk信息
      */
-    public ZKInfo info() {
+    public ZKConnect info() {
         return this.terminal.info();
     }
 

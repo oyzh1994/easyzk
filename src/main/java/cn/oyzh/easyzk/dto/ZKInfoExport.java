@@ -1,11 +1,10 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.common.json.JSONObject;
-import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
-import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -36,7 +35,7 @@ public class ZKInfoExport {
      * 导出连接数据
      */
     @Getter
-    private List<ZKInfo> connects;
+    private List<ZKConnect> connects;
 
     /**
      * 从zk连接数据生成
@@ -44,7 +43,7 @@ public class ZKInfoExport {
      * @param zkInfos 连接列表
      * @return ZKInfoExport
      */
-    public static ZKInfoExport fromConnects(@NonNull List<ZKInfo> zkInfos) {
+    public static ZKInfoExport fromConnects(@NonNull List<ZKConnect> zkInfos) {
         ZKInfoExport export = new ZKInfoExport();
         Project project = Project.load();
         export.version = project.getVersion();
@@ -65,7 +64,7 @@ public class ZKInfoExport {
         ZKInfoExport export = new ZKInfoExport();
         export.connects = new ArrayList<>();
         export.version = object.getString("version");
-        export.connects = object.getBeanList("connects", ZKInfo.class);
+        export.connects = object.getBeanList("connects", ZKConnect.class);
 //        export.connects = JSONUtil.toBeanList(object.getJSONArray("connects"), ZKInfo.class);
         return export;
     }

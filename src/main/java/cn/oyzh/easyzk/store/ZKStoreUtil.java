@@ -266,19 +266,19 @@ public class ZKStoreUtil {
                 if (obj.containsKey("sshInfo")) {
                     JSONObject object = obj.getJSONObject("sshInfo");
                     ZKSSHConnect sshConnect = new ZKSSHConnect();
-                    if(object.containsKey("port")){
+                    if (object.containsKey("port")) {
                         sshConnect.setPort(object.getInt("port"));
                     }
-                    if(object.containsKey("host")){
+                    if (object.containsKey("host")) {
                         sshConnect.setHost(object.getString("host"));
                     }
-                    if(object.containsKey("user")){
+                    if (object.containsKey("user")) {
                         sshConnect.setUser(object.getString("user"));
                     }
-                    if(object.containsKey("timeout")){
+                    if (object.containsKey("timeout")) {
                         sshConnect.setTimeout(object.getInt("timeout"));
                     }
-                    if(object.containsKey("password")){
+                    if (object.containsKey("password")) {
                         sshConnect.setPassword(object.getString("password"));
                     }
                     connect.setSshConnect(sshConnect);
@@ -317,5 +317,35 @@ public class ZKStoreUtil {
             }
         }
         return filters;
+    }
+
+    public static List<ZKAuth> loadAuths() {
+        List<ZKAuth> auths = new ArrayList<>();
+        String storePath = SysConst.storeDir();
+        String file = storePath + File.separator + "zk_auth.json";
+        String json = FileUtil.readUtf8String(file);
+        JSONArray array = JSONUtil.parseArray(json);
+        if (array == null) {
+            JulLog.warn("未找到认证数据");
+        } else {
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                ZKAuth auth = new ZKAuth();
+                if (obj.containsKey("uid")) {
+                    auth.setUid(obj.getString("uid"));
+                }
+                if (obj.containsKey("user")) {
+                    auth.setUser(obj.getString("user"));
+                }
+                if (obj.containsKey("password")) {
+                    auth.setPassword(obj.getString("password"));
+                }
+                if (obj.containsKey("enable")) {
+                    auth.setEnable(obj.getBooleanValue("enable"));
+                }
+                auths.add(auth);
+            }
+        }
+        return auths;
     }
 }

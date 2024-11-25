@@ -1,8 +1,10 @@
 package cn.oyzh.easyzk.handler;
 
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKInfo;
+import cn.oyzh.easyzk.store.ZKAuthStore2;
 import cn.oyzh.easyzk.store.ZKFilterStore2;
 import cn.oyzh.easyzk.store.ZKGroupStore2;
 import cn.oyzh.easyzk.store.ZKInfoStore2;
@@ -46,6 +48,8 @@ public class ZKDataMigrationHandler extends DataHandler {
     @Setter
     @Accessors(chain = false, fluent = true)
     private String dataPolicy;
+
+    private ZKAuthStore2 authStore = new ZKAuthStore2();
 
     private ZKInfoStore2 infoStore = new ZKInfoStore2();
 
@@ -94,6 +98,18 @@ public class ZKDataMigrationHandler extends DataHandler {
             }
         }
         this.message("迁移过滤成功...");
+
+        this.message("正在迁移认证...");
+        List<ZKAuth> auths = ZKStoreUtil.loadAuths();
+        this.message("已找到认证:" + auths.size());
+        if ("2".equals(this.dataPolicy)) {
+            this.authStore.delete((DeleteParam) null);
+            this.message("旧认证数据已清空...");
+            for (ZKAuth auth : auths) {
+                this.authStore.replace(auth);
+            }
+        }
+        this.message("迁移认证成功...");
     }
 }
 

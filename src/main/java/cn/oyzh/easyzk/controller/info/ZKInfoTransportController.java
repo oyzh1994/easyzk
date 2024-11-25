@@ -173,7 +173,7 @@ public class ZKInfoTransportController extends StageController {
         // 开始传输
         this.transportStart();
         // 检查传输连接
-        if (this.formClient == null || !this.formClient.isConnected() || this.formClient.zkInfo() != formInfo) {
+        if (this.formClient == null || !this.formClient.isConnected() || this.formClient.connect() != formInfo) {
             try {
                 this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.transport", "base.connect", "base.initing") + "===");
                 if (this.formClient != null) {
@@ -193,7 +193,7 @@ public class ZKInfoTransportController extends StageController {
         }
 
         // 检查目标连接
-        if (this.targetClient == null || !this.targetClient.isConnected() || this.targetClient.zkInfo() != formInfo) {
+        if (this.targetClient == null || !this.targetClient.isConnected() || this.targetClient.connect() != formInfo) {
             try {
                 this.transportMsg.appendLine(I18nResourceBundle.i18nString("base.target", "base.connect", "base.initing") + "===");
                 if (this.targetClient != null) {

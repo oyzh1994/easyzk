@@ -85,7 +85,7 @@ public class ZKClient {
      * zk信息
      */
     @Getter
-    private final ZKConnect zkInfo;
+    private final ZKConnect connect;
 
     /**
      * 树监听对象
@@ -158,10 +158,10 @@ public class ZKClient {
         return this.state.getReadOnlyProperty();
     }
 
-    public ZKClient(@NonNull ZKConnect zkInfo) {
-        this.zkInfo = zkInfo;
-        if (zkInfo.isSSHForward()) {
-            this.sshForwarder = new SSHForwarder(zkInfo.getSshConnect());
+    public ZKClient(@NonNull ZKConnect connect) {
+        this.connect = connect;
+        if (connect.isSSHForward()) {
+            this.sshForwarder = new SSHForwarder(connect.getSshConnect());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || !newValue.isConnected()) {
@@ -185,7 +185,7 @@ public class ZKClient {
      * @return 结果
      */
     public boolean isReadonly() {
-        return this.zkInfo.isReadonly();
+        return this.connect.isReadonly();
     }
 
     /**
@@ -240,7 +240,7 @@ public class ZKClient {
      * @return 结果
      */
     public boolean isEnableListen() {
-        return this.zkInfo.getListen();
+        return this.connect.getListen();
     }
 
     /**
@@ -284,7 +284,7 @@ public class ZKClient {
             // 开始连接
             this.framework.start();
             // 连接成功前阻塞线程
-            if (this.framework.blockUntilConnected(this.zkInfo.getConnectTimeOut(), TimeUnit.SECONDS)) {
+            if (this.framework.blockUntilConnected(this.connect.getConnectTimeOut(), TimeUnit.SECONDS)) {
                 // 更新连接状态
                 this.state.set(ZKConnState.CONNECTED);
                 // 设置认证信息为已认证
@@ -313,16 +313,16 @@ public class ZKClient {
         // 连接地址
         String host;
         // ssh端口转发
-        if (this.zkInfo.isSSHForward()) {
+        if (this.connect.isSSHForward()) {
             SSHForwardConfig forwardConfig = new SSHForwardConfig();
-            forwardConfig.setHost(this.zkInfo.hostIp());
-            forwardConfig.setPort(this.zkInfo.hostPort());
+            forwardConfig.setHost(this.connect.hostIp());
+            forwardConfig.setPort(this.connect.hostPort());
             int localPort = this.sshForwarder.forward(forwardConfig);
             // 连接信息
             host = "127.0.0.1:" + localPort;
         } else {// 直连
             // 连接信息
-            host = this.zkInfo.hostIp() + ":" + this.zkInfo.hostPort();
+            host = this.connect.hostIp() + ":" + this.connect.hostPort();
         }
         // 认证信息列表
         List<AuthInfo> authInfos = List.of();
@@ -337,7 +337,7 @@ public class ZKClient {
             this.retryPolicy = new RetryOneTime(3_000);
         }
         // 创建客户端
-        this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.zkInfo.connectTimeOutMs(), this.zkInfo.sessionTimeOutMs(), authInfos, this.zkInfo.compatibility34());
+        this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.connect.connectTimeOutMs(), this.connect.sessionTimeOutMs(), authInfos, this.connect.compatibility34());
     }
 
     /**
@@ -358,7 +358,7 @@ public class ZKClient {
                 this.framework = null;
             }
             // 销毁端口转发
-            if (this.zkInfo.isSSHForward()) {
+            if (this.connect.isSSHForward()) {
                 this.sshForwarder.destroy();
             }
             this.closeTreeCache();
@@ -1020,7 +1020,7 @@ public class ZKClient {
         try {
             QuorumVerifier verifier = this.getCurrentConfig();
             // 老版本实现
-            if (this.zkInfo.compatibility34() || verifier == null) {
+            if (this.connect.compatibility34() || verifier == null) {
                 if (this.exists("/zookeeper/config")) {
                     String data = this.getDataString("/zookeeper/config");
                     if (data != null) {
@@ -1059,8 +1059,8 @@ public class ZKClient {
      *
      * @return 连接名称
      */
-    public String infoName() {
-        return this.zkInfo.getName();
+    public String connectName() {
+        return this.connect.getName();
     }
 
     /**

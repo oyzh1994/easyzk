@@ -14,10 +14,10 @@ public class ZKConnectionClosedEvent extends Event<ZKClient> implements EventFor
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().infoName());
+        return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().connectName());
     }
 
-    public ZKConnect info() {
-        return this.data().zkInfo();
+    public ZKConnect connect() {
+        return this.data().connect();
     }
 }

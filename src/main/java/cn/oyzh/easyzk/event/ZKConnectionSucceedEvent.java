@@ -14,10 +14,10 @@ public class ZKConnectionSucceedEvent extends Event<ZKClient> implements EventFo
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionSucceed(), this.data().infoName());
+        return String.format("[%s] " + I18nHelper.connectionSucceed(), this.data().connectName());
     }
 
-    public ZKConnect info() {
-        return this.data().zkInfo();
+    public ZKConnect connect() {
+        return this.data().connect();
     }
 }

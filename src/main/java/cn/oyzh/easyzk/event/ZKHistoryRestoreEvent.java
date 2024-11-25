@@ -25,7 +25,7 @@ public class ZKHistoryRestoreEvent extends Event<byte[]> implements EventFormatt
         return String.format("[%s] " + I18nResourceBundle.i18nString("base.data", "base.restored"), this.item.nodePath());
     }
 
-    public ZKConnect info(){
-        return item.info();
+    public ZKConnect connect(){
+        return this.item.connect();
     }
 }

@@ -184,7 +184,7 @@ public class ZKNodeAddController extends StageController {
             if (node == null) {
                 MessageBox.warnToast(I18nHelper.operationFail());
             } else {
-                ZKEventUtil.nodeAdded(this.zkClient.zkInfo(), this.nodePathText);
+                ZKEventUtil.nodeAdded(this.zkClient.connect(), this.nodePathText);
                 this.closeWindow();
             }
         } catch (Exception ex) {

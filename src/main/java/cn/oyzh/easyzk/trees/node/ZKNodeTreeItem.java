@@ -403,7 +403,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
                 // 删除旧节点
                 this.deleteNode();
                 // 发送事件
-                ZKEventUtil.nodeAdded(this.info(), newNodePath);
+                ZKEventUtil.nodeAdded(this.connect(), newNodePath);
             } else {// 操作失败
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -589,8 +589,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         return this.getTreeView().client();
     }
 
-    public ZKConnect info() {
-        return this.getTreeView().info();
+    public ZKConnect connect() {
+        return this.getTreeView().connect();
     }
 
     /**
@@ -828,21 +828,21 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 节点是否被收藏
      */
     public boolean isCollect() {
-        return ZKCollectJdbcStore.INSTANCE.exist(this.info().getId(), this.decodeNodePath());
+        return ZKCollectJdbcStore.INSTANCE.exist(this.connect().getId(), this.decodeNodePath());
     }
 
     /**
      * 收藏节点
      */
     public void collect() {
-        ZKCollectJdbcStore.INSTANCE.replace(this.info().getId(), this.decodeNodePath());
+        ZKCollectJdbcStore.INSTANCE.replace(this.connect().getId(), this.decodeNodePath());
     }
 
     /**
      * 取消收藏节点
      */
     public void unCollect() {
-        ZKCollectJdbcStore.INSTANCE.delete(this.info().getId(), this.decodeNodePath());
+        ZKCollectJdbcStore.INSTANCE.delete(this.connect().getId(), this.decodeNodePath());
     }
 
     /**
@@ -945,8 +945,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      *
      * @return zk连接名称
      */
-    public String infoName() {
-        return this.info().getName();
+    public String connectName() {
+        return this.connect().getName();
     }
 
     /**
@@ -1041,7 +1041,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         ZKDataHistory history = new ZKDataHistory();
         history.setData(this.unsavedData());
         history.setPath(this.nodePath());
-        history.setInfoId(this.info().getId());
+        history.setInfoId(this.connect().getId());
         ZKDataHistoryJdbcStore.INSTANCE.replace(history, this.client());
         ZKEventUtil.dataHistoryAdded(history, this);
     }

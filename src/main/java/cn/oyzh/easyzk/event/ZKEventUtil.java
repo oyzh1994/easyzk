@@ -122,7 +122,7 @@ public class ZKEventUtil {
     public static void nodeUpdated(ZKClient client, String path) {
         ZKNodeUpdatedEvent event = new ZKNodeUpdatedEvent();
         event.data(path);
-        event.infoName(client.infoName());
+        event.infoName(client.connectName());
         EventUtil.post(event);
     }
 
@@ -150,7 +150,7 @@ public class ZKEventUtil {
         ZKNodeDeletedEvent event = new ZKNodeDeletedEvent();
         event.data(path);
         event.delChildren(delChildren);
-        event.infoName(client.infoName());
+        event.infoName(client.connectName());
         EventUtil.post(event);
     }
 

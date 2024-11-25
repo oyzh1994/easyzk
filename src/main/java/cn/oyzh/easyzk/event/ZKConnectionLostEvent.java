@@ -14,10 +14,10 @@ public class ZKConnectionLostEvent extends Event<ZKClient> implements EventForma
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nResourceBundle.i18nString("base.client", "base.connectLoss"), this.data().infoName());
+        return String.format("[%s] " + I18nResourceBundle.i18nString("base.client", "base.connectLoss"), this.data().connectName());
     }
 
-    public ZKConnect info() {
-        return this.data().zkInfo();
+    public ZKConnect connect() {
+        return this.data().connect();
     }
 }

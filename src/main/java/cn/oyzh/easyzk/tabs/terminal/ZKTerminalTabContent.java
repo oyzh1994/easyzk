@@ -47,8 +47,8 @@ public class ZKTerminalTabContent extends DynamicTabController {
      *
      * @return zk信息
      */
-    public ZKConnect info() {
-        return this.terminal.info();
+    public ZKConnect connect() {
+        return this.terminal.connect();
     }
 
     @Override

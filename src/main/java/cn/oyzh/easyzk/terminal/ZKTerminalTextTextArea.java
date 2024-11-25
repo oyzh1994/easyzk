@@ -44,7 +44,7 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
     /**
      * zk连接
      */
-    private ZKConnectInfo connect;
+    private ZKConnectInfo connectInfo;
 
     /**
      * 客户端连接状态监听器
@@ -67,10 +67,10 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
         if (this.isTemporary()) {
             str = "zk" + I18nHelper.connect();
         } else {
-            str = this.client.infoName();
+            str = this.client.connectName();
         }
-        if (this.info().getHost() != null) {
-            str += "@" + this.info().getHost();
+        if (this.connect().getHost() != null) {
+            str += "@" + this.connect().getHost();
         }
         if (this.isConnecting()) {
             str += "（" + I18nHelper.connectIng() + "）> ";
@@ -111,7 +111,7 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
      * @return 结果
      */
     public boolean isTemporary() {
-        return this.info().getId() == null;
+        return this.connect().getId() == null;
     }
 
     /**
@@ -147,10 +147,10 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
      * @param input 输入内容
      */
     public void connect(String input) {
-        this.connect = ZKConnectUtil.parse(input);
-        if (this.connect != null) {
+        this.connectInfo = ZKConnectUtil.parse(input);
+        if (this.connectInfo != null) {
             this.disable();
-            ZKConnectUtil.copyConnect(this.connect, this.info());
+            ZKConnectUtil.copyConnect(this.connectInfo, this.connect());
             this.start();
         }
     }
@@ -212,7 +212,7 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
             this.stateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
                 // 获取连接
-                String host = this.info().getHost();
+                String host = this.connect().getHost();
                 if (t1 == ZKConnState.CONNECTED) {
                     this.outputLine(host + I18nHelper.connectSuccess() + " .");
                     // this.outputLine(host + " 连接成功.");
@@ -247,8 +247,8 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
                 } else if (t1 == ZKConnState.FAILED) {
                     this.outputLine(host + I18nHelper.connectFail() + " .");
                     // this.outputLine(host + " 连接失败.");
-                    if (this.connect != null) {
-                        this.appendByPrompt(this.connect.getInput());
+                    if (this.connectInfo != null) {
+                        this.appendByPrompt(this.connectInfo.getInput());
                     }
                     this.flushAndMoveCaretAnd();
                     this.enableInput();
@@ -269,7 +269,7 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
         }
     }
 
-    public ZKConnect info() {
-        return this.client().zkInfo();
+    public ZKConnect connect() {
+        return this.client().connect();
     }
 }

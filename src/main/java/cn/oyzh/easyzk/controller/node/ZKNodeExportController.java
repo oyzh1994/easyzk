@@ -232,7 +232,7 @@ public class ZKNodeExportController extends StageController {
                 // 文件格式
                 FileExtensionFilter extensionFilter;
                 // 处理名称
-                String fileName = "ZK-" + I18nHelper.connect() + this.client.infoName() + "-" + I18nHelper.exportData();
+                String fileName = "ZK-" + I18nHelper.connect() + this.client.connectName() + "-" + I18nHelper.exportData();
                 // if (isJSON) {
                 // boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
                 boolean prettyFormat = this.pretty.isSelected();

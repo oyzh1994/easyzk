@@ -38,8 +38,8 @@ public class ZKNodeTreeView extends RichTreeView {
     @Accessors(fluent = true)
     private ZKClient client;
 
-    public ZKConnect info() {
-        return this.client.zkInfo();
+    public ZKConnect connect() {
+        return this.client.connect();
     }
 
     @Override

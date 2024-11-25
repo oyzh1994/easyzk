@@ -15,7 +15,7 @@ public class ZKConnectOpenedEvent extends Event<ZKConnectTreeItem>  {
         return this.data().client();
     }
 
-    public ZKConnect info() {
-        return this.data().client().zkInfo();
+    public ZKConnect connect() {
+        return this.data().client().connect();
     }
 }

@@ -24,7 +24,6 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.gui.treeView.RichTreeItemFilter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -41,6 +40,7 @@ import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -59,96 +59,153 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     protected ZKNode value;
 
     /**
-     * 节点状态
-     * 1. 已变更
-     * 2. 已删除
-     * 3. 子节点已变更
+     * bit值设置，减少内存占用
      */
-    @Getter
-    private Byte nodeStatus;
+    private BitSet bitValue;
 
     /**
-     * 忽略状态
-     * 1. 已忽略变更
-     * 2. 已忽略删除
-     * 3. 已忽略子节点变更
+     * bit值设置
+     *
+     * @return BitSet
      */
-    private Byte ignoreStatus;
+    private BitSet bitValue() {
+        if (this.bitValue == null) {
+            this.bitValue = new BitSet(0b00000000);
+        }
+        return bitValue;
+    }
 
     /**
-     * 取消标志位
-     */
-    private volatile boolean canceled;
-
-    /**
-     * 需要认证标志位
-     */
-    private volatile boolean needAuth;
-
-    /**
-     * 设置被删除状态
+     * 设置节点变更
      */
     public void setBeChanged() {
-        this.nodeStatus = 1;
+        this.bitValue().set(0, true);
     }
 
     /**
-     * 设置被删除状态
+     * 设置节点删除
      */
     public void setBeDeleted() {
-        this.nodeStatus = 2;
+        this.bitValue().set(1, true);
     }
 
     /**
-     * 设置被删除状态
+     * 设置节点变化
      */
     public void setBeChildChanged() {
-        this.nodeStatus = 3;
-    }
-
-    public boolean isBeChanged() {
-        return this.nodeStatus != null && this.nodeStatus == 1;
-    }
-
-    public boolean isBeDeleted() {
-        return this.nodeStatus != null && this.nodeStatus == 2;
-    }
-
-    public boolean isBeChildChanged() {
-        return this.nodeStatus != null && this.nodeStatus == 3;
+        this.bitValue().set(2, true);
     }
 
     /**
-     * 设置被删除状态
+     * 是否变更
+     *
+     * @return 结果
+     */
+    public boolean isBeChanged() {
+        return this.bitValue != null && this.bitValue().get(0);
+    }
+
+    /**
+     * 是否删除
+     *
+     * @return 结果
+     */
+    public boolean isBeDeleted() {
+        return this.bitValue != null && this.bitValue().get(1);
+    }
+
+    /**
+     * 是否子节点变化
+     *
+     * @return 结果
+     */
+    public boolean isBeChildChanged() {
+        return this.bitValue != null && this.bitValue().get(2);
+    }
+
+    /**
+     * 设置忽略变化
      */
     public void doIgnoreChanged() {
-        this.ignoreStatus = 1;
+        this.bitValue().set(3, true);
     }
 
     /**
-     * 设置被删除状态
+     * 设置忽略删除
      */
     public void doIgnoreDeleted() {
-        this.ignoreStatus = 2;
+        this.bitValue().set(4, true);
     }
 
     /**
-     * 设置被删除状态
+     * 设置忽略子节点变化
      */
     public void doIgnoreChildChanged() {
-        this.ignoreStatus = 3;
+        this.bitValue().set(5, true);
     }
 
+    /**
+     * 是否忽略变化
+     *
+     * @return 结果
+     */
     public boolean isIgnoreChanged() {
-        return this.ignoreStatus != null && this.ignoreStatus == 1;
+        return this.bitValue != null && this.bitValue().get(3);
     }
 
+    /**
+     * 是否忽略删除
+     *
+     * @return 结果
+     */
     public boolean isIgnoreDeleted() {
-        return this.ignoreStatus != null && this.ignoreStatus == 2;
+        return this.bitValue != null && this.bitValue().get(4);
     }
 
+    /**
+     * 是否忽略子节点变化
+     *
+     * @return 结果
+     */
     public boolean isIgnoreChildChanged() {
-        return this.ignoreStatus != null && this.ignoreStatus == 3;
+        return this.bitValue != null && this.bitValue().get(5);
+    }
+
+    /**
+     * 设置是否需要认证
+     *
+     * @param needAuth 是否需要认证
+     */
+    public void setNeedAuth(boolean needAuth) {
+        this.bitValue().set(6, needAuth);
+    }
+
+    /**
+     * 是否需要认证
+     *
+     * @return 结果
+     */
+    public boolean isNeedAuth() {
+        boolean needAuth = this.bitValue != null && this.bitValue().get(6);
+        return needAuth || ZKAuthUtil.isNeedAuth(this.value, this.client());
+    }
+
+    /**
+     * 设置已取消状态
+     *
+     * @param canceled 已取消状态
+     */
+    public void setCanceled(boolean canceled) {
+        this.bitValue().set(7, canceled);
+    }
+
+    /**
+     * 是否已取消
+     *
+     * @return 结果
+     */
+    public boolean isCanceled() {
+        return this.bitValue != null && this.bitValue().get(7);
     }
 
     /**
@@ -182,9 +239,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 清理
      */
     public void clear() {
-        this.nodeStatus = null;
         this.unsavedData = null;
-        this.ignoreStatus = null;
     }
 
     /**
@@ -298,8 +353,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 取消操作
      */
     public void cancel() {
-        this.canceled = true;
-        // this.stopWaiting();
+        this.setCanceled(true);
     }
 
     /**
@@ -556,7 +610,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             ZKNodeUtil.refreshNode(this.client(), this.value);
             this.clear();
         } catch (KeeperException.NoAuthException ex) {
-            this.needAuth = true;
+            this.setNeedAuth(true);
         }
     }
 
@@ -569,7 +623,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             ZKNodeUtil.refreshData(this.client(), this.value);
             this.clear();
         } catch (KeeperException.NoAuthException ex) {
-            this.needAuth = true;
+            this.setNeedAuth(true);
         }
     }
 
@@ -581,7 +635,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             JulLog.debug("refreshACL.");
             ZKNodeUtil.refreshAcl(this.client(), this.value);
         } catch (KeeperException.NoAuthException ex) {
-            this.needAuth = true;
+            this.setNeedAuth(true);
         }
     }
 
@@ -595,7 +649,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
         } catch (KeeperException.NoNodeException ignored) {
             this.value.quota(null);
         } catch (KeeperException.NoAuthException ex) {
-            this.needAuth = true;
+            this.setNeedAuth(true);
         }
     }
 
@@ -607,7 +661,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             JulLog.debug("refreshStat.");
             ZKNodeUtil.refreshStat(this.client(), this.value);
         } catch (KeeperException.NoAuthException ex) {
-            this.needAuth = true;
+            this.setNeedAuth(true);
         }
     }
 
@@ -657,7 +711,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @param loop 递归加载
      */
     public void loadChild(boolean loop) {
-        if (this.canceled) {
+        if (this.isCanceled()) {
             return;
         }
         try {
@@ -709,7 +763,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             // 递归处理
             if (loop && !this.isChildEmpty()) {
                 for (ZKNodeTreeItem item : this.itemChildren()) {
-                    if (this.canceled && item.canceled) {
+                    if (this.isCanceled() && item.isCanceled()) {
                         break;
                     }
                     item.loadChild(true);
@@ -717,10 +771,10 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             }
         } catch (KeeperException.NoAuthException ex) {
             this.setLoaded(false);
-            this.needAuth = true;
+            this.setNeedAuth(true);
         } catch (Exception ex) {
             // 非取消、连接关闭情况下，则抛出异常
-            if (!this.canceled && !this.client().isConnected()) {
+            if (!this.isCanceled() && !this.client().isConnected()) {
                 throw new RuntimeException(ex);
             }
             this.setSorting(false);
@@ -752,7 +806,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * @return 节点内容
      */
     public List<ZKNodeTreeItem> itemChildren() {
-      return  (List) super.unfilteredChildren();
+        return (List) super.unfilteredChildren();
     }
 
     @Override
@@ -777,15 +831,6 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             super.sortDesc();
             this.itemChildren().forEach(ZKNodeTreeItem::sortDesc);
         }
-    }
-
-    /**
-     * 是否需要认证
-     *
-     * @return 结果
-     */
-    public boolean isNeedAuth() {
-        return this.needAuth || ZKAuthUtil.isNeedAuth(this.value, this.client());
     }
 
     /**
@@ -1014,9 +1059,8 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
     public void destroy() {
         if (!this.isRoot()) {
             this.value = null;
-            this.nodeStatus = null;
+            this.bitValue = null;
             this.unsavedData = null;
-            this.ignoreStatus = null;
             super.destroy();
         }
     }
@@ -1029,7 +1073,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 授权变化事件
      */
     public void authChanged() throws Exception {
-        this.needAuth = false;
+        this.setNeedAuth(false);
         this.refreshNode();
         this.loadRoot();
     }

@@ -255,9 +255,9 @@ public class SettingController extends StageController {
         // this.tabLimit.setValue(this.setting.getTabLimit());
         // this.tabStrategy.select(this.setting.getTabStrategy());
         // 字体相关处理
+        this.fontSize.selectSize(this.setting.getFontSize());
         this.fontFamily.select(this.setting.getFontFamily());
-        this.fontSize.selectSize(Integer.valueOf(this.setting.getFontSize()));
-        this.fontWeight.selectWeight(Integer.valueOf(this.setting.getFontWeight()));
+        this.fontWeight.selectWeight(this.setting.getFontWeight());
         // 区域相关处理
         this.locale.select(this.setting.getLocale());
         // 透明度相关处理
@@ -275,8 +275,8 @@ public class SettingController extends StageController {
             byte authMode = (byte) (this.authMode.isSelected() ? 0 : 1);
             byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
             String locale = this.locale.name();
-            Integer fontSize = this.fontSize.getValue();
-            int fontWeight = this.fontWeight.getWeight();
+            Byte fontSize = this.fontSize.getValue();
+            short fontWeight = this.fontWeight.getWeight();
             String fontFamily = this.fontFamily.getValue();
 
             // 提示文字
@@ -285,9 +285,9 @@ public class SettingController extends StageController {
             this.setting.setLoadMode(loadMode);
             this.setting.setAuthMode(authMode);
             // 字体相关
+            this.setting.setFontSize(fontSize);
             this.setting.setFontFamily(fontFamily);
-            this.setting.setFontWeight((short) fontWeight);
-            this.setting.setFontSize(fontSize == null ? null : fontSize.byteValue());
+            this.setting.setFontWeight(fontWeight);
             // 主题相关
             this.setting.setTheme(this.theme.name());
             this.setting.setBgColor(this.bgColor.getColor());
@@ -337,7 +337,7 @@ public class SettingController extends StageController {
      * @param locale     区域
      * @return 结果
      */
-    private String checkConfigForRestart(byte loadMode, byte authMode, Integer fontSize, Integer fontWeight, String fontFamily, String locale) {
+    private String checkConfigForRestart(byte loadMode, byte authMode, Byte fontSize, Short fontWeight, String fontFamily, String locale) {
         if (!Objects.equals(this.setting.getLoadMode(), loadMode) || !Objects.equals(this.setting.getAuthMode(), authMode)
                 || !Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)
                 || !Objects.equals(this.setting.getFontFamily(), fontFamily) || !Objects.equals(this.setting.getFontWeight(), fontWeight)) {
@@ -434,6 +434,6 @@ public class SettingController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("base.title.setting");
+        return I18nHelper.settingTitle();
     }
 }

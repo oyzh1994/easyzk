@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
+import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
@@ -126,9 +127,11 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 导出zk节点
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
-        fxView.setProp("zkItem", this);
-        fxView.setProp("zkClient", this.client());
+        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
+        // fxView.setProp("zkItem", this);
+        // fxView.setProp("zkClient", this.client());
+        fxView.setProp("connect", this.value);
+        fxView.setProp("nodePath", "/");
         fxView.display();
     }
 

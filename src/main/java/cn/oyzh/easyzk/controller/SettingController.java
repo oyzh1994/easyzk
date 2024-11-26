@@ -255,8 +255,8 @@ public class SettingController extends StageController {
         // this.tabLimit.setValue(this.setting.getTabLimit());
         // this.tabStrategy.select(this.setting.getTabStrategy());
         // 字体相关处理
-        this.fontSize.select(this.setting.getFontSize());
         this.fontFamily.select(this.setting.getFontFamily());
+        this.fontSize.selectSize(Integer.valueOf(this.setting.getFontSize()));
         this.fontWeight.selectWeight(Integer.valueOf(this.setting.getFontWeight()));
         // 区域相关处理
         this.locale.select(this.setting.getLocale());

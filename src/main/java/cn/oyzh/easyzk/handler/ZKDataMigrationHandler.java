@@ -39,7 +39,6 @@ public class ZKDataMigrationHandler extends DataHandler {
     @Accessors(chain = false, fluent = true)
     private boolean authInfos;
 
-
     @Setter
     @Accessors(chain = false, fluent = true)
     private boolean connections;

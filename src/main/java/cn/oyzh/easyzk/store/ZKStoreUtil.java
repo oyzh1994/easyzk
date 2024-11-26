@@ -368,6 +368,6 @@ public class ZKStoreUtil {
         String file = storePath + File.separator + "zk_info.json";
         String done = storePath + File.separator + "done.data";
         String ignore = storePath + File.separator + "ignore.data";
-        return FileUtil.exist(file) && (!FileUtil.exist(done) || !FileUtil.exist(ignore));
+        return FileUtil.exist(file) && !(FileUtil.exist(done) || FileUtil.exist(ignore));
     }
 }

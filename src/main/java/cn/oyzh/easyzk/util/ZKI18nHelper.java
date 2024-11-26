@@ -47,4 +47,8 @@ public class ZKI18nHelper {
     public static String aclC() {
         return I18nResourceBundle.i18nString("zk.acl.c");
     }
+
+    public static String migrationTip1() {
+        return I18nResourceBundle.i18nString("zk.migration.tip1");
+    }
 }

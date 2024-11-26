@@ -17,7 +17,7 @@ import java.io.File;
 public class ZKCacheUtil {
 
     private static String baseDir(int hashCode, String path) {
-        return ZKConst.NODE_CACHE_PATH + hashCode + File.separator + MD5Util.md5Hex(path);
+        return ZKConst.NODE_CACHE_PATH + hashCode + "_" + MD5Util.md5Hex(path);
     }
 
     /**

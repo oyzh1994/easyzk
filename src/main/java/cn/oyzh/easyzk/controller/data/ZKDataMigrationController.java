@@ -153,8 +153,6 @@ public class ZKDataMigrationController extends StageController {
         } else {
             this.dataMigrationHandler.interrupt(false);
         }
-        // 数据处理策略
-        this.dataMigrationHandler.dataPolicy(this.dataPolicy.selectedUserData());
         // 分组
         this.dataMigrationHandler.groups(this.groups.isSelected());
         // 过滤
@@ -167,6 +165,8 @@ public class ZKDataMigrationController extends StageController {
         this.dataMigrationHandler.terminalHistory(this.terminalHistory.isSelected());
         // 应用配置
         this.dataMigrationHandler.applicationSetting(this.applicationSetting.isSelected());
+        // 数据处理策略
+        this.dataMigrationHandler.dataPolicy(this.dataPolicy.selectedUserData());
         // 开始处理
         NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.migrationInProgress() + "===");

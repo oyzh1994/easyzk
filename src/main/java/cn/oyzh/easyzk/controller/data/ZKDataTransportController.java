@@ -40,7 +40,7 @@ import javafx.stage.WindowEvent;
  */
 @StageAttribute(
         iconUrls = ZKConst.ICON_PATH,
-        modality = Modality.WINDOW_MODAL,
+        modality = Modality.APPLICATION_MODAL,
         value = FXConst.VIEW_PATH + "data/zkDataTransport.fxml"
 )
 public class ZKDataTransportController extends StageController {

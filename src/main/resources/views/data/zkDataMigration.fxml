@@ -24,7 +24,7 @@
                     <Insets left="30" top="20"/>
                 </HBox.margin>
             </MigrationSVGGlyph>
-            <FXText realHeight="25" text="迁移数据" fontSize="15">
+            <FXText realHeight="25" text="%zk.migration.tip2" fontSize="15">
                 <HBox.margin>
                     <Insets left="15" top="28"/>
                 </HBox.margin>
@@ -84,7 +84,7 @@
     </FlexVBox>
     <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="数据处理方式" realHeight="30" fontWeight="BOLD">
+            <FlexLabel text="%zk.migration.tip3" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
                     <Insets left="30" top="25"/>
                 </VBox.margin>

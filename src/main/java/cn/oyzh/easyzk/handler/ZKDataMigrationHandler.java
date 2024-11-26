@@ -1,19 +1,20 @@
 package cn.oyzh.easyzk.handler;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
 import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
+import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistoryJdbcStore;
-import cn.oyzh.store.jdbc.DeleteParam;
+import cn.oyzh.easyzk.util.ZKI18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -74,99 +75,130 @@ public class ZKDataMigrationHandler extends DataHandler {
      * 执行传输
      */
     public void doMigration() {
-        this.message("正在执行迁移");
+        this.message(I18nHelper.executingMigration());
 
         if (this.groups) {
-            this.message("正在迁移分组...");
+            this.message(I18nHelper.migratingGroups());
             List<ZKGroup> groups = ZKStoreUtil.loadGroups();
-            this.message("已找到分组:" + groups.size());
-            if ("2".equals(this.dataPolicy)) {
+            this.message(I18nHelper.foundGroup() + " : " + groups.size());
+            if ("1".equals(this.dataPolicy)) {
+                for (ZKGroup group : groups) {
+                    if (!this.groupStore.exist(group.getName())) {
+                        this.groupStore.replace(group);
+                        this.message(I18nHelper.group() + " : " + group.getName() + " " + I18nHelper.added());
+                        this.processedIncr();
+                    }
+                }
+            } else if ("2".equals(this.dataPolicy)) {
                 this.groupStore.clear();
-                this.message("旧分组数据已清空...");
+                this.message(I18nHelper.groupDataCleared());
                 for (ZKGroup group : groups) {
                     this.groupStore.replace(group);
                 }
                 this.processedIncr(groups.size());
             }
-            this.message("迁移分组成功...");
+            this.message(I18nHelper.migrationGroupsSuccessful());
         }
 
         if (this.connections) {
-            this.message("正在迁移连接...");
+            this.message(I18nHelper.migratingConnections());
             List<ZKConnect> connects = ZKStoreUtil.loadConnects();
-            this.message("已找到连接:" + connects.size());
-            if ("2".equals(this.dataPolicy)) {
+            this.message(I18nHelper.foundConnection() + " : " + connects.size());
+            if ("1".equals(this.dataPolicy)) {
+                for (ZKConnect connect : connects) {
+                    if (!this.infoStore.exist(connect.getId())) {
+                        this.infoStore.replace(connect);
+                        this.message(I18nHelper.connect() + " : " + connect.getName() + " " + I18nHelper.added());
+                        this.processedIncr();
+                    }
+                }
+            } else if ("2".equals(this.dataPolicy)) {
                 this.infoStore.clear();
-                this.message("旧连接数据已清空...");
+                this.message(I18nHelper.connectionDataCleared());
                 for (ZKConnect connect : connects) {
                     this.infoStore.replace(connect);
                 }
                 this.processedIncr(connects.size());
             }
-            this.message("迁移连接成功...");
+            this.message(I18nHelper.migrationConnectionsSuccessful());
         }
 
         if (this.filters) {
-            this.message("正在迁移过滤...");
+            this.message(I18nHelper.migratingFilters());
             List<ZKFilter> filters = ZKStoreUtil.loadFilters();
-            this.message("已找到过滤:" + filters.size());
-            if ("2".equals(this.dataPolicy)) {
+            this.message(I18nHelper.foundFilter() + " : " + filters.size());
+            if ("1".equals(this.dataPolicy)) {
+                for (ZKFilter filter : filters) {
+                    if (!this.filterStore.exist(filter.getKw())) {
+                        this.filterStore.replace(filter);
+                        this.message(I18nHelper.filter() + " : " + filter.getKw() + " " + I18nHelper.added());
+                        this.processedIncr();
+                    }
+                }
+            } else if ("2".equals(this.dataPolicy)) {
                 this.filterStore.clear();
-                this.message("旧过滤数据已清空...");
+                this.message(I18nHelper.filterDataCleared());
                 for (ZKFilter filter : filters) {
                     this.filterStore.replace(filter);
                 }
                 this.processedIncr(filters.size());
             }
-            this.message("迁移过滤成功...");
+            this.message(I18nHelper.migrationFiltersSuccessful());
         }
 
         if (this.authInfos) {
-            this.message("正在迁移认证...");
+            this.message(I18nHelper.migratingAuth());
             List<ZKAuth> auths = ZKStoreUtil.loadAuths();
-            this.message("已找到认证:" + auths.size());
-            if ("2".equals(this.dataPolicy)) {
+            this.message(I18nHelper.foundAuth() + " : " + auths.size());
+            if ("1".equals(this.dataPolicy)) {
+                for (ZKAuth auth : auths) {
+                    if (!this.authStore.exist(auth.getUser(), auth.getPassword())) {
+                        this.authStore.replace(auth);
+                        this.message(I18nHelper.auth() + " : [" + auth.getUser() + "," + auth.getPassword() + "] " + I18nHelper.added());
+                        this.processedIncr();
+                    }
+                }
+            } else if ("2".equals(this.dataPolicy)) {
                 this.authStore.clear();
-                this.message("旧认证数据已清空...");
+                this.message(I18nHelper.authDataCleared());
                 for (ZKAuth auth : auths) {
                     this.authStore.replace(auth);
                 }
                 this.processedIncr(auths.size());
             }
-            this.message("迁移认证成功...");
+            this.message(I18nHelper.migrationAuthSuccessful());
         }
 
         if (this.terminalHistory) {
-            this.message("正在迁移终端历史...");
+            this.message(I18nHelper.migratingTerminalHistory());
             List<ZKTerminalHistory> terminalHistories = ZKStoreUtil.loadTerminalHistory();
-            this.message("已找到终端历史:" + terminalHistories.size());
+            this.message(I18nHelper.foundTerminalHistory() + " : " + terminalHistories.size());
+            // 清理终端
             if ("2".equals(this.dataPolicy)) {
                 this.terminalHistoryStore.clear();
-                this.message("旧终端历史数据已清空...");
-                for (ZKTerminalHistory history : terminalHistories) {
-                    this.terminalHistoryStore.replace(history);
-                }
-                this.processedIncr(terminalHistories.size());
             }
-            this.message("迁移终端历史成功...");
+            this.message(I18nHelper.terminalHistoryDataCleared());
+            for (ZKTerminalHistory history : terminalHistories) {
+                this.terminalHistoryStore.replace(history);
+            }
+            this.processedIncr(terminalHistories.size());
+            this.message(I18nHelper.migrationTerminalHistorySuccessful());
         }
 
         if (this.applicationSetting) {
-            this.message("正在迁移应用设置...");
+            this.message(I18nHelper.migratingApplicationSetting());
             ZKSetting setting = ZKStoreUtil.loadSetting();
-            if (setting == null) {
-                this.message("未找到应用设置");
-            } else if ("2".equals(this.dataPolicy)) {
-                this.message("已找到应用设置");
-                this.settingStore.delete((DeleteParam) null);
-                this.message("旧应用设置数据已清空...");
-                this.settingStore.replace(setting);
-                this.processedIncr();
+            // 清理设置
+            if ("2".equals(this.dataPolicy)) {
+                this.settingStore.clear();
+                this.message(I18nHelper.applicationSettingDataCleared());
             }
-            this.message("迁移应用设置成功...");
+            this.settingStore.replace(setting);
+            this.processedIncr();
+            this.message(I18nHelper.migrationApplicationSettingSuccessful());
         }
 
-        this.message("迁移执行完成，请重写打开应用以生效");
+        this.message(ZKI18nHelper.migrationTip1());
     }
 }
 

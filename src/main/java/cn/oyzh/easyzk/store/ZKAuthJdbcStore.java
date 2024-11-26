@@ -40,7 +40,6 @@ public class ZKAuthJdbcStore extends JdbcStore<ZKAuth> {
 
     public boolean delete(String user, String password) {
         if (StringUtil.isEmpty(user) || StringUtil.isEmpty(password)) {
-
             Map<String, Object> params = new HashMap<>();
             params.put("user", user);
             params.put("password", password);

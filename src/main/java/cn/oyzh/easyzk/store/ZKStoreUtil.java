@@ -5,18 +5,15 @@ import cn.oyzh.common.json.JSONArray;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
-import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.jdbc.JdbcConst;
 import cn.oyzh.store.jdbc.JdbcDialect;
 import lombok.experimental.UtilityClass;
@@ -36,17 +33,9 @@ public class ZKStoreUtil {
      * 执行初始化
      */
     public static void init() {
-        try {
-            JdbcConst.dbCacheSize(1024);
-            JdbcConst.dbDialect(JdbcDialect.H2);
-            JdbcConst.dbFile(ZKConst.STORE_PATH + "db");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            // 提示
-            MessageBox.error(I18nHelper.initStoreFail());
-            // 退出程序
-            ThreadUtil.start(() -> System.exit(-1), 3000);
-        }
+        JdbcConst.dbCacheSize(1024);
+        JdbcConst.dbDialect(JdbcDialect.H2);
+        JdbcConst.dbFile(ZKConst.STORE_PATH + "db");
     }
 
     // public static void migration() {
@@ -378,73 +367,80 @@ public class ZKStoreUtil {
         String file = storePath + File.separator + "zk_setting.json";
         String json = FileUtil.readUtf8String(file);
         JSONObject object = JSONUtil.parseObject(json);
-        if (object == null) {
-            JulLog.warn("未找到设置数据");
-            return null;
-        }
         ZKSetting setting = new ZKSetting();
-        if (object.containsKey("theme")) {
-            setting.setTheme(object.getString("theme"));
+        if (object != null) {
+            if (object.containsKey("theme")) {
+                setting.setTheme(object.getString("theme"));
+            }
+            if (object.containsKey("fgColor")) {
+                setting.setFgColor(object.getString("fgColor"));
+            }
+            if (object.containsKey("bgColor")) {
+                setting.setBgColor(object.getString("bgColor"));
+            }
+            if (object.containsKey("accentColor")) {
+                setting.setAccentColor(object.getString("accentColor"));
+            }
+            if (object.containsKey("fontFamily")) {
+                setting.setFontFamily(object.getString("fontFamily"));
+            }
+            if (object.containsKey("fontSize")) {
+                setting.setFontSize(object.getByteValue("fontSize"));
+            }
+            if (object.containsKey("fontWeight")) {
+                setting.setFontWeight(object.getShortValue("fontWeight"));
+            }
+            if (object.containsKey("locale")) {
+                setting.setLocale(object.getString("locale"));
+            }
+            if (object.containsKey("exitMode")) {
+                setting.setExitMode(object.getByteValue("exitMode"));
+            }
+            if (object.containsKey("loadMode")) {
+                setting.setLoadMode(object.getByteValue("loadMode"));
+            }
+            if (object.containsKey("rememberPageSize")) {
+                setting.setRememberPageSize(object.getByteValue("rememberPageSize"));
+            }
+            if (object.containsKey("rememberPageResize")) {
+                setting.setRememberPageResize(object.getByteValue("rememberPageResize"));
+            }
+            if (object.containsKey("rememberPageLocation")) {
+                setting.setRememberPageLocation(object.getByteValue("rememberPageLocation"));
+            }
+            if (object.containsKey("authMode")) {
+                setting.setAuthMode(object.getByteValue("authMode"));
+            }
+            if (object.containsKey("opacity")) {
+                setting.setOpacity(object.getFloatValue("opacity"));
+            }
+        } else {
+            JulLog.warn("未找到设置数据");
         }
-        if (object.containsKey("fgColor")) {
-            setting.setFgColor(object.getString("fgColor"));
-        }
-        if (object.containsKey("bgColor")) {
-            setting.setBgColor(object.getString("bgColor"));
-        }
-        if (object.containsKey("accentColor")) {
-            setting.setAccentColor(object.getString("accentColor"));
-        }
-        if (object.containsKey("fontFamily")) {
-            setting.setFontFamily(object.getString("fontFamily"));
-        }
-        if (object.containsKey("fontSize")) {
-            setting.setFontSize(object.getByteValue("fontSize"));
-        }
-        if (object.containsKey("fontWeight")) {
-            setting.setFontWeight(object.getShortValue("fontWeight"));
-        }
-        if (object.containsKey("locale")) {
-            setting.setLocale(object.getString("locale"));
-        }
-        if (object.containsKey("exitMode")) {
-            setting.setExitMode(object.getByteValue("exitMode"));
-        }
-        if (object.containsKey("loadMode")) {
-            setting.setLoadMode(object.getByteValue("loadMode"));
-        }
-        if (object.containsKey("rememberPageSize")) {
-            setting.setRememberPageSize(object.getByteValue("rememberPageSize"));
-        }
-        if (object.containsKey("rememberPageResize")) {
-            setting.setRememberPageResize(object.getByteValue("rememberPageResize"));
-        }
-        if (object.containsKey("rememberPageLocation")) {
-            setting.setRememberPageLocation(object.getByteValue("rememberPageLocation"));
-        }
-        if (object.containsKey("pageWidth")) {
-            setting.setPageWidth(object.getDoubleValue("pageWidth"));
-        }
-        if (object.containsKey("pageHeight")) {
-            setting.setPageHeight(object.getDoubleValue("pageHeight"));
-        }
-        if (object.containsKey("pageLeftWidth")) {
-            setting.setPageLeftWidth(object.getFloatValue("pageLeftWidth"));
-        }
-        if (object.containsKey("pageScreenX")) {
-            setting.setPageScreenX(object.getDoubleValue("pageScreenX"));
-        }
-        if (object.containsKey("pageScreenY")) {
-            setting.setPageScreenY(object.getDoubleValue("pageScreenY"));
-        }
-        if (object.containsKey("pageMaximized")) {
-            setting.setPageMaximized(object.getBooleanValue("pageMaximized"));
-        }
-        if (object.containsKey("authMode")) {
-            setting.setAuthMode(object.getByteValue("authMode"));
-        }
-        if (object.containsKey("opacity")) {
-            setting.setOpacity(object.getFloatValue("opacity"));
+        file = storePath + File.separator + "page_info.json";
+        json = FileUtil.readUtf8String(file);
+        object = JSONUtil.parseObject(json);
+        if (object != null) {
+            if (object.containsKey("width")) {
+                setting.setPageWidth(object.getDoubleValue("width"));
+            }
+            if (object.containsKey("height")) {
+                setting.setPageHeight(object.getDoubleValue("height"));
+            }
+            if (object.containsKey("screenX")) {
+                setting.setPageScreenX(object.getDoubleValue("screenX"));
+            }
+            if (object.containsKey("screenY")) {
+                setting.setPageScreenY(object.getDoubleValue("screenY"));
+            }
+            if (object.containsKey("maximized")) {
+                setting.setPageMaximized(object.getBooleanValue("maximized"));
+            }
+            if (object.containsKey("mainLeftWidth")) {
+                setting.setPageLeftWidth(object.getFloatValue("mainLeftWidth"));
+            }
+        } else {
+            JulLog.warn("未找到页面信息");
         }
         return setting;
     }

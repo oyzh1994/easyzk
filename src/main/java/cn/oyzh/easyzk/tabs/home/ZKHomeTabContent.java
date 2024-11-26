@@ -33,7 +33,6 @@ public class ZKHomeTabContent extends DynamicTabController {
     /**
      * 项目对象
      */
-//    @Resource
     private final Project project = Project.load();
 
     @Override

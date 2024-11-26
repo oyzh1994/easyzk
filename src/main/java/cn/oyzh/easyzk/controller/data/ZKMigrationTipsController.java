@@ -1,0 +1,74 @@
+package cn.oyzh.easyzk.controller.data;
+
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.SystemUtil;
+import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.handler.ZKDataMigrationHandler;
+import cn.oyzh.easyzk.store.ZKStoreUtil;
+import cn.oyzh.easyzk.util.ZKI18nHelper;
+import cn.oyzh.fx.plus.FXConst;
+import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
+import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
+import cn.oyzh.fx.plus.util.Counter;
+import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.stage.Modality;
+import javafx.stage.WindowEvent;
+
+
+/**
+ * zk迁移业务
+ *
+ * @author oyzh
+ * @since 2024/11/25
+ */
+@StageAttribute(
+        iconUrls = ZKConst.ICON_PATH,
+        modality = Modality.APPLICATION_MODAL,
+        value = FXConst.VIEW_PATH + "data/zkMigrationTips.fxml"
+)
+public class ZKMigrationTipsController extends StageController {
+
+    @FXML
+    private FXCheckBox ignoreMigration;
+
+    @Override
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        this.stage.hideOnEscape();
+    }
+
+    @Override
+    public String getViewTitle() {
+        return ZKI18nHelper.migrationTip6();
+    }
+
+    @Override
+    public void onWindowHidden(WindowEvent event) {
+        super.onWindowHidden(event);
+        if(this.ignoreMigration.isSelected()){
+            ZKStoreUtil.ignoreMigration();
+        }
+    }
+
+    @FXML
+    private void close( ) {
+        super.closeWindow();
+    }
+
+    @FXML
+    private void migration( ) {
+        this.close();
+        StageManager.showStage(ZKDataMigrationController.class);
+    }
+}

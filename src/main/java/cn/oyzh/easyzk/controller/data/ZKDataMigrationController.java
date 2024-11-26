@@ -4,6 +4,7 @@ import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.handler.ZKDataMigrationHandler;
+import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -118,7 +119,7 @@ public class ZKDataMigrationController extends StageController {
     private final Counter counter = new Counter();
 
     /**
-     * 过滤配置储存
+     * 迁移处理器
      */
     private ZKDataMigrationHandler dataMigrationHandler;
 
@@ -176,6 +177,8 @@ public class ZKDataMigrationController extends StageController {
                 this.updateStatus(I18nHelper.migrationStarting());
                 // 执行迁移
                 this.dataMigrationHandler.doMigration();
+                // 标记为完成迁移
+                ZKStoreUtil.doneMigration();
                 // 更新状态
                 this.updateStatus(I18nHelper.migrationFinished());
             } catch (Exception ex) {

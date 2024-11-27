@@ -95,18 +95,6 @@ public class ZKDataExportController extends StageController {
     private FXButton selectFile;
 
     /**
-     * 节点路径组件
-     */
-    @FXML
-    private FlexHBox nodePathBox;
-
-    /**
-     * 节点路径
-     */
-    @FXML
-    private TextField nodePath;
-
-    /**
      * 适用过滤配置
      */
     @FXML
@@ -201,15 +189,17 @@ public class ZKDataExportController extends StageController {
             this.dataExportHandler.interrupt(false);
         }
         // 节点路径
-        this.dataExportHandler.nodePath(this.nodePath.getText());
+        this.dataExportHandler.nodePath(this.exportPath);
         // 节点路径
-        this.dataExportHandler.format(this.fileFormat.selectedUserData());
+        this.dataExportHandler.fileType(this.fileFormat.selectedUserData());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.dataExportHandler.filters(this.filterStore.loadEnable());
         } else {
             this.dataExportHandler.filters(null);
         }
+        this.dataExportHandler.client(this.client);
+        this.dataExportHandler.exportFile(this.file);
         // 执行导出
         this.execTask = ThreadUtil.start(() -> {
             try {

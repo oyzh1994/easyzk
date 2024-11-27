@@ -1,23 +1,19 @@
 package cn.oyzh.easyzk.util;
 
-import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.ArrayUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.RuntimeUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.ArrayUtil;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.FileUtil;
-import cn.oyzh.common.util.MD5Util;
-import cn.oyzh.common.util.RuntimeUtil;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.i18n.I18nHelper;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.KeeperException;
 
-import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -25,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * zk节点工具类
@@ -75,7 +72,7 @@ public class ZKNodeUtil {
      */
     public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path, @NonNull String properties) throws Exception {
         if (!path.contains("/")) {
-            throw new ZKException("path:" + path + I18nHelper.invalid());
+            throw new ZKException("path:[" + path + "]" + I18nHelper.invalid());
         }
         long start = System.currentTimeMillis();
         // zk节点
@@ -324,5 +321,26 @@ public class ZKNodeUtil {
             return URLDecoder.decode(nodePath, Charset.defaultCharset());
         }
         return nodePath;
+    }
+
+    /**
+     * 获取zk节点
+     *
+     * @param path   路径
+     * @param client zk操作器
+     * @return zk节点
+     */
+    public static void loopNode(@NonNull ZKClient client, @NonNull String path, Consumer<ZKNode> consumer) throws Exception {
+        try {
+            ZKNode node = getNode(client, path);
+            consumer.accept(node);
+            List<String> childes = client.getChildren(path);
+            for (String child : childes) {
+                String nPath = ZKNodeUtil.concatPath(path, child);
+                loopNode(client, nPath, consumer);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

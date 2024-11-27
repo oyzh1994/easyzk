@@ -333,14 +333,11 @@ public class ZKNodeUtil {
      * @param success 成功处理
      * @param error   错误处理
      */
-    public static void loopNode(@NonNull ZKClient client, @NonNull String path, Predicate<String> filter, BiConsumer<String, ZKNode> success, BiConsumer<String, Exception> error) throws Exception {
+    public static void loopNode(@NonNull ZKClient client, @NonNull String path, Predicate<String> filter, @NonNull BiConsumer<String, byte[]> success, BiConsumer<String, Exception> error) throws Exception {
         try {
             // 获取节点
             if (filter == null || filter.test(path)) {
-                ZKNode node = getNode(client, path, DATA_PROPERTIES);
-                if (success != null) {
-                    success.accept(path, node);
-                }
+                success.accept(path, client.getData(path));
             }
             // 获取子节点
             List<String> children = client.getChildren(path);

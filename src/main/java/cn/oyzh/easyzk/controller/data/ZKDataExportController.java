@@ -242,6 +242,7 @@ public class ZKDataExportController extends StageController {
         this.format.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             this.fileType = null;
             this.exportFile = null;
+            this.fileName.clear();
         });
     }
 

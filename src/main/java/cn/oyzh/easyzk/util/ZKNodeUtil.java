@@ -334,12 +334,18 @@ public class ZKNodeUtil {
      * @param error   错误处理
      */
     public static void loopNode(@NonNull ZKClient client, @NonNull String path, Predicate<String> filter, @NonNull BiConsumer<String, byte[]> success, BiConsumer<String, Exception> error) throws Exception {
+        // 获取节点
         try {
-            // 获取节点
             if (filter == null || filter.test(path)) {
                 success.accept(path, client.getData(path));
             }
-            // 获取子节点
+        } catch (Exception ex) {
+            if (error != null) {
+                error.accept(path, ex);
+            }
+        }
+        // 获取子节点
+        try {
             List<String> children = client.getChildren(path);
             for (String child : children) {
                 String nPath = ZKNodeUtil.concatPath(path, child);

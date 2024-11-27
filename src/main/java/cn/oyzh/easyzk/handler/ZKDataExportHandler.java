@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.handler;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.file.FileColumns;
 import cn.oyzh.easyzk.file.FileRecord;
@@ -149,6 +150,14 @@ public class ZKDataExportHandler extends DataHandler {
         } else {
 
             this.config.prefix(prefix + " ");
+        }
+    }
+
+    public void charset(String charset) {
+        if (StringUtil.isBlank(charset)) {
+            this.config.charset(StandardCharsets.UTF_8.name());
+        } else {
+            this.config.charset(charset);
         }
     }
 

@@ -45,7 +45,8 @@ public class ZKExcelTypeFileWriter extends ZKTypeFileWriter {
     public ZKExcelTypeFileWriter(ZKDataExportConfig config, FileColumns columns) throws IOException, InvalidFormatException {
         this.columns = columns;
         this.config = config;
-        this.workbook = WorkbookHelper.create(config.filePath());
+        boolean isXlsx = StringUtil.endWithIgnoreCase(config.filePath(), ".xlsx");
+        this.workbook = WorkbookHelper.create(isXlsx);
     }
 
     @Override

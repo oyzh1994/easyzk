@@ -15,6 +15,7 @@ import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
+import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
@@ -67,14 +68,15 @@ public class ZKDataExportController extends StageController {
     private FlexVBox step3;
 
     /**
+     * 第四步
+     */
+    @FXML
+    private FlexVBox step4;
+
+    /**
      * 导出文件
      */
     private File exportFile;
-
-    /**
-     * 文件类型
-     */
-    private String fileType;
 
     /**
      * 文件格式
@@ -93,6 +95,18 @@ public class ZKDataExportController extends StageController {
      */
     @FXML
     private FXText fileName;
+
+    /**
+     * 节点路径
+     */
+    @FXML
+    private FXText nodePath;
+
+    /**
+     * 字符集
+     */
+    @FXML
+    private CharsetComboBox charset;
 
     /**
      * 选择文件
@@ -189,14 +203,17 @@ public class ZKDataExportController extends StageController {
         } else {
             this.exportHandler.interrupt(false);
         }
+        String fileType = this.format.selectedUserData();
+        // 文件类型
+        this.exportHandler.fileType(fileType);
         // 客户端
         this.exportHandler.client(this.client);
-        // 文件类型
-        this.exportHandler.fileType(this.fileType);
         // 节点路径
         this.exportHandler.nodePath(this.exportPath);
         // 导出文件
         this.exportHandler.filePath(this.exportFile.getPath());
+        // 字符集
+        this.exportHandler.charset(this.charset.getCharsetName());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.exportHandler.filters(this.filterStore.loadEnable());
@@ -204,7 +221,7 @@ public class ZKDataExportController extends StageController {
             this.exportHandler.filters(null);
         }
         // 前缀
-        if (FileNameUtil.isTxtType(this.fileType)) {
+        if (FileNameUtil.isTxtType(fileType)) {
             this.exportHandler.prefix(this.prefix.selectedUserData());
         }
         // 执行导出
@@ -252,7 +269,6 @@ public class ZKDataExportController extends StageController {
         this.stage.hideOnEscape();
         // 格式选择监听
         this.format.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            this.fileType = null;
             this.exportFile = null;
             this.fileName.clear();
         });
@@ -264,6 +280,7 @@ public class ZKDataExportController extends StageController {
         this.step1.managedBindVisible();
         this.step2.managedBindVisible();
         this.step3.managedBindVisible();
+        this.step4.managedBindVisible();
     }
 
     @Override
@@ -293,6 +310,7 @@ public class ZKDataExportController extends StageController {
     private void showStep1() {
         this.step2.disappear();
         this.step3.disappear();
+        this.step4.disappear();
         this.step1.display();
     }
 
@@ -300,8 +318,9 @@ public class ZKDataExportController extends StageController {
     private void showStep2() {
         this.step1.disappear();
         this.step3.disappear();
-        this.fileType = this.format.selectedUserData();
-        if (FileNameUtil.isTxtType(this.fileType)) {
+        this.step4.disappear();
+        String fileType = this.format.selectedUserData();
+        if (FileNameUtil.isTxtType(fileType)) {
             NodeGroupUtil.enable(this.stage, "txt");
         } else {
             NodeGroupUtil.disable(this.stage, "txt");
@@ -316,6 +335,14 @@ public class ZKDataExportController extends StageController {
             MessageBox.warn(I18nHelper.pleaseSelectFile());
             return;
         }
+        this.step1.disappear();
+        this.step2.disappear();
+        this.step4.disappear();
+        this.step3.display();
+    }
+
+    @FXML
+    private void showStep4() {
         try {
             // 检查客户端
             if (this.client == null || this.client.isClosed()) {
@@ -340,7 +367,8 @@ public class ZKDataExportController extends StageController {
 
             this.step1.disappear();
             this.step2.disappear();
-            this.step3.display();
+            this.step3.disappear();
+            this.step4.display();
         } finally {
             this.getStage().restoreTitle();
             this.getStage().enable();
@@ -352,12 +380,15 @@ public class ZKDataExportController extends StageController {
      */
     @FXML
     private void selectFile() {
-        FileExtensionFilter filter = FileChooserHelper.extensionFilter(this.fileType);
-        String fileName = "ZK-" + this.connect.getName() + "-" + I18nHelper.exportData() + "." + this.fileType;
+        String fileType = this.format.selectedUserData();
+        FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
+        String fileName = "Zookeeper-" + this.connect.getName() + "-" + I18nHelper.exportData() + "." + fileType;
         this.exportFile = FileChooserHelper.save(fileName, fileName, filter);
         if (this.exportFile != null) {
-            // 清空文件数据
-            FileUtil.clean(this.exportFile);
+            // 删除文件
+            if (this.exportFile.exists()) {
+                FileUtil.del(this.exportFile);
+            }
             this.fileName.setText(this.exportFile.getPath());
         } else {
             this.fileName.clear();
@@ -369,5 +400,6 @@ public class ZKDataExportController extends StageController {
         super.onStageShown(event);
         this.connect = this.getWindowProp("connect");
         this.exportPath = this.getWindowProp("nodePath");
+        this.nodePath.setText(this.exportPath);
     }
 }

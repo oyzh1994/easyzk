@@ -6,8 +6,8 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAuthController;
+import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
-import cn.oyzh.easyzk.controller.node.ZKNodeExportController;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSetting;
@@ -371,9 +371,12 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      * 导出zk节点
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
-        fxView.setProp("zkItem", this);
-        fxView.setProp("zkClient", this.client());
+        // StageAdapter fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
+        // fxView.setProp("zkItem", this);
+        // fxView.setProp("zkClient", this.client());
+        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class);
+        fxView.setProp("connect", this.connect());
+        fxView.setProp("nodePath", this.nodePath());
         fxView.display();
     }
 

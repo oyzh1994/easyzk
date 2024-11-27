@@ -27,10 +27,10 @@ public class ZKCsvTypeFileWriter extends ZKTypeFileWriter {
      */
     private final LineFileWriter writer;
 
-    public ZKCsvTypeFileWriter(String filePath, ZKDataExportConfig config, FileColumns columns) throws FileNotFoundException {
+    public ZKCsvTypeFileWriter(ZKDataExportConfig config, FileColumns columns) throws FileNotFoundException {
         this.columns = columns;
         this.config = config;
-        this.writer = LineFileWriter.create(filePath, config.charset());
+        this.writer = LineFileWriter.create(config.filePath(), config.charset());
     }
 
     @Override

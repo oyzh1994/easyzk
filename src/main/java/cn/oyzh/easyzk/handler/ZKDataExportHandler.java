@@ -42,11 +42,6 @@ public class ZKDataExportHandler extends DataHandler {
     private String nodePath;
 
     /**
-     * 文件路径
-     */
-    private File exportFile;
-
-    /**
      * 过滤内容列表
      */
     private List<ZKFilter> filters;
@@ -72,7 +67,7 @@ public class ZKDataExportHandler extends DataHandler {
         columns.addColumn("path");
         columns.addColumn("data");
         // 获取写入器
-        ZKTypeFileWriter writer = ZKFileHelper.initWriter(this.fileType, this.config, this.exportFile.getPath(), columns);
+        ZKTypeFileWriter writer = ZKFileHelper.initWriter(this.fileType, this.config, columns);
         if (writer != null) {
             // 批量记录
             List<FileRecord> batchList = new ArrayList<>(this.batchSize);
@@ -80,8 +75,8 @@ public class ZKDataExportHandler extends DataHandler {
             Runnable writeBatch = () -> {
                 try {
                     writer.writeRecords(batchList);
-                    for (FileRecord r : batchList) {
-                        this.message("Export Node:" + r.get(0) + " Success");
+                    for (FileRecord record : batchList) {
+                        this.message("Export Node:" + record.get(0) + " Success");
                     }
                     this.processedIncr(batchList.size());
                     batchList.clear();
@@ -143,10 +138,14 @@ public class ZKDataExportHandler extends DataHandler {
                 writeBatch.run();
                 writer.writeTrial();
                 writer.close();
-                this.message("Exported To -> " + this.exportFile.getPath());
+                this.message("Exported To -> " + this.config.filePath());
             }
         }
         this.message("Export Finished");
+    }
+
+    public void filePath(String filePath) {
+        this.config.filePath(filePath);
     }
 
     public void txtIdentifier(String txtIdentifier) {

@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.file;
 
 import cn.oyzh.common.util.FileNameUtil;
 import lombok.experimental.UtilityClass;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 
@@ -17,29 +18,28 @@ public class ZKFileHelper {
      *
      * @param fileType 文件类型
      * @param config   配置
-     * @param filePath 文件路径
      * @param columns  字段列表
      * @return 文件写入器
      * @throws IOException 异常
      */
-    public static ZKTypeFileWriter initWriter(String fileType, ZKDataExportConfig config, String filePath, FileColumns columns) throws IOException {
+    public static ZKTypeFileWriter initWriter(String fileType, ZKDataExportConfig config, FileColumns columns) throws IOException, InvalidFormatException {
         if (FileNameUtil.isExcelType(fileType)) {
-            return new ZKExcelTypeFileWriter(filePath, config, columns);
+            return new ZKExcelTypeFileWriter(config, columns);
         }
         if (FileNameUtil.isHtmlType(fileType)) {
-            return new ZKHtmlTypeFileWriter(filePath, config, columns);
+            return new ZKHtmlTypeFileWriter(config, columns);
         }
         if (FileNameUtil.isJsonType(fileType)) {
-            return new ZKJsonTypeFileWriter(filePath, config, columns);
+            return new ZKJsonTypeFileWriter(config, columns);
         }
         if (FileNameUtil.isXmlType(fileType)) {
-            return new ZKXmlTypeFileWriter(filePath, config, columns);
+            return new ZKXmlTypeFileWriter(config, columns);
         }
         if (FileNameUtil.isCsvType(fileType)) {
-            return new ZKCsvTypeFileWriter(filePath, config, columns);
+            return new ZKCsvTypeFileWriter(config, columns);
         }
         if (FileNameUtil.isTxtType(fileType)) {
-            return new ZKTxtTypeFileWriter(filePath, config, columns);
+            return new ZKTxtTypeFileWriter(config, columns);
         }
         return null;
     }

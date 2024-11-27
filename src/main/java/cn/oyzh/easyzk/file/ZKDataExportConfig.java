@@ -23,4 +23,9 @@ public class ZKDataExportConfig {
      */
     private String charset = StandardCharsets.UTF_8.displayName();
 
+    /**
+     * 文件路径
+     */
+    private String filePath;
+
 }

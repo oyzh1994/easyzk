@@ -33,10 +33,10 @@ public class ZKJsonTypeFileWriter extends ZKTypeFileWriter {
      */
     private ZKDataExportConfig config;
 
-    public ZKJsonTypeFileWriter(String filePath, ZKDataExportConfig config, FileColumns columns) throws FileNotFoundException {
+    public ZKJsonTypeFileWriter(ZKDataExportConfig config, FileColumns columns) throws FileNotFoundException {
         this.columns = columns;
         this.config = config;
-        this.writer = LineFileWriter.create(filePath, config.charset());
+        this.writer = LineFileWriter.create(config.filePath(), config.charset());
     }
 
     @Override

@@ -28,10 +28,10 @@ public class ZKHtmlTypeFileWriter extends ZKTypeFileWriter {
      */
     private LineFileWriter writer;
 
-    public ZKHtmlTypeFileWriter(String filePath, ZKDataExportConfig config, FileColumns columns) throws FileNotFoundException {
+    public ZKHtmlTypeFileWriter(ZKDataExportConfig config, FileColumns columns) throws FileNotFoundException {
         this.columns = columns;
         this.config = config;
-        this.writer = LineFileWriter.create(filePath, config.charset());
+        this.writer = LineFileWriter.create(config.filePath(), config.charset());
     }
 
     @Override

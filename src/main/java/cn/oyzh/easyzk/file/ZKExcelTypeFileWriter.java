@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.file;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.xls.WorkbookHelper;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -41,14 +42,10 @@ public class ZKExcelTypeFileWriter extends ZKTypeFileWriter {
      */
     private int xlsRowIndex = 1;
 
-    private String filePath;
-
-    public ZKExcelTypeFileWriter(String filePath, ZKDataExportConfig config, FileColumns columns) throws IOException {
+    public ZKExcelTypeFileWriter(ZKDataExportConfig config, FileColumns columns) throws IOException, InvalidFormatException {
         this.columns = columns;
         this.config = config;
-        this.filePath = filePath;
-        boolean isXlsx = StringUtil.endWithIgnoreCase(filePath, ".xlsx");
-        this.workbook = WorkbookHelper.create(isXlsx);
+        this.workbook = WorkbookHelper.create(config.filePath());
     }
 
     @Override
@@ -56,7 +53,7 @@ public class ZKExcelTypeFileWriter extends ZKTypeFileWriter {
         // 重置行索引
         this.xlsRowIndex = 1;
         // 创建一个新的工作表sheet
-        Sheet sheet = this.workbook.createSheet("Nodes");
+        Sheet sheet = this.workbook.createSheet("ZNodes");
         // 创建列名行
         Row headerRow = sheet.createRow(0);
         // 写入列名
@@ -66,10 +63,17 @@ public class ZKExcelTypeFileWriter extends ZKTypeFileWriter {
             cell.setCellValue(columnList.get(i).getName());
         }
         // 写入数据
-        WorkbookHelper.write(this.workbook, this.filePath);
+        WorkbookHelper.write(this.workbook, this.config.filePath());
     }
 
-    private void writeObject(FileRecord record, boolean flush) throws Exception {
+    /**
+     * 写入记录
+     *
+     * @param record 记录
+     * @param flush  是否刷新
+     * @throws Exception 异常
+     */
+    private void writeRecord(FileRecord record, boolean flush) throws Exception {
         // 处理数据
         Object[] values = new Object[record.size()];
         for (Map.Entry<Integer, Object> entry : record.entrySet()) {
@@ -101,22 +105,22 @@ public class ZKExcelTypeFileWriter extends ZKTypeFileWriter {
         }
         // 写入数据
         if (flush) {
-            WorkbookHelper.write(this.workbook, this.filePath);
+            WorkbookHelper.write(this.workbook, this.config.filePath());
         }
     }
 
     @Override
     public void writeRecord(FileRecord record) throws Exception {
-        this.writeObject(record, true);
+        this.writeRecord(record, true);
     }
 
     @Override
     public void writeRecords(List<FileRecord> records) throws Exception {
         for (FileRecord record : records) {
-            this.writeObject(record, false);
+            this.writeRecord(record, false);
         }
         // 写入数据
-        WorkbookHelper.write(this.workbook, this.filePath);
+        WorkbookHelper.write(this.workbook, this.config.filePath());
     }
 
     @Override
@@ -125,7 +129,5 @@ public class ZKExcelTypeFileWriter extends ZKTypeFileWriter {
         this.workbook = null;
         this.config = null;
         this.columns = null;
-        this.filePath = null;
     }
-
 }

@@ -188,7 +188,7 @@ public class ZKDataExportController extends StageController {
         // 节点路径
         this.exportHandler.nodePath(this.exportPath);
         // 导出文件
-        this.exportHandler.exportFile(this.exportFile);
+        this.exportHandler.filePath(this.exportFile.getPath());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.exportHandler.filters(this.filterStore.loadEnable());

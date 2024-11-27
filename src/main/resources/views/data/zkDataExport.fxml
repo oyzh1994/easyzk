@@ -112,6 +112,30 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXCheckBox>
+            <FlexLabel text="%base.prefix" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="25"/>
+                </VBox.margin>
+            </FlexLabel>
+            <fx:define>
+                <FXToggleGroup fx:id="prefix"/>
+            </fx:define>
+            <FXRadioButton groupId="txt" userData="" toggleGroup="$prefix" text="%base.none" disable="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton groupId="txt" userData="set" toggleGroup="$prefix" text="set" disable="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton groupId="txt" userData="create" toggleGroup="$prefix" text="create" selected="true"
+                           disable="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep1" groupId="exec" realHeight="30" iconSizePercent="0.75">

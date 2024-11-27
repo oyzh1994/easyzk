@@ -11,7 +11,6 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,6 +141,15 @@ public class ZKDataExportHandler extends DataHandler {
             }
         }
         this.message("Export Finished");
+    }
+
+    public void prefix(String prefix) {
+        if (prefix.isBlank()) {
+            this.config.prefix(null);
+        } else {
+
+            this.config.prefix(prefix + " ");
+        }
     }
 
     public void filePath(String filePath) {

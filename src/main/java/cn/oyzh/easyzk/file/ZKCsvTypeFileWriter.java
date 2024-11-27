@@ -35,7 +35,7 @@ public class ZKCsvTypeFileWriter extends ZKTypeFileWriter {
 
     @Override
     public void writeHeader() throws Exception {
-        this.writer.write(this.formatLine(this.columns.columnNames(), ",", this.config.txtIdentifier(), "\n"));
+        this.writer.write(this.formatLine(this.columns.columnNames(), null, ",", this.config.txtIdentifier(), "\n"));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ZKCsvTypeFileWriter extends ZKTypeFileWriter {
             Object val = entry.getValue();
             values[index] = val;
         }
-        this.writer.write(this.formatLine(values, ",", this.config.txtIdentifier(), "\n"));
+        this.writer.write(this.formatLine(values, null, ",", this.config.txtIdentifier(), "\n"));
     }
 
     @Override

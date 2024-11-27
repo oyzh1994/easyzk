@@ -65,18 +65,16 @@ public abstract class ZKTypeFileWriter implements Closeable {
         }
     }
 
-    protected String formatLine(Object[] objects, String fieldSeparator, String txtIdentifier, String recordSeparator) {
-        return this.formatLine(List.of(objects), fieldSeparator, txtIdentifier, recordSeparator);
+    protected String formatLine(Object[] objects, String prefix, String fieldSeparator, String txtIdentifier, String recordSeparator) {
+        return this.formatLine(List.of(objects), prefix, fieldSeparator, txtIdentifier, recordSeparator);
     }
 
-    protected String formatLine(List<?> list, String fieldSeparator, String txtIdentifier, String recordSeparator) {
+    protected String formatLine(List<?> list, String prefix, String fieldSeparator, String txtIdentifier, String recordSeparator) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
         for (Object val : list) {
-            if (first) {
-                first = false;
-            } else {
-                sb.append(fieldSeparator);
+            if (prefix != null) {
+                sb.append(prefix);
             }
             if (txtIdentifier != null) {
                 sb.append(txtIdentifier);
@@ -84,6 +82,11 @@ public abstract class ZKTypeFileWriter implements Closeable {
             sb.append(val);
             if (txtIdentifier != null) {
                 sb.append(txtIdentifier);
+            }
+            if (first) {
+                first = false;
+            } else {
+                sb.append(fieldSeparator);
             }
         }
         sb.append(recordSeparator);

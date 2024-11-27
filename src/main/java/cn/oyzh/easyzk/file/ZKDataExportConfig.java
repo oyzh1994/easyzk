@@ -28,4 +28,9 @@ public class ZKDataExportConfig {
      */
     private String filePath;
 
+    /**
+     * 前缀
+     */
+    private String prefix;
+
 }

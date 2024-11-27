@@ -2,6 +2,8 @@ package cn.oyzh.easyzk.controller.data;
 
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.FileNameUtil;
+import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.handler.ZKDataExportHandler;
@@ -79,6 +81,12 @@ public class ZKDataExportController extends StageController {
      */
     @FXML
     private FXToggleGroup format;
+
+    /**
+     * 前缀
+     */
+    @FXML
+    private FXToggleGroup prefix;
 
     /**
      * 文件名
@@ -195,6 +203,10 @@ public class ZKDataExportController extends StageController {
         } else {
             this.exportHandler.filters(null);
         }
+        // 前缀
+        if (FileNameUtil.isTxtType(this.fileType)) {
+            this.exportHandler.prefix(this.prefix.selectedUserData());
+        }
         // 执行导出
         this.execTask = ThreadUtil.start(() -> {
             try {
@@ -289,6 +301,11 @@ public class ZKDataExportController extends StageController {
         this.step1.disappear();
         this.step3.disappear();
         this.fileType = this.format.selectedUserData();
+        if (FileNameUtil.isTxtType(this.fileType)) {
+            NodeGroupUtil.enable(this.stage, "txt");
+        } else {
+            NodeGroupUtil.disable(this.stage, "txt");
+        }
         this.step2.display();
     }
 
@@ -339,6 +356,8 @@ public class ZKDataExportController extends StageController {
         String fileName = "ZK-" + this.connect.getName() + "-" + I18nHelper.exportData() + "." + this.fileType;
         this.exportFile = FileChooserHelper.save(fileName, fileName, filter);
         if (this.exportFile != null) {
+            // 清空文件数据
+            FileUtil.clean(this.exportFile);
             this.fileName.setText(this.exportFile.getPath());
         } else {
             this.fileName.clear();

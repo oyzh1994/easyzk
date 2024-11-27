@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.file;
 
 import cn.oyzh.common.file.LineFileWriter;
+import cn.oyzh.common.json.JSONUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,10 +39,18 @@ public class ZKTxtTypeFileWriter extends ZKTypeFileWriter {
         Object[] values = new Object[record.size()];
         for (Map.Entry<Integer, Object> entry : record.entrySet()) {
             int index = entry.getKey();
-            Object val = entry.getValue();
+            Object val = this.parameterized(entry.getValue());
             values[index] = val;
         }
-        this.writer.write(this.formatLine(values, " ", this.config.txtIdentifier(), "\n"));
+        this.writer.write(this.formatLine(values, " ", null, "\n"));
+    }
+
+    @Override
+    public Object parameterized(Object value) {
+        if (value == null) {
+            return "";
+        }
+        return JSONUtil.escape(value.toString());
     }
 
     @Override

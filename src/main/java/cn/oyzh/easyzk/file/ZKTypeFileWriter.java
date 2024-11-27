@@ -2,10 +2,7 @@ package cn.oyzh.easyzk.file;
 
 
 import java.io.Closeable;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author oyzh
@@ -20,10 +17,10 @@ public abstract class ZKTypeFileWriter implements Closeable {
     /**
      * 参数化
      *
-     * @param value  值
+     * @param value 值
      * @return 参数化后的值
      */
-    public Object parameterized( Object value) {
+    public Object parameterized(Object value) {
         if (value == null) {
             return "";
         }
@@ -74,14 +71,23 @@ public abstract class ZKTypeFileWriter implements Closeable {
 
     protected String formatLine(List<?> list, String fieldSeparator, String txtIdentifier, String recordSeparator) {
         StringBuilder sb = new StringBuilder();
+        boolean first = true;
         for (Object val : list) {
-            sb.append(fieldSeparator)
-                    .append(txtIdentifier)
-                    .append(val)
-                    .append(txtIdentifier);
+            if (first) {
+                first = false;
+            } else {
+                sb.append(fieldSeparator);
+            }
+            if (txtIdentifier != null) {
+                sb.append(txtIdentifier);
+            }
+            sb.append(val);
+            if (txtIdentifier != null) {
+                sb.append(txtIdentifier);
+            }
         }
         sb.append(recordSeparator);
-        return sb.substring(1);
+        return sb.toString();
     }
 
 }

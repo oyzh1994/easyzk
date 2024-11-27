@@ -49,12 +49,27 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXRadioButton>
+            <FXRadioButton userData="txt" toggleGroup="$format" text="%base.txtType">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
             <FXRadioButton userData="xls" toggleGroup="$format" text="%base.xlsType">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXRadioButton>
             <FXRadioButton userData="xlsx" toggleGroup="$format" text="%base.xlsxType">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton userData="xml" toggleGroup="$format" text="%base.xmlType">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton userData="html" toggleGroup="$format" text="%base.htmlType">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>

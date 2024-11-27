@@ -20,12 +20,10 @@ public abstract class ZKTypeFileWriter implements Closeable {
     /**
      * 参数化
      *
-     * @param column 字段
      * @param value  值
-     * @param config 导出配置
      * @return 参数化后的值
      */
-    public Object parameterized(FileColumn column, Object value, ZKDataExportConfig config) {
+    public Object parameterized( Object value) {
         if (value == null) {
             return "";
         }

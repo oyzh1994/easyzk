@@ -74,12 +74,4 @@ public class ZKXmlTypeFileWriter extends ZKTypeFileWriter {
         this.config = null;
         this.columns = null;
     }
-
-    @Override
-    public Object parameterized(FileColumn column, Object value, ZKDataExportConfig config) {
-        if (value == null) {
-            return null;
-        }
-        return super.parameterized(column, value, config);
-    }
 }

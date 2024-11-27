@@ -21,7 +21,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 /**
  * zk节点工具类
@@ -324,23 +325,33 @@ public class ZKNodeUtil {
     }
 
     /**
-     * 获取zk节点
+     * 递归获取zk节点
      *
-     * @param path   路径
-     * @param client zk操作器
-     * @return zk节点
+     * @param path    路径
+     * @param client  zk操作器
+     * @param filter  过滤器
+     * @param success 成功处理
+     * @param error   错误处理
      */
-    public static void loopNode(@NonNull ZKClient client, @NonNull String path, Consumer<ZKNode> consumer) throws Exception {
+    public static void loopNode(@NonNull ZKClient client, @NonNull String path, Predicate<String> filter, BiConsumer<String, ZKNode> success, BiConsumer<String, Exception> error) throws Exception {
         try {
-            ZKNode node = getNode(client, path);
-            consumer.accept(node);
-            List<String> childes = client.getChildren(path);
-            for (String child : childes) {
+            // 获取节点
+            if (filter == null || filter.test(path)) {
+                ZKNode node = getNode(client, path, DATA_PROPERTIES);
+                if (success != null) {
+                    success.accept(path, node);
+                }
+            }
+            // 获取子节点
+            List<String> children = client.getChildren(path);
+            for (String child : children) {
                 String nPath = ZKNodeUtil.concatPath(path, child);
-                loopNode(client, nPath, consumer);
+                loopNode(client, nPath, filter, success, error);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            if (error != null) {
+                error.accept(path, ex);
+            }
         }
     }
 }

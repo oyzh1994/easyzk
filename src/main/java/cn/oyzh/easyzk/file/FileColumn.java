@@ -11,8 +11,6 @@ public class FileColumn {
 
     private String name;
 
-    private String type;
-
     private int position;
 
     public FileColumn() {
@@ -23,9 +21,8 @@ public class FileColumn {
         this.name = name;
     }
 
-    public FileColumn(String name, String type, int position) {
+    public FileColumn(String name, int position) {
         this.name = name;
-        this.type = type;
         this.position = position;
     }
 }

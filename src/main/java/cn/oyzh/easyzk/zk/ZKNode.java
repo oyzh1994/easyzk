@@ -131,6 +131,15 @@ public class ZKNode implements Comparable<ZKNode> {
     /**
      * 节点值字符串
      *
+     * @return 节点值字符串
+     */
+    public String nodeDataStr() {
+        return this.nodeDataStr((Charset) null);
+    }
+
+    /**
+     * 节点值字符串
+     *
      * @param charset 字符集
      * @return 节点值字符串
      */

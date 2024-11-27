@@ -41,7 +41,7 @@ public class ZKTxtTypeFileWriter extends ZKTypeFileWriter {
             Object val = entry.getValue();
             values[index] = val;
         }
-        this.writer.write(this.formatLine(values, " ", this.config.txtIdentifier(), this.config.recordSeparator()));
+        this.writer.write(this.formatLine(values, " ", this.config.txtIdentifier(), "\n"));
     }
 
     @Override

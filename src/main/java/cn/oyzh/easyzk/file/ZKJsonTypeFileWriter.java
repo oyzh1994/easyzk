@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.file;
 
 import cn.oyzh.common.file.LineFileWriter;
+import cn.oyzh.common.json.JSONUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,11 +19,6 @@ public class ZKJsonTypeFileWriter extends ZKTypeFileWriter {
     private FileColumns columns;
 
     /**
-     * 导出配置
-     */
-    private ZKDataExportConfig config;
-
-    /**
      * 文件读取器
      */
     private LineFileWriter writer;
@@ -31,6 +27,11 @@ public class ZKJsonTypeFileWriter extends ZKTypeFileWriter {
      * 是否首次写入
      */
     private boolean firstWrite = true;
+
+    /**
+     * 导出配置
+     */
+    private ZKDataExportConfig config;
 
     public ZKJsonTypeFileWriter(String filePath, ZKDataExportConfig config, FileColumns columns) throws FileNotFoundException {
         this.columns = columns;
@@ -60,17 +61,8 @@ public class ZKJsonTypeFileWriter extends ZKTypeFileWriter {
             // 名称
             builder.append("   \"").append(columnName).append("\" : ");
             // 值处理
-            Object val = entry.getValue();
-            if (val != null) {
-                // 数字
-                if (val instanceof Number) {
-                    builder.append(val);
-                } else {// 其他类型
-                    builder.append("\"").append(val).append("\"");
-                }
-            } else {
-                builder.append("null");
-            }
+            Object val = this.parameterized(entry.getValue());
+            builder.append(val);
             if (--size != 0) {
                 builder.append(",\n");
             } else {
@@ -91,10 +83,13 @@ public class ZKJsonTypeFileWriter extends ZKTypeFileWriter {
     }
 
     @Override
-    public Object parameterized(FileColumn column, Object value, ZKDataExportConfig config) {
+    public Object parameterized(Object value) {
         if (value == null) {
-            return null;
+            return "null";
         }
-        return super.parameterized(column, value, config);
+        if (value instanceof Number) {
+            return value;
+        }
+        return "\"" + JSONUtil.escape(value.toString()) + "\"";
     }
 }

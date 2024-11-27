@@ -42,19 +42,19 @@
                 </VBox.margin>
             </FlexLabel>
             <fx:define>
-                <FXToggleGroup fx:id="fileFormat"/>
+                <FXToggleGroup fx:id="format"/>
             </fx:define>
-            <FXRadioButton userData="json" toggleGroup="$fileFormat" text="%base.jsonType" selected="true">
+            <FXRadioButton userData="json" toggleGroup="$format" text="%base.jsonType" selected="true">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXRadioButton>
-            <FXRadioButton userData="xls" toggleGroup="$fileFormat" text="%base.xlsType">
+            <FXRadioButton userData="xls" toggleGroup="$format" text="%base.xlsType">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXRadioButton>
-            <FXRadioButton userData="xlsx" toggleGroup="$fileFormat" text="%base.xlsxType">
+            <FXRadioButton userData="xlsx" toggleGroup="$format" text="%base.xlsxType">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
@@ -81,7 +81,7 @@
                         <Insets left="30" top="10"/>
                     </HBox.margin>
                 </FXButton>
-                <FXText fx:id="exportFile">
+                <FXText fx:id="fileName">
                     <HBox.margin>
                         <Insets left="10" top="15"/>
                     </HBox.margin>

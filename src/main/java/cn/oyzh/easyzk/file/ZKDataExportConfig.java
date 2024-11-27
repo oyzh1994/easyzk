@@ -14,10 +14,6 @@ import java.nio.charset.StandardCharsets;
 public class ZKDataExportConfig {
 
     /**
-     * 记录分割符号
-     */
-    private String recordSeparator = System.lineSeparator();
-    /**
      * 文本识别符号
      */
     private String txtIdentifier = "\"";

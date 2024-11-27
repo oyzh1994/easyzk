@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.zk;
 
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKServerNode;
 import cn.oyzh.easyzk.enums.ZKConnState;
@@ -14,8 +16,6 @@ import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
-import cn.oyzh.common.log.JulLog;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -259,6 +259,15 @@ public class ZKClient {
      * 连接zk
      */
     public void start() {
+        this.start(this.connect.connectTimeOutMs());
+    }
+
+    /**
+     * 连接zk
+     *
+     * @param timeout 超时时间
+     */
+    public void start(int timeout) {
         if (this.isConnected() || this.isConnecting()) {
             return;
         }
@@ -284,7 +293,7 @@ public class ZKClient {
             // 开始连接
             this.framework.start();
             // 连接成功前阻塞线程
-            if (this.framework.blockUntilConnected(this.connect.getConnectTimeOut(), TimeUnit.SECONDS)) {
+            if (this.framework.blockUntilConnected(timeout, TimeUnit.MILLISECONDS)) {
                 // 更新连接状态
                 this.state.set(ZKConnState.CONNECTED);
                 // 设置认证信息为已认证
@@ -977,7 +986,7 @@ public class ZKClient {
      *
      * @param path  路径
      * @param bytes 删除数据大小配额
-     * @param count   删除子节点数量配额
+     * @param count 删除子节点数量配额
      */
     public boolean delQuota(@NonNull String path, boolean bytes, boolean count) throws Exception {
         this.throwReadonlyException();

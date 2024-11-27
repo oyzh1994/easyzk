@@ -390,15 +390,14 @@ public class ZKDataTransportController extends StageController {
 
             if (this.sourceClient == null || this.sourceClient.isClosed()) {
                 DownLatch latch = DownLatch.of();
-                sourceInfo.setConnectTimeOut(3);
                 ThreadUtil.start(() -> {
                     try {
                         this.sourceClient = ZKClientUtil.newClient(sourceInfo);
-                        this.sourceClient.start();
+                        this.sourceClient.start(2500);
                     } finally {
                         latch.countDown();
                     }
-                }, 100);
+                });
                 if (!latch.await(3000) || !this.sourceClient.isConnected()) {
                     this.sourceClient.close();
                     this.sourceClient = null;
@@ -410,15 +409,14 @@ public class ZKDataTransportController extends StageController {
 
             if (this.targetClient == null || this.targetClient.isClosed()) {
                 DownLatch latch = DownLatch.of();
-                targetInfo.setConnectTimeOut(3);
                 ThreadUtil.start(() -> {
                     try {
                         this.targetClient = ZKClientUtil.newClient(targetInfo);
-                        this.targetClient.start();
+                        this.targetClient.start(2500);
                     } finally {
                         latch.countDown();
                     }
-                }, 100);
+                });
                 if (!latch.await(3000) || !this.targetClient.isConnected()) {
                     this.targetClient.close();
                     this.targetClient = null;

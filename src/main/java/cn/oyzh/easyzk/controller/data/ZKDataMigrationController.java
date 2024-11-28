@@ -121,7 +121,7 @@ public class ZKDataMigrationController extends StageController {
     /**
      * 迁移处理器
      */
-    private ZKDataMigrationHandler dataMigrationHandler;
+    private ZKDataMigrationHandler migrationHandler;
 
     /**
      * 执行迁移
@@ -135,11 +135,11 @@ public class ZKDataMigrationController extends StageController {
         this.migrationStatus.clear();
         // 开始处理
         NodeGroupUtil.disable(this.stage, "exec");
-        this.stage.appendTitle("===" + I18nHelper.transportInProgress() + "===");
+        this.stage.appendTitle("===" + I18nHelper.migrationInProgress() + "===");
         // 生成迁移处理器
-        if (this.dataMigrationHandler == null) {
-            this.dataMigrationHandler = new ZKDataMigrationHandler();
-            this.dataMigrationHandler
+        if (this.migrationHandler == null) {
+            this.migrationHandler = new ZKDataMigrationHandler();
+            this.migrationHandler
                     .messageHandler(str -> this.migrationMsg.appendLine(str))
                     .processedHandler(count -> {
                         if (count == 0) {
@@ -152,22 +152,22 @@ public class ZKDataMigrationController extends StageController {
                         this.updateStatus(I18nHelper.migrationInProgress());
                     });
         } else {
-            this.dataMigrationHandler.interrupt(false);
+            this.migrationHandler.interrupt(false);
         }
         // 分组
-        this.dataMigrationHandler.groups(this.groups.isSelected());
+        this.migrationHandler.groups(this.groups.isSelected());
         // 过滤
-        this.dataMigrationHandler.filters(this.filters.isSelected());
+        this.migrationHandler.filters(this.filters.isSelected());
         // 认证信息
-        this.dataMigrationHandler.authInfos(this.authInfos.isSelected());
+        this.migrationHandler.authInfos(this.authInfos.isSelected());
         // 连接
-        this.dataMigrationHandler.connections(this.connections.isSelected());
+        this.migrationHandler.connections(this.connections.isSelected());
         // 终端历史
-        this.dataMigrationHandler.terminalHistory(this.terminalHistory.isSelected());
+        this.migrationHandler.terminalHistory(this.terminalHistory.isSelected());
         // 应用配置
-        this.dataMigrationHandler.applicationSetting(this.applicationSetting.isSelected());
+        this.migrationHandler.applicationSetting(this.applicationSetting.isSelected());
         // 数据处理策略
-        this.dataMigrationHandler.dataPolicy(this.dataPolicy.selectedUserData());
+        this.migrationHandler.dataPolicy(this.dataPolicy.selectedUserData());
         // 开始处理
         NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.migrationInProgress() + "===");
@@ -176,7 +176,7 @@ public class ZKDataMigrationController extends StageController {
             try {
                 this.updateStatus(I18nHelper.migrationStarting());
                 // 执行迁移
-                this.dataMigrationHandler.doMigration();
+                this.migrationHandler.doMigration();
                 // 标记为完成迁移
                 ZKStoreUtil.doneMigration();
                 // 更新状态
@@ -208,8 +208,8 @@ public class ZKDataMigrationController extends StageController {
     private void stopMigration() {
         ThreadUtil.interrupt(this.execTask);
         this.execTask = null;
-        if (this.dataMigrationHandler != null) {
-            this.dataMigrationHandler.interrupt();
+        if (this.migrationHandler != null) {
+            this.migrationHandler.interrupt();
         }
     }
 

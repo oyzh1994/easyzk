@@ -90,7 +90,7 @@
             <FlexHBox flexWidth="100%">
                 <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
                     <HBox.margin>
-                        <Insets left="30" top="5"/>
+                        <Insets left="30" top="10"/>
                     </HBox.margin>
                 </FXButton>
                 <FXText fx:id="fileName">
@@ -106,7 +106,7 @@
             </AccentLabel>
             <FlexCheckBox fx:id="ignoreExist" text="%base.skipByExists">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </FlexCheckBox>
         </FlexVBox>
@@ -132,7 +132,7 @@
             </FlexLabel>
             <FXText fx:id="connectionName">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXText>
             <FlexLabel text="%base.charset" realHeight="30" fontWeight="BOLD">
@@ -142,7 +142,7 @@
             </FlexLabel>
             <CharsetComboBox fx:id="charset" realHeight="25">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </CharsetComboBox>
         </FlexVBox>

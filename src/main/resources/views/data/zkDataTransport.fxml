@@ -182,7 +182,7 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%base.nodeExists" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
-                    <Insets left="30" top="25"/>
+                    <Insets left="30" top="20"/>
                 </VBox.margin>
             </FlexLabel>
             <fx:define>
@@ -200,7 +200,7 @@
             </FXRadioButton>
             <FlexLabel text="%base.nodeFilter" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
-                    <Insets left="30" top="25"/>
+                    <Insets left="30" top="20"/>
                 </VBox.margin>
             </FlexLabel>
             <FXCheckBox fx:id="applyFilter" text="%base.apply">

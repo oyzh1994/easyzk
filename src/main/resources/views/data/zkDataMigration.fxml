@@ -35,7 +35,7 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%base.data" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
-                    <Insets left="30" top="25"/>
+                    <Insets left="30" top="20"/>
                 </VBox.margin>
             </FlexLabel>
             <FXCheckBox fx:id="groups" text="%base.groups" selected="true">
@@ -55,7 +55,7 @@
             </FXCheckBox>
             <FlexLabel text="%base.setting" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
-                    <Insets left="30" top="25"/>
+                    <Insets left="30" top="20"/>
                 </VBox.margin>
             </FlexLabel>
             <FXCheckBox fx:id="applicationSetting" text="%base.applicationSetting" selected="true">
@@ -86,7 +86,7 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%zk.migration.tip3" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
-                    <Insets left="30" top="25"/>
+                    <Insets left="30" top="20"/>
                 </VBox.margin>
             </FlexLabel>
             <fx:define>

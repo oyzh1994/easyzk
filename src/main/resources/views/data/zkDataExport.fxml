@@ -18,7 +18,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.button.OldButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataExportController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -99,7 +98,7 @@
             <FlexHBox flexWidth="100%">
                 <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
                     <HBox.margin>
-                        <Insets left="30" top="5"/>
+                        <Insets left="30" top="10"/>
                     </HBox.margin>
                 </FXButton>
                 <FXText fx:id="fileName">
@@ -115,7 +114,7 @@
             </FlexLabel>
             <FXCheckBox fx:id="applyFilter" text="%base.apply">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXCheckBox>
             <FlexLabel text="%base.prefix" realHeight="30" fontWeight="BOLD">
@@ -128,18 +127,18 @@
             </fx:define>
             <FXRadioButton groupId="txt" userData="" toggleGroup="$prefix" text="%base.none" disable="true">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXRadioButton>
             <FXRadioButton groupId="txt" userData="set" toggleGroup="$prefix" text="set" disable="true">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXRadioButton>
             <FXRadioButton groupId="txt" userData="create" toggleGroup="$prefix" text="create" selected="true"
                            disable="true">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXRadioButton>
         </FlexVBox>
@@ -165,7 +164,7 @@
             </FlexLabel>
             <FXText fx:id="nodePath">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXText>
             <FlexLabel text="%base.charset" realHeight="30" fontWeight="BOLD">
@@ -175,7 +174,7 @@
             </FlexLabel>
             <CharsetComboBox fx:id="charset" realHeight="25">
                 <VBox.margin>
-                    <Insets left="30" top="5"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </CharsetComboBox>
         </FlexVBox>

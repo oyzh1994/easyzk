@@ -1109,7 +1109,7 @@ public class ZKClient {
         }
     }
 
-    public List<ZKEnvNode> localEnviNodes() {
+    public List<ZKEnvNode> localEnvNodes() {
         List<ZKEnvNode> list = new ArrayList<>();
         ZKEnvNode host = new ZKEnvNode("host", this.connect.getHost());
         ZKEnvNode connection = new ZKEnvNode("connection", this.connect.getName());
@@ -1122,7 +1122,7 @@ public class ZKClient {
         return list;
     }
 
-    public String serverEnvi() {
+    public String envi() {
         try {
             return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "envi");
         } catch (Exception ex) {
@@ -1131,12 +1131,37 @@ public class ZKClient {
         return null;
     }
 
-    public List<ZKEnvNode> serverEnviNodes() {
-        String envi = this.serverEnvi();
+    public List<ZKEnvNode> serverEnvNodes() {
+        String envi = this.envi();
         if (envi != null) {
             List<ZKEnvNode> list = new ArrayList<>();
             envi.lines().skip(1).forEach(l -> {
                 int index = l.indexOf("=");
+                String name = l.substring(0, index);
+                String value = l.substring(index + 1);
+                ZKEnvNode envNode = new ZKEnvNode(name, value);
+                list.add(envNode);
+            });
+            return list;
+        }
+        return Collections.emptyList();
+    }
+
+    public String srvr() {
+        try {
+            return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "srvr");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ZKEnvNode> srvrNodes() {
+        String envi = this.srvr();
+        if (envi != null) {
+            List<ZKEnvNode> list = new ArrayList<>();
+            envi.lines().forEach(l -> {
+                int index = l.indexOf(":");
                 String name = l.substring(0, index);
                 String value = l.substring(index + 1);
                 ZKEnvNode envNode = new ZKEnvNode(name, value);

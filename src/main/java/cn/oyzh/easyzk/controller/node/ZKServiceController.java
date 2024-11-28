@@ -31,6 +31,12 @@ import java.util.List;
 public class ZKServiceController extends StageController {
 
     /**
+     * 状态
+     */
+    @FXML
+    private FlexTableView<ZKEnvNode> statTable;
+
+    /**
      * 客户端环境
      */
     @FXML
@@ -59,12 +65,16 @@ public class ZKServiceController extends StageController {
         ZKClient zkClient = this.getWindowProp("zkClient");
 
         // 客户端信息
-        List<ZKEnvNode> localEnviNodes = zkClient.localEnviNodes();
+        List<ZKEnvNode> localEnviNodes = zkClient.localEnvNodes();
         this.localEnvTable.setItem(localEnviNodes);
 
         // 服务信息
-        List<ZKEnvNode> serverEnviNodes = zkClient.serverEnviNodes();
+        List<ZKEnvNode> serverEnviNodes = zkClient.serverEnvNodes();
         this.serverEnvTable.setItem(serverEnviNodes);
+
+        // 状态信息
+        List<ZKEnvNode> srvrNodes = zkClient.srvrNodes();
+        this.statTable.setItem(srvrNodes);
 
         // 集群信息
         List<ZKClusterNode> clusterNodes = zkClient.getServers();

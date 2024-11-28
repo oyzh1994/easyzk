@@ -1,24 +1,17 @@
 package cn.oyzh.easyzk.controller.node;
 
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.dto.ZKServerNode;
+import cn.oyzh.easyzk.dto.ZKEnvNode;
+import cn.oyzh.easyzk.dto.ZKClusterNode;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.common.dto.Paging;
-import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import org.apache.zookeeper.Version;
 
 import java.util.List;
 
@@ -38,113 +31,44 @@ import java.util.List;
 public class ZKServiceController extends StageController {
 
     /**
-     * sdk版本
+     * 客户端环境
      */
     @FXML
-    private TextField sdkVersion;
+    private FlexTableView<ZKEnvNode> localEnvTable;
 
     /**
-     * zk连接地址
+     * 服务端环境
      */
     @FXML
-    private TextArea zkInfoHost;
+    private FlexTableView<ZKEnvNode> serverEnvTable;
 
     /**
-     * zk名称
+     * 集群列表
      */
     @FXML
-    private TextField zkInfoName;
+    private FlexTableView<ZKClusterNode> clusterTable;
 
-    /**
-     * 分页组件
-     */
-    @FXML
-    private PageBox<ZKServerNode> pagePane;
-
-    /**
-     * 数据列表
-     */
-    @FXML
-    private FlexTableView<ZKServerNode> listTable;
-
-    /**
-     * id列
-     */
-    @FXML
-    private TableColumn<ZKServerNode, Long> id;
-
-    /**
-     * 交互地址列
-     */
-    @FXML
-    private TableColumn<ZKServerNode, String> addr;
-
-    /**
-     * 类型列
-     */
-    @FXML
-    private TableColumn<ZKServerNode, String> type;
-
-    /**
-     * 权重列
-     */
-    @FXML
-    private TableColumn<ZKServerNode, Long> weight;
-
-    /**
-     * 客户端连接地址列
-     */
-    @FXML
-    private TableColumn<ZKServerNode, String> clientAddr;
-
-    /**
-     * 选举地址列
-     */
-    @FXML
-    private TableColumn<ZKServerNode, String> electionAddr;
-
-    /**
-     * 分页数据
-     */
-    private Paging<ZKServerNode> pageData;
-
-    /**
-     * 上一页
-     */
-    @FXML
-    private void prevPage() {
-        this.listTable.setItem(this.pageData.prev());
-    }
-
-    /**
-     * 下一页
-     */
-    @FXML
-    private void nextPage() {
-        this.listTable.setItem(this.pageData.next());
+    @Override
+    protected void bindListeners() {
+        super.bindListeners();
+        this.stage.hideOnEscape();
     }
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        this.addr.setCellValueFactory(new PropertyValueFactory<>("addr"));
-        this.type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        this.weight.setCellValueFactory(new PropertyValueFactory<>("weight"));
-        this.clientAddr.setCellValueFactory(new PropertyValueFactory<>("clientAddr"));
-        this.electionAddr.setCellValueFactory(new PropertyValueFactory<>("electionAddr"));
-
-        ZKConnect zkInfo = this.getWindowProp("zkInfo");
-        this.zkInfoName.setText(zkInfo.getName());
-        this.zkInfoHost.setText(zkInfo.getHost());
-        this.sdkVersion.setText(Version.getFullVersion());
-
         ZKClient zkClient = this.getWindowProp("zkClient");
-        List<ZKServerNode> servers = zkClient.getServers();
-        this.pageData = new Paging<>(servers, 5);
-        this.pagePane.setPaging(this.pageData);
-        this.listTable.getItems().clear();
-        this.listTable.getItems().addAll(this.pageData.first());
-        this.stage.hideOnEscape();
+
+        // 客户端信息
+        List<ZKEnvNode> localEnviNodes = zkClient.localEnviNodes();
+        this.localEnvTable.setItem(localEnviNodes);
+
+        // 服务信息
+        List<ZKEnvNode> serverEnviNodes = zkClient.serverEnviNodes();
+        this.serverEnvTable.setItem(serverEnviNodes);
+
+        // 集群信息
+        List<ZKClusterNode> clusterNodes = zkClient.getServers();
+        this.clusterTable.setItem(clusterNodes);
     }
 
     @Override

@@ -3,7 +3,8 @@ package cn.oyzh.easyzk.zk;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.dto.ZKServerNode;
+import cn.oyzh.easyzk.dto.ZKClusterNode;
+import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
@@ -41,10 +42,12 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Quotas;
 import org.apache.zookeeper.StatsTrack;
+import org.apache.zookeeper.Version;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.cli.DelQuotaCommand;
 import org.apache.zookeeper.cli.SetQuotaCommand;
+import org.apache.zookeeper.client.FourLetterWordMain;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.server.quorum.QuorumPeer;
@@ -52,6 +55,7 @@ import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -1036,8 +1040,8 @@ public class ZKClient {
      *
      * @return 集群服务列表
      */
-    public List<ZKServerNode> getServers() {
-        List<ZKServerNode> servers = new ArrayList<>();
+    public List<ZKClusterNode> getServers() {
+        List<ZKClusterNode> servers = new ArrayList<>();
         try {
             QuorumVerifier verifier = this.getCurrentConfig();
             // 老版本实现
@@ -1047,7 +1051,7 @@ public class ZKClient {
                     if (data != null) {
                         for (String str : data.lines().toList()) {
                             if (str.startsWith("server.")) {
-                                servers.add(new ZKServerNode(str));
+                                servers.add(new ZKClusterNode(str));
                             }
                         }
                     }
@@ -1055,7 +1059,7 @@ public class ZKClient {
             } else {// 新版本实现
                 Collection<QuorumPeer.QuorumServer> quorumServers = verifier.getVotingMembers().values();
                 for (QuorumPeer.QuorumServer quorumServer : quorumServers) {
-                    ZKServerNode serverNode = new ZKServerNode(quorumServer);
+                    ZKClusterNode serverNode = new ZKClusterNode(quorumServer);
                     serverNode.setWeight(verifier.getWeight(quorumServer.id));
                     servers.add(serverNode);
                 }
@@ -1104,4 +1108,43 @@ public class ZKClient {
             this.state.addListener(stateListener);
         }
     }
+
+    public List<ZKEnvNode> localEnviNodes() {
+        List<ZKEnvNode> list = new ArrayList<>();
+        ZKEnvNode host = new ZKEnvNode("host", this.connect.getHost());
+        ZKEnvNode connection = new ZKEnvNode("connection", this.connect.getName());
+        ZKEnvNode version = new ZKEnvNode("sdkVersion", Version.getFullVersion());
+        ZKEnvNode jdkVersion = new ZKEnvNode("jdkVersion", System.getProperty("java.vm.version"));
+        list.add(host);
+        list.add(version);
+        list.add(connection);
+        list.add(jdkVersion);
+        return list;
+    }
+
+    public String serverEnvi() {
+        try {
+            return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "envi");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ZKEnvNode> serverEnviNodes() {
+        String envi = this.serverEnvi();
+        if (envi != null) {
+            List<ZKEnvNode> list = new ArrayList<>();
+            envi.lines().skip(1).forEach(l -> {
+                int index = l.indexOf("=");
+                String name = l.substring(0, index);
+                String value = l.substring(index + 1);
+                ZKEnvNode envNode = new ZKEnvNode(name, value);
+                list.add(envNode);
+            });
+            return list;
+        }
+        return Collections.emptyList();
+    }
+
 }

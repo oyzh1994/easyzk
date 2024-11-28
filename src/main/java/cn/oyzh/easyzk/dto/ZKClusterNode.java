@@ -8,13 +8,13 @@ import org.apache.zookeeper.server.quorum.QuorumPeer;
 import java.util.Locale;
 
 /**
- * zk服务节点
+ * zk集群节点
  *
  * @author oyzh
  * @since 2023/1/6
  */
 @Data
-public class ZKServerNode {
+public class ZKClusterNode {
 
     /**
      * id
@@ -46,7 +46,7 @@ public class ZKServerNode {
      */
     private String electionAddr;
 
-    public ZKServerNode(@NonNull QuorumPeer.QuorumServer server) {
+    public ZKClusterNode(@NonNull QuorumPeer.QuorumServer server) {
         this.id = server.id;
         if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
             this.type = server.type == QuorumPeer.LearnerType.PARTICIPANT ? "选举节点" : "观察节点";
@@ -60,7 +60,7 @@ public class ZKServerNode {
         this.electionAddr = server.electionAddr.toString();
     }
 
-    public ZKServerNode(@NonNull String serverTxt) {
+    public ZKClusterNode(@NonNull String serverTxt) {
         String serverName = serverTxt.split(":")[0];
         serverName = serverName.substring(serverName.indexOf("=") + 1);
         this.weight = 1L;

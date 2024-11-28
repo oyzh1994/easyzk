@@ -2,13 +2,13 @@ package cn.oyzh.easyzk.handler;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.file.FileColumns;
-import cn.oyzh.easyzk.file.FileRecord;
-import cn.oyzh.easyzk.file.ZKDataExportConfig;
-import cn.oyzh.easyzk.file.ZKFileHelper;
-import cn.oyzh.easyzk.file.ZKTypeFileWriter;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.store.file.FileColumns;
+import cn.oyzh.store.file.FileHelper;
+import cn.oyzh.store.file.FileRecord;
+import cn.oyzh.store.file.FileWriteConfig;
+import cn.oyzh.store.file.TypeFileWriter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -54,7 +54,7 @@ public class ZKDataExportHandler extends DataHandler {
     /**
      * 导出配置
      */
-    private ZKDataExportConfig config = new ZKDataExportConfig();
+    private FileWriteConfig config = new FileWriteConfig();
 
     /**
      * 执行导出
@@ -67,7 +67,7 @@ public class ZKDataExportHandler extends DataHandler {
         columns.addColumn("path");
         columns.addColumn("data");
         // 获取写入器
-        ZKTypeFileWriter writer = ZKFileHelper.initWriter(this.fileType, this.config, columns);
+        TypeFileWriter writer = FileHelper.initWriter(this.fileType, this.config, columns);
         if (writer != null) {
             // 批量记录
             List<FileRecord> batchList = new ArrayList<>(this.batchSize);

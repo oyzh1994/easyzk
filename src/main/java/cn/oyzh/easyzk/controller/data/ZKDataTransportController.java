@@ -200,7 +200,7 @@ public class ZKDataTransportController extends StageController {
                     .messageHandler(str -> this.transportMsg.appendLine(str))
                     .processedHandler(count -> {
                         if (count == 0) {
-                            this.counter.incrIgnore(count);
+                            this.counter.updateIgnore();
                         } else if (count < 0) {
                             this.counter.incrFail(count);
                         } else {

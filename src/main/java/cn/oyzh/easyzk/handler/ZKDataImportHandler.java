@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.handler;
 
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
@@ -65,6 +66,7 @@ public class ZKDataImportHandler extends DataHandler {
         if (reader != null) {
             try {
                 while (true) {
+                    this.checkInterrupt();
                     List<FileRecord> records = reader.readRecords(this.batchSize);
                     if (CollectionUtil.isEmpty(records)) {
                         break;
@@ -76,6 +78,7 @@ public class ZKDataImportHandler extends DataHandler {
                             if (StringUtil.isBlank(path)) {
                                 this.message("Node:" + path + " Is Invalid");
                                 this.processedSkip();
+                                continue;
                             }
                             // 节点状态
                             boolean exists = this.client.exists(path);
@@ -106,6 +109,8 @@ public class ZKDataImportHandler extends DataHandler {
                 reader.close();
                 this.message("Imported From -> " + this.config.filePath());
             }
+        } else {
+            JulLog.error("未找到可用的读取器，文件类型:{}", this.fileType);
         }
         this.message("Import Finished");
     }

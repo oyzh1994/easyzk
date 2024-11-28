@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.handler;
 
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -140,6 +141,8 @@ public class ZKDataExportHandler extends DataHandler {
                 writer.close();
                 this.message("Exported To -> " + this.config.filePath());
             }
+        } else {
+            JulLog.error("未找到可用的写入器，文件类型:{}", this.fileType);
         }
         this.message("Export Finished");
     }

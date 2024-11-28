@@ -19,6 +19,7 @@
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
 <?import cn.oyzh.fx.gui.button.ImportButton?>
+<?import cn.oyzh.fx.gui.button.OldButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataImportController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -72,6 +73,11 @@
                     <Insets left="30" top="10"/>
                 </HBox.margin>
             </NextStepButton>
+            <OldButton text="%zk.old.tip1" tipText="%zk.old.tip2" onAction="#openOld" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </OldButton>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%">

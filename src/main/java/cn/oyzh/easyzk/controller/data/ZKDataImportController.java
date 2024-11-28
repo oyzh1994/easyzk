@@ -4,6 +4,7 @@ import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.FileNameUtil;
 import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.handler.ZKDataImportHandler;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -26,6 +27,7 @@ import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -314,6 +316,18 @@ public class ZKDataImportController extends StageController {
 
     @FXML
     private void showStep4() {
+        // 检查客户端
+        if (this.doConnect()) {
+            return;
+        }
+
+        this.step1.disappear();
+        this.step2.disappear();
+        this.step3.disappear();
+        this.step4.display();
+    }
+
+    private boolean doConnect() {
         try {
             // 检查客户端
             if (this.client == null || this.client.isClosed()) {
@@ -332,14 +346,10 @@ public class ZKDataImportController extends StageController {
                     this.client.close();
                     this.client = null;
                     MessageBox.warn(I18nHelper.connectInitFail());
-                    return;
+                    return false;
                 }
             }
-
-            this.step1.disappear();
-            this.step2.disappear();
-            this.step3.disappear();
-            this.step4.display();
+            return true;
         } finally {
             this.getStage().restoreTitle();
             this.getStage().enable();
@@ -366,5 +376,18 @@ public class ZKDataImportController extends StageController {
         super.onStageShown(event);
         this.connect = this.getWindowProp("connect");
         this.connectionName.setText(this.connect.getName());
+    }
+
+    /**
+     * 打开旧版
+     */
+    @FXML
+    private void openOld() {
+        if (this.doConnect()) {
+            this.closeWindow();
+            StageAdapter fxView = StageManager.parseStage(ZKNodeImportController.class);
+            fxView.setProp("zkClient", this.client);
+            fxView.display();
+        }
     }
 }

@@ -48,7 +48,7 @@ import java.util.Map;
  */
 @StageAttribute(
         iconUrls = ZKConst.ICON_PATH,
-        modality = Modality.WINDOW_MODAL,
+        modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeImport.fxml"
 )
 public class ZKNodeImportController extends StageController {

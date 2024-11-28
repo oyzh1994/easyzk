@@ -1,156 +1,156 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?> -->
-<!-- <?import cn.oyzh.fx.gui.button.CloseButton?> -->
-<!-- <?import cn.oyzh.fx.gui.button.ExportButton?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?> -->
-<!-- <?import cn.oyzh.fx.gui.button.StopButton?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
-<!-- <?import cn.oyzh.fx.gui.label.AccentLabel?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.label.FXLabel?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?> -->
-<!-- <?import javafx.geometry.Insets?> -->
-<!-- <?import javafx.scene.layout.HBox?> -->
-<!-- <?import javafx.scene.layout.VBox?> -->
-<!-- <?import javafx.scene.text.Text?> -->
-<!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
-<!--           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="680"> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox"> -->
-<!--         <AccentLabel text="%base.path" realHeight="30" realWidth="80"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="20" top="10"/> -->
-<!--             </HBox.margin> -->
-<!--         </AccentLabel> -->
-<!--         <DisabledTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 160"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="10" top="10"/> -->
-<!--             </HBox.margin> -->
-<!--         </DisabledTextField> -->
-<!--     </FlexHBox> -->
-<!--     &lt;!&ndash; <FlexHBox flexWidth="100%" realHeight="50"> &ndash;&gt; -->
-<!--     &lt;!&ndash;     <AccentLabel text="%base.format" realHeight="30" realWidth="80"> &ndash;&gt; -->
-<!--     &lt;!&ndash;         <HBox.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;             <Insets left="20" top="10"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;         </HBox.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;     </AccentLabel> &ndash;&gt; -->
-<!--     &lt;!&ndash;     <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="%base.formatTip" &ndash;&gt; -->
-<!--     &lt;!&ndash;                   fx:id="format"> &ndash;&gt; -->
-<!--     &lt;!&ndash;         <items> &ndash;&gt; -->
-<!--     &lt;!&ndash;             <FXCollections fx:factory="observableArrayList"> &ndash;&gt; -->
-<!--     &lt;!&ndash;                 <String fx:value="JSON"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;                 <String fx:value="TXT"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;             </FXCollections> &ndash;&gt; -->
-<!--     &lt;!&ndash;         </items> &ndash;&gt; -->
-<!--     &lt;!&ndash;         <HBox.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;             <Insets left="10" top="12"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;         </HBox.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;     </FlexComboBox> &ndash;&gt; -->
-<!--     &lt;!&ndash;     <FlexFlowPane fx:id="prettyPane"> &ndash;&gt; -->
-<!--     &lt;!&ndash;         <FXLabel text="%base.pretty" maxWidth="100"> &ndash;&gt; -->
-<!--     &lt;!&ndash;             <FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;                 <Insets left="10" top="20"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;             </FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;         </FXLabel> &ndash;&gt; -->
-<!--     &lt;!&ndash;         <ZKPrettyComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="pretty"> &ndash;&gt; -->
-<!--     &lt;!&ndash;             <FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;                 <Insets left="5" top="12"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;             </FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;         </ZKPrettyComboBox> &ndash;&gt; -->
-<!--     &lt;!&ndash;     </FlexFlowPane> &ndash;&gt; -->
-<!--     &lt;!&ndash;     <FlexFlowPane fx:id="prefixPane" visible="false"> &ndash;&gt; -->
-<!--     &lt;!&ndash;         <FXLabel text="%base.prefix" maxWidth="100"> &ndash;&gt; -->
-<!--     &lt;!&ndash;             <FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;                 <Insets left="10" top="20"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;             </FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;         </FXLabel> &ndash;&gt; -->
-<!--     &lt;!&ndash;         <FlexComboBox stateManager="$stateManager" prefWidth="100" fx:id="prefix"> &ndash;&gt; -->
-<!--     &lt;!&ndash;             <items> &ndash;&gt; -->
-<!--     &lt;!&ndash;                 <FXCollections fx:factory="observableArrayList"> &ndash;&gt; -->
-<!--     &lt;!&ndash;                     <String fx:value="create"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;                     <String fx:value="set"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;                 </FXCollections> &ndash;&gt; -->
-<!--     &lt;!&ndash;             </items> &ndash;&gt; -->
-<!--     &lt;!&ndash;             <FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;                 <Insets left="5" top="12"/> &ndash;&gt; -->
-<!--     &lt;!&ndash;             </FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;         </FlexComboBox> &ndash;&gt; -->
-<!--     &lt;!&ndash;     </FlexFlowPane> &ndash;&gt; -->
-<!--     &lt;!&ndash; </FlexHBox> &ndash;&gt; -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
-<!--         <AccentLabel text="%base.options" realHeight="30" realWidth="80"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="20" top="10"/> -->
-<!--             </HBox.margin> -->
-<!--         </AccentLabel> -->
-<!--         <FlexCheckBox groupId="exec" fx:id="dictSort" selected="true" text="%base.sortDict"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="10" top="18"/> -->
-<!--             </HBox.margin> -->
-<!--         </FlexCheckBox> -->
-<!--         <FlexCheckBox groupId="exec" fx:id="applyFilter" text="%base.applyFilter"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="10" top="18"/> -->
-<!--             </HBox.margin> -->
-<!--         </FlexCheckBox> -->
-<!--         <FXToggleSwitch fx:id="pretty" selected="true" selectedText="%base.enablePretty" -->
-<!--                         unselectedText="%base.disablePretty" groupId="exec"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="10" top="18"/> -->
-<!--             </HBox.margin> -->
-<!--         </FXToggleSwitch> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" flexHeight="100% - 270"> -->
-<!--         <AccentLabel text="%base.message" realHeight="30" realWidth="80"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="20" top="10"/> -->
-<!--             </HBox.margin> -->
-<!--         </AccentLabel> -->
-<!--         <FlexVBox flexWidth="100% - 140" flexHeight="100%"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="10" top="10"/> -->
-<!--             </HBox.margin> -->
-<!--             <MsgTextArea lineLimit="300" fx:id="exportMsg" flexWidth="100%" flexHeight="100% - 20"/> -->
-<!--             <FXLabel fx:id="exportStatus"/> -->
-<!--         </FlexVBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
-<!--         <ExportButton groupId="exec" onAction="#doExport" -->
-<!--                       realHeight="30" iconSizePercent="0.75"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="110" top="10"/> -->
-<!--             </HBox.margin> -->
-<!--         </ExportButton> -->
-<!--         <StopButton disable="true" fx:id="stopExportBtn" onAction="#stopExport" -->
-<!--                     realHeight="30" iconSizePercent="0.9"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="15" top="10"/> -->
-<!--             </HBox.margin> -->
-<!--         </StopButton> -->
-<!--         <CloseButton iconSizePercent="0.6"> -->
-<!--             <HBox.margin> -->
-<!--                 <Insets left="15" top="10"/> -->
-<!--             </HBox.margin> -->
-<!--         </CloseButton> -->
-<!--     </FlexHBox> -->
-<!--     <FlexVBox flexWidth="100%" fontSize="12"> -->
-<!--         <FXLabel text="%base.tip" textFill="#666"> -->
-<!--             <VBox.margin> -->
-<!--                 <Insets top="10"/> -->
-<!--             </VBox.margin> -->
-<!--         </FXLabel> -->
-<!--         <Text fill="#666" text="%zk.node.export.tip1"> -->
-<!--             <VBox.margin> -->
-<!--                 <Insets top="10"/> -->
-<!--             </VBox.margin> -->
-<!--         </Text> -->
-<!--         <Text fill="#666" text="%zk.node.export.tip2"> -->
-<!--             <VBox.margin> -->
-<!--                 <Insets top="10"/> -->
-<!--             </VBox.margin> -->
-<!--         </Text> -->
-<!--         <VBox.margin> -->
-<!--             <Insets left="110"/> -->
-<!--         </VBox.margin> -->
-<!--     </FlexVBox> -->
-<!-- </FlexVBox> -->
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?>
+<?import cn.oyzh.fx.gui.button.CloseButton?>
+<?import cn.oyzh.fx.gui.button.ExportButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.gui.button.StopButton?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="680">
+    <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox">
+        <AccentLabel text="%base.path" realHeight="30" realWidth="80">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </AccentLabel>
+        <DisabledTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 160">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </DisabledTextField>
+    </FlexHBox>
+    <!-- <FlexHBox flexWidth="100%" realHeight="50"> -->
+    <!--     <AccentLabel text="%base.format" realHeight="30" realWidth="80"> -->
+    <!--         <HBox.margin> -->
+    <!--             <Insets left="20" top="10"/> -->
+    <!--         </HBox.margin> -->
+    <!--     </AccentLabel> -->
+    <!--     <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="%base.formatTip" -->
+    <!--                   fx:id="format"> -->
+    <!--         <items> -->
+    <!--             <FXCollections fx:factory="observableArrayList"> -->
+    <!--                 <String fx:value="JSON"/> -->
+    <!--                 <String fx:value="TXT"/> -->
+    <!--             </FXCollections> -->
+    <!--         </items> -->
+    <!--         <HBox.margin> -->
+    <!--             <Insets left="10" top="12"/> -->
+    <!--         </HBox.margin> -->
+    <!--     </FlexComboBox> -->
+    <!--     <FlexFlowPane fx:id="prettyPane"> -->
+    <!--         <FXLabel text="%base.pretty" maxWidth="100"> -->
+    <!--             <FlowPane.margin> -->
+    <!--                 <Insets left="10" top="20"/> -->
+    <!--             </FlowPane.margin> -->
+    <!--         </FXLabel> -->
+    <!--         <ZKPrettyComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="pretty"> -->
+    <!--             <FlowPane.margin> -->
+    <!--                 <Insets left="5" top="12"/> -->
+    <!--             </FlowPane.margin> -->
+    <!--         </ZKPrettyComboBox> -->
+    <!--     </FlexFlowPane> -->
+    <!--     <FlexFlowPane fx:id="prefixPane" visible="false"> -->
+    <!--         <FXLabel text="%base.prefix" maxWidth="100"> -->
+    <!--             <FlowPane.margin> -->
+    <!--                 <Insets left="10" top="20"/> -->
+    <!--             </FlowPane.margin> -->
+    <!--         </FXLabel> -->
+    <!--         <FlexComboBox stateManager="$stateManager" prefWidth="100" fx:id="prefix"> -->
+    <!--             <items> -->
+    <!--                 <FXCollections fx:factory="observableArrayList"> -->
+    <!--                     <String fx:value="create"/> -->
+    <!--                     <String fx:value="set"/> -->
+    <!--                 </FXCollections> -->
+    <!--             </items> -->
+    <!--             <FlowPane.margin> -->
+    <!--                 <Insets left="5" top="12"/> -->
+    <!--             </FlowPane.margin> -->
+    <!--         </FlexComboBox> -->
+    <!--     </FlexFlowPane> -->
+    <!-- </FlexHBox> -->
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="80">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </AccentLabel>
+        <FlexCheckBox groupId="exec" fx:id="dictSort" selected="true" text="%base.sortDict">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox groupId="exec" fx:id="applyFilter" text="%base.applyFilter">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FXToggleSwitch fx:id="pretty" selected="true" selectedText="%base.enablePretty"
+                        unselectedText="%base.disablePretty" groupId="exec">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXToggleSwitch>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" flexHeight="100% - 270">
+        <AccentLabel text="%base.message" realHeight="30" realWidth="80">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </AccentLabel>
+        <FlexVBox flexWidth="100% - 140" flexHeight="100%">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+            <MsgTextArea lineLimit="300" fx:id="exportMsg" flexWidth="100%" flexHeight="100% - 20"/>
+            <FXLabel fx:id="exportStatus"/>
+        </FlexVBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <ExportButton groupId="exec" onAction="#doExport"
+                      realHeight="30" iconSizePercent="0.75">
+            <HBox.margin>
+                <Insets left="110" top="10"/>
+            </HBox.margin>
+        </ExportButton>
+        <StopButton disable="true" fx:id="stopExportBtn" onAction="#stopExport"
+                    realHeight="30" iconSizePercent="0.9">
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </StopButton>
+        <CloseButton iconSizePercent="0.6">
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CloseButton>
+    </FlexHBox>
+    <FlexVBox flexWidth="100%" fontSize="12">
+        <FXLabel text="%base.tip" textFill="#666">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </FXLabel>
+        <Text fill="#666" text="%zk.node.export.tip1">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </Text>
+        <Text fill="#666" text="%zk.node.export.tip2">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </Text>
+        <VBox.margin>
+            <Insets left="110"/>
+        </VBox.margin>
+    </FlexVBox>
+</FlexVBox>

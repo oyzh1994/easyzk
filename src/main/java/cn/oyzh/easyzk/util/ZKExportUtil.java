@@ -1,17 +1,17 @@
 package cn.oyzh.easyzk.util;
 
 
-import cn.oyzh.common.json.JSONArray;
-import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.easyzk.dto.ZKNodeExport;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.common.dto.Project;
-import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.common.file.FileNameUtil;
 import cn.oyzh.common.util.OSUtil;
 import cn.oyzh.common.util.StringUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -165,7 +165,7 @@ public class ZKExportUtil {
      */
     public static ZKNodeExport fromJSON(@NonNull String json) {
         JulLog.info("json: {}", json);
-        JSONObject object = JSONUtil.parseObject(json);
+        JSONObject object = JSON.parseObject(json);
         ZKNodeExport export = new ZKNodeExport();
         export.setNodes(new ArrayList<>());
         export.setVersion(object.getString("version"));

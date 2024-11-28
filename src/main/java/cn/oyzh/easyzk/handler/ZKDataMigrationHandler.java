@@ -74,7 +74,7 @@ public class ZKDataMigrationHandler extends DataHandler {
      * 执行传输
      */
     public void doMigration() {
-        this.message(I18nHelper.executingMigration());
+        this.message("Migration Starting");
 
         if (this.groups) {
             this.message(I18nHelper.migratingGroups());
@@ -197,6 +197,7 @@ public class ZKDataMigrationHandler extends DataHandler {
             this.message(I18nHelper.migrationApplicationSettingSuccessful());
         }
 
+        this.message("Migration Finished");
         this.message(ZKI18nHelper.migrationTip1());
     }
 }

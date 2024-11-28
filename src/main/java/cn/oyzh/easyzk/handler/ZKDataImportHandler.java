@@ -76,7 +76,7 @@ public class ZKDataImportHandler extends DataHandler {
                         try {
                             path = (String) record.get(0);
                             if (StringUtil.isBlank(path)) {
-                                this.message("Node:" + path + " Is Invalid");
+                                this.message("node[" + path + "] is invalid");
                                 this.processedSkip();
                                 continue;
                             }
@@ -84,7 +84,7 @@ public class ZKDataImportHandler extends DataHandler {
                             boolean exists = this.client.exists(path);
                             // 跳过
                             if (this.ignoreExist && exists) {
-                                this.message("Node:" + path + " Exists, Skip");
+                                this.message("node[" + path + "] is exists, skip it");
                                 this.processedSkip();
                                 continue;
                             }
@@ -93,15 +93,15 @@ public class ZKDataImportHandler extends DataHandler {
                             // 更新
                             if (exists) {
                                 this.client.setData(path, dataStr);
-                                this.message("Update Node:" + path + " Success");
+                                this.message("update node[" + path + "] success");
                             } else {// 创建
                                 this.client.create(path, dataStr, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT, true);
-                                this.message("Create Node:" + path + " Success");
+                                this.message("create node[" + path + "] success");
                             }
                             this.processedIncr();
                         } catch (Exception ex) {
                             this.processedDecr();
-                            this.message("Create Node:" + path + " Failed");
+                            this.message("create node[" + path + "] failed");
                         }
                     }
                 }

@@ -77,12 +77,12 @@ public class ZKDataExportHandler extends DataHandler {
                 try {
                     writer.writeRecords(batchList);
                     for (FileRecord record : batchList) {
-                        this.message("Export Node:" + record.get(0) + " Success");
+                        this.message("export node[" + record.get(0) + "] success");
                     }
                     this.processedIncr(batchList.size());
                     batchList.clear();
                 } catch (Exception ex) {
-                    this.message("Write  Failed");
+                    this.message("write data failed");
                     this.processedDecr();
                 }
             };
@@ -92,7 +92,7 @@ public class ZKDataExportHandler extends DataHandler {
                 // 节点过滤
                 Predicate<String> filter = path -> {
                     if (ZKNodeUtil.isFiltered(path, this.filters)) {
-                        this.message("Node:" + path + " Filtered");
+                        this.message("node[" + path + "] is filtered, skip it");
                         this.processedSkip();
                         return false;
                     }
@@ -129,7 +129,7 @@ public class ZKDataExportHandler extends DataHandler {
                     if (ex instanceof InterruptedException) {
                         return;
                     }
-                    this.message("Export Node:" + path + " Failed");
+                    this.message("export node[" + path + "] failed");
                     this.processedDecr();
                 };
                 // 递归获取节点

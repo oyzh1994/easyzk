@@ -62,7 +62,9 @@ public class ZKDataTransportHandler extends DataHandler {
      * 执行传输
      */
     public void doTransport() throws Exception {
+        this.message("Transport Starting");
         this.doTransport("/");
+        this.message("Transport Finished");
     }
 
     /**

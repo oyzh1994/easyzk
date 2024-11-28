@@ -38,7 +38,7 @@ public class ZKDataImportHandler extends DataHandler {
     /**
      * 批量处理大小
      */
-    private int batchSize = 20;
+    private int batchSize = 50;
 
     /**
      * 存在时忽略

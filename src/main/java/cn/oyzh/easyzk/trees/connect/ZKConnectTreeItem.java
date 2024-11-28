@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
+import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
@@ -108,6 +109,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             FXMenuItem renameConnect = MenuItemHelper.renameConnect("12", this::rename);
             FXMenuItem deleteConnect = MenuItemHelper.deleteConnect("12", this::delete);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
+            FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
             FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
 
@@ -115,6 +117,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
             items.add(editConnect);
             items.add(renameConnect);
             items.add(exportData);
+            items.add(importData);
             items.add(transportData);
             items.add(repeatConnect);
             items.add(deleteConnect);
@@ -187,8 +190,11 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
      * 导入数据
      */
     private void importData() {
-        StageAdapter fxView = StageManager.parseStage(ZKNodeImportController.class, this.window());
-        fxView.setProp("zkClient", this.client);
+        // StageAdapter fxView = StageManager.parseStage(ZKNodeImportController.class, this.window());
+        // fxView.setProp("zkClient", this.client);
+        // fxView.display();
+        StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class);
+        fxView.setProp("connect", this.value);
         fxView.display();
     }
 

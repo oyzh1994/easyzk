@@ -843,6 +843,18 @@ public class ZKClient {
     /**
      * 设置节点数据
      *
+     * @param path 路径
+     * @param data 数据
+     * @return Stat 状态
+     */
+    public Stat setData(@NonNull String path, String data) throws Exception {
+        byte[] bytes = Objects.requireNonNullElse(data, "").getBytes();
+        return this.setData(path, bytes, null);
+    }
+
+    /**
+     * 设置节点数据
+     *
      * @param path    路径
      * @param data    数据
      * @param version 版本

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.gui.button.NextStepButton?>
+<?import cn.oyzh.fx.gui.button.PrevStepButton?>
+<?import cn.oyzh.fx.gui.button.StopButton?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
+<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
+<?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
+<?import cn.oyzh.fx.gui.button.ImportButton?>
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.data.ZKDataImportController" realWidth="800" realHeight="600">
+    <FlexHBox flexWidth="100%" realHeight="80">
+        <FlexHBox flexHeight="100%" flexWidth="100%">
+            <ImportSVGGlyph sizeStr="40,40" color="yellowgreen">
+                <HBox.margin>
+                    <Insets left="30" top="20"/>
+                </HBox.margin>
+            </ImportSVGGlyph>
+            <FXText realHeight="25" text="%zk.import.tip1" fontSize="15">
+                <HBox.margin>
+                    <Insets left="15" top="30"/>
+                </HBox.margin>
+            </FXText>
+        </FlexHBox>
+    </FlexHBox>
+    <FlexVBox fx:id="step1" flexHeight="100% - 80" flexWidth="100%">
+        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+            <FlexLabel text="%base.fileFormat" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </FlexLabel>
+            <fx:define>
+                <FXToggleGroup fx:id="format"/>
+            </fx:define>
+            <FXRadioButton userData="json" toggleGroup="$format" text="%base.jsonType" selected="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton userData="excel" toggleGroup="$format" text="%base.excelType">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton userData="xml" toggleGroup="$format" text="%base.xmlType">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+            <FXRadioButton userData="csv" toggleGroup="$format" text="%base.csvType">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </FXRadioButton>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <NextStepButton onAction="#showStep2" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </NextStepButton>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%">
+        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+            <FlexLabel text="%base.filePath" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </FlexLabel>
+            <FlexHBox flexWidth="100%">
+                <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
+                    <HBox.margin>
+                        <Insets left="30" top="5"/>
+                    </HBox.margin>
+                </FXButton>
+                <FXText fx:id="fileName">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXText>
+            </FlexHBox>
+            <AccentLabel text="%base.options" realHeight="30" realWidth="80">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </AccentLabel>
+            <FlexCheckBox fx:id="ignoreExist" text="%base.skipByExists">
+                <VBox.margin>
+                    <Insets left="30" top="5"/>
+                </VBox.margin>
+            </FlexCheckBox>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <PrevStepButton onAction="#showStep1" groupId="exec" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </PrevStepButton>
+            <NextStepButton onAction="#showStep3" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </NextStepButton>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%">
+        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+            <FlexLabel text="%base.connection" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </FlexLabel>
+            <FXText fx:id="connectionName">
+                <VBox.margin>
+                    <Insets left="30" top="5"/>
+                </VBox.margin>
+            </FXText>
+            <FlexLabel text="%base.charset" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </FlexLabel>
+            <CharsetComboBox fx:id="charset" realHeight="25">
+                <VBox.margin>
+                    <Insets left="30" top="5"/>
+                </VBox.margin>
+            </CharsetComboBox>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </PrevStepButton>
+            <NextStepButton onAction="#showStep4" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </NextStepButton>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox fx:id="step4" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
+        <FlexVBox flexWidth="100%" flexHeight="100% - 60">
+            <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="importMsg" flexWidth="100% - 60"
+                         flexHeight="100% - 30">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </MsgTextArea>
+            <FXLabel fx:id="importStatus" realHeight="30">
+                <VBox.margin>
+                    <Insets left="30"/>
+                </VBox.margin>
+            </FXLabel>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <PrevStepButton onAction="#showStep3" groupId="exec" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </PrevStepButton>
+            <ImportButton tipText="%base.start" groupId="exec" onAction="#doImport" realHeight="30">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </ImportButton>
+            <StopButton fx:id="stopImportBtn" groupId="exec" onAction="#stopImport" realHeight="30">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </StopButton>
+        </FlexHBox>
+    </FlexVBox>
+</FlexVBox>

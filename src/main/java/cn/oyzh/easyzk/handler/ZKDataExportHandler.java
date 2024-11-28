@@ -165,7 +165,7 @@ public class ZKDataExportHandler extends DataHandler {
         this.config.filePath(filePath);
     }
 
-    public void txtIdentifier(String txtIdentifier) {
+    public void txtIdentifier(Character txtIdentifier) {
         this.config.txtIdentifier(txtIdentifier);
     }
 }

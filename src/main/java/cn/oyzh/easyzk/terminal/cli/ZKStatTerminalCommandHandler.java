@@ -12,17 +12,11 @@ import org.apache.zookeeper.cli.StatCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKStatTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKStatTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new StatCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.STAT);
 
     @Override
     public String commandName() {
@@ -36,7 +30,6 @@ public class ZKStatTerminalCommandHandler extends ZKPathTerminalCommandHandler<T
 
     @Override
     public String commandDesc() {
-        // return "获取节点状态";
         return I18nResourceBundle.i18nString("base.get", "base.stat");
     }
 

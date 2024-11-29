@@ -13,17 +13,11 @@ import org.apache.zookeeper.cli.LsCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKLsTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new LsCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.LS);
 
     @Override
     public String commandName() {
@@ -37,7 +31,6 @@ public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<Ter
 
     @Override
     public String commandDesc() {
-        // return "获取子节点列表";
         return I18nResourceBundle.i18nString("base.iter", "base.child");
     }
 

@@ -4,12 +4,7 @@ package cn.oyzh.easyzk.terminal.cli;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKRmrTerminalCommandHandler extends ZKDeleteallTerminalCommandHandler {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKRmrTerminalCommandHandler.class);
-    // }
 
     @Override
     public String commandName() {

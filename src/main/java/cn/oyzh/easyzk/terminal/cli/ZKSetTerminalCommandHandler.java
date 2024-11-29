@@ -15,17 +15,11 @@ import org.apache.zookeeper.cli.SetCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKSetTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKSetTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new SetCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET);
 
     @Override
     public String commandName() {
@@ -39,7 +33,6 @@ public class ZKSetTerminalCommandHandler extends ZKPathTerminalCommandHandler<Te
 
     @Override
     public String commandDesc() {
-        // return "设置节点数据";
         return I18nResourceBundle.i18nString("base.set", "base.data");
     }
 

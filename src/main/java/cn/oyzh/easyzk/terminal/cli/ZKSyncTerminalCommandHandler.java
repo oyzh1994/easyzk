@@ -15,17 +15,11 @@ import org.apache.zookeeper.cli.SyncCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-    //
-    // static {
-    //     TerminalManager.registerHandler(ZKSyncTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new SyncCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SYNC);
 
     @Override
     public String commandName() {
@@ -39,7 +33,6 @@ public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<T
 
     @Override
     public String commandDesc() {
-        // return "同步节点";
         return I18nResourceBundle.i18nString("base.sync", "base.node");
     }
 

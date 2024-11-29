@@ -15,17 +15,11 @@ import org.apache.zookeeper.cli.SetQuotaCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKSetQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKSetQuotaTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new SetQuotaCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET_QUOTA);
 
     @Override
     public String commandName() {
@@ -39,7 +33,6 @@ public class ZKSetQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandle
 
     @Override
     public String commandDesc() {
-        // return "设置配额";
         return I18nResourceBundle.i18nString("base.set", "base.quota");
     }
 

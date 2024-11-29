@@ -15,17 +15,11 @@ import org.apache.zookeeper.cli.SetAclCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKSetAclTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKSetAclTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new SetAclCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET_ACL);
 
     @Override
     public String commandName() {
@@ -39,7 +33,6 @@ public class ZKSetAclTerminalCommandHandler extends ZKPathTerminalCommandHandler
 
     @Override
     public String commandDesc() {
-        // return "设置权限";
         return I18nResourceBundle.i18nString("base.set", "base.acl");
     }
 

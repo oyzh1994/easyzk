@@ -13,17 +13,11 @@ import org.apache.zookeeper.cli.RemoveWatchesCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKRemoveWatchesTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKRemoveWatchesTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new RemoveWatchesCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.REMOVE_WATCHES);
 
     @Override
     public String commandName() {
@@ -37,7 +31,6 @@ public class ZKRemoveWatchesTerminalCommandHandler extends ZKCliTerminalCommandH
 
     @Override
     public String commandDesc() {
-        // return "移除订阅";
         return I18nResourceBundle.i18nString("base.remove", "base.watch");
     }
 

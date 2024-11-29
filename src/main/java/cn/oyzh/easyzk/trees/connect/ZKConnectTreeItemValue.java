@@ -40,8 +40,7 @@ public class ZKConnectTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public Color graphicColor() {
-        ZKConnectTreeItem item = this.item();
-        if (item.isConnected() || item.isConnecting()) {
+        if (this.item().isConnected() || this.item().isConnecting()) {
             return Color.GREEN;
         }
         return super.graphicColor();

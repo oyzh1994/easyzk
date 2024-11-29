@@ -45,27 +45,29 @@ public class ZKStoreUtil {
      */
     public static List<ZKGroup> loadGroups() {
         List<ZKGroup> groups = new ArrayList<>();
-        String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_group.json";
-        String json = FileUtil.readUtf8String(file);
-        JSONArray array = JSONUtil.parseArray(json);
-        if (array == null) {
-            JulLog.warn("未找到分组数据");
-        } else {
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject obj = array.getJSONObject(i);
-                ZKGroup group = new ZKGroup();
-                if (obj.containsKey("gid")) {
-                    group.setGid(obj.getString("gid"));
+        try {
+            String storePath = SysConst.storeDir();
+            String file = storePath + File.separator + "zk_group.json";
+            if (FileUtil.exist(file)) {
+                String json = FileUtil.readUtf8String(file);
+                JSONArray array = JSONUtil.parseArray(json);
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    ZKGroup group = new ZKGroup();
+                    if (obj.containsKey("gid")) {
+                        group.setGid(obj.getString("gid"));
+                    }
+                    if (obj.containsKey("name")) {
+                        group.setName(obj.getString("name"));
+                    }
+                    if (obj.containsKey("expand")) {
+                        group.setExpand(obj.getBooleanValue("Expand"));
+                    }
+                    groups.add(group);
                 }
-                if (obj.containsKey("name")) {
-                    group.setName(obj.getString("name"));
-                }
-                if (obj.containsKey("expand")) {
-                    group.setExpand(obj.getBooleanValue("Expand"));
-                }
-                groups.add(group);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return groups;
     }
@@ -77,75 +79,77 @@ public class ZKStoreUtil {
      */
     public static List<ZKConnect> loadConnects() {
         List<ZKConnect> connects = new ArrayList<>();
-        String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_info.json";
-        String json = FileUtil.readUtf8String(file);
-        JSONArray array = JSONUtil.parseArray(json);
-        if (array == null) {
-            JulLog.warn("未找到连接数据");
-        } else {
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject obj = array.getJSONObject(i);
-                ZKConnect connect = new ZKConnect();
+        try {
+            String storePath = SysConst.storeDir();
+            String file = storePath + File.separator + "zk_info.json";
+            String json = FileUtil.readUtf8String(file);
+            JSONArray array = JSONUtil.parseArray(json);
+            if (FileUtil.exist(file)) {
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    ZKConnect connect = new ZKConnect();
 
-                if (obj.containsKey("id")) {
-                    connect.setId(obj.getString("id"));
-                }
-                if (obj.containsKey("name")) {
-                    connect.setName(obj.getString("name"));
-                }
-                if (obj.containsKey("host")) {
-                    connect.setHost(obj.getString("host"));
-                }
-                if (obj.containsKey("listen")) {
-                    connect.setListen(obj.getBooleanValue("listen"));
-                }
-                if (obj.containsKey("sshForward")) {
-                    connect.setSshForward(obj.getBooleanValue("sshForward"));
-                }
-                if (obj.containsKey("collects")) {
-                    connect.setCollects(obj.getBeanList("collects", String.class));
-                }
-                if (obj.containsKey("remark")) {
-                    connect.setRemark(obj.getString("remark"));
-                }
-                if (obj.containsKey("groupId")) {
-                    connect.setGroupId(obj.getString("groupId"));
-                }
-                if (obj.containsKey("readonly")) {
-                    connect.setReadonly(obj.getBooleanValue("readonly"));
-                }
-                if (obj.containsKey("compatibility")) {
-                    connect.setCompatibility(obj.getIntValue("compatibility"));
-                }
-                if (obj.containsKey("sessionTimeOut")) {
-                    connect.setSessionTimeOut(obj.getIntValue("sessionTimeOut"));
-                }
-                if (obj.containsKey("connectTimeOut")) {
-                    connect.setConnectTimeOut(obj.getIntValue("connectTimeOut"));
-                }
-                if (obj.containsKey("sshInfo")) {
-                    JSONObject object = obj.getJSONObject("sshInfo");
-                    ZKSSHConnect sshConnect = new ZKSSHConnect();
-                    if (object.containsKey("port")) {
-                        sshConnect.setPort(object.getInt("port"));
+                    if (obj.containsKey("id")) {
+                        connect.setId(obj.getString("id"));
                     }
-                    if (object.containsKey("host")) {
-                        sshConnect.setHost(object.getString("host"));
+                    if (obj.containsKey("name")) {
+                        connect.setName(obj.getString("name"));
                     }
-                    if (object.containsKey("user")) {
-                        sshConnect.setUser(object.getString("user"));
+                    if (obj.containsKey("host")) {
+                        connect.setHost(obj.getString("host"));
                     }
-                    if (object.containsKey("timeout")) {
-                        sshConnect.setTimeout(object.getInt("timeout"));
+                    if (obj.containsKey("listen")) {
+                        connect.setListen(obj.getBooleanValue("listen"));
                     }
-                    if (object.containsKey("password")) {
-                        sshConnect.setPassword(object.getString("password"));
+                    if (obj.containsKey("sshForward")) {
+                        connect.setSshForward(obj.getBooleanValue("sshForward"));
                     }
-                    connect.setSshConnect(sshConnect);
+                    if (obj.containsKey("collects")) {
+                        connect.setCollects(obj.getBeanList("collects", String.class));
+                    }
+                    if (obj.containsKey("remark")) {
+                        connect.setRemark(obj.getString("remark"));
+                    }
+                    if (obj.containsKey("groupId")) {
+                        connect.setGroupId(obj.getString("groupId"));
+                    }
+                    if (obj.containsKey("readonly")) {
+                        connect.setReadonly(obj.getBooleanValue("readonly"));
+                    }
+                    if (obj.containsKey("compatibility")) {
+                        connect.setCompatibility(obj.getIntValue("compatibility"));
+                    }
+                    if (obj.containsKey("sessionTimeOut")) {
+                        connect.setSessionTimeOut(obj.getIntValue("sessionTimeOut"));
+                    }
+                    if (obj.containsKey("connectTimeOut")) {
+                        connect.setConnectTimeOut(obj.getIntValue("connectTimeOut"));
+                    }
+                    if (obj.containsKey("sshInfo")) {
+                        JSONObject object = obj.getJSONObject("sshInfo");
+                        ZKSSHConnect sshConnect = new ZKSSHConnect();
+                        if (object.containsKey("port")) {
+                            sshConnect.setPort(object.getInt("port"));
+                        }
+                        if (object.containsKey("host")) {
+                            sshConnect.setHost(object.getString("host"));
+                        }
+                        if (object.containsKey("user")) {
+                            sshConnect.setUser(object.getString("user"));
+                        }
+                        if (object.containsKey("timeout")) {
+                            sshConnect.setTimeout(object.getInt("timeout"));
+                        }
+                        if (object.containsKey("password")) {
+                            sshConnect.setPassword(object.getString("password"));
+                        }
+                        connect.setSshConnect(sshConnect);
+                    }
+                    connects.add(connect);
                 }
-                connects.add(connect);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return connects;
     }
@@ -157,30 +161,32 @@ public class ZKStoreUtil {
      */
     public static List<ZKFilter> loadFilters() {
         List<ZKFilter> filters = new ArrayList<>();
-        String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_filter.json";
-        String json = FileUtil.readUtf8String(file);
-        JSONArray array = JSONUtil.parseArray(json);
-        if (array == null) {
-            JulLog.warn("未找到过滤数据");
-        } else {
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject obj = array.getJSONObject(i);
-                ZKFilter filter = new ZKFilter();
-                if (obj.containsKey("kw")) {
-                    filter.setKw(obj.getString("kw"));
+        try {
+            String storePath = SysConst.storeDir();
+            String file = storePath + File.separator + "zk_filter.json";
+            String json = FileUtil.readUtf8String(file);
+            JSONArray array = JSONUtil.parseArray(json);
+            if (FileUtil.exist(file)) {
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    ZKFilter filter = new ZKFilter();
+                    if (obj.containsKey("kw")) {
+                        filter.setKw(obj.getString("kw"));
+                    }
+                    if (obj.containsKey("uid")) {
+                        filter.setUid(obj.getString("uid"));
+                    }
+                    if (obj.containsKey("enable")) {
+                        filter.setEnable(obj.getBooleanValue("enable"));
+                    }
+                    if (obj.containsKey("partMatch")) {
+                        filter.setPartMatch(obj.getBooleanValue("partMatch"));
+                    }
+                    filters.add(filter);
                 }
-                if (obj.containsKey("uid")) {
-                    filter.setUid(obj.getString("uid"));
-                }
-                if (obj.containsKey("enable")) {
-                    filter.setEnable(obj.getBooleanValue("enable"));
-                }
-                if (obj.containsKey("partMatch")) {
-                    filter.setPartMatch(obj.getBooleanValue("partMatch"));
-                }
-                filters.add(filter);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return filters;
     }
@@ -196,9 +202,7 @@ public class ZKStoreUtil {
         String file = storePath + File.separator + "zk_auth.json";
         String json = FileUtil.readUtf8String(file);
         JSONArray array = JSONUtil.parseArray(json);
-        if (array == null) {
-            JulLog.warn("未找到认证数据");
-        } else {
+        if (FileUtil.exist(file)) {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject obj = array.getJSONObject(i);
                 ZKAuth auth = new ZKAuth();
@@ -227,27 +231,29 @@ public class ZKStoreUtil {
      */
     public static List<ZKTerminalHistory> loadTerminalHistory() {
         List<ZKTerminalHistory> histories = new ArrayList<>();
-        String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_shell_history.json";
-        String json = FileUtil.readUtf8String(file);
-        JSONArray array = JSONUtil.parseArray(json);
-        if (array == null) {
-            JulLog.warn("未找到终端历史数据");
-        } else {
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject obj = array.getJSONObject(i);
-                ZKTerminalHistory history = new ZKTerminalHistory();
-                if (obj.containsKey("tid")) {
-                    history.setTid(obj.getString("tid"));
+        try {
+            String storePath = SysConst.storeDir();
+            String file = storePath + File.separator + "zk_shell_history.json";
+            String json = FileUtil.readUtf8String(file);
+            JSONArray array = JSONUtil.parseArray(json);
+            if (FileUtil.exist(file)) {
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    ZKTerminalHistory history = new ZKTerminalHistory();
+                    if (obj.containsKey("tid")) {
+                        history.setTid(obj.getString("tid"));
+                    }
+                    if (obj.containsKey("line")) {
+                        history.setLine(obj.getString("line"));
+                    }
+                    if (obj.containsKey("saveTime")) {
+                        history.setSaveTime(obj.getLongValue("saveTime"));
+                    }
+                    histories.add(history);
                 }
-                if (obj.containsKey("line")) {
-                    history.setLine(obj.getString("line"));
-                }
-                if (obj.containsKey("saveTime")) {
-                    history.setSaveTime(obj.getLongValue("saveTime"));
-                }
-                histories.add(history);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return histories;
     }
@@ -258,84 +264,84 @@ public class ZKStoreUtil {
      * @return 旧版本设置数据
      */
     public static ZKSetting loadSetting() {
-        String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_setting.json";
-        String json = FileUtil.readUtf8String(file);
-        JSONObject object = JSONUtil.parseObject(json);
         ZKSetting setting = new ZKSetting();
-        if (object != null) {
-            if (object.containsKey("theme")) {
-                setting.setTheme(object.getString("theme"));
+        try {
+            String storePath = SysConst.storeDir();
+            String file = storePath + File.separator + "zk_setting.json";
+            if (FileUtil.exist(file)) {
+                String json = FileUtil.readUtf8String(file);
+                JSONObject object = JSONUtil.parseObject(json);
+                if (object.containsKey("theme")) {
+                    setting.setTheme(object.getString("theme"));
+                }
+                if (object.containsKey("fgColor")) {
+                    setting.setFgColor(object.getString("fgColor"));
+                }
+                if (object.containsKey("bgColor")) {
+                    setting.setBgColor(object.getString("bgColor"));
+                }
+                if (object.containsKey("accentColor")) {
+                    setting.setAccentColor(object.getString("accentColor"));
+                }
+                if (object.containsKey("fontFamily")) {
+                    setting.setFontFamily(object.getString("fontFamily"));
+                }
+                if (object.containsKey("fontSize")) {
+                    setting.setFontSize(object.getByteValue("fontSize"));
+                }
+                if (object.containsKey("fontWeight")) {
+                    setting.setFontWeight(object.getShortValue("fontWeight"));
+                }
+                if (object.containsKey("locale")) {
+                    setting.setLocale(object.getString("locale"));
+                }
+                if (object.containsKey("exitMode")) {
+                    setting.setExitMode(object.getByteValue("exitMode"));
+                }
+                if (object.containsKey("loadMode")) {
+                    setting.setLoadMode(object.getByteValue("loadMode"));
+                }
+                if (object.containsKey("rememberPageSize")) {
+                    setting.setRememberPageSize(object.getByteValue("rememberPageSize"));
+                }
+                if (object.containsKey("rememberPageResize")) {
+                    setting.setRememberPageResize(object.getByteValue("rememberPageResize"));
+                }
+                if (object.containsKey("rememberPageLocation")) {
+                    setting.setRememberPageLocation(object.getByteValue("rememberPageLocation"));
+                }
+                if (object.containsKey("authMode")) {
+                    setting.setAuthMode(object.getByteValue("authMode"));
+                }
+                if (object.containsKey("opacity")) {
+                    setting.setOpacity(object.getFloatValue("opacity"));
+                }
             }
-            if (object.containsKey("fgColor")) {
-                setting.setFgColor(object.getString("fgColor"));
+            file = storePath + File.separator + "page_info.json";
+            if (FileUtil.exist(file)) {
+                String json = FileUtil.readUtf8String(file);
+                JSONObject object = JSONUtil.parseObject(json);
+                if (object.containsKey("width")) {
+                    setting.setPageWidth(object.getDoubleValue("width"));
+                }
+                if (object.containsKey("height")) {
+                    setting.setPageHeight(object.getDoubleValue("height"));
+                }
+                if (object.containsKey("screenX")) {
+                    setting.setPageScreenX(object.getDoubleValue("screenX"));
+                }
+                if (object.containsKey("screenY")) {
+                    setting.setPageScreenY(object.getDoubleValue("screenY"));
+                }
+                if (object.containsKey("maximized")) {
+                    setting.setPageMaximized(object.getBooleanValue("maximized"));
+                }
+                if (object.containsKey("mainLeftWidth")) {
+                    setting.setPageLeftWidth(object.getFloatValue("mainLeftWidth"));
+                }
             }
-            if (object.containsKey("bgColor")) {
-                setting.setBgColor(object.getString("bgColor"));
-            }
-            if (object.containsKey("accentColor")) {
-                setting.setAccentColor(object.getString("accentColor"));
-            }
-            if (object.containsKey("fontFamily")) {
-                setting.setFontFamily(object.getString("fontFamily"));
-            }
-            if (object.containsKey("fontSize")) {
-                setting.setFontSize(object.getByteValue("fontSize"));
-            }
-            if (object.containsKey("fontWeight")) {
-                setting.setFontWeight(object.getShortValue("fontWeight"));
-            }
-            if (object.containsKey("locale")) {
-                setting.setLocale(object.getString("locale"));
-            }
-            if (object.containsKey("exitMode")) {
-                setting.setExitMode(object.getByteValue("exitMode"));
-            }
-            if (object.containsKey("loadMode")) {
-                setting.setLoadMode(object.getByteValue("loadMode"));
-            }
-            if (object.containsKey("rememberPageSize")) {
-                setting.setRememberPageSize(object.getByteValue("rememberPageSize"));
-            }
-            if (object.containsKey("rememberPageResize")) {
-                setting.setRememberPageResize(object.getByteValue("rememberPageResize"));
-            }
-            if (object.containsKey("rememberPageLocation")) {
-                setting.setRememberPageLocation(object.getByteValue("rememberPageLocation"));
-            }
-            if (object.containsKey("authMode")) {
-                setting.setAuthMode(object.getByteValue("authMode"));
-            }
-            if (object.containsKey("opacity")) {
-                setting.setOpacity(object.getFloatValue("opacity"));
-            }
-        } else {
-            JulLog.warn("未找到设置数据");
-        }
-        file = storePath + File.separator + "page_info.json";
-        json = FileUtil.readUtf8String(file);
-        object = JSONUtil.parseObject(json);
-        if (object != null) {
-            if (object.containsKey("width")) {
-                setting.setPageWidth(object.getDoubleValue("width"));
-            }
-            if (object.containsKey("height")) {
-                setting.setPageHeight(object.getDoubleValue("height"));
-            }
-            if (object.containsKey("screenX")) {
-                setting.setPageScreenX(object.getDoubleValue("screenX"));
-            }
-            if (object.containsKey("screenY")) {
-                setting.setPageScreenY(object.getDoubleValue("screenY"));
-            }
-            if (object.containsKey("maximized")) {
-                setting.setPageMaximized(object.getBooleanValue("maximized"));
-            }
-            if (object.containsKey("mainLeftWidth")) {
-                setting.setPageLeftWidth(object.getFloatValue("mainLeftWidth"));
-            }
-        } else {
-            JulLog.warn("未找到页面信息");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return setting;
     }
@@ -366,8 +372,9 @@ public class ZKStoreUtil {
     public static boolean checkOlder() {
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "zk_info.json";
+        String file1 = storePath + File.separator + "zk_group.json";
         String done = storePath + File.separator + "done.data";
         String ignore = storePath + File.separator + "ignore.data";
-        return FileUtil.exist(file) && !(FileUtil.exist(done) || FileUtil.exist(ignore));
+        return (FileUtil.exist(file) || FileUtil.exist(file1)) && !(FileUtil.exist(done) || FileUtil.exist(ignore));
     }
 }

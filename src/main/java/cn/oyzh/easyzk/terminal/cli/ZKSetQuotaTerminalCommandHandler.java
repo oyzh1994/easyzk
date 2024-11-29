@@ -1,7 +1,6 @@
-package cn.oyzh.easyzk.terminal.basic;
+package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
-import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -10,45 +9,45 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.SetAclCommand;
+import org.apache.zookeeper.cli.SetQuotaCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKSetAclTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKSetQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     // static {
-    //     TerminalManager.registerHandler(ZKSetAclTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKSetQuotaTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new SetAclCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET_ACL);
+    private final CliCommand cliCommand = new SetQuotaCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET_QUOTA);
 
     @Override
     public String commandName() {
-        return "setAcl";
+        return "setquota";
     }
 
     @Override
     public String commandArg() {
-        return "[-s] [-v version] path acl";
+        return "-n|-b val path";
     }
 
     @Override
     public String commandDesc() {
-        // return "设置权限";
-        return I18nResourceBundle.i18nString("base.set", "base.acl");
+        // return "设置配额";
+        return I18nResourceBundle.i18nString("base.set", "base.quota");
     }
 
     @Override
     public String commandHelp(ZKTerminalTextTextArea terminal) {
-        return super.commandHelp(terminal)  + "\n" +
-                "-s stats\n" +
-                "-v version";
+        return super.commandHelp(terminal) + "\n" +
+                "-n num quota\n" +
+                "-b bytes quota";
     }
 
     @Override

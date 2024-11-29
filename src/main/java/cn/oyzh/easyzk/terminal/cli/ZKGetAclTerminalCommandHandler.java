@@ -1,6 +1,5 @@
-package cn.oyzh.easyzk.terminal.basic;
+package cn.oyzh.easyzk.terminal.cli;
 
-import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -8,27 +7,27 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.LsCommand;
+import org.apache.zookeeper.cli.GetAclCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKGetAclTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     // static {
-    //     TerminalManager.registerHandler(ZKLsTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKGetAclTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new LsCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.LS);
+    private final CliCommand cliCommand = new GetAclCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_ACL);
 
     @Override
     public String commandName() {
-        return "ls";
+        return "getAcl";
     }
 
     @Override
@@ -38,13 +37,13 @@ public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<Ter
 
     @Override
     public String commandDesc() {
-        // return "获取子节点列表";
-        return I18nResourceBundle.i18nString("base.iter", "base.child");
+        // return "获取权限";
+        return I18nResourceBundle.i18nString("base.get", "base.acl");
     }
 
     @Override
     public String commandHelp(ZKTerminalTextTextArea terminal) {
-        return super.commandHelp(terminal) + "\n" +
-                "-s stat";
+        return super.commandHelp(terminal)  + "\n" +
+                "-s stats";
     }
 }

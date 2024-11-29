@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.basic;
+package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
 import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
@@ -10,38 +10,45 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.DeleteAllCommand;
+import org.apache.zookeeper.cli.SetCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKDeleteallTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKSetTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     // static {
-    //     TerminalManager.registerHandler(ZKDeleteallTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKSetTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new DeleteAllCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DELETE_ALL);
+    private final CliCommand cliCommand = new SetCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET);
 
     @Override
     public String commandName() {
-        return "deleteall";
+        return "set";
     }
 
     @Override
     public String commandArg() {
-        return "path";
+        return "[-s] [-v version] path data";
     }
 
     @Override
     public String commandDesc() {
-        // return "删除节点及子节点";
-        return I18nResourceBundle.i18nString("base.delete", "base.node", "base.all");
+        // return "设置节点数据";
+        return I18nResourceBundle.i18nString("base.set", "base.data");
+    }
+
+    @Override
+    public String commandHelp(ZKTerminalTextTextArea terminal) {
+        return super.commandHelp(terminal)  + "\n" +
+                "-s stats\n" +
+                "-v version";
     }
 
     @Override

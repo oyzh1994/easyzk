@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.basic;
+package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
 import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
@@ -10,38 +10,45 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.SyncCommand;
+import org.apache.zookeeper.cli.SetAclCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-    //
+public class ZKSetAclTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+
     // static {
-    //     TerminalManager.registerHandler(ZKSyncTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKSetAclTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new SyncCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SYNC);
+    private final CliCommand cliCommand = new SetAclCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET_ACL);
 
     @Override
     public String commandName() {
-        return "sync";
+        return "setAcl";
     }
 
     @Override
     public String commandArg() {
-        return "path";
+        return "[-s] [-v version] path acl";
     }
 
     @Override
     public String commandDesc() {
-        // return "同步节点";
-        return I18nResourceBundle.i18nString("base.sync", "base.node");
+        // return "设置权限";
+        return I18nResourceBundle.i18nString("base.set", "base.acl");
+    }
+
+    @Override
+    public String commandHelp(ZKTerminalTextTextArea terminal) {
+        return super.commandHelp(terminal)  + "\n" +
+                "-s stats\n" +
+                "-v version";
     }
 
     @Override
@@ -51,5 +58,4 @@ public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<T
         }
         return super.execute(command, terminal);
     }
-
 }

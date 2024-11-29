@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.basic;
+package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.terminal.ZKCliPrintStream;
 import lombok.Getter;

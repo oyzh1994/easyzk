@@ -1,7 +1,6 @@
-package cn.oyzh.easyzk.terminal.basic;
+package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
-import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -10,44 +9,46 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.DeleteCommand;
+import org.apache.zookeeper.cli.CreateCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKDeleteTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     // static {
-    //     TerminalManager.registerHandler(ZKDeleteTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKCreateTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new DeleteCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DELETE);
+    private final CliCommand cliCommand = new CreateCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.CREATE);
 
     @Override
     public String commandName() {
-        return "delete";
+        return "create";
     }
 
     @Override
     public String commandArg() {
-        return "[-v version] path";
+        return "[-s] [-e] [-c] path [data] [acl]";
     }
 
     @Override
     public String commandDesc() {
-        // return "删除节点";
-        return I18nResourceBundle.i18nString("base.delete", "base.node");
+        // return "创建节点";
+        return I18nResourceBundle.i18nString("base.create", "base.node");
     }
 
     @Override
     public String commandHelp(ZKTerminalTextTextArea terminal) {
         return super.commandHelp(terminal) + "\n" +
-                "-v version";
+                "-s sequential\n" +
+                "-e ephemeral\n" +
+                "-c container";
     }
 
     @Override

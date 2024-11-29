@@ -16,10 +16,10 @@ public class ZKTest {
     // private int port = 52181;
     // private int port = 32181;
     // private String host = "192.168.3.4";
-    // private String host = "192.168.2.19";
-    // private int port = 32181;
-    private String host = "localhost";
-    private int port = 12184;
+    private String host = "192.168.2.19";
+    private int port = 32181;
+    // private String host = "localhost";
+    // private int port = 12184;
 
     @Test
     public void test1() throws X509Exception.SSLContextException, IOException {

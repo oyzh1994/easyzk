@@ -1034,7 +1034,7 @@ public class ZKClient {
      *
      * @return 集群服务列表
      */
-    public List<ZKClusterNode> getServers() {
+    public List<ZKClusterNode> clusterNodes() {
         List<ZKClusterNode> servers = new ArrayList<>();
         try {
             QuorumVerifier verifier = this.getCurrentConfig();
@@ -1131,10 +1131,12 @@ public class ZKClient {
             List<ZKEnvNode> list = new ArrayList<>();
             envi.lines().skip(1).forEach(l -> {
                 int index = l.indexOf("=");
-                String name = l.substring(0, index);
-                String value = l.substring(index + 1);
-                ZKEnvNode envNode = new ZKEnvNode(name, value);
-                list.add(envNode);
+                if (index != -1) {
+                    String name = l.substring(0, index);
+                    String value = l.substring(index + 1);
+                    ZKEnvNode envNode = new ZKEnvNode(name, value);
+                    list.add(envNode);
+                }
             });
             return list;
         }
@@ -1151,19 +1153,74 @@ public class ZKClient {
     }
 
     public List<ZKEnvNode> srvrNodes() {
-        String envi = this.srvr();
-        if (envi != null) {
+        String srvr = this.srvr();
+        if (srvr != null) {
             List<ZKEnvNode> list = new ArrayList<>();
-            envi.lines().forEach(l -> {
+            srvr.lines().forEach(l -> {
                 int index = l.indexOf(":");
-                String name = l.substring(0, index);
-                String value = l.substring(index + 1);
-                ZKEnvNode envNode = new ZKEnvNode(name, value);
-                list.add(envNode);
+                if (index != -1) {
+                    String name = l.substring(0, index);
+                    String value = l.substring(index + 1);
+                    ZKEnvNode envNode = new ZKEnvNode(name, value);
+                    list.add(envNode);
+                }
             });
             return list;
         }
         return Collections.emptyList();
     }
 
+    public String stat() {
+        try {
+            return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "stat");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ZKEnvNode> statNodes() {
+        String stat = this.stat();
+        if (stat != null) {
+            List<ZKEnvNode> list = new ArrayList<>();
+            stat.lines().forEach(l -> {
+                int index = l.indexOf("=");
+                if (index != -1) {
+                    String name = l.substring(0, index);
+                    String value = l.substring(index + 1);
+                    ZKEnvNode envNode = new ZKEnvNode(name, value);
+                    list.add(envNode);
+                }
+            });
+            return list;
+        }
+        return Collections.emptyList();
+    }
+
+    public String conf() {
+        try {
+            return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "conf");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ZKEnvNode> confNodes() {
+        String conf = this.conf();
+        if (conf != null) {
+            List<ZKEnvNode> list = new ArrayList<>();
+            conf.lines().forEach(l -> {
+                int index = l.indexOf("=");
+                if (index != -1) {
+                    String name = l.substring(0, index);
+                    String value = l.substring(index + 1);
+                    ZKEnvNode envNode = new ZKEnvNode(name, value);
+                    list.add(envNode);
+                }
+            });
+            return list;
+        }
+        return Collections.emptyList();
+    }
 }

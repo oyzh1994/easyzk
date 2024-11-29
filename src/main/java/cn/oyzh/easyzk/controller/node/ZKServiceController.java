@@ -31,10 +31,22 @@ import java.util.List;
 public class ZKServiceController extends StageController {
 
     /**
-     * 状态
+     * 状态信息
      */
     @FXML
     private FlexTableView<ZKEnvNode> statTable;
+
+    /**
+     * 配置信息
+     */
+    @FXML
+    private FlexTableView<ZKEnvNode> confTable;
+
+    /**
+     * 服务信息
+     */
+    @FXML
+    private FlexTableView<ZKEnvNode> srvrTable;
 
     /**
      * 客户端环境
@@ -64,20 +76,28 @@ public class ZKServiceController extends StageController {
     public void onStageShown(WindowEvent event) {
         ZKClient zkClient = this.getWindowProp("zkClient");
 
-        // 客户端信息
+        // 客户端环境信息
         List<ZKEnvNode> localEnviNodes = zkClient.localEnvNodes();
         this.localEnvTable.setItem(localEnviNodes);
 
-        // 服务信息
+        // 服务端环境信息
         List<ZKEnvNode> serverEnviNodes = zkClient.serverEnvNodes();
         this.serverEnvTable.setItem(serverEnviNodes);
 
-        // 状态信息
+        // 服务信息
         List<ZKEnvNode> srvrNodes = zkClient.srvrNodes();
-        this.statTable.setItem(srvrNodes);
+        this.srvrTable.setItem(srvrNodes);
+
+        // 状态信息
+        List<ZKEnvNode> statNodes = zkClient.statNodes();
+        this.statTable.setItem(statNodes);
+
+        // 配置信息
+        List<ZKEnvNode> confNodes = zkClient.confNodes();
+        this.confTable.setItem(confNodes);
 
         // 集群信息
-        List<ZKClusterNode> clusterNodes = zkClient.getServers();
+        List<ZKClusterNode> clusterNodes = zkClient.clusterNodes();
         this.clusterTable.setItem(clusterNodes);
     }
 

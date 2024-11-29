@@ -31,7 +31,7 @@ public class ZKConnectInfo {
     private int port = 2181;
 
     /**
-     * 超时时间
+     * 超时时间，单位毫秒
      */
     @Setter
     private int timeout = 5000;

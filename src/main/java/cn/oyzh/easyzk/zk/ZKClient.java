@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKClusterNode;
@@ -367,7 +368,7 @@ public class ZKClient {
     private void _close() {
         try {
             if (this.framework != null) {
-                this.framework.close();
+                TaskManager.startTimeout(this.framework::close, 500);
                 this.framework = null;
             }
             // 销毁端口转发
@@ -382,13 +383,6 @@ public class ZKClient {
             JulLog.warn("zkClient close error.", ex);
         }
     }
-
-    // /**
-    //  * 关闭zk，手动模式
-    //  */
-    // public void closeManual() {
-    //     this.close();
-    // }
 
     /**
      * 是否最后创建的节点

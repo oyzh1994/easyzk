@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.util;
 
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKConnectInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.i18n.I18nHelper;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -125,14 +125,14 @@ public class ZKConnectUtil {
     /**
      * 复制连接
      *
-     * @param connect 连接对象
-     * @param info    zk对象
+     * @param connectInfo 连接信息
+     * @param connect     连接
      */
-    public static void copyConnect(ZKConnectInfo connect, ZKConnect info) {
-        if (connect != null && info != null) {
-            info.setReadonly(connect.isReadonly());
-            info.setConnectTimeOut(connect.getTimeout());
-            info.setHost(connect.getHost() + ":" + connect.getPort());
+    public static void copyConnect(ZKConnectInfo connectInfo, ZKConnect connect) {
+        if (connectInfo != null && connect != null) {
+            connect.setReadonly(connectInfo.isReadonly());
+            connect.setConnectTimeOut(connectInfo.getTimeout());
+            connect.setHost(connectInfo.getHost() + ":" + connectInfo.getPort());
         }
     }
 }

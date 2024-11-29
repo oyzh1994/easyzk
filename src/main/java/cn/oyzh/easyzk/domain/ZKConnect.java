@@ -88,15 +88,6 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     @Column
     private Boolean listen;
 
-    // /**
-    //  * 集群模式
-    //  * 0|null: 否
-    //  * 1: 是
-    //  */
-    // @Setter
-    // @Getter
-    // private Boolean cluster;
-
     /**
      * 收藏的节点
      */
@@ -139,7 +130,6 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.host = zkInfo.host;
         this.remark = zkInfo.remark;
         this.listen = zkInfo.listen;
-        // this.cluster = zkInfo.cluster;
         this.groupId = zkInfo.groupId;
         this.readonly = zkInfo.readonly;
         this.collects = zkInfo.collects;
@@ -241,15 +231,6 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     public Boolean getListen() {
         return this.listen == null || this.listen;
     }
-
-    // /**
-    //  * 是否集群模式
-    //  *
-    //  * @return 结果
-    //  */
-    // public boolean isCluster() {
-    //     return BooleanUtil.isTrue(this.cluster) || StringUtil.count(this.host, ":") > 1;
-    // }
 
     /**
      * 获取连接超时毫秒值

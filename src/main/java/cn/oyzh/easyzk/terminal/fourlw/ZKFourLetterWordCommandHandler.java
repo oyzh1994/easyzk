@@ -1,17 +1,19 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.fourlw;
 
+import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import cn.oyzh.fx.terminal.util.TerminalUtil;
-import org.apache.zookeeper.cli.CliCommand;
 
 /**
  * @author oyzh
  * @since 2023/7/21
  */
-public abstract class ZKCliTerminalCommandHandler<C extends TerminalCommand> extends ZKTerminalCommandHandler<C> {
+public abstract class ZKFourLetterWordCommandHandler<C extends TerminalCommand> extends ZKTerminalCommandHandler<C> {
 
-    protected abstract CliCommand cliCommand();
+    protected abstract ZKFourLetterWordCommand furLetterWordCommand();
 
     @Override
     public C parseCommand(String line) {
@@ -26,11 +28,9 @@ public abstract class ZKCliTerminalCommandHandler<C extends TerminalCommand> ext
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             terminal.disable();
-            ZKCliCommandWrapper wrapper = new ZKCliCommandWrapper(this.cliCommand(), terminal.zooKeeper());
-            wrapper.parse(command.args());
-            // wrapper.init(terminal.zooKeeper());
-            wrapper.setOnResponse(result::appendResult);
-            wrapper.exec();
+            ZKConnect connect = terminal.connect();
+            String execResult = this.furLetterWordCommand().exec(connect.hostIp(), connect.hostPort());
+            result.setResult(execResult);
         } catch (Exception ex) {
             result.setException(ex);
         } finally {

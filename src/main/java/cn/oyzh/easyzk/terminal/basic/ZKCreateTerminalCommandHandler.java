@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
-import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;

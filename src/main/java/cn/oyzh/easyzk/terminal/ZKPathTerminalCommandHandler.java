@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.terminal;
 
+import cn.oyzh.easyzk.terminal.basic.ZKCliTerminalCommandHandler;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.common.util.StringUtil;

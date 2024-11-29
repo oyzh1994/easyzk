@@ -1,5 +1,6 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.basic;
 
+import cn.oyzh.easyzk.terminal.ZKCliPrintStream;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.cli.ParseException;

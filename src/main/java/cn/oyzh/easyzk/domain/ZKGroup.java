@@ -18,8 +18,8 @@ public class ZKGroup extends TreeGroup implements ObjectComparator<ZKGroup> {
         super();
     }
 
-    public ZKGroup(String name, String groupId, boolean expand) {
-        super(name, groupId, expand);
+    public ZKGroup(String gid, String name, boolean expand) {
+        super(gid, name, expand);
     }
 
     @Override

@@ -76,6 +76,7 @@ public class EasyZKApp extends FXApplication {
             OpacityManager.apply(ZKSettingJdbcStore.SETTING.getOpacity());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
+            // 调用父类
             super.init();
         } catch (Exception ex) {
             ex.printStackTrace();

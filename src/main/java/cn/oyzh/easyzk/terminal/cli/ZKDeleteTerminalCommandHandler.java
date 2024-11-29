@@ -15,17 +15,11 @@ import org.apache.zookeeper.cli.DeleteCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKDeleteTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKDeleteTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new DeleteCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DELETE);
 
     @Override
     public String commandName() {
@@ -39,7 +33,6 @@ public class ZKDeleteTerminalCommandHandler extends ZKPathTerminalCommandHandler
 
     @Override
     public String commandDesc() {
-        // return "删除节点";
         return I18nResourceBundle.i18nString("base.delete", "base.node");
     }
 

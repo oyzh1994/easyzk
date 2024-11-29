@@ -33,7 +33,6 @@ public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<
 
     @Override
     public String commandDesc() {
-        // return "创建节点";
         return I18nResourceBundle.i18nString("base.create", "base.node");
     }
 

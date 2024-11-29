@@ -33,7 +33,6 @@ public class ZKDeleteallTerminalCommandHandler extends ZKPathTerminalCommandHand
 
     @Override
     public String commandDesc() {
-        // return "删除节点及子节点";
         return I18nResourceBundle.i18nString("base.delete", "base.node", "base.all");
     }
 

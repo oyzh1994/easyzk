@@ -30,7 +30,6 @@ public class ZKAddAuthTerminalCommandHandler extends ZKCliTerminalCommandHandler
 
     @Override
     public String commandDesc() {
-        // return "添加认证";
         return I18nResourceBundle.i18nString("base.add", "base.auth");
     }
 

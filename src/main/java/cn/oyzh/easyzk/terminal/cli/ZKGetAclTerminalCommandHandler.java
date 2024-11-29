@@ -13,17 +13,11 @@ import org.apache.zookeeper.cli.GetAclCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKGetAclTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKGetAclTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new GetAclCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_ACL);
 
     @Override
     public String commandName() {

@@ -13,17 +13,11 @@ import org.apache.zookeeper.cli.GetConfigCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKGetConfigTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKGetConfigTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new GetConfigCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_CONFIG);
 
     @Override
     public String commandName() {
@@ -37,7 +31,6 @@ public class ZKGetConfigTerminalCommandHandler extends ZKCliTerminalCommandHandl
 
     @Override
     public String commandDesc() {
-        // return "获取配置";
         return I18nResourceBundle.i18nString("base.get", "base.config");
     }
 

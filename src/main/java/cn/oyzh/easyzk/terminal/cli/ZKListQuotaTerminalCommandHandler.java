@@ -12,17 +12,11 @@ import org.apache.zookeeper.cli.ListQuotaCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKListQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKListQuotaTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new ListQuotaCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.LIST_QUOTA);
 
     @Override
     public String commandName() {
@@ -36,7 +30,6 @@ public class ZKListQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandl
 
     @Override
     public String commandDesc() {
-        // return "列举配额";
         return I18nResourceBundle.i18nString("base.iter", "base.quota");
     }
 }

@@ -12,17 +12,11 @@ import org.apache.zookeeper.cli.GetAllChildrenNumberCommand;
  * @author oyzh
  * @since 2023/12/21
  */
-// @Component
 public class ZKGetAllChildrenNumberCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKGetAllChildrenNumberCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new GetAllChildrenNumberCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_ALL_CHILDREN_NUMBER);
 
     @Override
     public String commandName() {
@@ -36,7 +30,6 @@ public class ZKGetAllChildrenNumberCommandHandler extends ZKPathTerminalCommandH
 
     @Override
     public String commandDesc() {
-        // return "获取全部子节点数量";
         return I18nResourceBundle.i18nString("base.get", "base.all", "base.childNumber");
     }
 

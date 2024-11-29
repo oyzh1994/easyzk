@@ -12,17 +12,11 @@ import org.apache.zookeeper.cli.GetEphemeralsCommand;
  * @author oyzh
  * @since 2023/12/21
  */
-// @Component
 public class ZKGetEphemeralsCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKGetEphemeralsCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new GetEphemeralsCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.GET_EPHEMERALS);
 
     @Override
     public String commandName() {
@@ -36,7 +30,6 @@ public class ZKGetEphemeralsCommandHandler extends ZKPathTerminalCommandHandler<
 
     @Override
     public String commandDesc() {
-        // return "获取临时节点";
         return I18nResourceBundle.i18nString("base.get", "base.ephemerals", "base.node");
     }
 

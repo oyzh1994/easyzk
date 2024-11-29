@@ -16,8 +16,4 @@ public class ZKWchsCommandHandler extends ZKFourLetterWordCommandHandler<Termina
     @Accessors(fluent = true)
     private final ZKFourLetterWordCommand furLetterWordCommand = new ZKWchsCommand();
 
-    @Override
-    public String commandDesc() {
-        return I18nResourceBundle.i18nString("base.add", "base.auth");
-    }
 }

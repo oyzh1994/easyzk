@@ -7,6 +7,6 @@ package cn.oyzh.easyzk.terminal.fourlw;
 public class ZKStatCommand extends ZKFourLetterWordCommand {
 
     public ZKStatCommand() {
-        super("stat");
+        super("stat", "stat4");
     }
 }

@@ -9,7 +9,7 @@ import cn.oyzh.fx.terminal.util.TerminalUtil;
 
 /**
  * @author oyzh
- * @since 2023/7/21
+ * @since 2024/11/29
  */
 public abstract class ZKFourLetterWordCommandHandler<C extends TerminalCommand> extends ZKTerminalCommandHandler<C> {
 
@@ -17,7 +17,16 @@ public abstract class ZKFourLetterWordCommandHandler<C extends TerminalCommand> 
 
     @Override
     public String commandName() {
-        return this.furLetterWordCommand().getCmd();
+        ZKFourLetterWordCommand cmd = this.furLetterWordCommand();
+        if (cmd.getAlias() != null) {
+            return cmd.getAlias();
+        }
+        return cmd.getCmd();
+    }
+
+    @Override
+    public String commandDesc() {
+        return "FourLetterWord Command " + this.furLetterWordCommand().getCmd();
     }
 
     @Override

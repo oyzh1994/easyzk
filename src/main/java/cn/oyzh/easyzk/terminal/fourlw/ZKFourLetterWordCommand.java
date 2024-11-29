@@ -16,8 +16,16 @@ public abstract class ZKFourLetterWordCommand {
     @Getter
     private final String cmd;
 
+    @Getter
+    private final String alias;
+
     public ZKFourLetterWordCommand(String cmd) {
+        this(cmd, null);
+    }
+
+    public ZKFourLetterWordCommand(String cmd, String alias) {
         this.cmd = cmd;
+        this.alias = alias;
     }
 
     public String exec(String host, int port) throws KeeperException, IOException, InterruptedException, X509Exception.SSLContextException {

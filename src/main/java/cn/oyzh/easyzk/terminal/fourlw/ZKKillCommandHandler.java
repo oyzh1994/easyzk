@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/09/20
+ * @since 2024/11/29
  */
 public class ZKKillCommandHandler extends ZKFourLetterWordCommandHandler<TerminalCommand> {
 
@@ -16,8 +16,4 @@ public class ZKKillCommandHandler extends ZKFourLetterWordCommandHandler<Termina
     @Accessors(fluent = true)
     private final ZKFourLetterWordCommand furLetterWordCommand = new ZKKillCommand();
 
-    @Override
-    public String commandDesc() {
-        return I18nResourceBundle.i18nString("base.add", "base.auth");
-    }
 }

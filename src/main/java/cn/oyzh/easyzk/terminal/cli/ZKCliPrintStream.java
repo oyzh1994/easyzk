@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal;
+package cn.oyzh.easyzk.terminal.cli;
 
 import java.io.OutputStream;
 import java.io.PrintStream;

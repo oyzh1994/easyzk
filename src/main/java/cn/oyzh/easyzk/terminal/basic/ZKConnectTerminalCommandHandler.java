@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.cli;
+package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
@@ -10,12 +10,7 @@ import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKConnectTerminalCommandHandler.class);
-    // }
 
     @Override
     protected TerminalCommand parseCommand(String line, String[] args) {

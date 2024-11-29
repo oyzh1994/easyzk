@@ -16,6 +16,11 @@ public abstract class ZKFourLetterWordCommandHandler<C extends TerminalCommand> 
     protected abstract ZKFourLetterWordCommand furLetterWordCommand();
 
     @Override
+    public String commandName() {
+        return this.furLetterWordCommand().getCmd();
+    }
+
+    @Override
     public C parseCommand(String line) {
         String[] args = TerminalUtil.split(line);
         TerminalCommand command = new TerminalCommand();

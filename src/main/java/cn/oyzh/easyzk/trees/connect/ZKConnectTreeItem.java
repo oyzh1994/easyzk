@@ -4,12 +4,11 @@ import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
-import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
 import cn.oyzh.easyzk.controller.node.ZKServiceController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.data.ZKDataTreeItem;
@@ -265,7 +264,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         zkInfo.copy(this.value);
         zkInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         zkInfo.setCollects(Collections.emptyList());
-        if (ZKInfoJdbcStore.INSTANCE.replace(zkInfo)) {
+        if (ZKConnectJdbcStore.INSTANCE.replace(zkInfo)) {
             this.connectManager().addConnect(zkInfo);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
@@ -298,7 +297,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
         }
         this.value.setName(connectName);
         // 修改名称
-        if (ZKInfoJdbcStore.INSTANCE.replace(this.value)) {
+        if (ZKConnectJdbcStore.INSTANCE.replace(this.value)) {
             this.setValue(new ZKConnectTreeItemValue(this));
         } else {
             MessageBox.warn(I18nHelper.operationFail());

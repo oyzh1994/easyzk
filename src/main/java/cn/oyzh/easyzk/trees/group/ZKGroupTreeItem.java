@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
-import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
@@ -167,7 +167,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         if (!this.containsChild(item)) {
             if (!Objects.equals(item.value().getGroupId(), this.value.getGid())) {
                 item.value().setGroupId(this.value.getGid());
-                ZKInfoJdbcStore.INSTANCE.replace(item.value());
+                ZKConnectJdbcStore.INSTANCE.replace(item.value());
             }
             super.addChild(item);
         }
@@ -183,7 +183,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
     @Override
     public boolean delConnectItem(@NonNull ZKConnectTreeItem item) {
         // 删除连接
-        if (ZKInfoJdbcStore.INSTANCE.delete(item.value())) {
+        if (ZKConnectJdbcStore.INSTANCE.delete(item.value())) {
             this.removeChild(item);
             return true;
         }

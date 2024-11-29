@@ -13,18 +13,18 @@ import java.util.List;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKInfoJdbcStore extends JdbcStore<ZKConnect> {
+public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
 
     /**
      * 当前实例
      */
-    public static final ZKInfoJdbcStore INSTANCE = new ZKInfoJdbcStore();
+    public static final ZKConnectJdbcStore INSTANCE = new ZKConnectJdbcStore();
 
     public List<ZKConnect> load() {
         List<ZKConnect> list = super.selectList();
         // 处理ssh信息
         for (ZKConnect info : list) {
-            info.setSshConnect(ZKSSHInfoJdbcStore.INSTANCE.find(info.getId()));
+            info.setSshConnect(ZKSSHConnectJdbcStore.INSTANCE.find(info.getId()));
         }
         return list;
     }
@@ -41,11 +41,11 @@ public class ZKInfoJdbcStore extends JdbcStore<ZKConnect> {
             // ssh信息处理
             ZKSSHConnect connect = info.getSshConnect();
             if (info.getSshConnect() != null) {
-                ZKSSHInfoJdbcStore.INSTANCE.replace(connect);
+                ZKSSHConnectJdbcStore.INSTANCE.replace(connect);
             } else {
                 DeleteParam param = new DeleteParam();
                 param.addQueryParam(new QueryParam("iid", info.getId()));
-                ZKSSHInfoJdbcStore.INSTANCE.delete(connect);
+                ZKSSHConnectJdbcStore.INSTANCE.delete(connect);
             }
 
             // 收藏处理

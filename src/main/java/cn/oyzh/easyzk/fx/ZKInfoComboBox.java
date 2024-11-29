@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 
@@ -25,7 +25,7 @@ public class ZKInfoComboBox extends FlexComboBox<ZKConnect> {
                 return o.getName();
             }
         });
-        List<ZKConnect> infos = ZKInfoJdbcStore.INSTANCE.load();
+        List<ZKConnect> infos = ZKConnectJdbcStore.INSTANCE.load();
         this.setItem(infos);
     }
 }

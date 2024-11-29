@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKInfoJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
@@ -251,7 +251,7 @@ public class ZKInfoAddController extends StageController {
             zkInfo.setConnectTimeOut(connectTimeOut.intValue());
             zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
             // 保存数据
-            boolean result = ZKInfoJdbcStore.INSTANCE.replace(zkInfo);
+            boolean result = ZKConnectJdbcStore.INSTANCE.replace(zkInfo);
             if (result) {
                 ZKEventUtil.infoAdded(zkInfo);
                 MessageBox.okToast(I18nHelper.operationSuccess());

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;

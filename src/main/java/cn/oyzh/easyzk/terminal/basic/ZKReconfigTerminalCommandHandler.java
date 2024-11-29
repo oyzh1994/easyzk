@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
 import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
@@ -10,45 +10,49 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.SetQuotaCommand;
+import org.apache.zookeeper.cli.ReconfigCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKSetQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+public class ZKReconfigTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
     // static {
-    //     TerminalManager.registerHandler(ZKSetQuotaTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKReconfigTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new SetQuotaCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET_QUOTA);
+    private final CliCommand cliCommand = new ReconfigCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.RECONFIG);
 
     @Override
     public String commandName() {
-        return "setquota";
+        return "reconfig";
     }
 
     @Override
     public String commandArg() {
-        return "-n|-b val path";
+        return "[-s] [-v version] [[-file path] | [-members serverID=host:port1:port2;port3[,...]*]] | [-add serverId=host:port1:port2;port3[,...]]* [-remove serverId[,...]*]";
     }
 
     @Override
     public String commandDesc() {
-        // return "设置配额";
-        return I18nResourceBundle.i18nString("base.set", "base.quota");
+        // return "重新配置";
+        return I18nResourceBundle.i18nString("base.re", "base.config");
     }
 
     @Override
     public String commandHelp(ZKTerminalTextTextArea terminal) {
         return super.commandHelp(terminal) + "\n" +
-                "-n num quota\n" +
-                "-b bytes quota";
+                "-s stats\n" +
+                "-v required current config version\n" +
+                "-file path of config file to parse for membership\n" +
+                "-members comma-separated list of config strings for non-incremental reconfig\n" +
+                "-add comma-separated list of config strings for new servers\n" +
+                "-remove comma-separated list of server IDs to remove";
     }
 
     @Override

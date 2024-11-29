@@ -1,7 +1,7 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
-import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
+import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -10,45 +10,45 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.DelQuotaCommand;
+import org.apache.zookeeper.cli.SetAclCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKDelQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
+public class ZKSetAclTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     // static {
-    //     TerminalManager.registerHandler(ZKDelQuotaTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKSetAclTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new DelQuotaCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DEL_QUOTA);
+    private final CliCommand cliCommand = new SetAclCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET_ACL);
 
     @Override
     public String commandName() {
-        return "delquota";
+        return "setAcl";
     }
 
     @Override
     public String commandArg() {
-        return "[-n|-b] path";
+        return "[-s] [-v version] path acl";
     }
 
     @Override
     public String commandDesc() {
-        // return "删除配额";
-        return I18nResourceBundle.i18nString("base.delete", "base.quota");
+        // return "设置权限";
+        return I18nResourceBundle.i18nString("base.set", "base.acl");
     }
 
     @Override
     public String commandHelp(ZKTerminalTextTextArea terminal) {
         return super.commandHelp(terminal)  + "\n" +
-                "-n num quota\n" +
-                "-b bytes quota";
+                "-s stats\n" +
+                "-v version";
     }
 
     @Override

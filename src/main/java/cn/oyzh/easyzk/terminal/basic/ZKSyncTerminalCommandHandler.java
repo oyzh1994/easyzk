@@ -1,7 +1,7 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
-import cn.oyzh.easyzk.terminal.ZKCliTerminalCommandHandler;
+import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -10,46 +10,38 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.CreateCommand;
+import org.apache.zookeeper.cli.SyncCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
-
+public class ZKSyncTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+    //
     // static {
-    //     TerminalManager.registerHandler(ZKCreateTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKSyncTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new CreateCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.CREATE);
+    private final CliCommand cliCommand = new SyncCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SYNC);
 
     @Override
     public String commandName() {
-        return "create";
+        return "sync";
     }
 
     @Override
     public String commandArg() {
-        return "[-s] [-e] [-c] path [data] [acl]";
+        return "path";
     }
 
     @Override
     public String commandDesc() {
-        // return "创建节点";
-        return I18nResourceBundle.i18nString("base.create", "base.node");
-    }
-
-    @Override
-    public String commandHelp(ZKTerminalTextTextArea terminal) {
-        return super.commandHelp(terminal) + "\n" +
-                "-s sequential\n" +
-                "-e ephemeral\n" +
-                "-c container";
+        // return "同步节点";
+        return I18nResourceBundle.i18nString("base.sync", "base.node");
     }
 
     @Override
@@ -59,4 +51,5 @@ public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<
         }
         return super.execute(command, terminal);
     }
+
 }

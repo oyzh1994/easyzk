@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal.basic;
 
 /**
  * @author oyzh

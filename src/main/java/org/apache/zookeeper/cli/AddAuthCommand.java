@@ -31,7 +31,7 @@ import java.io.IOException;
  */
 public class AddAuthCommand extends CliCommand {
 
-    private static Options options = new Options();
+    private static final Options options = new Options();
     private String[] args;
 
     public AddAuthCommand() {

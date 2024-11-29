@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
 import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
@@ -10,38 +10,38 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.SetAclCommand;
+import org.apache.zookeeper.cli.SetCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKSetAclTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKSetTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     // static {
-    //     TerminalManager.registerHandler(ZKSetAclTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKSetTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new SetAclCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET_ACL);
+    private final CliCommand cliCommand = new SetCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.SET);
 
     @Override
     public String commandName() {
-        return "setAcl";
+        return "set";
     }
 
     @Override
     public String commandArg() {
-        return "[-s] [-v version] path acl";
+        return "[-s] [-v version] path data";
     }
 
     @Override
     public String commandDesc() {
-        // return "设置权限";
-        return I18nResourceBundle.i18nString("base.set", "base.acl");
+        // return "设置节点数据";
+        return I18nResourceBundle.i18nString("base.set", "base.data");
     }
 
     @Override

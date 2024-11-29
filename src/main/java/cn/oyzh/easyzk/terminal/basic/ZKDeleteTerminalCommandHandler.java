@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.terminal.handler;
+package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
 import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
@@ -10,38 +10,44 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
-import org.apache.zookeeper.cli.DeleteAllCommand;
+import org.apache.zookeeper.cli.DeleteCommand;
 
 /**
  * @author oyzh
  * @since 2023/09/20
  */
 // @Component
-public class ZKDeleteallTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
+public class ZKDeleteTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
     // static {
-    //     TerminalManager.registerHandler(ZKDeleteallTerminalCommandHandler.class);
+    //     TerminalManager.registerHandler(ZKDeleteTerminalCommandHandler.class);
     // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
-    private final CliCommand cliCommand = new DeleteAllCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DELETE_ALL);
+    private final CliCommand cliCommand = new DeleteCommand();
+    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DELETE);
 
     @Override
     public String commandName() {
-        return "deleteall";
+        return "delete";
     }
 
     @Override
     public String commandArg() {
-        return "path";
+        return "[-v version] path";
     }
 
     @Override
     public String commandDesc() {
-        // return "删除节点及子节点";
-        return I18nResourceBundle.i18nString("base.delete", "base.node", "base.all");
+        // return "删除节点";
+        return I18nResourceBundle.i18nString("base.delete", "base.node");
+    }
+
+    @Override
+    public String commandHelp(ZKTerminalTextTextArea terminal) {
+        return super.commandHelp(terminal) + "\n" +
+                "-v version";
     }
 
     @Override

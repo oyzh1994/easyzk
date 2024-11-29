@@ -15,17 +15,11 @@ import org.apache.zookeeper.cli.CreateCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKCreateTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKCreateTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new CreateCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.CREATE);
 
     @Override
     public String commandName() {

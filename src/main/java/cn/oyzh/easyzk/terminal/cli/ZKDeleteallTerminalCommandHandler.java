@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
-import cn.oyzh.easyzk.terminal.ZKPathTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -16,17 +15,11 @@ import org.apache.zookeeper.cli.DeleteAllCommand;
  * @author oyzh
  * @since 2023/09/20
  */
-// @Component
 public class ZKDeleteallTerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
-
-    // static {
-    //     TerminalManager.registerHandler(ZKDeleteallTerminalCommandHandler.class);
-    // }
 
     @Getter(AccessLevel.PROTECTED)
     @Accessors(fluent = true)
     private final CliCommand cliCommand = new DeleteAllCommand();
-    // private final CliCommand cliCommand = CommandFactory.getInstance(CommandFactory.Command.DELETE_ALL);
 
     @Override
     public String commandName() {

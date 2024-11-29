@@ -22,6 +22,6 @@ public class ZKThread extends Thread {
 
     @Override
     public void run() {
-        BackgroundService.submit(task);
+        BackgroundService.submit(this.task);
     }
 }

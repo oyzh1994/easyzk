@@ -31,7 +31,7 @@ public class ZKClientUtil {
      * @param sessionTimeoutMs    会话超时毫秒值
      * @return zk客户端
      */
-    public static CuratorFramework buildClient(@NonNull String host, @NonNull RetryPolicy retryPolicy, int connectionTimeoutMs, int sessionTimeoutMs, List<AuthInfo> authInfos, boolean compatibility) {
+    public static CuratorFramework build(@NonNull String host, @NonNull RetryPolicy retryPolicy, int connectionTimeoutMs, int sessionTimeoutMs, List<AuthInfo> authInfos, boolean compatibility) {
         ExecutorService service = Executors.newCachedThreadPool();
         // 构建builder
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
@@ -46,32 +46,6 @@ public class ZKClientUtil {
                 .zookeeperFactory(new ZKFactory())
                 .sessionTimeoutMs(sessionTimeoutMs)
                 .connectionTimeoutMs(connectionTimeoutMs);
-        return builder.build();
-    }
-
-    /**
-     * 构建zk监听器
-     *
-     * @param framework zk客户端
-     * @return zk监听器
-     */
-    public static TreeCache buildTreeCache(@NonNull CuratorFramework framework) {
-        return buildTreeCache(framework, "/");
-    }
-
-    /**
-     * 构建zk监听器
-     *
-     * @param framework zk客户端
-     * @param path      监听路径
-     * @return zk监听器
-     */
-    public static TreeCache buildTreeCache(@NonNull CuratorFramework framework, @NonNull String path) {
-        // 构建builder
-        TreeCache.Builder builder = TreeCache.newBuilder(framework, path)
-                .setCacheData(false)
-                .setExecutor(ZKThread::new)
-                .setCreateParentNodes(true);
         return builder.build();
     }
 

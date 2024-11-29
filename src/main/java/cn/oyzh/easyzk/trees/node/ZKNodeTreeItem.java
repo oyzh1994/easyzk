@@ -79,6 +79,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void setBeChanged() {
         this.bitValue().set(0, true);
+        this.refresh();
     }
 
     /**
@@ -86,6 +87,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void setBeDeleted() {
         this.bitValue().set(1, true);
+        this.refresh();
     }
 
     /**
@@ -93,6 +95,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
      */
     public void setBeChildChanged() {
         this.bitValue().set(2, true);
+        this.refresh();
     }
 
     /**
@@ -1089,5 +1092,17 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             this.bitValue = null;
             super.destroy();
         }
+    }
+
+    public boolean cacheable(String fullPath) {
+        if (StringUtil.equals(this.nodePath(), fullPath)) {
+            return true;
+        }
+        for (ZKNodeTreeItem subItem : this.itemChildren()) {
+            if (subItem.cacheable(fullPath)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

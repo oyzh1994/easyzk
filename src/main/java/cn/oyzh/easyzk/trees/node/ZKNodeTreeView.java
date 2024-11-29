@@ -12,6 +12,7 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
+import cn.oyzh.fx.plus.node.NodeLifeCycle;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -31,12 +32,17 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKNodeTreeView extends RichTreeView {
+public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
 
     @Getter
     @Setter
-    @Accessors(fluent = true)
+    @Accessors(fluent = true, chain = false)
     private ZKClient client;
+
+//    public void client(ZKClient client) {
+//        this.client = client;
+//        this.client.setCacheFilter(p-> this.getRoot().cacheable(p));
+//    }
 
     public ZKConnect connect() {
         return this.client.connect();
@@ -358,12 +364,24 @@ public class ZKNodeTreeView extends RichTreeView {
      * @return 结果
      */
     public boolean hasUnsavedData() {
-         List<ZKNodeTreeItem> items = this.getAllNodeItem();
-         for (ZKNodeTreeItem item : items) {
-             if (item.isDataUnsaved()) {
-                 return true;
-             }
-         }
+        List<ZKNodeTreeItem> items = this.getAllNodeItem();
+        for (ZKNodeTreeItem item : items) {
+            if (item.isDataUnsaved()) {
+                return true;
+            }
+        }
         return false;
+    }
+
+    @Override
+    public void onNodeDestroy() {
+//        if (this.client != null) {
+//            this.client.setCacheFilter(null);
+//        }
+    }
+
+    @Override
+    public void onNodeInitialize() {
+
     }
 }

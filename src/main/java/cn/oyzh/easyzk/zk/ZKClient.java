@@ -125,6 +125,11 @@ public class ZKClient {
     private volatile ZKTreeListener cacheListener;
 
     /**
+     * 缓存选择器
+     */
+    private final ZKTreeCacheSelector cacheSelector = new ZKTreeCacheSelector();
+
+    /**
      * 初始化状态监听器
      */
     private final TreeCacheListener initializedListener = (c, e) -> {
@@ -165,7 +170,7 @@ public class ZKClient {
 
     public ZKClient(@NonNull ZKConnect connect) {
         this.connect = connect;
-        if (connect.isSSHForward()) {
+        if (connect.isSSHForward() && connect.getSshConnect() != null) {
             this.sshForwarder = new SSHForwarder(connect.getSshConnect());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
@@ -211,12 +216,12 @@ public class ZKClient {
             this.closeTreeCache();
             // 创建zk树监听
             if (this.cacheListener != null) {
-                this.treeCache = ZKClientUtil.buildTreeCache(this.framework, this.cacheListener.path());
+                this.treeCache = ZKTreeCacheUtil.build(this.framework, this.cacheListener.path(), this.cacheSelector);
                 this.treeCache.getListenable().addListener(this.cacheListener);
                 this.treeCache.getListenable().addListener(this.initializedListener);
                 this.treeCache.start();
             } else if (!this.isEnableListen()) {// 未开启监听则只创建连接状态初始化监听器
-                this.treeCache = ZKClientUtil.buildTreeCache(this.framework);
+                this.treeCache = ZKTreeCacheUtil.build(this.framework, this.cacheSelector);
                 this.treeCache.getListenable().addListener(this.initializedListener);
                 this.treeCache.start();
             }
@@ -351,7 +356,7 @@ public class ZKClient {
             this.retryPolicy = new RetryOneTime(3_000);
         }
         // 创建客户端
-        this.framework = ZKClientUtil.buildClient(host, this.retryPolicy, this.connect.connectTimeOutMs(), this.connect.sessionTimeOutMs(), authInfos, this.connect.compatibility34());
+        this.framework = ZKClientUtil.build(host, this.retryPolicy, this.connect.connectTimeOutMs(), this.connect.sessionTimeOutMs(), authInfos, this.connect.compatibility34());
     }
 
     /**

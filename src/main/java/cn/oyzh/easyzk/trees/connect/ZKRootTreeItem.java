@@ -11,6 +11,8 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
@@ -36,7 +38,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItem.ZKRootTreeItemValue> implements ZKConnectManager {
+public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemValue> implements ZKConnectManager {
 
     /**
      * zk信息储存
@@ -381,7 +383,7 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItem.ZKRootTreeItemValu
      * @author oyzh
      * @since 2023/4/7
      */
-    public static class ZKRootTreeItemValue extends ZKTreeItemValue {
+    public static class ZKRootTreeItemValue extends RichTreeItemValue {
 
         @Override
         public String name() {

@@ -9,6 +9,8 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.i18n.I18nHelper;
@@ -35,7 +37,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItem.ZKGroupTreeItemValue> implements ZKConnectManager {
+public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeItemValue> implements ZKConnectManager {
 
     /**
      * 分组对象
@@ -43,11 +45,6 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItem.ZKGroupTreeItemV
     @Getter
     @Accessors(chain = true, fluent = true)
     private final ZKGroup value;
-
-    // /**
-    //  * zk信息储存
-    //  */
-    // private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
 
     /**
      * zk分组储存
@@ -227,7 +224,7 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItem.ZKGroupTreeItemV
      * @author oyzh
      * @since 2023/4/7
      */
-    public static class ZKGroupTreeItemValue extends ZKTreeItemValue {
+    public static class ZKGroupTreeItemValue extends RichTreeItemValue {
 
         public ZKGroupTreeItemValue(@NonNull ZKGroupTreeItem item) {
             super(item);

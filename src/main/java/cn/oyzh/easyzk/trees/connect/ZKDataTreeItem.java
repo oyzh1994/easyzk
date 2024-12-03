@@ -2,6 +2,8 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
@@ -11,7 +13,7 @@ import javafx.scene.control.TreeItem;
  * @author oyzh
  * @since 2023/1/30
  */
-public class ZKDataTreeItem extends ZKTreeItem<ZKDataTreeItem.ZKDataTreeItemValue> {
+public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemValue> {
 
     public ZKDataTreeItem(RichTreeView treeView) {
         super(treeView);
@@ -39,7 +41,7 @@ public class ZKDataTreeItem extends ZKTreeItem<ZKDataTreeItem.ZKDataTreeItemValu
      * @author oyzh
      * @since 2023/4/7
      */
-    public static class ZKDataTreeItemValue extends ZKTreeItemValue {
+    public static class ZKDataTreeItemValue extends RichTreeItemValue {
 
         @Override
         public SVGGlyph graphic() {

@@ -16,14 +16,14 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKCollectJdbcStore;
 import cn.oyzh.easyzk.store.ZKDataHistoryJdbcStore;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
-import cn.oyzh.easyzk.trees.connect.ZKTreeItem;
-import cn.oyzh.easyzk.trees.connect.ZKTreeItemValue;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.LockSVGGlyph;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
@@ -52,7 +52,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/1/30
  */
-public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItem.ZKNodeTreeItemValue> {
+public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemValue> {
 
     /**
      * zk节点
@@ -1116,7 +1116,7 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItem.ZKNodeTreeItemValu
      * @author oyzh
      * @since 2023/4/7
      */
-    public static class ZKNodeTreeItemValue extends ZKTreeItemValue {
+    public static class ZKNodeTreeItemValue extends RichTreeItemValue {
 
         public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
             super(item);

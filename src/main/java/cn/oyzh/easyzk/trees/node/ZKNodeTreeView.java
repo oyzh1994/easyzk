@@ -4,12 +4,12 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.TreeChildFilterEvent;
-import cn.oyzh.easyzk.trees.connect.ZKTreeCell;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.treeView.RichTreeCell;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.node.NodeLifeCycle;
@@ -39,11 +39,6 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
     @Accessors(fluent = true, chain = false)
     private ZKClient client;
 
-//    public void client(ZKClient client) {
-//        this.client = client;
-//        this.client.setCacheFilter(p-> this.getRoot().cacheable(p));
-//    }
-
     public ZKConnect connect() {
         return this.client.connect();
     }
@@ -51,7 +46,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
     @Override
     protected void initTreeView() {
         super.initTreeView();
-        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new ZKTreeCell());
+        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell<>());
     }
 
     @Override

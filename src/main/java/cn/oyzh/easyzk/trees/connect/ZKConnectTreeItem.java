@@ -15,6 +15,8 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -41,7 +43,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItem.ZKConnectTreeItemValue> {
+public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectTreeItemValue> {
 
     /**
      * zk信息
@@ -389,7 +391,7 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItem.ZKConnectTre
      * @since 2023/4/7
      */
     @Accessors(chain = true, fluent = true)
-    public static class ZKConnectTreeItemValue extends ZKTreeItemValue {
+    public static class ZKConnectTreeItemValue extends RichTreeItemValue {
 
         public ZKConnectTreeItemValue(@NonNull ZKConnectTreeItem item) {
             super(item);

@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.test;
 
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.trees.ZKTreeView;
+import cn.oyzh.easyzk.trees.connect.ZKTreeView;
 import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.common.util.ResourceUtil;
 import cn.oyzh.common.util.SystemUtil;

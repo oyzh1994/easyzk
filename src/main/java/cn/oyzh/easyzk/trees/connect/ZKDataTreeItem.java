@@ -2,8 +2,6 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.trees.ZKTreeItem;
-import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;

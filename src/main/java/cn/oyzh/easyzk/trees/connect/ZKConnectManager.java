@@ -1,7 +1,6 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.common.util.CollectionUtil;
 import lombok.NonNull;
 

@@ -1,8 +1,7 @@
 package cn.oyzh.easyzk.controller.main;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.fx.ZKMsgTextArea;
-import cn.oyzh.easyzk.trees.ZKTreeView;
+import cn.oyzh.easyzk.trees.connect.ZKTreeView;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.keyboard.KeyListener;

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
@@ -9,9 +9,7 @@ import cn.oyzh.easyzk.event.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
-import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;

@@ -1,15 +1,10 @@
-package cn.oyzh.easyzk.trees.group;
+package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
-import cn.oyzh.easyzk.trees.ZKConnectManager;
-import cn.oyzh.easyzk.trees.ZKTreeItem;
-import cn.oyzh.easyzk.trees.ZKTreeItemValue;
-import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
-import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.trees;
+package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;

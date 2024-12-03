@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.controller.main;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.trees.connect.ZKTreeView;
+import cn.oyzh.easyzk.trees.connect.ZKConnectTreeView;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -22,7 +22,7 @@ public class ConnectController extends SubStageController   {
      * 左侧zk树
      */
     @FXML
-    private ZKTreeView tree;
+    private ZKConnectTreeView tree;
 
     /**
      * 节点排序(正序)

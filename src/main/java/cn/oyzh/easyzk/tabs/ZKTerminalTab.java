@@ -82,7 +82,7 @@ public class ZKTerminalTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/terminal/zkTerminalTabContent.fxml";
+        return "/tabs/zkTerminalTab.fxml";
     }
 
     /**

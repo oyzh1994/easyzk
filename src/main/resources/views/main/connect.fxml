@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyzk.trees.connect.ZKTreeView?>
+<?import cn.oyzh.easyzk.trees.connect.ZKConnectTreeView?>
 <?import cn.oyzh.fx.gui.svg.glyph.ConnectionSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
@@ -40,7 +40,7 @@
                 </HBox.margin>
             </PositioningSVGGlyph>
         </FlexHBox>
-        <ZKTreeView fx:id="tree" flexHeight="100% - 32" flexWidth="100%"/>
+        <ZKConnectTreeView fx:id="tree" flexHeight="100% - 32" flexWidth="100%"/>
     </FlexVBox>
 </FXTab>
 

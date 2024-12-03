@@ -30,7 +30,7 @@ import lombok.experimental.Accessors;
  * @since 2023/1/29
  */
 @Accessors(chain = true, fluent = true)
-public class ZKTreeView extends RichTreeView implements FXEventListener {
+public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
 
     /**
      * 搜索中标志位
@@ -43,7 +43,7 @@ public class ZKTreeView extends RichTreeView implements FXEventListener {
      */
     private final ZKSetting setting = ZKSettingJdbcStore.SETTING;
 
-    public ZKTreeView() {
+    public ZKConnectTreeView() {
         this.dragContent = "zk_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell());
         // 初始化根节点
@@ -64,18 +64,18 @@ public class ZKTreeView extends RichTreeView implements FXEventListener {
     }
 
     @Override
-    public ZKTreeItemFilter itemFilter() {
+    public ZKConnectTreeItemFilter itemFilter() {
         try {
             // 初始化过滤器
             if (this.itemFilter == null) {
-                ZKTreeItemFilter filter = new ZKTreeItemFilter();
+                ZKConnectTreeItemFilter filter = new ZKConnectTreeItemFilter();
                 filter.initFilters();
                 this.itemFilter = filter;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return (ZKTreeItemFilter) this.itemFilter;
+        return (ZKConnectTreeItemFilter) this.itemFilter;
     }
 
     @Override

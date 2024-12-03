@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.test;
 
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.trees.connect.ZKTreeView;
+import cn.oyzh.easyzk.trees.connect.ZKConnectTreeView;
 import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.common.util.ResourceUtil;
 import cn.oyzh.common.util.SystemUtil;
@@ -237,7 +237,7 @@ public class AppMain extends Application {
     }
 
     private void test12(Stage stage) {
-        ZKTreeView treeView = new ZKTreeView();
+        ZKConnectTreeView treeView = new ZKConnectTreeView();
 
         // TreeItem<String> root = new TreeItem<>();
         // root.setValue("zk连接列表");

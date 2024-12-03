@@ -29,7 +29,7 @@ public class ZKHomeTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/home/zkHomeTabContent.fxml";
+        return "/tabs/zkHomeTab.fxml";
     }
 
     @Override

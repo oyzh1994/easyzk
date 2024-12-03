@@ -19,7 +19,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/3/28
  */
-public class ZKTreeItemFilter implements RichTreeItemFilter {
+public class ZKConnectTreeItemFilter implements RichTreeItemFilter {
 
     /**
      * 排除子节点
@@ -41,13 +41,6 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
     @Setter
     @Getter
     private boolean excludeEphemeral;
-
-    // /**
-    //  * zk主页搜索处理
-    //  */
-    // // @Autowired
-    // @Setter
-    // private ZKSearchHandler searchHandler;
 
     /**
      * 过滤内容列表
@@ -88,15 +81,8 @@ public class ZKTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤节点
-            if (ZKNodeUtil.isFiltered(treeItem.nodePath(), this.filters)) {
-                return false;
-            }
+            return !ZKNodeUtil.isFiltered(treeItem.nodePath(), this.filters);
         }
-        // // 判断是否满足搜索要求
-        // ZKSearchParam param = this.searchHandler.searchParam();
-        // if (param != null && param.isFilterMode() && !param.isEmpty()) {
-        //     return this.searchHandler.getMatchType(item) != null;
-        // }
         return true;
     }
 }

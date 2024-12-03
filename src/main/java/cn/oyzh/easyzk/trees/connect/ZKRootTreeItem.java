@@ -50,7 +50,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
      */
     private final ZKGroupJdbcStore groupStore = ZKGroupJdbcStore.INSTANCE;
 
-    public ZKRootTreeItem(@NonNull ZKTreeView treeView) {
+    public ZKRootTreeItem(@NonNull ZKConnectTreeView treeView) {
         super(treeView);
         this.setValue(new ZKRootTreeItemValue());
         // 初始化子节点

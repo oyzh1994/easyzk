@@ -11,12 +11,14 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -26,6 +28,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.MenuItem;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -41,7 +44,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
+public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItem.ZKConnectTreeItemValue> {
 
     /**
      * zk信息
@@ -380,5 +383,45 @@ public class ZKConnectTreeItem extends ZKTreeItem<ZKConnectTreeItemValue> {
 
     public String infoName() {
         return this.value.getName();
+    }
+
+    /**
+     * zk树节点值
+     *
+     * @author oyzh
+     * @since 2023/4/7
+     */
+    @Accessors(chain = true, fluent = true)
+    public static class ZKConnectTreeItemValue extends ZKTreeItemValue {
+
+        public ZKConnectTreeItemValue(@NonNull ZKConnectTreeItem item) {
+            super(item);
+        }
+
+        @Override
+        protected ZKConnectTreeItem item() {
+            return (ZKConnectTreeItem) super.item();
+        }
+
+        @Override
+        public String name() {
+            return this.item().value().getName();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new SVGGlyph("/font/Zookeeper1.svg", 12);
+            }
+            return super.graphic();
+        }
+
+        @Override
+        public Color graphicColor() {
+            if (this.item().isConnected() || this.item().isConnecting()) {
+                return Color.GREEN;
+            }
+            return super.graphicColor();
+        }
     }
 }

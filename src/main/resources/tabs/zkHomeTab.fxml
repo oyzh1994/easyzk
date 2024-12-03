@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <FlexPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="cn.oyzh.easyzk.tabs.ZKHomeTab.ZKHomeTabContent">
+          fx:controller="cn.oyzh.easyzk.tabs.ZKHomeTab.ZKHomeTabController">
     <ImageView fitWidth="200" fitHeight="200" layoutX="50" layoutY="100">
         <Image url="/image/zoo_no_bg.png"/>
     </ImageView>

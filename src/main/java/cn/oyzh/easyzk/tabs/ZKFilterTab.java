@@ -63,7 +63,7 @@ public class ZKFilterTab extends DynamicTab {
      * @author oyzh
      * @since 2023/11/03
      */
-    public static class ZKFilterTabContent extends DynamicTabController {
+    public static class ZKFilterTabController extends DynamicTabController {
 
         /**
          * 分页组件

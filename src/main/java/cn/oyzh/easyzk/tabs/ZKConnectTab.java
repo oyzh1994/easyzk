@@ -182,8 +182,8 @@ public class ZKConnectTab extends DynamicTab {
     }
 
     @Override
-    public ZKConnectTabContent controller() {
-        return (ZKConnectTabContent) super.controller();
+    public ZKConnectTabController controller() {
+        return (ZKConnectTabController) super.controller();
     }
 
     @Override
@@ -215,7 +215,7 @@ public class ZKConnectTab extends DynamicTab {
      * @author oyzh
      * @since 2023/05/21
      */
-    public static class ZKConnectTabContent extends DynamicTabController {
+    public static class ZKConnectTabController extends DynamicTabController {
 
         /**
          * 左侧节点

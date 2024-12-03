@@ -62,7 +62,7 @@ public class ZKAuthTab extends DynamicTab {
      * @author oyzh
      * @since 2023/11/03
      */
-    public static class ZKAuthTabContent extends DynamicTabController {
+    public static class ZKAuthTabController extends DynamicTabController {
 
         /**
          * 搜索词汇

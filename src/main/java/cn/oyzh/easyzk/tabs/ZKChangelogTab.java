@@ -53,7 +53,7 @@ public class ZKChangelogTab extends DynamicTab {
      * @author oyzh
      * @since 2024/04/07
      */
-    public static class ChangelogTabContent extends DynamicTabController {
+    public static class ZKChangelogTabController extends DynamicTabController {
 
         /**
          * 更新日志

@@ -53,7 +53,7 @@ public class ZKHomeTab extends DynamicTab {
      * @author oyzh
      * @since 2023/5/24
      */
-    public static class ZKHomeTabContent extends DynamicTabController {
+    public static class ZKHomeTabController extends DynamicTabController {
 
         /**
          * 软件信息

@@ -76,8 +76,8 @@ public class ZKTerminalTab extends DynamicTab {
     }
 
     @Override
-    public ZKTerminalTabContent controller() {
-        return (ZKTerminalTabContent) super.controller();
+    public ZKTerminalTabController controller() {
+        return (ZKTerminalTabController) super.controller();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class ZKTerminalTab extends DynamicTab {
      * @author oyzh
      * @since 2023/07/21
      */
-    public static class ZKTerminalTabContent extends DynamicTabController {
+    public static class ZKTerminalTabController extends DynamicTabController {
 
         /**
          * 命令行文本域

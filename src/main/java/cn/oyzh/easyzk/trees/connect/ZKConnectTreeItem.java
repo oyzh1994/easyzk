@@ -1,5 +1,9 @@
 package cn.oyzh.easyzk.trees.connect;
 
+import cn.oyzh.common.thread.Task;
+import cn.oyzh.common.thread.TaskBuilder;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
@@ -10,21 +14,17 @@ import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.common.thread.Task;
-import cn.oyzh.common.thread.TaskBuilder;
-import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
+import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
@@ -69,14 +69,14 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         this.value(value);
     }
 
-    /**
-     * 连接状态属性
-     *
-     * @return 连接状态属性
-     */
-    public ReadOnlyObjectProperty<ZKConnState> stateProperty() {
-        return this.client.stateProperty();
-    }
+    // /**
+    //  * 连接状态属性
+    //  *
+    //  * @return 连接状态属性
+    //  */
+    // public ReadOnlyObjectProperty<ZKConnState> stateProperty() {
+    //     return this.client.stateProperty();
+    // }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -127,9 +127,10 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      * 导出zk节点
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
+        // StageAdapter fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
         // fxView.setProp("zkItem", this);
         // fxView.setProp("zkClient", this.client());
+        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
         fxView.setProp("connect", this.value);
         fxView.setProp("nodePath", "/");
         fxView.display();
@@ -231,7 +232,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
-                    .onSuccess(this::flushLocal)
+                    .onSuccess(this::refresh)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);
@@ -325,15 +326,6 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         });
         super.setValue(new ZKConnectTreeItemValue(this));
     }
-
-    // public ZKDataTreeItem dataChild(){
-    //     for (TreeItem<?> realChild : this.getRealChildren()) {
-    //         if(realChild instanceof ZKDataTreeItem){
-    //             return (ZKDataTreeItem) realChild;
-    //         }
-    //     }
-    //     return null;
-    // }
 
     /**
      * 是否已连接

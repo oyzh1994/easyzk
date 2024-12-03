@@ -3,5 +3,5 @@
 <ZKTerminalTextTextArea styleClass="root" flexHeight="100%" fx:id="terminal" fontSize="12" editable="false" flexWidth="100%"
                         xmlns="http://javafx.com/javafx"
                         xmlns:fx="http://javafx.com/fxml"
-                        fx:controller="cn.oyzh.easyzk.tabs.terminal.ZKTerminalTabContent">
+                        fx:controller="cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab.ZKTerminalTabContent">
 </ZKTerminalTextTextArea>

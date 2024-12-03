@@ -146,10 +146,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         }
     }
 
-    private ZKConnectTab getConnectTab(ZKConnect info) {
+    private ZKNodeTab getNodeTab(ZKConnect info) {
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKConnectTab connectTab && connectTab.info() == info) {
-                return connectTab;
+            if (tab instanceof ZKNodeTab tab1 && tab1.info() == info) {
+                return tab1;
             }
         }
         return null;
@@ -162,9 +162,9 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void connectionOpened(ZKConnectOpenedEvent event) {
-        ZKConnectTab connectTab = this.getConnectTab(event.connect());
+        ZKNodeTab connectTab = this.getNodeTab(event.connect());
         if (connectTab == null) {
-            connectTab = new ZKConnectTab(event.data());
+            connectTab = new ZKNodeTab(event.data());
             super.addTab(connectTab);
         }
         connectTab.selectTab();
@@ -177,7 +177,7 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void connectionClosed(ZKConnectionClosedEvent event) {
-        ZKConnectTab connectTab = this.getConnectTab(event.connect());
+        ZKNodeTab connectTab = this.getNodeTab(event.connect());
         if (connectTab != null) {
             connectTab.closeTab();
         }
@@ -238,7 +238,7 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void restoreData(ZKHistoryRestoreEvent event) {
-        ZKConnectTab connectTab = this.getConnectTab(event.connect());
+        ZKNodeTab connectTab = this.getNodeTab(event.connect());
         if (connectTab != null) {
             connectTab.restoreData(event.data());
         }

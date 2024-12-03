@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.event.ZKHistoryAddedEvent;
 import cn.oyzh.easyzk.event.ZKHistoryShowEvent;
 import cn.oyzh.easyzk.event.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.store.ZKDataHistoryJdbcStore;
-import cn.oyzh.easyzk.tabs.ZKConnectTab;
+import cn.oyzh.easyzk.tabs.ZKNodeTab;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.TabClosedEvent;
@@ -77,7 +77,7 @@ public class HistoryController extends SubStageController implements Initializab
         if (item == null) {
             return;
         }
-        if (event.data() instanceof ZKConnectTab tab1 && tab1.info() == item.connect()) {
+        if (event.data() instanceof ZKNodeTab tab1 && tab1.info() == item.connect()) {
             this.itemReference = null;
             this.listTable.clearItems();
             this.root.disable();

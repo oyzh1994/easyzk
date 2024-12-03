@@ -91,9 +91,9 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKConnectTab extends DynamicTab {
+public class ZKNodeTab extends DynamicTab {
 
-    public ZKConnectTab(ZKConnectTreeItem treeItem) {
+    public ZKNodeTab(ZKConnectTreeItem treeItem) {
         this.init(treeItem);
     }
 
@@ -182,8 +182,8 @@ public class ZKConnectTab extends DynamicTab {
     }
 
     @Override
-    public ZKConnectTabController controller() {
-        return (ZKConnectTabController) super.controller();
+    public ZKNodeTabController controller() {
+        return (ZKNodeTabController) super.controller();
     }
 
     @Override
@@ -215,7 +215,7 @@ public class ZKConnectTab extends DynamicTab {
      * @author oyzh
      * @since 2023/05/21
      */
-    public static class ZKConnectTabController extends DynamicTabController {
+    public static class ZKNodeTabController extends DynamicTabController {
 
         /**
          * 左侧节点

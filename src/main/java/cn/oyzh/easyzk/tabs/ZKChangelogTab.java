@@ -20,9 +20,9 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2024/04/07
  */
-public class ChangelogTab extends DynamicTab {
+public class ZKChangelogTab extends DynamicTab {
 
-    public ChangelogTab() {
+    public ZKChangelogTab() {
         super();
         super.flush();
     }

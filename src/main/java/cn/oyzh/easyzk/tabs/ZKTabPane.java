@@ -136,9 +136,9 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void changelog(ChangelogEvent event) {
-        ChangelogTab tab = this.getTab(ChangelogTab.class);
+        ZKChangelogTab tab = this.getTab(ZKChangelogTab.class);
         if (tab == null) {
-            tab = new ChangelogTab();
+            tab = new ZKChangelogTab();
             super.addTab(tab);
         }
         if (!tab.isSelected()) {

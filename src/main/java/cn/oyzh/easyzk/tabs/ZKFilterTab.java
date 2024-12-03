@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.tabs.filter;
+package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;

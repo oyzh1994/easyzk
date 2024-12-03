@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.tabs.changelog;
+package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;

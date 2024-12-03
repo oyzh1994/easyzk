@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.tabs.auth;
+package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAddController;

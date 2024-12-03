@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.tabs.home;
+package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyzk.event.ZKEventUtil;

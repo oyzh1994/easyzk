@@ -11,7 +11,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.filter.ZKFilterTab.ZKFilterTabContent">
+          fx:controller="cn.oyzh.easyzk.tabs.ZKFilterTab.ZKFilterTabContent">
     <FlexHBox realHeight="50" flexWidth="100%">
         <ClearableTextField realHeight="26" fx:id="searchKeyWord" realWidth="200" tipText="%base.searchKWTip">
             <HBox.margin>

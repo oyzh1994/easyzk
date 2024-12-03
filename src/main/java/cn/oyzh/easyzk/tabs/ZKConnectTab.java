@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.tabs.connect;
+package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.dto.Paging;

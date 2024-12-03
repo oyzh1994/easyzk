@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.tabs.terminal;
+package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;

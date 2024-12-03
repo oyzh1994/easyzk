@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.trees.ZKTreeView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.group.ZKGroupTreeItem;
@@ -16,6 +17,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -40,7 +42,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements ZKConnectManager {
+public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItem.ZKRootTreeItemValue> implements ZKConnectManager {
 
     /**
      * zk信息储存
@@ -376,6 +378,28 @@ public class ZKRootTreeItem extends ZKTreeItem<ZKRootTreeItemValue> implements Z
         if (item instanceof ZKConnectTreeItem connectTreeItem) {
             connectTreeItem.remove();
             this.addConnectItem(connectTreeItem);
+        }
+    }
+
+    /**
+     * zk树节点值
+     *
+     * @author oyzh
+     * @since 2023/4/7
+     */
+    public static class ZKRootTreeItemValue extends ZKTreeItemValue {
+
+        @Override
+        public String name() {
+            return I18nHelper.zk();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new SVGGlyph("/font/Zookeeper1.svg", 12);
+            }
+            return super.graphic();
         }
     }
 }

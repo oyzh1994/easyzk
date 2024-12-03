@@ -7,11 +7,14 @@ import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.trees.ZKConnectManager;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.root.ZKRootTreeItem;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -22,6 +25,7 @@ import cn.oyzh.fx.plus.window.StageManager;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -36,7 +40,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements ZKConnectManager {
+public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItem.ZKGroupTreeItemValue> implements ZKConnectManager {
 
     /**
      * 分组对象
@@ -219,6 +223,45 @@ public class ZKGroupTreeItem extends ZKTreeItem<ZKGroupTreeItemValue> implements
         if (item instanceof ZKConnectTreeItem connectTreeItem) {
             connectTreeItem.remove();
             this.addConnectItem(connectTreeItem);
+        }
+    }
+
+    /**
+     * zk树group值
+     *
+     * @author oyzh
+     * @since 2023/4/7
+     */
+    public static class ZKGroupTreeItemValue extends ZKTreeItemValue {
+
+        public ZKGroupTreeItemValue(@NonNull ZKGroupTreeItem item) {
+            super(item);
+        }
+
+        @Override
+        protected ZKGroupTreeItem item() {
+            return (ZKGroupTreeItem) super.item();
+        }
+
+        @Override
+        public String name() {
+            return this.item().value().getName();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new GroupSVGGlyph("10");
+            }
+            return super.graphic();
+        }
+
+        @Override
+        public Color graphicColor() {
+            if (this.item().isChildEmpty()) {
+                return super.graphicColor();
+            }
+            return Color.DEEPSKYBLUE;
         }
     }
 }

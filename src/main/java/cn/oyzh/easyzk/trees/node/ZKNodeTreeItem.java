@@ -17,11 +17,14 @@ import cn.oyzh.easyzk.store.ZKCollectJdbcStore;
 import cn.oyzh.easyzk.store.ZKDataHistoryJdbcStore;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
+import cn.oyzh.easyzk.trees.ZKTreeItemValue;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.svg.glyph.LockSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -30,6 +33,7 @@ import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -48,7 +52,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/1/30
  */
-public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
+public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItem.ZKNodeTreeItemValue> {
 
     /**
      * zk节点
@@ -1104,5 +1108,92 @@ public class ZKNodeTreeItem extends ZKTreeItem<ZKNodeTreeItemValue> {
             }
         }
         return false;
+    }
+
+    /**
+     * zk树节点值
+     *
+     * @author oyzh
+     * @since 2023/4/7
+     */
+    public static class ZKNodeTreeItemValue extends ZKTreeItemValue {
+
+        public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
+            super(item);
+        }
+
+        @Override
+        protected ZKNodeTreeItem item() {
+            return (ZKNodeTreeItem) super.item();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic != null && this.graphic.isWaiting()) {
+                return this.graphic;
+            }
+            boolean changed = false;
+            if (this.graphic == null) {
+                changed = true;
+            } else if (this.item().isNeedAuth() && StringUtil.notEquals(this.graphic.getProp("_type"), "3")) {
+                changed = true;
+            } else if (this.item().isEphemeral() && StringUtil.notEquals(this.graphic.getProp("_type"), "2")) {
+                changed = true;
+            } else if (StringUtil.notEquals(this.graphic.getProp("_type"), "1")) {
+                changed = true;
+            }
+            if (changed) {
+                if (this.item().isNeedAuth()) {
+                    this.graphic = new LockSVGGlyph("11");
+                    this.graphic.setProp("_type", "3");
+                } else if (this.item().isEphemeral()) {
+                    this.graphic = new SVGGlyph("/font/temp.svg", 11);
+                    this.graphic.setProp("_type", "2");
+                } else {
+                    this.graphic = new SVGGlyph("/font/file-text.svg", 11);
+                    this.graphic.setProp("_type", "1");
+                }
+                this.graphic.disableTheme();
+            }
+            return super.graphic();
+        }
+
+        @Override
+        public String extra() {
+            String extra;
+            int showNum = this.item().getChildrenSize();
+            Integer totalNum = this.item().getNumChildren();
+            if (totalNum == null || totalNum == 0) {
+                extra = null;
+            } else if (showNum == totalNum) {
+                extra = "(" + totalNum + ")";
+            } else {
+                extra = "(" + showNum + "/" + totalNum + ")";
+            }
+            return extra;
+        }
+
+        @Override
+        public Color graphicColor() {
+            // 节点已删除
+            if (this.item().isBeDeleted()) {
+                return Color.RED;
+            }
+            if (this.item().isDataUnsaved()) { // 节点数据未保存
+                return Color.ORANGE;
+            }
+            if (this.item().isBeChanged()) { // 节点已更新
+                return Color.PURPLE;
+            }
+            if (this.item().isBeChildChanged()) { // 子节点已更新
+                return Color.BROWN;
+            }
+            return super.graphicColor();
+        }
+
+        @Override
+        public String name() {
+            return this.item().decodeNodeName();
+        }
     }
 }

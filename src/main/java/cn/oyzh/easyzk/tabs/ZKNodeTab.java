@@ -188,7 +188,7 @@ public class ZKNodeTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/zkConnectTab.fxml";
+        return "/tabs/zkNodeTab.fxml";
     }
 
     /**

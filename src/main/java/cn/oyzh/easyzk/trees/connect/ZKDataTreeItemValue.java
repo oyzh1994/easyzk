@@ -1,7 +1,6 @@
-package cn.oyzh.easyzk.trees.query;
+package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.trees.ZKTreeItemValue;
-import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 
@@ -12,18 +11,18 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/4/7
  */
-public class ZKQueryTreeItemValue extends ZKTreeItemValue {
+public class ZKDataTreeItemValue extends ZKTreeItemValue {
 
     @Override
     public SVGGlyph graphic() {
         if (this.graphic == null) {
-            this.graphic = new QuerySVGGlyph("10");
+            this.graphic = new SVGGlyph("/font/file-text.svg", 10);
         }
         return super.graphic();
     }
 
     @Override
     public String name() {
-        return I18nHelper.query();
+        return I18nHelper.data();
     }
 }

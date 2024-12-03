@@ -1,8 +1,8 @@
-package cn.oyzh.easyzk.trees.data;
+package cn.oyzh.easyzk.trees.connect;
 
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.ZKTreeItem;
-import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 import javafx.scene.control.TreeItem;
 
@@ -21,6 +21,10 @@ public class ZKDataTreeItem extends ZKTreeItem<ZKDataTreeItemValue> {
     public ZKConnectTreeItem parent() {
         TreeItem<?> treeItem = super.getParent();
         return (ZKConnectTreeItem) treeItem;
+    }
+
+    public ZKConnect connect() {
+        return this.parent().value();
     }
 
     @Override

@@ -94,7 +94,10 @@ import java.util.Set;
 public class ZKNodeTab extends DynamicTab {
 
     public ZKNodeTab(ZKConnectTreeItem treeItem) {
-        this.init(treeItem);
+        // 初始化
+        this.controller().init(treeItem);
+        // 刷新tab
+        this.flush();
     }
 
     /**
@@ -109,18 +112,6 @@ public class ZKNodeTab extends DynamicTab {
      */
     public ZKNodeTreeItem activeItem() {
         return this.controller().getActiveItem();
-    }
-
-    /**
-     * 执行初始化
-     *
-     * @param treeItem zk树节点
-     */
-    public void init(@NonNull ZKConnectTreeItem treeItem) {
-        // 初始化
-        this.controller().init(treeItem);
-        // 刷新tab
-        this.flush();
     }
 
     @Override
@@ -255,7 +246,7 @@ public class ZKNodeTab extends DynamicTab {
         private ZKNodeSearchTypeComboBox searchType;
 
         /**
-         * 搜索组件
+         * 搜索内容
          */
         @FXML
         private ZKNodeSearchTextField searchKW;

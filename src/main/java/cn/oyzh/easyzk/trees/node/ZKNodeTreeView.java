@@ -45,8 +45,8 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
 
     @Override
     protected void initTreeView() {
-        super.initTreeView();
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell<>());
+        super.initTreeView();
     }
 
     @Override

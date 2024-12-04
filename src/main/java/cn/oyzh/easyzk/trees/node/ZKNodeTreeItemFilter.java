@@ -28,6 +28,9 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
     @Getter
     private int type;
 
+    /**
+     * 关键字
+     */
     @Getter
     @Setter
     private String kw;

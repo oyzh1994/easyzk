@@ -230,7 +230,7 @@ public class ZKNodeTab extends DynamicTab {
         private FlexTabPane tabPane;
 
         /**
-         * 节点数
+         * 节点树
          */
         @FXML
         @Getter

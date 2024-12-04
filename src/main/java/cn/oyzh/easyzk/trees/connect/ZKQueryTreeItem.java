@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
@@ -23,6 +24,10 @@ public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItem.ZKQueryTreeIte
     public ZKConnectTreeItem parent() {
         TreeItem<?> parent = this.getParent();
         return (ZKConnectTreeItem) parent;
+    }
+
+    public ZKConnect zkConnect() {
+        return this.parent().value();
     }
 
     @Override

@@ -9,17 +9,18 @@ import cn.oyzh.easyzk.event.ZKTreeItemChangedEvent;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
+import cn.oyzh.easyzk.trees.connect.ZKDataTreeItem;
+import cn.oyzh.easyzk.trees.connect.ZKQueryTreeItem;
+import cn.oyzh.easyzk.trees.connect.ZKTerminalTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.event.Layout1Event;
 import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class ZKMainController extends ParentStageController {
         super.onWindowHidden(event);
         // 保存页面拉伸
         this.savePageResize();
-        KeyListener.unListenReleased(this.tabPane, KeyCode.F5);
+        // KeyListener.unListenReleased(this.tabPane, KeyCode.F5);
     }
 
     /**
@@ -133,13 +134,13 @@ public class ZKMainController extends ParentStageController {
     @Override
     protected void bindListeners() {
         // 大小调整增强
-        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeLeft);
+        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT, this::resizeLeft);
         resizeHelper.widthLimit(240f, 650f);
         resizeHelper.initResizeEvent();
         // // 搜索触发事件
         // KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> ZKEventUtil.searchFire()));
-        // 刷新触发事件
-        KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
+        // // 刷新触发事件
+        // KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
     }
 
     /**
@@ -151,6 +152,12 @@ public class ZKMainController extends ParentStageController {
     private void treeItemChanged(ZKTreeItemChangedEvent event) {
         if (event.data() instanceof ZKConnectTreeItem treeItem) {
             this.flushViewTitle(treeItem.value());
+        } else if (event.data() instanceof ZKDataTreeItem treeItem) {
+            this.flushViewTitle(treeItem.zkConnect());
+        } else if (event.data() instanceof ZKQueryTreeItem treeItem) {
+            this.flushViewTitle(treeItem.zkConnect());
+        } else if (event.data() instanceof ZKTerminalTreeItem treeItem) {
+            this.flushViewTitle(treeItem.zkConnect());
         } else {
             this.flushViewTitle(null);
         }

@@ -13,8 +13,10 @@ import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.FXEventListener;
+import cn.oyzh.fx.plus.keyboard.KeyListener;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
+import javafx.scene.input.KeyCode;
 
 /**
  * zk切换面板
@@ -23,6 +25,19 @@ import javafx.scene.control.Tab;
  * @since 2023/05/21
  */
 public class ZKTabPane extends DynamicTabPane implements FXEventListener {
+
+    @Override
+    public void onNodeInitialize() {
+        FXEventListener.super.onNodeInitialize();
+        // 刷新触发事件
+        KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
+    }
+
+    @Override
+    public void onNodeDestroy() {
+        FXEventListener.super.onNodeDestroy();
+        KeyListener.unListenReleased(this, KeyCode.F5);
+    }
 
     @Override
     protected void initTabPane() {

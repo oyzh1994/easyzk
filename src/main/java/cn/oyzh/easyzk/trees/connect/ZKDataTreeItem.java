@@ -30,6 +30,10 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemVa
         return this.parent().value();
     }
 
+    public ZKConnect zkConnect() {
+        return this.parent().value();
+    }
+
     @Override
     public void onPrimaryDoubleClick() {
         super.startWaiting(() -> ZKEventUtil.connectionOpened(this.parent()));

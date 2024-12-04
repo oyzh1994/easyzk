@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
@@ -24,6 +25,10 @@ public class ZKTerminalTreeItem extends RichTreeItem<ZKTerminalTreeItem.ZKTermin
     public ZKConnectTreeItem parent() {
         TreeItem<?> parent = this.getParent();
         return (ZKConnectTreeItem) parent;
+    }
+
+    public ZKConnect zkConnect() {
+        return this.parent().value();
     }
 
     @Override

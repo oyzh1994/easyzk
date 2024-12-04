@@ -1214,8 +1214,8 @@ public class ZKNodeTab extends DynamicTab {
             int mode = this.searchKW.getSelectedIndex();
             int type = this.searchType.getSelectedIndex();
             this.treeView.itemFilter().setKw(kw);
-            this.treeView.itemFilter().setType(type);
-            this.treeView.itemFilter().setMatchMode(mode);
+            this.treeView.itemFilter().setType((byte) type);
+            this.treeView.itemFilter().setMatchMode((byte) mode);
             this.treeView.filter();
         }
 

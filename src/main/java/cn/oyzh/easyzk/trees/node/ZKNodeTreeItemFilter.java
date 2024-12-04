@@ -26,7 +26,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
      */
     @Setter
     @Getter
-    private int type;
+    private byte type;
 
     /**
      * 关键字
@@ -43,7 +43,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
      */
     @Getter
     @Setter
-    private int matchMode;
+    private byte matchMode;
 
     /**
      * 过滤内容列表

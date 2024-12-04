@@ -21,9 +21,9 @@ public class ZKNodeSearchTypeComboBox extends FlexComboBox<String> implements I1
     @Override
     public List<String> values(Locale locale) {
         this.clearItems();
-        this.addItem(I18nHelper.allNode());
-        this.addItem(I18nHelper.collectNode());
-        this.addItem(I18nHelper.persistentNode());
+        this.addItem(I18nHelper.allNodes());
+        this.addItem(I18nHelper.collectNodes());
+        this.addItem(I18nHelper.persistentNodes());
         return this.getItems();
     }
 }

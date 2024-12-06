@@ -275,17 +275,17 @@ public class SettingController extends StageController {
             byte authMode = (byte) (this.authMode.isSelected() ? 0 : 1);
             byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
             String locale = this.locale.name();
-            Byte fontSize = this.fontSize.getValue();
+            Integer fontSize = this.fontSize.getValue();
             short fontWeight = this.fontWeight.getWeight();
             String fontFamily = this.fontFamily.getValue();
 
             // 提示文字
-            String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
+            String tips = this.checkConfigForRestart(loadMode, authMode, fontSize.byteValue(), fontWeight, fontFamily, locale);
 
             this.setting.setLoadMode(loadMode);
             this.setting.setAuthMode(authMode);
             // 字体相关
-            this.setting.setFontSize(fontSize);
+            this.setting.setFontSize(fontSize.byteValue());
             this.setting.setFontFamily(fontFamily);
             this.setting.setFontWeight(fontWeight);
             // 主题相关

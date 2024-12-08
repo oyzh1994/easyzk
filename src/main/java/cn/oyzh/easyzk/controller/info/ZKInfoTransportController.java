@@ -12,10 +12,10 @@
 // import cn.oyzh.common.thread.ThreadUtil;
 // import cn.oyzh.common.util.TextUtil;
 // import cn.oyzh.fx.plus.controller.StageController;
-// import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
+// import cn.oyzh.fx.gui.textarea.MsgTextArea;
 // import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 // import cn.oyzh.fx.plus.controls.button.FlexButton;
-// import cn.oyzh.fx.plus.controls.combo.CharsetComboBox;
+// import cn.oyzh.fx.gui.comboBox.CharsetComboBox;
 // import cn.oyzh.fx.plus.controls.label.FXLabel;
 // import cn.oyzh.i18n.I18nHelper;
 // import cn.oyzh.fx.plus.i18n.I18nResourceBundle;

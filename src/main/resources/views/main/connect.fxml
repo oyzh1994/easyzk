@@ -13,7 +13,7 @@
 <FXTab xmlns:fx="http://javafx.com/fxml/1"
        fx:controller="cn.oyzh.easyzk.controller.main.ConnectController" text="%base.connection">
     <graphic>
-        <ConnectionSVGGlyph initCursor="DEFAULT" size="12"/>
+        <ConnectionSVGGlyph cursorType="DEFAULT" size="12"/>
     </graphic>
     <FlexVBox flexHeight="100%" flexWidth="100%"
               style="-fx-border-width: 0 1 0 0; -fx-border-color: #c0c0c0">

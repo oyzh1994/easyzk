@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.search;
 
-import cn.oyzh.fx.plus.controls.textfield.LimitTextField;
+import cn.oyzh.fx.gui.text.field.LimitTextField;
 import cn.oyzh.fx.plus.event.AnonymousEvent;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.EventHandler;

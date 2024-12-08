@@ -2,7 +2,7 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLType2ComboBox?>
 <?import cn.oyzh.easyzk.fx.ZKCreateModeComboBox?>
-<?import cn.oyzh.fx.plus.controls.textarea.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
@@ -15,8 +15,8 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
+<?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>

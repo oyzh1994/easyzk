@@ -2,9 +2,9 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
-import cn.oyzh.fx.gui.treeView.RichTreeItem;
-import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
-import cn.oyzh.fx.gui.treeView.RichTreeView;
+import cn.oyzh.fx.gui.tree.view.RichTreeItem;
+import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
+import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;

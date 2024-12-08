@@ -10,7 +10,7 @@
 <FXTab xmlns:fx="http://javafx.com/fxml/1"
        fx:controller="cn.oyzh.easyzk.controller.main.MessageController" text="%base.msg">
     <graphic>
-        <MessageSVGGlyph initCursor="DEFAULT" size="13"/>
+        <MessageSVGGlyph cursorType="DEFAULT" size="13"/>
     </graphic>
     <FlexVBox flexHeight="100%" flexWidth="100%" style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
         <FlexHBox realHeight="30">

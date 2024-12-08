@@ -27,16 +27,16 @@
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UnLockSVGGlyph?>
-<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
+<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
@@ -85,7 +85,7 @@
                  rotateGraphic="true" disable="true">
         <FXTab text="%base.data">
             <graphic>
-                <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
+                <SVGGlyph cursorType="DEFAULT" url="/font/file-text.svg" size="13"/>
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="32" flexWidth="100%">
@@ -177,7 +177,7 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </ZKDataFormatComboBox>
-                    <CharsetComboBox  realHeight="24" initDefault="true" fx:id="charset" fontSize="11" prefWidth="120"
+                    <CharsetComboBox realHeight="24" initDefault="true" fx:id="charset" fontSize="11" prefWidth="120"
                                      style="-fx-padding: 0;">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
@@ -195,7 +195,7 @@
         </FXTab>
         <FXTab text="%base.stat">
             <graphic>
-                <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
+                <SVGGlyph cursorType="DEFAULT" url="/font/status.svg" size="13"/>
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%" fx:id="statBox">
                 <FlexHBox realHeight="32" flexWidth="100%">
@@ -232,7 +232,7 @@
         </FXTab>
         <FXTab text="%base.acl">
             <graphic>
-                <AccessControlSVGGlyph initCursor="DEFAULT" size="13"/>
+                <AccessControlSVGGlyph cursorType="DEFAULT" size="13"/>
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="32" flexWidth="100%">
@@ -288,7 +288,7 @@
         </FXTab>
         <FXTab text="%base.quota" fx:id="quotaTab">
             <graphic>
-                <SVGGlyph initCursor="DEFAULT" url="/font/quota.svg" size="13"/>
+                <SVGGlyph cursorType="DEFAULT" url="/font/quota.svg" size="13"/>
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="32" flexWidth="100%">

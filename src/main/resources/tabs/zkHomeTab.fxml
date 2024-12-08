@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.gui.button.AddGroupButton?>
 <?import cn.oyzh.fx.gui.button.OpenTerminalButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexPane?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
 <?import javafx.geometry.Insets?>

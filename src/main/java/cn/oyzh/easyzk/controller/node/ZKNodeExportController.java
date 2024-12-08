@@ -17,7 +17,7 @@ import cn.oyzh.common.util.CharsetUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
+import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.tabs.ZKTabPane?>
-<?import cn.oyzh.fx.plus.controls.FlexPane?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <FlexPane xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.ZKMainController" flexWidth="100%" flexHeight="100% - 30">

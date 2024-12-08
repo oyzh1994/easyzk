@@ -6,7 +6,7 @@ import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.common.util.ResourceUtil;
 import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.fx.gui.page.PagePane;
-import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
+import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import javafx.application.Application;
 import javafx.event.Event;

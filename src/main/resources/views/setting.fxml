@@ -7,7 +7,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.FlexSlider?>
+<?import cn.oyzh.fx.plus.controls.text.FlexSlider?>
 <?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>

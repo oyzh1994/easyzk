@@ -2,16 +2,14 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
-import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
-import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.treeView.RichTreeCell;
-import cn.oyzh.fx.gui.treeView.RichTreeItem;
-import cn.oyzh.fx.gui.treeView.RichTreeView;
+import cn.oyzh.fx.gui.tree.view.RichTreeCell;
+import cn.oyzh.fx.gui.tree.view.RichTreeItem;
+import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -20,8 +18,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 /**
  * zk树

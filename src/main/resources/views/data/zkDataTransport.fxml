@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.fx.ZKInfoComboBox?>
 <?import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?>
+<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
@@ -10,7 +10,7 @@
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
 <?import cn.oyzh.fx.gui.button.TransportButton?>
-<?import cn.oyzh.fx.plus.controls.combo.CharsetComboBox?>
+<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.RightSideSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>

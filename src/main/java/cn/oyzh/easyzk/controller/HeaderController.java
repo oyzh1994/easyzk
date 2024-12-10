@@ -21,29 +21,6 @@ import javafx.fxml.FXML;
 public class HeaderController extends SubStageController {
 
     /**
-     * 项目信息
-     */
-//    @Resource
-//    private final Project project = Project.load();
-
-//    /**
-//     * 展开zk树
-//     */
-//    @FXML
-//    private SVGLabel expandTree;
-//
-//    /**
-//     * 收缩zk树
-//     */
-//    @FXML
-//    private SVGLabel collapseTree;
-
-//    /**
-//     * zk树互斥器
-//     */
-//    private final NodeMutexes treeMutexes = new NodeMutexes();
-
-    /**
      * 认证管理
      */
     @FXML
@@ -101,12 +78,6 @@ public class HeaderController extends SubStageController {
         } else {
             StageManager.showStage(ZKDataTransportController.class);
         }
-        // StageAdapter wrapper = StageManager.getStage(ZKInfoTransportController.class);
-        // if (wrapper != null) {
-        //     wrapper.toFront();
-        // } else {
-        //     StageManager.showStage(ZKInfoTransportController.class);
-        // }
     }
 
     /**
@@ -117,41 +88,25 @@ public class HeaderController extends SubStageController {
         StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
     }
 
-//    /**
-//     * 收缩左侧zk树
-//     */
-//    @FXML
-//    private void collapseTree() {
-//        this.treeMutexes.visible(this.expandTree);
-//        ZKEventUtil.leftCollapse();
-//    }
-//
-//    /**
-//     * 展开左侧zk树
-//     */
-//    @FXML
-//    private void expandTree() {
-//        this.treeMutexes.visible(this.collapseTree);
-//        ZKEventUtil.leftExtend();
-//    }
-
-//    @Override
-//    public void onStageShown(WindowEvent event) {
-//        super.onStageShown(event);
-//        this.treeMutexes.addNodes(this.collapseTree, this.expandTree);
-//        this.treeMutexes.manageBindVisible();
-//    }
-
+    /**
+     * 布局1
+     */
     @FXML
     private void layout1() {
         ZKEventUtil.layout1();
     }
 
+    /**
+     * 布局2
+     */
     @FXML
     private void layout2() {
         ZKEventUtil.layout2();
     }
 
+    /**
+     * 迁移
+     */
     @FXML
     private void migration() {
         StageManager.showStage(ZKDataMigrationController.class);

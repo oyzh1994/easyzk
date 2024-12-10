@@ -25,27 +25,7 @@ import javafx.util.Callback;
  * @author oyzh
  * @since 2023/1/29
  */
-// @Accessors(chain = true, fluent = true)
 public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
-
-    // /**
-    //  * 搜索中标志位
-    //  */
-    // @Getter
-    // private volatile boolean searching;
-
-    // /**
-    //  * 配置储存对象
-    //  */
-    // private final ZKSetting setting = ZKSettingJdbcStore.SETTING;
-    //
-    // public ZKConnectTreeView() {
-    //     this.dragContent = "zk_tree_drag";
-    //     this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell());
-    //     // 初始化根节点
-    //     super.setRoot(new ZKRootTreeItem(this));
-    //     this.getRoot().expend();
-    // }
 
     @Override
     protected void initTreeView() {
@@ -72,21 +52,6 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
             }
         });
     }
-
-    // @Override
-    // public ZKConnectTreeItemFilter itemFilter() {
-    //     try {
-    //         // 初始化过滤器
-    //         if (this.itemFilter == null) {
-    //             ZKConnectTreeItemFilter filter = new ZKConnectTreeItemFilter();
-    //             filter.initFilters();
-    //             this.itemFilter = filter;
-    //         }
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    //     return (ZKConnectTreeItemFilter) this.itemFilter;
-    // }
 
     @Override
     public ZKRootTreeItem getRoot() {

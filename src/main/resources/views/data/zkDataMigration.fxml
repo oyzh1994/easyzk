@@ -82,7 +82,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%">
+    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" managed="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%zk.migration.tip3" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
@@ -116,7 +116,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
+    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" managed="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
             <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="migrationMsg" flexWidth="100% - 60"
                          flexHeight="100% - 30">

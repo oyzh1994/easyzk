@@ -348,13 +348,13 @@ public class ZKDataTransportController extends StageController {
         return I18nHelper.transportTitle();
     }
 
-    @Override
-    public void onStageInitialize(StageAdapter stage) {
-        super.onStageInitialize(stage);
-        this.step1.managedBindVisible();
-        this.step2.managedBindVisible();
-        this.step3.managedBindVisible();
-    }
+    // @Override
+    // public void onStageInitialize(StageAdapter stage) {
+    //     super.onStageInitialize(stage);
+    //     this.step1.managedBindVisible();
+    //     this.step2.managedBindVisible();
+    //     this.step3.managedBindVisible();
+    // }
 
     @FXML
     private void showStep1() {

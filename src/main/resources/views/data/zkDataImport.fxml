@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.gui.button.ImportButton?>
 <?import cn.oyzh.fx.gui.button.NextStepButton?>
+<?import cn.oyzh.fx.gui.button.OldButton?>
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
+<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
+<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
-<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
-<?import cn.oyzh.fx.gui.button.ImportButton?>
-<?import cn.oyzh.fx.gui.button.OldButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataImportController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -73,14 +73,15 @@
                     <Insets left="30" top="10"/>
                 </HBox.margin>
             </NextStepButton>
-            <OldButton text="%zk.old.tip1" tipText="%zk.old.tip2" onAction="#openOld" realHeight="30" iconSizePercent="0.75">
+            <OldButton text="%zk.old.tip1" tipText="%zk.old.tip2" onAction="#openOld" realHeight="30"
+                       iconSizePercent="0.75">
                 <HBox.margin>
                     <Insets left="15" top="10"/>
                 </HBox.margin>
             </OldButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%">
+    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" managed="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%base.filePath" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
@@ -123,7 +124,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%">
+    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" managed="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%base.connection" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
@@ -159,7 +160,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step4" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
+    <FlexVBox fx:id="step4" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" managed="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
             <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="importMsg" flexWidth="100% - 60"
                          flexHeight="100% - 30">

@@ -197,11 +197,11 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      * 传输数据
      */
     private void transportData() {
-        StageAdapter adapter = StageManager.getStage(ZKDataTransportController.class);
-        if (adapter != null) {
-            adapter.disappear();
-        }
-        adapter = StageManager.parseStage(ZKDataTransportController.class);
+        // StageAdapter adapter = StageManager.getStage(ZKDataTransportController.class);
+        // if (adapter != null) {
+        //     adapter.disappear();
+        // }
+        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class);
         adapter.setProp("sourceInfo", this.value);
         adapter.display();
     }

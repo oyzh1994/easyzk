@@ -33,7 +33,7 @@ public class ZKACLUtil {
     /**
      * 开放的acl权限
      */
-    public static ACL OPEN_ACL = ZooDefs.Ids.OPEN_ACL_UNSAFE.get(0);
+    public static ACL OPEN_ACL = ZooDefs.Ids.OPEN_ACL_UNSAFE.getFirst();
 
     /**
      * 是否开放的acl权限

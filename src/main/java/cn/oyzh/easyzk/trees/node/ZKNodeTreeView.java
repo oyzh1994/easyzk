@@ -10,8 +10,8 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tree.view.RichTreeCell;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeLifeCycle;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.control.TreeCell;
@@ -370,9 +370,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
 
     @Override
     public void onNodeDestroy() {
-//        if (this.client != null) {
-//            this.client.setCacheFilter(null);
-//        }
+        this.client = null;
     }
 
     @Override

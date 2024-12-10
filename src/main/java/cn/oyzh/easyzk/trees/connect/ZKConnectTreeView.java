@@ -130,17 +130,4 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
     private void addConnect(ZKAddConnectEvent event) {
         StageManager.showStage(ZKInfoAddController.class, this.window());
     }
-
-    // @EventSubscribe
-    // private void onDataOpened(ZKDataOpenedEvent event) {
-    //     for (ZKConnectTreeItem item : this.getRoot().getConnectedItems()) {
-    //         if (item.client() == event.data()) {
-    //             ZKDataTreeItem treeItem = item.dataChild();
-    //             if (treeItem != null) {
-    //                 treeItem.stopWaiting();
-    //             }
-    //             break;
-    //         }
-    //     }
-    // }
 }

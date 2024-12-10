@@ -81,25 +81,6 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    // /**
-    //  * 节点已添加事件
-    //  *
-    //  * @param client   zk客户端
-    //  * @param stat     状态
-    //  * @param nodeData 数据
-    //  * @param nodePath 路径
-    //  */
-    // public static void nodeAdded(ZKClient client, Stat stat, byte[] nodeData, String nodePath) {
-    //     ZKNodeAddedEvent event = new ZKNodeAddedEvent();
-    //     ZKNode zkNode = new ZKNode();
-    //     zkNode.stat(stat);
-    //     zkNode.nodePath(nodePath);
-    //     zkNode.nodeData(nodeData);
-    //     event.data(zkNode);
-    //     event.client(client);
-    //     EventUtil.post(event);
-    // }
-
     /**
      * 节点已添加事件
      *
@@ -200,30 +181,30 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 图标变化事件
-     */
-    public static void graphicChanged(TreeItem<?> treeItem) {
-        TreeGraphicChangedEvent event = new TreeGraphicChangedEvent();
-        event.data(treeItem);
-        EventUtil.postDelay(event, 200);
-    }
+    // /**
+    //  * 图标变化事件
+    //  */
+    // public static void graphicChanged(TreeItem<?> treeItem) {
+    //     TreeGraphicChangedEvent event = new TreeGraphicChangedEvent();
+    //     event.data(treeItem);
+    //     EventUtil.postDelay(event, 200);
+    // }
 
-    /**
-     * 图标颜色变化事件
-     */
-    public static void graphicColorChanged(TreeItem<?> treeItem) {
-        TreeGraphicColorChangedEvent event = new TreeGraphicColorChangedEvent();
-        event.data(treeItem);
-        EventUtil.postDelay(event, 200);
-    }
-
-    /**
-     * 树节点变化事件
-     */
-    public static void treeChildChanged() {
-        EventUtil.postDelay(new TreeChildChangedEvent(), 200);
-    }
+    // /**
+    //  * 图标颜色变化事件
+    //  */
+    // public static void graphicColorChanged(TreeItem<?> treeItem) {
+    //     TreeGraphicColorChangedEvent event = new TreeGraphicColorChangedEvent();
+    //     event.data(treeItem);
+    //     EventUtil.postDelay(event, 200);
+    // }
+    //
+    // /**
+    //  * 树节点变化事件
+    //  */
+    // public static void treeChildChanged() {
+    //     EventUtil.postDelay(new TreeChildChangedEvent(), 200);
+    // }
 
     /**
      * 树节点过滤事件
@@ -232,14 +213,14 @@ public class ZKEventUtil {
         EventUtil.postDelay(new TreeChildFilterEvent(), 200);
     }
 
-    /**
-     * 树节点选中事件
-     */
-    public static void treeChildSelected(ZKNodeTreeItem item) {
-        TreeChildSelectedEvent event = new TreeChildSelectedEvent();
-        event.data(item);
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 树节点选中事件
+    //  */
+    // public static void treeChildSelected(ZKNodeTreeItem item) {
+    //     TreeChildSelectedEvent event = new TreeChildSelectedEvent();
+    //     event.data(item);
+    //     EventUtil.post(event);
+    // }
 
     /**
      * 终端打开事件
@@ -454,12 +435,6 @@ public class ZKEventUtil {
         event.data(item);
         EventUtil.post(event);
     }
-
-    // public static void dataOpened(ZKClient client) {
-    //     ZKDataOpenedEvent event = new ZKDataOpenedEvent();
-    //     event.data(client);
-    //     EventUtil.post(event);
-    // }
 
     /**
      * 布局1

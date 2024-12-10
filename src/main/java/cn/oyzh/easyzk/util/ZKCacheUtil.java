@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.util;
 
 import cn.oyzh.common.util.FileUtil;
-import cn.oyzh.common.util.MD5Util;
 import cn.oyzh.easyzk.ZKConst;
 import lombok.experimental.UtilityClass;
 
@@ -16,23 +15,23 @@ import java.io.File;
 @UtilityClass
 public class ZKCacheUtil {
 
-    private static String baseDir(int hashCode, String path) {
-        return ZKConst.NODE_CACHE_PATH + hashCode + "_" + MD5Util.md5Hex(path);
+    private static String baseDir(int hashCode) {
+        return ZKConst.NODE_CACHE_PATH + hashCode + "_";
     }
 
     /**
-     * 缓存未保存数据
+     * 缓存数据
      *
      * @param hashCode hash码
-     * @param path     路径
      * @param data     数据
-     * @return 缓存结果
+     * @param suffix   尾缀
+     * @return 结果
      */
-    public static boolean cacheUnsavedData(int hashCode, String path, byte[] data) {
+    public static boolean cacheData(int hashCode, byte[] data, String suffix) {
         if (data != null) {
             try {
-                String baseDir = baseDir(hashCode, path);
-                String fileName = baseDir + ".unsaved";
+                String baseDir = baseDir(hashCode);
+                String fileName = baseDir + "." + suffix;
                 FileUtil.touch(fileName);
                 FileUtil.writeBytes(data, fileName);
                 return true;
@@ -40,20 +39,20 @@ public class ZKCacheUtil {
                 ex.printStackTrace();
             }
         }
-        return deleteUnsavedData(hashCode, path);
+        return deleteData(hashCode, suffix);
     }
 
     /**
-     * 加载未保存数据
+     * 加载数据
      *
      * @param hashCode hash码
-     * @param path     路径
-     * @return 未保存数据
+     * @param suffix   尾缀
+     * @return 数据
      */
-    public static byte[] loadUnsavedData(int hashCode, String path) {
+    public static byte[] loadData(int hashCode, String suffix) {
         try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".unsaved";
+            String baseDir = baseDir(hashCode);
+            String fileName = baseDir + "." + suffix;
             if (FileUtil.exist(fileName)) {
                 return FileUtil.readBytes(fileName);
             }
@@ -64,15 +63,15 @@ public class ZKCacheUtil {
     }
 
     /**
-     * 删除未保存数据
+     * 删除数据
      *
      * @param hashCode hash码
-     * @param path     路径
+     * @param suffix   尾缀
      */
-    public static boolean deleteUnsavedData(int hashCode, String path) {
+    public static boolean deleteData(int hashCode, String suffix) {
         try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".unsaved";
+            String baseDir = baseDir(hashCode);
+            String fileName = baseDir + "." + suffix;
             FileUtil.del(fileName);
             return true;
         } catch (Exception ex) {
@@ -82,122 +81,27 @@ public class ZKCacheUtil {
     }
 
     /**
-     * 是否有未保存数据
+     * 是否有数据
      *
      * @param hashCode hash码
-     * @param path     路径
+     * @param suffix   尾缀
      * @return 结果
      */
-    public static boolean hasUnsavedData(int hashCode, String path) {
-        return getUnsavedDataSize(hashCode, path) > 0;
+    public static boolean hasData(int hashCode, String suffix) {
+        return dataSize(hashCode, suffix) > 0;
     }
 
     /**
-     * 获取未保存数据长度
+     * 获取数据长度
      *
      * @param hashCode hash码
-     * @param path     路径
-     * @return 未保存数据长度
+     * @param suffix   尾缀
+     * @return 数据长度
      */
-    public static long getUnsavedDataSize(int hashCode, String path) {
+    public static long dataSize(int hashCode, String suffix) {
         try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".unsaved";
-            File file = new File(fileName);
-            if (file.exists()) {
-                return file.length();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return -1;
-    }
-
-
-    /**
-     * 缓存节点数据
-     *
-     * @param hashCode hash码
-     * @param path     路径
-     * @param data     数据
-     * @return 缓存结果
-     */
-    public static boolean cacheNodeData(int hashCode, String path, byte[] data) {
-        if (data != null) {
-            try {
-                String baseDir = baseDir(hashCode, path);
-                String fileName = baseDir + ".data";
-                FileUtil.touch(fileName);
-                FileUtil.writeBytes(data, fileName);
-                return true;
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            return false;
-        }
-        return deleteNodeData(hashCode, path);
-    }
-
-    /**
-     * 加载节点数据
-     *
-     * @param hashCode hash码
-     * @param path     路径
-     * @return 节点数据
-     */
-    public static byte[] loadNodeData(int hashCode, String path) {
-        try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".data";
-            if (FileUtil.exist(fileName)) {
-                return FileUtil.readBytes(fileName);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 删除节点数据
-     *
-     * @param hashCode hash码
-     * @param path     路径
-     */
-    public static boolean deleteNodeData(int hashCode, String path) {
-        try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".unsaved";
-            FileUtil.del(fileName);
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * 是否有节点数据
-     *
-     * @param hashCode hash码
-     * @param path     路径
-     * @return 结果
-     */
-    public static boolean hasNodeData(int hashCode, String path) {
-        return getUnsavedDataSize(hashCode, path) > 0;
-    }
-
-    /**
-     * 获取节点数据长度
-     *
-     * @param hashCode hash码
-     * @param path     路径
-     * @return 节点数据长度
-     */
-    public static long getNodeDataSize(int hashCode, String path) {
-        try {
-            String baseDir = baseDir(hashCode, path);
-            String fileName = baseDir + ".data";
+            String baseDir = baseDir(hashCode);
+            String fileName = baseDir + "." + suffix;
             File file = new File(fileName);
             if (file.exists()) {
                 return file.length();

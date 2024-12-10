@@ -89,43 +89,43 @@ public class ZKNode implements Comparable<ZKNode> {
     private String nodePath;
 
     public void setNodeData(byte[] nodeData) {
-        ZKCacheUtil.cacheNodeData(this.hashCode(), this.nodePath(), nodeData);
+        ZKCacheUtil.cacheData(this.hashCode(),  nodeData,"data");
     }
 
     public byte[] getNodeData() {
-        return ZKCacheUtil.loadNodeData(this.hashCode(), this.nodePath());
+        return ZKCacheUtil.loadData(this.hashCode(), "data");
     }
 
     public boolean hasNodeData() {
-        return ZKCacheUtil.hasNodeData(this.hashCode(), this.nodePath());
+        return ZKCacheUtil.hasData(this.hashCode(), "data");
     }
 
     public long getNodeDataSize() {
-        return ZKCacheUtil.getNodeDataSize(this.hashCode(), this.nodePath());
+        return ZKCacheUtil.dataSize(this.hashCode(), "data");
     }
 
     public void clearNodeData() {
-        ZKCacheUtil.deleteNodeData(this.hashCode(), this.nodePath());
+        ZKCacheUtil.deleteData(this.hashCode(), "data");
     }
 
     public void setUnsavedData(byte[] unsavedData) {
-        ZKCacheUtil.cacheUnsavedData(this.hashCode(), this.nodePath(), unsavedData);
+        ZKCacheUtil.cacheData(this.hashCode(),  unsavedData,"unsaved");
     }
 
     public byte[] getUnsavedData() {
-        return ZKCacheUtil.loadUnsavedData(this.hashCode(), this.nodePath());
+        return ZKCacheUtil.loadData(this.hashCode() ,"unsaved");
     }
 
     public boolean hasUnsavedData() {
-        return ZKCacheUtil.hasUnsavedData(this.hashCode(), this.nodePath());
+        return ZKCacheUtil.hasData(this.hashCode(),"unsaved");
     }
 
     public long getUnsavedDataSize() {
-        return ZKCacheUtil.getUnsavedDataSize(this.hashCode(), this.nodePath());
+        return ZKCacheUtil.dataSize(this.hashCode(), "unsaved");
     }
 
     public void clearUnsavedData() {
-        ZKCacheUtil.deleteUnsavedData(this.hashCode(), this.nodePath());
+        ZKCacheUtil.deleteData(this.hashCode(), "unsaved");
     }
 
     /**

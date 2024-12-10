@@ -188,9 +188,6 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      * 导入数据
      */
     private void importData() {
-        // StageAdapter fxView = StageManager.parseStage(ZKNodeImportController.class, this.window());
-        // fxView.setProp("zkClient", this.client);
-        // fxView.display();
         StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class);
         fxView.setProp("connect", this.value);
         fxView.display();

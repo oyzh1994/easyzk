@@ -5,7 +5,7 @@
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.text.FlexSlider?>
 <?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
@@ -62,12 +62,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexCheckBox tipText="%zk.info.autoAuthTip" text="%base.autoAuth" realHeight="25"
+                    <FXCheckBox tipText="%zk.info.autoAuthTip" text="%base.autoAuth" prefWidth="25"
                                   selected="true" fx:id="authMode">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
-                    </FlexCheckBox>
+                    </FXCheckBox>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
@@ -110,21 +110,21 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexCheckBox text="%base.windowSize" realHeight="25" fx:id="pageSize">
+                    <FXCheckBox text="%base.windowSize" prefWidth="25" fx:id="pageSize">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
-                    </FlexCheckBox>
-                    <FlexCheckBox text="%base.windowLocation" realHeight="25" fx:id="pageLocation">
+                    </FXCheckBox>
+                    <FXCheckBox text="%base.windowLocation" prefWidth="25" fx:id="pageLocation">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
-                    </FlexCheckBox>
-                    <FlexCheckBox text="%base.windowResize" selected="true" realHeight="25" fx:id="pageResize">
+                    </FXCheckBox>
+                    <FXCheckBox text="%base.windowResize" selected="true" prefWidth="25" fx:id="pageResize">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
-                    </FlexCheckBox>
+                    </FXCheckBox>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>

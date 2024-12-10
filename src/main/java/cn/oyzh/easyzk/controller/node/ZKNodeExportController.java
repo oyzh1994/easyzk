@@ -20,7 +20,7 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
@@ -76,13 +76,13 @@ public class ZKNodeExportController extends StageController {
      * 按词典导出
      */
     @FXML
-    private FlexCheckBox dictSort;
+    private FXCheckBox dictSort;
 
     /**
      * 适用过滤配置
      */
     @FXML
-    private FlexCheckBox applyFilter;
+    private FXCheckBox applyFilter;
 
     // /**
     //  * 格式选项

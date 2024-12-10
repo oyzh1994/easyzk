@@ -4,7 +4,7 @@
 <?import cn.oyzh.easyzk.fx.ZKCreateModeComboBox?>
 <?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
@@ -132,27 +132,27 @@
                         <padding>
                             <Insets left="10" top="20"/>
                         </padding>
-                        <FlexCheckBox text="%base.admin" selected="true" realWidth="60"/>
-                        <FlexCheckBox text="%base.write" selected="true" realWidth="60">
+                        <FXCheckBox text="%base.admin" selected="true" prefWidth="60"/>
+                        <FXCheckBox text="%base.write" selected="true" prefWidth="60">
                             <HBox.margin>
                                 <Insets left="5"/>
                             </HBox.margin>
-                        </FlexCheckBox>
-                        <FlexCheckBox text="%base.read" selected="true" realWidth="60">
+                        </FXCheckBox>
+                        <FXCheckBox text="%base.read" selected="true" prefWidth="60">
                             <HBox.margin>
                                 <Insets left="5"/>
                             </HBox.margin>
-                        </FlexCheckBox>
-                        <FlexCheckBox text="%base.delete" selected="true" realWidth="90">
+                        </FXCheckBox>
+                        <FXCheckBox text="%base.delete" selected="true" prefWidth="90">
                             <HBox.margin>
                                 <Insets left="5"/>
                             </HBox.margin>
-                        </FlexCheckBox>
-                        <FlexCheckBox text="%zk.acl.c" selected="true" realWidth="90">
+                        </FXCheckBox>
+                        <FXCheckBox text="%zk.acl.c" selected="true" prefWidth="90">
                             <HBox.margin>
                                 <Insets left="5"/>
                             </HBox.margin>
-                        </FlexCheckBox>
+                        </FXCheckBox>
                     </FlexHBox>
                 </FlexHBox>
                 <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digestACL">

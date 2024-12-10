@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.pane.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -162,7 +162,7 @@ public class ZKACLAddController extends StageController {
      * 摘要保存
      */
     @FXML
-    private FlexCheckBox digestSaveInfo;
+    private FXCheckBox digestSaveInfo;
 
     /**
      * IP单IP内容

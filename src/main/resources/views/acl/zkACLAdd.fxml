@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.CopyButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.button.SuccessButton?>
@@ -98,11 +98,11 @@
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <FlexCheckBox text="%base.save" realWidth="80" fx:id="digestSaveInfo" selected="true">
+            <FXCheckBox text="%base.save" prefWidth="80" fx:id="digestSaveInfo" selected="true">
                 <HBox.margin>
                     <Insets left="10" top="15"/>
                 </HBox.margin>
-            </FlexCheckBox>
+            </FXCheckBox>
         </FlexHBox>
         <FlexHBox flexWidth="100%" realHeight="25">
             <VBox.margin>

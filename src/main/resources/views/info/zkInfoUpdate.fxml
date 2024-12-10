@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.button.TestButton?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
@@ -63,21 +63,21 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexCheckBox text="%base.readonlyMode" tipText="%base.readonlyModeTip" fx:id="readonly">
+                    <FXCheckBox text="%base.readonlyMode" tipText="%base.readonlyModeTip" fx:id="readonly">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
-                    </FlexCheckBox>
-                    <FlexCheckBox fx:id="listen" text="%zk.info.listenNode" fontSize="11" selected="true" tipText="%zk.info.listenNodeTip">
+                    </FXCheckBox>
+                    <FXCheckBox fx:id="listen" text="%zk.info.listenNode" fontSize="11" selected="true" tipText="%zk.info.listenNodeTip">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
-                    </FlexCheckBox>
-                    <FlexCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11" tipText="%zk.info.compatibilityTip">
+                    </FXCheckBox>
+                    <FXCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11" tipText="%zk.info.compatibilityTip">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
-                    </FlexCheckBox>
+                    </FXCheckBox>
                 </FlexHBox>
             </FlexVBox>
         </FXTab>

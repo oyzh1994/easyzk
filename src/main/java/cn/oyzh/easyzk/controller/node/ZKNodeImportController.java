@@ -14,7 +14,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
@@ -68,7 +68,7 @@ public class ZKNodeImportController extends StageController {
      * 忽略已存在的节点
      */
     @FXML
-    private FlexCheckBox ignoreExist;
+    private FXCheckBox ignoreExist;
 
     /**
      * 导入字符集

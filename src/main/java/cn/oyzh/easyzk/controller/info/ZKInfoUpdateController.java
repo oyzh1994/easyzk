@@ -12,7 +12,7 @@ import cn.oyzh.fx.gui.text.field.PortTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -42,19 +42,19 @@ public class ZKInfoUpdateController extends StageController {
      * 只读模式
      */
     @FXML
-    private FlexCheckBox readonly;
+    private FXCheckBox readonly;
 
     /**
      * 监听节点
      */
     @FXML
-    private FlexCheckBox listen;
+    private FXCheckBox listen;
 
     /**
      * 兼容模式开关
      */
     @FXML
-    private FlexCheckBox compatibility;
+    private FXCheckBox compatibility;
 
     /**
      * tab组件

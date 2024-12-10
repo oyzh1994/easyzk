@@ -14,7 +14,7 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -63,7 +63,7 @@ public class ZKAuthAuthController extends StageController {
      * 保存信息1
      */
     @FXML
-    private FlexCheckBox saveInfo1;
+    private FXCheckBox saveInfo1;
 
     /**
      * zk节点

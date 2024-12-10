@@ -3,7 +3,7 @@
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.gui.button.CloseButton?>
 <?import cn.oyzh.fx.gui.button.FileButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.button.ImportButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
@@ -43,11 +43,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox groupId="exec" fx:id="ignoreExist" text="%base.skipByExists" selected="true">
+        <FXCheckBox groupId="exec" fx:id="ignoreExist" text="%base.skipByExists" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
+        </FXCheckBox>
         <FXLabel text="%base.charset">
             <HBox.margin>
                 <Insets left="10" top="20"/>

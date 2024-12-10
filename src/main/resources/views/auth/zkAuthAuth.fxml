@@ -2,7 +2,7 @@
 
 <?import cn.oyzh.easyzk.fx.ZKAuthTypeComboBox?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
@@ -57,11 +57,11 @@
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
-            <FlexCheckBox text="%base.save" fx:id="saveInfo1" selected="true">
+            <FXCheckBox text="%base.save" fx:id="saveInfo1" selected="true">
                 <HBox.margin>
                     <Insets left="10" top="18"/>
                 </HBox.margin>
-            </FlexCheckBox>
+            </FXCheckBox>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox flexWidth="100%" realHeight="50" fx:id="authType2" visible="false" managed="false">

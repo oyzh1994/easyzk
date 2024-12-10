@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.FlexSlider;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
@@ -73,19 +73,19 @@ public class SettingController extends StageController {
      * 记住页面大小
      */
     @FXML
-    private FlexCheckBox pageSize;
+    private FXCheckBox pageSize;
 
     /**
      * 记住页面拉伸
      */
     @FXML
-    private FlexCheckBox pageResize;
+    private FXCheckBox pageResize;
 
     /**
      * 记住页面位置
      */
     @FXML
-    private FlexCheckBox pageLocation;
+    private FXCheckBox pageLocation;
 
     /**
      * 节点加载
@@ -115,7 +115,7 @@ public class SettingController extends StageController {
      * 节点自动认证
      */
     @FXML
-    private FlexCheckBox authMode;
+    private FXCheckBox authMode;
 
     // /**
     //  * 标签数量限制

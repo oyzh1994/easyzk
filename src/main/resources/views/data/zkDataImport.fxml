@@ -81,7 +81,7 @@
             </OldButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" managed="false">
+    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%base.filePath" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
@@ -124,7 +124,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" managed="false">
+    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%base.connection" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
@@ -160,7 +160,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step4" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" managed="false">
+    <FlexVBox fx:id="step4" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
             <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="importMsg" flexWidth="100% - 60"
                          flexHeight="100% - 30">

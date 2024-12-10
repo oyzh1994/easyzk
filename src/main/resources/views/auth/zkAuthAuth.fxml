@@ -64,7 +64,7 @@
             </FXCheckBox>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox flexWidth="100%" realHeight="50" fx:id="authType2" visible="false" managed="false">
+    <FlexVBox flexWidth="100%" realHeight="50" fx:id="authType2" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" realHeight="50">
             <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
                 <HBox.margin>

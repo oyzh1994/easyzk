@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.pane.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexFlowPane?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLUpdateController" realWidth="600" realHeight="300">
     <FlexHBox flexWidth="100%" realHeight="50">
@@ -70,7 +70,7 @@
             </FXCheckBox>
         </FlexFlowPane>
     </FlexHBox>
-    <FlexHBox fx:id="digestACL" flexWidth="100%" realHeight="50" managed="false" visible="false">
+    <FlexHBox fx:id="digestACL" flexWidth="100%" realHeight="50" managedBindVisible="true" visible="false">
         <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
@@ -82,7 +82,7 @@
             </HBox.margin>
         </DisabledTextField>
     </FlexHBox>
-    <FlexHBox fx:id="ipACL" flexWidth="100%" realHeight="50" managed="false" visible="false">
+    <FlexHBox fx:id="ipACL" flexWidth="100%" realHeight="50" managedBindVisible="true" visible="false">
         <AccentLabel text="%base.ipAddr" realWidth="80" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>

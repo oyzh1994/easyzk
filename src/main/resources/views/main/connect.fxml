@@ -28,7 +28,7 @@
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </SortAscSVGGlyph>
-            <SortDescSVGGlyph fx:id="sortDesc" size="15" visible="false" managed="false"
+            <SortDescSVGGlyph fx:id="sortDesc" size="15" managedBindVisible="true" visible="false"
                               onMousePrimaryClicked="#sortDesc">
                 <HBox.margin>
                     <Insets left="5" top="10"/>

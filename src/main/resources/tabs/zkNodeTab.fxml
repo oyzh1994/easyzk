@@ -6,6 +6,7 @@
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
+<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.gui.label.SuccessLabel?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AccessControlSVGGlyph?>
@@ -28,15 +29,14 @@
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UnLockSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
+<?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
@@ -46,7 +46,7 @@
           fx:controller="cn.oyzh.easyzk.tabs.ZKNodeTab.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="32" flexWidth="100%">
-            <ZKNodeSearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType" >
+            <ZKNodeSearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
@@ -67,7 +67,7 @@
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </SortAscSVGGlyph>
-            <SortDescSVGGlyph fx:id="sortDesc" size="15" visible="false" managed="false"
+            <SortDescSVGGlyph fx:id="sortDesc" size="15" managedBindVisible="true" visible="false"
                               onMousePrimaryClicked="#sortDesc">
                 <HBox.margin>
                     <Insets left="5" top="10"/>
@@ -133,7 +133,7 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </CollectSVGGlyph>
-                    <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15"
+                    <UnCollectSVGGlyph managedBindVisible="true" visible="false" fx:id="unCollect" size="15"
                                        onMousePrimaryClicked="#unCollect">
                         <HBox.margin>
                             <Insets left="5" top="7"/>

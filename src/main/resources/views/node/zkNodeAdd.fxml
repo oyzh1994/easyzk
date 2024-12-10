@@ -2,21 +2,21 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLType2ComboBox?>
 <?import cn.oyzh.easyzk.fx.ZKCreateModeComboBox?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.JSONSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -62,7 +62,8 @@
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathPreviewBox" visible="false" managed="false">
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathPreviewBox" managedBindVisible="true"
+                          visible="false">
                     <AccentLabel text="%base.preview" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
@@ -116,7 +117,8 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ZKACLType2ComboBox fx:id="aclType" realHeight="30" flexWidth="100% - 140" initIndex="0" require="true">
+                    <ZKACLType2ComboBox fx:id="aclType" realHeight="30" flexWidth="100% - 140" initIndex="0"
+                                        require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -155,7 +157,7 @@
                         </FXCheckBox>
                     </FlexHBox>
                 </FlexHBox>
-                <FlexVBox flexWidth="100%" managed="false" realHeight="65" visible="false" fx:id="digestACL">
+                <FlexVBox flexWidth="100%" managedBindVisible="true" realHeight="65" visible="false" fx:id="digestACL">
                     <FlexHBox realHeight="50" flexWidth="100%">
                         <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
                             <HBox.margin>
@@ -182,7 +184,7 @@
                         <FXLabel fx:id="digestText"/>
                     </FlexHBox>
                 </FlexVBox>
-                <FlexHBox flexWidth="100%" realHeight="50" managed="false" visible="false" fx:id="ipACL">
+                <FlexHBox flexWidth="100%" realHeight="50" managedBindVisible="true" visible="false" fx:id="ipACL">
                     <AccentLabel text="%base.ipAddr" realWidth="80" realHeight="30">
                         <HBox.margin>
                             <Insets left="20" top="10"/>

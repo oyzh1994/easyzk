@@ -84,8 +84,8 @@ public class ConnectController extends SubStageController   {
     @Override
     protected void bindListeners() {
         super.bindListeners();
-        this.sortAsc.managedBindVisible();
-        this.sortDesc.managedBindVisible();
+        // this.sortAsc.managedBindVisible();
+        // this.sortDesc.managedBindVisible();
         // zk树变化事件
         this.tree.selectItemChanged(ZKEventUtil::treeItemChanged);
         // 文件拖拽初始化

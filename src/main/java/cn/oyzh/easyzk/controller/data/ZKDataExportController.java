@@ -274,15 +274,6 @@ public class ZKDataExportController extends StageController {
         });
     }
 
-    // @Override
-    // public void onStageInitialize(StageAdapter stage) {
-    //     super.onStageInitialize(stage);
-    //     this.step1.managedBindVisible();
-    //     this.step2.managedBindVisible();
-    //     this.step3.managedBindVisible();
-    //     this.step4.managedBindVisible();
-    // }
-
     @Override
     public void onWindowHidden(WindowEvent event) {
         super.onWindowHidden(event);

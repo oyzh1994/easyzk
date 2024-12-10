@@ -13,7 +13,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/04/08
  */
-public class ZKInfoComboBox extends FlexComboBox<ZKConnect> {
+public class ZKConnectComboBox extends FlexComboBox<ZKConnect> {
 
     {
         this.setConverter(new SimpleStringConverter<>() {

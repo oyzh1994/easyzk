@@ -5,7 +5,7 @@ import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.fx.ZKInfoComboBox;
+import cn.oyzh.easyzk.fx.ZKConnectComboBox;
 import cn.oyzh.easyzk.handler.ZKDataTransportHandler;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -79,7 +79,7 @@ public class ZKDataTransportController extends StageController {
      * 来源信息
      */
     @FXML
-    private ZKInfoComboBox sourceInfo;
+    private ZKConnectComboBox sourceInfo;
 
     /**
      * 来源字符集
@@ -97,7 +97,7 @@ public class ZKDataTransportController extends StageController {
      * 目标信息
      */
     @FXML
-    private ZKInfoComboBox targetInfo;
+    private ZKConnectComboBox targetInfo;
 
     /**
      * 目标字符集

@@ -401,7 +401,7 @@ public class ZKDataTransportController extends StageController {
                     this.sourceClient.close();
                     this.sourceClient = null;
                     this.sourceInfo.requestFocus();
-                    MessageBox.warn(sourceInfo.getName() + " " + I18nHelper.connectInitFail());
+                    MessageBox.warn(sourceInfo.getName() + " " + I18nHelper.connectFail());
                     return;
                 }
             }
@@ -420,7 +420,7 @@ public class ZKDataTransportController extends StageController {
                     this.targetClient.close();
                     this.targetClient = null;
                     this.targetInfo.requestFocus();
-                    MessageBox.warn(targetInfo.getName() + " " + I18nHelper.connectInitFail());
+                    MessageBox.warn(targetInfo.getName() + " " + I18nHelper.connectFail());
                     return;
                 }
             }

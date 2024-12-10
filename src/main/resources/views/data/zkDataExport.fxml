@@ -108,12 +108,12 @@
                     </HBox.margin>
                 </FXText>
             </FlexHBox>
-            <FlexLabel text="%base.nodeFilter" realHeight="30" fontWeight="BOLD">
+            <FlexLabel text="%base.options" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
             </FlexLabel>
-            <FXCheckBox fx:id="applyFilter" text="%base.apply">
+            <FXCheckBox fx:id="applyFilter" text="%base.applyFilter">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>

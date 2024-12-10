@@ -3,17 +3,18 @@
 <?import cn.oyzh.fx.gui.button.NextStepButton?>
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
+<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.ExportSVGGlyph?>
+<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
-<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -103,7 +104,7 @@
                 </FXButton>
                 <FXText fx:id="fileName">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="15"/>
                     </HBox.margin>
                 </FXText>
             </FlexHBox>
@@ -125,22 +126,24 @@
             <fx:define>
                 <FXToggleGroup fx:id="prefix"/>
             </fx:define>
-            <FXRadioButton groupId="txt" userData="" toggleGroup="$prefix" text="%base.none" disable="true">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXRadioButton>
-            <FXRadioButton groupId="txt" userData="set" toggleGroup="$prefix" text="set" disable="true">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXRadioButton>
-            <FXRadioButton groupId="txt" userData="create" toggleGroup="$prefix" text="create" selected="true"
-                           disable="true">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXRadioButton>
+            <FXHBox>
+                <FXRadioButton groupId="txt" userData="" toggleGroup="$prefix" text="%base.none" disable="true">
+                    <HBox.margin>
+                        <Insets left="30" top="10"/>
+                    </HBox.margin>
+                </FXRadioButton>
+                <FXRadioButton groupId="txt" userData="set" toggleGroup="$prefix" text="set" disable="true">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXRadioButton>
+                <FXRadioButton groupId="txt" userData="create" toggleGroup="$prefix" text="create" selected="true"
+                               disable="true">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXRadioButton>
+            </FXHBox>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep1" groupId="exec" realHeight="30" iconSizePercent="0.75">

@@ -10,15 +10,15 @@ import cn.oyzh.easyzk.handler.ZKDataTransportHandler;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
+import cn.oyzh.fx.gui.combobox.CharsetComboBox;
+import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.label.FlexLabel;
-import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -196,8 +196,7 @@ public class ZKDataTransportController extends StageController {
         // 生成传输处理器
         if (this.transportHandler == null) {
             this.transportHandler = new ZKDataTransportHandler();
-            this.transportHandler
-                    .messageHandler(str -> this.transportMsg.appendLine(str))
+            this.transportHandler.messageHandler(str -> this.transportMsg.appendLine(str))
                     .processedHandler(count -> {
                         if (count == 0) {
                             this.counter.updateIgnore();
@@ -402,7 +401,7 @@ public class ZKDataTransportController extends StageController {
                     this.sourceClient.close();
                     this.sourceClient = null;
                     this.sourceInfo.requestFocus();
-                    MessageBox.warn(I18nHelper.connectInitFail());
+                    MessageBox.warn(sourceInfo.getName() + " " + I18nHelper.connectInitFail());
                     return;
                 }
             }
@@ -421,7 +420,7 @@ public class ZKDataTransportController extends StageController {
                     this.targetClient.close();
                     this.targetClient = null;
                     this.targetInfo.requestFocus();
-                    MessageBox.warn(I18nHelper.connectInitFail());
+                    MessageBox.warn(targetInfo.getName() + " " + I18nHelper.connectInitFail());
                     return;
                 }
             }

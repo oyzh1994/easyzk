@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.fx.ZKConnectComboBox?>
 <?import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph?>
-<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.gui.button.NextStepButton?>
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
 <?import cn.oyzh.fx.gui.button.TransportButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.RightSideSVGGlyph?>
+<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
@@ -188,22 +189,24 @@
             <fx:define>
                 <FXToggleGroup fx:id="existsPolicy"/>
             </fx:define>
-            <FXRadioButton userData="0" toggleGroup="$existsPolicy" text="%base.skip" selected="true">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXRadioButton>
-            <FXRadioButton userData="1" toggleGroup="$existsPolicy" text="%base.update">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXRadioButton>
-            <FlexLabel text="%base.nodeFilter" realHeight="30" fontWeight="BOLD">
+            <FXHBox>
+                <FXRadioButton userData="0" toggleGroup="$existsPolicy" text="%base.skip" selected="true">
+                    <HBox.margin>
+                        <Insets left="30" top="10"/>
+                    </HBox.margin>
+                </FXRadioButton>
+                <FXRadioButton userData="1" toggleGroup="$existsPolicy" text="%base.update">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXRadioButton>
+            </FXHBox>
+            <FlexLabel text="%base.options" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
             </FlexLabel>
-            <FXCheckBox fx:id="applyFilter" text="%base.apply">
+            <FXCheckBox fx:id="applyFilter" text="%base.applyFilter">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
@@ -224,7 +227,8 @@
     </FlexVBox>
     <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managed="false" visible="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
-            <MsgTextArea lineLimit="1500" limitPolicy="4" fx:id="transportMsg" flexWidth="100% - 60" flexHeight="100% - 30">
+            <MsgTextArea lineLimit="1500" limitPolicy="4" fx:id="transportMsg" flexWidth="100% - 60"
+                         flexHeight="100% - 30">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>

@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/3/18
  */
-//@Slf4j
 @UtilityClass
 public class ZKExportUtil {
 
@@ -73,75 +72,75 @@ public class ZKExportUtil {
         return data.replaceAll(LINE_REPLACE, System.lineSeparator());
     }
 
-    /**
-     * zk节点数据生成文本
-     *
-     * @param zkNodes zk节点数据
-     * @param charset 字符集
-     * @param prefix  前缀
-     * @return 数据文本字符串
-     */
-    public static String nodesToTxt(@NonNull List<ZKNode> zkNodes, String charset, String prefix) {
-        Project project = Project.load();
-        String version = project.getVersion();
-        String platform = OSUtil.getOSType();
-        StringBuilder builder = new StringBuilder();
-        // 元信息
-        builder.append("**")
-                .append("prefix=").append(prefix).append(" ")
-                .append("version=").append(version).append(" ")
-                .append("charset=").append(charset).append(" ")
-                .append("platform=").append(platform)
-                .append("**");
-        // 拼接数据
-        for (ZKNode n : zkNodes) {
-            builder.append(System.lineSeparator()).append(TEXT_LINE_SEPARATOR).append(System.lineSeparator());
-            // 拼接前缀
-            if (!StringUtil.isBlank(prefix)) {
-                builder.append(prefix).append(" ");
-            }
-            // 拼接数据
-            builder.append(n.nodePath()).append(" ");
-            // String data = n.nodeData();
-            String data = n.nodeDataStr(charset);
-            if (data != null) {
-                builder.append(data);
-            }
-        }
-        return builder.toString();
-    }
-
-    /**
-     * zk节点数据生成json字符串
-     *
-     * @param zkNodes      zk节点数据
-     * @param charset      字符集
-     * @param prettyFormat 美化
-     * @return 数据json字符串
-     */
-    public static String nodesToJSON(@NonNull List<ZKNode> zkNodes, String charset, boolean prettyFormat) {
-        Project project = Project.load();
-        String version = project.getVersion();
-        String platform = OSUtil.getOSType();
-        ZKNodeExport export = new ZKNodeExport();
-        // 元信息
-        export.setNodes(new ArrayList<>());
-        export.setVersion(version);
-        export.setCharset(charset);
-        export.setPlatform(platform);
-        // 拼接数据
-        for (ZKNode n : zkNodes) {
-            Map<String, String> node = new HashMap<>();
-            node.put("path", n.nodePath());
-            // String data = n.nodeData();
-            String data = n.nodeDataStr(charset);
-            if (data != null) {
-                node.put("data", data);
-            }
-            export.getNodes().add(node);
-        }
-        return export.toJSONString(prettyFormat);
-    }
+    // /**
+    //  * zk节点数据生成文本
+    //  *
+    //  * @param zkNodes zk节点数据
+    //  * @param charset 字符集
+    //  * @param prefix  前缀
+    //  * @return 数据文本字符串
+    //  */
+    // public static String nodesToTxt(@NonNull List<ZKNode> zkNodes, String charset, String prefix) {
+    //     Project project = Project.load();
+    //     String version = project.getVersion();
+    //     String platform = OSUtil.getOSType();
+    //     StringBuilder builder = new StringBuilder();
+    //     // 元信息
+    //     builder.append("**")
+    //             .append("prefix=").append(prefix).append(" ")
+    //             .append("version=").append(version).append(" ")
+    //             .append("charset=").append(charset).append(" ")
+    //             .append("platform=").append(platform)
+    //             .append("**");
+    //     // 拼接数据
+    //     for (ZKNode n : zkNodes) {
+    //         builder.append(System.lineSeparator()).append(TEXT_LINE_SEPARATOR).append(System.lineSeparator());
+    //         // 拼接前缀
+    //         if (!StringUtil.isBlank(prefix)) {
+    //             builder.append(prefix).append(" ");
+    //         }
+    //         // 拼接数据
+    //         builder.append(n.nodePath()).append(" ");
+    //         // String data = n.nodeData();
+    //         String data = n.nodeDataStr(charset);
+    //         if (data != null) {
+    //             builder.append(data);
+    //         }
+    //     }
+    //     return builder.toString();
+    // }
+    //
+    // /**
+    //  * zk节点数据生成json字符串
+    //  *
+    //  * @param zkNodes      zk节点数据
+    //  * @param charset      字符集
+    //  * @param prettyFormat 美化
+    //  * @return 数据json字符串
+    //  */
+    // public static String nodesToJSON(@NonNull List<ZKNode> zkNodes, String charset, boolean prettyFormat) {
+    //     Project project = Project.load();
+    //     String version = project.getVersion();
+    //     String platform = OSUtil.getOSType();
+    //     ZKNodeExport export = new ZKNodeExport();
+    //     // 元信息
+    //     export.setNodes(new ArrayList<>());
+    //     export.setVersion(version);
+    //     export.setCharset(charset);
+    //     export.setPlatform(platform);
+    //     // 拼接数据
+    //     for (ZKNode n : zkNodes) {
+    //         Map<String, String> node = new HashMap<>();
+    //         node.put("path", n.nodePath());
+    //         // String data = n.nodeData();
+    //         String data = n.nodeDataStr(charset);
+    //         if (data != null) {
+    //             node.put("data", data);
+    //         }
+    //         export.getNodes().add(node);
+    //     }
+    //     return export.toJSONString(prettyFormat);
+    // }
 
     /**
      * 从文件生成

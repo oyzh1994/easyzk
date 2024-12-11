@@ -68,11 +68,11 @@ public class ZKDataImportController extends StageController {
     @FXML
     private FlexVBox step3;
 
-    /**
-     * 第四步
-     */
-    @FXML
-    private FlexVBox step4;
+    // /**
+    //  * 第四步
+    //  */
+    // @FXML
+    // private FlexVBox step4;
 
     /**
      * 导入文件
@@ -91,11 +91,11 @@ public class ZKDataImportController extends StageController {
     @FXML
     private FXText fileName;
 
-    /**
-     * 连接名
-     */
-    @FXML
-    private FXText connectionName;
+    // /**
+    //  * 连接名
+    //  */
+    // @FXML
+    // private FXText connectionName;
 
     /**
      * 字符集
@@ -287,7 +287,7 @@ public class ZKDataImportController extends StageController {
     private void showStep1() {
         this.step2.disappear();
         this.step3.disappear();
-        this.step4.disappear();
+        // this.step4.disappear();
         this.step1.display();
     }
 
@@ -295,7 +295,7 @@ public class ZKDataImportController extends StageController {
     private void showStep2() {
         this.step1.disappear();
         this.step3.disappear();
-        this.step4.disappear();
+        // this.step4.disappear();
         String fileType = this.format.selectedUserData();
         // 检查是否支持跳行
         if (StringUtil.equalsAny(fileType, "excel", "csv")) {
@@ -306,27 +306,27 @@ public class ZKDataImportController extends StageController {
         this.step2.display();
     }
 
-    @FXML
-    private void showStep3() {
-        if (this.importFile == null) {
-            this.selectFile.requestFocus();
-            MessageBox.warn(I18nHelper.pleaseSelectFile());
-            return;
-        }
-        this.step1.disappear();
-        this.step2.disappear();
-        this.step4.disappear();
-        this.step3.display();
-    }
+    // @FXML
+    // private void showStep3() {
+    //     if (this.importFile == null) {
+    //         this.selectFile.requestFocus();
+    //         MessageBox.warn(I18nHelper.pleaseSelectFile());
+    //         return;
+    //     }
+    //     this.step1.disappear();
+    //     this.step2.disappear();
+    //     this.step4.disappear();
+    //     this.step3.display();
+    // }
 
     @FXML
-    private void showStep4() {
+    private void showStep3() {
         // 检查客户端
         if (this.doConnect()) {
             this.step1.disappear();
             this.step2.disappear();
-            this.step3.disappear();
-            this.step4.display();
+            // this.step3.disappear();
+            this.step3.display();
         }
     }
 
@@ -383,7 +383,7 @@ public class ZKDataImportController extends StageController {
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
         this.connect = this.getWindowProp("connect");
-        this.connectionName.setText(this.connect.getName());
+        // this.connectionName.setText(this.connect.getName());
     }
 
     /**

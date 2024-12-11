@@ -67,11 +67,11 @@ public class ZKDataExportController extends StageController {
     @FXML
     private FlexVBox step3;
 
-    /**
-     * 第四步
-     */
-    @FXML
-    private FlexVBox step4;
+    // /**
+    //  * 第四步
+    //  */
+    // @FXML
+    // private FlexVBox step4;
 
     /**
      * 导出文件
@@ -308,7 +308,7 @@ public class ZKDataExportController extends StageController {
     private void showStep1() {
         this.step2.disappear();
         this.step3.disappear();
-        this.step4.disappear();
+        // this.step4.disappear();
         this.step1.display();
     }
 
@@ -316,7 +316,7 @@ public class ZKDataExportController extends StageController {
     private void showStep2() {
         this.step1.disappear();
         this.step3.disappear();
-        this.step4.disappear();
+        // this.step4.disappear();
         String fileType = this.format.selectedUserData();
         if (FileNameUtil.isTxtType(fileType)) {
             NodeGroupUtil.enable(this.stage, "txt");
@@ -332,22 +332,28 @@ public class ZKDataExportController extends StageController {
         this.step2.display();
     }
 
-    @FXML
-    private void showStep3() {
-        if (this.exportFile == null) {
-            this.selectFile.requestFocus();
-            MessageBox.warn(I18nHelper.pleaseSelectFile());
-            return;
-        }
-        this.step1.disappear();
-        this.step2.disappear();
-        this.step4.disappear();
-        this.step3.display();
-    }
+    // @FXML
+    // private void showStep3() {
+    //     if (this.exportFile == null) {
+    //         this.selectFile.requestFocus();
+    //         MessageBox.warn(I18nHelper.pleaseSelectFile());
+    //         return;
+    //     }
+    //     this.step1.disappear();
+    //     this.step2.disappear();
+    //     this.step4.disappear();
+    //     this.step3.display();
+    // }
 
     @FXML
-    private void showStep4() {
+    private void showStep3() {
         try {
+            // 检查文件
+            if (this.exportFile == null) {
+                this.selectFile.requestFocus();
+                MessageBox.warn(I18nHelper.pleaseSelectFile());
+                return;
+            }
             // 检查客户端
             if (this.client == null || this.client.isClosed()) {
                 this.getStage().appendTitle("===" + I18nHelper.connectIng() + "===");
@@ -371,8 +377,8 @@ public class ZKDataExportController extends StageController {
 
             this.step1.disappear();
             this.step2.disappear();
-            this.step3.disappear();
-            this.step4.display();
+            // this.step3.disappear();
+            this.step3.display();
         } finally {
             this.getStage().restoreTitle();
             this.getStage().enable();

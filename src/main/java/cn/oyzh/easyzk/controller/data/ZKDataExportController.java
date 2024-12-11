@@ -127,6 +127,12 @@ public class ZKDataExportController extends StageController {
     private FXCheckBox includeTitle;
 
     /**
+     * 压缩
+     */
+    @FXML
+    private FXCheckBox compress;
+
+    /**
      * 结束导出按钮
      */
     @FXML
@@ -227,6 +233,8 @@ public class ZKDataExportController extends StageController {
         }
         // 包含标题
         this.exportHandler.includeTitle(this.includeTitle.isEnable() && this.includeTitle.isSelected());
+        // 压缩
+        this.exportHandler.compress(this.compress.isEnable() && this.compress.isSelected());
         // 前缀
         if (FileNameUtil.isTxtType(fileType)) {
             this.exportHandler.prefix(this.prefix.selectedUserData());
@@ -318,6 +326,7 @@ public class ZKDataExportController extends StageController {
         this.step3.disappear();
         // this.step4.disappear();
         String fileType = this.format.selectedUserData();
+        // 检查是否支持前缀
         if (FileNameUtil.isTxtType(fileType)) {
             NodeGroupUtil.enable(this.stage, "txt");
         } else {
@@ -328,6 +337,12 @@ public class ZKDataExportController extends StageController {
             this.includeTitle.enable();
         } else {
             this.includeTitle.disable();
+        }
+        // 检查是否支持压缩
+        if (StringUtil.equalsAny(fileType, "xml", "json")) {
+            this.compress.enable();
+        } else {
+            this.compress.disable();
         }
         this.step2.display();
     }

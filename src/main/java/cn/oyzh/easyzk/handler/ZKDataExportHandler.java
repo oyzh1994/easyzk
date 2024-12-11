@@ -176,5 +176,9 @@ public class ZKDataExportHandler extends DataHandler {
     public void includeTitle(boolean includeTitle) {
         this.config.includeTitle(includeTitle);
     }
+
+    public void compress(boolean compress) {
+        this.config.compress(compress);
+    }
 }
 

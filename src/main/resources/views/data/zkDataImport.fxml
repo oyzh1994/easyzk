@@ -179,11 +179,11 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FXLabel fx:id="importStatus" realHeight="30">
+            <InfoLabel fx:id="importStatus">
                 <VBox.margin>
                     <Insets left="30"/>
                 </VBox.margin>
-            </FXLabel>
+            </InfoLabel>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep3" groupId="exec" realHeight="30" iconSizePercent="0.75">

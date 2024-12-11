@@ -7,14 +7,13 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataMigrationController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -33,11 +32,11 @@
     </FlexHBox>
     <FlexVBox fx:id="step1" flexHeight="100% - 80" flexWidth="100%">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%base.data" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.data">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <FXCheckBox fx:id="groups" text="%base.groups" selected="true">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -53,11 +52,11 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXCheckBox>
-            <FlexLabel text="%base.setting" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.setting">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <FXCheckBox fx:id="applicationSetting" text="%base.applicationSetting" selected="true">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -84,11 +83,11 @@
     </FlexVBox>
     <FlexVBox fx:id="step2" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%zk.migration.tip3" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%zk.migration.tip3">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <fx:define>
                 <FXToggleGroup fx:id="dataPolicy"/>
             </fx:define>
@@ -124,11 +123,11 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FXLabel fx:id="migrationStatus" realHeight="30">
+            <InfoLabel fx:id="migrationStatus">
                 <VBox.margin>
                     <Insets left="30"/>
                 </VBox.margin>
-            </FXLabel>
+            </InfoLabel>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75">

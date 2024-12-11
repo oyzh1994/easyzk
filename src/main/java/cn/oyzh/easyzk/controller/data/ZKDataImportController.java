@@ -297,8 +297,8 @@ public class ZKDataImportController extends StageController {
         this.step3.disappear();
         this.step4.disappear();
         String fileType = this.format.selectedUserData();
-        // 检查是否支持标题
-        if (StringUtil.equalsAny(fileType, "xls", "xlsx", "csv")) {
+        // 检查是否支持跳行
+        if (StringUtil.equalsAny(fileType, "excel", "csv")) {
             this.dataRowStarts.enable();
         } else {
             this.dataRowStarts.disable();

@@ -5,6 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.file.FileColumns;
 import cn.oyzh.store.file.FileHelper;
 import cn.oyzh.store.file.FileRecord;
@@ -65,8 +66,8 @@ public class ZKDataExportHandler extends DataHandler {
     public void doExport() throws Exception {
         this.message("Export Starting");
         FileColumns columns = new FileColumns();
-        columns.addColumn("path");
-        columns.addColumn("data");
+        columns.addColumn("path", I18nHelper.path());
+        columns.addColumn("data", I18nHelper.data());
         // 获取写入器
         TypeFileWriter writer = FileHelper.initWriter(this.fileType, this.config, columns);
         if (writer != null) {
@@ -170,6 +171,10 @@ public class ZKDataExportHandler extends DataHandler {
 
     public void txtIdentifier(Character txtIdentifier) {
         this.config.txtIdentifier(txtIdentifier);
+    }
+
+    public void includeTitle(boolean includeTitle) {
+        this.config.includeTitle(includeTitle);
     }
 }
 

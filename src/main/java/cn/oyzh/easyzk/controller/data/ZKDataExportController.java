@@ -4,21 +4,22 @@ import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.FileNameUtil;
 import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.handler.ZKDataExportHandler;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
+import cn.oyzh.fx.gui.combobox.CharsetComboBox;
+import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -26,7 +27,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -121,6 +121,12 @@ public class ZKDataExportController extends StageController {
     private FXCheckBox applyFilter;
 
     /**
+     * 包含标题
+     */
+    @FXML
+    private FXCheckBox includeTitle;
+
+    /**
      * 结束导出按钮
      */
     @FXML
@@ -188,8 +194,7 @@ public class ZKDataExportController extends StageController {
         // 生成迁移处理器
         if (this.exportHandler == null) {
             this.exportHandler = new ZKDataExportHandler();
-            this.exportHandler
-                    .messageHandler(str -> this.exportMsg.appendLine(str))
+            this.exportHandler.messageHandler(str -> this.exportMsg.appendLine(str))
                     .processedHandler(count -> {
                         if (count == 0) {
                             this.counter.updateIgnore();
@@ -220,6 +225,8 @@ public class ZKDataExportController extends StageController {
         } else {
             this.exportHandler.filters(null);
         }
+        // 包含标题
+        this.exportHandler.includeTitle(this.includeTitle.isEnable() && this.includeTitle.isSelected());
         // 前缀
         if (FileNameUtil.isTxtType(fileType)) {
             this.exportHandler.prefix(this.prefix.selectedUserData());
@@ -315,6 +322,12 @@ public class ZKDataExportController extends StageController {
             NodeGroupUtil.enable(this.stage, "txt");
         } else {
             NodeGroupUtil.disable(this.stage, "txt");
+        }
+        // 检查是否支持标题
+        if (StringUtil.equalsAny(fileType, "xls", "xlsx", "csv")) {
+            this.includeTitle.enable();
+        } else {
+            this.includeTitle.disable();
         }
         this.step2.display();
     }

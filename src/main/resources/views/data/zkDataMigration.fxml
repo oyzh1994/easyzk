@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataMigrationController" realWidth="800" realHeight="600">
-    <FlexHBox flexWidth="100%" realHeight="100">
+    <FlexHBox flexWidth="100%" realHeight="80">
         <FlexHBox flexHeight="100%" flexWidth="100%">
             <MigrationSVGGlyph sizeStr="40,40" color="yellowgreen">
                 <HBox.margin>
@@ -31,7 +31,7 @@
             </FXText>
         </FlexHBox>
     </FlexHBox>
-    <FlexVBox fx:id="step1" flexHeight="100% - 100" flexWidth="100%">
+    <FlexVBox fx:id="step1" flexHeight="100% - 80" flexWidth="100%">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%base.data" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
@@ -82,7 +82,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
+    <FlexVBox fx:id="step2" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%zk.migration.tip3" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
@@ -116,7 +116,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
+    <FlexVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
             <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="migrationMsg" flexWidth="100% - 60"
                          flexHeight="100% - 30">

@@ -2,22 +2,23 @@ package cn.oyzh.easyzk.controller.data;
 
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.FileNameUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.controller.node.ZKNodeImportController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.handler.ZKDataImportHandler;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
+import cn.oyzh.fx.gui.combobox.CharsetComboBox;
+import cn.oyzh.fx.gui.text.area.MsgTextArea;
+import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -109,6 +110,12 @@ public class ZKDataImportController extends StageController {
     private FXCheckBox ignoreExist;
 
     /**
+     * 数据行开始
+     */
+    @FXML
+    private NumberTextField dataRowStarts;
+
+    /**
      * 选择文件
      */
     @FXML
@@ -197,6 +204,12 @@ public class ZKDataImportController extends StageController {
         this.importHandler.filePath(this.importFile.getPath());
         // 字符集
         this.importHandler.charset(this.charset.getCharsetName());
+        // 数据行开始
+        if (this.dataRowStarts.isEnable()) {
+            this.importHandler.dataRowStarts(this.dataRowStarts.getIntValue());
+        } else {
+            this.importHandler.dataRowStarts(null);
+        }
         // 执行导入
         this.execTask = ThreadUtil.start(() -> {
             try {
@@ -284,10 +297,11 @@ public class ZKDataImportController extends StageController {
         this.step3.disappear();
         this.step4.disappear();
         String fileType = this.format.selectedUserData();
-        if (FileNameUtil.isTxtType(fileType)) {
-            NodeGroupUtil.enable(this.stage, "txt");
+        // 检查是否支持标题
+        if (StringUtil.equalsAny(fileType, "xls", "xlsx", "csv")) {
+            this.dataRowStarts.enable();
         } else {
-            NodeGroupUtil.disable(this.stage, "txt");
+            this.dataRowStarts.disable();
         }
         this.step2.display();
     }
@@ -309,15 +323,18 @@ public class ZKDataImportController extends StageController {
     private void showStep4() {
         // 检查客户端
         if (this.doConnect()) {
-            return;
+            this.step1.disappear();
+            this.step2.disappear();
+            this.step3.disappear();
+            this.step4.display();
         }
-
-        this.step1.disappear();
-        this.step2.disappear();
-        this.step3.disappear();
-        this.step4.display();
     }
 
+    /**
+     * 执行连接
+     *
+     * @return 结果
+     */
     private boolean doConnect() {
         try {
             // 检查客户端

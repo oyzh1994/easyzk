@@ -5,15 +5,15 @@
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
+<?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
@@ -38,11 +38,11 @@
     </FlexHBox>
     <FlexVBox fx:id="step1" flexHeight="100% - 80" flexWidth="100%">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%base.fileFormat" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.fileFormat">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <fx:define>
                 <FXToggleGroup fx:id="format"/>
             </fx:define>
@@ -81,13 +81,13 @@
             </OldButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
+    <FlexVBox fx:id="step2" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%base.filePath" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.filePath">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <FlexHBox flexWidth="100%">
                 <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
                     <HBox.margin>
@@ -96,20 +96,31 @@
                 </FXButton>
                 <FXText fx:id="fileName">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="15"/>
                     </HBox.margin>
                 </FXText>
             </FlexHBox>
-            <AccentLabel text="%base.options" realHeight="30" realWidth="80">
+            <InfoLabel text="%base.options">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </AccentLabel>
+            </InfoLabel>
             <FXCheckBox fx:id="ignoreExist" text="%base.skipByExists">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXCheckBox>
+            <InfoLabel text="%base.dataRowStarts">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </InfoLabel>
+            <NumberTextField realHeight="25" fx:id="dataRowStarts" text="%base.skipByExists" min="1" value="2"
+                             flexWidth="100% - 80" disable="true">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </NumberTextField>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep1" groupId="exec" realHeight="30" iconSizePercent="0.75">
@@ -124,23 +135,23 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
+    <FlexVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%base.connection" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.connection">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <FXText fx:id="connectionName">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXText>
-            <FlexLabel text="%base.charset" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.charset">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <CharsetComboBox fx:id="charset" realHeight="25">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -160,7 +171,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step4" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
+    <FlexVBox fx:id="step4" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
             <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="importMsg" flexWidth="100% - 60"
                          flexHeight="100% - 30">

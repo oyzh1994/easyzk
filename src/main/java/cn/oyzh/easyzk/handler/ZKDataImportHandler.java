@@ -130,5 +130,9 @@ public class ZKDataImportHandler extends DataHandler {
     public void txtIdentifier(Character txtIdentifier) {
         this.config.txtIdentifier(txtIdentifier);
     }
+
+    public void dataRowStarts(Integer dataRowStarts) {
+        this.config.dataRowStarts(dataRowStarts);
+    }
 }
 

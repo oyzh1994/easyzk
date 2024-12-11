@@ -73,7 +73,7 @@
                     <Insets left="30" top="10"/>
                 </HBox.margin>
             </NextStepButton>
-            <OldButton text="%zk.old.tip1" tipText="%zk.old.tip2" onAction="#openOld" realHeight="30"
+            <OldButton text="%base.oldEntrance" tipText="%zk.old.tip2" onAction="#openOld" realHeight="30"
                        iconSizePercent="0.75">
                 <HBox.margin>
                     <Insets left="15" top="10"/>

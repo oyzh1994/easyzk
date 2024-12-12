@@ -10,6 +10,7 @@
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.ZKFilterTab.ZKFilterTabController">
     <FlexHBox realHeight="50" flexWidth="100%">
@@ -18,11 +19,11 @@
                 <Insets left="5" top="-4"/>
             </HBox.margin>
         </ClearableTextField>
-        <AddFillSVGGlyph size="16" onMousePrimaryClicked="#add">
+        <AddSVGGlyph size="16" onMousePrimaryClicked="#add">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
-        </AddFillSVGGlyph>
+        </AddSVGGlyph>
         <DeleteSVGGlyph size="16" onMousePrimaryClicked="#delete">
             <HBox.margin>
                 <Insets left="5"/>

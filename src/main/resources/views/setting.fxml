@@ -59,8 +59,7 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <FXCheckBox tipText="%zk.info.autoAuthTip" text="%base.autoAuth" prefWidth="80"
-                            selected="true" fx:id="authMode">
+                <FXCheckBox tipText="%zk.info.autoAuthTip" text="%base.autoAuth" selected="true" fx:id="authMode">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
@@ -103,17 +102,17 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>
-                    <FXCheckBox text="%base.windowSize" selected="true" prefWidth="120" fx:id="pageSize">
+                    <FXCheckBox text="%base.windowSize" selected="true" fx:id="pageSize">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FXCheckBox>
-                    <FXCheckBox text="%base.windowLocation" prefWidth="120" fx:id="pageLocation">
+                    <FXCheckBox text="%base.windowLocation" fx:id="pageLocation">
                         <HBox.margin>
                             <Insets left="10" top="5"/>
                         </HBox.margin>
                     </FXCheckBox>
-                    <FXCheckBox text="%base.windowResize" prefWidth="120" fx:id="pageResize">
+                    <FXCheckBox text="%base.windowResize" fx:id="pageResize">
                         <HBox.margin>
                             <Insets left="10" top="5"/>
                         </HBox.margin>

@@ -92,7 +92,7 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ClearableTextField>
-            <FXCheckBox text="%base.save" prefWidth="80" fx:id="digestSaveInfo" selected="true">
+            <FXCheckBox text="%base.save" fx:id="digestSaveInfo" selected="true">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>

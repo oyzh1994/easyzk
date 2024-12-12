@@ -25,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import org.apache.zookeeper.CreateMode;
@@ -71,11 +72,11 @@ public class ZKNodeAddController extends StageController {
     @FXML
     private FlexTextArea nodeData;
 
-    /**
-     * 节点路径预览组件
-     */
-    @FXML
-    private HBox nodePathPreviewBox;
+    // /**
+    //  * 节点路径预览组件
+    //  */
+    // @FXML
+    // private VBox nodePathPreviewBox;
 
     /**
      * 节点路径预览
@@ -87,7 +88,7 @@ public class ZKNodeAddController extends StageController {
      * 父节点值组件
      */
     @FXML
-    private HBox parentNodeBox;
+    private VBox parentNodeBox;
 
     /**
      * 父节点值
@@ -127,7 +128,7 @@ public class ZKNodeAddController extends StageController {
      * ip权限
      */
     @FXML
-    private FlexHBox ipACL;
+    private FlexVBox ipACL;
 
     /**
      * 摘要权限
@@ -311,10 +312,10 @@ public class ZKNodeAddController extends StageController {
         this.nodePath.addTextChangeListener((observableValue, s, t1) -> {
             if (StringUtil.isNotBlank(t1)) {
                 this.nodePathText = ZKNodeUtil.concatPath(this.parentNode.getText(), t1).trim();
-                this.nodePathPreviewBox.setVisible(true);
+                // this.nodePathPreviewBox.setVisible(true);
             } else {
                 this.nodePathText = "";
-                this.nodePathPreviewBox.setVisible(false);
+                // this.nodePathPreviewBox.setVisible(false);
             }
             this.nodePathPreview.setText(this.nodePathText);
         });
@@ -362,7 +363,7 @@ public class ZKNodeAddController extends StageController {
             this.parentNode.setVisible(false);
         }
         this.nodePath.requestFocus();
-        this.nodePathPreviewBox.managedProperty().bind(this.nodePathPreviewBox.visibleProperty());
+        // this.nodePathPreviewBox.managedProperty().bind(this.nodePathPreviewBox.visibleProperty());
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);

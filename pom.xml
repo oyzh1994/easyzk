@@ -15,6 +15,18 @@
 
     <properties>
         <curator-version>4.3.0</curator-version>
+        <maven.compile.jvmArgs>--add-opens java.base/java.time.zone=ALL-UNNAMED --add-opens
+            java.desktop/sun.awt.windows=ALL-UNNAMED --add-opens java.desktop/sun.java2d.pipe=ALL-UNNAMED --add-opens
+            java.desktop/sun.awt.image=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
+        </maven.compile.jvmArgs>
+        <maven.test.jvmArgs>--add-opens java.base/java.time.zone=ALL-UNNAMED --add-opens
+            java.desktop/sun.awt.windows=ALL-UNNAMED --add-opens java.desktop/sun.java2d.pipe=ALL-UNNAMED --add-opens
+            java.desktop/sun.awt.image=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
+        </maven.test.jvmArgs>
+        <maven.plugin.jvmArgs>--add-opens java.base/java.time.zone=ALL-UNNAMED --add-opens
+            java.desktop/sun.awt.windows=ALL-UNNAMED --add-opens java.desktop/sun.java2d.pipe=ALL-UNNAMED --add-opens
+            java.desktop/sun.awt.image=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
+        </maven.plugin.jvmArgs>
     </properties>
 
     <dependencies>
@@ -291,6 +303,60 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
+            <!-- <plugin> -->
+            <!--     <groupId>org.apache.maven.plugins</groupId> -->
+            <!--     <artifactId>maven-compiler-plugin</artifactId> -->
+            <!--     <version>3.13.0</version> -->
+            <!--     <configuration> -->
+            <!--         <compilerArgs> -->
+            <!--             <arg>&#45;&#45;add-opens java.base/java.time.zone=ALL-UNNAMED &#45;&#45;add-opens -->
+            <!--                 java.desktop/sun.awt.windows=ALL-UNNAMED &#45;&#45;add-opens -->
+            <!--                 java.desktop/sun.java2d.pipe=ALL-UNNAMED &#45;&#45;add-opens java.desktop/sun.awt.image=ALL-UNNAMED -->
+            <!--                 &#45;&#45;add-opens java.desktop/java.awt=ALL-UNNAMED -->
+            <!--             </arg> -->
+            <!--         </compilerArgs> -->
+            <!--     </configuration> -->
+            <!-- </plugin> -->
+
+            <!-- <plugin> -->
+            <!--     <groupId>org.apache.maven.plugins</groupId> -->
+            <!--     <artifactId>maven-surefire-plugin</artifactId> -->
+            <!--     <version>3.2.5</version> &lt;!&ndash; 请使用适当的版本号 &ndash;&gt; -->
+            <!--     <configuration> -->
+            <!--         <argLine>&#45;&#45;add-opens java.base/java.time.zone=ALL-UNNAMED &#45;&#45;add-opens -->
+            <!--             java.desktop/sun.awt.windows=ALL-UNNAMED &#45;&#45;add-opens java.desktop/sun.java2d.pipe=ALL-UNNAMED -->
+            <!--             &#45;&#45;add-opens java.desktop/sun.awt.image=ALL-UNNAMED &#45;&#45;add-opens java.desktop/java.awt=ALL-UNNAMED -->
+            <!--         </argLine> -->
+            <!--         &lt;!&ndash; <argLine>-Xmx2048m -Xms1024m -XX:PermSize=256m -XX:MaxPermSize=512m</argLine> &ndash;&gt; -->
+            <!--     </configuration> -->
+            <!-- </plugin> -->
+
+            <!-- <plugin> -->
+            <!--     <groupId>org.codehaus.mojo</groupId> -->
+            <!--     <artifactId>exec-maven-plugin</artifactId> -->
+            <!--     <version>3.0.0</version> &lt;!&ndash; 使用你需要的版本 &ndash;&gt; -->
+            <!--     <executions> -->
+            <!--         <execution> -->
+            <!--             <goals> -->
+            <!--                 <goal>java</goal> -->
+            <!--             </goals> -->
+            <!--         </execution> -->
+            <!--     </executions> -->
+            <!--     <configuration> -->
+            <!--         <mainClass>cn.oyzh.easyzk.EasyZKApp</mainClass> -->
+            <!--         <arguments> -->
+            <!--             &lt;!&ndash; 程序参数 &ndash;&gt; -->
+            <!--         </arguments> -->
+            <!--         <jvmArgs> -->
+            <!--             <jvmArg>-Xmx1024m</jvmArg> -->
+            <!--             <jvmArg>&#45;&#45;add-opens java.base/java.time.zone=ALL-UNNAMED &#45;&#45;add-opens -->
+            <!--                 java.desktop/sun.awt.windows=ALL-UNNAMED &#45;&#45;add-opens java.desktop/sun.java2d.pipe=ALL-UNNAMED -->
+            <!--                 &#45;&#45;add-opens java.desktop/sun.awt.image=ALL-UNNAMED &#45;&#45;add-opens java.desktop/java.awt=ALL-UNNAMED</jvmArg> -->
+            <!--         </jvmArgs> -->
+            <!--     </configuration> -->
+            <!-- </plugin> -->
+
 
             <!-- Spring Boot打包相关 -->
             <plugin>

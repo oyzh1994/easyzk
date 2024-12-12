@@ -38,4 +38,9 @@ public class ZKConst {
      * icon地址
      */
     public final static String ICON_PATH = "/image/zoo_no_bg.png";
+
+    /**
+     * 托盘icon地址
+     */
+    public final static String TRAY_ICON_PATH = "/image/zoo_24.png";
 }

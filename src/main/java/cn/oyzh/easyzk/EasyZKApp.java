@@ -109,7 +109,7 @@ public class EasyZKApp extends FXApplication {
         }
         try {
             // 初始化
-            TrayManager.init(this.appIcon());
+            TrayManager.init(ZKConst.TRAY_ICON_PATH);
             // 设置标题
             TrayManager.setTitle(PROJECT.getName() + " v" + PROJECT.getVersion());
             // 打开主页

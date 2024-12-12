@@ -1,193 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.button.TestButton?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.gui.text.field.PortTextField?>
+<?import cn.oyzh.fx.gui.toggle.SwitchToggleSwitch?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.gui.toggle.SwitchToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
+<?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoUpdateController" realWidth="750" realHeight="320">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.name">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="30" require="true" realHeight="30" flexWidth="100% - 180">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </ClearableTextField>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.host">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <ClearableTextField fx:id="hostIp" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 180" maxLen="1024">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </ClearableTextField>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.port">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <PortTextField flexWidth="100% - 180" fx:id="hostPort" realHeight="30" value="2181">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </PortTextField>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.options">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
+                <InfoLabel text="%base.name">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="30" require="true" realHeight="30"
+                                    flexWidth="100% - 180">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </ClearableTextField>
+                <InfoLabel text="%base.host">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <ClearableTextField fx:id="hostIp" tipText="%base.hostTip" require="true" realHeight="30"
+                                    flexWidth="100% - 180" maxLen="1024">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </ClearableTextField>
+                <InfoLabel text="%base.port">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <PortTextField flexWidth="100% - 180" fx:id="hostPort" realHeight="30" value="2181">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </PortTextField>
+                <InfoLabel text="%base.options">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FXHBox>
                     <FXCheckBox text="%base.readonlyMode" tipText="%base.readonlyModeTip" fx:id="readonly">
                         <HBox.margin>
-                            <Insets left="10" top="16"/>
+                            <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FXCheckBox>
-                    <FXCheckBox fx:id="listen" text="%zk.info.listenNode" fontSize="11" selected="true" tipText="%zk.info.listenNodeTip">
+                    <FXCheckBox fx:id="listen" text="%zk.info.listenNode" fontSize="11" selected="true"
+                                tipText="%zk.info.listenNodeTip">
                         <HBox.margin>
-                            <Insets left="10" top="16"/>
+                            <Insets left="10" top="5"/>
                         </HBox.margin>
                     </FXCheckBox>
-                    <FXCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11" tipText="%zk.info.compatibilityTip">
+                    <FXCheckBox fx:id="compatibility" text="%base.compatibilityMode" fontSize="11"
+                                tipText="%zk.info.compatibilityTip">
                         <HBox.margin>
-                            <Insets left="10" top="16"/>
+                            <Insets left="10" top="5"/>
                         </HBox.margin>
                     </FXCheckBox>
-                </FlexHBox>
+                </FXHBox>
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.extra">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.connectTimeout">
+                <InfoLabel text="%base.connectTimeout">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FXHBox>
+                    <NumberTextField realHeight="30" flexWidth="100% - 180" min="3" max="30" fx:id="connectTimeOut"
+                                     tipText="%zk.info.connectTimoutTip" value="5" require="true">
                         <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="3" max="30" fx:id="connectTimeOut" tipText="%zk.info.connectTimoutTip" value="5" require="true">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
+                            <Insets left="30" top="5"/>
                         </HBox.margin>
                     </NumberTextField>
                     <FXLabel text="%base.second">
                         <HBox.margin>
-                            <Insets left="5" top="18"/>
+                            <Insets left="10" top="9"/>
                         </HBox.margin>
                     </FXLabel>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.sessionTimeout">
+                </FXHBox>
+                <InfoLabel text="%base.sessionTimeout">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FXHBox>
+                    <NumberTextField realHeight="30" flexWidth="100% - 180" min="5" max="120" fx:id="sessionTimeOut"
+                                     tipText="%zk.info.sessionTimoutTip" value="30" require="true" step="5">
                         <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="5" max="120" fx:id="sessionTimeOut" tipText="%zk.info.sessionTimoutTip" value="30" require="true" step="5">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
+                            <Insets left="30" top="5"/>
                         </HBox.margin>
                     </NumberTextField>
                     <FXLabel text="%base.minute">
                         <HBox.margin>
-                            <Insets left="5" top="18"/>
+                            <Insets left="10" top="9"/>
                         </HBox.margin>
                     </FXLabel>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="100">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.remark">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <FlexTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip" maxLen="100">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </FlexTextArea>
-                </FlexHBox>
+                </FXHBox>
+                <InfoLabel text="%base.remark">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FlexTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip"
+                              maxLen="100">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </FlexTextArea>
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.ssh">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.enableSSHChannel">
+                <InfoLabel text="%base.enableSSHChannel">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <SwitchToggleSwitch fx:id="sshForward">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </SwitchToggleSwitch>
+                <AccentLabel text="%base.host">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </AccentLabel>
+                <FlexHBox fx:id="sshHostBox" disable="true">
+                    <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30"
+                                        flexWidth="100% - 285" maxLen="1024">
                         <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <SwitchToggleSwitch fx:id="sshForward">
-                        <HBox.margin>
-                            <Insets left="10" top="15"/>
-                        </HBox.margin>
-                    </SwitchToggleSwitch>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshHostBox" disable="true">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.host">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 285" maxLen="1024">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
+                            <Insets left="30" top="5"/>
                         </HBox.margin>
                     </ClearableTextField>
                     <PortTextField realWidth="100" fx:id="sshPort" realHeight="30" value="22">
                         <HBox.margin>
-                            <Insets left="5" top="10"/>
+                            <Insets left="5" top="5"/>
                         </HBox.margin>
                     </PortTextField>
                 </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshTimeoutBox" disable="true">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.connectTimeout">
+                <InfoLabel text="%base.connectTimeout">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <NumberTextField flexWidth="100% - 180" fx:id="sshTimeout" tipText="%base.sshTimeoutTip"
+                                 realHeight="30" value="3000">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </NumberTextField>
+                <InfoLabel text="%base.sshInfo">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FlexHBox fx:id="sshAuthBox" disable="true">
+                    <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30"
+                                        flexWidth="50% - 93" text="root">
                         <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <NumberTextField flexWidth="100% - 180" fx:id="sshTimeout" tipText="%base.sshTimeoutTip" realHeight="30" value="3000">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </NumberTextField>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshAuthBox" disable="true">
-                    <AccentLabel realHeight="30" realWidth="100" text="%base.sshInfo">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30" flexWidth="50% - 93" text="root">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
+                            <Insets left="30" top="5"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30" flexWidth="50% - 92">
+                    <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30"
+                                        flexWidth="50% - 92">
                         <HBox.margin>
-                            <Insets left="5" top="10"/>
+                            <Insets left="5" top="5"/>
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
@@ -197,7 +199,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <TestButton onAction="#testConnect" iconSizePercent="0.8">
             <HBox.margin>
-                <Insets left="130" top="10"/>
+                <Insets left="30" top="10"/>
             </HBox.margin>
         </TestButton>
         <SubmitButton onAction="#update">

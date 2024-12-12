@@ -100,7 +100,7 @@
         </FlexHBox>
         <FlexHBox>
             <VBox.margin>
-                <Insets left="30"/>
+                <Insets left="30" top="5"/>
             </VBox.margin>
             <FXLabel fx:id="digestText" realHeight="25"/>
             <CopyButton fx:id="copyDigestText" realHeight="25" visible="false" onMousePrimaryClicked="#copyDigestText">

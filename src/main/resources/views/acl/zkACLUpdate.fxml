@@ -2,107 +2,100 @@
 
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.plus.controls.pane.FlexFlowPane?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLUpdateController" realWidth="600" realHeight="300">
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.path" realWidth="80" realHeight="30">
+          fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLUpdateController" realWidth="600" realHeight="400">
+    <InfoLabel text="%base.path">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <DisabledTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 140">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </DisabledTextField>
+    <InfoLabel text="%zk.aclType">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <DisabledTextField realHeight="30" flexWidth="100% - 140" fx:id="aclType">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </DisabledTextField>
+    <InfoLabel text="%zk.aclScope">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <FlexHBox fx:id="perms">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+        <FXCheckBox text="%base.admin"/>
+        <FXCheckBox text="%base.write">
             <HBox.margin>
-                <Insets left="20" top="10"/>
+                <Insets left="10"/>
             </HBox.margin>
-        </AccentLabel>
-        <DisabledTextField fx:id="nodePath" realHeight="30" flexWidth="100% - 140">
+        </FXCheckBox>
+        <FXCheckBox text="%base.read">
             <HBox.margin>
-                <Insets left="10" top="10"/>
+                <Insets left="10"/>
             </HBox.margin>
-        </DisabledTextField>
+        </FXCheckBox>
+        <FXCheckBox text="%base.delete">
+            <HBox.margin>
+                <Insets left="10"/>
+            </HBox.margin>
+        </FXCheckBox>
+        <FXCheckBox text="%zk.acl.c">
+            <HBox.margin>
+                <Insets left="10"/>
+            </HBox.margin>
+        </FXCheckBox>
     </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%zk.aclType" realWidth="80" realHeight="30">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <DisabledTextField realHeight="30" flexWidth="100% - 140" fx:id="aclType">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </DisabledTextField>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%zk.aclScope" realWidth="80" realHeight="30">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FlexFlowPane realHeight="30" flexWidth="100% - 140" fx:id="perms">
-            <padding>
-                <Insets left="10" top="20"/>
-            </padding>
-            <FXCheckBox text="%base.admin"/>
-            <FXCheckBox text="%base.write">
-                <FlowPane.margin>
-                    <Insets left="5"/>
-                </FlowPane.margin>
-            </FXCheckBox>
-            <FXCheckBox text="%base.read">
-                <FlowPane.margin>
-                    <Insets left="5"/>
-                </FlowPane.margin>
-            </FXCheckBox>
-            <FXCheckBox text="%base.delete">
-                <FlowPane.margin>
-                    <Insets left="5"/>
-                </FlowPane.margin>
-            </FXCheckBox>
-            <FXCheckBox text="%zk.acl.c">
-                <FlowPane.margin>
-                    <Insets left="5"/>
-                </FlowPane.margin>
-            </FXCheckBox>
-        </FlexFlowPane>
-    </FlexHBox>
-    <FlexHBox fx:id="digestACL" flexWidth="100%" realHeight="50" managedBindVisible="true" visible="false">
-        <AccentLabel text="%base.authInfo" realWidth="80" realHeight="30">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
+    <FlexVBox fx:id="digestACL" managedBindVisible="true" visible="false">
+        <InfoLabel text="%base.authInfo">
+            <VBox.margin>
+                <Insets left="30" top="10"/>
+            </VBox.margin>
+        </InfoLabel>
         <DisabledTextField fx:id="digest" realHeight="30" flexWidth="100% - 140">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
+            <VBox.margin>
+                <Insets left="30" top="5"/>
+            </VBox.margin>
         </DisabledTextField>
-    </FlexHBox>
-    <FlexHBox fx:id="ipACL" flexWidth="100%" realHeight="50" managedBindVisible="true" visible="false">
-        <AccentLabel text="%base.ipAddr" realWidth="80" realHeight="30">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
+    </FlexVBox>
+    <FlexVBox fx:id="ipACL" managedBindVisible="true" visible="false">
+        <InfoLabel text="%base.ipAddr">
+            <VBox.margin>
+                <Insets left="30" top="10"/>
+            </VBox.margin>
+        </InfoLabel>
         <DisabledTextField fx:id="ip" realHeight="30" flexWidth="100% - 140">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
+            <VBox.margin>
+                <Insets left="30" top="5"/>
+            </VBox.margin>
         </DisabledTextField>
-    </FlexHBox>
+    </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#updateACL">
             <HBox.margin>
-                <Insets left="110" top="10"/>
+                <Insets left="30" top="20"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
     </FlexHBox>

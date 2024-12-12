@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -17,6 +18,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import org.apache.zookeeper.data.ACL;
@@ -57,7 +59,7 @@ public class ZKACLUpdateController extends StageController {
      * 权限
      */
     @FXML
-    private Pane perms;
+    private FlexHBox perms;
 
     /**
      * 节点路径
@@ -87,13 +89,13 @@ public class ZKACLUpdateController extends StageController {
      * ip权限控件
      */
     @FXML
-    private HBox ipACL;
+    private VBox ipACL;
 
     /**
      * 摘要权限控件
      */
     @FXML
-    private HBox digestACL;
+    private VBox digestACL;
 
     /**
      * 修改zk权限
@@ -147,11 +149,11 @@ public class ZKACLUpdateController extends StageController {
 
         // ip权限相关
         if (this.acl.isIPACL()) {
-            this.ipACL.setManaged(true);
+            // this.ipACL.setManaged(true);
             this.ipACL.setVisible(true);
             this.ip.setText(this.acl.idVal());
         } else if (this.acl.isDigestACL()) {// 摘要权限相关
-            this.digestACL.setManaged(true);
+            // this.digestACL.setManaged(true);
             this.digestACL.setVisible(true);
             this.digest.setText(this.acl.idVal());
         }

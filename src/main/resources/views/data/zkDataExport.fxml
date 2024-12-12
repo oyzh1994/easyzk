@@ -4,6 +4,7 @@
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.ExportSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
@@ -17,7 +18,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataExportController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -38,7 +38,7 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.fileFormat">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <fx:define>
@@ -92,86 +92,86 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.filePath">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FlexHBox flexWidth="100%">
                 <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </FXButton>
                 <FXText fx:id="fileName">
                     <HBox.margin>
-                        <Insets left="10" top="15"/>
+                        <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXText>
             </FlexHBox>
             <InfoLabel text="%base.nodePath">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FXText fx:id="nodePath">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </FXText>
             <InfoLabel text="%base.charset">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <CharsetComboBox fx:id="charset" realHeight="25">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </CharsetComboBox>
             <InfoLabel text="%base.options">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FXHBox>
                 <FXCheckBox fx:id="includeTitle" text="%base.includeTitle" selected="true" disable="true">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox fx:id="compress" text="%base.compressContent" selected="true">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox fx:id="applyFilter" text="%base.applyFilter">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
             </FXHBox>
             <InfoLabel text="%base.prefix">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <fx:define>
-                <FXToggleGroup fx:id="prefix"/>
-            </fx:define>
             <FXHBox>
+                <fx:define>
+                    <FXToggleGroup fx:id="prefix"/>
+                </fx:define>
                 <FXRadioButton groupId="txt" userData="" toggleGroup="$prefix" text="%base.none" disable="true">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </FXRadioButton>
                 <FXRadioButton groupId="txt" userData="set" toggleGroup="$prefix" text="set" disable="true">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXRadioButton>
                 <FXRadioButton groupId="txt" userData="create" toggleGroup="$prefix" text="create" selected="true"
                                disable="true">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXRadioButton>
             </FXHBox>

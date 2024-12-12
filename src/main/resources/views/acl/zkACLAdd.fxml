@@ -41,7 +41,7 @@
         </VBox.margin>
     </ZKACLTypeComboBox>
     <FlexVBox fx:id="permsBox">
-        <InfoLabel text="%zk.aclScope" realWidth="80" realHeight="30">
+        <InfoLabel text="%zk.aclScope">
             <VBox.margin>
                 <Insets left="30" top="10"/>
             </VBox.margin>
@@ -74,7 +74,7 @@
         </FlexHBox>
     </FlexVBox>
     <FlexVBox managedBindVisible="true" visible="false" fx:id="digest1ACL">
-        <InfoLabel text="%base.authInfo" realWidth="80" realHeight="30">
+        <InfoLabel text="%base.authInfo">
             <VBox.margin>
                 <Insets left="30" top="10"/>
             </VBox.margin>

@@ -2,18 +2,19 @@
 <?import cn.oyzh.fx.gui.button.MigrationButton?>
 <?import cn.oyzh.fx.gui.button.NextStepButton?>
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.MigrationSVGGlyph?>
+<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
-<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataMigrationController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -85,22 +86,24 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%zk.migration.tip3">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <fx:define>
-                <FXToggleGroup fx:id="dataPolicy"/>
-            </fx:define>
-            <FXRadioButton userData="1" toggleGroup="$dataPolicy" text="%base.merge" selected="true">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXRadioButton>
-            <FXRadioButton userData="2" toggleGroup="$dataPolicy" text="%base.cover">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXRadioButton>
+            <FXHBox>
+                <fx:define>
+                    <FXToggleGroup fx:id="dataPolicy"/>
+                </fx:define>
+                <FXRadioButton userData="1" toggleGroup="$dataPolicy" text="%base.merge" selected="true">
+                    <HBox.margin>
+                        <Insets left="30" top="5"/>
+                    </HBox.margin>
+                </FXRadioButton>
+                <FXRadioButton userData="2" toggleGroup="$dataPolicy" text="%base.cover">
+                    <HBox.margin>
+                        <Insets left="10" top="5"/>
+                    </HBox.margin>
+                </FXRadioButton>
+            </FXHBox>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep1" groupId="exec" realHeight="30" iconSizePercent="0.75">

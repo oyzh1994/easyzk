@@ -6,6 +6,7 @@
 <?import cn.oyzh.fx.gui.button.StopButton?>
 <?import cn.oyzh.fx.gui.button.TransportButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.RightSideSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
@@ -19,7 +20,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataTransportController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -184,7 +184,7 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.nodeExists">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <fx:define>
@@ -193,23 +193,23 @@
             <FXHBox>
                 <FXRadioButton userData="0" toggleGroup="$existsPolicy" text="%base.skip" selected="true">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </FXRadioButton>
                 <FXRadioButton userData="1" toggleGroup="$existsPolicy" text="%base.update">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXRadioButton>
             </FXHBox>
             <InfoLabel text="%base.options">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FXCheckBox fx:id="applyFilter" text="%base.applyFilter">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </FXCheckBox>
         </FlexVBox>

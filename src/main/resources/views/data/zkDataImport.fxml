@@ -40,7 +40,7 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.fileFormat">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <fx:define>
@@ -48,22 +48,22 @@
             </fx:define>
             <FXRadioButton userData="json" toggleGroup="$format" text="%base.jsonType" selected="true">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </FXRadioButton>
             <FXRadioButton userData="excel" toggleGroup="$format" text="%base.excelType">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </FXRadioButton>
             <FXRadioButton userData="xml" toggleGroup="$format" text="%base.xmlType">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </FXRadioButton>
             <FXRadioButton userData="csv" toggleGroup="$format" text="%base.csvType">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </FXRadioButton>
         </FlexVBox>
@@ -85,50 +85,50 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.filePath">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FlexHBox flexWidth="100%">
                 <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </FXButton>
                 <FXText fx:id="fileName">
                     <HBox.margin>
-                        <Insets left="10" top="15"/>
+                        <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXText>
             </FlexHBox>
             <InfoLabel text="%base.options">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FXCheckBox fx:id="ignoreExist" text="%base.skipByExists">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </FXCheckBox>
             <InfoLabel text="%base.charset">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <CharsetComboBox fx:id="charset" realHeight="25">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </CharsetComboBox>
             <InfoLabel text="%base.dataRowStarts">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <NumberTextField realHeight="25" fx:id="dataRowStarts" text="%base.skipByExists" min="1" value="2"
                              flexWidth="100% - 80" disable="true">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </NumberTextField>
         </FlexVBox>

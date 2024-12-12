@@ -3,7 +3,6 @@
 <?import cn.oyzh.easyzk.fx.ZKAuthTypeComboBox?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.UnLockButton?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthAuthController" realWidth="600" realHeight="320">
-    <InfoLabel text="%base.path" realHeight="30" realWidth="80">
+    <InfoLabel text="%base.path">
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
@@ -26,7 +25,7 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </DisabledTextField>
-    <InfoLabel text="%zk.authMethod" realWidth="80" realHeight="30">
+    <InfoLabel text="%zk.authMethod">
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>

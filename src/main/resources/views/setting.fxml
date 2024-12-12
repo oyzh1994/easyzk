@@ -28,7 +28,7 @@
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.load">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <fx:define>
@@ -56,7 +56,7 @@
                 </FXHBox>
                 <InfoLabel text="%base.auth">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FXCheckBox tipText="%zk.info.autoAuthTip" text="%base.autoAuth" prefWidth="80"
@@ -71,7 +71,7 @@
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.close">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>
@@ -99,7 +99,7 @@
                 </FlexHBox>
                 <InfoLabel text="%base.remember">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>
@@ -121,7 +121,7 @@
                 </FlexHBox>
                 <InfoLabel text="%base.opacity">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>
@@ -142,7 +142,7 @@
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.fontName">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>
@@ -159,7 +159,7 @@
                 </FlexHBox>
                 <InfoLabel text="%base.fontSize">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>
@@ -176,7 +176,7 @@
                 </FlexHBox>
                 <InfoLabel text="%base.fontWeight">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>
@@ -197,7 +197,7 @@
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.themeName">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="%base.themeTip"
@@ -208,7 +208,7 @@
                 </ThemeComboBox>
                 <InfoLabel text="%base.fgColor">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox fx:id="fgColorBox" disable="true">
@@ -227,7 +227,7 @@
                 </FlexHBox>
                 <InfoLabel text="%base.bgColor">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox fx:id="bgColorBox" disable="true">
@@ -246,7 +246,7 @@
                 </FlexHBox>
                 <InfoLabel text="%base.accentColor">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox fx:id="accentColorBox" disable="true">
@@ -269,7 +269,7 @@
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.language">
                     <VBox.margin>
-                        <Insets left="30" top="20"/>
+                        <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>

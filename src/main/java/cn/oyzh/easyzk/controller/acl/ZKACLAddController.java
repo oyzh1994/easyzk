@@ -16,6 +16,7 @@ import cn.oyzh.fx.gui.button.CopyButton;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.pane.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
@@ -72,7 +73,7 @@ public class ZKACLAddController extends StageController {
      * 权限
      */
     @FXML
-    private FlexFlowPane perms;
+    private FlexHBox perms;
 
     /**
      * 节点路径
@@ -84,7 +85,7 @@ public class ZKACLAddController extends StageController {
      * 权限组件
      */
     @FXML
-    private FlexHBox permsBox;
+    private FlexVBox permsBox;
 
     /**
      * 权限类型
@@ -102,25 +103,25 @@ public class ZKACLAddController extends StageController {
      * digest权限处理2
      */
     @FXML
-    private HBox digest2ACL;
+    private VBox digest2ACL;
 
     /**
      * digest权限处理3
      */
     @FXML
-    private HBox digest3ACL;
+    private VBox digest3ACL;
 
     /**
      * 单IP权限处理
      */
     @FXML
-    private HBox ip1ACL;
+    private VBox ip1ACL;
 
     /**
      * 多IP权限处理
      */
     @FXML
-    private HBox ip2ACL;
+    private VBox ip2ACL;
 
     /**
      * 摘要信息1，用户名

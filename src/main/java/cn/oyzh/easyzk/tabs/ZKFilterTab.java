@@ -81,7 +81,7 @@ public class ZKFilterTab extends DynamicTab {
          * 数据列表
          */
         @FXML
-        private FlexTableView<ZKFilter> listTable;
+        private FlexTableView<ZKFilterVO> listTable;
 
         /**
          * 分页数据
@@ -106,7 +106,6 @@ public class ZKFilterTab extends DynamicTab {
             this.listTable.setItem(ZKFilterVO.convert(this.pageData.dataList()));
             this.pagePane.setPaging(this.pageData);
         }
-
 
         /**
          * 添加过滤

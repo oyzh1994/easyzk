@@ -65,17 +65,9 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
 
     public ZKConnectTreeItem(@NonNull ZKConnect value, @NonNull RichTreeView treeView) {
         super(treeView);
+        super.setSortable(false);
         this.value(value);
     }
-
-    // /**
-    //  * 连接状态属性
-    //  *
-    //  * @return 连接状态属性
-    //  */
-    // public ReadOnlyObjectProperty<ZKConnState> stateProperty() {
-    //     return this.client.stateProperty();
-    // }
 
     @Override
     public List<MenuItem> getMenuItems() {

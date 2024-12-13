@@ -47,7 +47,7 @@ public class ConnectController extends SubStageController {
      */
     @FXML
     private void openTerminal() {
-
+        ZKEventUtil.terminalOpen();
     }
 
     // /**

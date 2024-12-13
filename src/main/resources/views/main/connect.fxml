@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.trees.connect.ZKConnectTreeView?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ConnectionSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.SortDescSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.pane.SortSVGPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.svg.pane.SortSVGPane?>
 <FXTab xmlns:fx="http://javafx.com/fxml/1"
        fx:controller="cn.oyzh.easyzk.controller.main.ConnectController" text="%base.connection">
     <graphic>

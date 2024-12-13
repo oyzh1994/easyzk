@@ -111,43 +111,48 @@
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="30" flexWidth="100%">
+                    <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </RichDataTypeComboBox>
                     <SaveSVGGlyph fx:id="saveNodeData" size="16" tipText="%base.saveTip1"
                                   onMousePrimaryClicked="#saveNodeData">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </SaveSVGGlyph>
                     <UndoSVGGlyph disable="true" fx:id="dataUndo" size="16" onMousePrimaryClicked="#dataUndo"
                                   tipText="%base.undoTip1">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </UndoSVGGlyph>
                     <RedoSVGGlyph disable="true" fx:id="dataRedo" size="16" onMousePrimaryClicked="#dataRedo"
                                   tipText="%base.redoTip1">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </RedoSVGGlyph>
                     <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </PasteSVGGlyph>
                     <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </ClearSVGGlyph>
                     <QRCodeSVGGlyph fx:id="node2QRCode" size="16"
                                     onMousePrimaryClicked="#node2QRCode">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </QRCodeSVGGlyph>
                     <UnLockSVGGlyph tipText="%base.auth" size="15" onMousePrimaryClicked="#authNode">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </UnLockSVGGlyph>
                     <!-- <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect"> -->
@@ -163,21 +168,21 @@
                     <!-- </UnCollectSVGGlyph> -->
                     <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </RefreshSVGGlyph>
                     <CopySVGGlyph tipText="%zk.node.main.copy1" size="16" onMousePrimaryClicked="#copyNode">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </CopySVGGlyph>
                     <SVGGlyph tipText="%base.copyPath" size="16" onMousePrimaryClicked="#copyNodePath"
                               url="/font/copy-path.svg">
                         <HBox.margin>
-                            <Insets left="5" top="5"/>
+                            <Insets left="5" top="7"/>
                         </HBox.margin>
                     </SVGGlyph>
-                    <ClearableTextField fx:id="dataSearch" tipText="%base.searchKWTip" fontSize="11" realHeight="22"
+                    <ClearableTextField fx:id="dataSearch" tipText="%base.searchKWTip" fontSize="11" prefHeight="22"
                                         prefWidth="165">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
@@ -193,12 +198,6 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </HistorySVGGlyph>
-                    <RichDataTypeComboBox prefHeight="22" fx:id="dataType" initIndex="0" fontSize="11" prefWidth="100"
-                                          style="-fx-padding: 0;">
-                        <HBox.margin>
-                            <Insets left="5" top="3"/>
-                        </HBox.margin>
-                    </RichDataTypeComboBox>
                     <CharsetComboBox prefHeight="22" initDefault="true" fx:id="charset" fontSize="11" prefWidth="120"
                                      style="-fx-padding: 0;">
                         <HBox.margin>

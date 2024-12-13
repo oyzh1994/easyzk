@@ -379,7 +379,7 @@ public class ZKNodeTab extends DynamicTab {
          * 格式
          */
         @FXML
-        protected RichDataTypeComboBox dataType;
+        protected RichDataTypeComboBox format;
 
         /**
          * 配额组件tab
@@ -979,7 +979,7 @@ public class ZKNodeTab extends DynamicTab {
             // 显示检测后的数据
             RichDataType dataType = this.nodeData.showDetectData(new String(bytes, this.charset.getCharset()));
             // 选中格式
-            this.dataType.selectObj(dataType);
+            this.format.selectObj(dataType);
         }
 
         /**
@@ -1100,20 +1100,20 @@ public class ZKNodeTab extends DynamicTab {
             // 节点内容搜索
             this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setSearchText(newValue));
             // 格式监听
-            this.dataType.selectedItemChanged((t1, t2, t3) -> {
-                if (this.dataType.isStringFormat()) {
+            this.format.selectedItemChanged((t1, t2, t3) -> {
+                if (this.format.isStringFormat()) {
                     this.showData(RichDataType.STRING);
                     this.nodeData.setEditable(true);
-                } else if (this.dataType.isJsonFormat()) {
+                } else if (this.format.isJsonFormat()) {
                     this.showData(RichDataType.JSON);
                     this.nodeData.setEditable(true);
-                } else if (this.dataType.isBinaryFormat()) {
+                } else if (this.format.isBinaryFormat()) {
                     this.showData(RichDataType.BINARY);
                     this.nodeData.setEditable(false);
-                } else if (this.dataType.isHexFormat()) {
+                } else if (this.format.isHexFormat()) {
                     this.showData(RichDataType.HEX);
                     this.nodeData.setEditable(false);
-                } else if (this.dataType.isRawFormat()) {
+                } else if (this.format.isRawFormat()) {
                     this.showData(RichDataType.RAW);
                 }
             });

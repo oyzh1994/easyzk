@@ -23,7 +23,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.stage.WindowEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -169,7 +168,7 @@ public class ZKMainController extends ParentStageController {
     @EventSubscribe
     private void layout2(Layout2Event event) {
         this.tabPaneLeft.display();
-        double w = this.tabPaneLeft.getMinWidth();
+        double w = this.tabPaneLeft.realWidth();
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
         this.tabPaneLeft.parentAutosize();
@@ -188,10 +187,6 @@ public class ZKMainController extends ParentStageController {
 
     @Override
     public List<SubStageController> getSubControllers() {
-        List<SubStageController> list = new ArrayList<>();
-        list.add(this.connectController);
-        list.add(this.messageController);
-        list.add(this.historyController);
-        return list;
+        return List.of(this.connectController, this.messageController, this.historyController);
     }
 }

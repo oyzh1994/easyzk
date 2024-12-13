@@ -9,8 +9,4 @@ import cn.oyzh.fx.plus.controls.table.FlexTableView;
 public class ZKACLTableView extends FlexTableView<ZKACLControl> {
 
 
-
-
-
-
 }

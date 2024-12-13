@@ -7,6 +7,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
+import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
@@ -33,19 +34,20 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.page.PageBox;
+import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
+import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
-import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
@@ -53,7 +55,6 @@ import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.util.TableViewUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
@@ -61,27 +62,20 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
-import javafx.util.Callback;
 import lombok.Getter;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.Stat;
 
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
@@ -226,17 +220,17 @@ public class ZKNodeTab extends DynamicTab {
         @Getter
         private ZKNodeTreeView treeView;
 
-        /**
-         * 节点排序(正序)
-         */
-        @FXML
-        private SVGGlyph sortAsc;
-
-        /**
-         * 节点排序(倒序)
-         */
-        @FXML
-        private SVGGlyph sortDesc;
+        // /**
+        //  * 节点排序(正序)
+        //  */
+        // @FXML
+        // private SVGGlyph sortAsc;
+        //
+        // /**
+        //  * 节点排序(倒序)
+        //  */
+        // @FXML
+        // private SVGGlyph sortDesc;
 
         /**
          * 搜索类型
@@ -309,41 +303,41 @@ public class ZKNodeTab extends DynamicTab {
         @FXML
         private ZKACLTableView aclTableView;
 
-        /**
-         * acl编码
-         */
-        @FXML
-        private FlexTableColumn<String, String> aclId;
+        // /**
+        //  * acl编码
+        //  */
+        // @FXML
+        // private FlexTableColumn<String, String> aclId;
+        //
+        // /**
+        //  * acl权限
+        //  */
+        // @FXML
+        // private FlexTableColumn<String, String> aclPerms;
+        //
+        // /**
+        //  * acl协议
+        //  */
+        // @FXML
+        // private FlexTableColumn<String, String> aclSchema;
+        //
+        // /**
+        //  * acl状态
+        //  */
+        // @FXML
+        // private FlexTableColumn<String, String> aclStatus;
 
-        /**
-         * acl权限
-         */
-        @FXML
-        private FlexTableColumn<String, String> aclPerms;
-
-        /**
-         * acl协议
-         */
-        @FXML
-        private FlexTableColumn<String, String> aclSchema;
-
-        /**
-         * acl状态
-         */
-        @FXML
-        private FlexTableColumn<String, String> aclStatus;
-
-        /**
-         * 收藏节点
-         */
-        @FXML
-        private SVGGlyph collect;
-
-        /**
-         * 取消收藏节点
-         */
-        @FXML
-        private SVGGlyph unCollect;
+        // /**
+        //  * 收藏节点
+        //  */
+        // @FXML
+        // private SVGGlyph collect;
+        //
+        // /**
+        //  * 取消收藏节点
+        //  */
+        // @FXML
+        // private SVGGlyph unCollect;
 
         /**
          * 加载耗时
@@ -411,6 +405,18 @@ public class ZKNodeTab extends DynamicTab {
         private ZKClient client;
 
         /**
+         * 收藏面板
+         */
+        @FXML
+        private CollectSVGPane collectPane;
+
+        /**
+         * 排序面板
+         */
+        @FXML
+        private SortSVGPane sortPane;
+
+        /**
          * 初始化
          *
          * @param item 树节点
@@ -444,6 +450,8 @@ public class ZKNodeTab extends DynamicTab {
                     this.initStat();
                     // 初始化配额
                     this.initQuota();
+                    // 设置是否收藏
+                    this.collectPane.setCollect(this.activeItem.isCollect());
                     // 启用组件
                     this.tabPane.enable();
                     // 检查状态
@@ -452,10 +460,10 @@ public class ZKNodeTab extends DynamicTab {
                     // 禁用组件
                     this.tabPane.disable();
                 }
-                // 触发事件
-                ZKEventUtil.nodeSelected(this.activeItem);
                 // 刷新tab
                 this.flushTab();
+                // 触发事件
+                ZKEventUtil.nodeSelected(this.activeItem);
             } catch (Exception ex) {
                 MessageBox.exception(ex);
             }
@@ -842,25 +850,25 @@ public class ZKNodeTab extends DynamicTab {
             }
         }
 
-        /**
-         * 收藏节点
-         */
-        @FXML
-        private void collect() {
-            this.activeItem.collect();
-            this.collect.disappear();
-            this.unCollect.display();
-        }
-
-        /**
-         * 取消收藏节点
-         */
-        @FXML
-        private void unCollect() {
-            this.activeItem.unCollect();
-            this.collect.display();
-            this.unCollect.disappear();
-        }
+        // /**
+        //  * 收藏节点
+        //  */
+        // @FXML
+        // private void collect() {
+        //     this.activeItem.collect();
+        //     this.collect.disappear();
+        //     this.unCollect.display();
+        // }
+        //
+        // /**
+        //  * 取消收藏节点
+        //  */
+        // @FXML
+        // private void unCollect() {
+        //     this.activeItem.unCollect();
+        //     this.collect.display();
+        //     this.unCollect.disappear();
+        // }
 
         /**
          * 保存节点数据
@@ -1070,9 +1078,9 @@ public class ZKNodeTab extends DynamicTab {
             super.bindListeners();
             // 监听选中变化
             this.treeView.selectItemChanged(this::initItem);
-            // 收藏处理
-            this.collect.managedProperty().bind(this.collect.visibleProperty());
-            this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
+            // // 收藏处理
+            // this.collect.managedProperty().bind(this.collect.visibleProperty());
+            // this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
             // 搜索处理
             this.searchType.selectedIndexChanged((observable, oldValue, newValue) -> this.doSearch());
             // undo监听
@@ -1119,21 +1127,21 @@ public class ZKNodeTab extends DynamicTab {
             resizeHelper.initResizeEvent();
         }
 
-        @Override
-        public void initialize(URL url, ResourceBundle resourceBundle) {
-            super.initialize(url, resourceBundle);
-            // acl处理
-            this.aclId.setCellValueFactory(new PropertyValueFactory<>("idControl"));
-            this.aclPerms.setCellValueFactory(new PropertyValueFactory<>("permsControl"));
-            this.aclSchema.setCellValueFactory(new PropertyValueFactory<>("schemaControl"));
-            this.aclStatus.setCellValueFactory(new PropertyValueFactory<>("statusControl"));
-            // 设置cell工厂
-            Callback<TableColumn<String, String>, TableCell<String, String>> cellFactory = param -> TableViewUtil.newCell(18, Pos.CENTER_LEFT);
-            this.aclId.setCellFactory(cellFactory);
-            this.aclPerms.setCellFactory(cellFactory);
-            this.aclSchema.setCellFactory(cellFactory);
-            this.aclStatus.setCellFactory(cellFactory);
-        }
+        // @Override
+        // public void initialize(URL url, ResourceBundle resourceBundle) {
+        //     super.initialize(url, resourceBundle);
+        //     // acl处理
+        //     this.aclId.setCellValueFactory(new PropertyValueFactory<>("idControl"));
+        //     this.aclPerms.setCellValueFactory(new PropertyValueFactory<>("permsControl"));
+        //     this.aclSchema.setCellValueFactory(new PropertyValueFactory<>("schemaControl"));
+        //     this.aclStatus.setCellValueFactory(new PropertyValueFactory<>("statusControl"));
+        //     // 设置cell工厂
+        //     Callback<TableColumn<String, String>, TableCell<String, String>> cellFactory = param -> TableViewUtil.newCell(18, Pos.CENTER_LEFT);
+        //     this.aclId.setCellFactory(cellFactory);
+        //     this.aclPerms.setCellFactory(cellFactory);
+        //     this.aclSchema.setCellFactory(cellFactory);
+        //     this.aclStatus.setCellFactory(cellFactory);
+        // }
 
         /**
          * 左侧组件重新布局
@@ -1209,25 +1217,25 @@ public class ZKNodeTab extends DynamicTab {
             this.treeView.filter();
         }
 
-        /**
-         * 对子节点排序，正序
-         */
-        @FXML
-        private void sortAsc() {
-            this.sortAsc.disappear();
-            this.sortDesc.display();
-            this.treeView.sortAsc();
-        }
-
-        /**
-         * 对子节点排序，倒序
-         */
-        @FXML
-        private void sortDesc() {
-            this.sortDesc.disappear();
-            this.sortAsc.display();
-            this.treeView.sortDesc();
-        }
+        // /**
+        //  * 对子节点排序，正序
+        //  */
+        // @FXML
+        // private void sortAsc() {
+        //     this.sortAsc.disappear();
+        //     this.sortDesc.display();
+        //     this.treeView.sortAsc();
+        // }
+        //
+        // /**
+        //  * 对子节点排序，倒序
+        //  */
+        // @FXML
+        // private void sortDesc() {
+        //     this.sortDesc.disappear();
+        //     this.sortAsc.display();
+        //     this.treeView.sortDesc();
+        // }
 
         /**
          * 定位节点
@@ -1363,6 +1371,49 @@ public class ZKNodeTab extends DynamicTab {
                 this.flushTab();
             } catch (Exception ex) {
                 MessageBox.exception(ex);
+            }
+        }
+
+        @FXML
+        private void addNode() {
+            StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
+            fxView.setProp("dbItem", this.treeItem);
+            fxView.display();
+        }
+
+        @FXML
+        private void deleteNode() {
+            if (this.activeItem != null) {
+                this.activeItem.delete();
+            }
+        }
+
+        @FXML
+        private void collectNode(MouseEvent event) {
+            if (this.activeItem != null) {
+                if (this.collectPane.isCollect()) {
+                    this.activeItem.unCollect();
+                    this.collectPane.unCollect();
+                } else {
+                    this.activeItem.collect();
+                    this.collectPane.collect();
+                }
+            }
+        }
+
+        @FXML
+        private void refreshNode() {
+            this.treeView.loadRoot();
+        }
+
+        @FXML
+        private void sortTree() {
+            if (this.sortPane.isAsc()) {
+                this.treeView.sortAsc();
+                this.sortPane.desc();
+            } else {
+                this.treeView.sortDesc();
+                this.sortPane.asc();
             }
         }
     }

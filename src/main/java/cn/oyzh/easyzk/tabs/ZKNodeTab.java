@@ -24,7 +24,6 @@ import cn.oyzh.easyzk.event.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
-import cn.oyzh.easyzk.fx.ZKDataFormatComboBox;
 import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
 import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
@@ -59,6 +58,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -379,7 +379,7 @@ public class ZKNodeTab extends DynamicTab {
          * 格式
          */
         @FXML
-        protected ZKDataFormatComboBox dataFormat;
+        protected RichDataTypeComboBox dataType;
 
         /**
          * 配额组件tab
@@ -574,8 +574,7 @@ public class ZKNodeTab extends DynamicTab {
                 if (quota == null) {
                     return;
                 }
-                String builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() +
-                        I18nHelper.bytes() + " " + quota.getBytes();
+                String builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() + I18nHelper.bytes() + " " + quota.getBytes();
                 ClipboardUtil.setStringAndTip(builder);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -593,9 +592,7 @@ public class ZKNodeTab extends DynamicTab {
                 return;
             }
             try {
-                String builder = acl.idFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.idFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
-                        acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() +
-                        acl.permsFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.permsFriend().getValue(this.aclViewSwitch.isSelected());
+                String builder = acl.idFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.idFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() + acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() + acl.permsFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.permsFriend().getValue(this.aclViewSwitch.isSelected());
                 ClipboardUtil.setStringAndTip(builder);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -789,9 +786,7 @@ public class ZKNodeTab extends DynamicTab {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < statInfos.size(); i++) {
                 FriendlyInfo<Stat> statInfo = statInfos.get(i);
-                builder.append(statInfo.getName(this.statViewSwitch.isSelected()))
-                        .append(" : ")
-                        .append(statInfo.getValue(this.statViewSwitch.isSelected()));
+                builder.append(statInfo.getName(this.statViewSwitch.isSelected())).append(" : ").append(statInfo.getValue(this.statViewSwitch.isSelected()));
                 if (statInfo != CollectionUtil.getLast(statInfos)) {
                     builder.append(System.lineSeparator());
                 }
@@ -981,7 +976,10 @@ public class ZKNodeTab extends DynamicTab {
                 bytes = this.activeItem.nodeData();
             }
             bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
-            this.nodeData.showData(bytes);
+            // 显示检测后的数据
+            RichDataType dataType = this.nodeData.showDetectData(new String(bytes, this.charset.getCharset()));
+            // 选中格式
+            this.dataType.selectObj(dataType);
         }
 
         /**
@@ -990,20 +988,26 @@ public class ZKNodeTab extends DynamicTab {
          * @param dataType 数据类型
          */
         protected void showData(RichDataType dataType) {
+            byte[] bytes;
             if (this.activeItem.isDataUnsaved()) {
-                this.nodeData.showData(dataType, this.activeItem.unsavedData());
+                bytes = this.activeItem.unsavedData();
             } else {
-                this.nodeData.showData(dataType, this.activeItem.nodeData());
+                bytes = this.activeItem.nodeData();
             }
+            bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
+            this.nodeData.showData(dataType, bytes);
         }
 
+        /**
+         * 初始化数据
+         */
         public void initData() {
             // 显示数据
             this.showData();
             // 遗忘历史
             this.nodeData.forgetHistory();
             // 加载耗时处理
-            FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.activeItem.loadTime() + "ms"));
+            this.loadTime.text(I18nHelper.cost() + " : " + this.activeItem.loadTime() + "ms");
         }
 
         /**
@@ -1096,20 +1100,20 @@ public class ZKNodeTab extends DynamicTab {
             // 节点内容搜索
             this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setSearchText(newValue));
             // 格式监听
-            this.dataFormat.selectedItemChanged((t1, t2, t3) -> {
-                if (this.dataFormat.isStringFormat()) {
+            this.dataType.selectedItemChanged((t1, t2, t3) -> {
+                if (this.dataType.isStringFormat()) {
                     this.showData(RichDataType.STRING);
                     this.nodeData.setEditable(true);
-                } else if (this.dataFormat.isJsonFormat()) {
+                } else if (this.dataType.isJsonFormat()) {
                     this.showData(RichDataType.JSON);
                     this.nodeData.setEditable(true);
-                } else if (this.dataFormat.isBinaryFormat()) {
+                } else if (this.dataType.isBinaryFormat()) {
                     this.showData(RichDataType.BINARY);
                     this.nodeData.setEditable(false);
-                } else if (this.dataFormat.isHexFormat()) {
+                } else if (this.dataType.isHexFormat()) {
                     this.showData(RichDataType.HEX);
                     this.nodeData.setEditable(false);
-                } else if (this.dataFormat.isRawFormat()) {
+                } else if (this.dataType.isRawFormat()) {
                     this.showData(RichDataType.RAW);
                 }
             });

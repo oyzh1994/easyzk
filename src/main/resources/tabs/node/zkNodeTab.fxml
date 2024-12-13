@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyzk.fx.ZKACLTableView?>
-<?import cn.oyzh.easyzk.fx.ZKDataFormatComboBox?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
 <?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
@@ -40,6 +39,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.ZKNodeTab.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -193,12 +193,12 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </HistorySVGGlyph>
-                    <ZKDataFormatComboBox prefHeight="22" fx:id="dataFormat" initIndex="0" fontSize="11" prefWidth="100"
+                    <RichDataTypeComboBox prefHeight="22" fx:id="dataType" initIndex="0" fontSize="11" prefWidth="100"
                                           style="-fx-padding: 0;">
                         <HBox.margin>
                             <Insets left="5" top="3"/>
                         </HBox.margin>
-                    </ZKDataFormatComboBox>
+                    </RichDataTypeComboBox>
                     <CharsetComboBox prefHeight="22" initDefault="true" fx:id="charset" fontSize="11" prefWidth="120"
                                      style="-fx-padding: 0;">
                         <HBox.margin>
@@ -208,7 +208,7 @@
                     <FlexText tipText="%base.loadCost" fx:id="loadTime" style="-fx-fill: #009933;-fx-text-fill:#009933"
                               realHeight="22">
                         <HBox.margin>
-                            <Insets left="5" top="3"/>
+                            <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FlexText>
                 </FlexHBox>

@@ -8,8 +8,8 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAuthController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
-import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -43,7 +43,6 @@ import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -61,44 +60,28 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     @Accessors(fluent = true, chain = true)
     protected ZKNode value;
 
-    /**
-     * bit值设置，减少内存占用
-     */
-    private BitSet bitValue;
-
-    /**
-     * bit值设置
-     *
-     * @return BitSet
-     */
-    private BitSet bitValue() {
-        if (this.bitValue == null) {
-            this.bitValue = new BitSet(0b00000000);
-        }
-        return bitValue;
-    }
+    // /**
+    //  * bit值设置，减少内存占用
+    //  */
+    // private BitSet bitValue;
+    //
+    // /**
+    //  * bit值设置
+    //  *
+    //  * @return BitSet
+    //  */
+    // private BitSet bitValue() {
+    //     if (this.bitValue == null) {
+    //         this.bitValue = new BitSet(0b00000000);
+    //     }
+    //     return bitValue;
+    // }
 
     /**
      * 设置节点变更
      */
     public void setBeChanged() {
-        this.bitValue().set(0, true);
-        this.refresh();
-    }
-
-    /**
-     * 设置节点删除
-     */
-    public void setBeDeleted() {
-        this.bitValue().set(1, true);
-        this.refresh();
-    }
-
-    /**
-     * 设置节点变化
-     */
-    public void setBeChildChanged() {
-        this.bitValue().set(2, true);
+        this.bitValue().set(8, true);
         this.refresh();
     }
 
@@ -108,7 +91,15 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 结果
      */
     public boolean isBeChanged() {
-        return this.bitValue != null && this.bitValue().get(0);
+        return this.bitValue != null && this.bitValue().get(8);
+    }
+
+    /**
+     * 设置节点删除
+     */
+    public void setBeDeleted() {
+        this.bitValue().set(9, true);
+        this.refresh();
     }
 
     /**
@@ -117,7 +108,15 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 结果
      */
     public boolean isBeDeleted() {
-        return this.bitValue != null && this.bitValue().get(1);
+        return this.bitValue != null && this.bitValue().get(9);
+    }
+
+    /**
+     * 设置节点变化
+     */
+    public void setBeChildChanged() {
+        this.bitValue().set(10, true);
+        this.refresh();
     }
 
     /**
@@ -126,28 +125,14 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 结果
      */
     public boolean isBeChildChanged() {
-        return this.bitValue != null && this.bitValue().get(2);
+        return this.bitValue != null && this.bitValue().get(10);
     }
 
     /**
      * 设置忽略变化
      */
     public void doIgnoreChanged() {
-        this.bitValue().set(3, true);
-    }
-
-    /**
-     * 设置忽略删除
-     */
-    public void doIgnoreDeleted() {
-        this.bitValue().set(4, true);
-    }
-
-    /**
-     * 设置忽略子节点变化
-     */
-    public void doIgnoreChildChanged() {
-        this.bitValue().set(5, true);
+        this.bitValue().set(11, true);
     }
 
     /**
@@ -156,7 +141,14 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 结果
      */
     public boolean isIgnoreChanged() {
-        return this.bitValue != null && this.bitValue().get(3);
+        return this.bitValue != null && this.bitValue().get(11);
+    }
+
+    /**
+     * 设置忽略删除
+     */
+    public void doIgnoreDeleted() {
+        this.bitValue().set(12, true);
     }
 
     /**
@@ -165,7 +157,14 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 结果
      */
     public boolean isIgnoreDeleted() {
-        return this.bitValue != null && this.bitValue().get(4);
+        return this.bitValue != null && this.bitValue().get(12);
+    }
+
+    /**
+     * 设置忽略子节点变化
+     */
+    public void doIgnoreChildChanged() {
+        this.bitValue().set(13, true);
     }
 
     /**
@@ -174,7 +173,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 结果
      */
     public boolean isIgnoreChildChanged() {
-        return this.bitValue != null && this.bitValue().get(5);
+        return this.bitValue != null && this.bitValue().get(13);
     }
 
     /**
@@ -183,7 +182,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @param needAuth 是否需要认证
      */
     public void setNeedAuth(boolean needAuth) {
-        this.bitValue().set(6, needAuth);
+        this.bitValue().set(14, needAuth);
     }
 
     /**
@@ -192,7 +191,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 结果
      */
     public boolean isNeedAuth() {
-        boolean needAuth = this.bitValue != null && this.bitValue().get(6);
+        boolean needAuth = this.bitValue != null && this.bitValue().get(14);
         return needAuth || ZKAuthUtil.isNeedAuth(this.value, this.client());
     }
 
@@ -202,7 +201,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @param canceled 已取消状态
      */
     public void setCanceled(boolean canceled) {
-        this.bitValue().set(7, canceled);
+        this.bitValue().set(15, canceled);
     }
 
     /**
@@ -211,7 +210,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 结果
      */
     public boolean isCanceled() {
-        return this.bitValue != null && this.bitValue().get(7);
+        return this.bitValue != null && this.bitValue().get(15);
     }
 
     /**
@@ -1094,7 +1093,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         this.value.clearUnsavedData();
         if (!this.isRoot()) {
             this.value = null;
-            this.bitValue = null;
+            // this.bitValue = null;
             super.destroy();
         }
     }

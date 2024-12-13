@@ -1099,17 +1099,17 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         }
     }
 
-    public boolean cacheable(String fullPath) {
-        if (StringUtil.equals(this.nodePath(), fullPath)) {
-            return true;
-        }
-        for (ZKNodeTreeItem subItem : this.itemChildren()) {
-            if (subItem.cacheable(fullPath)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // public boolean cacheable(String fullPath) {
+    //     if (StringUtil.equals(this.nodePath(), fullPath)) {
+    //         return true;
+    //     }
+    //     for (ZKNodeTreeItem subItem : this.itemChildren()) {
+    //         if (subItem.cacheable(fullPath)) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     /**
      * zk树节点值

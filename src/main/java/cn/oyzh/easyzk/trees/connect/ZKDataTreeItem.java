@@ -34,9 +34,26 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemVa
         return this.parent().value();
     }
 
+    private void setOpening(boolean opening) {
+        super.getBitValue().set(7, opening);
+    }
+
+    private boolean isOpening() {
+        return super.getBitValue().get(7);
+    }
+
     @Override
     public void onPrimaryDoubleClick() {
-        super.startWaiting(() -> ZKEventUtil.connectionOpened(this.parent()));
+        if (!this.isOpening()) {
+            this.setOpening(true);
+            super.startWaiting(() -> {
+                try {
+                    ZKEventUtil.connectionOpened(this.parent());
+                } finally {
+                    this.setOpening(false);
+                }
+            });
+        }
     }
 
     /**

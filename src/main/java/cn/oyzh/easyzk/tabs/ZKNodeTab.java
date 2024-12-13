@@ -44,10 +44,10 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
-import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
@@ -343,7 +343,7 @@ public class ZKNodeTab extends DynamicTab {
          * 加载耗时
          */
         @FXML
-        private FXLabel loadTime;
+        private FXText loadTime;
 
         /**
          * 右侧zk数据二维码视图

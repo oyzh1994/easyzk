@@ -30,11 +30,11 @@
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
@@ -205,13 +205,12 @@
                             <Insets left="5" top="3"/>
                         </HBox.margin>
                     </CharsetComboBox>
-                    <FXLabel tipText="%base.loadCost" fx:id="loadTime"
-                             style="-fx-cursor: HAND;-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="120"
-                             prefHeight="22">
+                    <FlexText tipText="%base.loadCost" fx:id="loadTime" style="-fx-fill: #009933;-fx-text-fill:#009933"
+                              realHeight="22">
                         <HBox.margin>
                             <Insets left="5" top="3"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </FlexText>
                 </FlexHBox>
             </FlexVBox>
         </FXTab>

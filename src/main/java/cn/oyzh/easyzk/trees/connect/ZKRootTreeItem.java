@@ -41,14 +41,14 @@ import java.util.Optional;
 public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemValue> implements ZKConnectManager {
 
     /**
-     * zk信息储存
-     */
-    private final ZKConnectJdbcStore infoStore = ZKConnectJdbcStore.INSTANCE;
-
-    /**
      * zk分组储存
      */
     private final ZKGroupJdbcStore groupStore = ZKGroupJdbcStore.INSTANCE;
+
+    /**
+     * zk信息储存
+     */
+    private final ZKConnectJdbcStore infoStore = ZKConnectJdbcStore.INSTANCE;
 
     public ZKRootTreeItem(@NonNull ZKConnectTreeView treeView) {
         super(treeView);

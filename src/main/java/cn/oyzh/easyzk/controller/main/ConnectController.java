@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.controller.main;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeView;
+import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.plus.controller.SubStageController;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
@@ -16,7 +16,7 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2024/04/23
  */
-public class ConnectController extends SubStageController   {
+public class ConnectController extends SubStageController {
 
     /**
      * 左侧zk树
@@ -25,44 +25,50 @@ public class ConnectController extends SubStageController   {
     private ZKConnectTreeView tree;
 
     /**
-     * 节点排序(正序)
+     * 节点排序组件
      */
     @FXML
-    private SVGGlyph sortAsc;
+    private SortSVGPane sortPane;
 
-    /**
-     * 节点排序(倒序)
-     */
-    @FXML
-    private SVGGlyph sortDesc;
+    // /**
+    //  * 节点排序(正序)
+    //  */
+    // @FXML
+    // private SVGGlyph sortAsc;
+    //
+    // /**
+    //  * 节点排序(倒序)
+    //  */
+    // @FXML
+    // private SVGGlyph sortDesc;
 
     /**
      * 打开终端
      */
     @FXML
     private void openTerminal() {
-        ZKEventUtil.terminalOpen();
+
     }
 
-    /**
-     * 对子节点排序，正序
-     */
-    @FXML
-    private void sortAsc() {
-        this.sortAsc.disappear();
-        this.sortDesc.display();
-        this.tree.sortAsc();
-    }
-
-    /**
-     * 对子节点排序，倒序
-     */
-    @FXML
-    private void sortDesc() {
-        this.sortDesc.disappear();
-        this.sortAsc.display();
-        this.tree.sortDesc();
-    }
+    // /**
+    //  * 对子节点排序，正序
+    //  */
+    // @FXML
+    // private void sortAsc() {
+    //     this.sortAsc.disappear();
+    //     this.sortDesc.display();
+    //     this.tree.sortAsc();
+    // }
+    //
+    // /**
+    //  * 对子节点排序，倒序
+    //  */
+    // @FXML
+    // private void sortDesc() {
+    //     this.sortDesc.disappear();
+    //     this.sortAsc.display();
+    //     this.tree.sortDesc();
+    // }
 
     /**
      * 定位节点
@@ -92,5 +98,21 @@ public class ConnectController extends SubStageController   {
         this.stage.initDragFile(this.tree.getDragContent(), this.tree.getRoot()::dragFile);
         // 刷新触发事件
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
+    }
+
+    @FXML
+    private void addConnect() {
+        ZKEventUtil.addConnect();
+    }
+
+    @FXML
+    private void sortTree() {
+        if (this.sortPane.isAsc()) {
+            this.tree.sortAsc();
+            this.sortPane.desc();
+        } else {
+            this.tree.sortDesc();
+            this.sortPane.asc();
+        }
     }
 }

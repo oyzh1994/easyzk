@@ -5,42 +5,55 @@
 <?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortDescSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.gui.svg.pane.SortSVGPane?>
 <FXTab xmlns:fx="http://javafx.com/fxml/1"
        fx:controller="cn.oyzh.easyzk.controller.main.ConnectController" text="%base.connection">
     <graphic>
         <ConnectionSVGGlyph cursorType="DEFAULT" size="12"/>
     </graphic>
-    <FlexVBox flexHeight="100%" flexWidth="100%"
-              style="-fx-border-width: 0 1 0 0; -fx-border-color: #c0c0c0">
-        <FlexHBox realHeight="32" flexWidth="100%">
+    <FlexVBox flexHeight="100%" flexWidth="100%">
+        <FlexHBox realHeight="30" flexWidth="100%">
+            <AddSVGGlyph size="15" onMousePrimaryClicked="#addConnect">
+                <HBox.margin>
+                    <Insets left="5" top="10"/>
+                </HBox.margin>
+            </AddSVGGlyph>
             <TerminalSVGGlyph size="15" onMousePrimaryClicked="#openTerminal">
                 <HBox.margin>
-                    <Insets left="10" top="10"/>
+                    <Insets left="5" top="10"/>
                 </HBox.margin>
             </TerminalSVGGlyph>
-            <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
+        </FlexHBox>
+        <ZKConnectTreeView fx:id="tree" flexHeight="100% - 60" flexWidth="100%"/>
+        <FlexHBox realHeight="30" flexWidth="100%">
+            <!-- <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc"> -->
+            <!--     <HBox.margin> -->
+            <!--         <Insets left="5" top="10"/> -->
+            <!--     </HBox.margin> -->
+            <!-- </SortAscSVGGlyph> -->
+            <!-- <SortDescSVGGlyph fx:id="sortDesc" size="15" managedBindVisible="true" visible="false" -->
+            <!--                   onMousePrimaryClicked="#sortDesc"> -->
+            <!--     <HBox.margin> -->
+            <!--         <Insets left="5" top="10"/> -->
+            <!--     </HBox.margin> -->
+            <!-- </SortDescSVGGlyph> -->
+            <SortSVGPane fx:id="sortPane" size="15" onMousePrimaryClicked="#sortTree">
                 <HBox.margin>
                     <Insets left="5" top="10"/>
                 </HBox.margin>
-            </SortAscSVGGlyph>
-            <SortDescSVGGlyph fx:id="sortDesc" size="15" managedBindVisible="true" visible="false"
-                              onMousePrimaryClicked="#sortDesc">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </SortDescSVGGlyph>
+            </SortSVGPane>
             <PositioningSVGGlyph size="17" onMousePrimaryClicked="#positionNode">
                 <HBox.margin>
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </PositioningSVGGlyph>
         </FlexHBox>
-        <ZKConnectTreeView fx:id="tree" flexHeight="100% - 32" flexWidth="100%"/>
     </FlexVBox>
 </FXTab>
 

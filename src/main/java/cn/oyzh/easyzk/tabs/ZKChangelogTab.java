@@ -6,7 +6,7 @@ import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.changelog.Changelog;
 import cn.oyzh.fx.plus.changelog.ChangelogListView;
 import cn.oyzh.fx.plus.changelog.ChangelogManager;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 
@@ -44,7 +44,7 @@ public class ZKChangelogTab extends DynamicTab {
 
     @Override
     public String getTabTitle() {
-        return I18nResourceBundle.i18nString("base.title.changelog");
+        return I18nHelper.changelogTitle();
     }
 
     /**

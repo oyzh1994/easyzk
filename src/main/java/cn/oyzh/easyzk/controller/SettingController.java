@@ -117,18 +117,6 @@ public class SettingController extends StageController {
     @FXML
     private FXCheckBox authMode;
 
-    // /**
-    //  * 标签数量限制
-    //  */
-    // @FXML
-    // private NumberTextField tabLimit;
-    //
-    // /**
-    //  * 标签策略
-    //  */
-    // @FXML
-    // private TabStrategyComboBox tabStrategy;
-
     /**
      * 主题
      */
@@ -251,9 +239,6 @@ public class SettingController extends StageController {
         this.fgColor.setColor(StringUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
         this.bgColor.setColor(StringUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
         this.accentColor.setColor(StringUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
-        // // 标签相关处理
-        // this.tabLimit.setValue(this.setting.getTabLimit());
-        // this.tabStrategy.select(this.setting.getTabStrategy());
         // 字体相关处理
         this.fontSize.selectSize(this.setting.getFontSize());
         this.fontFamily.select(this.setting.getFontFamily());
@@ -297,9 +282,6 @@ public class SettingController extends StageController {
             this.setting.setLocale(locale);
             // 透明度相关处理
             this.setting.setOpacity((float) this.opacity.getValue());
-            // 标签设置
-            // this.setting.setTabStrategy(this.tabStrategy.getStrategy());
-            // this.setting.setTabLimit(this.tabLimit.getValue().intValue());
             // 页面设置
             this.setting.setRememberPageSize((byte) (this.pageSize.isSelected() ? 1 : 0));
             this.setting.setRememberPageResize((byte) (this.pageResize.isSelected() ? 1 : 0));

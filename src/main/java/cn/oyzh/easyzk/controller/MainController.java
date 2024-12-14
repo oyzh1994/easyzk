@@ -36,7 +36,6 @@ public class MainController extends ParentStageController {
     /**
      * 项目信息
      */
-//    @Resource
     private final Project project = Project.load();
 
     /**
@@ -51,88 +50,10 @@ public class MainController extends ParentStageController {
     @FXML
     private ZKMainController zkMainController;
 
-    // /**
-    //  * 页面信息
-    //  */
-    // private final ZKPageInfo pageInfo = ZKPageInfoStore.PAGE_INFO;
-
     /**
      * zk相关配置
      */
     private final ZKSetting setting = ZKSettingJdbcStore.SETTING;
-
-    // /**
-    //  * 页面信息储存
-    //  */
-    // private final ZKPageInfoStore pageInfoStore = ZKPageInfoStore.INSTANCE;
-
-    // /**
-    //  * 初始化系统托盘
-    //  */
-    // private void initSystemTray() {
-    //     if (!TrayManager.supported()) {
-    //         JulLog.warn("tray is not supported.");
-    //         return;
-    //     }
-    //     if (!TrayManager.exist()) {
-    //         try {
-    //             // 初始化
-    //             TrayManager.init(ZKConst.ICON_PATH);
-    //             // 设置标题
-    //             TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
-    //             // 打开主页
-    //             TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
-    //             // 打开设置
-    //             TrayManager.addMenuItem(new SettingTrayItem("12", this::showSetting));
-    //             // 退出程序
-    //             TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
-    //                 JulLog.warn("exit app by tray.");
-    //                 StageManager.exit();
-    //             }));
-    //             // 鼠标事件
-    //             TrayManager.onMouseClicked(e -> {
-    //                 // 单击鼠标主键，显示主页
-    //                 if (e.getButton() == MouseEvent.BUTTON1) {
-    //                     this.showMain();
-    //                 }
-    //             });
-    //         } catch (Exception ex) {
-    //             ex.printStackTrace();
-    //         }
-    //     }
-    // }
-
-    // /**
-    //  * 显示设置
-    //  */
-    // private void showSetting() {
-    //     FXUtil.runLater(() -> {
-    //         StageAdapter wrapper = StageManager.getStage(SettingController.class);
-    //         if (wrapper != null) {
-    //             JulLog.info("front setting.");
-    //             wrapper.toFront();
-    //         } else {
-    //             JulLog.info("show setting.");
-    //             StageManager.showStage(SettingController.class, this.stage);
-    //         }
-    //     });
-    // }
-    //
-    // /**
-    //  * 显示主页
-    //  */
-    // private void showMain() {
-    //     FXUtil.runLater(() -> {
-    //         StageAdapter wrapper = StageManager.getStage(MainController.class);
-    //         if (wrapper != null) {
-    //             JulLog.info("front main.");
-    //             wrapper.toFront();
-    //         } else {
-    //             JulLog.info("show main.");
-    //             StageManager.showStage(MainController.class);
-    //         }
-    //     });
-    // }
 
     @Override
     public List<? extends StageController> getSubControllers() {
@@ -174,18 +95,6 @@ public class MainController extends ParentStageController {
         super.onWindowShowing(event);
         this.stage.setTitleExt(this.project.getName() + "-v" + this.project.getVersion());
     }
-
-    // @Override
-    // public void onStageShown(WindowEvent event) {
-    //     super.onStageShown(event);
-    //     try {
-    //         // this.initSystemTray();
-    //         TrayManager.show();
-    //     } catch (Exception ex) {
-    //         JulLog.warn("不支持系统托盘!");
-    //         ex.printStackTrace();
-    //     }
-    // }
 
     @Override
     public void onSystemExit() {

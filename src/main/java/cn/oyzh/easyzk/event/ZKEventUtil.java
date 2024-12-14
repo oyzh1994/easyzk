@@ -181,46 +181,12 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    // /**
-    //  * 图标变化事件
-    //  */
-    // public static void graphicChanged(TreeItem<?> treeItem) {
-    //     TreeGraphicChangedEvent event = new TreeGraphicChangedEvent();
-    //     event.data(treeItem);
-    //     EventUtil.postDelay(event, 200);
-    // }
-
-    // /**
-    //  * 图标颜色变化事件
-    //  */
-    // public static void graphicColorChanged(TreeItem<?> treeItem) {
-    //     TreeGraphicColorChangedEvent event = new TreeGraphicColorChangedEvent();
-    //     event.data(treeItem);
-    //     EventUtil.postDelay(event, 200);
-    // }
-    //
-    // /**
-    //  * 树节点变化事件
-    //  */
-    // public static void treeChildChanged() {
-    //     EventUtil.postDelay(new TreeChildChangedEvent(), 200);
-    // }
-
     /**
      * 树节点过滤事件
      */
     public static void treeChildFilter() {
         EventUtil.postDelay(new TreeChildFilterEvent(), 200);
     }
-
-    // /**
-    //  * 树节点选中事件
-    //  */
-    // public static void treeChildSelected(ZKNodeTreeItem item) {
-    //     TreeChildSelectedEvent event = new TreeChildSelectedEvent();
-    //     event.data(item);
-    //     EventUtil.post(event);
-    // }
 
     /**
      * 终端打开事件
@@ -264,31 +230,6 @@ public class ZKEventUtil {
     public static void filterMain() {
         EventUtil.post(new ZKFilterMainEvent());
     }
-
-    // /**
-    //  * 搜索开始事件
-    //  */
-    // public static void searchStart(ZKSearchParam searchParam) {
-    //     ZKSearchStartEvent event = new ZKSearchStartEvent();
-    //     event.data(searchParam);
-    //     EventUtil.post(event);
-    // }
-    //
-    // /**
-    //  * 搜索结束事件
-    //  */
-    // public static void searchFinish(ZKSearchParam searchParam) {
-    //     ZKSearchFinishEvent event = new ZKSearchFinishEvent();
-    //     event.data(searchParam);
-    //     EventUtil.post(event);
-    // }
-
-    // /**
-    //  * 搜索触发事件
-    //  */
-    // public static void searchFire() {
-    //     EventUtil.post(new ZKSearchFireEvent());
-    // }
 
     /**
      * 触发认证添加事件
@@ -341,20 +282,6 @@ public class ZKEventUtil {
     public static void addConnect() {
         EventUtil.post(new ZKAddConnectEvent());
     }
-
-//    /**
-//     * 展开左侧
-//     */
-//    public static void leftExtend() {
-//        EventUtil.post(new ZKLeftExtendEvent());
-//    }
-//
-//    /**
-//     * 收缩左侧
-//     */
-//    public static void leftCollapse() {
-//        EventUtil.post(new ZKLeftCollapseEvent());
-//    }
 
     /**
      * 添加过滤配置
@@ -418,18 +345,33 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
+    /**
+     * 节点acl添加事件
+     *
+     * @param info zk连接
+     */
     public static void nodeACLAdded(ZKConnect info) {
         ZKNodeACLAddedEvent event = new ZKNodeACLAddedEvent();
         event.data(info);
         EventUtil.post(event);
     }
 
+    /**
+     * 节点acl修改事件
+     *
+     * @param info zk连接
+     */
     public static void nodeACLUpdated(ZKConnect info) {
         ZKNodeACLUpdatedEvent event = new ZKNodeACLUpdatedEvent();
         event.data(info);
         EventUtil.post(event);
     }
 
+    /**
+     * 节点选中事件
+     *
+     * @param item 节点
+     */
     public static void treeItemChanged(TreeItem<?> item) {
         ZKTreeItemChangedEvent event = new ZKTreeItemChangedEvent();
         event.data(item);

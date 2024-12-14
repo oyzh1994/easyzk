@@ -44,7 +44,7 @@ public class ZKHomeTab extends DynamicTab {
 
     @Override
     public String getTabTitle() {
-        return I18nResourceBundle.i18nString("base.title.home");
+        return I18nHelper.homeTitle();
     }
 
     /**

@@ -12,4 +12,7 @@ public class ZookeeperSVGGlyph extends SVGGlyph {
         super("/font/Zookeeper1.svg");
     }
 
+    public ZookeeperSVGGlyph(double size) {
+        super("/font/Zookeeper1.svg", size);
+    }
 }

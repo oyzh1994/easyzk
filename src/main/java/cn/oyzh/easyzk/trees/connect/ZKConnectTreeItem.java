@@ -12,6 +12,7 @@ import cn.oyzh.easyzk.controller.node.ZKServiceController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
@@ -309,7 +310,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             // 连接中断事件
             if (n == ZKConnState.SUSPENDED) {
                 this.client.close();
-                MessageBox.warn(this.value().getName() + I18nResourceBundle.i18nString("base.connectSuspended"));
+                MessageBox.warn(this.value().getName() + I18nHelper.connectSuspended());
             }
         });
         super.setValue(new ZKConnectTreeItemValue(this));
@@ -390,7 +391,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         @Override
         public SVGGlyph graphic() {
             if (this.graphic == null) {
-                this.graphic = new SVGGlyph("/font/Zookeeper1.svg", 12);
+                this.graphic = new ZookeeperSVGGlyph(12);
             }
             return super.graphic();
         }

@@ -30,18 +30,6 @@ public class ConnectController extends SubStageController {
     @FXML
     private SortSVGPane sortPane;
 
-    // /**
-    //  * 节点排序(正序)
-    //  */
-    // @FXML
-    // private SVGGlyph sortAsc;
-    //
-    // /**
-    //  * 节点排序(倒序)
-    //  */
-    // @FXML
-    // private SVGGlyph sortDesc;
-
     /**
      * 打开终端
      */
@@ -49,26 +37,6 @@ public class ConnectController extends SubStageController {
     private void openTerminal() {
         ZKEventUtil.terminalOpen();
     }
-
-    // /**
-    //  * 对子节点排序，正序
-    //  */
-    // @FXML
-    // private void sortAsc() {
-    //     this.sortAsc.disappear();
-    //     this.sortDesc.display();
-    //     this.tree.sortAsc();
-    // }
-    //
-    // /**
-    //  * 对子节点排序，倒序
-    //  */
-    // @FXML
-    // private void sortDesc() {
-    //     this.sortDesc.disappear();
-    //     this.sortAsc.display();
-    //     this.tree.sortDesc();
-    // }
 
     /**
      * 定位节点
@@ -90,8 +58,6 @@ public class ConnectController extends SubStageController {
     @Override
     protected void bindListeners() {
         super.bindListeners();
-        // this.sortAsc.managedBindVisible();
-        // this.sortDesc.managedBindVisible();
         // zk树变化事件
         this.tree.selectItemChanged(ZKEventUtil::treeItemChanged);
         // 文件拖拽初始化

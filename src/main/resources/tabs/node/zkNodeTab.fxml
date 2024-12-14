@@ -116,7 +116,7 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </RichDataTypeComboBox>
-                    <SaveSVGGlyph fx:id="saveNodeData" size="16" tipText="%base.saveTip1"
+                    <SaveSVGGlyph size="16" tipText="%base.saveTip1"
                                   onMousePrimaryClicked="#saveNodeData">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
@@ -144,7 +144,7 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </ClearSVGGlyph>
-                    <QRCodeSVGGlyph fx:id="node2QRCode" size="16"
+                    <QRCodeSVGGlyph size="16"
                                     onMousePrimaryClicked="#node2QRCode">
                         <HBox.margin>
                             <Insets left="5" top="7"/>

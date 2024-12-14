@@ -60,23 +60,6 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     @Accessors(fluent = true, chain = true)
     protected ZKNode value;
 
-    // /**
-    //  * bit值设置，减少内存占用
-    //  */
-    // private BitSet bitValue;
-    //
-    // /**
-    //  * bit值设置
-    //  *
-    //  * @return BitSet
-    //  */
-    // private BitSet bitValue() {
-    //     if (this.bitValue == null) {
-    //         this.bitValue = new BitSet(0b00000000);
-    //     }
-    //     return bitValue;
-    // }
-
     /**
      * 设置节点变更
      */
@@ -1097,19 +1080,6 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             super.destroy();
         }
     }
-
-    // public boolean cacheable(String fullPath) {
-    //     if (StringUtil.equals(this.nodePath(), fullPath)) {
-    //         return true;
-    //     }
-    //     for (ZKNodeTreeItem subItem : this.itemChildren()) {
-    //         if (subItem.cacheable(fullPath)) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
     /**
      * zk树节点值
      *

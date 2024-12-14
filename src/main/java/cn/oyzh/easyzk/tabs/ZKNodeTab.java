@@ -220,18 +220,6 @@ public class ZKNodeTab extends DynamicTab {
         @Getter
         private ZKNodeTreeView treeView;
 
-        // /**
-        //  * 节点排序(正序)
-        //  */
-        // @FXML
-        // private SVGGlyph sortAsc;
-        //
-        // /**
-        //  * 节点排序(倒序)
-        //  */
-        // @FXML
-        // private SVGGlyph sortDesc;
-
         /**
          * 搜索类型
          */
@@ -303,59 +291,11 @@ public class ZKNodeTab extends DynamicTab {
         @FXML
         private ZKACLTableView aclTableView;
 
-        // /**
-        //  * acl编码
-        //  */
-        // @FXML
-        // private FlexTableColumn<String, String> aclId;
-        //
-        // /**
-        //  * acl权限
-        //  */
-        // @FXML
-        // private FlexTableColumn<String, String> aclPerms;
-        //
-        // /**
-        //  * acl协议
-        //  */
-        // @FXML
-        // private FlexTableColumn<String, String> aclSchema;
-        //
-        // /**
-        //  * acl状态
-        //  */
-        // @FXML
-        // private FlexTableColumn<String, String> aclStatus;
-
-        // /**
-        //  * 收藏节点
-        //  */
-        // @FXML
-        // private SVGGlyph collect;
-        //
-        // /**
-        //  * 取消收藏节点
-        //  */
-        // @FXML
-        // private SVGGlyph unCollect;
-
         /**
          * 加载耗时
          */
         @FXML
         private FXText loadTime;
-
-        /**
-         * 右侧zk数据二维码视图
-         */
-        @FXML
-        private SVGGlyph node2QRCode;
-
-        /**
-         * zk数据保存按钮
-         */
-        @FXML
-        private SVGGlyph saveNodeData;
 
         /**
          * zk数据撤销
@@ -678,10 +618,6 @@ public class ZKNodeTab extends DynamicTab {
          * @param pageNo 页码
          */
         private void renderACLView(long pageNo) {
-            // // 获取子节点
-            // List<Node> nodes = this.aclBox.getChildren();
-            // // 隐藏子节点
-            // nodes.forEach(n -> n.setVisible(false));
             // 获取zk权限分页数据
             List<ZKACL> aclList = this.aclPaging.page(pageNo);
             // 设置分页信息
@@ -696,86 +632,7 @@ public class ZKNodeTab extends DynamicTab {
                 list.add(control);
             }
             this.aclTableView.setItem(list);
-
-            // // 处理zk权限分页数据
-            // for (int i = 0; i < aclList.size(); i++) {
-            //     ZKACL acl = aclList.get(i);
-            //     ZKACLVBox vBox = (ZKACLVBox) nodes.get(i);
-            //     // 获取控件，设置acl信息，并显示
-            //     vBox.acl(acl);
-            //     vBox.setVisible(true);
-            //     // 查找组件
-            //     HBox idBox = (HBox) vBox.lookup(".acl-id");
-            //     HBox permsBox = (HBox) vBox.lookup(".acl-perms");
-            //     HBox schemeBox = (HBox) vBox.lookup(".acl-scheme");
-            //     Text statusText = (Text) vBox.lookup(".acl-status");
-            //     // 执行渲染
-            //     BackgroundService.submitFX(() -> {
-            //         this.handleACLState(acl, statusText);
-            //         this.handleACLInfo(acl.idFriend(), idBox);
-            //         this.handleACLInfo(acl.permsFriend(), permsBox);
-            //         this.handleACLInfo(acl.schemeFriend(), schemeBox);
-            //     });
-            // }
-            // // 获取子节点
-            // List<Node> nodes = this.aclBox.getChildren();
-            // // 隐藏子节点
-            // nodes.forEach(n -> n.setVisible(false));
-            // // 获取zk权限分页数据
-            // List<ZKACL> aclList = this.aclPaging.page(pageNo);
-            // // 设置分页信息
-            // this.aclPage.setPaging(this.aclPaging);
-            // // 处理zk权限分页数据
-            // for (int i = 0; i < aclList.size(); i++) {
-            //     ZKACL acl = aclList.get(i);
-            //     ZKACLVBox vBox = (ZKACLVBox) nodes.get(i);
-            //     // 获取控件，设置acl信息，并显示
-            //     vBox.acl(acl);
-            //     vBox.setVisible(true);
-            //     // 查找组件
-            //     HBox idBox = (HBox) vBox.lookup(".acl-id");
-            //     HBox permsBox = (HBox) vBox.lookup(".acl-perms");
-            //     HBox schemeBox = (HBox) vBox.lookup(".acl-scheme");
-            //     Text statusText = (Text) vBox.lookup(".acl-status");
-            //     // 执行渲染
-            //     BackgroundService.submitFX(() -> {
-            //         this.handleACLState(acl, statusText);
-            //         this.handleACLInfo(acl.idFriend(), idBox);
-            //         this.handleACLInfo(acl.permsFriend(), permsBox);
-            //         this.handleACLInfo(acl.schemeFriend(), schemeBox);
-            //     });
-            // }
         }
-
-        // /**
-        //  * 处理权限状态
-        //  *
-        //  * @param acl  权限
-        //  * @param text 组件
-        //  */
-        // private void handleACLState(ZKACL acl, Text text) {
-        //     Set<String> digests = ZKAuthUtil.getAuthedDigest(this.treeItem.client());
-        //     if (CollectionUtil.isNotEmpty(digests) && digests.contains(acl.idVal())) {
-        //         text.setText("(" + I18nHelper.authed() + ")");
-        //     } else {
-        //         text.setText("");
-        //     }
-        // }
-        //
-        // /**
-        //  * 处理权限属性
-        //  *
-        //  * @param info 属性
-        //  * @param box  组件
-        //  */
-        // private void handleACLInfo(FriendlyInfo<ACL> info, HBox box) {
-        //     // 获取标题和文本框
-        //     Label label = (Label) box.getChildren().get(0);
-        //     Label data = (Label) box.getChildren().get(1);
-        //     // 设置属性值及属性值
-        //     label.setText(info.getName(this.aclViewSwitch.isSelected()));
-        //     data.setText(info.getValue(this.aclViewSwitch.isSelected()).toString());
-        // }
 
         /**
          * 复制zk状态
@@ -844,26 +701,6 @@ public class ZKNodeTab extends DynamicTab {
                 MessageBox.exception(ex);
             }
         }
-
-        // /**
-        //  * 收藏节点
-        //  */
-        // @FXML
-        // private void collect() {
-        //     this.activeItem.collect();
-        //     this.collect.disappear();
-        //     this.unCollect.display();
-        // }
-        //
-        // /**
-        //  * 取消收藏节点
-        //  */
-        // @FXML
-        // private void unCollect() {
-        //     this.activeItem.unCollect();
-        //     this.collect.display();
-        //     this.unCollect.disappear();
-        // }
 
         /**
          * 保存节点数据
@@ -1082,9 +919,6 @@ public class ZKNodeTab extends DynamicTab {
             super.bindListeners();
             // 监听选中变化
             this.treeView.selectItemChanged(this::initItem);
-            // // 收藏处理
-            // this.collect.managedProperty().bind(this.collect.visibleProperty());
-            // this.unCollect.managedProperty().bind(this.unCollect.visibleProperty());
             // 搜索处理
             this.searchType.selectedIndexChanged((observable, oldValue, newValue) -> this.doSearch());
             // undo监听
@@ -1130,22 +964,6 @@ public class ZKNodeTab extends DynamicTab {
             resizeHelper.widthLimit(240f, 750f);
             resizeHelper.initResizeEvent();
         }
-
-        // @Override
-        // public void initialize(URL url, ResourceBundle resourceBundle) {
-        //     super.initialize(url, resourceBundle);
-        //     // acl处理
-        //     this.aclId.setCellValueFactory(new PropertyValueFactory<>("idControl"));
-        //     this.aclPerms.setCellValueFactory(new PropertyValueFactory<>("permsControl"));
-        //     this.aclSchema.setCellValueFactory(new PropertyValueFactory<>("schemaControl"));
-        //     this.aclStatus.setCellValueFactory(new PropertyValueFactory<>("statusControl"));
-        //     // 设置cell工厂
-        //     Callback<TableColumn<String, String>, TableCell<String, String>> cellFactory = param -> TableViewUtil.newCell(18, Pos.CENTER_LEFT);
-        //     this.aclId.setCellFactory(cellFactory);
-        //     this.aclPerms.setCellFactory(cellFactory);
-        //     this.aclSchema.setCellFactory(cellFactory);
-        //     this.aclStatus.setCellFactory(cellFactory);
-        // }
 
         /**
          * 左侧组件重新布局
@@ -1220,26 +1038,6 @@ public class ZKNodeTab extends DynamicTab {
             this.treeView.itemFilter().setMatchMode((byte) mode);
             this.treeView.filter();
         }
-
-        // /**
-        //  * 对子节点排序，正序
-        //  */
-        // @FXML
-        // private void sortAsc() {
-        //     this.sortAsc.disappear();
-        //     this.sortDesc.display();
-        //     this.treeView.sortAsc();
-        // }
-        //
-        // /**
-        //  * 对子节点排序，倒序
-        //  */
-        // @FXML
-        // private void sortDesc() {
-        //     this.sortDesc.disappear();
-        //     this.sortAsc.display();
-        //     this.treeView.sortDesc();
-        // }
 
         /**
          * 定位节点

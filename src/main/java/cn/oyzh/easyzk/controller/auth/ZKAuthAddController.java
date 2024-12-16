@@ -22,7 +22,7 @@ import javafx.stage.WindowEvent;
  * @since 2022/12/22
  */
 @StageAttribute(
-        iconUrls = ZKConst.ICON_PATH,
+        iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "auth/zkAuthAdd.fxml"
 )

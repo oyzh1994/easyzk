@@ -43,7 +43,7 @@
 //  * @since 2023/04/07
 //  */
 // @StageAttribute(
-//         iconUrls = ZKConst.ICON_PATH,
+//         iconUrl = ZKConst.ICON_PATH,
 //         modality = Modality.APPLICATION_MODAL,
 //         value = ZKConst.FXML_BASE_PATH + "info/zkInfoTransport.fxml"
 // )

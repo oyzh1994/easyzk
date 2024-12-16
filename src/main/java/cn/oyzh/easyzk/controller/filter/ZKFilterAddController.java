@@ -24,8 +24,8 @@ import javafx.stage.WindowEvent;
  * @since 2022/12/20
  */
 @StageAttribute(
-        resizeable = false,
-        iconUrls = ZKConst.ICON_PATH,
+        resizable = false,
+        iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "filter/zkFilterAdd.fxml"
 )

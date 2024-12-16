@@ -39,7 +39,7 @@ import javafx.stage.WindowEvent;
  * @since 2024/09/05
  */
 @StageAttribute(
-        iconUrls = ZKConst.ICON_PATH,
+        iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.VIEW_PATH + "data/zkDataTransport.fxml"
 )

@@ -28,7 +28,7 @@ import java.util.List;
  */
 @StageAttribute(
         usePrimary = true,
-        iconUrls = ZKConst.ICON_PATH,
+        iconUrl = ZKConst.ICON_PATH,
         value = ZKConst.FXML_BASE_PATH + "main.fxml"
 )
 public class MainController extends ParentStageController {

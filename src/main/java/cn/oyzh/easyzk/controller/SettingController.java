@@ -39,7 +39,7 @@ import java.util.Objects;
  * @since 2022/08/26
  */
 @StageAttribute(
-        iconUrls = ZKConst.ICON_PATH,
+        iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "setting.fxml"
 )

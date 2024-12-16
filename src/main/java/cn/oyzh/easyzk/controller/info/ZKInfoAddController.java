@@ -33,7 +33,7 @@ import javafx.stage.WindowEvent;
  */
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
-        iconUrls = ZKConst.ICON_PATH,
+        iconUrl = ZKConst.ICON_PATH,
         value = ZKConst.FXML_BASE_PATH + "info/zkInfoAdd.fxml"
 )
 public class ZKInfoAddController extends StageController {

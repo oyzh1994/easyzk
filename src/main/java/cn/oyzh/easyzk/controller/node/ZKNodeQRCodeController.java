@@ -28,8 +28,8 @@ import java.io.File;
  * @since 2022/08/23
  */
 @StageAttribute(
-        resizeable = false,
-        iconUrls = ZKConst.ICON_PATH,
+        resizable = false,
+        iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeQRCode.fxml"
 )

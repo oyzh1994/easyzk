@@ -43,7 +43,7 @@ import java.io.File;
  * @since 2024/11/26
  */
 @StageAttribute(
-        iconUrls = ZKConst.ICON_PATH,
+        iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = ZKConst.FXML_BASE_PATH + "data/zkDataExport.fxml"
 )

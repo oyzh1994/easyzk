@@ -54,7 +54,7 @@
 //  * @since 2020/10/13
 //  */
 // @StageAttribute(
-//         iconUrls = ZKConst.ICON_PATH,
+//         iconUrl = ZKConst.ICON_PATH,
 //         modality = Modality.WINDOW_MODAL,
 //         value = ZKConst.FXML_BASE_PATH + "node/zkNodeExport.fxml"
 // )

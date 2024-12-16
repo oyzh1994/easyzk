@@ -31,7 +31,6 @@ import java.io.File;
         resizeable = false,
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        stageStyle = StageStyle.DECORATED,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeQRCode.fxml"
 )
 public class ZKNodeQRCodeController extends StageController {

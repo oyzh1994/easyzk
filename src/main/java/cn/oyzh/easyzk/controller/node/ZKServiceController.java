@@ -25,7 +25,6 @@ import java.util.List;
 @StageAttribute(
         iconUrls = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        stageStyle = StageStyle.DECORATED,
         value = ZKConst.FXML_BASE_PATH + "node/zkService.fxml"
 )
 public class ZKServiceController extends StageController {

@@ -7,13 +7,13 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
@@ -28,6 +28,8 @@ import java.util.List;
  */
 @StageAttribute(
         usePrimary = true,
+        alwaysOnTopAble = true,
+        fullScreenAble = true,
         iconUrl = ZKConst.ICON_PATH,
         value = ZKConst.FXML_BASE_PATH + "main.fxml"
 )

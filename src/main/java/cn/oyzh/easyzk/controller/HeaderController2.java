@@ -1,10 +1,11 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.SysConst;
-import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.data.ZKDataMigrationController;
+import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -18,8 +19,7 @@ import javafx.fxml.FXML;
  * @author oyzh
  * @since 2022/1/26
  */
-@Deprecated
-public class HeaderController extends SubStageController {
+public class HeaderController2 extends StageController {
 
     /**
      * 认证管理

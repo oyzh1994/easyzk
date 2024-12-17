@@ -9,6 +9,7 @@ import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.titlebar.TitleBar;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
@@ -17,7 +18,7 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,11 +41,11 @@ public class MainController extends ParentStageController {
      */
     private final Project project = Project.load();
 
-    /**
-     * 头部页面
-     */
-    @FXML
-    private HeaderController headerController;
+    // /**
+    //  * 头部页面
+    //  */
+    // @FXML
+    // private HeaderController headerController;
 
     /**
      * zk主页业务
@@ -59,7 +60,8 @@ public class MainController extends ParentStageController {
 
     @Override
     public List<? extends StageController> getSubControllers() {
-        return Arrays.asList(this.zkMainController, this.headerController);
+        return Collections.singletonList(this.zkMainController);
+        // return Arrays.asList(this.zkMainController, this.headerController);
     }
 
     @Override
@@ -138,6 +140,16 @@ public class MainController extends ParentStageController {
         if (this.setting.isRememberPageLocation() && !this.setting.isPageMaximized() && this.setting.getPageScreenX() != null && this.setting.getPageScreenY() != null) {
             this.stage.setLocation(this.setting.getPageScreenX(), this.setting.getPageScreenY());
             JulLog.debug("view x:{} y:{}", this.setting.getPageScreenX(), this.setting.getPageScreenY());
+        }
+    }
+
+    @Override
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        TitleBar titleBar = this.stage.getTitleBar();
+        // 加载标题
+        if (titleBar != null && !titleBar.isHasContent()) {
+            titleBar.loadContent("/views/header2.fxml");
         }
     }
 

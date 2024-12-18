@@ -1,5 +1,5 @@
 {
-    "packMode": "jpackage",
+    "packMode": "packr",
     "platform": "win_amd64",
     "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}",
     "appIcon": "${projectPath}\\resource\\zoo.ico",

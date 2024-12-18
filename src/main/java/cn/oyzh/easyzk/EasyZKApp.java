@@ -62,6 +62,7 @@ public class EasyZKApp extends FXApplication {
     @Override
     public void init() throws Exception {
         try {
+            JulLog.info("{} init start.", this.appName());
             // 储存初始化
             ZKStoreUtil.init();
             // 禁用fx的css日志

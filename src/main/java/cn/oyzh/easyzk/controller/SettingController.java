@@ -6,11 +6,12 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.easyzk.util.ZKProcessUtil;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.text.FlexSlider;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
+import cn.oyzh.fx.plus.controls.text.FlexSlider;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
@@ -292,7 +293,9 @@ public class SettingController extends StageController {
             if (!this.setting.isAutoAuth()) {
                 ZKAuthUtil.clearAuthed();
             }
-            MessageBox.okToast(I18nHelper.operationSuccess() + tips);
+            // 执行提示
+            MessageBox.okToast(I18nHelper.operationSuccess());
+            // 关闭窗口
             this.closeWindow();
             // 应用区域配置
             I18nManager.apply(this.setting.getLocale());
@@ -302,6 +305,10 @@ public class SettingController extends StageController {
             ThemeManager.apply(this.setting.themeConfig());
             // 应用透明度配置
             OpacityManager.apply((float) this.opacity.getValue());
+            // 提示不为空，说明需要重启，则执行重启
+            if (StringUtil.isNotBlank(tips) && MessageBox.confirm(tips)) {
+                ZKProcessUtil.restartApplication();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

@@ -1,15 +1,15 @@
 package cn.oyzh.easyzk.trees.connect;
 
-import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
-import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.dto.ZKInfoExport;
-import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.common.file.FileNameUtil;
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
+import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.dto.ZKConnectExport;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
+import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
@@ -17,11 +17,11 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
@@ -53,28 +53,8 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     public ZKRootTreeItem(@NonNull ZKConnectTreeView treeView) {
         super(treeView);
         this.setValue(new ZKRootTreeItemValue());
-        // 初始化子节点
-        this.initChildes();
-    }
-
-    /**
-     * 初始化子节点
-     */
-    private void initChildes() {
-        // 初始化分组
-        List<ZKGroup> groups = this.groupStore.load();
-        if (CollectionUtil.isNotEmpty(groups)) {
-            List<TreeItem<?>> list = new ArrayList<>();
-            for (ZKGroup group : groups) {
-                list.add(new ZKGroupTreeItem(group, this.getTreeView()));
-            }
-            this.addChild(list);
-        }
-        // 初始化连接
-        List<ZKConnect> infos = this.infoStore.load();
-        if (CollectionUtil.isNotEmpty(infos)) {
-            this.addConnects(infos);
-        }
+        // 加载子节点
+        this.loadChild();
     }
 
     @Override
@@ -97,13 +77,13 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     /**
      * 导出连接
      */
-    private void exportConnect() {
+    public void exportConnect() {
         List<ZKConnect> infos = this.infoStore.load();
         if (infos.isEmpty()) {
             MessageBox.warn(I18nHelper.connectionIsEmpty());
             return;
         }
-        ZKInfoExport export = ZKInfoExport.fromConnects(infos);
+        ZKConnectExport export = ZKConnectExport.fromConnects(infos);
         FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
         File file = FileChooserHelper.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.zk", "base.connect", "base._json"), extensionFilter);
         if (file != null) {
@@ -137,7 +117,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     /**
      * 导入连接
      */
-    private void importConnect() {
+    public void importConnect() {
         FileExtensionFilter filter1 = FileChooserHelper.jsonExtensionFilter();
         File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
         // 解析文件
@@ -161,7 +141,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
             MessageBox.warn(I18nHelper.notSupportFolder());
             return;
         }
-        if (!FileNameUtil.isType(file.getName(), "json")) {
+        if (!FileNameUtil.isJsonType(FileNameUtil.extName(file.getName()))) {
             MessageBox.warn(I18nHelper.invalidFormat());
             return;
         }
@@ -171,21 +151,22 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
         }
         try {
             String text = FileUtil.readUtf8String(file);
-            ZKInfoExport export = ZKInfoExport.fromJSON(text);
-            List<ZKConnect> infos = export.getConnects();
-            if (CollectionUtil.isNotEmpty(infos)) {
-                for (ZKConnect info : infos) {
-                    if (this.infoStore.replace(info)) {
-                        this.addConnect(info);
-                    } else {
-                        MessageBox.warn(I18nHelper.connect() + " [" + info.getName() + "] " + I18nHelper.importFail());
+            ZKConnectExport export = ZKConnectExport.fromJSON(text);
+            List<ZKConnect> connects = export.getConnects();
+            if (CollectionUtil.isNotEmpty(connects)) {
+                for (ZKConnect connect : connects) {
+                    if (!this.infoStore.replace(connect)) {
+                        MessageBox.warn(I18nHelper.connect() + " : " + connect.getName() + " " + I18nHelper.importFail());
                     }
                 }
-                MessageBox.okToast(I18nHelper.operationSuccess());
+                // 重新加载节点
+                this.loadChild();
+                // 提示成功
+                MessageBox.okToast(I18nHelper.importConnectionSuccess());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.operationException());
+            MessageBox.exception(ex, I18nHelper.importConnectionFail());
         }
     }
 
@@ -374,6 +355,42 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
         if (item instanceof ZKConnectTreeItem connectTreeItem) {
             connectTreeItem.remove();
             this.addConnectItem(connectTreeItem);
+        }
+    }
+
+    @Override
+    public void loadChild() {
+        // 初始化分组
+        List<ZKGroup> groups = this.groupStore.load();
+        if (CollectionUtil.isNotEmpty(groups)) {
+            List<ZKGroupTreeItem> groupItems = this.getGroupItems();
+            List<TreeItem<?>> list = new ArrayList<>();
+            f1:
+            for (ZKGroup group : groups) {
+                for (ZKGroupTreeItem groupItem : groupItems) {
+                    if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
+                        continue f1;
+                    }
+                }
+                list.add(new ZKGroupTreeItem(group, this.getTreeView()));
+            }
+            this.addChild(list);
+        }
+        // 初始化连接
+        List<ZKConnect> connects = this.infoStore.load();
+        if (CollectionUtil.isNotEmpty(connects)) {
+            List<ZKConnectTreeItem> connectItems = this.getConnectItems();
+            List<ZKConnect> list = new ArrayList<>();
+            f1:
+            for (ZKConnect connect : connects) {
+                for (ZKConnectTreeItem connectItem : connectItems) {
+                    if (StringUtil.equals(connectItem.getId(), connect.getId())) {
+                        continue f1;
+                    }
+                }
+                list.add(connect);
+            }
+            this.addConnects(list);
         }
     }
 

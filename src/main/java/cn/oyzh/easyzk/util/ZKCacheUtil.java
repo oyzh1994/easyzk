@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.util;
 
-import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.easyzk.ZKConst;
 import lombok.experimental.UtilityClass;
 

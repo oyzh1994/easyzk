@@ -81,4 +81,14 @@ public class ConnectController extends SubStageController {
             this.sortPane.asc();
         }
     }
+
+    @FXML
+    private void importConnect() {
+        this.tree.getRoot().importConnect();
+    }
+
+    @FXML
+    private void exportConnect() {
+        this.tree.getRoot().exportConnect();
+    }
 }

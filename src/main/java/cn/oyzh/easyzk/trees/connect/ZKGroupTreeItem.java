@@ -218,6 +218,10 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
         }
     }
 
+    public String getGid() {
+        return this.value.getGid();
+    }
+
     /**
      * zk树group值
      *

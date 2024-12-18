@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.controller.data;
 
+import cn.oyzh.common.file.FileNameUtil;
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.FileNameUtil;
-import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;

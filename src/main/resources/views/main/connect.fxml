@@ -2,6 +2,8 @@
 <?import cn.oyzh.easyzk.trees.connect.ZKConnectTreeView?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ConnectionSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.ExportSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.pane.SortSVGPane?>
@@ -27,20 +29,19 @@
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </TerminalSVGGlyph>
+            <ImportSVGGlyph size="15" onMousePrimaryClicked="#importConnect" tipText="%base.importConnect">
+                <HBox.margin>
+                    <Insets left="5" top="10"/>
+                </HBox.margin>
+            </ImportSVGGlyph>
+            <ExportSVGGlyph size="15" onMousePrimaryClicked="#exportConnect" tipText="%base.exportConnect">
+                <HBox.margin>
+                    <Insets left="5" top="10"/>
+                </HBox.margin>
+            </ExportSVGGlyph>
         </FlexHBox>
         <ZKConnectTreeView fx:id="tree" flexHeight="100% - 60" flexWidth="100%"/>
         <FlexHBox realHeight="30" flexWidth="100%">
-            <!-- <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc"> -->
-            <!--     <HBox.margin> -->
-            <!--         <Insets left="5" top="10"/> -->
-            <!--     </HBox.margin> -->
-            <!-- </SortAscSVGGlyph> -->
-            <!-- <SortDescSVGGlyph fx:id="sortDesc" size="15" managedBindVisible="true" visible="false" -->
-            <!--                   onMousePrimaryClicked="#sortDesc"> -->
-            <!--     <HBox.margin> -->
-            <!--         <Insets left="5" top="10"/> -->
-            <!--     </HBox.margin> -->
-            <!-- </SortDescSVGGlyph> -->
             <SortSVGPane fx:id="sortPane" size="15" onMousePrimaryClicked="#sortTree">
                 <HBox.margin>
                     <Insets left="5" top="10"/>

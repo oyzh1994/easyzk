@@ -247,9 +247,6 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         return this.value.nodePath();
     }
 
-    /**
-     * 加载子节点
-     */
     @Override
     public void loadChild() {
         if (!this.isWaiting() && !this.isLoaded() && !this.isLoading()) {
@@ -273,11 +270,11 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> this.loadChild(false))
                 .onSuccess(this::expend)
-                .onFinish(() -> {
+                .onFinish(() -> this.setLoading(false))
+                .onError(ex -> {
                     this.setLoaded(false);
-                    this.setLoading(false);
+                    MessageBox.exception(ex);
                 })
-                .onError(MessageBox::exception)
                 .build();
         task.run();
     }
@@ -1080,6 +1077,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             super.destroy();
         }
     }
+
     /**
      * zk树节点值
      *

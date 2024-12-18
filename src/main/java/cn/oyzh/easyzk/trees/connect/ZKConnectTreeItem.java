@@ -166,8 +166,8 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
                         // ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
                         // ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
                         // this.setChild(List.of(dataItem, queryItem, terminalItem));
-                        // this.expend();
                         this.loadChild();
+                        this.expend();
                     }
                 })
                 .onSuccess(this::flushLocal)

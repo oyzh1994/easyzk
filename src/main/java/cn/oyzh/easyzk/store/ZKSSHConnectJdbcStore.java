@@ -25,7 +25,7 @@ public class ZKSSHConnectJdbcStore extends JdbcStore<ZKSSHConnect> {
     public boolean replace(ZKSSHConnect model) {
         String iid = model.getIid();
         if (super.exist(iid)) {
-            super.update(model);
+            return super.update(model);
         }
         return this.insert(model);
     }

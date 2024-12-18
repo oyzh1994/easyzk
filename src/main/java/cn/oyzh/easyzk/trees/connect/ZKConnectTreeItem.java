@@ -7,7 +7,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
-import cn.oyzh.easyzk.controller.info.ZKInfoUpdateController;
+import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKServiceController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
@@ -239,7 +239,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             }
             this.closeConnect();
         }
-        StageAdapter fxView = StageManager.parseStage(ZKInfoUpdateController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(ZKConnectUpdateController.class, this.window());
         fxView.setProp("zkInfo", this.value());
         fxView.display();
     }

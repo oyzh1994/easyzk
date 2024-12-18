@@ -4,7 +4,7 @@ import cn.oyzh.common.file.FileNameUtil;
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
+import cn.oyzh.easyzk.controller.connect.ZKConenctAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.dto.ZKConnectExport;
@@ -174,7 +174,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
      * 添加连接
      */
     private void addConnect() {
-        StageManager.showStage(ZKInfoAddController.class, this.window());
+        StageManager.showStage(ZKConenctAddController.class, this.window());
     }
 
     /**

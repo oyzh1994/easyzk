@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
+import cn.oyzh.easyzk.controller.connect.ZKConenctAddController;
 import cn.oyzh.easyzk.event.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
@@ -128,6 +128,6 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      */
     @EventSubscribe
     private void addConnect(ZKAddConnectEvent event) {
-        StageManager.showStage(ZKInfoAddController.class, this.window());
+        StageManager.showStage(ZKConenctAddController.class, this.window());
     }
 }

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.controller.info;
+package cn.oyzh.easyzk.controller.connect;
 
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKGroup;
@@ -34,9 +34,9 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
         iconUrl = ZKConst.ICON_PATH,
-        value = ZKConst.FXML_BASE_PATH + "info/zkInfoAdd.fxml"
+        value = ZKConst.FXML_BASE_PATH + "info/zkConnectAdd.fxml"
 )
-public class ZKInfoAddController extends StageController {
+public class ZKConenctAddController extends StageController {
 
     /**
      * 只读模式

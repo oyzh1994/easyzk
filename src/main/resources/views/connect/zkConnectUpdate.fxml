@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoAddController" realWidth="750" realHeight="400">
+          fx:controller="cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController" realWidth="750" realHeight="320">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
@@ -202,7 +202,7 @@
                 <Insets left="30" top="10"/>
             </HBox.margin>
         </TestButton>
-        <SubmitButton onAction="#add">
+        <SubmitButton onAction="#update">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>

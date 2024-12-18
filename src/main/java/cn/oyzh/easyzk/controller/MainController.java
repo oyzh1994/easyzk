@@ -94,11 +94,11 @@ public class MainController extends ParentStageController {
         }
     }
 
-    @Override
-    public void onWindowShowing(WindowEvent event) {
-        super.onWindowShowing(event);
-        this.stage.setTitleExt(this.project.getName() + "-v" + this.project.getVersion());
-    }
+    // @Override
+    // public void onWindowShowing(WindowEvent event) {
+    //     super.onWindowShowing(event);
+    //     this.stage.title(this.project.getName() + "-v" + this.project.getVersion());
+    // }
 
     @Override
     public void onSystemExit() {

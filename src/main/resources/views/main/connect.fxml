@@ -44,12 +44,12 @@
         <FlexHBox realHeight="30" flexWidth="100%">
             <SortSVGPane fx:id="sortPane" size="15" onMousePrimaryClicked="#sortTree">
                 <HBox.margin>
-                    <Insets left="5" top="10"/>
+                    <Insets left="5" top="5"/>
                 </HBox.margin>
             </SortSVGPane>
             <PositioningSVGGlyph size="17" onMousePrimaryClicked="#positionNode">
                 <HBox.margin>
-                    <Insets left="5" top="10"/>
+                    <Insets left="5" top="5"/>
                 </HBox.margin>
             </PositioningSVGGlyph>
         </FlexHBox>

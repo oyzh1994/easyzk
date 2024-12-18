@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.common.file.FileNameUtil;
-import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.file.FileUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
@@ -89,9 +89,9 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
         if (file != null) {
             try {
                 FileUtil.writeUtf8String(export.toJSONString(), file);
-                MessageBox.okToast(I18nHelper.operationSuccess());
+                MessageBox.okToast(I18nHelper.exportConnectionSuccess());
             } catch (Exception ex) {
-                MessageBox.warn(I18nHelper.operationFail());
+                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
             }
         }
     }

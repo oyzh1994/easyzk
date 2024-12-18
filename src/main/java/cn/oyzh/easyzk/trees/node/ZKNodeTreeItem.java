@@ -112,6 +112,15 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     }
 
     /**
+     * 清除子节点变化
+     */
+    public void clearBeChildChanged() {
+        if (this.bitValue != null) {
+            this.bitValue.set(10, false);
+        }
+    }
+
+    /**
      * 设置忽略变化
      */
     public void doIgnoreChanged() {
@@ -270,7 +279,10 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> this.loadChild(false))
                 .onSuccess(this::expend)
-                .onFinish(() -> this.setLoading(false))
+                .onFinish(() -> {
+                    this.setLoading(false);
+                    this.refresh();
+                })
                 .onError(ex -> {
                     this.setLoaded(false);
                     MessageBox.exception(ex);
@@ -680,8 +692,8 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             try {
                 this.refreshNode();
                 this.loadChildAsync();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
             }
         }
     }
@@ -1143,20 +1155,20 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
 
         @Override
         public Color graphicColor() {
+            Color color;
             // 节点已删除
             if (this.item().isBeDeleted()) {
-                return Color.RED;
+                color = Color.RED;
+            } else if (this.item().isDataUnsaved()) { // 节点数据未保存
+                color = Color.ORANGE;
+            } else if (this.item().isBeChanged()) { // 节点已更新
+                color = Color.PURPLE;
+            } else if (this.item().isBeChildChanged()) {// 子节点已更新
+                color = Color.BROWN;
+            } else {
+                color = super.graphicColor();
             }
-            if (this.item().isDataUnsaved()) { // 节点数据未保存
-                return Color.ORANGE;
-            }
-            if (this.item().isBeChanged()) { // 节点已更新
-                return Color.PURPLE;
-            }
-            if (this.item().isBeChildChanged()) { // 子节点已更新
-                return Color.BROWN;
-            }
-            return super.graphicColor();
+            return color;
         }
 
         @Override

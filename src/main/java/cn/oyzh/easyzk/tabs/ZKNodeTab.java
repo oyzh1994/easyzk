@@ -428,6 +428,9 @@ public class ZKNodeTab extends DynamicTab {
             }
         }
 
+        /**
+         * 检查节点状态
+         */
         private void checkStatus() {
             if (this.activeItem == null) {
                 return;
@@ -453,6 +456,7 @@ public class ZKNodeTab extends DynamicTab {
                 if (!this.activeItem.isIgnoreChildChanged()) {
                     if (MessageBox.confirm(ZKI18nHelper.nodeTip5())) {
                         this.activeItem.reloadChild();
+                        this.activeItem.clearBeChildChanged();
                     } else {
                         this.activeItem.doIgnoreChildChanged();
                     }

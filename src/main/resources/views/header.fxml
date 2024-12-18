@@ -1,80 +1,80 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.label.AboutSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.ToolsSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.svg.label.MigrationSVGLabel?>
-<FlexHBox xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <SVGLabel text="%base.auth" onMousePrimaryClicked="#auth" url="/font/audit.svg"
-              size="12">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </SVGLabel>
-    <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </FilterSVGLabel>
-    <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </TransportSVGLabel>
-    <ToolsSVGLabel onMousePrimaryClicked="#tool" size="13">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </ToolsSVGLabel>
-    <SettingSVGLabel onMousePrimaryClicked="#setting" size="13">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </SettingSVGLabel>
-    <MigrationSVGLabel onMousePrimaryClicked="#migration" size="12">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </MigrationSVGLabel>
-    <AboutSVGLabel onMousePrimaryClicked="#about" size="14">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </AboutSVGLabel>
-    <!--    <CollapseSVGLabel fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" size="12">-->
-    <!--        <HBox.margin>-->
-    <!--            <Insets left="10" top="5" bottom="5"/>-->
-    <!--        </HBox.margin>-->
-    <!--    </CollapseSVGLabel>-->
-    <!--    <ExpandSVGLabel visible="false" managed="false" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">-->
-    <!--        <HBox.margin>-->
-    <!--            <Insets left="10" top="5" bottom="5"/>-->
-    <!--        </HBox.margin>-->
-    <!--    </ExpandSVGLabel>-->
-    <QuitSVGLabel onMousePrimaryClicked="#quit" size="12">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </QuitSVGLabel>
-    <!--    &lt;!&ndash; 占位符，将右边的组件推到右边 &ndash;&gt;-->
-    <!--    <Region HBox.hgrow="ALWAYS"/>-->
-    <Layout1SVGGlyph sizeStr="16" onMousePrimaryClicked="#layout1" size="12">
-        <HBox.margin>
-            <Insets top="7" left="35"/>
-        </HBox.margin>
-    </Layout1SVGGlyph>
-    <Layout2SVGGlyph sizeStr="16" onMousePrimaryClicked="#layout2" size="12">
-        <HBox.margin>
-            <Insets top="7" left="10"/>
-        </HBox.margin>
-    </Layout2SVGGlyph>
-</FlexHBox>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.label.AboutSVGLabel?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.label.ToolsSVGLabel?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?> -->
+<!-- <?import javafx.geometry.Insets?> -->
+<!-- <?import javafx.scene.layout.HBox?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.label.MigrationSVGLabel?> -->
+<!-- <FlexHBox xmlns:fx="http://javafx.com/fxml/1" -->
+<!--           fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30"> -->
+<!--     <SVGLabel text="%base.auth" onMousePrimaryClicked="#auth" url="/font/audit.svg" -->
+<!--               size="12"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets left="10" top="5" bottom="5"/> -->
+<!--         </HBox.margin> -->
+<!--     </SVGLabel> -->
+<!--     <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets left="10" top="5" bottom="5"/> -->
+<!--         </HBox.margin> -->
+<!--     </FilterSVGLabel> -->
+<!--     <TransportSVGLabel onMousePrimaryClicked="#transport" size="12"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets left="10" top="5" bottom="5"/> -->
+<!--         </HBox.margin> -->
+<!--     </TransportSVGLabel> -->
+<!--     <ToolsSVGLabel onMousePrimaryClicked="#tool" size="13"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets left="10" top="5" bottom="5"/> -->
+<!--         </HBox.margin> -->
+<!--     </ToolsSVGLabel> -->
+<!--     <SettingSVGLabel onMousePrimaryClicked="#setting" size="13"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets left="10" top="5" bottom="5"/> -->
+<!--         </HBox.margin> -->
+<!--     </SettingSVGLabel> -->
+<!--     <MigrationSVGLabel onMousePrimaryClicked="#migration" size="12"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets left="10" top="5" bottom="5"/> -->
+<!--         </HBox.margin> -->
+<!--     </MigrationSVGLabel> -->
+<!--     <AboutSVGLabel onMousePrimaryClicked="#about" size="14"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets left="10" top="5" bottom="5"/> -->
+<!--         </HBox.margin> -->
+<!--     </AboutSVGLabel> -->
+<!--     &lt;!&ndash;    <CollapseSVGLabel fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" size="12">&ndash;&gt; -->
+<!--     &lt;!&ndash;        <HBox.margin>&ndash;&gt; -->
+<!--     &lt;!&ndash;            <Insets left="10" top="5" bottom="5"/>&ndash;&gt; -->
+<!--     &lt;!&ndash;        </HBox.margin>&ndash;&gt; -->
+<!--     &lt;!&ndash;    </CollapseSVGLabel>&ndash;&gt; -->
+<!--     &lt;!&ndash;    <ExpandSVGLabel visible="false" managed="false" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">&ndash;&gt; -->
+<!--     &lt;!&ndash;        <HBox.margin>&ndash;&gt; -->
+<!--     &lt;!&ndash;            <Insets left="10" top="5" bottom="5"/>&ndash;&gt; -->
+<!--     &lt;!&ndash;        </HBox.margin>&ndash;&gt; -->
+<!--     &lt;!&ndash;    </ExpandSVGLabel>&ndash;&gt; -->
+<!--     <QuitSVGLabel onMousePrimaryClicked="#quit" size="12"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets left="10" top="5" bottom="5"/> -->
+<!--         </HBox.margin> -->
+<!--     </QuitSVGLabel> -->
+<!--     &lt;!&ndash;    &lt;!&ndash; 占位符，将右边的组件推到右边 &ndash;&gt;&ndash;&gt; -->
+<!--     &lt;!&ndash;    <Region HBox.hgrow="ALWAYS"/>&ndash;&gt; -->
+<!--     <Layout1SVGGlyph sizeStr="16" onMousePrimaryClicked="#layout1" size="12"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets top="7" left="35"/> -->
+<!--         </HBox.margin> -->
+<!--     </Layout1SVGGlyph> -->
+<!--     <Layout2SVGGlyph sizeStr="16" onMousePrimaryClicked="#layout2" size="12"> -->
+<!--         <HBox.margin> -->
+<!--             <Insets top="7" left="10"/> -->
+<!--         </HBox.margin> -->
+<!--     </Layout2SVGGlyph> -->
+<!-- </FlexHBox> -->

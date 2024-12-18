@@ -45,9 +45,9 @@
             <Insets left="10" top="8"/>
         </HBox.margin>
     </MigrationSVGLabel>
-    <AboutSVGLabel onMousePrimaryClicked="#about" size="14">
+    <AboutSVGLabel onMousePrimaryClicked="#about" size="13">
         <HBox.margin>
-            <Insets left="10" top="7"/>
+            <Insets left="10" top="8"/>
         </HBox.margin>
     </AboutSVGLabel>
     <QuitSVGLabel onMousePrimaryClicked="#quit" size="12">

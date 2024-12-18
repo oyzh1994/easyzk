@@ -84,7 +84,7 @@ public class ZKHomeTab extends DynamicTab {
             if (System.getProperty("java.vm.version") != null) {
                 jdkInfo += System.getProperty("java.vm.version");
             }
-            this.jdkInfo.setText(I18nHelper.env() + ": " + jdkInfo);
+            this.jdkInfo.setText(I18nHelper.env() + " : " + jdkInfo);
         }
 
         /**

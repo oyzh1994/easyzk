@@ -4,10 +4,10 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
-import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKServiceController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
@@ -162,11 +162,12 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
                         this.canceled = false;
                         this.closeConnect(false);
                     } else {
-                        ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
-                        ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
-                        ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
-                        this.setChild(List.of(dataItem, queryItem, terminalItem));
-                        this.expend();
+                        // ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
+                        // ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
+                        // ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
+                        // this.setChild(List.of(dataItem, queryItem, terminalItem));
+                        // this.expend();
+                        this.loadChild();
                     }
                 })
                 .onSuccess(this::flushLocal)
@@ -174,6 +175,24 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
                 .build();
         // 执行连接
         this.startWaiting(task);
+    }
+
+    @Override
+    public void clearChild() {
+        super.clearChild();
+        this.setLoaded(false);
+    }
+
+    @Override
+    public void loadChild() {
+        if (!this.isLoaded()) {
+            this.setLoaded(true);
+            ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
+            // ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
+            ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
+            this.setChild(List.of(dataItem, terminalItem));
+            // this.setChild(List.of(dataItem, queryItem, terminalItem));
+        }
     }
 
     /**

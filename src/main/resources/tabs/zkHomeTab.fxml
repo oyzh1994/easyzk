@@ -12,6 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <FlexPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.tabs.ZKHomeTab.ZKHomeTabController">
@@ -19,21 +20,21 @@
         <Image url="/image/zoo_no_bg.png"/>
     </ImageView>
     <FlexVBox flexWidth="100% - 300" realHeight="210" layoutX="260" layoutY="100">
-        <FlexLabel text="%zk.home.welcome" fontSize="30">
+        <FXText text="%zk.home.welcome" fontSize="30" enableFont="false">
             <VBox.margin>
                 <Insets top="20"/>
             </VBox.margin>
-        </FlexLabel>
-        <FlexLabel fx:id="softInfo">
+        </FXText>
+        <FXText fx:id="softInfo">
             <VBox.margin>
                 <Insets top="20"/>
             </VBox.margin>
-        </FlexLabel>
-        <FlexLabel fx:id="jdkInfo">
+        </FXText>
+        <FXText fx:id="jdkInfo">
             <VBox.margin>
                 <Insets top="20"/>
             </VBox.margin>
-        </FlexLabel>
+        </FXText>
     </FlexVBox>
     <FlexHBox flexWidth="100% - 300" realHeight="300" layoutX="260" layoutY="260">
         <AddConnectButton onMousePrimaryClicked="#addConnect"/>

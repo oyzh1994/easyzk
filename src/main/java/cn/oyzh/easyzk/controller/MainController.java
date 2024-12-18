@@ -29,8 +29,8 @@ import java.util.List;
  */
 @StageAttribute(
         usePrimary = true,
-        alwaysOnTopAble = true,
         fullScreenAble = true,
+        alwaysOnTopAble = true,
         iconUrl = ZKConst.ICON_PATH,
         value = ZKConst.FXML_BASE_PATH + "main.fxml"
 )

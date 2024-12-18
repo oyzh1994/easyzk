@@ -16,41 +16,36 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/2/20
  */
-//@Slf4j
+@Getter
 public class ZKNodeExport {
 
     /**
      * 脚本前缀，txt格式专用
      */
-    @Getter
     @Setter
     private String prefix;
 
     /**
      * 导出程序版本号
      */
-    @Getter
     @Setter
     private String version;
 
     /**
      * 平台
      */
-    @Getter
     @Setter
     private String platform;
 
     /**
      * 字符集
      */
-    @Getter
     @Setter
     private String charset;
 
     /**
      * 导出节点数据
      */
-    @Getter
     @Setter
     private List<Map<String, String>> nodes;
 
@@ -84,11 +79,6 @@ public class ZKNodeExport {
      * @return 数据字节数组
      */
     public byte[] getDateBytes(String data, @NonNull Charset charset) {
-        // if (StringUtil.isBlank(charset)) {
-        //     charset = StandardCharsets.UTF_8.name();
-        // } else if ("跟随系统".equals(charset)) {
-        //     charset = Charset.defaultCharset().name();
-        // }
         byte[] bytes;
         try {
             if (data == null) {

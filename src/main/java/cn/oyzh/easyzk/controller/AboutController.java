@@ -45,8 +45,7 @@ public class AboutController extends StageController {
     /**
      * 项目信息
      */
-//    @Resource
-    private static final Project project = Project.load();
+    private final Project project = Project.load();
 
     @Override
     public void onStageShown(WindowEvent event) {

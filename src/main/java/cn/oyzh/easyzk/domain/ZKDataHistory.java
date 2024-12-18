@@ -26,14 +26,12 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
     @Column
     private byte[] data;
 
+    /**
+     * 数据大小
+     */
     @Column
     @Setter
     private long dataLength;
-
-    // /**
-    //  * 数据大小
-    //  */
-    // private String dataSize;
 
     /**
      * 保存时间
@@ -80,7 +78,6 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
         this.data = history.data;
         this.path = history.path;
         this.infoId = history.infoId;
-        // this.dataSize = history.dataSize;
         this.saveTime = history.saveTime;
         this.dataLength = history.dataLength;
         return this;
@@ -108,8 +105,4 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
             this.dataLength = 0;
         }
     }
-
-    // public String getSaveTimeExt() {
-    //     return Const.DATE_FORMAT.format(this.saveTime);
-    // }
 }

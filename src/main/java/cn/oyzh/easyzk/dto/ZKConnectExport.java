@@ -17,24 +17,22 @@ import java.util.List;
  * @author oyzh
  * @since 2023/2/22
  */
+@Getter
 public class ZKConnectExport {
 
     /**
      * 导出程序版本号
      */
-    @Getter
     private String version;
 
     /**
      * 平台
      */
-    @Getter
     private String platform;
 
     /**
      * 导出连接数据
      */
-    @Getter
     private List<ZKConnect> connects;
 
     /**

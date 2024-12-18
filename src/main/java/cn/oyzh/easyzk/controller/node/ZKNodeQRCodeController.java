@@ -14,7 +14,6 @@ import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import java.awt.image.BufferedImage;

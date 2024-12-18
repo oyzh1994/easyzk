@@ -10,7 +10,6 @@ import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import java.util.List;

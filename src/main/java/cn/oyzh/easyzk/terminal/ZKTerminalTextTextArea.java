@@ -74,12 +74,12 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
             str += "@" + this.connect().getHost();
         }
         if (this.isConnecting()) {
-            str += "（" + I18nHelper.connectIng() + "）> ";
+            str += "(" + I18nHelper.connectIng() + ")> ";
         } else if (this.isConnected()) {
             if (this.client.isReadonly()) {
-                str += "（" + I18nHelper.connected() + "/" + I18nHelper.readonlyMode() + "）> ";
+                str += "(" + I18nHelper.connected() + "/" + I18nHelper.readonlyMode() + ")> ";
             } else {
-                str += "（" + I18nHelper.connected() + "）> ";
+                str += "(" + I18nHelper.connected() + ")> ";
             }
         } else {
             str += "> ";

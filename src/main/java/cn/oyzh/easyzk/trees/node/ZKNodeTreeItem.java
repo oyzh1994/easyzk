@@ -1066,6 +1066,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         this.setNeedAuth(false);
         this.refreshNode();
         this.loadRoot();
+        this.refresh();
     }
 
     /**

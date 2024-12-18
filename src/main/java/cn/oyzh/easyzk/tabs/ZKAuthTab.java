@@ -48,7 +48,7 @@ public class ZKAuthTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/zkAuthTab.fxml";
+        return "/tabs/auth/zkAuthTab.fxml";
     }
 
     @Override

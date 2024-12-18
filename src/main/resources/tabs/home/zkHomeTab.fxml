@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.gui.button.ChangelogButton?>
 <?import cn.oyzh.fx.gui.button.AddConnectButton?>
 <?import cn.oyzh.fx.gui.button.AddGroupButton?>
+<?import cn.oyzh.fx.gui.button.ChangelogButton?>
 <?import cn.oyzh.fx.gui.button.OpenTerminalButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <FlexPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyzk.tabs.ZKHomeTab.ZKHomeTabController">

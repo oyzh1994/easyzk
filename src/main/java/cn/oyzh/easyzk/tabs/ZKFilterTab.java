@@ -49,7 +49,7 @@ public class ZKFilterTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/zkFilterTab.fxml";
+        return "/tabs/filter/zkFilterTab.fxml";
     }
 
     @Override

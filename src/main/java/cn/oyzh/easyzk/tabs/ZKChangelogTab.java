@@ -39,7 +39,7 @@ public class ZKChangelogTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/zkChangelogTab.fxml";
+        return "/tabs/changelog/zkChangelogTab.fxml";
     }
 
     @Override

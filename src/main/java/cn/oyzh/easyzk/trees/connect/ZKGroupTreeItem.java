@@ -1,24 +1,24 @@
 package cn.oyzh.easyzk.trees.connect;
 
-import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
-import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.controller.info.ZKInfoAddController;
+import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
+import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
+import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -92,24 +92,21 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
         if (groupName == null || Objects.equals(groupName, this.value.getName())) {
             return;
         }
-
         // 检查名称
         if (StringUtil.isBlank(groupName)) {
             return;
         }
-
         // 检查是否存在
-        String name = this.value.getName();
-        if (this.groupStore.exist(name)) {
-            this.value.setName(name);
+        if (this.groupStore.exist(groupName)) {
             MessageBox.warn(I18nHelper.groupAlreadyExists());
             return;
         }
-
         // 修改名称
         this.value.setName(groupName);
         if (!this.groupStore.replace(this.value)) {
             MessageBox.warn(I18nHelper.operationFail());
+        } else {
+            this.refresh();
         }
     }
 

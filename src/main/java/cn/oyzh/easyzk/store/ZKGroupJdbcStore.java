@@ -29,7 +29,7 @@ public class ZKGroupJdbcStore extends JdbcStore<ZKGroup> {
 
     public boolean replace(ZKGroup group) {
         if (group != null) {
-            if (this.exist(group.getName())) {
+            if (this.exist(group.getName()) || super.exist(group.getGid())) {
                 return this.update(group);
             }
             return this.insert(group);

@@ -24,6 +24,7 @@ public class ZKNodeSearchTypeComboBox extends FlexComboBox<String> implements I1
         this.addItem(I18nHelper.allNodes());
         this.addItem(I18nHelper.collectNodes());
         this.addItem(I18nHelper.persistentNodes());
+        this.addItem(I18nHelper.temporaryNodes());
         return this.getItems();
     }
 }

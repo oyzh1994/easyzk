@@ -23,6 +23,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
      * 0. 所有节点
      * 1. 收藏节点
      * 2. 持久节点
+     * 3. 临时节点
      */
     @Setter
     @Getter
@@ -76,6 +77,10 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
             }
             // 仅持久节点
             if (2 == this.type && treeItem.isEphemeral()) {
+                return false;
+            }
+            // 仅临时节点
+            if (3 == this.type && !treeItem.isEphemeral()) {
                 return false;
             }
             String nodePath = treeItem.decodeNodePath();

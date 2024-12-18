@@ -146,11 +146,11 @@ public class ZKConnectAddController extends StageController {
     @FXML
     private FlexHBox sshAuthBox;
 
-    /**
-     * ssh超时组件
-     */
-    @FXML
-    private FlexHBox sshTimeoutBox;
+    // /**
+    //  * ssh超时组件
+    //  */
+    // @FXML
+    // private FlexHBox sshTimeoutBox;
 
     /**
      * 分组
@@ -284,11 +284,11 @@ public class ZKConnectAddController extends StageController {
             if (newValue) {
                 this.sshAuthBox.enable();
                 this.sshHostBox.enable();
-                this.sshTimeoutBox.enable();
+                this.sshTimeout.enable();
             } else {
                 this.sshAuthBox.disable();
                 this.sshHostBox.disable();
-                this.sshTimeoutBox.disable();
+                this.sshTimeout.disable();
             }
         });
     }

@@ -812,7 +812,10 @@ public class ZKNodeTab extends DynamicTab {
             } else {
                 bytes = this.activeItem.nodeData();
             }
+            // 转换编码
             bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
+            // 数据可能为null
+            bytes = bytes == null ? "".getBytes() : bytes;
             // 显示检测后的数据
             RichDataType dataType = this.nodeData.showDetectData(new String(bytes, this.charset.getCharset()));
             // 选中格式

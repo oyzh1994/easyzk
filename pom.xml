@@ -15,18 +15,6 @@
 
     <properties>
         <curator-version>4.3.0</curator-version>
-        <maven.compile.jvmArgs>--add-opens java.base/java.time.zone=ALL-UNNAMED --add-opens
-            java.desktop/sun.awt.windows=ALL-UNNAMED --add-opens java.desktop/sun.java2d.pipe=ALL-UNNAMED --add-opens
-            java.desktop/sun.awt.image=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
-        </maven.compile.jvmArgs>
-        <maven.test.jvmArgs>--add-opens java.base/java.time.zone=ALL-UNNAMED --add-opens
-            java.desktop/sun.awt.windows=ALL-UNNAMED --add-opens java.desktop/sun.java2d.pipe=ALL-UNNAMED --add-opens
-            java.desktop/sun.awt.image=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
-        </maven.test.jvmArgs>
-        <maven.plugin.jvmArgs>--add-opens java.base/java.time.zone=ALL-UNNAMED --add-opens
-            java.desktop/sun.awt.windows=ALL-UNNAMED --add-opens java.desktop/sun.java2d.pipe=ALL-UNNAMED --add-opens
-            java.desktop/sun.awt.image=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
-        </maven.plugin.jvmArgs>
     </properties>
 
     <dependencies>
@@ -85,7 +73,7 @@
         <!--     <scope>provided</scope> -->
         <!-- </dependency> -->
 
-        <!-- Apache POI -->
+        <!-- excel类库 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -205,33 +193,37 @@
             </exclusions>
         </dependency>
 
+        <!-- ssh模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>ssh</artifactId>
         </dependency>
 
+        <!-- 事件模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>event</artifactId>
         </dependency>
 
+        <!-- 存储模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>store</artifactId>
         </dependency>
 
-        <!-- 自定义类库，富文本相关 -->
+        <!-- fx-富文本模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-rich</artifactId>
         </dependency>
 
+        <!-- fx-gui模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-gui</artifactId>
         </dependency>
 
-        <!-- 自定义类库，终端相关 -->
+        <!-- fx-终端模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-terminal</artifactId>
@@ -250,6 +242,7 @@
         <!--     </exclusions> -->
         <!-- </dependency> -->
 
+        <!-- 内存数据库 -->
         <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
         <dependency>
             <groupId>com.h2database</groupId>

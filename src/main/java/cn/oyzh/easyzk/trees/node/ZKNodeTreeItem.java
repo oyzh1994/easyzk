@@ -549,6 +549,12 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             this.unCollect();
             // 移除此节点
             parent.removeChild(this);
+            try {
+                // 刷新父节点状态
+                parent.refreshStat();
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
+            }
             // 选中节点
             if (nextItem != null) {
                 TreeItem<?> finalNextItem = nextItem;
@@ -653,6 +659,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         try {
             JulLog.debug("refreshStat.");
             ZKNodeUtil.refreshStat(this.client(), this.value);
+            this.refresh();
         } catch (KeeperException.NoAuthException ex) {
             this.setNeedAuth(true);
         }

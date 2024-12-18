@@ -436,9 +436,10 @@ public class ZKNodeTab extends DynamicTab {
                 return;
             }
             // 节点被移除
+            String nodePath = this.activeItem.nodePath();
             if (this.activeItem.isBeDeleted()) {
                 if (!this.activeItem.isIgnoreDeleted()) {
-                    if (MessageBox.confirm(ZKI18nHelper.nodeTip2())) {
+                    if (MessageBox.confirm("[" + nodePath + "] " + ZKI18nHelper.nodeTip2())) {
                         this.activeItem.remove();
                     } else {
                         this.activeItem.doIgnoreDeleted();
@@ -446,7 +447,7 @@ public class ZKNodeTab extends DynamicTab {
                 }
             } else if (this.activeItem.isBeChanged()) { // 节点被更新
                 if (!this.activeItem.isIgnoreChanged()) {
-                    if (MessageBox.confirm(ZKI18nHelper.nodeTip1())) {
+                    if (MessageBox.confirm("[" + nodePath + "] " + ZKI18nHelper.nodeTip1())) {
                         this.refreshItem();
                     } else {
                         this.activeItem.doIgnoreChanged();
@@ -454,7 +455,7 @@ public class ZKNodeTab extends DynamicTab {
                 }
             } else if (this.activeItem.isBeChildChanged()) { // 子节点被更新
                 if (!this.activeItem.isIgnoreChildChanged()) {
-                    if (MessageBox.confirm(ZKI18nHelper.nodeTip5())) {
+                    if (MessageBox.confirm("[" + nodePath + "] " + ZKI18nHelper.nodeTip5())) {
                         this.activeItem.reloadChild();
                         this.activeItem.clearBeChildChanged();
                     } else {
@@ -462,7 +463,7 @@ public class ZKNodeTab extends DynamicTab {
                     }
                 }
             } else if (this.activeItem.isNeedAuth()) { // 需要认证
-                if (MessageBox.confirm(ZKI18nHelper.nodeTip6())) {
+                if (MessageBox.confirm("[" + nodePath + "] " + ZKI18nHelper.nodeTip6())) {
                     this.activeItem.authNode();
                 }
             }

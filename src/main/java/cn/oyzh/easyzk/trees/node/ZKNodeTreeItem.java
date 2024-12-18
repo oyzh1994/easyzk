@@ -769,15 +769,17 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                     item.loadChild(true);
                 }
             }
-        } catch (KeeperException.NoAuthException ex) {
-            this.setLoaded(false);
-            this.setNeedAuth(true);
         } catch (Exception ex) {
-            // 非取消、连接关闭情况下，则抛出异常
-            if (!this.isCanceled() && !this.client().isConnected()) {
+            this.setLoaded(false);
+            // 无权限
+            if ((ex instanceof KeeperException.NoAuthException)) {
+                this.setNeedAuth(true);
+            } else if (!this.isCanceled() && !this.client().isConnected()) {  // 非取消、连接关闭情况下，则抛出异常
                 throw new RuntimeException(ex);
             }
-            this.setSorting(false);
+            // this.setSorting(false);
+        } finally {
+            this.doFilter();
         }
     }
 

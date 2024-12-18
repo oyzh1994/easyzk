@@ -88,6 +88,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
             if (ZKNodeUtil.isFiltered(nodePath, this.filters)) {
                 return false;
             }
+            // 关键字
             if (StringUtil.isNotBlank(this.kw)) {
                 if (this.matchMode == 0) {
                     return StringUtil.containsIgnoreCase(nodePath, this.kw);

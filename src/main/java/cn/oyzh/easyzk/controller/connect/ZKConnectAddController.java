@@ -34,9 +34,9 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
         iconUrl = ZKConst.ICON_PATH,
-        value = ZKConst.FXML_BASE_PATH + "info/zkConnectAdd.fxml"
+        value = ZKConst.FXML_BASE_PATH + "connect/zkConnectAdd.fxml"
 )
-public class ZKConenctAddController extends StageController {
+public class ZKConnectAddController extends StageController {
 
     /**
      * 只读模式

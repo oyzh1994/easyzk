@@ -34,7 +34,7 @@ import lombok.NonNull;
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
         iconUrl = ZKConst.ICON_PATH,
-        value = ZKConst.FXML_BASE_PATH + "info/zkConnectUpdate.fxml"
+        value = ZKConst.FXML_BASE_PATH + "connect/zkConnectUpdate.fxml"
 )
 public class ZKConnectUpdateController extends StageController {
 

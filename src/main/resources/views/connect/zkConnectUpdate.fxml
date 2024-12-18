@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController" realWidth="750" realHeight="320">
+          fx:controller="cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController" realWidth="750" realHeight="400">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">

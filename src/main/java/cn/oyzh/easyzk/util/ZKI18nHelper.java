@@ -55,4 +55,8 @@ public class ZKI18nHelper {
     public static String migrationTip6() {
         return I18nResourceBundle.i18nString("zk.migration.tip6");
     }
+
+    public static String migrationTip8() {
+        return I18nResourceBundle.i18nString("zk.migration.tip8");
+    }
 }

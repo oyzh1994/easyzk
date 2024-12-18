@@ -5,6 +5,8 @@ import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.handler.ZKDataMigrationHandler;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
+import cn.oyzh.easyzk.util.ZKI18nHelper;
+import cn.oyzh.easyzk.util.ZKProcessUtil;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -12,10 +14,10 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -181,6 +183,10 @@ public class ZKDataMigrationController extends StageController {
                 ZKStoreUtil.doneMigration();
                 // 更新状态
                 this.updateStatus(I18nHelper.migrationFinished());
+                // 重启应用
+                if (MessageBox.confirm(ZKI18nHelper.migrationTip8())) {
+                    ZKProcessUtil.restartApplication();
+                }
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus(I18nHelper.operationCancel());
@@ -241,14 +247,6 @@ public class ZKDataMigrationController extends StageController {
     public String getViewTitle() {
         return I18nHelper.migrationTitle();
     }
-
-    // @Override
-    // public void onStageInitialize(StageAdapter stage) {
-    //     super.onStageInitialize(stage);
-    //     this.step1.managedBindVisible();
-    //     this.step2.managedBindVisible();
-    //     this.step3.managedBindVisible();
-    // }
 
     @FXML
     private void showStep1() {

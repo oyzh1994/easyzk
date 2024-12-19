@@ -240,7 +240,7 @@
         <FXTab text="%base.filter">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="50" flexWidth="100%">
-                    <ClearableTextField realHeight="26" fx:id="filterSearchKW" realWidth="200"
+                    <ClearableTextField realHeight="26" fx:id="filterSearchKW" realWidth="280"
                                         tipText="%base.searchKWTip">
                         <HBox.margin>
                             <Insets left="30" top="14"/>

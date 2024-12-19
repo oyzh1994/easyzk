@@ -44,8 +44,8 @@ import java.util.List;
  * @since 2020/9/15
  */
 @StageAttribute(
-        modality = Modality.WINDOW_MODAL,
         iconUrl = ZKConst.ICON_PATH,
+        modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "connect/zkConnectUpdate.fxml"
 )
 public class ZKConnectUpdateController extends StageController {
@@ -86,6 +86,12 @@ public class ZKConnectUpdateController extends StageController {
     private ClearableTextField name;
 
     /**
+     * 备注
+     */
+    @FXML
+    private FlexTextArea remark;
+
+    /**
      * 连接ip
      */
     @FXML
@@ -98,13 +104,7 @@ public class ZKConnectUpdateController extends StageController {
     private PortTextField hostPort;
 
     /**
-     * 备注
-     */
-    @FXML
-    private FlexTextArea remark;
-
-    /**
-     * 超时时间
+     * 连接超时时间
      */
     @FXML
     private NumberTextField connectTimeOut;
@@ -274,31 +274,36 @@ public class ZKConnectUpdateController extends StageController {
         if (StringUtil.isBlank(this.name.getTextTrim())) {
             this.name.setText(host.replace(":", "_"));
         }
-        String name = this.name.getTextTrim();
-        this.zkInfo.setName(name);
-        Number connectTimeOut = this.connectTimeOut.getValue();
-        Number sessionTimeOut = this.sessionTimeOut.getValue();
+        try {
+            String name = this.name.getTextTrim();
+            this.zkInfo.setName(name);
+            Number connectTimeOut = this.connectTimeOut.getValue();
+            Number sessionTimeOut = this.sessionTimeOut.getValue();
 
-        this.zkInfo.setHost(host.trim());
-        this.zkInfo.setSshConnect(this.getSSHInfo());
-        this.zkInfo.setListen(this.listen.isSelected());
-        this.zkInfo.setRemark(this.remark.getTextTrim());
-        this.zkInfo.setReadonly(this.readonly.isSelected());
-        this.zkInfo.setSshForward(this.sshForward.isSelected());
-        this.zkInfo.setConnectTimeOut(connectTimeOut.intValue());
-        this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
-        this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
-        // 认证列表
-        this.zkInfo.setAuths(this.authTable.getAuths());
-        // 过滤列表
-        this.zkInfo.setFilters(this.filterTable.getFilters());
-        // 保存数据
-        if (this.connectStore.replace(this.zkInfo)) {
-            ZKEventUtil.infoUpdated(this.zkInfo);
-            MessageBox.okToast(I18nHelper.operationSuccess());
-            this.closeWindow();
-        } else {
-            MessageBox.warn(I18nHelper.operationFail());
+            this.zkInfo.setHost(host.trim());
+            this.zkInfo.setSshConnect(this.getSSHInfo());
+            this.zkInfo.setListen(this.listen.isSelected());
+            this.zkInfo.setRemark(this.remark.getTextTrim());
+            this.zkInfo.setReadonly(this.readonly.isSelected());
+            this.zkInfo.setSshForward(this.sshForward.isSelected());
+            this.zkInfo.setConnectTimeOut(connectTimeOut.intValue());
+            this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
+            this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
+            // 认证列表
+            this.zkInfo.setAuths(this.authTable.getAuths());
+            // 过滤列表
+            this.zkInfo.setFilters(this.filterTable.getFilters());
+            // 保存数据
+            if (this.connectStore.replace(this.zkInfo)) {
+                ZKEventUtil.infoUpdated(this.zkInfo);
+                MessageBox.okToast(I18nHelper.operationSuccess());
+                this.closeWindow();
+            } else {
+                MessageBox.warn(I18nHelper.operationFail());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
     }
 

@@ -3,17 +3,17 @@ package cn.oyzh.easyzk.controller.connect;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
-import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
+import cn.oyzh.easyzk.fx.ZKAuthTableView;
+import cn.oyzh.easyzk.fx.ZKFilterTableView;
+import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
-import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.page.PageBox;
+import cn.oyzh.easyzk.vo.ZKAuthVO;
+import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
@@ -21,20 +21,18 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 添加zk信息业务
@@ -56,6 +54,18 @@ public class ZKConnectAddController extends StageController {
     private FXCheckBox readonly;
 
     /**
+     * 监听节点
+     */
+    @FXML
+    private FXCheckBox listen;
+
+    /**
+     * 兼容模式开关
+     */
+    @FXML
+    private FXCheckBox compatibility;
+
+    /**
      * tab组件
      */
     @FXML
@@ -72,18 +82,6 @@ public class ZKConnectAddController extends StageController {
      */
     @FXML
     private FlexTextArea remark;
-
-    /**
-     * 监听节点
-     */
-    @FXML
-    private FXCheckBox listen;
-
-    /**
-     * 兼容模式开关
-     */
-    @FXML
-    private FXCheckBox compatibility;
 
     /**
      * 连接ip
@@ -168,32 +166,38 @@ public class ZKConnectAddController extends StageController {
     private final ZKConnectJdbcStore connectStore = ZKConnectJdbcStore.INSTANCE;
 
     /**
-     * 分页组件
+     * 认证列表
      */
     @FXML
-    private PageBox<ZKFilter> filterPagePane;
+    private ZKAuthTableView authTable;
 
     /**
-     * 搜索词汇
+     * 认证搜索
+     */
+    @FXML
+    private ClearableTextField authSearchKW;
+
+    /**
+     * 过滤列表
+     */
+    @FXML
+    private ZKFilterTableView filterTable;
+
+    /**
+     * zk认证配置储存
+     */
+    private final ZKAuthJdbcStore authStore = ZKAuthJdbcStore.INSTANCE;
+
+    /**
+     * 过滤搜索
      */
     @FXML
     private ClearableTextField filterSearchKW;
 
     /**
-     * 数据列表
-     */
-    @FXML
-    private FlexTableView<ZKFilterVO> filterTable;
-
-    /**
      * zk过滤配置储存
      */
     private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
-
-    /**
-     * 当前过滤列表
-     */
-    private List<ZKFilter> filters;
 
     /**
      * 获取连接地址
@@ -225,8 +229,8 @@ public class ZKConnectAddController extends StageController {
         ZKSSHConnect sshConnectInfo = new ZKSSHConnect();
         sshConnectInfo.setHost(this.sshHost.getText());
         sshConnectInfo.setUser(this.sshUser.getText());
-        sshConnectInfo.setPassword(this.sshPassword.getText());
         sshConnectInfo.setPort(this.sshPort.getIntValue());
+        sshConnectInfo.setPassword(this.sshPassword.getText());
         sshConnectInfo.setTimeout(this.sshTimeout.getIntValue());
         return sshConnectInfo;
     }
@@ -279,14 +283,15 @@ public class ZKConnectAddController extends StageController {
             zkInfo.setReadonly(this.readonly.isSelected());
             zkInfo.setSshForward(this.sshForward.isSelected());
             zkInfo.setGroupId(this.group == null ? null : this.group.getGid());
-            zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
             zkInfo.setConnectTimeOut(connectTimeOut.intValue());
             zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
+            zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
+            // 认证列表
+            zkInfo.setAuths(this.authTable.getAuths());
             // 过滤列表
-            zkInfo.setFilters((List) this.filterTable.getItems());
+            zkInfo.setFilters(this.filterTable.getFilters());
             // 保存数据
-            boolean result = this.connectStore.replace(zkInfo);
-            if (result) {
+            if (this.connectStore.replace(zkInfo)) {
                 ZKEventUtil.infoAdded(zkInfo);
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();
@@ -325,6 +330,8 @@ public class ZKConnectAddController extends StageController {
                 this.sshTimeout.disable();
             }
         });
+        // 认证监听
+        this.authSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initAuthDataList());
         // 过滤监听
         this.filterSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initFilterDataList());
     }
@@ -333,6 +340,7 @@ public class ZKConnectAddController extends StageController {
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
         this.group = this.getWindowProp("group");
+        this.initAuthDataList();
         this.initFilterDataList();
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
@@ -344,21 +352,26 @@ public class ZKConnectAddController extends StageController {
     }
 
     /**
-     * 初始化数据列表
+     * 初始化过滤
      */
     private void initFilterDataList() {
-        List<ZKFilter> list = new ArrayList<>();
-        if (this.filters == null) {
-            this.filters = new ArrayList<>();
+        if (!this.filterTable.hasData()) {
+            this.filterTable.setFilters(new ArrayList<>());
         } else {
-            String kw = this.filterSearchKW.getText();
-            for (ZKFilter filter : this.filters) {
-                if (StringUtil.containsIgnoreCase(filter.getKw(), kw)) {
-                    list.add(filter);
-                }
-            }
+            this.filterTable.setKw(this.filterSearchKW.getText());
         }
-        this.filterTable.setItem(ZKFilterVO.convert(list));
+    }
+
+    /**
+     * 添加过滤
+     */
+    @FXML
+    private void addFilter() {
+        ZKFilterVO filter = new ZKFilterVO();
+        filter.setEnable(true);
+        filter.setPartMatch(true);
+        this.filterTable.addFilter(filter);
+        this.filterTable.selectLast();
     }
 
     /**
@@ -366,7 +379,7 @@ public class ZKConnectAddController extends StageController {
      */
     @FXML
     private void deleteFilter() {
-        ZKFilter filter = this.filterTable.getSelectedItem();
+        ZKFilterVO filter = this.filterTable.getSelectedItem();
         if (filter == null) {
             return;
         }
@@ -376,11 +389,52 @@ public class ZKConnectAddController extends StageController {
     }
 
     /**
-     * 过滤新增事件
+     * 初始化认证
      */
-    @EventSubscribe
-    private void filterAdded(ZKFilterAddedEvent event) {
-        this.filters.add(event.data());
-        this.initFilterDataList();
+    private void initAuthDataList() {
+        if (!this.authTable.hasData()) {
+            this.authTable.setAuths(new ArrayList<>());
+        } else {
+            this.authTable.setKw(this.authSearchKW.getText());
+        }
+    }
+
+    /**
+     * 添加认证
+     */
+    @FXML
+    private void addAuth() {
+        ZKAuthVO authVO = new ZKAuthVO();
+        authVO.setEnable(true);
+        this.authTable.addAuth(authVO);
+        this.authTable.selectLast();
+    }
+
+    /**
+     * 删除认证
+     */
+    @FXML
+    private void deleteAuth() {
+        ZKAuthVO authVO = this.authTable.getSelectedItem();
+        if (authVO == null) {
+            return;
+        }
+        if (MessageBox.confirm(I18nHelper.deleteData())) {
+            this.authTable.removeItem(authVO);
+        }
+    }
+
+    /**
+     * 复制认证
+     */
+    @FXML
+    private void copyAuth() {
+        ZKAuthVO auth = this.authTable.getSelectedItem();
+        if (auth == null) {
+            return;
+        }
+        String data = I18nHelper.userName() + " " + auth.getUser() + System.lineSeparator()
+                + I18nHelper.password() + " " + auth.getPassword();
+        ClipboardUtil.setStringAndTip(data);
     }
 }

@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
-import cn.oyzh.easyzk.dto.ZKFilterVO;
+import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
@@ -387,10 +387,14 @@ public class ZKConnectUpdateController extends StageController {
             return;
         }
         if (MessageBox.confirm(I18nHelper.deleteData())) {
-            if (this.filterStore.delete(filter)) {
-                this.filterTable.removeItem(filter);
+            if (filter.getIid() != null) {
+                if (this.filterStore.delete(filter)) {
+                    this.filterTable.removeItem(filter);
+                } else {
+                    MessageBox.warn(I18nHelper.operationFail());
+                }
             } else {
-                MessageBox.warn(I18nHelper.operationFail());
+                this.filterTable.removeItem(filter);
             }
         }
     }
@@ -400,9 +404,7 @@ public class ZKConnectUpdateController extends StageController {
      */
     @EventSubscribe
     private void filterAdded(ZKFilterAddedEvent event) {
-        ZKFilter filter = event.data();
-        filter.setIid(this.zkInfo.getId());
-        this.filters.add(filter);
+        this.filters.add(event.data());
         this.initFilterDataList();
     }
 }

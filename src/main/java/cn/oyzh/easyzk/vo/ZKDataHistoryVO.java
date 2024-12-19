@@ -1,7 +1,6 @@
-package cn.oyzh.easyzk.dto;
+package cn.oyzh.easyzk.vo;
 
 import cn.oyzh.easyzk.domain.ZKDataHistory;
-import cn.oyzh.common.Const;
 import cn.oyzh.common.Index;
 import cn.oyzh.common.date.DateUtil;
 import lombok.Data;

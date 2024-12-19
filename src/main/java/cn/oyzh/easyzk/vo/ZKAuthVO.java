@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.dto;
+package cn.oyzh.easyzk.vo;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventUtil;

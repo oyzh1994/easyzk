@@ -68,6 +68,13 @@ public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
     //     return false;
     // }
 
+    /**
+     * 根据iid删除数据
+     *
+     * @param iid zk连接id
+     * @return 结果
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
     public boolean deleteByIid(String iid) {
         if (StringUtil.isNotBlank(iid)) {
             DeleteParam param = new DeleteParam();
@@ -93,6 +100,14 @@ public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
     //     return paging;
     // }
 
+    /**
+     * 判断是否存在
+     *
+     * @param kw  关键字
+     * @param iid zk连接id
+     * @return 结果
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
     public boolean exist(String kw, String iid) {
         if (StringUtil.isNotBlank(kw)) {
             Map<String, Object> params = new HashMap<>();

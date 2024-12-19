@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.tabs;
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAddController;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.dto.ZKAuthVO;
+import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
 import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
 import cn.oyzh.event.EventSubscribe;

@@ -3,7 +3,7 @@
 // import cn.oyzh.common.dto.Paging;
 // import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
 // import cn.oyzh.easyzk.domain.ZKFilter;
-// import cn.oyzh.easyzk.dto.ZKFilterVO;
+// import cn.oyzh.easyzk.vo.ZKFilterVO;
 // import cn.oyzh.easyzk.event.ZKEventUtil;
 // import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
 // import cn.oyzh.easyzk.store.ZKFilterJdbcStore;

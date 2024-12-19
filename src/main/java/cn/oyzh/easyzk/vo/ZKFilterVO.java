@@ -1,7 +1,6 @@
-package cn.oyzh.easyzk.dto;
+package cn.oyzh.easyzk.vo;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.common.Index;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;

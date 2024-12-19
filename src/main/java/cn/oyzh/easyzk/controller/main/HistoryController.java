@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.controller.main;
 
 import cn.oyzh.easyzk.domain.ZKDataHistory;
-import cn.oyzh.easyzk.dto.ZKDataHistoryVO;
+import cn.oyzh.easyzk.vo.ZKDataHistoryVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKHistoryAddedEvent;
 import cn.oyzh.easyzk.event.ZKHistoryShowEvent;

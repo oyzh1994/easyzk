@@ -16,7 +16,6 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKCollectJdbcStore;
 import cn.oyzh.easyzk.store.ZKDataHistoryJdbcStore;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
-import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -1095,9 +1094,42 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         this.value.clearUnsavedData();
         if (!this.isRoot()) {
             this.value = null;
-            // this.bitValue = null;
             super.destroy();
         }
+    }
+
+    /**
+     * 获取数据大小
+     *
+     * @return 数据大小
+     */
+    public int dataSize() {
+        if (this.isDataUnsaved()) {
+            return this.unsavedData().length;
+        }
+        return this.nodeData().length;
+    }
+
+    /**
+     * 获取数据大小信息
+     *
+     * @return 数据大小信息
+     */
+    public String dataSizeInfo() {
+        int dataSize = this.dataSize();
+        if (dataSize < 0) {
+            return "N/A";
+        }
+        if (dataSize < 1024) {
+            return dataSize + "bytes";
+        }
+        if (dataSize < 1024 * 1024) {
+            return dataSize / 1024.0 + "KB";
+        }
+        if (dataSize < 1024 * 1024 * 1024) {
+            return dataSize / 1024.0 / 1024 + "MB";
+        }
+        return dataSize / 1024.0 / 1024 / 1024 + "GB";
     }
 
     /**

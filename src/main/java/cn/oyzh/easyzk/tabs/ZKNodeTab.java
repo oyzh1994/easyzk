@@ -288,6 +288,12 @@ public class ZKNodeTab extends DynamicTab {
         private ZKACLTableView aclTableView;
 
         /**
+         * 数据大小
+         */
+        @FXML
+        private FXText dataSize;
+
+        /**
          * 加载耗时
          */
         @FXML
@@ -699,6 +705,7 @@ public class ZKNodeTab extends DynamicTab {
                 this.activeItem.refreshData();
                 // 数据变更
                 this.showData();
+                // 刷新tab颜色
                 this.flushTabGraphicColor();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -716,13 +723,18 @@ public class ZKNodeTab extends DynamicTab {
                 return;
             }
             // 保存数据
-            if (this.activeItem.isDataUnsaved()) {
-                // 保存数据
-                RenderService.submit(() -> {
-                    this.activeItem.saveData();
-                    this.flushTabGraphicColor();
-                });
+            if (!this.activeItem.isDataUnsaved()) {
+                return;
             }
+            // 保存数据
+            RenderService.submit(() -> {
+                // 保存数据
+                this.activeItem.saveData();
+                // 刷新数据大小
+                this.flushDataSize();
+                // 刷新tab颜色
+                this.flushTabGraphicColor();
+            });
         }
 
         /**
@@ -848,10 +860,20 @@ public class ZKNodeTab extends DynamicTab {
         public void initData() {
             // 显示数据
             this.showData();
+            // 刷新数据大小
+            this.flushDataSize();
             // 遗忘历史
             this.nodeData.forgetHistory();
             // 加载耗时处理
             this.loadTime.text(I18nHelper.cost() + " : " + this.activeItem.loadTime() + "ms");
+        }
+
+        /**
+         * 刷新数据大小
+         */
+        private void flushDataSize() {
+            // 数据大小处理
+            this.dataSize.text(I18nHelper.size() + " : " + this.activeItem.dataSizeInfo());
         }
 
         /**

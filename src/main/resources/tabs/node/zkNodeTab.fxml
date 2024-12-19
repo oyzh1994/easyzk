@@ -40,6 +40,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.ZKNodeTab.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -204,12 +205,19 @@
                             <Insets left="5" top="3"/>
                         </HBox.margin>
                     </CharsetComboBox>
-                    <FlexText tipText="%base.loadCost" fx:id="loadTime" style="-fx-fill: #009933;-fx-text-fill:#009933"
+                    <FXText tipText="%base.dataSize" fx:id="dataSize"
+                            style="-fx-fill: #AD0EB5B2;"
+                            realHeight="22">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </FXText>
+                    <FXText tipText="%base.loadCost" fx:id="loadTime" style="-fx-fill: #009933;"
                               realHeight="22">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
-                    </FlexText>
+                    </FXText>
                 </FlexHBox>
             </FlexVBox>
         </FXTab>

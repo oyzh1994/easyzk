@@ -18,12 +18,12 @@ public class ZKAuthAuthedEvent extends Event<ZKNodeTreeItem> {
 
     private String user;
 
-    private boolean success;
-
     private String password;
 
+    private boolean success;
+
     public ZKAuth auth() {
-        return new ZKAuth(this.user, this.password);
+        return new ZKAuth(this.data().client().iid(), this.user, this.password);
     }
 
 }

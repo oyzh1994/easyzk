@@ -289,10 +289,10 @@ public class SettingController extends StageController {
             this.setting.setRememberPageLocation((byte) (this.pageLocation.isSelected() ? 1 : 0));
             this.setting.setExitMode((byte) Integer.parseInt(this.exitMode.selectedUserData()));
             this.settingStore.replace(this.setting);
-            // 清除认证列表
-            if (!this.setting.isAutoAuth()) {
-                ZKAuthUtil.clearAuthed();
-            }
+            // // 清除认证列表
+            // if (!this.setting.isAutoAuth()) {
+            //     ZKAuthUtil.clearAuthed();
+            // }
             // 执行提示
             MessageBox.okToast(I18nHelper.operationSuccess());
             // 关闭窗口

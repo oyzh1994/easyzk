@@ -184,7 +184,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      */
     public boolean isNeedAuth() {
         boolean needAuth = this.bitValue != null && this.bitValue().get(14);
-        return needAuth || ZKAuthUtil.isNeedAuth(this.value, this.client());
+        return needAuth || this.client().isNeedAuth(this.value);
     }
 
     /**

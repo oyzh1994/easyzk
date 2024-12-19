@@ -29,7 +29,6 @@ import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
-import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
@@ -633,7 +632,7 @@ public class ZKNodeTab extends DynamicTab {
                 control.setId(zkacl.getId());
                 control.setPerms(zkacl.getPerms());
                 control.setFriendly(this.aclViewSwitch.isSelected());
-                control.setAuthed(ZKAuthUtil.isDigestAuthed(this.client, zkacl.idVal()));
+                control.setAuthed(this.client.isDigestAuthed(zkacl.idVal()));
                 list.add(control);
             }
             this.aclTableView.setItem(list);

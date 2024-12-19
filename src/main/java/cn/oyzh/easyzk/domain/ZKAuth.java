@@ -35,6 +35,7 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
 
     /**
      * iid
+     *
      * @see ZKConnect
      */
     @Column
@@ -58,7 +59,13 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
     @Column
     private Boolean enable;
 
-    public ZKAuth(String user, String password) {
+    // public ZKAuth(String user, String password) {
+    //     this.user = user;
+    //     this.password = password;
+    // }
+
+    public ZKAuth(String iid, String user, String password) {
+        this.iid = iid;
         this.user = user;
         this.password = password;
     }
@@ -89,16 +96,16 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
         return Objects.equals(auth.password, this.password);
     }
 
-    /**
-     * 比较信息
-     *
-     * @param user     认证用户
-     * @param password 认证密码
-     * @return 结果
-     */
-    public boolean compare(String user, String password) {
-        return this.compare(new ZKAuth(user, password));
-    }
+    // /**
+    //  * 比较信息
+    //  *
+    //  * @param user     认证用户
+    //  * @param password 认证密码
+    //  * @return 结果
+    //  */
+    // public boolean compare(String user, String password) {
+    //     return this.compare(new ZKAuth(user, password));
+    // }
 
     /**
      * 复制认证信息

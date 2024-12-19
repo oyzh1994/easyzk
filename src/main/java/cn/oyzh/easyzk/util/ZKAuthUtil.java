@@ -1,11 +1,12 @@
 package cn.oyzh.easyzk.util;
 
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
+import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.common.util.CollectionUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.curator.framework.AuthInfo;
@@ -31,10 +32,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @UtilityClass
 public class ZKAuthUtil {
 
-    /**
-     * 已认证信息列表
-     */
-    private static final Map<ZKClient, Set<String>> AUTHED_INFOS = new ConcurrentHashMap<>();
+    // /**
+    //  * 已认证信息列表
+    //  */
+    // private static final Map<ZKClient, Set<String>> AUTHED_INFOS = new ConcurrentHashMap<>();
 
     /**
      * 获取认证信息列表
@@ -88,7 +89,8 @@ public class ZKAuthUtil {
             }
             if (result == 1) {
                 zkNode.copy(node);
-                setAuthed(client, user, password);
+                // setAuthed(client, user, password);
+                client.setAuthed(user, password);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -97,143 +99,157 @@ public class ZKAuthUtil {
         return result;
     }
 
-    /**
-     * 加载已启用的认证信息
-     *
-     * @return 已启用的认证信息列表
-     */
-    public static List<ZKAuth> loadEnableAuths() {
-        List<ZKAuth> auths = ZKAuthJdbcStore.INSTANCE.load();
-        auths = auths.stream().filter(ZKAuth::getEnable).toList();
-        return auths;
-    }
+    // /**
+    //  * 加载已启用的认证信息
+    //  *
+    //  * @return 已启用的认证信息列表
+    //  */
+    // public static List<ZKAuth> loadEnableAuths() {
+    //     List<ZKAuth> auths = ZKAuthJdbcStore.INSTANCE.load();
+    //     auths = auths.stream().filter(ZKAuth::getEnable).toList();
+    //     return auths;
+    // }
 
     /**
-     * 设置认证信息为已认证
+     * 加载认证信息
      *
-     * @param client zk客户端
-     * @param auth   认证信息
+     * @param iid 连接id
+     * @return 认证信息列表
+     * @see cn.oyzh.easyzk.domain.ZKConnect
      */
-    public static void setAuthed(@NonNull ZKClient client, @NonNull ZKAuth auth) {
-        setAuthed(client, auth.getUser(), auth.getPassword());
-    }
-
-    /**
-     * 设置认证信息为已认证
-     *
-     * @param client zk客户端
-     * @param auths  认证信息列表
-     */
-    public static void setAuthed(@NonNull ZKClient client, List<? extends ZKAuth> auths) {
-        if (CollectionUtil.isNotEmpty(auths)) {
-            auths.parallelStream().forEach(a -> setAuthed(client, a));
+    public static List<ZKAuth> loadAuths(String iid) {
+        if (ZKSettingJdbcStore.SETTING.isAutoAuth()) {
+            return ZKAuthJdbcStore.INSTANCE.loadEnable(iid);
         }
+        return Collections.emptyList();
     }
 
-    /**
-     * 设置认证信息为已认证
-     *
-     * @param client   zk客户端
-     * @param user     用户名
-     * @param password 密码
-     */
-    public static void setAuthed(@NonNull ZKClient client, String user, String password) {
-        if (user != null && password != null) {
-            Set<String> set = AUTHED_INFOS.computeIfAbsent(client, k -> new CopyOnWriteArraySet<>());
-            set.add(user + ":" + password);
-        }
-    }
+    // /**
+    //  * 设置认证信息为已认证
+    //  *
+    //  * @param client zk客户端
+    //  * @param auth   认证信息
+    //  */
+    // public static void setAuthed(@NonNull ZKClient client, @NonNull ZKAuth auth) {
+    //     setAuthed(client, auth.getUser(), auth.getPassword());
+    // }
 
-    /**
-     * 清除已认证信息
-     */
-    public static void clearAuthed() {
-        AUTHED_INFOS.clear();
-    }
+    // /**
+    //  * 设置认证信息为已认证
+    //  *
+    //  * @param client zk客户端
+    //  * @param auths  认证信息列表
+    //  */
+    // public static void setAuthed(@NonNull ZKClient client, List<? extends ZKAuth> auths) {
+    //     if (CollectionUtil.isNotEmpty(auths)) {
+    //         auths.parallelStream().forEach(a -> setAuthed(client, a));
+    //     }
+    // }
+    //
+    // /**
+    //  * 设置认证信息为已认证
+    //  *
+    //  * @param client   zk客户端
+    //  * @param user     用户名
+    //  * @param password 密码
+    //  */
+    // public static void setAuthed(@NonNull ZKClient client, String user, String password) {
+    //     if (user != null && password != null) {
+    //         Set<String> set = AUTHED_INFOS.computeIfAbsent(client, k -> new CopyOnWriteArraySet<>());
+    //         set.add(user + ":" + password);
+    //     }
+    // }
 
-    /**
-     * 移除已认证信息
-     *
-     * @param client zk客户端
-     */
-    public static void removeAuthed(@NonNull ZKClient client) {
-        AUTHED_INFOS.remove(client);
-    }
+    // /**
+    //  * 清除已认证信息
+    //  */
+    // public static void clearAuthed() {
+    //     AUTHED_INFOS.clear();
+    // }
 
-    /**
-     * 获取已认证信息
-     *
-     * @param client zk客户端
-     * @return 已认证的信息列表
-     */
-    public static Set<String> getAuthed(ZKClient client) {
-        return client == null ? Collections.emptySet() : AUTHED_INFOS.get(client);
-    }
+    // /**
+    //  * 移除已认证信息
+    //  *
+    //  * @param client zk客户端
+    //  */
+    // public static void removeAuthed(@NonNull ZKClient client) {
+    //     AUTHED_INFOS.remove(client);
+    // }
 
-    /**
-     * 是否已认证
-     *
-     * @param client zk客户端
-     * @param auth   认证信息
-     * @return 结果
-     */
-    public static boolean isAuthed(@NonNull ZKClient client, ZKAuth auth) {
-        if (auth != null) {
-            Set<String> set = getAuthed(client);
-            if (set != null) {
-                return set.contains(auth.getUser() + ":" + auth.getPassword());
-            }
-        }
-        return false;
-    }
+    // /**
+    //  * 获取已认证信息
+    //  *
+    //  * @param client zk客户端
+    //  * @return 已认证的信息列表
+    //  */
+    // public static Set<String> getAuthed(ZKClient client) {
+    //     return client == null ? Collections.emptySet() : AUTHED_INFOS.get(client);
+    // }
 
-    /**
-     * 获取已认证的摘要信息
-     *
-     * @param client zk客户端
-     * @return 已认证的摘要信息列表
-     */
-    public static Set<String> getAuthedDigest(ZKClient client) {
-        Set<String> set = getAuthed(client);
-        if (set == null) {
-            return Collections.emptySet();
-        }
-        Set<String> digestList = new HashSet<>();
-        for (String s : set) {
-            String[] arr = s.split(":");
-            digestList.add(digest(arr[0], arr[1]));
-        }
-        return digestList;
-    }
+    // /**
+    //  * 是否已认证
+    //  *
+    //  * @param client zk客户端
+    //  * @param auth   认证信息
+    //  * @return 结果
+    //  */
+    // public static boolean isAuthed(@NonNull ZKClient client, ZKAuth auth) {
+    //     if (auth != null) {
+    //         Set<String> set = getAuthed(client);
+    //         if (set != null) {
+    //             return set.contains(auth.getUser() + ":" + auth.getPassword());
+    //         }
+    //     }
+    //     return false;
+    // }
 
-    /**
-     * 获取已认证的摘要信息
-     *
-     * @param client zk客户端
-     * @return 已认证的摘要信息列表
-     */
-    public static boolean isDigestAuthed(ZKClient client, String digestVal) {
-        Set<String> digests = ZKAuthUtil.getAuthedDigest(client);
-        return CollectionUtil.isNotEmpty(digests) && digests.contains(digestVal);
-    }
+    // /**
+    //  * 获取已认证的摘要信息
+    //  *
+    //  * @param client zk客户端
+    //  * @return 已认证的摘要信息列表
+    //  */
+    // public static Set<String> getAuthedDigest(ZKClient client) {
+    //     Set<String> set = getAuthed(client);
+    //     if (set == null) {
+    //         return Collections.emptySet();
+    //     }
+    //     Set<String> digestList = new HashSet<>();
+    //     for (String s : set) {
+    //         String[] arr = s.split(":");
+    //         digestList.add(digest(arr[0], arr[1]));
+    //     }
+    //     return digestList;
+    // }
 
-    /**
-     * 是否任意权限已认证
-     *
-     * @param aclList 权限列表
-     * @return 结果
-     */
-    public static boolean isAnyAuthed(@NonNull ZKClient client, List<ZKACL> aclList) {
-        if (CollectionUtil.isNotEmpty(aclList)) {
-            Set<String> digestList = getAuthedDigest(client);
-            for (ZKACL zkacl : aclList) {
-                if (digestList.contains(zkacl.idVal())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    // /**
+    //  * 获取已认证的摘要信息
+    //  *
+    //  * @param client zk客户端
+    //  * @return 已认证的摘要信息列表
+    //  */
+    // public static boolean isDigestAuthed(ZKClient client, String digestVal) {
+    //     Set<String> digests = ZKAuthUtil.getAuthedDigest(client);
+    //     return CollectionUtil.isNotEmpty(digests) && digests.contains(digestVal);
+    // }
+
+    // /**
+    //  * 是否任意权限已认证
+    //  *
+    //  * @param aclList 权限列表
+    //  * @return 结果
+    //  */
+    // public static boolean isAnyAuthed(@NonNull ZKClient client, List<ZKACL> aclList) {
+    //     if (CollectionUtil.isNotEmpty(aclList)) {
+    //         Set<String> digestList = getAuthedDigest(client);
+    //         for (ZKACL zkacl : aclList) {
+    //             if (digestList.contains(zkacl.idVal())) {
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
 
     /**
      * 生成摘要信息
@@ -251,23 +267,23 @@ public class ZKAuthUtil {
         return null;
     }
 
-    /**
-     * 是否需要认证
-     *
-     * @param node   zk节点
-     * @param client zk客户端
-     * @return 结果
-     */
-    public boolean isNeedAuth(@NonNull ZKNode node, @NonNull ZKClient client) {
-        if (node.aclEmpty() && node.lackPerm()) {
-            return true;
-        }
-        if (node.hasWorldACL()) {
-            return false;
-        }
-        if (node.hasIPACL()) {
-            return false;
-        }
-        return !isAnyAuthed(client, node.acl());
-    }
+    // /**
+    //  * 是否需要认证
+    //  *
+    //  * @param node   zk节点
+    //  * @param client zk客户端
+    //  * @return 结果
+    //  */
+    // public boolean isNeedAuth(@NonNull ZKNode node, @NonNull ZKClient client) {
+    //     if (node.aclEmpty() && node.lackPerm()) {
+    //         return true;
+    //     }
+    //     if (node.hasWorldACL()) {
+    //         return false;
+    //     }
+    //     if (node.hasIPACL()) {
+    //         return false;
+    //     }
+    //     return !isAnyAuthed(client, node.acl());
+    // }
 }

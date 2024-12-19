@@ -3,7 +3,10 @@ package cn.oyzh.easyzk.zk;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.dto.ZKClusterNode;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.easyzk.enums.ZKConnState;
@@ -16,7 +19,6 @@ import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
 import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
-import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
@@ -123,6 +125,11 @@ public class ZKClient {
      * zk消息监听器
      */
     private volatile ZKTreeListener cacheListener;
+
+    /**
+     * 认证列表
+     */
+    private List<ZKAuth> auths;
 
     /**
      * 缓存选择器
@@ -306,10 +313,8 @@ public class ZKClient {
             if (this.framework.blockUntilConnected(timeout, TimeUnit.MILLISECONDS)) {
                 // 更新连接状态
                 this.state.set(ZKConnState.CONNECTED);
-                // 设置认证信息为已认证
-                if (ZKSettingJdbcStore.SETTING.isAutoAuth()) {
-                    ZKAuthUtil.setAuthed(this, ZKAuthUtil.loadEnableAuths());
-                }
+                // // 设置认证信息为已认证
+                // ZKAuthUtil.setAuthed(this, ZKAuthUtil.loadAuths(this.iid()));
             } else {// 连接未成功则关闭
                 this._close();
                 if (this.state.get() == ZKConnState.FAILED) {
@@ -343,14 +348,11 @@ public class ZKClient {
             // 连接信息
             host = this.connect.hostIp() + ":" + this.connect.hostPort();
         }
+        // 加载认证
+        this.auths = ZKAuthUtil.loadAuths(this.iid());
         // 认证信息列表
-        List<AuthInfo> authInfos = List.of();
-        // 开启自动认证
-        if (ZKSettingJdbcStore.SETTING.isAutoAuth()) {
-            // 加载已启用的认证
-            authInfos = ZKAuthUtil.toAuthInfo(ZKAuthUtil.loadEnableAuths());
-            JulLog.info("auto authorization, auths: {}.", authInfos);
-        }
+        List<AuthInfo> authInfos = ZKAuthUtil.toAuthInfo(auths);
+        JulLog.info("auto authorization, auths: {}.", authInfos);
         // 重试策略
         if (this.retryPolicy == null) {
             this.retryPolicy = new RetryOneTime(3_000);
@@ -382,7 +384,8 @@ public class ZKClient {
             }
             this.closeTreeCache();
             this.initialized = false;
-            ZKAuthUtil.removeAuthed(this);
+            // ZKAuthUtil.removeAuthed(this);
+            this.auths = null;
             JulLog.info("zkClient closed.");
         } catch (Exception ex) {
             JulLog.warn("zkClient close error.", ex);
@@ -585,7 +588,8 @@ public class ZKClient {
         ZooKeeper zooKeeper = this.framework.getZookeeperClient().getZooKeeper();
         String data = user + ":" + password;
         zooKeeper.addAuthInfo("digest", data.getBytes());
-        ZKAuthUtil.setAuthed(this, user, password);
+        // ZKAuthUtil.setAuthed(this, user, password);
+        this.setAuthed(user, password);
     }
 
     /**
@@ -1231,5 +1235,87 @@ public class ZKClient {
 
     public String iid() {
         return this.connect.getId();
+    }
+
+    /**
+     * 是否已认证
+     *
+     * @param auth 认证信息
+     * @return 结果
+     */
+    public boolean isAuthed(ZKAuth auth) {
+        if (auth != null) {
+            for (ZKAuth auth1 : this.auths) {
+                if (auth1.compare(auth)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 设置已认证
+     *
+     * @param user     用户名
+     * @param password 密码
+     */
+    public void setAuthed(String user, String password) {
+        if (user != null && password != null) {
+            this.auths.add(new ZKAuth(this.iid(), user, password));
+        }
+    }
+
+    /**
+     * 是否任意权限已认证
+     *
+     * @param aclList 权限列表
+     * @return 结果
+     */
+    public boolean isAnyAuthed(List<ZKACL> aclList) {
+        if (CollectionUtil.isNotEmpty(aclList) && CollectionUtil.isNotEmpty(this.auths)) {
+            for (ZKACL zkacl : aclList) {
+                for (ZKAuth auth : this.auths) {
+                    if (auth.digest().equals(zkacl.idVal())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 是否需要认证
+     *
+     * @param node zk节点
+     * @return 结果
+     */
+    public boolean isNeedAuth(@NonNull ZKNode node) {
+        if (node.aclEmpty() && node.lackPerm()) {
+            return true;
+        }
+        if (node.hasWorldACL()) {
+            return false;
+        }
+        if (node.hasIPACL()) {
+            return false;
+        }
+        return !isAnyAuthed(node.acl());
+    }
+
+    /**
+     * 是否摘要认证已认证
+     *
+     * @param digestVal 摘要值
+     * @return 结果
+     */
+    public boolean isDigestAuthed(String digestVal) {
+        for (ZKAuth auth : this.auths) {
+            if (auth.digest().equals(digestVal)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

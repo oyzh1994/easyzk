@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStore;
 import cn.oyzh.store.jdbc.QueryParam;
+import cn.oyzh.store.jdbc.SelectParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +22,29 @@ public class ZKAuthJdbcStore extends JdbcStore<ZKAuth> {
      */
     public static final ZKAuthJdbcStore INSTANCE = new ZKAuthJdbcStore();
 
-    public List<ZKAuth> load() {
-        return super.selectList();
+    /**
+     * 加载数据列表
+     *
+     * @param iid zk连接id
+     * @return 数据列表
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
+    public List<ZKAuth> load(String iid) {
+        return super.selectList(QueryParam.of("iid", iid));
+    }
+
+    /**
+     * 加载已启用的数据列表
+     *
+     * @param iid zk连接id
+     * @return 已启用的数据列表
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
+    public List<ZKAuth> loadEnable(String iid) {
+        SelectParam selectParam = new SelectParam();
+        selectParam.addQueryParam(QueryParam.of("enable", 1));
+        selectParam.addQueryParam(QueryParam.of("iid", iid));
+        return super.selectList(selectParam);
     }
 
     public boolean replace(ZKAuth model) {

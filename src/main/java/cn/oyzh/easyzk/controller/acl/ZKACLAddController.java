@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.controller.acl;
 
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
@@ -10,30 +12,26 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.button.CopyButton;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
-import cn.oyzh.fx.plus.controls.pane.FlexFlowPane;
-import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
-import cn.oyzh.i18n.I18nHelper;
+import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -279,7 +277,7 @@ public class ZKACLAddController extends StageController {
         // 新增权限
         if (this.addACL(acl) && this.digestSaveInfo.isSelected()) {
             // 保存认证信息
-            this.authStore.replace(new ZKAuth(user, password));
+            this.authStore.replace(new ZKAuth(this.zkClient.iid(), user, password));
         }
     }
 
@@ -513,7 +511,7 @@ public class ZKACLAddController extends StageController {
      */
     private void initDigestData() {
         this.digestInfo3.getItems().clear();
-        List<ZKAuth> authList = this.authStore.load();
+        List<ZKAuth> authList = this.authStore.load(this.zkClient.iid());
         if (CollectionUtil.isNotEmpty(authList)) {
             this.digestInfo3.addItems(authList);
             this.digestInfo3.setConverter(new SimpleStringConverter<>() {

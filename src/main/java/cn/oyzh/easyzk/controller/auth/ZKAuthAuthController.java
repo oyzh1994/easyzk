@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.controller.auth;
 
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -8,18 +10,16 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -158,7 +158,7 @@ public class ZKAuthAuthController extends StageController {
             int result = ZKAuthUtil.authNode(user, password, zkClient, this.zkNode);
             if (result == 1) {
                 if (this.saveInfo1.isSelected()) {
-                    this.authStore.replace(new ZKAuth(user, password));
+                    this.authStore.replace(new ZKAuth(zkClient.iid(), user, password));
                 }
                 ZKEventUtil.authAuthed(this.zkItem, true, user, password);
                 MessageBox.okToast(I18nHelper.operationSuccess());
@@ -192,7 +192,7 @@ public class ZKAuthAuthController extends StageController {
         });
         this.authList.getItems().clear();
         ZKClient client = this.zkItem.client();
-        List<ZKAuth> authList = this.authStore.load();
+        List<ZKAuth> authList = this.authStore.load(client.iid());
         if (CollectionUtil.isNotEmpty(authList)) {
             this.authList.addItems(authList);
             this.authList.setConverter(new SimpleStringConverter<>() {
@@ -201,7 +201,7 @@ public class ZKAuthAuthController extends StageController {
                     String text = "";
                     if (auth != null) {
                         text = auth.getUser() + ":" + auth.getPassword();
-                        if (ZKAuthUtil.isAuthed(client, auth)) {
+                        if (client.isAuthed(auth)) {
                             text += " (" + I18nHelper.authed() + ")";
                         }
                     }

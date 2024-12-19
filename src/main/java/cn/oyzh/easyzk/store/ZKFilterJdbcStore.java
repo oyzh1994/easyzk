@@ -22,16 +22,16 @@ public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
      */
     public static final ZKFilterJdbcStore INSTANCE = new ZKFilterJdbcStore();
 
-    /**
-     * 加载已启用的数据列表
-     *
-     * @param iid zk连接id
-     * @return 数据列表
-     * @see cn.oyzh.easyzk.domain.ZKConnect
-     */
-    public List<ZKFilter> load(String iid) {
-        return super.selectList(QueryParam.of("iid", iid));
-    }
+    // /**
+    //  * 加载已启用的数据列表
+    //  *
+    //  * @param iid zk连接id
+    //  * @return 数据列表
+    //  * @see cn.oyzh.easyzk.domain.ZKConnect
+    //  */
+    // public List<ZKFilter> load(String iid) {
+    //     return super.selectList(QueryParam.of("iid", iid));
+    // }
 
     /**
      * 加载已启用的数据列表

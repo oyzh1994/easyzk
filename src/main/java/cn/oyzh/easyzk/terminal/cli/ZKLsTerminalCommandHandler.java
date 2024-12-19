@@ -31,7 +31,7 @@ public class ZKLsTerminalCommandHandler extends ZKPathTerminalCommandHandler<Ter
 
     @Override
     public String commandDesc() {
-        return I18nResourceBundle.i18nString("base.iter", "base.child");
+        return I18nResourceBundle.i18nString("base.iter", "base.child", "base.node");
     }
 
     @Override

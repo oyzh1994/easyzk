@@ -181,13 +181,13 @@ public class ZKEventUtil {
         event.data(info);
         EventUtil.post(event);
     }
-
-    /**
-     * 树节点过滤事件
-     */
-    public static void treeChildFilter() {
-        EventUtil.postDelay(new TreeChildFilterEvent(), 200);
-    }
+    //
+    // /**
+    //  * 树节点过滤事件
+    //  */
+    // public static void treeChildFilter() {
+    //     EventUtil.postDelay(new TreeChildFilterEvent(), 200);
+    // }
 
     /**
      * 终端打开事件
@@ -225,12 +225,12 @@ public class ZKEventUtil {
         EventUtil.post(new ZKAuthMainEvent());
     }
 
-    /**
-     * 过滤主页事件
-     */
-    public static void filterMain() {
-        EventUtil.post(new ZKFilterMainEvent());
-    }
+    // /**
+    //  * 过滤主页事件
+    //  */
+    // public static void filterMain() {
+    //     EventUtil.post(new ZKFilterMainEvent());
+    // }
 
     /**
      * 触发认证添加事件

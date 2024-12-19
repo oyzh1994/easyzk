@@ -72,9 +72,9 @@ public class ZKFilterVO extends ZKFilter implements Index {
         toggleSwitch.setSelected(this.isPartMatch());
         toggleSwitch.selectedChanged((obs, o, n) -> {
             this.setPartMatch(n);
-            if (this.filterStore.replace(this)) {
-                ZKEventUtil.treeChildFilter();
-            }
+            // if (this.filterStore.replace(this)) {
+            //     ZKEventUtil.treeChildFilter();
+            // }
         });
         return toggleSwitch;
     }
@@ -88,9 +88,9 @@ public class ZKFilterVO extends ZKFilter implements Index {
         toggleSwitch.setSelected(this.isEnable());
         toggleSwitch.selectedChanged((abs, o, n) -> {
             this.setEnable(n);
-            if (this.filterStore.replace(this)) {
-                ZKEventUtil.treeChildFilter();
-            }
+            // if (this.filterStore.replace(this)) {
+            //     ZKEventUtil.treeChildFilter();
+            // }
         });
         return toggleSwitch;
     }

@@ -5,7 +5,6 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKAuthMainEvent;
 import cn.oyzh.easyzk.event.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.ZKConnectionClosedEvent;
-import cn.oyzh.easyzk.event.ZKFilterMainEvent;
 import cn.oyzh.easyzk.event.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.ZKTerminalOpenEvent;
@@ -224,27 +223,27 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         this.select(tab);
     }
 
-    /**
-     * 获取过滤tab
-     *
-     * @return 过滤tab
-     */
-    private ZKFilterTab getFilterTab() {
-        return super.getTab(ZKFilterTab.class);
-    }
-
-    /**
-     * 初始化过滤tab
-     */
-    @EventSubscribe
-    private void filterMain(ZKFilterMainEvent event) {
-        ZKFilterTab tab = this.getFilterTab();
-        if (tab == null) {
-            tab = new ZKFilterTab();
-            super.addTab(tab);
-        }
-        this.select(tab);
-    }
+    // /**
+    //  * 获取过滤tab
+    //  *
+    //  * @return 过滤tab
+    //  */
+    // private ZKFilterTab getFilterTab() {
+    //     return super.getTab(ZKFilterTab.class);
+    // }
+    //
+    // /**
+    //  * 初始化过滤tab
+    //  */
+    // @EventSubscribe
+    // private void filterMain(ZKFilterMainEvent event) {
+    //     ZKFilterTab tab = this.getFilterTab();
+    //     if (tab == null) {
+    //         tab = new ZKFilterTab();
+    //         super.addTab(tab);
+    //     }
+    //     this.select(tab);
+    // }
 
     /**
      * 恢复数据

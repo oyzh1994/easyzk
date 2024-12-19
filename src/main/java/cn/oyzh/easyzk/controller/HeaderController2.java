@@ -50,13 +50,13 @@ public class HeaderController2 extends StageController {
         StageManager.showStage(AboutController.class, this.stage);
     }
 
-    /**
-     * 过滤
-     */
-    @FXML
-    private void filter() {
-        ZKEventUtil.filterMain();
-    }
+    // /**
+    //  * 过滤
+    //  */
+    // @FXML
+    // private void filter() {
+    //     ZKEventUtil.filterMain();
+    // }
 
     /**
      * 退出

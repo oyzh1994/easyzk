@@ -20,11 +20,11 @@
             <Insets left="10" top="8"/>
         </HBox.margin>
     </SVGLabel>
-    <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
-        <HBox.margin>
-            <Insets left="10" top="8"/>
-        </HBox.margin>
-    </FilterSVGLabel>
+    <!-- <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12"> -->
+    <!--     <HBox.margin> -->
+    <!--         <Insets left="10" top="8"/> -->
+    <!--     </HBox.margin> -->
+    <!-- </FilterSVGLabel> -->
     <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">
         <HBox.margin>
             <Insets left="10" top="8"/>

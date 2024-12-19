@@ -227,7 +227,7 @@ public class ZKDataExportController extends StageController {
         this.exportHandler.charset(this.charset.getCharsetName());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
-            this.exportHandler.filters(this.filterStore.loadEnable());
+            this.exportHandler.filters(this.filterStore.loadEnable(this.client.iid()));
         } else {
             this.exportHandler.filters(null);
         }

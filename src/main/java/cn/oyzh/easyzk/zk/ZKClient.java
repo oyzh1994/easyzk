@@ -1228,4 +1228,8 @@ public class ZKClient {
         }
         return Collections.emptyList();
     }
+
+    public String iid() {
+        return this.connect.getId();
+    }
 }

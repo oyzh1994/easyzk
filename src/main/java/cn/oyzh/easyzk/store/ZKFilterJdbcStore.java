@@ -1,14 +1,11 @@
 package cn.oyzh.easyzk.store;
 
-import cn.oyzh.common.dto.Paging;
-import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStore;
-import cn.oyzh.store.jdbc.PageParam;
 import cn.oyzh.store.jdbc.QueryParam;
-import cn.oyzh.store.jdbc.QueryParams;
+import cn.oyzh.store.jdbc.SelectParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,18 +22,29 @@ public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
      */
     public static final ZKFilterJdbcStore INSTANCE = new ZKFilterJdbcStore();
 
-    public List<ZKFilter> load() {
-        return super.selectList();
+    /**
+     * 加载已启用的数据列表
+     *
+     * @param iid zk连接id
+     * @return 数据列表
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
+    public List<ZKFilter> load(String iid) {
+        return super.selectList(QueryParam.of("iid", iid));
     }
 
     /**
      * 加载已启用的数据列表
      *
+     * @param iid zk连接id
      * @return 已启用的数据列表
+     * @see cn.oyzh.easyzk.domain.ZKConnect
      */
-    public List<ZKFilter> loadEnable() {
-        QueryParam queryParam = new QueryParam("enable", 1);
-        return super.selectList(queryParam);
+    public List<ZKFilter> loadEnable(String iid) {
+        SelectParam selectParam = new SelectParam();
+        selectParam.addQueryParam(QueryParam.of("enable", 1));
+        selectParam.addQueryParam(QueryParam.of("iid", iid));
+        return super.selectList(selectParam);
     }
 
     public boolean replace(ZKFilter model) {
@@ -105,7 +113,7 @@ public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
         return ZKFilter.class;
     }
 
-    public Paging<ZKFilter> getPage(long pageNo, int i, String text) {
-        return null;
-    }
+    // public Paging<ZKFilter> getPage(long pageNo, int i, String text) {
+    //     return null;
+    // }
 }

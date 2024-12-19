@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.trees.node;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.event.TreeChildFilterEvent;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -55,7 +54,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
             // 初始化过滤器
             if (this.itemFilter == null) {
                 ZKNodeTreeItemFilter filter = new ZKNodeTreeItemFilter();
-                filter.initFilters();
+                filter.initFilters(this.client.iid());
                 this.itemFilter = filter;
             }
         } catch (Exception ex) {
@@ -115,14 +114,13 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         return null;
     }
 
-    /**
-     * 树节点过滤
-     */
-    @EventSubscribe
-    private void treeChildFilter(TreeChildFilterEvent event) {
-        this.itemFilter().initFilters();
-        this.filter();
-    }
+    // /**
+    //  * 树节点过滤
+    //  */
+    // @EventSubscribe
+    // private void treeChildFilter(TreeChildFilterEvent event) {
+    //     this.filter();
+    // }
 
     @Override
     public void expand() {

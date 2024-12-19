@@ -222,7 +222,7 @@ public class ZKDataTransportController extends StageController {
         this.transportHandler.existsPolicy(this.existsPolicy.selectedUserData());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
-            this.transportHandler.filters(this.filterStore.loadEnable());
+            this.transportHandler.filters(this.filterStore.loadEnable(this.sourceClient.iid()));
         } else {
             this.transportHandler.filters(null);
         }

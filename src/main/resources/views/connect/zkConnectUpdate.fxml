@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyzk.fx.ZKFilterTableView?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.button.TestButton?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.gui.text.field.PortTextField?>
@@ -15,15 +18,11 @@
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.easyzk.fx.ZKFilterTableView?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController" realWidth="750" realHeight="400">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
@@ -203,9 +202,10 @@
         <FXTab text="%base.filter">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="50" flexWidth="100%">
-                    <ClearableTextField realHeight="26" fx:id="filterSearchKW" realWidth="200" tipText="%base.searchKWTip">
+                    <ClearableTextField realHeight="26" fx:id="filterSearchKW" realWidth="200"
+                                        tipText="%base.searchKWTip">
                         <HBox.margin>
-                            <Insets left="5" top="14"/>
+                            <Insets left="30" top="14"/>
                         </HBox.margin>
                     </ClearableTextField>
                     <AddSVGGlyph size="16" onMousePrimaryClicked="#addFilter">
@@ -219,12 +219,18 @@
                         </HBox.margin>
                     </DeleteSVGGlyph>
                 </FlexHBox>
-                <ZKFilterTableView flexHeight="100% - 50" flexWidth="100%" fx:id="filterTable" copyCellDataOnDoubleClicked="true">
+                <ZKFilterTableView flexHeight="100% - 50" flexWidth="100% - 50" fx:id="filterTable"
+                                   copyCellDataOnDoubleClicked="true">
                     <columns>
                         <FlexTableColumn flexWidth="60%" text="%base.kw" valueName="kwControl"/>
-                        <FlexTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl" sortable="false"/>
-                        <FlexTableColumn flexWidth="20% - 15" text="%base.status" valueName="statusControl" sortable="false"/>
+                        <FlexTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl"
+                                         sortable="false"/>
+                        <FlexTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
+                                         sortable="false"/>
                     </columns>
+                    <VBox.margin>
+                        <Insets left="30"/>
+                    </VBox.margin>
                 </ZKFilterTableView>
             </FlexVBox>
         </FXTab>

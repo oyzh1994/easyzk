@@ -244,31 +244,31 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 触发认证添加事件
-     *
-     * @param auth 认证
-     */
-    public static void authAdded(@NonNull ZKAuth auth) {
-        if (auth.getEnable()) {
-            ZKAuthAddedEvent event = new ZKAuthAddedEvent();
-            event.data(auth);
-            EventUtil.post(event);
-        }
-    }
+    // /**
+    //  * 触发认证添加事件
+    //  *
+    //  * @param auth 认证
+    //  */
+    // public static void authAdded(@NonNull ZKAuth auth) {
+    //     if (auth.getEnable()) {
+    //         ZKAuthAddedEvent event = new ZKAuthAddedEvent();
+    //         event.data(auth);
+    //         EventUtil.post(event);
+    //     }
+    // }
 
-    /**
-     * 触发认证启用事件
-     *
-     * @param auth 认证
-     */
-    public static void authEnabled(@NonNull ZKAuth auth) {
-        if (auth.getEnable()) {
-            ZKAuthEnabledEvent event = new ZKAuthEnabledEvent();
-            event.data(auth);
-            EventUtil.post(event);
-        }
-    }
+    // /**
+    //  * 触发认证启用事件
+    //  *
+    //  * @param auth 认证
+    //  */
+    // public static void authEnabled(@NonNull ZKAuth auth) {
+    //     if (auth.getEnable()) {
+    //         ZKAuthEnabledEvent event = new ZKAuthEnabledEvent();
+    //         event.data(auth);
+    //         EventUtil.post(event);
+    //     }
+    // }
 
     /**
      * 添加分组

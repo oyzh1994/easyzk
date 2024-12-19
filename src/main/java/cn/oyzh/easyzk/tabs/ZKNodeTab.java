@@ -9,12 +9,9 @@ import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
-import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.easyzk.event.ZKAuthAddedEvent;
 import cn.oyzh.easyzk.event.ZKAuthAuthedEvent;
-import cn.oyzh.easyzk.event.ZKAuthEnabledEvent;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.ZKNodeACLAddedEvent;
 import cn.oyzh.easyzk.event.ZKNodeACLUpdatedEvent;
@@ -1151,38 +1148,38 @@ public class ZKNodeTab extends DynamicTab {
             }
         }
 
-        /**
-         * 认证已添加事件
-         *
-         * @param event 事件
-         */
-        @EventSubscribe
-        private void authAdded(ZKAuthAddedEvent event) {
-            try {
-                ZKAuth auth = event.data();
-                if (auth.isEnable()) {
-                    this.treeView.authChanged(auth);
-                    this.flushTab();
-                }
-            } catch (Exception ex) {
-                MessageBox.exception(ex);
-            }
-        }
+        // /**
+        //  * 认证已添加事件
+        //  *
+        //  * @param event 事件
+        //  */
+        // @EventSubscribe
+        // private void authAdded(ZKAuthAddedEvent event) {
+        //     try {
+        //         ZKAuth auth = event.data();
+        //         if (auth.isEnable()) {
+        //             this.treeView.authChanged(auth);
+        //             this.flushTab();
+        //         }
+        //     } catch (Exception ex) {
+        //         MessageBox.exception(ex);
+        //     }
+        // }
 
-        /**
-         * 认证已启用事件
-         *
-         * @param event 事件
-         */
-        @EventSubscribe
-        private void authEnabled(ZKAuthEnabledEvent event) {
-            try {
-                this.treeView.authChanged(event.data());
-                this.flushTab();
-            } catch (Exception ex) {
-                MessageBox.exception(ex);
-            }
-        }
+        // /**
+        //  * 认证已启用事件
+        //  *
+        //  * @param event 事件
+        //  */
+        // @EventSubscribe
+        // private void authEnabled(ZKAuthEnabledEvent event) {
+        //     try {
+        //         this.treeView.authChanged(event.data());
+        //         this.flushTab();
+        //     } catch (Exception ex) {
+        //         MessageBox.exception(ex);
+        //     }
+        // }
 
         @FXML
         private void addNode() {

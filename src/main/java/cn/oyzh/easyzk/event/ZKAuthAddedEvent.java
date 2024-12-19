@@ -1,12 +1,12 @@
-package cn.oyzh.easyzk.event;
-
-import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.event.Event;
-
-/**
- * @author oyzh
- * @since 2023/9/18
- */
-public class ZKAuthAddedEvent extends Event<ZKAuth> {
-
-}
+// package cn.oyzh.easyzk.event;
+//
+// import cn.oyzh.easyzk.domain.ZKAuth;
+// import cn.oyzh.event.Event;
+//
+// /**
+//  * @author oyzh
+//  * @since 2023/9/18
+//  */
+// public class ZKAuthAddedEvent extends Event<ZKAuth> {
+//
+// }

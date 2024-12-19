@@ -186,6 +186,11 @@ public class ZKConnectUpdateController extends StageController {
     private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
 
     /**
+     * 当前过滤列表
+     */
+    private List<ZKFilter> filters;
+
+    /**
      * 获取连接地址
      *
      * @return 连接地址
@@ -345,8 +350,6 @@ public class ZKConnectUpdateController extends StageController {
         return I18nResourceBundle.i18nString("base.title.info.update");
     }
 
-    private List<ZKFilter> filters;
-
     /**
      * 初始化数据列表
      */
@@ -391,7 +394,6 @@ public class ZKConnectUpdateController extends StageController {
             }
         }
     }
-
 
     /**
      * 过滤新增事件

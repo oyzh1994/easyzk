@@ -1,29 +1,41 @@
 package cn.oyzh.easyzk.controller.connect;
 
-import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
-import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
-import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
+import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKSSHConnect;
+import cn.oyzh.easyzk.dto.ZKFilterVO;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
+import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.util.ZKConnectUtil;
+import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.gui.text.field.NumberTextField;
+import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 添加zk信息业务
@@ -32,8 +44,8 @@ import javafx.stage.WindowEvent;
  * @since 2020/9/15
  */
 @StageAttribute(
-        modality = Modality.WINDOW_MODAL,
         iconUrl = ZKConst.ICON_PATH,
+        modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "connect/zkConnectAdd.fxml"
 )
 public class ZKConnectAddController extends StageController {
@@ -146,21 +158,43 @@ public class ZKConnectAddController extends StageController {
     @FXML
     private FlexHBox sshAuthBox;
 
-    // /**
-    //  * ssh超时组件
-    //  */
-    // @FXML
-    // private FlexHBox sshTimeoutBox;
-
     /**
      * 分组
      */
     private ZKGroup group;
 
-    // /**
-    //  * zk连接储存对象
-    //  */
-    // private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
+    /**
+     * zk连接储存对象
+     */
+    private final ZKConnectJdbcStore connectStore = ZKConnectJdbcStore.INSTANCE;
+
+    /**
+     * 分页组件
+     */
+    @FXML
+    private PageBox<ZKFilter> filterPagePane;
+
+    /**
+     * 搜索词汇
+     */
+    @FXML
+    private ClearableTextField filterSearchKW;
+
+    /**
+     * 数据列表
+     */
+    @FXML
+    private FlexTableView<ZKFilterVO> filterTable;
+
+    /**
+     * zk过滤配置储存
+     */
+    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
+
+    /**
+     * 当前过滤列表
+     */
+    private List<ZKFilter> filters;
 
     /**
      * 获取连接地址
@@ -169,7 +203,6 @@ public class ZKConnectAddController extends StageController {
      */
     private String getHost() {
         String hostText;
-        // String host = this.host.getTextTrim();
         String hostIp = this.hostIp.getTextTrim();
         this.tabPane.select(0);
         if (!this.hostPort.validate()) {
@@ -250,8 +283,10 @@ public class ZKConnectAddController extends StageController {
             zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
             zkInfo.setConnectTimeOut(connectTimeOut.intValue());
             zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
+            // 过滤列表
+            zkInfo.setFilters((List) this.filterTable.getItems());
             // 保存数据
-            boolean result = ZKConnectJdbcStore.INSTANCE.replace(zkInfo);
+            boolean result = this.connectStore.replace(zkInfo);
             if (result) {
                 ZKEventUtil.infoAdded(zkInfo);
                 MessageBox.okToast(I18nHelper.operationSuccess());
@@ -291,12 +326,15 @@ public class ZKConnectAddController extends StageController {
                 this.sshTimeout.disable();
             }
         });
+        // 过滤监听
+        this.filterSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initFilterDataList());
     }
 
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
         this.group = this.getWindowProp("group");
+        this.initFilterDataList();
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }
@@ -304,5 +342,59 @@ public class ZKConnectAddController extends StageController {
     @Override
     public String getViewTitle() {
         return I18nResourceBundle.i18nString("base.title.info.add");
+    }
+
+    /**
+     * 初始化数据列表
+     */
+    private void initFilterDataList() {
+        List<ZKFilter> list = new ArrayList<>();
+        if (this.filters == null) {
+            this.filters = new ArrayList<>();
+        } else {
+            String kw = this.filterSearchKW.getText();
+            for (ZKFilter filter : this.filters) {
+                if (StringUtil.containsIgnoreCase(filter.getKw(), kw)) {
+                    list.add(filter);
+                }
+            }
+        }
+        this.filterTable.setItem(ZKFilterVO.convert(list));
+    }
+
+    /**
+     * 添加过滤
+     */
+    @FXML
+    private void addFilter() {
+        StageManager.showStage(ZKFilterAddController.class);
+    }
+
+    /**
+     * 删除过滤
+     */
+    @FXML
+    private void deleteFilter() {
+        ZKFilter filter = this.filterTable.getSelectedItem();
+        if (filter == null) {
+            return;
+        }
+        if (MessageBox.confirm(I18nHelper.deleteData())) {
+            if (this.filterStore.delete(filter)) {
+                this.filterTable.removeItem(filter);
+            } else {
+                MessageBox.warn(I18nHelper.operationFail());
+            }
+        }
+    }
+
+    /**
+     * 过滤新增事件
+     */
+    @EventSubscribe
+    private void filterAdded(ZKFilterAddedEvent event) {
+        ZKFilter filter = event.data();
+        this.filters.add(filter);
+        this.initFilterDataList();
     }
 }

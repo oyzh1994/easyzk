@@ -33,7 +33,6 @@
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
@@ -41,6 +40,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
+<?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.ZKNodeTab.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -80,17 +80,6 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
-            <!-- <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc"> -->
-            <!--     <HBox.margin> -->
-            <!--         <Insets left="5" top="5"/> -->
-            <!--     </HBox.margin> -->
-            <!-- </SortAscSVGGlyph> -->
-            <!-- <SortDescSVGGlyph fx:id="sortDesc" size="15" managedBindVisible="true" visible="false" -->
-            <!--                   onMousePrimaryClicked="#sortDesc"> -->
-            <!--     <HBox.margin> -->
-            <!--         <Insets left="5" top="5"/> -->
-            <!--     </HBox.margin> -->
-            <!-- </SortDescSVGGlyph> -->
             <SortSVGPane fx:id="sortPane" size="15" onMousePrimaryClicked="#sortTree">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -172,6 +161,11 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </SVGGlyph>
+                    <BinarySVGGlyph tipText="%base.saveBinaryFile" size="16" onMousePrimaryClicked="#saveBinaryFile">
+                        <HBox.margin>
+                            <Insets left="5" top="7"/>
+                        </HBox.margin>
+                    </BinarySVGGlyph>
                     <ClearableTextField fx:id="dataSearch" tipText="%base.searchKWTip" fontSize="11" prefHeight="22"
                                         prefWidth="165">
                         <HBox.margin>

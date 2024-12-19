@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.dto.Paging;
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
@@ -44,6 +45,7 @@ import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
@@ -69,6 +71,7 @@ import lombok.Getter;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.Stat;
 
+import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -689,6 +692,22 @@ public class ZKNodeTab extends DynamicTab {
         @FXML
         private void copyNodePath() {
             ClipboardUtil.setStringAndTip(this.activeItem.decodeNodePath());
+        }
+
+        /**
+         * 保存为二进制文件
+         */
+        @FXML
+        private void saveBinaryFile() {
+            try {
+                File file = FileChooserHelper.save(I18nHelper.saveFile(), "", FileChooserHelper.allExtensionFilter());
+                if (file != null) {
+                    FileUtil.writeBytes(this.activeItem.nodeData(), file);
+                    MessageBox.info(I18nHelper.operationSuccess());
+                }
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
+            }
         }
 
         /**

@@ -40,7 +40,7 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </ZKACLTypeComboBox>
-    <FlexVBox fx:id="permsBox">
+    <FlexVBox fx:id="permsBox" managedBindVisible="true">
         <InfoLabel text="%zk.aclScope">
             <VBox.margin>
                 <Insets left="30" top="10"/>

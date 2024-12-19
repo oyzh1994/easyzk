@@ -374,18 +374,21 @@ public class ZKClient {
      */
     private void _close() {
         try {
+            // 关闭树监听
+            this.closeTreeCache();
+            // 关闭连接
             if (this.framework != null) {
                 TaskManager.startTimeout(this.framework::close, 500);
-                this.framework = null;
+                // this.framework = null;
             }
+            // 清理变量
+            this.auths = null;
+            this.initialized = false;
             // 销毁端口转发
             if (this.connect.isSSHForward()) {
                 this.sshForwarder.destroy();
             }
-            this.closeTreeCache();
-            this.initialized = false;
             // ZKAuthUtil.removeAuthed(this);
-            this.auths = null;
             JulLog.info("zkClient closed.");
         } catch (Exception ex) {
             JulLog.warn("zkClient close error.", ex);

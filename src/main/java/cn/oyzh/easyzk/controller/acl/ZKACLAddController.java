@@ -178,7 +178,7 @@ public class ZKACLAddController extends StageController {
     /**
      * 节点互斥器
      */
-    private final NodeMutexes nodeGroupManage = new NodeMutexes();
+    private final NodeMutexes nodeMutexes = new NodeMutexes();
 
     /**
      * 认证信息储存
@@ -435,50 +435,35 @@ public class ZKACLAddController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
-        // 获取初始化对象
-        this.zkItem = this.getWindowProp("zkItem");
-        this.zkClient = this.getWindowProp("zkClient");
-        // 初始化摘要数据
-        this.initDigestData();
-
-        // 绑定事件
-        this.permsBox.managedProperty().bind(this.permsBox.visibleProperty());
-
+    protected void bindListeners() {
+        super.bindListeners();
         // 节点互斥
-        this.nodeGroupManage.addNodes(this.ip1ACL, this.ip2ACL, this.digest1ACL, this.digest2ACL, this.digest3ACL);
-        this.nodeGroupManage.manageBindVisible();
+        this.nodeMutexes.addNodes(this.ip1ACL, this.ip2ACL, this.digest1ACL, this.digest2ACL, this.digest3ACL);
+        this.nodeMutexes.manageBindVisible();
 
         // 权限类型切换事件
         this.aclType.selectedIndexChanged((observableValue, number, t1) -> {
             // world权限
             if (t1.intValue() == 0) {
                 this.permsBox.display();
-                this.nodeGroupManage.visible(null);
+                this.nodeMutexes.visible(null);
             } else if (t1.intValue() == 1) {// digest权限1
                 this.permsBox.display();
-                this.nodeGroupManage.visible(this.digest1ACL);
+                this.nodeMutexes.visible(this.digest1ACL);
             } else if (t1.intValue() == 2) {// digest权限2
                 this.permsBox.display();
-                this.nodeGroupManage.visible(this.digest2ACL);
+                this.nodeMutexes.visible(this.digest2ACL);
             } else if (t1.intValue() == 3) {// digest权限3
                 this.permsBox.display();
-                this.nodeGroupManage.visible(this.digest3ACL);
+                this.nodeMutexes.visible(this.digest3ACL);
             } else if (t1.intValue() == 4) {// 单IP权限
                 this.permsBox.display();
-                this.nodeGroupManage.visible(this.ip1ACL);
+                this.nodeMutexes.visible(this.ip1ACL);
             } else if (t1.intValue() == 5) {// 多IP权限
                 this.permsBox.disappear();
-                this.nodeGroupManage.visible(this.ip2ACL);
+                this.nodeMutexes.visible(this.ip2ACL);
             }
         });
-
-        // 如果已有world权限，则默认选中摘要权限
-        if (this.zkItem.hasWorldACL()) {
-            this.aclType.select(1);
-        }
-
         // 文本监听器
         ChangeListener<String> info1listener = (observableValue, s, t1) -> {
             String user = this.digestInfo1User.getText().trim();
@@ -502,6 +487,25 @@ public class ZKACLAddController extends StageController {
             info1listener.changed(observableValue, s, t1);
         });
         this.digestInfo1Password.addTextChangeListener(info1listener);
+    }
+
+    @Override
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        // 获取初始化对象
+        this.zkItem = this.getWindowProp("zkItem");
+        this.zkClient = this.getWindowProp("zkClient");
+        // 初始化摘要数据
+        this.initDigestData();
+
+        // // 绑定事件
+        // this.permsBox.managedProperty().bind(this.permsBox.visibleProperty());
+
+        // 如果已有world权限，则默认选中摘要权限
+        if (this.zkItem.hasWorldACL()) {
+            this.aclType.select(1);
+        }
+
         this.nodePath.setText(this.zkItem.decodeNodePath());
         this.stage.hideOnEscape();
     }

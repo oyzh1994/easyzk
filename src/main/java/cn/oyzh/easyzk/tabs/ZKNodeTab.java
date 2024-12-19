@@ -482,7 +482,7 @@ public class ZKNodeTab extends DynamicTab {
          * 添加权限
          */
         @FXML
-        private void toAddACL() {
+        private void addACL() {
             StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class, this.window());
             fxView.setProp("zkItem", this.activeItem);
             fxView.setProp("zkClient", this.activeItem.client());
@@ -582,8 +582,11 @@ public class ZKNodeTab extends DynamicTab {
                 Stat stat = this.activeItem.deleteACL(acl);
                 if (stat != null) {
                     this.aclTableView.removeItem(acl);
+                    // 重载权限和页面
                     if (this.aclTableView.isItemEmpty()) {
                         this.reloadACL();
+                    } else {// 仅重载权限
+                        this.activeItem.refreshACL();
                     }
                 } else {
                     MessageBox.warn(I18nHelper.operationFail());

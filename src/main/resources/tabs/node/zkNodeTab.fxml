@@ -263,7 +263,7 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FXToggleSwitch>
-                    <AddSVGGlyph size="16" onMousePrimaryClicked="#toAddACL">
+                    <AddSVGGlyph size="16" onMousePrimaryClicked="#addACL">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>

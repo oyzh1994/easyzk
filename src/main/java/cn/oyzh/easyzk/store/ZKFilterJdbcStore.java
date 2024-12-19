@@ -1,13 +1,14 @@
 package cn.oyzh.easyzk.store;
 
-import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.common.dto.Paging;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStore;
 import cn.oyzh.store.jdbc.PageParam;
 import cn.oyzh.store.jdbc.QueryParam;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.store.jdbc.QueryParams;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,7 @@ public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
     public boolean replace(ZKFilter model) {
         boolean result = false;
         if (model != null) {
-            if (this.exist(model.getKw())) {
+            if (this.exist(model.getKw(), model.getIid())) {
                 result = this.update(model);
             } else {
                 result = this.insert(model);
@@ -50,33 +51,45 @@ public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
         return result;
     }
 
-    public boolean delete(String kw) {
-        if (StringUtil.isNotBlank(kw)) {
+    // public boolean delete(String kw) {
+    //     if (StringUtil.isNotBlank(kw)) {
+    //         DeleteParam param = new DeleteParam();
+    //         param.addQueryParam(new QueryParam("kw", kw));
+    //         return this.delete(param);
+    //     }
+    //     return false;
+    // }
+
+    public boolean deleteByIid(String iid) {
+        if (StringUtil.isNotBlank(iid)) {
             DeleteParam param = new DeleteParam();
-            param.addQueryParam(new QueryParam("kw", kw));
+            param.addQueryParam(new QueryParam("iid", iid));
             return this.delete(param);
         }
         return false;
     }
 
-    public Paging<ZKFilter> getPage(long pageNo, int limit, String kw) {
-        PageParam pageParam = new PageParam(limit, pageNo * limit);
-        List<ZKFilter> list = this.selectPage(kw, List.of("kw"), pageParam);
-        Paging<ZKFilter> paging;
-        if (CollectionUtil.isNotEmpty(list)) {
-            long count = this.selectCount(kw, List.of("kw"));
-            paging = new Paging<>(list, limit, count);
-            paging.currentPage(pageNo);
-        } else {
-            paging = new Paging<>(limit);
-        }
-        return paging;
-    }
+    // public Paging<ZKFilter> getPage(long pageNo, int limit, String kw, String iid) {
+    //     QueryParam queryParam = new QueryParam("iid", iid);
+    //     PageParam pageParam = new PageParam(limit, pageNo * limit);
+    //     pageParam.addQueryParam(queryParam);
+    //     List<ZKFilter> list = this.selectPage(kw, List.of("kw"), pageParam);
+    //     Paging<ZKFilter> paging;
+    //     if (CollectionUtil.isNotEmpty(list)) {
+    //         long count = this.selectCount(kw, List.of("kw"), QueryParams.of(queryParam));
+    //         paging = new Paging<>(list, limit, count);
+    //         paging.currentPage(pageNo);
+    //     } else {
+    //         paging = new Paging<>(limit);
+    //     }
+    //     return paging;
+    // }
 
-    public boolean exist(String kw) {
+    public boolean exist(String kw, String iid) {
         if (StringUtil.isNotBlank(kw)) {
             Map<String, Object> params = new HashMap<>();
             params.put("kw", kw);
+            params.put("iid", iid);
             return super.exist(params);
         }
         return false;
@@ -90,5 +103,9 @@ public class ZKFilterJdbcStore extends JdbcStore<ZKFilter> {
     @Override
     protected Class<ZKFilter> modelClass() {
         return ZKFilter.class;
+    }
+
+    public Paging<ZKFilter> getPage(long pageNo, int i, String text) {
+        return null;
     }
 }

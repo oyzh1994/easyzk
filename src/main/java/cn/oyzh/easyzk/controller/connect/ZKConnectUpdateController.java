@@ -1,29 +1,41 @@
 package cn.oyzh.easyzk.controller.connect;
 
-import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
-import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
-import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
+import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.domain.ZKSSHConnect;
+import cn.oyzh.easyzk.dto.ZKFilterVO;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
+import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.util.ZKConnectUtil;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.gui.text.field.NumberTextField;
+import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
+import cn.oyzh.store.jdbc.QueryParam;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * zk信息修改业务
@@ -151,16 +163,27 @@ public class ZKConnectUpdateController extends StageController {
     @FXML
     private FlexHBox sshAuthBox;
 
-    // /**
-    //  * ssh超时组件
-    //  */
-    // @FXML
-    // private FlexHBox sshTimeoutBox;
+    /**
+     * zk连接储存对象
+     */
+    private final ZKConnectJdbcStore connectStore = ZKConnectJdbcStore.INSTANCE;
 
-    // /**
-    //  * zk连接储存对象
-    //  */
-    // private final ZKInfoStore infoStore = ZKInfoStore.INSTANCE;
+    /**
+     * 搜索词汇
+     */
+    @FXML
+    private ClearableTextField filterSearchKW;
+
+    /**
+     * 数据列表
+     */
+    @FXML
+    private FlexTableView<ZKFilterVO> filterTable;
+
+    /**
+     * zk过滤配置储存
+     */
+    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
 
     /**
      * 获取连接地址
@@ -248,8 +271,10 @@ public class ZKConnectUpdateController extends StageController {
         this.zkInfo.setConnectTimeOut(connectTimeOut.intValue());
         this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
         this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
+        // 过滤列表
+        this.zkInfo.setFilters((List) this.filterTable.getItems());
         // 保存数据
-        if (ZKConnectJdbcStore.INSTANCE.replace(this.zkInfo)) {
+        if (this.connectStore.replace(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
             MessageBox.okToast(I18nHelper.operationSuccess());
             this.closeWindow();
@@ -284,6 +309,8 @@ public class ZKConnectUpdateController extends StageController {
                 this.sshTimeout.disable();
             }
         });
+        // 过滤监听
+        this.filterSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initFilterDataList());
     }
 
     @Override
@@ -308,6 +335,7 @@ public class ZKConnectUpdateController extends StageController {
             this.sshTimeout.setValue(connectInfo.getTimeout());
             this.sshPassword.setText(connectInfo.getPassword());
         }
+        this.initFilterDataList();
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }
@@ -315,5 +343,64 @@ public class ZKConnectUpdateController extends StageController {
     @Override
     public String getViewTitle() {
         return I18nResourceBundle.i18nString("base.title.info.update");
+    }
+
+    private List<ZKFilter> filters;
+
+    /**
+     * 初始化数据列表
+     */
+    private void initFilterDataList() {
+        List<ZKFilter> list = new ArrayList<>();
+        if (this.filters == null) {
+            this.filters = this.filterStore.selectList(QueryParam.of("iid", this.zkInfo.getId()));
+            list = this.filters;
+        } else {
+            String kw = this.filterSearchKW.getText();
+            for (ZKFilter filter : this.filters) {
+                if (StringUtil.containsIgnoreCase(filter.getKw(), kw)) {
+                    list.add(filter);
+                }
+            }
+        }
+        this.filterTable.setItem(ZKFilterVO.convert(list));
+    }
+
+    /**
+     * 添加过滤
+     */
+    @FXML
+    private void addFilter() {
+        StageManager.showStage(ZKFilterAddController.class);
+    }
+
+    /**
+     * 删除过滤
+     */
+    @FXML
+    private void deleteFilter() {
+        ZKFilter filter = this.filterTable.getSelectedItem();
+        if (filter == null) {
+            return;
+        }
+        if (MessageBox.confirm(I18nHelper.deleteData())) {
+            if (this.filterStore.delete(filter)) {
+                this.filterTable.removeItem(filter);
+            } else {
+                MessageBox.warn(I18nHelper.operationFail());
+            }
+        }
+    }
+
+
+    /**
+     * 过滤新增事件
+     */
+    @EventSubscribe
+    private void filterAdded(ZKFilterAddedEvent event) {
+        ZKFilter filter = event.data();
+        filter.setIid(this.zkInfo.getId());
+        this.filters.add(filter);
+        this.initFilterDataList();
     }
 }

@@ -1,16 +1,17 @@
 package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKDataHistory;
+import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.event.EventUtil;
 import cn.oyzh.fx.gui.event.Layout1Event;
 import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
-import cn.oyzh.event.EventUtil;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -286,8 +287,10 @@ public class ZKEventUtil {
     /**
      * 添加过滤配置
      */
-    public static void filterAdded() {
-        EventUtil.post(new ZKFilterAddedEvent());
+    public static void filterAdded(ZKFilter filter) {
+        ZKFilterAddedEvent event = new ZKFilterAddedEvent();
+        event.data(filter);
+        EventUtil.post(event);
     }
 
     /**

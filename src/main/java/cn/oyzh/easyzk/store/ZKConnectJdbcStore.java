@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.store;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStore;
@@ -29,33 +30,44 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
         return list;
     }
 
-    public boolean replace(ZKConnect info) {
+    public boolean replace(ZKConnect zkConnect) {
         boolean result = false;
-        if (info != null) {
-            if (super.exist(info.getId())) {
-                result = this.update(info);
+        if (zkConnect != null) {
+            if (super.exist(zkConnect.getId())) {
+                result = this.update(zkConnect);
             } else {
-                result = this.insert(info);
+                result = this.insert(zkConnect);
             }
 
-            // ssh信息处理
-            ZKSSHConnect connect = info.getSshConnect();
-            if (info.getSshConnect() != null) {
-                ZKSSHConnectJdbcStore.INSTANCE.replace(connect);
+            // ssh处理
+            ZKSSHConnect sshConnect = zkConnect.getSshConnect();
+            if (sshConnect != null) {
+                ZKSSHConnectJdbcStore.INSTANCE.replace(sshConnect);
             } else {
                 DeleteParam param = new DeleteParam();
-                param.addQueryParam(new QueryParam("iid", info.getId()));
-                ZKSSHConnectJdbcStore.INSTANCE.delete(connect);
+                param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
+                ZKSSHConnectJdbcStore.INSTANCE.delete(param);
             }
 
             // 收藏处理
-            List<String> collects = info.getCollects();
+            List<String> collects = zkConnect.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
                 for (String collect : collects) {
-                    ZKCollectJdbcStore.INSTANCE.replace(info.getId(), collect);
+                    ZKCollectJdbcStore.INSTANCE.replace(zkConnect.getId(), collect);
                 }
             } else {
-                ZKCollectJdbcStore.INSTANCE.delete(info.getId());
+                ZKCollectJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
+            }
+
+            // 过滤处理
+            List<ZKFilter> filters = zkConnect.getFilters();
+            if (CollectionUtil.isNotEmpty(filters)) {
+                for (ZKFilter filter : filters) {
+                    filter.setIid(zkConnect.getId());
+                    ZKFilterJdbcStore.INSTANCE.replace(filter);
+                }
+            } else {
+                ZKFilterJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
             }
         }
         return result;

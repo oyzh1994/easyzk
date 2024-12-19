@@ -33,6 +33,13 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
     private String uid;
 
     /**
+     * iid
+     * @see ZKConnect
+     */
+    @Column
+    private String iid;
+
+    /**
      * 关键词
      */
     @Column

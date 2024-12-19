@@ -1,17 +1,17 @@
 package cn.oyzh.easyzk.controller.filter;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -74,14 +74,14 @@ public class ZKFilterAddController extends StageController {
             filter.setKw(kw);
             filter.setEnable(this.enable.isSelected());
             filter.setPartMatch(this.matchMode.isSelected());
-            if (this.filterStore.replace(filter)) {
-                ZKEventUtil.filterAdded();
-                ZKEventUtil.treeChildFilter();
+            // if (this.filterStore.replace(filter)) {
+                ZKEventUtil.filterAdded(filter);
+                // ZKEventUtil.treeChildFilter();
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();
-            } else {
-                MessageBox.warn(I18nHelper.operationFail());
-            }
+            // } else {
+            //     MessageBox.warn(I18nHelper.operationFail());
+            // }
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

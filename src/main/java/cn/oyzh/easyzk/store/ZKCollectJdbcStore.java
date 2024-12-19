@@ -45,7 +45,7 @@ public class ZKCollectJdbcStore extends JdbcStore<ZKCollect> {
         return false;
     }
 
-    public boolean delete(String iid) {
+    public boolean deleteByIid(String iid) {
         if (StringUtil.isEmpty(iid)) {
             Map<String, Object> params = new HashMap<>();
             params.put("iid", iid);

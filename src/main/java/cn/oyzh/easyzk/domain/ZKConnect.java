@@ -95,6 +95,12 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     private List<String> collects;
 
     /**
+     * 过滤列表
+     */
+    @Getter
+    private List<ZKFilter> filters;
+
+    /**
      * 会话超时时间
      */
     @Column

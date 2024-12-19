@@ -979,6 +979,7 @@ public class ZKNodeTab extends DynamicTab {
                     this.nodeData.setEditable(false);
                 } else if (this.format.isRawFormat()) {
                     this.showData(RichDataType.RAW);
+                    this.nodeData.setEditable(this.nodeData.getRealType() == RichDataType.STRING);
                 }
             });
             // 节点内容变更

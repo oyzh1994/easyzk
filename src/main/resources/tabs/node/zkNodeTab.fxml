@@ -156,17 +156,6 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </UnLockSVGGlyph>
-                    <!-- <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="5" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </CollectSVGGlyph> -->
-                    <!-- <UnCollectSVGGlyph managedBindVisible="true" visible="false" fx:id="unCollect" size="15" -->
-                    <!--                    onMousePrimaryClicked="#unCollect"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="5" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </UnCollectSVGGlyph> -->
                     <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
                         <HBox.margin>
                             <Insets left="5" top="7"/>

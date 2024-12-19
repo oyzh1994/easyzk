@@ -1,7 +1,9 @@
 package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import lombok.Getter;
@@ -13,12 +15,12 @@ import java.util.List;
  * @author oyzh
  * @since 2024-12-19
  */
-public class ZKFilterTableView extends FlexTableView<ZKFilterVO> {
+public class ZKAuthTableView extends FlexTableView<ZKAuthVO> {
 
     /**
      * 当前过滤列表
      */
-    private List<ZKFilterVO> list;
+    private List<ZKAuthVO> list;
 
     /**
      * 关键字
@@ -29,8 +31,8 @@ public class ZKFilterTableView extends FlexTableView<ZKFilterVO> {
         return list != null;
     }
 
-    public void setFilters(List<ZKFilter> filters) {
-        this.list = ZKFilterVO.convert(filters);
+    public void setAuths(List<ZKAuth> auths) {
+        this.list = ZKAuthVO.convert(auths);
         this.initDataList();
     }
 
@@ -39,33 +41,34 @@ public class ZKFilterTableView extends FlexTableView<ZKFilterVO> {
         this.initDataList();
     }
 
-    public List<ZKFilter> getFilters() {
-        List<ZKFilter> list = new ArrayList<>();
-        for (ZKFilterVO filterVO : this.list) {
-            if (filterVO != null && StringUtil.isNotBlank(filterVO.getKw())) {
-                list.add(filterVO);
+    public List<ZKAuth> getAuths() {
+        List<ZKAuth> list = new ArrayList<>();
+        for (ZKAuthVO authVO : this.list) {
+            if (authVO != null && StringUtil.isNotBlank(authVO.getUser()) && StringUtil.isNotBlank(authVO.getPassword())) {
+                list.add(authVO);
             }
         }
         return list;
     }
 
     private void initDataList() {
-        List<ZKFilterVO> list = new ArrayList<>();
+        List<ZKAuthVO> list = new ArrayList<>();
         if (this.list != null) {
-            for (ZKFilterVO filter : this.list) {
-                if (StringUtil.isBlank(this.kw) || StringUtil.containsIgnoreCase(filter.getKw(), this.kw)) {
-                    list.add(filter);
+            for (ZKAuthVO authVO : this.list) {
+                if (StringUtil.isBlank(this.kw) || StringUtil.containsIgnoreCase(authVO.getUser(), this.kw)
+                        || StringUtil.containsIgnoreCase(authVO.getPassword(), this.kw)) {
+                    list.add(authVO);
                 }
             }
         }
         super.setItem(list);
     }
 
-    public void addFilter(ZKFilterVO filter) {
+    public void addAuth(ZKAuthVO authVO) {
         if (this.list == null) {
             this.list = new ArrayList<>();
         }
-        this.list.add(filter);
+        this.list.add(authVO);
         this.initDataList();
     }
 

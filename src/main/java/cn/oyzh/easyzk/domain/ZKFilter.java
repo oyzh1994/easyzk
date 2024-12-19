@@ -67,6 +67,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
      */
     public ZKFilter copy(@NonNull ZKFilter filter) {
         this.kw = filter.kw;
+        this.iid = filter.iid;
         this.uid = filter.uid;
         this.enable = filter.enable;
         this.partMatch = filter.partMatch;

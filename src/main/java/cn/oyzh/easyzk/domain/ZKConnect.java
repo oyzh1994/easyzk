@@ -89,6 +89,12 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     private Boolean listen;
 
     /**
+     * 认证列表
+     */
+    @Getter
+    private List<ZKAuth> auths;
+
+    /**
      * 收藏的节点
      */
     @Getter

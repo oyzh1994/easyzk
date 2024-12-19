@@ -6,9 +6,9 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
@@ -151,7 +151,7 @@ public class ZKDataMigrationHandler extends DataHandler {
             this.message(I18nHelper.foundAuth() + " : " + auths.size());
             if ("1".equals(this.dataPolicy)) {
                 for (ZKAuth auth : auths) {
-                    if (!this.authStore.exist(auth.getUser(), auth.getPassword())) {
+                    if (!this.authStore.exist(auth.getUser(), auth.getPassword(), auth.getIid())) {
                         this.authStore.replace(auth);
                         this.message(I18nHelper.auth() + " : [" + auth.getUser() + "," + auth.getPassword() + "] " + I18nHelper.added());
                         this.processedIncr();

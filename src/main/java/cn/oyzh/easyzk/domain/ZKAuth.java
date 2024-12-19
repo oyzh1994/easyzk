@@ -34,6 +34,13 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
     private String uid;
 
     /**
+     * iid
+     * @see ZKConnect
+     */
+    @Column
+    private String iid;
+
+    /**
      * 用户名
      */
     @Column
@@ -100,6 +107,7 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
      * @return 当前认证信息
      */
     public ZKAuth copy(@NonNull ZKAuth auth) {
+        this.setUid(auth.iid);
         this.setUid(auth.uid);
         this.setUser(auth.user);
         this.setEnable(auth.enable);

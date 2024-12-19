@@ -1,57 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.gui.label.InfoLabel?>
-<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.gui.toggle.EnableToggleSwitch?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.filter.ZKFilterAddController" realWidth="750" realHeight="320">
-    <InfoLabel text="%base.kw">
-        <VBox.margin>
-            <Insets left="30" top="10"/>
-        </VBox.margin>
-    </InfoLabel>
-    <ClearableTextField fx:id="kw" realHeight="30" flexWidth="100% - 140" require="true" tipText="%base.searchKWTip">
-        <VBox.margin>
-            <Insets left="30" top="5"/>
-        </VBox.margin>
-    </ClearableTextField>
-    <InfoLabel text="%base.matchMode">
-        <VBox.margin>
-            <Insets left="30" top="10"/>
-        </VBox.margin>
-    </InfoLabel>
-    <FXToggleSwitch fx:id="matchMode" selectedText="%base.matchFuzzy" unselectedText="%base.matchFull" selected="true">
-        <VBox.margin>
-            <Insets left="30" top="10"/>
-        </VBox.margin>
-    </FXToggleSwitch>
-    <InfoLabel text="%base.enableConfig">
-        <VBox.margin>
-            <Insets left="30" top="10"/>
-        </VBox.margin>
-    </InfoLabel>
-    <EnableToggleSwitch fx:id="enable" selected="true">
-        <VBox.margin>
-            <Insets left="30" top="10"/>
-        </VBox.margin>
-    </EnableToggleSwitch>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#addFilter">
-            <HBox.margin>
-                <Insets left="30" top="20"/>
-            </HBox.margin>
-        </SubmitButton>
-        <CancelButton>
-            <HBox.margin>
-                <Insets left="15" top="20"/>
-            </HBox.margin>
-        </CancelButton>
-    </FlexHBox>
-</FlexVBox>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <?import cn.oyzh.fx.gui.button.CancelButton?> -->
+<!-- <?import cn.oyzh.fx.gui.button.SubmitButton?> -->
+<!-- <?import cn.oyzh.fx.gui.label.InfoLabel?> -->
+<!-- <?import cn.oyzh.fx.gui.text.field.ClearableTextField?> -->
+<!-- <?import cn.oyzh.fx.gui.toggle.EnableToggleSwitch?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?> -->
+<!-- <?import javafx.geometry.Insets?> -->
+<!-- <?import javafx.scene.layout.HBox?> -->
+<!-- <?import javafx.scene.layout.VBox?> -->
+<!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!--           fx:controller="cn.oyzh.easyzk.controller.filter.ZKFilterAddController" realWidth="750" realHeight="320"> -->
+<!--     <InfoLabel text="%base.kw"> -->
+<!--         <VBox.margin> -->
+<!--             <Insets left="30" top="10"/> -->
+<!--         </VBox.margin> -->
+<!--     </InfoLabel> -->
+<!--     <ClearableTextField fx:id="kw" realHeight="30" flexWidth="100% - 140" require="true" tipText="%base.searchKWTip"> -->
+<!--         <VBox.margin> -->
+<!--             <Insets left="30" top="5"/> -->
+<!--         </VBox.margin> -->
+<!--     </ClearableTextField> -->
+<!--     <InfoLabel text="%base.matchMode"> -->
+<!--         <VBox.margin> -->
+<!--             <Insets left="30" top="10"/> -->
+<!--         </VBox.margin> -->
+<!--     </InfoLabel> -->
+<!--     <FXToggleSwitch fx:id="matchMode" selectedText="%base.matchFuzzy" unselectedText="%base.matchFull" selected="true"> -->
+<!--         <VBox.margin> -->
+<!--             <Insets left="30" top="10"/> -->
+<!--         </VBox.margin> -->
+<!--     </FXToggleSwitch> -->
+<!--     <InfoLabel text="%base.enableConfig"> -->
+<!--         <VBox.margin> -->
+<!--             <Insets left="30" top="10"/> -->
+<!--         </VBox.margin> -->
+<!--     </InfoLabel> -->
+<!--     <EnableToggleSwitch fx:id="enable" selected="true"> -->
+<!--         <VBox.margin> -->
+<!--             <Insets left="30" top="10"/> -->
+<!--         </VBox.margin> -->
+<!--     </EnableToggleSwitch> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         <SubmitButton onAction="#addFilter"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="30" top="20"/> -->
+<!--             </HBox.margin> -->
+<!--         </SubmitButton> -->
+<!--         <CancelButton> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="15" top="20"/> -->
+<!--             </HBox.margin> -->
+<!--         </CancelButton> -->
+<!--     </FlexHBox> -->
+<!-- </FlexVBox> -->

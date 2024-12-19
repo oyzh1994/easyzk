@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.controller.connect;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
@@ -360,14 +359,6 @@ public class ZKConnectAddController extends StageController {
             }
         }
         this.filterTable.setItem(ZKFilterVO.convert(list));
-    }
-
-    /**
-     * 添加过滤
-     */
-    @FXML
-    private void addFilter() {
-        StageManager.showStage(ZKFilterAddController.class);
     }
 
     /**

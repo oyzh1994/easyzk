@@ -1,52 +1,52 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
 
-<?import cn.oyzh.fx.gui.page.PageBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
-<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<FlexVBox styleClass="root" flexWidth="100%" flexHeight="100%"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.oyzh.easyzk.tabs.ZKAuthTab.ZKAuthTabController">
-    <FlexHBox realHeight="50" flexWidth="100%">
-        <ClearableTextField realHeight="26" fx:id="searchKeyWord" realWidth="280" tipText="%base.searchKWTip">
-            <HBox.margin>
-                <Insets left="5" top="14"/>
-            </HBox.margin>
-        </ClearableTextField>
-        <AddSVGGlyph size="16" onMousePrimaryClicked="#add">
-            <HBox.margin>
-                <Insets left="5" top="18"/>
-            </HBox.margin>
-        </AddSVGGlyph>
-        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#delete">
-            <HBox.margin>
-                <Insets left="5" top="18"/>
-            </HBox.margin>
-        </DeleteSVGGlyph>
-        <CopySVGGlyph size="16" onMousePrimaryClicked="#copy">
-            <HBox.margin>
-                <Insets left="5" top="18"/>
-            </HBox.margin>
-        </CopySVGGlyph>
-        <PageBox hideIfLessPage="false" onNextClicked="#nextPage" onPrevClicked="#prevPage" fx:id="pagePane"
-                 realHeight="26" realWidth="300">
-            <HBox.margin>
-                <Insets left="5" top="14"/>
-            </HBox.margin>
-        </PageBox>
-    </FlexHBox>
-    <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable" copyCellDataOnDoubleClicked="true">
-        <columns>
-            <FlexTableColumn flexWidth="10%" text="%base.No" valueName="index"/>
-            <FlexTableColumn flexWidth="30%" text="%base.userName" valueName="user"/>
-            <FlexTableColumn flexWidth="40%" text="%base.password" valueName="password" sortable="false"/>
-            <FlexTableColumn flexWidth="20% - 15" text="%base.status" valueName="statusControl" sortable="false"/>
-        </columns>
-    </FlexTableView>
-</FlexVBox>
+<!-- <?import cn.oyzh.fx.gui.page.PageBox?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?> -->
+<!-- <?import cn.oyzh.fx.gui.text.field.ClearableTextField?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.table.FlexTableView?> -->
+<!-- <?import javafx.geometry.Insets?> -->
+<!-- <?import javafx.scene.layout.HBox?> -->
+<!-- <FlexVBox styleClass="root" flexWidth="100%" flexHeight="100%" -->
+<!--           xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.oyzh.easyzk.tabs.ZKAuthTab.ZKAuthTabController"> -->
+<!--     <FlexHBox realHeight="50" flexWidth="100%"> -->
+<!--         <ClearableTextField realHeight="26" fx:id="searchKeyWord" realWidth="280" tipText="%base.searchKWTip"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="14"/> -->
+<!--             </HBox.margin> -->
+<!--         </ClearableTextField> -->
+<!--         <AddSVGGlyph size="16" onMousePrimaryClicked="#add"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </AddSVGGlyph> -->
+<!--         <DeleteSVGGlyph size="16" onMousePrimaryClicked="#delete"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </DeleteSVGGlyph> -->
+<!--         <CopySVGGlyph size="16" onMousePrimaryClicked="#copy"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </CopySVGGlyph> -->
+<!--         <PageBox hideIfLessPage="false" onNextClicked="#nextPage" onPrevClicked="#prevPage" fx:id="pagePane" -->
+<!--                  realHeight="26" realWidth="300"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="14"/> -->
+<!--             </HBox.margin> -->
+<!--         </PageBox> -->
+<!--     </FlexHBox> -->
+<!--     <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable" copyCellDataOnDoubleClicked="true"> -->
+<!--         <columns> -->
+<!--             <FlexTableColumn flexWidth="10%" text="%base.No" valueName="index"/> -->
+<!--             <FlexTableColumn flexWidth="30%" text="%base.userName" valueName="user"/> -->
+<!--             <FlexTableColumn flexWidth="40%" text="%base.password" valueName="password" sortable="false"/> -->
+<!--             <FlexTableColumn flexWidth="20% - 15" text="%base.status" valueName="statusControl" sortable="false"/> -->
+<!--         </columns> -->
+<!--     </FlexTableView> -->
+<!-- </FlexVBox> -->

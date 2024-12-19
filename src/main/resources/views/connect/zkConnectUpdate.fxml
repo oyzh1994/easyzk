@@ -23,6 +23,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
+<?import cn.oyzh.easyzk.fx.ZKAuthTableView?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController" realWidth="750" realHeight="400">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
@@ -197,6 +199,42 @@
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="%base.auth">
+            <FlexVBox  flexWidth="100%" flexHeight="100%">
+                <FlexHBox realHeight="50" flexWidth="100%">
+                    <ClearableTextField realHeight="26" fx:id="authSearchKW" realWidth="280" tipText="%base.searchKWTip">
+                        <HBox.margin>
+                            <Insets left="30" top="14"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <AddSVGGlyph size="16" onMousePrimaryClicked="#addAuth">
+                        <HBox.margin>
+                            <Insets left="5" top="18"/>
+                        </HBox.margin>
+                    </AddSVGGlyph>
+                    <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteAuth">
+                        <HBox.margin>
+                            <Insets left="5" top="18"/>
+                        </HBox.margin>
+                    </DeleteSVGGlyph>
+                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyAuth">
+                        <HBox.margin>
+                            <Insets left="5" top="18"/>
+                        </HBox.margin>
+                    </CopySVGGlyph>
+                </FlexHBox>
+                <ZKAuthTableView flexHeight="100% - 50" flexWidth="100% - 50" fx:id="authTable" copyCellDataOnDoubleClicked="true">
+                    <columns>
+                        <FlexTableColumn flexWidth="35%" text="%base.userName" valueName="userControl"/>
+                        <FlexTableColumn flexWidth="45%" text="%base.password" valueName="passwordControl" sortable="false"/>
+                        <FlexTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl" sortable="false"/>
+                    </columns>
+                    <VBox.margin>
+                        <Insets left="30"/>
+                    </VBox.margin>
+                </ZKAuthTableView>
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.filter">

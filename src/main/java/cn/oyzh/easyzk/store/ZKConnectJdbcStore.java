@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
@@ -57,6 +58,16 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
                 }
             } else {
                 ZKCollectJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
+            }
+
+            // 认证处理
+            ZKAuthJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
+            List<ZKAuth> auths = zkConnect.getAuths();
+            if (CollectionUtil.isNotEmpty(auths)) {
+                for (ZKAuth auth : auths) {
+                    auth.setIid(zkConnect.getId());
+                    ZKAuthJdbcStore.INSTANCE.replace(auth);
+                }
             }
 
             // 过滤处理

@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.event.ZKAuthMainEvent;
 import cn.oyzh.easyzk.event.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.ZKHistoryRestoreEvent;
@@ -201,27 +200,27 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         }
     }
 
-    /**
-     * 获取认证tab
-     *
-     * @return 认证tab
-     */
-    public ZKAuthTab getAuthTab() {
-        return super.getTab(ZKAuthTab.class);
-    }
-
-    /**
-     * 初始化认证tab
-     */
-    @EventSubscribe
-    private void authMain(ZKAuthMainEvent event) {
-        ZKAuthTab tab = this.getAuthTab();
-        if (tab == null) {
-            tab = new ZKAuthTab();
-            super.addTab(tab);
-        }
-        this.select(tab);
-    }
+    // /**
+    //  * 获取认证tab
+    //  *
+    //  * @return 认证tab
+    //  */
+    // public ZKAuthTab getAuthTab() {
+    //     return super.getTab(ZKAuthTab.class);
+    // }
+    //
+    // /**
+    //  * 初始化认证tab
+    //  */
+    // @EventSubscribe
+    // private void authMain(ZKAuthMainEvent event) {
+    //     ZKAuthTab tab = this.getAuthTab();
+    //     if (tab == null) {
+    //         tab = new ZKAuthTab();
+    //         super.addTab(tab);
+    //     }
+    //     this.select(tab);
+    // }
 
     // /**
     //  * 获取过滤tab

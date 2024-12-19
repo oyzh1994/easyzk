@@ -21,13 +21,13 @@ import javafx.fxml.FXML;
  */
 public class HeaderController2 extends StageController {
 
-    /**
-     * 认证管理
-     */
-    @FXML
-    private void auth() {
-        ZKEventUtil.authMain();
-    }
+    // /**
+    //  * 认证管理
+    //  */
+    // @FXML
+    // private void auth() {
+    //     ZKEventUtil.authMain();
+    // }
 
     /**
      * 设置

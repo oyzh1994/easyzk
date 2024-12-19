@@ -218,12 +218,12 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 认证主页事件
-     */
-    public static void authMain() {
-        EventUtil.post(new ZKAuthMainEvent());
-    }
+    // /**
+    //  * 认证主页事件
+    //  */
+    // public static void authMain() {
+    //     EventUtil.post(new ZKAuthMainEvent());
+    // }
 
     // /**
     //  * 过滤主页事件

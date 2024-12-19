@@ -83,7 +83,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
-            server.setDisable(!this.client.initialized());
+            // server.setDisable(!this.client.initialized());
 
             items.add(closeConnect);
             items.add(editConnect);

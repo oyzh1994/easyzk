@@ -104,10 +104,10 @@ public class ZKClient {
      */
     private SSHForwarder sshForwarder;
 
-    /**
-     * 是否已初始化
-     */
-    private volatile boolean initialized;
+    // /**
+    //  * 是否已初始化
+    //  */
+    // private volatile boolean initialized;
 
     /**
      * 重试策略
@@ -136,21 +136,21 @@ public class ZKClient {
      */
     private final ZKTreeCacheSelector cacheSelector = new ZKTreeCacheSelector();
 
-    /**
-     * 初始化状态监听器
-     */
-    private final TreeCacheListener initializedListener = (c, e) -> {
-        if (e.getType() == TreeCacheEvent.Type.INITIALIZED) {
-            // 设置状态
-            this.initialized = true;
-            // 移除自身监听器
-            this.treeCache.getListenable().removeListener(this.initializedListener);
-            // 关闭节点监听器
-            if (!this.isEnableListen()) {
-                this.closeTreeCache();
-            }
-        }
-    };
+    // /**
+    //  * 初始化状态监听器
+    //  */
+    // private final TreeCacheListener initializedListener = (c, e) -> {
+    //     if (e.getType() == TreeCacheEvent.Type.INITIALIZED) {
+    //         // // 设置状态
+    //         // this.initialized = true;
+    //         // 移除自身监听器
+    //         this.treeCache.getListenable().removeListener(this.initializedListener);
+    //         // 关闭节点监听器
+    //         if (!this.isEnableListen()) {
+    //             this.closeTreeCache();
+    //         }
+    //     }
+    // };
 
     /**
      * 连接状态
@@ -225,12 +225,12 @@ public class ZKClient {
             if (this.cacheListener != null) {
                 this.treeCache = ZKTreeCacheUtil.build(this.framework, this.cacheListener.path(), this.cacheSelector);
                 this.treeCache.getListenable().addListener(this.cacheListener);
-                this.treeCache.getListenable().addListener(this.initializedListener);
+                // this.treeCache.getListenable().addListener(this.initializedListener);
                 this.treeCache.start();
-            } else if (!this.isEnableListen()) {// 未开启监听则只创建连接状态初始化监听器
-                this.treeCache = ZKTreeCacheUtil.build(this.framework, this.cacheSelector);
-                this.treeCache.getListenable().addListener(this.initializedListener);
-                this.treeCache.start();
+            // } else if (!this.isEnableListen()) {// 未开启监听则只创建连接状态初始化监听器
+            //     this.treeCache = ZKTreeCacheUtil.build(this.framework, this.cacheSelector);
+            //     this.treeCache.getListenable().addListener(this.initializedListener);
+            //     this.treeCache.start();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -378,12 +378,15 @@ public class ZKClient {
             this.closeTreeCache();
             // 关闭连接
             if (this.framework != null) {
+                // // 移除监听
+                // this.framework.watches().removeAll().forPath("/");
+                // 关闭连接
                 TaskManager.startTimeout(this.framework::close, 500);
                 // this.framework = null;
             }
             // 清理变量
             this.auths = null;
-            this.initialized = false;
+            // this.initialized = false;
             // 销毁端口转发
             if (this.connect.isSSHForward()) {
                 this.sshForwarder.destroy();
@@ -1080,14 +1083,14 @@ public class ZKClient {
         return servers;
     }
 
-    /**
-     * 是否已初始化完成
-     *
-     * @return 结果
-     */
-    public boolean initialized() {
-        return this.initialized && this.isConnected();
-    }
+    // /**
+    //  * 是否已初始化完成
+    //  *
+    //  * @return 结果
+    //  */
+    // public boolean initialized() {
+    //     return this.initialized && this.isConnected();
+    // }
 
     /**
      * 获取连接名称

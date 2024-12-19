@@ -1,13 +1,13 @@
 package cn.oyzh.easyzk.controller.connect;
 
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.easyzk.dto.ZKClusterNode;
+import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -64,6 +64,8 @@ public class ZKServerInfoController extends StageController {
     @FXML
     private FlexTableView<ZKClusterNode> clusterTable;
 
+    private ZKClient zkClient;
+
     @Override
     protected void bindListeners() {
         super.bindListeners();
@@ -72,35 +74,59 @@ public class ZKServerInfoController extends StageController {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        ZKClient zkClient = this.getWindowProp("zkClient");
-
-        // 客户端环境信息
-        List<ZKEnvNode> localEnviNodes = zkClient.localEnvNodes();
-        this.localEnvTable.setItem(localEnviNodes);
-
-        // 服务端环境信息
-        List<ZKEnvNode> serverEnviNodes = zkClient.serverEnvNodes();
-        this.serverEnvTable.setItem(serverEnviNodes);
-
-        // 服务信息
-        List<ZKEnvNode> srvrNodes = zkClient.srvrNodes();
-        this.srvrTable.setItem(srvrNodes);
-
-        // 状态信息
-        List<ZKEnvNode> statNodes = zkClient.statNodes();
-        this.statTable.setItem(statNodes);
-
-        // 配置信息
-        List<ZKEnvNode> confNodes = zkClient.confNodes();
-        this.confTable.setItem(confNodes);
-
-        // 集群信息
-        List<ZKClusterNode> clusterNodes = zkClient.clusterNodes();
-        this.clusterTable.setItem(clusterNodes);
+        this.zkClient = this.getWindowProp("zkClient");
+        this.refreshLocal();
+        this.refreshEnvi();
+        this.refreshSrvr();
+        this.refreshStat();
+        this.refreshConf();
+        this.refreshCluster();
     }
 
     @Override
     public String getViewTitle() {
         return I18nHelper.serverInfo();
+    }
+
+    @FXML
+    private void refreshLocal() {
+        // 客户端环境信息
+        List<ZKEnvNode> localEnviNodes = this.zkClient.localEnvNodes();
+        this.localEnvTable.setItem(localEnviNodes);
+    }
+
+    @FXML
+    private void refreshEnvi() {
+        // 服务端环境信息
+        List<ZKEnvNode> serverEnviNodes = this.zkClient.serverEnvNodes();
+        this.serverEnvTable.setItem(serverEnviNodes);
+    }
+
+    @FXML
+    private void refreshSrvr() {
+        // 服务信息
+        List<ZKEnvNode> srvrNodes = this.zkClient.srvrNodes();
+        this.srvrTable.setItem(srvrNodes);
+    }
+
+    @FXML
+    private void refreshStat() {
+        // 状态信息
+        List<ZKEnvNode> statNodes = this.zkClient.statNodes();
+        this.statTable.setItem(statNodes);
+    }
+
+    @FXML
+    private void refreshConf() {
+        // 配置信息
+        List<ZKEnvNode> confNodes = this.zkClient.confNodes();
+        this.confTable.setItem(confNodes);
+    }
+
+    @FXML
+    private void refreshCluster() {
+        // 集群信息
+        List<ZKClusterNode> clusterNodes = this.zkClient.clusterNodes();
+        this.clusterTable.setItem(clusterNodes);
     }
 }

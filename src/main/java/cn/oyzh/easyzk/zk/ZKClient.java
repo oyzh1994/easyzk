@@ -585,11 +585,15 @@ public class ZKClient {
      * @throws Exception 异常
      */
     public void addAuth(@NonNull String user, @NonNull String password) throws Exception {
-        ZooKeeper zooKeeper = this.framework.getZookeeperClient().getZooKeeper();
-        String data = user + ":" + password;
-        zooKeeper.addAuthInfo("digest", data.getBytes());
-        // ZKAuthUtil.setAuthed(this, user, password);
-        this.setAuthed(user, password);
+        ZooKeeper zooKeeper = this.getZooKeeper();
+        if (zooKeeper != null) {
+            String data = user + ":" + password;
+            zooKeeper.addAuthInfo("digest", data.getBytes());
+            // ZKAuthUtil.setAuthed(this, user, password);
+            this.setAuthed(user, password);
+        } else {
+            JulLog.warn("zooKeeper is null!");
+        }
     }
 
     /**
@@ -1098,6 +1102,9 @@ public class ZKClient {
      * @throws Exception 异常
      */
     public ZooKeeper getZooKeeper() throws Exception {
+        if (this.framework == null) {
+            return null;
+        }
         return this.framework.getZookeeperClient().getZooKeeper();
     }
 

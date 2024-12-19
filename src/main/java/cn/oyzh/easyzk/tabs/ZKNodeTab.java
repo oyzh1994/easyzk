@@ -652,7 +652,7 @@ public class ZKNodeTab extends DynamicTab {
                     builder.append(System.lineSeparator());
                 }
             }
-            ClipboardUtil.setStringAndTip(builder.toString(), "节点状态");
+            ClipboardUtil.setStringAndTip(builder.toString());
         }
 
         /**
@@ -891,6 +891,7 @@ public class ZKNodeTab extends DynamicTab {
                 this.aclViewSwitch.disable();
                 this.aclTableView.clearItems();
             } else {
+                this.aclViewSwitch.enable();
                 List<ZKACL> aclList = this.activeItem.acl();
                 // 获取分页控件
                 this.aclPaging = new Paging<>(aclList, 10);
@@ -1141,7 +1142,7 @@ public class ZKNodeTab extends DynamicTab {
         @EventSubscribe
         private void authAuthed(ZKAuthAuthedEvent event) {
             try {
-                if (event.success()) {
+                if (event.success() && event.client() == this.client) {
                     this.treeView.authChanged(event.auth());
                     this.flushTab();
                 }

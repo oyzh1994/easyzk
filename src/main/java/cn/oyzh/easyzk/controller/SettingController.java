@@ -293,8 +293,8 @@ public class SettingController extends StageController {
             // if (!this.setting.isAutoAuth()) {
             //     ZKAuthUtil.clearAuthed();
             // }
-            // 执行提示
-            MessageBox.okToast(I18nHelper.operationSuccess());
+            // // 执行提示
+            // MessageBox.okToast(I18nHelper.operationSuccess());
             // 关闭窗口
             this.closeWindow();
             // 应用区域配置

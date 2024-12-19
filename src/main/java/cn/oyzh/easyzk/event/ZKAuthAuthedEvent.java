@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,10 @@ public class ZKAuthAuthedEvent extends Event<ZKNodeTreeItem> {
 
     public ZKAuth auth() {
         return new ZKAuth(this.data().client().iid(), this.user, this.password);
+    }
+
+    public ZKClient client() {
+        return this.data().client();
     }
 
 }

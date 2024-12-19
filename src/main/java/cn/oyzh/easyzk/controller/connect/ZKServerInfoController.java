@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.controller.node;
+package cn.oyzh.easyzk.controller.connect;
 
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
@@ -24,9 +24,9 @@ import java.util.List;
 @StageAttribute(
         iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "node/zkService.fxml"
+        value = ZKConst.FXML_BASE_PATH + "connect/zkServerInfo.fxml"
 )
-public class ZKServiceController extends StageController {
+public class ZKServerInfoController extends StageController {
 
     /**
      * 状态信息

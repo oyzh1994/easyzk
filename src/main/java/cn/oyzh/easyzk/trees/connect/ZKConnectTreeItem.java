@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
-import cn.oyzh.easyzk.controller.node.ZKServiceController;
+import cn.oyzh.easyzk.controller.connect.ZKServerInfoController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -131,7 +131,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      * 查看服务信息
      */
     private void serverInfo() {
-        StageAdapter fxView = StageManager.parseStage(ZKServiceController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(ZKServerInfoController.class, this.window());
         fxView.setProp("zkInfo", this.value);
         fxView.setProp("zkClient", this.client);
         fxView.display();

@@ -1,14 +1,11 @@
 package cn.oyzh.easyzk.vo;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
-import cn.oyzh.common.Index;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import cn.oyzh.fx.plus.util.TableViewUtil;
 import lombok.NonNull;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,28 +16,18 @@ import java.util.List;
  * @author oyzh
  * @since 2022/12/20
  */
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
-public class ZKFilterVO extends ZKFilter implements Index {
+public class ZKFilterVO extends ZKFilter   {
 
     /**
-     * 索引
-     */
-    private int index;
-
-    /**
-     * 复制
+     * 转换
      *
-     * @param filter zk过滤信息
-     * @param index  索引
-     * @return zk认证vo
+     * @param filter zk过滤对象
+     * @return zk过滤vo对象
      */
-    public static ZKFilterVO copy(ZKFilter filter, int index) {
-        ZKFilterVO authVO = new ZKFilterVO();
-        authVO.copy(filter);
-        authVO.setIndex(index);
-        return authVO;
+    public static ZKFilterVO convert(@NonNull ZKFilter filter) {
+        ZKFilterVO filterVO = new ZKFilterVO();
+        filterVO.copy(filter);
+        return filterVO;
     }
 
     /**
@@ -51,16 +38,23 @@ public class ZKFilterVO extends ZKFilter implements Index {
      */
     public static List<ZKFilterVO> convert(@NonNull List<ZKFilter> list) {
         List<ZKFilterVO> voList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            voList.add(copy(list.get(i), i + 1));
+        for (ZKFilter filter : list) {
+            voList.add(convert(filter));
         }
         return voList;
     }
 
     /**
-     * 过滤储存
+     * 关键字控件
      */
-    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
+    public ClearableTextField getKwControl() {
+        ClearableTextField textField = new ClearableTextField();
+        textField.setFlexWidth("100% - 12");
+        textField.setValue(this.getKw());
+        textField.addTextChangeListener((obs, o, n) -> this.setKw(n));
+        TableViewUtil.selectRowOnMouseClicked(textField);
+        return textField;
+    }
 
     /**
      * 匹配模式控件
@@ -69,12 +63,8 @@ public class ZKFilterVO extends ZKFilter implements Index {
         MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
         toggleSwitch.fontSize(11);
         toggleSwitch.setSelected(this.isPartMatch());
-        toggleSwitch.selectedChanged((obs, o, n) -> {
-            this.setPartMatch(n);
-            // if (this.filterStore.replace(this)) {
-            //     ZKEventUtil.treeChildFilter();
-            // }
-        });
+        toggleSwitch.selectedChanged((obs, o, n) -> this.setPartMatch(n));
+        TableViewUtil.selectRowOnMouseClicked(toggleSwitch);
         return toggleSwitch;
     }
 
@@ -85,12 +75,8 @@ public class ZKFilterVO extends ZKFilter implements Index {
         EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
         toggleSwitch.setFontSize(11);
         toggleSwitch.setSelected(this.isEnable());
-        toggleSwitch.selectedChanged((abs, o, n) -> {
-            this.setEnable(n);
-            // if (this.filterStore.replace(this)) {
-            //     ZKEventUtil.treeChildFilter();
-            // }
-        });
+        toggleSwitch.selectedChanged((abs, o, n) -> this.setEnable(n));
+        TableViewUtil.selectRowOnMouseClicked(toggleSwitch);
         return toggleSwitch;
     }
 }

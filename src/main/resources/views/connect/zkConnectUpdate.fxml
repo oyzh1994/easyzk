@@ -23,6 +23,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.easyzk.fx.ZKFilterTableView?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController" realWidth="750" realHeight="400">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
@@ -218,14 +219,13 @@
                         </HBox.margin>
                     </DeleteSVGGlyph>
                 </FlexHBox>
-                <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="filterTable" copyCellDataOnDoubleClicked="true">
+                <ZKFilterTableView flexHeight="100% - 50" flexWidth="100%" fx:id="filterTable" copyCellDataOnDoubleClicked="true">
                     <columns>
-                        <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
-                        <FlexTableColumn flexWidth="45%" text="%base.kw" valueName="kw"/>
+                        <FlexTableColumn flexWidth="60%" text="%base.kw" valueName="kwControl"/>
                         <FlexTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl" sortable="false"/>
                         <FlexTableColumn flexWidth="20% - 15" text="%base.status" valueName="statusControl" sortable="false"/>
                     </columns>
-                </FlexTableView>
+                </ZKFilterTableView>
             </FlexVBox>
         </FXTab>
     </FlexTabPane>

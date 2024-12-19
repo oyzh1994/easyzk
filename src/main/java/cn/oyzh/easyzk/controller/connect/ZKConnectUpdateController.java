@@ -2,17 +2,15 @@ package cn.oyzh.easyzk.controller.connect;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.controller.filter.ZKFilterAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKSSHConnect;
-import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.ZKFilterAddedEvent;
+import cn.oyzh.easyzk.fx.ZKFilterTableView;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
-import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
@@ -20,13 +18,11 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.jdbc.QueryParam;
 import javafx.fxml.FXML;
@@ -34,7 +30,6 @@ import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -178,17 +173,12 @@ public class ZKConnectUpdateController extends StageController {
      * 数据列表
      */
     @FXML
-    private FlexTableView<ZKFilterVO> filterTable;
+    private ZKFilterTableView filterTable;
 
     /**
      * zk过滤配置储存
      */
     private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
-
-    /**
-     * 当前过滤列表
-     */
-    private List<ZKFilter> filters;
 
     /**
      * 获取连接地址
@@ -277,7 +267,7 @@ public class ZKConnectUpdateController extends StageController {
         this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
         this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
         // 过滤列表
-        this.zkInfo.setFilters((List) this.filterTable.getItems());
+        this.zkInfo.setFilters(this.filterTable.getFilers());
         // 保存数据
         if (this.connectStore.replace(this.zkInfo)) {
             ZKEventUtil.infoUpdated(this.zkInfo);
@@ -354,19 +344,12 @@ public class ZKConnectUpdateController extends StageController {
      * 初始化数据列表
      */
     private void initFilterDataList() {
-        List<ZKFilter> list = new ArrayList<>();
-        if (this.filters == null) {
-            this.filters = this.filterStore.selectList(QueryParam.of("iid", this.zkInfo.getId()));
-            list = this.filters;
+        if (this.filterTable.getFilters() == null) {
+            List<ZKFilter> list = this.filterStore.selectList(QueryParam.of("iid", this.zkInfo.getId()));
+            this.filterTable.setFilers(list);
         } else {
-            String kw = this.filterSearchKW.getText();
-            for (ZKFilter filter : this.filters) {
-                if (StringUtil.containsIgnoreCase(filter.getKw(), kw)) {
-                    list.add(filter);
-                }
-            }
+            this.filterTable.setKw(this.filterSearchKW.getText());
         }
-        this.filterTable.setItem(ZKFilterVO.convert(list));
     }
 
     /**
@@ -374,7 +357,11 @@ public class ZKConnectUpdateController extends StageController {
      */
     @FXML
     private void addFilter() {
-        StageManager.showStage(ZKFilterAddController.class);
+        ZKFilterVO filter = new ZKFilterVO();
+        filter.setEnable(true);
+        filter.setPartMatch(true);
+        this.filterTable.addFilter(filter);
+        this.filterTable.selectLast();
     }
 
     /**
@@ -382,29 +369,12 @@ public class ZKConnectUpdateController extends StageController {
      */
     @FXML
     private void deleteFilter() {
-        ZKFilter filter = this.filterTable.getSelectedItem();
+        ZKFilterVO filter = this.filterTable.getSelectedItem();
         if (filter == null) {
             return;
         }
         if (MessageBox.confirm(I18nHelper.deleteData())) {
-            if (filter.getIid() != null) {
-                if (this.filterStore.delete(filter)) {
-                    this.filterTable.removeItem(filter);
-                } else {
-                    MessageBox.warn(I18nHelper.operationFail());
-                }
-            } else {
-                this.filterTable.removeItem(filter);
-            }
+            this.filterTable.removeItem(filter);
         }
-    }
-
-    /**
-     * 过滤新增事件
-     */
-    @EventSubscribe
-    private void filterAdded(ZKFilterAddedEvent event) {
-        this.filters.add(event.data());
-        this.initFilterDataList();
     }
 }

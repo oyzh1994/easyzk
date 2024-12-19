@@ -60,14 +60,13 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
             }
 
             // 过滤处理
+            ZKFilterJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
             List<ZKFilter> filters = zkConnect.getFilters();
             if (CollectionUtil.isNotEmpty(filters)) {
                 for (ZKFilter filter : filters) {
                     filter.setIid(zkConnect.getId());
                     ZKFilterJdbcStore.INSTANCE.replace(filter);
                 }
-            } else {
-                ZKFilterJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
             }
         }
         return result;

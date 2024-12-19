@@ -191,9 +191,11 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     @EventSubscribe
     private void connectionClosed(ZKConnectionClosedEvent event) {
         ZKNodeTab connectTab = this.getNodeTab(event.connect());
-        if (connectTab != null) {
+        // 要检查连接和客户端是否相同
+        if (connectTab != null && connectTab.client() == event.data()) {
             connectTab.closeTab();
         }
+        // 检查连接是否相同
         ZKTerminalTab terminalTab = this.getTerminalTab(event.connect());
         if (terminalTab != null) {
             terminalTab.closeTab();

@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.tabs;
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.file.FileUtil;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
@@ -737,7 +738,7 @@ public class ZKNodeTab extends DynamicTab {
          */
         @FXML
         private void saveNodeData() {
-            if (this.activeItem.isDataTooLong()) {
+            if (this.activeItem.isDataTooBig()) {
                 MessageBox.warn(I18nHelper.dataTooLarge());
                 return;
             }
@@ -841,6 +842,20 @@ public class ZKNodeTab extends DynamicTab {
          * 显示数据
          */
         protected void showData() {
+            // 检测数据是否太大
+            if (this.activeItem.isDataTooBig()) {
+                this.nodeData.clear();
+                this.nodeData.disable();
+                // 异步处理，避免阻塞主程序
+                TaskManager.startDelay(() -> {
+                    if (MessageBox.confirm("数据太大，是否直接保存到文件查看？")) {
+                        this.saveBinaryFile();
+                    }
+
+                }, 10);
+                return;
+            }
+            this.nodeData.enable();
             byte[] bytes;
             if (this.activeItem.isDataUnsaved()) {
                 bytes = this.activeItem.unsavedData();

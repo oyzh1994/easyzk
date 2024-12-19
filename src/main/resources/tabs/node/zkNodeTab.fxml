@@ -95,47 +95,47 @@
     <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
                  flexHeight="100%"
                  rotateGraphic="true" disable="true">
-        <FXTab text="%base.data">
+        <FXTab text="%base.data" fx:id="dataTab">
             <graphic>
                 <SVGGlyph cursorType="DEFAULT" url="/font/file-text.svg" size="13"/>
             </graphic>
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="30" flexWidth="100%">
-                    <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0">
+                    <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </RichDataTypeComboBox>
                     <SaveSVGGlyph size="16" tipText="%base.saveTip1"
-                                  onMousePrimaryClicked="#saveNodeData">
+                                  onMousePrimaryClicked="#saveNodeData" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </SaveSVGGlyph>
                     <UndoSVGGlyph disable="true" fx:id="dataUndo" size="16" onMousePrimaryClicked="#dataUndo"
-                                  tipText="%base.undoTip1">
+                                  tipText="%base.undoTip1" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </UndoSVGGlyph>
                     <RedoSVGGlyph disable="true" fx:id="dataRedo" size="16" onMousePrimaryClicked="#dataRedo"
-                                  tipText="%base.redoTip1">
+                                  tipText="%base.redoTip1" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </RedoSVGGlyph>
-                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1">
+                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </PasteSVGGlyph>
-                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </ClearSVGGlyph>
                     <QRCodeSVGGlyph size="16"
-                                    onMousePrimaryClicked="#node2QRCode">
+                                    onMousePrimaryClicked="#node2QRCode" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
@@ -174,7 +174,7 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <RichDataTextAreaPane fontSize="12" fx:id="nodeData" flexHeight="100% - 60"
-                                      flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
+                                      flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" groupId="dataToBig"/>
                 <FlexHBox flexWidth="100%" flexHeight="30">
                     <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
                                      onMousePrimaryClicked="#showHistory">

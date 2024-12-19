@@ -49,6 +49,7 @@ import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -314,6 +315,12 @@ public class ZKNodeTab extends DynamicTab {
          */
         @FXML
         private SVGGlyph dataRedo;
+
+        /**
+         * 数据tab
+         */
+        @FXML
+        private FXTab dataTab;
 
         /**
          * 右侧zk数据
@@ -683,8 +690,21 @@ public class ZKNodeTab extends DynamicTab {
          */
         @FXML
         private void copyNode() {
-            String data = this.activeItem.decodeNodePath() + " " + this.nodeData.getTextTrim();
-            ClipboardUtil.setStringAndTip(data);
+            try {
+                byte[] bytes;
+                if (this.activeItem.isDataUnsaved()) {
+                    bytes = this.activeItem.unsavedData();
+                } else {
+                    bytes = this.activeItem.nodeData();
+                }
+                if (bytes == null) {
+                    bytes = new byte[0];
+                }
+                String data = this.activeItem.decodeNodePath() + " " + new String(bytes);
+                ClipboardUtil.setStringAndTip(data);
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
+            }
         }
 
         /**
@@ -846,16 +866,16 @@ public class ZKNodeTab extends DynamicTab {
             if (this.activeItem.isDataTooBig()) {
                 this.nodeData.clear();
                 this.nodeData.disable();
+                NodeGroupUtil.disable(this.dataTab, "dataToBig");
                 // 异步处理，避免阻塞主程序
                 TaskManager.startDelay(() -> {
-                    if (MessageBox.confirm("数据太大，是否直接保存到文件查看？")) {
+                    if (MessageBox.confirm(ZKI18nHelper.nodeTip7())) {
                         this.saveBinaryFile();
                     }
-
                 }, 10);
                 return;
             }
-            this.nodeData.enable();
+            NodeGroupUtil.enable(this.dataTab, "dataToBig");
             byte[] bytes;
             if (this.activeItem.isDataUnsaved()) {
                 bytes = this.activeItem.unsavedData();

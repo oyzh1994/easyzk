@@ -37,4 +37,28 @@ public class ZKSASLConfiguration extends Configuration {
             this.config.put(name, entry);
         }
     }
+
+    /**
+     * 移除配置
+     *
+     * @param name 名称
+     */
+    public void removeAppConfigurationEntry(String name) {
+        if (name != null && this.config != null) {
+            this.config.remove(name);
+        }
+    }
+
+    /**
+     * 是否包含配置
+     *
+     * @param name 名称
+     * @return 结果
+     */
+    public boolean containsAppConfigurationEntry(String name) {
+        if (name != null && this.config != null) {
+            return this.config.containsKey(name);
+        }
+        return false;
+    }
 }

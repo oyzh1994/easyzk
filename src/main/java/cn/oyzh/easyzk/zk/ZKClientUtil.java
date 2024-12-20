@@ -7,11 +7,12 @@ import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.AuthInfo;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.framework.recipes.cache.TreeCache;
+import org.apache.zookeeper.ZooKeeper;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 /**
  * zk客户端工具类
@@ -32,7 +33,7 @@ public class ZKClientUtil {
      * @return zk客户端
      */
     public static CuratorFramework build(@NonNull String host, @NonNull RetryPolicy retryPolicy, int connectionTimeoutMs,
-                                         int sessionTimeoutMs, List<AuthInfo> authInfos, boolean compatibility,String iid) {
+                                         int sessionTimeoutMs, List<AuthInfo> authInfos, boolean compatibility, String iid, Consumer<ZooKeeper> zooKeeperConsumer) {
         ExecutorService service = Executors.newCachedThreadPool();
         // 构建builder
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
@@ -45,7 +46,7 @@ public class ZKClientUtil {
                 .threadFactory(ZKThread::new)
                 .waitForShutdownTimeoutMs(500)
                 // .zk34CompatibilityMode(compatibility)
-                .zookeeperFactory(new ZKFactory(iid))
+                .zookeeperFactory(new ZKFactory(iid, zooKeeperConsumer))
                 .sessionTimeoutMs(sessionTimeoutMs)
                 .connectionTimeoutMs(connectionTimeoutMs);
         return builder.build();

@@ -49,5 +49,6 @@ public class ZooKeeperThread extends Thread {
      */
     protected void handleException(String thName, Throwable e) {
         JulLog.warn("Exception occured from thread {}", thName, e);
+        e.printStackTrace();
     }
 }

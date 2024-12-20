@@ -351,10 +351,8 @@ public class ZKConnectUpdateController extends StageController {
             // sasl配置
             this.zkInfo.setSaslConfig(this.getSASLConfig());
             this.zkInfo.setSaslAuth(this.saslAuth.isSelected());
-            // 刷新sasl配置
-            if (this.zkInfo.isSASLAuth() && this.zkInfo.getSaslConfig() != null) {
-                ZKSASLUtil.updateSasl();
-            }
+            // 移除sasl配置
+            ZKSASLUtil.removeSasl(this.zkInfo.getId());
             this.zkInfo.setListen(this.listen.isSelected());
             this.zkInfo.setRemark(this.remark.getTextTrim());
             this.zkInfo.setReadonly(this.readonly.isSelected());

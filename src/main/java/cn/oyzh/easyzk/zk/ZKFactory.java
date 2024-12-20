@@ -6,6 +6,8 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.client.ZKClientConfig;
 
+import java.util.function.Consumer;
+
 /**
  * @author oyzh
  * @since 2023/9/27
@@ -17,8 +19,14 @@ public class ZKFactory implements ZookeeperFactory {
      */
     private final String iid;
 
-    public ZKFactory(String iid) {
+    /**
+     * zookeeper对象消费器
+     */
+    private Consumer<ZooKeeper> consumer;
+
+    public ZKFactory(String iid, Consumer<ZooKeeper> consumer) {
         this.iid = iid;
+        this.consumer = consumer;
     }
 
     @Override
@@ -31,10 +39,15 @@ public class ZKFactory implements ZookeeperFactory {
             clientConfig.setProperty(ZKClientConfig.LOGIN_CONTEXT_NAME_KEY, this.iid);
         } else {// 重置sasl配置
             JulLog.debug("连接:{} 无需sasl认证", this.iid);
-            clientConfig.setProperty(ZKClientConfig.ENABLE_CLIENT_SASL_KEY, ZKClientConfig.ENABLE_CLIENT_SASL_DEFAULT);
+            clientConfig.setProperty(ZKClientConfig.ENABLE_CLIENT_SASL_KEY, "false");
             clientConfig.setProperty(ZKClientConfig.LOGIN_CONTEXT_NAME_KEY, ZKClientConfig.LOGIN_CONTEXT_NAME_KEY_DEFAULT);
         }
         // clientConfig.setProperty(ZKClientConfig.ZOOKEEPER_CLIENT_CNXN_SOCKET, ClientCnxnSocketNetty.class.getName());
-        return new ZooKeeper(connectString, sessionTimeout, watcher, canBeReadOnly, clientConfig);
+        ZooKeeper zooKeeper = new ZooKeeper(connectString, sessionTimeout, watcher, canBeReadOnly, clientConfig);
+        if (this.consumer != null) {
+            this.consumer.accept(zooKeeper);
+            this.consumer = null;
+        }
+        return zooKeeper;
     }
 }

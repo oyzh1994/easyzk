@@ -33,11 +33,6 @@ public class ZKSASLUtil {
     private static final ZKSASLConfigJdbcStore CONFIG_STORE = ZKSASLConfigJdbcStore.INSTANCE;
 
     /**
-     * 更新标志位
-     */
-    private static boolean needUpdate = true;
-
-    /**
      * 注册配置类
      */
     public static void registerConfiguration() {
@@ -45,10 +40,15 @@ public class ZKSASLUtil {
     }
 
     /**
-     * 更新sasl文件
+     * 移除sasl配置
+     *
+     * @param iid zk连接id
+     * @see ZKConnect
      */
-    public synchronized static void updateSasl() {
-        needUpdate = true;
+    public synchronized static void removeSasl(String iid) {
+        if (Configuration.getConfiguration() instanceof ZKSASLConfiguration configuration) {
+            configuration.removeAppConfigurationEntry(iid);
+        }
     }
 
     /**
@@ -59,19 +59,30 @@ public class ZKSASLUtil {
      * @see ZKConnect
      */
     public static boolean isNeedSasl(String iid) {
-        if (needUpdate) {
-            // 更新标志位
-            needUpdate = false;
-            // 更新配置
-            updateSaslEntry();
-        }
-        SelectParam selectParam = new SelectParam();
-        selectParam.addQueryParam(QueryParam.of("id", iid));
-        selectParam.addQueryColumn("saslAuth");
-        ZKConnect connect = CONNECT_STORE.selectOne(selectParam);
-        if (connect != null && connect.isSASLAuth()) {
-            ZKSASLConfig config = CONFIG_STORE.getByIid(iid);
-            return config != null && !config.checkInvalid();
+        if (Configuration.getConfiguration() instanceof ZKSASLConfiguration configuration) {
+            // 缓存里存在直接返回
+            if (configuration.containsAppConfigurationEntry(iid)) {
+                return true;
+            }
+            SelectParam selectParam = new SelectParam();
+            selectParam.addQueryParam(QueryParam.of("id", iid));
+            selectParam.addQueryColumn("saslAuth");
+            ZKConnect connect = CONNECT_STORE.selectOne(selectParam);
+            if (connect != null && connect.isSASLAuth()) {
+                ZKSASLConfig config = CONFIG_STORE.getByIid(iid);
+                if (config == null || config.checkInvalid()) {
+                    return false;
+                }
+                // 添加到缓存
+                if ("Digest".equalsIgnoreCase(config.getType())) {
+                    Map<String, String> options = new HashMap<>();
+                    options.put("username", config.getUserName());
+                    options.put("password", config.getPassword());
+                    AppConfigurationEntry entry = new AppConfigurationEntry("org.apache.zookeeper.server.auth.DigestLoginModule", AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, options);
+                    configuration.putAppConfigurationEntry(config.getIid(), entry);
+                }
+                return true;
+            }
         }
         return false;
     }

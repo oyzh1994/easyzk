@@ -30,6 +30,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.apache.curator.CuratorZookeeperClient;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.AuthInfo;
 import org.apache.curator.framework.CuratorFramework;
@@ -50,6 +51,7 @@ import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.cli.DelQuotaCommand;
 import org.apache.zookeeper.cli.SetQuotaCommand;
 import org.apache.zookeeper.client.FourLetterWordMain;
+import org.apache.zookeeper.client.ZooKeeperSaslClient;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.server.quorum.QuorumPeer;
@@ -114,6 +116,11 @@ public class ZKClient {
     @Getter
     @Setter
     private RetryPolicy retryPolicy;
+
+    /**
+     * zookeeper对象
+     */
+    private ZooKeeper zooKeeper;
 
     /**
      * zk客户端
@@ -357,8 +364,8 @@ public class ZKClient {
             this.retryPolicy = new RetryOneTime(3_000);
         }
         // 创建客户端
-        this.framework = ZKClientUtil.build(host, this.retryPolicy, this.connect.connectTimeOutMs(),
-                this.connect.sessionTimeOutMs(), authInfos, this.connect.compatibility34(), this.iid());
+        this.framework = ZKClientUtil.build(host, this.retryPolicy, this.connect.connectTimeOutMs(), this.connect.sessionTimeOutMs(),
+                authInfos, this.connect.compatibility34(), this.iid(), zoo -> this.zooKeeper = zoo);
     }
 
     /**
@@ -376,22 +383,27 @@ public class ZKClient {
         try {
             // 关闭树监听
             this.closeTreeCache();
-            // 关闭连接
-            if (this.framework != null) {
-                // // 移除监听
-                // this.framework.watches().removeAll().forPath("/");
-                // 关闭连接
-                TaskManager.startTimeout(this.framework::close, 500);
-                // this.framework = null;
-            }
             // 清理变量
             this.auths = null;
-            // this.initialized = false;
             // 销毁端口转发
             if (this.connect.isSSHForward()) {
                 this.sshForwarder.destroy();
             }
-            // ZKAuthUtil.removeAuthed(this);
+            // 关闭连接
+            if (this.framework != null) {
+                // 关闭连接
+                TaskManager.startTimeout(this.framework::close, 500);
+                 this.framework = null;
+            }
+            // 关闭zk连接及sasl客户端
+            ZooKeeper zooKeeper = this.getZooKeeper();
+            if (zooKeeper != null) {
+                ZooKeeperSaslClient saslClient = zooKeeper.getSaslClient();
+                if (saslClient != null) {
+                    saslClient.shutdown();
+                }
+                zooKeeper.close();
+            }
             JulLog.info("zkClient closed.");
         } catch (Exception ex) {
             JulLog.warn("zkClient close error.", ex);
@@ -1126,10 +1138,17 @@ public class ZKClient {
      * @throws Exception 异常
      */
     public ZooKeeper getZooKeeper() throws Exception {
+        if (this.zooKeeper != null) {
+            return this.zooKeeper;
+        }
         if (this.framework == null) {
             return null;
         }
-        return this.framework.getZookeeperClient().getZooKeeper();
+        CuratorZookeeperClient zookeeperClient = this.framework.getZookeeperClient();
+        if (zookeeperClient == null) {
+            return null;
+        }
+        return zookeeperClient.getZooKeeper();
     }
 
     /**

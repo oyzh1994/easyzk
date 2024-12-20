@@ -9,6 +9,7 @@ import cn.oyzh.easyzk.controller.data.ZKMigrationTipsController;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
+import cn.oyzh.easyzk.zk.ZKSASLUtil;
 import cn.oyzh.event.EventFactory;
 import cn.oyzh.fx.gui.tray.DesktopTrayItem;
 import cn.oyzh.fx.gui.tray.QuitTrayItem;
@@ -45,6 +46,7 @@ public class EasyZKApp extends FXApplication {
     private static final Project PROJECT = Project.load();
 
     public static void main(String[] args) {
+        ZKSASLUtil.registerConfiguration();
         SysConst.storeDir(ZKConst.STORE_PATH);
         SysConst.cacheDir(ZKConst.CACHE_PATH);
         SysConst.projectName(PROJECT.getName());

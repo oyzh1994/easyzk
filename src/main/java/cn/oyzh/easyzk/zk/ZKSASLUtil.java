@@ -1,16 +1,19 @@
 package cn.oyzh.easyzk.zk;
 
-import cn.oyzh.common.file.FileUtil;
-import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.store.ZKSASLConfigJdbcStore;
+import cn.oyzh.store.jdbc.QueryParam;
+import cn.oyzh.store.jdbc.SelectParam;
 import lombok.experimental.UtilityClass;
 
+import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
+import java.security.Security;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author oyzh
@@ -19,16 +22,32 @@ import java.util.List;
 @UtilityClass
 public class ZKSASLUtil {
 
-    private static final ZKConnectJdbcStore connectStore = ZKConnectJdbcStore.INSTANCE;
+    /**
+     * 连接存储
+     */
+    private static final ZKConnectJdbcStore CONNECT_STORE = ZKConnectJdbcStore.INSTANCE;
 
-    private static final ZKSASLConfigJdbcStore configStore = ZKSASLConfigJdbcStore.INSTANCE;
+    /**
+     * sasl配置存储
+     */
+    private static final ZKSASLConfigJdbcStore CONFIG_STORE = ZKSASLConfigJdbcStore.INSTANCE;
 
-    private static boolean needUpdate;
+    /**
+     * 更新标志位
+     */
+    private static boolean needUpdate = true;
+
+    /**
+     * 注册配置类
+     */
+    public static void registerConfiguration() {
+        Security.setProperty("login.configuration.provider", ZKSASLConfiguration.class.getName());
+    }
 
     /**
      * 更新sasl文件
      */
-    public synchronized static void updateSaslFile() {
+    public synchronized static void updateSasl() {
         needUpdate = true;
     }
 
@@ -39,53 +58,41 @@ public class ZKSASLUtil {
      * @return 结果
      * @see ZKConnect
      */
-    public static boolean isEnableSasl(String iid) {
-        ZKConnect connect = connectStore.selectOne(iid);
+    public static boolean isNeedSasl(String iid) {
+        if (needUpdate) {
+            // 更新标志位
+            needUpdate = false;
+            // 更新配置
+            updateSaslEntry();
+        }
+        SelectParam selectParam = new SelectParam();
+        selectParam.addQueryParam(QueryParam.of("id", iid));
+        selectParam.addQueryColumn("saslAuth");
+        ZKConnect connect = CONNECT_STORE.selectOne(selectParam);
         if (connect != null && connect.isSASLAuth()) {
-            ZKSASLConfig config = configStore.getByIid(iid);
+            ZKSASLConfig config = CONFIG_STORE.getByIid(iid);
             return config != null && !config.checkInvalid();
         }
         return false;
     }
 
     /**
-     * 获取sasl配置文件
-     *
-     * @return sasl文件
+     * 更新sasl配置
      */
-    public static String getSaslFile() {
-        String file = ZKConst.STORE_PATH + "jaas.conf";
-        if (!FileUtil.exist(file) || needUpdate) {
-            // 更新标志位
-            needUpdate = false;
-            List<ZKSASLConfig> configs = configStore.selectList();
-            StringBuilder sb = new StringBuilder();
-            for (ZKSASLConfig config : configs) {
-                if (!config.checkInvalid()) {
-                    if ("Digest".equalsIgnoreCase(config.getType())) {
-                        sb.append("Client_").append(config.getIid().replaceAll("-", ""));
-                        sb.append(" {\n");
-                        sb.append("    ").append("org.apache.zookeeper.server.auth.DigestLoginModule required\n");
-                        sb.append("    ").append("username=\"").append(config.getUserName()).append("\"\n");
-                        sb.append("    ").append("password=\"").append(config.getPassword()).append("\";\n");
-                        sb.append("};\n");
+    private static void updateSaslEntry() {
+        List<ZKSASLConfig> configs = CONFIG_STORE.selectList();
+        for (ZKSASLConfig config : configs) {
+            if (!config.checkInvalid()) {
+                if ("Digest".equalsIgnoreCase(config.getType())) {
+                    Map<String, String> options = new HashMap<>();
+                    options.put("username", config.getUserName());
+                    options.put("password", config.getPassword());
+                    AppConfigurationEntry entry = new AppConfigurationEntry("org.apache.zookeeper.server.auth.DigestLoginModule", AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, options);
+                    if (Configuration.getConfiguration() instanceof ZKSASLConfiguration configuration) {
+                        configuration.putAppConfigurationEntry(config.getIid(), entry);
                     }
                 }
             }
-            // 更新sasl文件
-            if (!sb.isEmpty()) {
-                // 写入内容
-                FileUtil.writeUtf8String(sb.toString(), file);
-                // 刷新配置
-                Configuration.getConfiguration().refresh();
-            } else {// 删除文件
-                FileUtil.del(file);
-            }
         }
-        // 判断文件是否存在
-        if (!FileUtil.exist(file)) {
-            return null;
-        }
-        return file;
     }
 }

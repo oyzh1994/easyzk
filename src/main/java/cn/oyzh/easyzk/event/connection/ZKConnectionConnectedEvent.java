@@ -10,11 +10,11 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/9/18
  */
-public class ZKConnectionSucceedEvent extends Event<ZKClient> implements EventFormatter {
+public class ZKConnectionConnectedEvent extends Event<ZKClient> implements EventFormatter {
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionSucceed(), this.data().connectName());
+        return String.format("[%s:%s connected] " , I18nHelper.connect(), this.data().connectName());
     }
 
     public ZKConnect connect() {

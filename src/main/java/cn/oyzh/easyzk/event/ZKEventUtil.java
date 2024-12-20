@@ -11,7 +11,7 @@ import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionLostEvent;
-import cn.oyzh.easyzk.event.connection.ZKConnectionSucceedEvent;
+import cn.oyzh.easyzk.event.connection.ZKConnectionConnectedEvent;
 import cn.oyzh.easyzk.event.filter.ZKFilterAddedEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.group.ZKGroupAddedEvent;
@@ -92,7 +92,7 @@ public class ZKEventUtil {
      * @param client zk客户端
      */
     public static void connectionSucceed(ZKClient client) {
-        ZKConnectionSucceedEvent event = new ZKConnectionSucceedEvent();
+        ZKConnectionConnectedEvent event = new ZKConnectionConnectedEvent();
         event.data(client);
         EventUtil.post(event);
     }

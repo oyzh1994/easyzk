@@ -14,7 +14,7 @@ public class ZKConnectionClosedEvent extends Event<ZKClient> implements EventFor
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().connectName());
+        return String.format("[%s:%s closed] ", I18nHelper.connect(), this.data().connectName());
     }
 
     public ZKConnect connect() {

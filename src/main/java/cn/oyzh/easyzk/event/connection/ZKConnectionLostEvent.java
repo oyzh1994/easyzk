@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.i18n.I18nHelper;
 
 /**
  * @author oyzh
@@ -14,7 +14,7 @@ public class ZKConnectionLostEvent extends Event<ZKClient> implements EventForma
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nResourceBundle.i18nString("base.client", "base.connectLoss"), this.data().connectName());
+        return String.format("[%s:%s lost] ", I18nHelper.connect(), this.data().connectName());
     }
 
     public ZKConnect connect() {

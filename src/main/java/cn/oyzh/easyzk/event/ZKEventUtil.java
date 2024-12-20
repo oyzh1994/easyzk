@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.event;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
+import cn.oyzh.easyzk.event.client.ZKClientActionEvent;
 import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectDeletedEvent;
@@ -446,6 +447,18 @@ public class ZKEventUtil {
         ZKGroupRenamedEvent event = new ZKGroupRenamedEvent();
         event.data(group);
         event.oldName(oldName);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 客户端操作
+     */
+    public static void clientAction(String connectName, String action, String params, Object actionData) {
+        ZKClientActionEvent event = new ZKClientActionEvent();
+        event.data(connectName);
+        event.action(action);
+        event.params(params);
+        event.actionData(actionData);
         EventUtil.post(event);
     }
 }

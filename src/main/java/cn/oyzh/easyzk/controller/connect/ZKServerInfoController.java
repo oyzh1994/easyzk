@@ -91,14 +91,14 @@ public class ZKServerInfoController extends StageController {
     @FXML
     private void refreshLocal() {
         // 客户端环境信息
-        List<ZKEnvNode> localEnviNodes = this.zkClient.localEnvNodes();
+        List<ZKEnvNode> localEnviNodes = this.zkClient.localNodes();
         this.localEnvTable.setItem(localEnviNodes);
     }
 
     @FXML
     private void refreshEnvi() {
         // 服务端环境信息
-        List<ZKEnvNode> serverEnviNodes = this.zkClient.serverEnvNodes();
+        List<ZKEnvNode> serverEnviNodes = this.zkClient.enviNodes();
         this.serverEnvTable.setItem(serverEnviNodes);
     }
 

@@ -1139,7 +1139,7 @@ public class ZKNodeTab extends DynamicTab {
          */
         @EventSubscribe
         public void onNodeAdded(ZKNodeAddedEvent event) {
-            if (event.info() == this.client.connect()) {
+            if (event.zkConnect() == this.client.connect()) {
                 this.treeView.onNodeAdded(event.data());
             }
         }

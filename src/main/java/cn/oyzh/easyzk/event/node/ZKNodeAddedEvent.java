@@ -17,11 +17,11 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 public class ZKNodeAddedEvent extends Event<String> implements EventFormatter {
 
-    private ZKConnect info;
+    private ZKConnect zkConnect;
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.nodeAdded() + ":%s", this.info.getName(), this.data());
+        return String.format("[%s:%s added, path:%s] ", I18nHelper.connect(), this.zkConnect.getName(), this.data());
     }
 
 }

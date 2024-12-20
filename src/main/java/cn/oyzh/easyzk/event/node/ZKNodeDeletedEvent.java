@@ -22,6 +22,6 @@ public class ZKNodeDeletedEvent extends Event<String> implements EventFormatter 
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.nodeDeleted() + ":%s", this.infoName, this.data());
+        return String.format("[%s:%s deleted, path:%s] ", I18nHelper.connect(), this.infoName, this.data());
     }
 }

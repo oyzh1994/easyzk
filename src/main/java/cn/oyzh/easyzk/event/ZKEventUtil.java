@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
-import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
@@ -10,8 +9,8 @@ import cn.oyzh.easyzk.event.connect.ZKConnectDeletedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
-import cn.oyzh.easyzk.event.connection.ZKConnectionLostEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionConnectedEvent;
+import cn.oyzh.easyzk.event.connection.ZKConnectionLostEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.group.ZKGroupAddedEvent;
 import cn.oyzh.easyzk.event.group.ZKGroupDeletedEvent;
@@ -99,13 +98,13 @@ public class ZKEventUtil {
     /**
      * 节点添加事件
      *
-     * @param info zk客户端
-     * @param path 路径
+     * @param zkConnect zk连接
+     * @param path      路径
      */
-    public static void nodeAdded(ZKConnect info, String path) {
+    public static void nodeAdded(ZKConnect zkConnect, String path) {
         ZKNodeAddedEvent event = new ZKNodeAddedEvent();
         event.data(path);
-        event.info(info);
+        event.zkConnect(zkConnect);
         EventUtil.post(event);
     }
 

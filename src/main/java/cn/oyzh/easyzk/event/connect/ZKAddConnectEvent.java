@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event;
+package cn.oyzh.easyzk.event.connect;
 
 
 import cn.oyzh.event.Event;

@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event;
+package cn.oyzh.easyzk.event.tree;
 
 import cn.oyzh.event.Event;
 import javafx.scene.control.TreeItem;

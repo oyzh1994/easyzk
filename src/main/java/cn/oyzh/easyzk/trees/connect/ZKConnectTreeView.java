@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
-import cn.oyzh.easyzk.event.ZKAddConnectEvent;
-import cn.oyzh.easyzk.event.ZKAddGroupEvent;
+import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
+import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
 import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
 import cn.oyzh.event.EventSubscribe;

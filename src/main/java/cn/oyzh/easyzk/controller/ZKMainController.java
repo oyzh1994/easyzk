@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.controller.main.HistoryController;
 import cn.oyzh.easyzk.controller.main.MessageController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.event.ZKTreeItemChangedEvent;
+import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
 import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;

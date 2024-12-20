@@ -1,7 +1,6 @@
-package cn.oyzh.easyzk.event;
+package cn.oyzh.easyzk.event.history;
 
 import cn.oyzh.easyzk.domain.ZKDataHistory;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.event.Event;
 import javafx.scene.control.TreeItem;
 import lombok.Data;

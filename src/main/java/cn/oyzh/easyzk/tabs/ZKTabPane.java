@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.event.connection.ZKConnectOpenedEvent;
+import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;

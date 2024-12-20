@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event.connection;
+package cn.oyzh.easyzk.event.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;

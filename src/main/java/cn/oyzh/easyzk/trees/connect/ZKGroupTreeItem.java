@@ -5,6 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
@@ -101,12 +102,15 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
             MessageBox.warn(I18nHelper.groupAlreadyExists());
             return;
         }
+        // 旧名称
+        String oldName = this.value.getName();
         // 修改名称
         this.value.setName(groupName);
-        if (!this.groupStore.replace(this.value)) {
-            MessageBox.warn(I18nHelper.operationFail());
-        } else {
+        if (this.groupStore.replace(this.value)) {
             this.refresh();
+            ZKEventUtil.groupRenamed(groupName, oldName);
+        } else {
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 
@@ -131,6 +135,8 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
             // 连接转移到父节点
             this.parent().addConnectItems(childes);
         }
+        // 发送事件
+        ZKEventUtil.groupDeleted(this.value.getName());
         // 移除节点
         this.remove();
     }

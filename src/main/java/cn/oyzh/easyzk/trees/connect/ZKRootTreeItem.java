@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.dto.ZKConnectExport;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
@@ -182,28 +183,25 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
      */
     public void addGroup() {
         String groupName = MessageBox.prompt(I18nHelper.contentTip1());
-
         // 名称为null，则忽略
         if (groupName == null) {
             return;
         }
-
         // 不能为空
         if (StringUtil.isBlank(groupName)) {
             MessageBox.warn(I18nHelper.nameCanNotEmpty());
             return;
         }
-
         // 检查是否存在
         if (this.groupStore.exist(groupName)) {
             MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
-
         ZKGroup group = new ZKGroup();
         group.setName(groupName);
         if (this.groupStore.replace(group)) {
             this.addChild(new ZKGroupTreeItem(group, this.getTreeView()));
+            ZKEventUtil.groupAdded(groupName);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }

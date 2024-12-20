@@ -3,15 +3,20 @@ package cn.oyzh.easyzk.event;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectDeletedEvent;
+import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
-import cn.oyzh.easyzk.event.connection.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionLostEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionSucceedEvent;
+import cn.oyzh.easyzk.event.filter.ZKFilterAddedEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
+import cn.oyzh.easyzk.event.group.ZKGroupAddedEvent;
+import cn.oyzh.easyzk.event.group.ZKGroupDeletedEvent;
+import cn.oyzh.easyzk.event.group.ZKGroupRenamedEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryAddedEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryShowEvent;
@@ -416,5 +421,33 @@ public class ZKEventUtil {
      */
     public static void layout2() {
         EventUtil.post(new Layout2Event());
+    }
+
+    /**
+     * 分组已添加
+     */
+    public static void groupAdded(String group) {
+        ZKGroupAddedEvent event = new ZKGroupAddedEvent();
+        event.data(group);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 分组已删除
+     */
+    public static void groupDeleted(String group) {
+        ZKGroupDeletedEvent event = new ZKGroupDeletedEvent();
+        event.data(group);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 分组已更名
+     */
+    public static void groupRenamed(String group, String oldName) {
+        ZKGroupRenamedEvent event = new ZKGroupRenamedEvent();
+        event.data(group);
+        event.oldName(oldName);
+        EventUtil.post(event);
     }
 }

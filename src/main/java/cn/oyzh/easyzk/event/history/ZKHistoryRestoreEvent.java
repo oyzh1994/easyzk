@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.i18n.I18nHelper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -22,10 +22,10 @@ public class ZKHistoryRestoreEvent extends Event<byte[]> implements EventFormatt
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nResourceBundle.i18nString("base.data", "base.restored"), this.item.nodePath());
+        return String.format("[%s:%s path:%s restored data] ", I18nHelper.connect(), this.connect().getName(), this.item.nodePath());
     }
 
-    public ZKConnect connect(){
+    public ZKConnect connect() {
         return this.item.connect();
     }
 }

@@ -19,6 +19,7 @@ import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
 import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
+import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
@@ -505,7 +506,7 @@ public class ZKClient {
     public Stat setACL(@NonNull String path, @NonNull List<ACL> aclList, Integer version) throws Exception {
         this.throwReadonlyException();
         try {
-            this.doAction("setAcl", path, aclList);
+            this.doAction("setAcl", path, ZKACLUtil.toAclStr(aclList));
             return this.framework.setACL().withVersion(version == null ? -1 : version).withACL(aclList).forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {

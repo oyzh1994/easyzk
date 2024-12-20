@@ -1,14 +1,14 @@
 package cn.oyzh.easyzk.util;
 
-import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.NumberUtil;
 import cn.oyzh.common.util.RegexUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.i18n.I18nHelper;
+import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.i18n.I18nManager;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -312,5 +312,24 @@ public class ZKACLUtil {
             }
         }
         return false;
+    }
+
+    /**
+     * 解析权限控制为字符串
+     *
+     * @param aclList 权限列表
+     * @return 权限控制字符串
+     */
+    public static String toAclStr(List<ACL> aclList) {
+        StringBuilder builder = new StringBuilder();
+        for (ACL acl : aclList) {
+            builder.append(",").append(acl.getId().getScheme())
+                    .append(":").append(acl.getId().getId())
+                    .append(":").append(toPermStr(acl.getPerms()));
+        }
+        if (!builder.isEmpty()) {
+            return builder.substring(1);
+        }
+        return builder.toString();
     }
 }

@@ -53,10 +53,8 @@ import org.apache.zookeeper.client.FourLetterWordMain;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.server.quorum.QuorumPeer;
-import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
 import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
 
-import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -359,9 +357,8 @@ public class ZKClient {
             this.retryPolicy = new RetryOneTime(3_000);
         }
         // 创建客户端
-        this.framework = ZKClientUtil.build(host, this.retryPolicy, this.connect.connectTimeOutMs(), this.connect.sessionTimeOutMs(), authInfos, this.connect.compatibility34());
-
-
+        this.framework = ZKClientUtil.build(host, this.retryPolicy, this.connect.connectTimeOutMs(),
+                this.connect.sessionTimeOutMs(), authInfos, this.connect.compatibility34(), this.iid());
     }
 
     /**

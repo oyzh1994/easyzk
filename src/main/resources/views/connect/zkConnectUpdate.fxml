@@ -220,7 +220,7 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <ZKSASLTypeComboBox initIndex="0" realHeight="30" groupId="sasl" disable="true">
+                <ZKSASLTypeComboBox initIndex="0" realHeight="30" groupId="sasl" fx:id="saslType" disable="true">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>

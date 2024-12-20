@@ -44,6 +44,7 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
             // ssh处理
             ZKSSHConfig sshConfig = zkConnect.getSshConfig();
             if (sshConfig != null) {
+                sshConfig.setIid(zkConnect.getId());
                 ZKSSHConfigJdbcStore.INSTANCE.replace(sshConfig);
             } else {
                 DeleteParam param = new DeleteParam();
@@ -53,12 +54,13 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
 
             // sasl处理
             ZKSASLConfig saslConfig = zkConnect.getSaslConfig();
-            if (saslConfig != null) {
-                ZKSASLConfigJdbcStore.INSTANCE.replace(saslConfig);
-            } else {
                 DeleteParam param = new DeleteParam();
                 param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
                 ZKSASLConfigJdbcStore.INSTANCE.delete(param);
+            if (saslConfig != null) {
+                saslConfig.setIid(zkConnect.getId());
+                ZKSASLConfigJdbcStore.INSTANCE.replace(saslConfig);
+            } else {
             }
 
             // 收藏处理

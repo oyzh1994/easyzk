@@ -10,12 +10,15 @@ import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKAuthTableView;
 import cn.oyzh.easyzk.fx.ZKFilterTableView;
+import cn.oyzh.easyzk.fx.ZKSASLTypeComboBox;
 import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
 import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.store.ZKSASLConfigJdbcStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
+import cn.oyzh.easyzk.zk.ZKSASLUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
@@ -184,6 +187,12 @@ public class ZKConnectUpdateController extends StageController {
     private FXToggleSwitch saslAuth;
 
     /**
+     * sasl类型
+     */
+    @FXML
+    private ZKSASLTypeComboBox saslType;
+
+    /**
      * sasl用户
      */
     @FXML
@@ -270,6 +279,7 @@ public class ZKConnectUpdateController extends StageController {
         sshConfig.setIid(this.zkInfo.getId());
         return sshConfig;
     }
+
     /**
      * 获取ssh信息
      *
@@ -278,6 +288,7 @@ public class ZKConnectUpdateController extends StageController {
     private ZKSASLConfig getSASLConfig() {
         ZKSASLConfig saslConfig = new ZKSASLConfig();
         saslConfig.setUserName(this.saslUser.getText());
+        saslConfig.setType(this.saslType.getSelectedItem());
         saslConfig.setPassword(this.saslPassword.getText());
         return saslConfig;
     }
@@ -334,6 +345,10 @@ public class ZKConnectUpdateController extends StageController {
             // sasl配置
             this.zkInfo.setSaslConfig(this.getSASLConfig());
             this.zkInfo.setSaslAuth(this.saslAuth.isSelected());
+            // 刷新jaas文件
+            if (this.zkInfo.isSASLAuth() && this.zkInfo.getSaslConfig() != null) {
+                ZKSASLUtil.updateJaasFile();
+            }
             this.zkInfo.setListen(this.listen.isSelected());
             this.zkInfo.setRemark(this.remark.getTextTrim());
             this.zkInfo.setReadonly(this.readonly.isSelected());
@@ -427,6 +442,7 @@ public class ZKConnectUpdateController extends StageController {
         ZKSASLConfig saslConfig = this.zkInfo.getSaslConfig();
         this.saslAuth.setSelected(this.zkInfo.isSASLAuth());
         if (saslConfig != null) {
+            this.saslType.select(saslConfig.getType());
             this.saslUser.setText(saslConfig.getUserName());
             this.saslPassword.setText(saslConfig.getPassword());
         }

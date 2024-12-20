@@ -31,7 +31,8 @@ public class ZKClientUtil {
      * @param sessionTimeoutMs    会话超时毫秒值
      * @return zk客户端
      */
-    public static CuratorFramework build(@NonNull String host, @NonNull RetryPolicy retryPolicy, int connectionTimeoutMs, int sessionTimeoutMs, List<AuthInfo> authInfos, boolean compatibility) {
+    public static CuratorFramework build(@NonNull String host, @NonNull RetryPolicy retryPolicy, int connectionTimeoutMs,
+                                         int sessionTimeoutMs, List<AuthInfo> authInfos, boolean compatibility,String iid) {
         ExecutorService service = Executors.newCachedThreadPool();
         // 构建builder
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
@@ -44,7 +45,7 @@ public class ZKClientUtil {
                 .threadFactory(ZKThread::new)
                 .waitForShutdownTimeoutMs(500)
                 // .zk34CompatibilityMode(compatibility)
-                .zookeeperFactory(new ZKFactory())
+                .zookeeperFactory(new ZKFactory(iid))
                 .sessionTimeoutMs(sessionTimeoutMs)
                 .connectionTimeoutMs(connectionTimeoutMs);
         return builder.build();

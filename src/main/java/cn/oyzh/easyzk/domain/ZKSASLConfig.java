@@ -48,4 +48,11 @@ public class ZKSASLConfig implements Serializable {
     @Column
     private String password;
 
+    public boolean checkInvalid() {
+        if ("Digest".equalsIgnoreCase(this.type)) {
+            return this.userName == null || this.password == null;
+        }
+        return false;
+    }
+
 }

@@ -317,12 +317,6 @@ public class ZKNodeTab extends DynamicTab {
         private SVGGlyph dataRedo;
 
         /**
-         * 数据tab
-         */
-        @FXML
-        private FXTab dataTab;
-
-        /**
          * 右侧zk数据
          */
         @FXML
@@ -335,7 +329,25 @@ public class ZKNodeTab extends DynamicTab {
         protected RichDataTypeComboBox format;
 
         /**
-         * 配额组件tab
+         * 数据tab
+         */
+        @FXML
+        private FXTab dataTab;
+
+        /**
+         * 状态tab
+         */
+        @FXML
+        private FXTab statTab;
+
+        /**
+         * 权限tab
+         */
+        @FXML
+        private FXTab aclTab;
+
+        /**
+         * 配额tab
          */
         @FXML
         protected FXTab quotaTab;
@@ -395,14 +407,20 @@ public class ZKNodeTab extends DynamicTab {
             try {
                 this.activeItem = (ZKNodeTreeItem) treeItem;
                 if (this.activeItem != null) {
-                    // 初始化数据
-                    this.initData();
-                    // 初始化acl
-                    this.initACL();
-                    // 初始化状态
-                    this.initStat();
-                    // 初始化配额
-                    this.initQuota();
+                    String id = this.tabPane.getSelectTabId();
+                    if (id.equals("dataTab")) {
+                        // 初始化数据
+                        this.initData();
+                    } else if (id.equals("statTab")) {
+                        // 初始化状态
+                        this.initStat();
+                    } else if (id.equals("aclTab")) {
+                        // 初始化acl
+                        this.initACL();
+                    } else if (id.equals("quotaTab")) {
+                        // 初始化配额
+                        this.initQuota();
+                    }
                     // 设置是否收藏
                     this.collectPane.setCollect(this.activeItem.isCollect());
                     // 启用组件
@@ -422,6 +440,9 @@ public class ZKNodeTab extends DynamicTab {
             }
         }
 
+        /**
+         * 刷新节点
+         */
         private void refreshItem() {
             try {
                 // 刷新节点
@@ -1044,6 +1065,24 @@ public class ZKNodeTab extends DynamicTab {
                     this.flushTabGraphicColor();
                 }
             });
+            // tab组件切换事件
+            this.tabPane.selectedTabChanged((observable, oldValue, newValue) -> {
+                try {
+                    if (newValue != null) {
+                        if ("dataTab".equals(newValue.getId())) {
+                            this.initData();
+                        } else if ("statTab".equals(newValue.getId())) {
+                            this.initStat();
+                        } else if ("aclTab".equals(newValue.getId())) {
+                            this.initACL();
+                        } else if ("quotaTab".equals(newValue.getId())) {
+                            this.initQuota();
+                        }
+                    }
+                } catch (Exception ex) {
+                    MessageBox.exception(ex);
+                }
+            });
             // 拉伸辅助
             NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
             resizeHelper.widthLimit(240f, 750f);
@@ -1113,6 +1152,9 @@ public class ZKNodeTab extends DynamicTab {
             this.showData();
         }
 
+        /**
+         * 执行搜索
+         */
         @FXML
         private void doSearch() {
             String kw = this.searchKW.getTextTrim();

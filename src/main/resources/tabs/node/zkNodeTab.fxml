@@ -204,7 +204,7 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%base.stat">
+        <FXTab text="%base.stat" fx:id="statTab">
             <graphic>
                 <SVGGlyph cursorType="DEFAULT" url="/font/status.svg" size="13"/>
             </graphic>
@@ -241,7 +241,7 @@
                 <fx:include source="zkNodeStatItem.fxml"/>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%base.acl">
+        <FXTab text="%base.acl" fx:id="aclTab">
             <graphic>
                 <AccessControlSVGGlyph cursorType="DEFAULT" size="13"/>
             </graphic>

@@ -42,7 +42,7 @@
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.ZKNodeTab.ZKNodeTabController">
+          fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTab.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="30" flexWidth="100%">
             <ZKNodeSearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType">

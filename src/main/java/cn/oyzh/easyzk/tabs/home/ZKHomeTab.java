@@ -1,13 +1,11 @@
-package cn.oyzh.easyzk.tabs;
+package cn.oyzh.easyzk.tabs.home;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.gui.svg.glyph.HomeSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;

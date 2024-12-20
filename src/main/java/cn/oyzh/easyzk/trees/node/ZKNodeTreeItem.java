@@ -820,7 +820,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
 
     @Override
     public void sortAsc() {
-        if (super.isSortable()) {
+        if (super.isSortable() && !super.isSorting()) {
             super.sortAsc();
             this.itemChildren().forEach(ZKNodeTreeItem::sortAsc);
         }
@@ -828,7 +828,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
 
     @Override
     public void sortDesc() {
-        if (super.isSortable()) {
+        if (super.isSortable() && !super.isSorting()) {
             super.sortDesc();
             this.itemChildren().forEach(ZKNodeTreeItem::sortDesc);
         }
@@ -838,21 +838,25 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * 节点是否被收藏
      */
     public boolean isCollect() {
-        return ZKCollectJdbcStore.INSTANCE.exist(this.connect().getId(), this.decodeNodePath());
+        return ZKCollectJdbcStore.INSTANCE.exist(this.iid(), this.decodeNodePath());
     }
 
     /**
      * 收藏节点
      */
     public void collect() {
-        ZKCollectJdbcStore.INSTANCE.replace(this.connect().getId(), this.decodeNodePath());
+        ZKCollectJdbcStore.INSTANCE.replace(this.iid(), this.decodeNodePath());
     }
 
     /**
      * 取消收藏节点
      */
     public void unCollect() {
-        ZKCollectJdbcStore.INSTANCE.delete(this.connect().getId(), this.decodeNodePath());
+        ZKCollectJdbcStore.INSTANCE.delete(this.iid(), this.decodeNodePath());
+    }
+
+    private String iid() {
+        return this.connect().getId();
     }
 
     /**

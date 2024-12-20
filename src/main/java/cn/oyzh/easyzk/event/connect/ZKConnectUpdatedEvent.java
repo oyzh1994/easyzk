@@ -13,6 +13,6 @@ public class ZKConnectUpdatedEvent extends Event<ZKConnect> implements EventForm
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] "+ I18nHelper.connectionUpdated(), this.data().getName());
+        return String.format("[%s:%s updated] ", I18nHelper.connect(), this.data().getName());
     }
 }

@@ -13,6 +13,6 @@ public class ZKConnectDeletedEvent extends Event<ZKConnect> implements EventForm
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionDeleted(), this.data().getName());
+        return String.format("[%s:%s deleted] ", I18nHelper.connect(), this.data().getName());
     }
 }

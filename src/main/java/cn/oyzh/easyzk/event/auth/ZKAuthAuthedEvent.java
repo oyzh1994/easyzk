@@ -4,6 +4,8 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
+import cn.oyzh.event.EventFormatter;
+import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,7 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class ZKAuthAuthedEvent extends Event<ZKNodeTreeItem> {
+public class ZKAuthAuthedEvent extends Event<ZKNodeTreeItem> implements EventFormatter {
 
     private String user;
 
@@ -31,4 +33,11 @@ public class ZKAuthAuthedEvent extends Event<ZKNodeTreeItem> {
         return this.data().client();
     }
 
+    @Override
+    public String eventFormat() {
+        return String.format(
+                "[%s:%s authed %s, user:%s password:%s] ",
+                I18nHelper.connect(), this.data().connectName(), this.success ? I18nHelper.success() : I18nHelper.fail(), this.user, this.password
+        );
+    }
 }

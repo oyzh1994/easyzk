@@ -175,7 +175,7 @@ public class ZKEventUtil {
      * @param info zk信息
      */
     public static void infoAdded(ZKConnect info) {
-        ZKInfoAddedEvent event = new ZKInfoAddedEvent();
+        ZKConnectAddedEvent event = new ZKConnectAddedEvent();
         event.data(info);
         EventUtil.post(event);
     }
@@ -186,7 +186,7 @@ public class ZKEventUtil {
      * @param info zk信息
      */
     public static void infoUpdated(ZKConnect info) {
-        ZKInfoUpdatedEvent event = new ZKInfoUpdatedEvent();
+        ZKConnectUpdatedEvent event = new ZKConnectUpdatedEvent();
         event.data(info);
         EventUtil.post(event);
     }
@@ -197,7 +197,7 @@ public class ZKEventUtil {
      * @param info zk信息
      */
     public static void infoDeleted(ZKConnect info) {
-        ZKInfoDeletedEvent event = new ZKInfoDeletedEvent();
+        ZKConnectDeletedEvent event = new ZKConnectDeletedEvent();
         event.data(info);
         EventUtil.post(event);
     }

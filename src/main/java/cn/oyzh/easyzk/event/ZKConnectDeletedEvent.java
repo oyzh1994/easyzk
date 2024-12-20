@@ -9,7 +9,7 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/9/18
  */
-public class ZKInfoDeletedEvent extends Event<ZKConnect> implements EventFormatter {
+public class ZKConnectDeletedEvent extends Event<ZKConnect> implements EventFormatter {
 
     @Override
     public String eventFormat() {

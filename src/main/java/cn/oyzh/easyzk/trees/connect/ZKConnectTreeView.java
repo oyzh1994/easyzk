@@ -4,8 +4,8 @@ import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
 import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
-import cn.oyzh.easyzk.event.ZKInfoAddedEvent;
-import cn.oyzh.easyzk.event.ZKInfoUpdatedEvent;
+import cn.oyzh.easyzk.event.ZKConnectAddedEvent;
+import cn.oyzh.easyzk.event.ZKConnectUpdatedEvent;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tree.view.RichTreeCell;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -109,7 +109,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      * @param event 事件
      */
     @EventSubscribe
-    private void infoAdded(ZKInfoAddedEvent event) {
+    private void infoAdded(ZKConnectAddedEvent event) {
         this.getRoot().infoAdded(event.data());
     }
 
@@ -119,7 +119,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      * @param event 事件
      */
     @EventSubscribe
-    private void infoUpdated(ZKInfoUpdatedEvent event) {
+    private void infoUpdated(ZKConnectUpdatedEvent event) {
         this.getRoot().infoUpdated(event.data());
     }
 

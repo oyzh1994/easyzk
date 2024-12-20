@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event;
+package cn.oyzh.easyzk.event.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.event.Event;
@@ -9,10 +9,10 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/9/18
  */
-public class ZKConnectAddedEvent extends Event<ZKConnect> implements EventFormatter {
+public class ZKConnectDeletedEvent extends Event<ZKConnect> implements EventFormatter {
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionAdded(), this.data().getName());
+        return String.format("[%s] " + I18nHelper.connectionDeleted(), this.data().getName());
     }
 }

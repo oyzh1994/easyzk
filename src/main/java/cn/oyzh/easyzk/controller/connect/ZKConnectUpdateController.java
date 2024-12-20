@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.domain.ZKSASLConfig;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKAuthTableView;
@@ -19,13 +20,14 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
+import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
@@ -116,6 +118,12 @@ public class ZKConnectUpdateController extends StageController {
     private NumberTextField sessionTimeOut;
 
     /**
+     * ssh面板
+     */
+    @FXML
+    private FXTab sshTab;
+
+    /**
      * 开启ssh
      */
     @FXML
@@ -151,17 +159,41 @@ public class ZKConnectUpdateController extends StageController {
     @FXML
     private ClearableTextField sshPassword;
 
-    /**
-     * ssh连接组件
-     */
-    @FXML
-    private FlexHBox sshHostBox;
+    // /**
+    //  * ssh连接组件
+    //  */
+    // @FXML
+    // private FlexHBox sshHostBox;
+    //
+    // /**
+    //  * ssh认证组件
+    //  */
+    // @FXML
+    // private FlexHBox sshAuthBox;
 
     /**
-     * ssh认证组件
+     * ssh面板
      */
     @FXML
-    private FlexHBox sshAuthBox;
+    private FXTab saslTab;
+
+    /**
+     * 开启sasl
+     */
+    @FXML
+    private FXToggleSwitch saslAuth;
+
+    /**
+     * sasl用户
+     */
+    @FXML
+    private ClearableTextField saslUser;
+
+    /**
+     * sasl密码
+     */
+    @FXML
+    private ClearableTextField saslPassword;
 
     /**
      * zk连接储存对象
@@ -228,15 +260,26 @@ public class ZKConnectUpdateController extends StageController {
      *
      * @return ssh连接信息
      */
-    private ZKSSHConfig getSSHInfo() {
-        ZKSSHConfig sshConnectInfo = new ZKSSHConfig();
-        sshConnectInfo.setHost(this.sshHost.getText());
-        sshConnectInfo.setUser(this.sshUser.getText());
-        sshConnectInfo.setPort(this.sshPort.getIntValue());
-        sshConnectInfo.setPassword(this.sshPassword.getText());
-        sshConnectInfo.setTimeout(this.sshTimeout.getIntValue());
-        sshConnectInfo.setIid(this.zkInfo.getId());
-        return sshConnectInfo;
+    private ZKSSHConfig getSSHConfig() {
+        ZKSSHConfig sshConfig = new ZKSSHConfig();
+        sshConfig.setHost(this.sshHost.getText());
+        sshConfig.setUser(this.sshUser.getText());
+        sshConfig.setPort(this.sshPort.getIntValue());
+        sshConfig.setPassword(this.sshPassword.getText());
+        sshConfig.setTimeout(this.sshTimeout.getIntValue());
+        sshConfig.setIid(this.zkInfo.getId());
+        return sshConfig;
+    }
+    /**
+     * 获取ssh信息
+     *
+     * @return ssh连接信息
+     */
+    private ZKSASLConfig getSASLConfig() {
+        ZKSASLConfig saslConfig = new ZKSASLConfig();
+        saslConfig.setUserName(this.saslUser.getText());
+        saslConfig.setPassword(this.saslPassword.getText());
+        return saslConfig;
     }
 
     /**
@@ -253,9 +296,13 @@ public class ZKConnectUpdateController extends StageController {
             ZKConnect zkInfo = new ZKConnect();
             zkInfo.setHost(host);
             zkInfo.setConnectTimeOut(3);
+            zkInfo.setSaslAuth(this.saslAuth.isSelected());
             zkInfo.setSshForward(this.sshForward.isSelected());
             if (zkInfo.isSSHForward()) {
-                zkInfo.setSshConfig(this.getSSHInfo());
+                zkInfo.setSshConfig(this.getSSHConfig());
+            }
+            if (zkInfo.isSASLAuth()) {
+                zkInfo.setSaslConfig(this.getSASLConfig());
             }
             ZKConnectUtil.testConnect(this.stage, zkInfo);
         }
@@ -281,11 +328,15 @@ public class ZKConnectUpdateController extends StageController {
             Number sessionTimeOut = this.sessionTimeOut.getValue();
 
             this.zkInfo.setHost(host.trim());
-            this.zkInfo.setSshConfig(this.getSSHInfo());
+            // ssh配置
+            this.zkInfo.setSshConfig(this.getSSHConfig());
+            this.zkInfo.setSshForward(this.sshForward.isSelected());
+            // sasl配置
+            this.zkInfo.setSaslConfig(this.getSASLConfig());
+            this.zkInfo.setSaslAuth(this.saslAuth.isSelected());
             this.zkInfo.setListen(this.listen.isSelected());
             this.zkInfo.setRemark(this.remark.getTextTrim());
             this.zkInfo.setReadonly(this.readonly.isSelected());
-            this.zkInfo.setSshForward(this.sshForward.isSelected());
             this.zkInfo.setConnectTimeOut(connectTimeOut.intValue());
             this.zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
             this.zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
@@ -324,13 +375,23 @@ public class ZKConnectUpdateController extends StageController {
         // ssh配置
         this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
             if (newValue) {
-                this.sshAuthBox.enable();
-                this.sshHostBox.enable();
-                this.sshTimeout.enable();
+                // this.sshAuthBox.enable();
+                // this.sshHostBox.enable();
+                // this.sshTimeout.enable();
+                NodeGroupUtil.enable(this.sshTab, "ssh");
             } else {
-                this.sshAuthBox.disable();
-                this.sshHostBox.disable();
-                this.sshTimeout.disable();
+                // this.sshAuthBox.disable();
+                // this.sshHostBox.disable();
+                // this.sshTimeout.disable();
+                NodeGroupUtil.disable(this.sshTab, "ssh");
+            }
+        });
+        // sasl配置
+        this.saslAuth.selectedChanged((observable, oldValue, newValue) -> {
+            if (newValue) {
+                NodeGroupUtil.enable(this.saslTab, "sasl");
+            } else {
+                NodeGroupUtil.disable(this.saslTab, "sasl");
             }
         });
         // 认证监听
@@ -352,7 +413,8 @@ public class ZKConnectUpdateController extends StageController {
         this.hostIp.setText(this.zkInfo.hostIp());
         this.hostPort.setValue(this.zkInfo.hostPort());
         this.listen.setSelected(this.zkInfo.getListen());
-        // ssh连接信息
+        // ssh配置
+        this.sshForward.setSelected(this.zkInfo.isSSHForward());
         ZKSSHConfig sshConfig = this.zkInfo.getSshConfig();
         if (sshConfig != null) {
             this.sshHost.setText(sshConfig.getHost());
@@ -360,6 +422,13 @@ public class ZKConnectUpdateController extends StageController {
             this.sshPort.setValue(sshConfig.getPort());
             this.sshTimeout.setValue(sshConfig.getTimeout());
             this.sshPassword.setText(sshConfig.getPassword());
+        }
+        // sasl配置
+        ZKSASLConfig saslConfig = this.zkInfo.getSaslConfig();
+        this.saslAuth.setSelected(this.zkInfo.isSASLAuth());
+        if (saslConfig != null) {
+            this.saslUser.setText(saslConfig.getUserName());
+            this.saslPassword.setText(saslConfig.getPassword());
         }
         // 初始化数据
         this.initAuthDataList();

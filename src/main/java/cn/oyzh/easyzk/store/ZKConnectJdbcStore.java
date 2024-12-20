@@ -4,6 +4,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.domain.ZKSASLConfig;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStore;
@@ -26,7 +27,7 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
         List<ZKConnect> list = super.selectList();
         // 处理ssh信息
         for (ZKConnect info : list) {
-            info.setSshConfig(ZKSSHConnectJdbcStore.INSTANCE.find(info.getId()));
+            info.setSshConfig(ZKSSHConfigJdbcStore.INSTANCE.find(info.getId()));
         }
         return list;
     }
@@ -43,11 +44,21 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
             // ssh处理
             ZKSSHConfig sshConfig = zkConnect.getSshConfig();
             if (sshConfig != null) {
-                ZKSSHConnectJdbcStore.INSTANCE.replace(sshConfig);
+                ZKSSHConfigJdbcStore.INSTANCE.replace(sshConfig);
             } else {
                 DeleteParam param = new DeleteParam();
                 param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
-                ZKSSHConnectJdbcStore.INSTANCE.delete(param);
+                ZKSSHConfigJdbcStore.INSTANCE.delete(param);
+            }
+
+            // sasl处理
+            ZKSASLConfig saslConfig = zkConnect.getSaslConfig();
+            if (saslConfig != null) {
+                ZKSASLConfigJdbcStore.INSTANCE.replace(saslConfig);
+            } else {
+                DeleteParam param = new DeleteParam();
+                param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
+                ZKSASLConfigJdbcStore.INSTANCE.delete(param);
             }
 
             // 收藏处理

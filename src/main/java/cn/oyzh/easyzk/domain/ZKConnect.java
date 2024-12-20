@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.store.jdbc.Column;
-import cn.oyzh.store.jdbc.PrimaryKey;
-import cn.oyzh.store.jdbc.Table;
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.store.jdbc.Column;
+import cn.oyzh.store.jdbc.PrimaryKey;
+import cn.oyzh.store.jdbc.Table;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -142,7 +142,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
      * ssh信息
      */
     @Getter
-    private ZKSaslConfig saslConfig;
+    private ZKSASLConfig saslConfig;
 
     /**
      * 复制对象
@@ -171,12 +171,21 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     }
 
     /**
-     * 是否ssh转发
+     * 是否开启ssh转发
      *
      * @return 结果
      */
     public boolean isSSHForward() {
         return BooleanUtil.isTrue(this.sshForward);
+    }
+
+    /**
+     * 是否开启sasl认证
+     *
+     * @return 结果
+     */
+    public boolean isSASLAuth() {
+        return BooleanUtil.isTrue(this.saslAuth);
     }
 
     /**

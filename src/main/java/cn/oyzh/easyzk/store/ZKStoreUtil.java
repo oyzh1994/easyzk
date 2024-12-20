@@ -10,7 +10,7 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
+import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
 import cn.oyzh.store.jdbc.JdbcConst;
@@ -126,7 +126,7 @@ public class ZKStoreUtil {
                     }
                     if (obj.containsKey("sshInfo")) {
                         JSONObject object = obj.getJSONObject("sshInfo");
-                        ZKSSHConnect sshConnect = new ZKSSHConnect();
+                        ZKSSHConfig sshConnect = new ZKSSHConfig();
                         if (object.containsKey("port")) {
                             sshConnect.setPort(object.getInt("port"));
                         }
@@ -142,7 +142,7 @@ public class ZKStoreUtil {
                         if (object.containsKey("password")) {
                             sshConnect.setPassword(object.getString("password"));
                         }
-                        connect.setSshConnect(sshConnect);
+                        connect.setSshConfig(sshConnect);
                     }
                     connects.add(connect);
                 }

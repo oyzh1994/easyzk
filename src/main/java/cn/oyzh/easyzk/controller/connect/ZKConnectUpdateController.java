@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
+import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKAuthTableView;
 import cn.oyzh.easyzk.fx.ZKFilterTableView;
@@ -228,8 +228,8 @@ public class ZKConnectUpdateController extends StageController {
      *
      * @return ssh连接信息
      */
-    private ZKSSHConnect getSSHInfo() {
-        ZKSSHConnect sshConnectInfo = new ZKSSHConnect();
+    private ZKSSHConfig getSSHInfo() {
+        ZKSSHConfig sshConnectInfo = new ZKSSHConfig();
         sshConnectInfo.setHost(this.sshHost.getText());
         sshConnectInfo.setUser(this.sshUser.getText());
         sshConnectInfo.setPort(this.sshPort.getIntValue());
@@ -255,7 +255,7 @@ public class ZKConnectUpdateController extends StageController {
             zkInfo.setConnectTimeOut(3);
             zkInfo.setSshForward(this.sshForward.isSelected());
             if (zkInfo.isSSHForward()) {
-                zkInfo.setSshConnect(this.getSSHInfo());
+                zkInfo.setSshConfig(this.getSSHInfo());
             }
             ZKConnectUtil.testConnect(this.stage, zkInfo);
         }
@@ -281,7 +281,7 @@ public class ZKConnectUpdateController extends StageController {
             Number sessionTimeOut = this.sessionTimeOut.getValue();
 
             this.zkInfo.setHost(host.trim());
-            this.zkInfo.setSshConnect(this.getSSHInfo());
+            this.zkInfo.setSshConfig(this.getSSHInfo());
             this.zkInfo.setListen(this.listen.isSelected());
             this.zkInfo.setRemark(this.remark.getTextTrim());
             this.zkInfo.setReadonly(this.readonly.isSelected());
@@ -353,13 +353,13 @@ public class ZKConnectUpdateController extends StageController {
         this.hostPort.setValue(this.zkInfo.hostPort());
         this.listen.setSelected(this.zkInfo.getListen());
         // ssh连接信息
-        ZKSSHConnect connectInfo = this.zkInfo.getSshConnect();
-        if (connectInfo != null) {
-            this.sshHost.setText(connectInfo.getHost());
-            this.sshUser.setText(connectInfo.getUser());
-            this.sshPort.setValue(connectInfo.getPort());
-            this.sshTimeout.setValue(connectInfo.getTimeout());
-            this.sshPassword.setText(connectInfo.getPassword());
+        ZKSSHConfig sshConfig = this.zkInfo.getSshConfig();
+        if (sshConfig != null) {
+            this.sshHost.setText(sshConfig.getHost());
+            this.sshUser.setText(sshConfig.getUser());
+            this.sshPort.setValue(sshConfig.getPort());
+            this.sshTimeout.setValue(sshConfig.getTimeout());
+            this.sshPassword.setText(sshConfig.getPassword());
         }
         // 初始化数据
         this.initAuthDataList();

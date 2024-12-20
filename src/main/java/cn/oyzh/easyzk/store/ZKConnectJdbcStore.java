@@ -4,7 +4,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
+import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStore;
 import cn.oyzh.store.jdbc.QueryParam;
@@ -26,7 +26,7 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
         List<ZKConnect> list = super.selectList();
         // 处理ssh信息
         for (ZKConnect info : list) {
-            info.setSshConnect(ZKSSHConnectJdbcStore.INSTANCE.find(info.getId()));
+            info.setSshConfig(ZKSSHConnectJdbcStore.INSTANCE.find(info.getId()));
         }
         return list;
     }
@@ -41,9 +41,9 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
             }
 
             // ssh处理
-            ZKSSHConnect sshConnect = zkConnect.getSshConnect();
-            if (sshConnect != null) {
-                ZKSSHConnectJdbcStore.INSTANCE.replace(sshConnect);
+            ZKSSHConfig sshConfig = zkConnect.getSshConfig();
+            if (sshConfig != null) {
+                ZKSSHConnectJdbcStore.INSTANCE.replace(sshConfig);
             } else {
                 DeleteParam param = new DeleteParam();
                 param.addQueryParam(new QueryParam("iid", zkConnect.getId()));

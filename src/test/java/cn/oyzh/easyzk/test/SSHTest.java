@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.test;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
+import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
@@ -15,7 +15,7 @@ public class SSHTest {
 
     @Test
     public void test() throws Exception {
-        ZKSSHConnect connectInfo = new ZKSSHConnect();
+        ZKSSHConfig connectInfo = new ZKSSHConfig();
         connectInfo.setHost("192.168.189.130");
         connectInfo.setUser("root");
         connectInfo.setPassword("123456");

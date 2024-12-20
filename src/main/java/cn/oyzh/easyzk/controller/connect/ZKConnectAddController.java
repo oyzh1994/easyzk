@@ -4,7 +4,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
+import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKAuthTableView;
 import cn.oyzh.easyzk.fx.ZKFilterTableView;
@@ -225,8 +225,8 @@ public class ZKConnectAddController extends StageController {
      *
      * @return ssh连接信息
      */
-    private ZKSSHConnect getSSHInfo() {
-        ZKSSHConnect sshConnectInfo = new ZKSSHConnect();
+    private ZKSSHConfig getSSHInfo() {
+        ZKSSHConfig sshConnectInfo = new ZKSSHConfig();
         sshConnectInfo.setHost(this.sshHost.getText());
         sshConnectInfo.setUser(this.sshUser.getText());
         sshConnectInfo.setPort(this.sshPort.getIntValue());
@@ -251,7 +251,7 @@ public class ZKConnectAddController extends StageController {
             zkInfo.setConnectTimeOut(3);
             zkInfo.setSshForward(this.sshForward.isSelected());
             if (zkInfo.isSSHForward()) {
-                zkInfo.setSshConnect(this.getSSHInfo());
+                zkInfo.setSshConfig(this.getSSHInfo());
             }
             ZKConnectUtil.testConnect(this.stage, zkInfo);
         }
@@ -277,7 +277,7 @@ public class ZKConnectAddController extends StageController {
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number sessionTimeOut = this.sessionTimeOut.getValue();
             zkInfo.setHost(host);
-            zkInfo.setSshConnect(this.getSSHInfo());
+            zkInfo.setSshConfig(this.getSSHInfo());
             zkInfo.setListen(this.listen.isSelected());
             zkInfo.setRemark(this.remark.getTextTrim());
             zkInfo.setReadonly(this.readonly.isSelected());

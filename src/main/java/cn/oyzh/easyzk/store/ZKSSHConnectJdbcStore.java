@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.store;
 
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
+import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.store.jdbc.JdbcStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
@@ -8,21 +8,21 @@ import cn.oyzh.store.jdbc.QueryParam;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKSSHConnectJdbcStore extends JdbcStore<ZKSSHConnect> {
+public class ZKSSHConnectJdbcStore extends JdbcStore<ZKSSHConfig> {
 
     /**
      * 当前实例
      */
     public static final ZKSSHConnectJdbcStore INSTANCE = new ZKSSHConnectJdbcStore();
 
-    public ZKSSHConnect find(String iid) {
+    public ZKSSHConfig find(String iid) {
         QueryParam param = new QueryParam();
         param.setName("iid");
         param.setData(iid);
         return super.selectOne(param);
     }
 
-    public boolean replace(ZKSSHConnect model) {
+    public boolean replace(ZKSSHConfig model) {
         String iid = model.getIid();
         if (super.exist(iid)) {
             return super.update(model);
@@ -31,12 +31,12 @@ public class ZKSSHConnectJdbcStore extends JdbcStore<ZKSSHConnect> {
     }
 
     @Override
-    protected ZKSSHConnect newModel() {
-        return new ZKSSHConnect();
+    protected ZKSSHConfig newModel() {
+        return new ZKSSHConfig();
     }
 
     @Override
-    protected Class<ZKSSHConnect> modelClass() {
-        return ZKSSHConnect.class;
+    protected Class<ZKSSHConfig> modelClass() {
+        return ZKSSHConfig.class;
     }
 }

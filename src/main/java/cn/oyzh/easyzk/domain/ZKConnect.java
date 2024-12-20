@@ -129,7 +129,20 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
      * ssh信息
      */
     @Getter
-    private ZKSSHConnect sshConnect;
+    private ZKSSHConfig sshConfig;
+
+    /**
+     * 是否开启ssh转发
+     */
+    @Getter
+    @Column
+    private Boolean saslAuth;
+
+    /**
+     * ssh信息
+     */
+    @Getter
+    private ZKSaslConfig saslConfig;
 
     /**
      * 复制对象
@@ -145,8 +158,12 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.groupId = zkInfo.groupId;
         this.readonly = zkInfo.readonly;
         this.collects = zkInfo.collects;
+        // ssh
+        this.sshConfig = zkInfo.sshConfig;
         this.sshForward = zkInfo.sshForward;
-        this.sshConnect = zkInfo.sshConnect;
+        // sasl
+        this.saslAuth = zkInfo.saslAuth;
+        this.saslConfig = zkInfo.saslConfig;
         this.compatibility = zkInfo.compatibility;
         this.connectTimeOut = zkInfo.connectTimeOut;
         this.sessionTimeOut = zkInfo.sessionTimeOut;

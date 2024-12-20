@@ -178,8 +178,8 @@ public class ZKClient {
 
     public ZKClient(@NonNull ZKConnect connect) {
         this.connect = connect;
-        if (connect.isSSHForward() && connect.getSshConnect() != null) {
-            this.sshForwarder = new SSHForwarder(connect.getSshConnect());
+        if (connect.isSSHForward() && connect.getSshConfig() != null) {
+            this.sshForwarder = new SSHForwarder(connect.getSshConfig());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || !newValue.isConnected()) {

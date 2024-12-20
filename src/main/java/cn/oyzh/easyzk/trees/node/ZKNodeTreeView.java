@@ -343,6 +343,8 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
             this.setRoot(rootItem);
             // 加载根节点
             rootItem.loadRoot();
+        } catch (IllegalStateException ex) {
+            throw ex;
         } catch (Exception ex) {
             MessageBox.exception(ex);
         } finally {

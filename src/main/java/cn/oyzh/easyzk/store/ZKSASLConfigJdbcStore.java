@@ -39,4 +39,8 @@ public class ZKSASLConfigJdbcStore extends JdbcStore<ZKSASLConfig> {
     protected Class<ZKSASLConfig> modelClass() {
         return ZKSASLConfig.class;
     }
+
+    public ZKSASLConfig getByIid(String iid) {
+        return super.selectOne(QueryParam.of("iid", iid));
+    }
 }

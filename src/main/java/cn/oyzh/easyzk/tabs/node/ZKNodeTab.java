@@ -393,6 +393,8 @@ public class ZKNodeTab extends DynamicTab {
                 this.treeView.client(this.client);
                 // 加载根节点
                 this.treeView.loadRoot();
+            } catch (IllegalStateException ex) {
+                this.closeTab();
             } catch (Exception ex) {
                 MessageBox.exception(ex);
             }

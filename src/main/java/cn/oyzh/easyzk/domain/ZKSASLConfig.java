@@ -49,6 +49,9 @@ public class ZKSASLConfig implements Serializable {
     private String password;
 
     public boolean checkInvalid() {
+        if (this.iid == null) {
+            return true;
+        }
         if ("Digest".equalsIgnoreCase(this.type)) {
             return this.userName == null || this.password == null;
         }

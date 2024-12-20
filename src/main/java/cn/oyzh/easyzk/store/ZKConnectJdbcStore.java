@@ -23,6 +23,10 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
      */
     public static final ZKConnectJdbcStore INSTANCE = new ZKConnectJdbcStore();
 
+    public ZKConnect getByIid(String iid) {
+        return super.selectOne(QueryParam.of("iid", iid));
+    }
+
     public List<ZKConnect> load() {
         List<ZKConnect> list = super.selectList();
         // 处理ssh信息
@@ -54,9 +58,9 @@ public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
 
             // sasl处理
             ZKSASLConfig saslConfig = zkConnect.getSaslConfig();
-                DeleteParam param = new DeleteParam();
-                param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
-                ZKSASLConfigJdbcStore.INSTANCE.delete(param);
+            DeleteParam param = new DeleteParam();
+            param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
+            ZKSASLConfigJdbcStore.INSTANCE.delete(param);
             if (saslConfig != null) {
                 saslConfig.setIid(zkConnect.getId());
                 ZKSASLConfigJdbcStore.INSTANCE.replace(saslConfig);

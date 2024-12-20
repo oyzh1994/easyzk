@@ -244,6 +244,11 @@ public class ZKConnectUpdateController extends StageController {
     private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
 
     /**
+     * sasl配置储存
+     */
+    private final ZKSASLConfigJdbcStore saslConfigStore = ZKSASLConfigJdbcStore.INSTANCE;
+
+    /**
      * 获取连接地址
      *
      * @return 连接地址
@@ -345,9 +350,9 @@ public class ZKConnectUpdateController extends StageController {
             // sasl配置
             this.zkInfo.setSaslConfig(this.getSASLConfig());
             this.zkInfo.setSaslAuth(this.saslAuth.isSelected());
-            // 刷新jaas文件
+            // 刷新sasl文件
             if (this.zkInfo.isSASLAuth() && this.zkInfo.getSaslConfig() != null) {
-                ZKSASLUtil.updateJaasFile();
+                ZKSASLUtil.updateSaslFile();
             }
             this.zkInfo.setListen(this.listen.isSelected());
             this.zkInfo.setRemark(this.remark.getTextTrim());
@@ -439,7 +444,7 @@ public class ZKConnectUpdateController extends StageController {
             this.sshPassword.setText(sshConfig.getPassword());
         }
         // sasl配置
-        ZKSASLConfig saslConfig = this.zkInfo.getSaslConfig();
+        ZKSASLConfig saslConfig = this.saslConfigStore.getByIid(this.zkInfo.getId());
         this.saslAuth.setSelected(this.zkInfo.isSASLAuth());
         if (saslConfig != null) {
             this.saslType.select(saslConfig.getType());

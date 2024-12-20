@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event;
+package cn.oyzh.easyzk.event.node;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -14,11 +14,11 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class ZKNodeChangedEvent extends Event<String> {
+public class ZKNodeCreatedEvent extends Event<String> {
 
     private ZKClient client;
 
-    public ZKConnect connect() {
+    public ZKConnect connect(){
         return this.client.connect();
     }
 

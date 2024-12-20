@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event;
+package cn.oyzh.easyzk.event.node;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.event.Event;

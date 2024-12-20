@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.event;
+package cn.oyzh.easyzk.event.filter;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.event.Event;

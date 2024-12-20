@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyzk.fx.ZKAuthTableView?>
+<?import cn.oyzh.easyzk.fx.ZKFilterTableView?>
+<?import cn.oyzh.easyzk.fx.ZKSASLTypeComboBox?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.button.TestButton?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
@@ -22,9 +26,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
-<?import cn.oyzh.easyzk.fx.ZKAuthTableView?>
-<?import cn.oyzh.easyzk.fx.ZKFilterTableView?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.connect.ZKConnectAddController" realWidth="750" realHeight="400">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
@@ -139,7 +140,7 @@
                 </FlexTextArea>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%base.ssh">
+        <FXTab text="%base.ssh" fx:id="sshTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.enableSSHChannel">
                     <VBox.margin>
@@ -156,7 +157,7 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </AccentLabel>
-                <FlexHBox fx:id="sshHostBox" disable="true">
+                <FlexHBox disable="true" groupId="ssh">
                     <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30"
                                         flexWidth="100% - 285" maxLen="1024">
                         <HBox.margin>
@@ -174,7 +175,8 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <NumberTextField flexWidth="100% - 180" fx:id="sshTimeout" tipText="%base.sshTimeoutTip"
+                <NumberTextField disable="true" groupId="ssh" flexWidth="100% - 180" fx:id="sshTimeout"
+                                 tipText="%base.sshTimeoutTip"
                                  realHeight="30" value="3000">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
@@ -185,7 +187,7 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <FlexHBox fx:id="sshAuthBox" disable="true">
+                <FlexHBox disable="true" groupId="ssh">
                     <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30"
                                         flexWidth="50% - 93" text="root">
                         <HBox.margin>
@@ -201,10 +203,59 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
+        <FXTab text="SASL" fx:id="saslTab">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <InfoLabel text="%base.enableSASLAuth">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <SwitchToggleSwitch fx:id="saslAuth">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </SwitchToggleSwitch>
+                <InfoLabel text="%base.type">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <ZKSASLTypeComboBox initIndex="0" realHeight="30" groupId="sasl" fx:id="saslType" disable="true">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </ZKSASLTypeComboBox>
+                <InfoLabel text="%base.userName">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <ClearableTextField promptText="%base.userNameTip" disable="true" fx:id="saslUser" require="true"
+                                    realHeight="30"
+                                    flexWidth="100% - 180" groupId="sasl">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </ClearableTextField>
+                <InfoLabel text="%base.password">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <ClearableTextField promptText="%base.passwordTip" disable="true" fx:id="saslPassword" require="true"
+                                    realHeight="30"
+                                    flexWidth="100% - 180" groupId="sasl">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </ClearableTextField>
+            </FlexVBox>
+        </FXTab>
         <FXTab text="%base.auth">
-            <FlexVBox  flexWidth="100%" flexHeight="100%">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="50" flexWidth="100%">
-                    <ClearableTextField realHeight="26" fx:id="authSearchKW" realWidth="280" tipText="%base.searchKWTip">
+                    <ClearableTextField realHeight="26" fx:id="authSearchKW" realWidth="280"
+                                        tipText="%base.searchKWTip">
                         <HBox.margin>
                             <Insets left="30" top="14"/>
                         </HBox.margin>
@@ -225,11 +276,14 @@
                         </HBox.margin>
                     </CopySVGGlyph>
                 </FlexHBox>
-                <ZKAuthTableView flexHeight="100% - 50" flexWidth="100% - 50" fx:id="authTable" copyCellDataOnDoubleClicked="true">
+                <ZKAuthTableView flexHeight="100% - 50" flexWidth="100% - 50" fx:id="authTable"
+                                 copyCellDataOnDoubleClicked="true">
                     <columns>
                         <FlexTableColumn flexWidth="35%" text="%base.userName" valueName="userControl"/>
-                        <FlexTableColumn flexWidth="45%" text="%base.password" valueName="passwordControl" sortable="false"/>
-                        <FlexTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl" sortable="false"/>
+                        <FlexTableColumn flexWidth="45%" text="%base.password" valueName="passwordControl"
+                                         sortable="false"/>
+                        <FlexTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
+                                         sortable="false"/>
                     </columns>
                     <VBox.margin>
                         <Insets left="30"/>

@@ -276,12 +276,12 @@ public class ZKConnectUpdateController extends StageController {
      */
     private ZKSSHConfig getSSHConfig() {
         ZKSSHConfig sshConfig = new ZKSSHConfig();
+        sshConfig.setIid(this.zkInfo.getId());
         sshConfig.setHost(this.sshHost.getText());
         sshConfig.setUser(this.sshUser.getText());
         sshConfig.setPort(this.sshPort.getIntValue());
         sshConfig.setPassword(this.sshPassword.getText());
         sshConfig.setTimeout(this.sshTimeout.getIntValue());
-        sshConfig.setIid(this.zkInfo.getId());
         return sshConfig;
     }
 
@@ -292,6 +292,7 @@ public class ZKConnectUpdateController extends StageController {
      */
     private ZKSASLConfig getSASLConfig() {
         ZKSASLConfig saslConfig = new ZKSASLConfig();
+        saslConfig.setIid(this.zkInfo.getId());
         saslConfig.setUserName(this.saslUser.getText());
         saslConfig.setType(this.saslType.getSelectedItem());
         saslConfig.setPassword(this.saslPassword.getText());
@@ -350,7 +351,7 @@ public class ZKConnectUpdateController extends StageController {
             // sasl配置
             this.zkInfo.setSaslConfig(this.getSASLConfig());
             this.zkInfo.setSaslAuth(this.saslAuth.isSelected());
-            // 刷新sasl文件
+            // 刷新sasl配置
             if (this.zkInfo.isSASLAuth() && this.zkInfo.getSaslConfig() != null) {
                 ZKSASLUtil.updateSasl();
             }

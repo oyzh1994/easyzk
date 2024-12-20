@@ -12,7 +12,6 @@ import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionLostEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionConnectedEvent;
-import cn.oyzh.easyzk.event.filter.ZKFilterAddedEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.group.ZKGroupAddedEvent;
 import cn.oyzh.easyzk.event.group.ZKGroupDeletedEvent;
@@ -312,14 +311,14 @@ public class ZKEventUtil {
         EventUtil.post(new ZKAddConnectEvent());
     }
 
-    /**
-     * 添加过滤配置
-     */
-    public static void filterAdded(ZKFilter filter) {
-        ZKFilterAddedEvent event = new ZKFilterAddedEvent();
-        event.data(filter);
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 添加过滤配置
+    //  */
+    // public static void filterAdded(ZKFilter filter) {
+    //     ZKFilterAddedEvent event = new ZKFilterAddedEvent();
+    //     event.data(filter);
+    //     EventUtil.post(event);
+    // }
 
     /**
      * 更新日志事件

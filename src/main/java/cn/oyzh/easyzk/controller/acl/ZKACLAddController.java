@@ -423,7 +423,7 @@ public class ZKACLAddController extends StageController {
         try {
             Stat stat = this.zkClient.addACL(this.zkItem.nodePath(), list);
             if (stat != null) {
-                ZKEventUtil.nodeACLAdded(this.zkItem.connect());
+                ZKEventUtil.nodeACLAdded(this.zkItem.connect(), this.zkItem.nodePath());
                 this.closeWindow();
                 return true;
             }

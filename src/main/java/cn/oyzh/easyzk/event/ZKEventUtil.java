@@ -378,22 +378,24 @@ public class ZKEventUtil {
     /**
      * 节点acl添加事件
      *
-     * @param info zk连接
+     * @param zkConnect zk连接
      */
-    public static void nodeACLAdded(ZKConnect info) {
+    public static void nodeACLAdded(ZKConnect zkConnect, String nodePath) {
         ZKNodeACLAddedEvent event = new ZKNodeACLAddedEvent();
-        event.data(info);
+        event.data(zkConnect);
+        event.nodePath(nodePath);
         EventUtil.post(event);
     }
 
     /**
      * 节点acl修改事件
      *
-     * @param info zk连接
+     * @param zkConnect zk连接
      */
-    public static void nodeACLUpdated(ZKConnect info) {
+    public static void nodeACLUpdated(ZKConnect zkConnect, String nodePath) {
         ZKNodeACLUpdatedEvent event = new ZKNodeACLUpdatedEvent();
-        event.data(info);
+        event.data(zkConnect);
+        event.nodePath(nodePath);
         EventUtil.post(event);
     }
 
@@ -459,6 +461,6 @@ public class ZKEventUtil {
         event.action(action);
         event.params(params);
         event.actionData(actionData);
-        EventUtil.post(event);
+        EventUtil.postAsync(event);
     }
 }

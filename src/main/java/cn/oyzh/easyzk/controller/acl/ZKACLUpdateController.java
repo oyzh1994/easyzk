@@ -1,23 +1,20 @@
 package cn.oyzh.easyzk.controller.acl;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -114,7 +111,7 @@ public class ZKACLUpdateController extends StageController {
                     acl.setPerms(ZKACLUtil.toPermInt(perms));
                     Stat stat = this.zkClient.setACL(this.zkItem.nodePath(), aclList);
                     if (stat != null) {
-                        ZKEventUtil.nodeACLUpdated(this.zkItem.connect());
+                        ZKEventUtil.nodeACLUpdated(this.zkItem.connect(), this.zkItem.nodePath());
                         this.closeWindow();
                     } else {
                         MessageBox.warn(I18nHelper.operationFail());

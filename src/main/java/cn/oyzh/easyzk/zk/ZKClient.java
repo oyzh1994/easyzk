@@ -314,7 +314,7 @@ public class ZKClient {
                 // // 设置认证信息为已认证
                 // ZKAuthUtil.setAuthed(this, ZKAuthUtil.loadAuths(this.iid()));
             } else {// 连接未成功则关闭
-                this._close();
+                this.close1();
                 if (this.state.get() == ZKConnState.FAILED) {
                     this.state.set(null);
                 } else {
@@ -363,14 +363,14 @@ public class ZKClient {
      * 关闭zk
      */
     public void close() {
-        this._close();
+        this.close1();
         this.state.set(ZKConnState.CLOSED);
     }
 
     /**
      * 关闭zk实际业务
      */
-    private void _close() {
+    private void close1() {
         try {
             // 关闭树监听
             this.closeTreeCache();
@@ -1402,14 +1402,32 @@ public class ZKClient {
         return false;
     }
 
+    /**
+     * 执行操作
+     *
+     * @param action 操作
+     */
     private void doAction(String action) {
         ZKEventUtil.clientAction(this.connectName(), action, null, null);
     }
 
+    /**
+     * 执行操作
+     *
+     * @param action 操作
+     * @param params 参数
+     */
     private void doAction(String action, String params) {
         ZKEventUtil.clientAction(this.connectName(), action, params, null);
     }
 
+    /**
+     * 执行操作
+     *
+     * @param action 操作
+     * @param params 参数
+     * @param data   数据
+     */
     private void doAction(String action, String params, Object data) {
         ZKEventUtil.clientAction(this.connectName(), action, params, data);
     }

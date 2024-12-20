@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.event.client;
 
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
@@ -37,6 +38,8 @@ public class ZKClientActionEvent extends Event<String> implements EventFormatter
             }
         } else if (actionData instanceof Number n) {
             this.actionData = n.doubleValue();
+        } else if (actionData != null) {
+            this.actionData = JSONUtil.toJson(actionData);
         }
     }
 

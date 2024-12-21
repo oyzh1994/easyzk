@@ -4,7 +4,7 @@ import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -56,7 +56,7 @@ public class MainController extends ParentStageController {
     /**
      * zk相关配置
      */
-    private final ZKSetting setting = ZKSettingJdbcStore.SETTING;
+    private final ZKSetting setting = ZKSettingStore.SETTING;
 
     @Override
     public List<? extends StageController> getSubControllers() {
@@ -118,7 +118,7 @@ public class MainController extends ParentStageController {
         }
         // 保存页面信息
         if (savePageInfo) {
-            ZKSettingJdbcStore.INSTANCE.replace(this.setting);
+            ZKSettingStore.INSTANCE.replace(this.setting);
         }
         super.onSystemExit();
     }

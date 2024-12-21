@@ -4,7 +4,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
-import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import lombok.NonNull;
@@ -118,7 +118,7 @@ public class ZKAuthUtil {
      * @see cn.oyzh.easyzk.domain.ZKConnect
      */
     public static List<ZKAuth> loadAuths(String iid) {
-        if (ZKSettingJdbcStore.SETTING.isAutoAuth()) {
+        if (ZKSettingStore.SETTING.isAutoAuth()) {
             return ZKAuthJdbcStore.INSTANCE.loadEnable(iid);
         }
         return Collections.emptyList();

@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.store.jdbc.DeleteParam;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKConnectJdbcStore extends JdbcStore<ZKConnect> {
+public class ZKConnectJdbcStore extends JdbcStandardStore<ZKConnect> {
 
     /**
      * 当前实例

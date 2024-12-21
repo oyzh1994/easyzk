@@ -1,14 +1,14 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 /**
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKSASLConfigJdbcStore extends JdbcStore<ZKSASLConfig> {
+public class ZKSASLConfigJdbcStore extends JdbcStandardStore<ZKSASLConfig> {
 
     /**
      * 当前实例

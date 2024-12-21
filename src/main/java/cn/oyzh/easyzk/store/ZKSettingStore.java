@@ -1,32 +1,27 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.store.jdbc.JdbcStandardStore;
+import cn.oyzh.store.jdbc.JdbcKeyValueStore;
 
 
 /**
  * @author oyzh
  * @since 2024/09/23
  */
-public class ZKSettingJdbcStore extends JdbcStandardStore<ZKSetting> {
+public class ZKSettingStore extends JdbcKeyValueStore<ZKSetting> {
 
     /**
      * 当前实例
      */
-    public static final ZKSettingJdbcStore INSTANCE = new ZKSettingJdbcStore();
+    public static final ZKSettingStore INSTANCE = new ZKSettingStore();
 
     /**
      * 当前设置
      */
     public static final ZKSetting SETTING = INSTANCE.load();
 
-    /**
-     * 数据id
-     */
-    private static final String DATA_UID = "DEFAULT";
-
     public ZKSetting load() {
-        ZKSetting setting = super.selectOne(DATA_UID);
+        ZKSetting setting = super.select();
         if (setting == null) {
             setting = new ZKSetting();
         }
@@ -35,10 +30,7 @@ public class ZKSettingJdbcStore extends JdbcStandardStore<ZKSetting> {
 
     public boolean replace(ZKSetting model) {
         if (model != null) {
-            if (super.exist(DATA_UID)) {
-                return this.update(model);
-            }
-            return this.insert(model);
+            return this.update(model);
         }
         return false;
     }

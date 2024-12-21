@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.store;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.store.jdbc.DeleteParam;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/5/12
  */
-public class ZKGroupJdbcStore extends JdbcStore<ZKGroup> {
+public class ZKGroupJdbcStore extends JdbcStandardStore<ZKGroup> {
 
     /**
      * 当前实例

@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.controller.main.MessageController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
-import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKDataTreeItem;
@@ -37,7 +37,7 @@ public class ZKMainController extends ParentStageController {
     /**
      * 配置对象
      */
-    private final ZKSetting setting = ZKSettingJdbcStore.SETTING;
+    private final ZKSetting setting = ZKSettingStore.SETTING;
 
     /**
      * 左侧组件
@@ -126,7 +126,7 @@ public class ZKMainController extends ParentStageController {
     private void savePageResize() {
         if (this.setting.isRememberPageResize()) {
             this.setting.setPageLeftWidth((float) this.tabPaneLeft.getMinWidth());
-            ZKSettingJdbcStore.INSTANCE.replace(this.setting);
+            ZKSettingStore.INSTANCE.replace(this.setting);
         }
     }
 

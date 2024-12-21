@@ -1,12 +1,12 @@
 package cn.oyzh.easyzk.terminal;
 
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 
 /**
  * @author oyzh
  * @since 2024-11-25
  */
-public class ZKTerminalHistoryJdbcStore extends JdbcStore<ZKTerminalHistory> {
+public class ZKTerminalHistoryJdbcStore extends JdbcStandardStore<ZKTerminalHistory> {
 
     /**
      * 当前实例

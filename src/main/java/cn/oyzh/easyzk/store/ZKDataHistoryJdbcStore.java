@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.common.exception.InvalidDataException;
 import cn.oyzh.store.jdbc.DeleteParam;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.OrderByParam;
 import cn.oyzh.store.jdbc.QueryParam;
 import cn.oyzh.store.jdbc.SelectParam;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @since 2022/12/16
  */
 //@Slf4j
-public class ZKDataHistoryJdbcStore extends JdbcStore<ZKDataHistory> {
+public class ZKDataHistoryJdbcStore extends JdbcStandardStore<ZKDataHistory> {
 
     /**
      * 最大历史数量

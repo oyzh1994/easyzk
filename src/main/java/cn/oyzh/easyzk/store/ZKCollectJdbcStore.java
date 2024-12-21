@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.store;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKCollect;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKCollectJdbcStore extends JdbcStore<ZKCollect> {
+public class ZKCollectJdbcStore extends JdbcStandardStore<ZKCollect> {
 
     /**
      * 当前实例

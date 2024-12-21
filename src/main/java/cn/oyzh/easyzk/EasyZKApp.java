@@ -6,8 +6,9 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.controller.SettingController;
 import cn.oyzh.easyzk.controller.data.ZKMigrationTipsController;
+import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
-import cn.oyzh.easyzk.store.ZKSettingJdbcStore;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.easyzk.zk.ZKSASLUtil;
 import cn.oyzh.event.EventFactory;
@@ -46,9 +47,9 @@ public class EasyZKApp extends FXApplication {
     private static final Project PROJECT = Project.load();
 
     public static void main(String[] args) {
-        ZKSASLUtil.registerConfiguration();
         SysConst.storeDir(ZKConst.STORE_PATH);
         SysConst.cacheDir(ZKConst.CACHE_PATH);
+        ZKSASLUtil.registerConfiguration();
         SysConst.projectName(PROJECT.getName());
         EventFactory.registerEventBus(FxEventBus.class);
         EventFactory.syncEventConfig(FxEventConfig.SYNC);
@@ -69,14 +70,15 @@ public class EasyZKApp extends FXApplication {
             ZKStoreUtil.init();
             // 禁用fx的css日志
             FXUtil.disableCSSLogger();
+            ZKSetting setting= ZKSettingStore.SETTING;
             // 应用区域
-            I18nManager.apply(ZKSettingJdbcStore.SETTING.getLocale());
+            I18nManager.apply(setting.getLocale());
             // 应用字体
-            FontManager.apply(ZKSettingJdbcStore.SETTING.fontConfig());
+            FontManager.apply(setting.fontConfig());
             // 应用主题
-            ThemeManager.apply(ZKSettingJdbcStore.SETTING.themeConfig());
+            ThemeManager.apply(setting.themeConfig());
             // 应用透明度
-            OpacityManager.apply(ZKSettingJdbcStore.SETTING.getOpacity());
+            OpacityManager.apply(setting.getOpacity());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 调用父类

@@ -1,14 +1,14 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 /**
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKSSHConfigJdbcStore extends JdbcStore<ZKSSHConfig> {
+public class ZKSSHConfigJdbcStore extends JdbcStandardStore<ZKSSHConfig> {
 
     /**
      * 当前实例

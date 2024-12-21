@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.store;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.store.jdbc.DeleteParam;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 import cn.oyzh.store.jdbc.SelectParam;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class ZKAuthJdbcStore extends JdbcStore<ZKAuth> {
+public class ZKAuthJdbcStore extends JdbcStandardStore<ZKAuth> {
 
     /**
      * 当前实例

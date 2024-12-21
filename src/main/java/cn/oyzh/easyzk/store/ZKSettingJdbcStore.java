@@ -8,6 +8,7 @@ import cn.oyzh.store.jdbc.JdbcStandardStore;
  * @author oyzh
  * @since 2024/09/23
  */
+@Deprecated
 public class ZKSettingJdbcStore extends JdbcStandardStore<ZKSetting> {
 
     /**

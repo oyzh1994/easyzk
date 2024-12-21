@@ -13,7 +13,8 @@ import lombok.EqualsAndHashCode;
  * @since 2022/8/26
  */
 @Data
-@Table("t_app_setting")
+@Table("t_setting")
+//@Table("t_app_setting")
 @EqualsAndHashCode(callSuper = true)
 public class ZKSetting extends Setting {
 

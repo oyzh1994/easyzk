@@ -720,6 +720,8 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                 List<TreeItem<?>> delList = new ArrayList<>(list.size());
                 // 预加载标志位
                 boolean loadPre = false;
+                // 加载限制
+                int limit = ZKSettingStore.SETTING.getNodeLoadLimit();
                 // 遍历列表寻找待更新或者待添加节点
                 f1:
                 for (ZKNode node : list) {
@@ -738,6 +740,16 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                         this.expend();
                         addList.clear();
                         loadPre = true;
+                    }
+                    if (limit > 0 && addList.size() >= limit) {
+                        ZKMoreTreeItem moreItem = this.moreChildren();
+                        if (moreItem != null) {
+                            delList.add(moreItem);
+                            addList.add(moreItem);
+                        } else {
+                            addList.add(new ZKMoreTreeItem(this.getTreeView()));
+                        }
+                        break;
                     }
                 }
                 // 遍历列表寻找待删除节点
@@ -772,6 +784,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         } finally {
             this.setLoading(false);
             this.doFilter();
+            this.doSort();
         }
     }
 
@@ -795,12 +808,24 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     }
 
     /**
+     * 字节点-更多
+     *
+     * @return ZKMoreTreeItem
+     */
+    protected ZKMoreTreeItem moreChildren() {
+        List list = super.unfilteredChildren().filtered(e -> e instanceof ZKMoreTreeItem);
+        return list.isEmpty() ? null : (ZKMoreTreeItem) list.getFirst();
+    }
+
+    /**
      * 显示的节点内容
      *
      * @return 节点内容
      */
     public List<ZKNodeTreeItem> itemChildren() {
-        return (List) super.unfilteredChildren();
+        return (List) super.unfilteredChildren().filtered(e -> {
+            return e instanceof ZKNodeTreeItem;
+        });
     }
 
     @Override

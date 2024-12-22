@@ -406,8 +406,12 @@ public class ZKNodeTab extends DynamicTab {
          * @param treeItem 当前节点
          */
         private void initItem(TreeItem<?> treeItem) {
-            try {
+            if (treeItem instanceof ZKNodeTreeItem) {
                 this.activeItem = (ZKNodeTreeItem) treeItem;
+            } else {
+                this.activeItem = null;
+            }
+            try {
                 if (this.activeItem != null) {
                     String id = this.tabPane.getSelectTabId();
                     if (id.equals("dataTab")) {

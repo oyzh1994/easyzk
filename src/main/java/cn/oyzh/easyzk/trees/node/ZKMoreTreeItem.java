@@ -12,11 +12,13 @@ import javafx.scene.control.TreeItem;
  * @author oyzh
  * @since 2023/1/30
  */
-public class ZKMoreTreeItem extends RichTreeItem<ZKMoreTreeItem.ZKQueryTreeItemValue> {
+public class ZKMoreTreeItem extends RichTreeItem<ZKMoreTreeItem.ZKMoreTreeItemValue> {
 
     public ZKMoreTreeItem(ZKNodeTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKQueryTreeItemValue());
+        super.setSortable(false);
+        super.setFilterable(false);
+        this.setValue(new ZKMoreTreeItemValue());
     }
 
     @Override
@@ -39,7 +41,7 @@ public class ZKMoreTreeItem extends RichTreeItem<ZKMoreTreeItem.ZKQueryTreeItemV
      * @author oyzh
      * @since 2023/4/7
      */
-    public static class ZKQueryTreeItemValue extends RichTreeItemValue {
+    public static class ZKMoreTreeItemValue extends RichTreeItemValue {
 
         @Override
         public SVGGlyph graphic() {
@@ -51,7 +53,7 @@ public class ZKMoreTreeItem extends RichTreeItem<ZKMoreTreeItem.ZKQueryTreeItemV
 
         @Override
         public String name() {
-            return I18nHelper.query();
+            return I18nHelper.loadMore();
         }
     }
 }

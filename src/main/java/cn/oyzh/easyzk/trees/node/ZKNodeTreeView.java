@@ -68,10 +68,10 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         return (ZKNodeTreeItem) super.getRoot();
     }
 
-    @Override
-    public ZKNodeTreeItem getSelectedItem() {
-        return (ZKNodeTreeItem) super.getSelectedItem();
-    }
+//    @Override
+//    public ZKNodeTreeItem getSelectedItem() {
+//        return (ZKNodeTreeItem) super.getSelectedItem();
+//    }
 
     /**
      * 寻找zk节点
@@ -124,8 +124,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
 
     @Override
     public void expand() {
-        ZKNodeTreeItem item = this.getSelectedItem();
-        if (item != null) {
+        if (this.getSelectedItem() instanceof ZKNodeTreeItem item) {
             item.expandAll();
             this.select(item);
         }
@@ -133,8 +132,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
 
     @Override
     public void collapse() {
-        ZKNodeTreeItem item = this.getSelectedItem();
-        if (item != null) {
+        if (this.getSelectedItem() instanceof ZKNodeTreeItem item) {
             item.collapseAll();
             this.select(item);
         }

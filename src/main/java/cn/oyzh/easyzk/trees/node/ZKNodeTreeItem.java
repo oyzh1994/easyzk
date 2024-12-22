@@ -49,6 +49,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * @author oyzh
@@ -733,8 +734,10 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                 boolean loadPre = false;
                 // 限制标志位
                 AtomicBoolean beLimit = new AtomicBoolean(false);
+                // 已存在节点
+                List<String> existingNodes = itemList.parallelStream().map(ZKNodeTreeItem::nodePath).toList();
                 // 获取节点列表
-                List<ZKNode> list = ZKNodeUtil.getChildNode(this.client(), this.nodePath(), ZKNodeUtil.FULL_PROPERTIES, null);
+                List<ZKNode> list = ZKNodeUtil.getChildNode(this.client(), this.nodePath(), existingNodes, limit);
                 // 遍历列表寻找待更新或者待添加节点
                 f1:
                 for (ZKNode node : list) {
@@ -754,6 +757,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                         addList.clear();
                         loadPre = true;
                     }
+                    // 限制节点加载数量
                     if (limit > 0 && addList.size() >= limit) {
                         beLimit.set(true);
                         ZKMoreTreeItem moreItem = this.moreChildren();
@@ -773,13 +777,13 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                         delList.add(moreItem);
                     }
                 }
-                // 遍历列表寻找待删除节点
-                for (ZKNodeTreeItem item : this.itemChildren()) {
-                    // 判断节点是否不存在
-                    if (list.parallelStream().noneMatch(item::nodeEquals)) {
-                        delList.add(item);
-                    }
-                }
+//                // 遍历列表寻找待删除节点
+//                for (ZKNodeTreeItem item : this.itemChildren()) {
+//                    // 判断节点是否不存在
+//                    if (list.parallelStream().noneMatch(item::nodeEquals)) {
+//                        delList.add(item);
+//                    }
+//                }
                 // 删除节点
                 this.removeChild(delList);
                 // 添加节点

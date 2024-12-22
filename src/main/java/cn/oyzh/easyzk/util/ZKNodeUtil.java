@@ -268,6 +268,7 @@ public class ZKNodeUtil {
     /**
      * 获取子节点
      *
+     * @param client     zk客户端
      * @param parentPath 父节点路径
      * @param properties 查询属性
      * @param filter     过滤器
@@ -308,6 +309,75 @@ public class ZKNodeUtil {
                     tasks.add(() -> getNode(client, path, properties));
                 }
                 // 分批获取，避免机器爆炸
+                if (tasks.size() >= pCount) {
+                    list.addAll(ThreadUtil.invoke(tasks));
+                    tasks.clear();
+                }
+            }
+            // 处理尾部数据
+            if (!tasks.isEmpty()) {
+                list.addAll(ThreadUtil.invoke(tasks));
+            }
+            tasks.clear();
+            children.clear();
+        }
+        return list;
+    }
+
+    /**
+     * 获取子节点
+     *
+     * @param client        zk客户端
+     * @param parentPath    父节点路径
+     * @param existingNodes 查询属性
+     * @param limit         过滤器
+     * @return 子节点列表
+     */
+    public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, List<String> existingNodes, int limit) throws Exception {
+        List<ZKNode> list = new ArrayList<>();
+        // 获取子节点
+        List<String> children = client.getChildren(parentPath);
+        // 为空，直接返回
+        if (CollectionUtil.isEmpty(children)) {
+            return Collections.emptyList();
+        }
+        // 处理器核心数量
+        int pCount = RuntimeUtil.processorCount();
+        // 已加载数量
+        int count = 0;
+        // 性能较差机器上同步执行
+        if (pCount < 4) {
+            // 获取节点数据
+            for (String sub : children) {
+                // 对节点路径做处理
+                String path = ZKNodeUtil.concatPath(parentPath, sub);
+                // 判断是否存在
+                if (existingNodes.contains(path)) {
+                    continue;
+                }
+                // 获取节点
+                list.add(getNode(client, path, FULL_PROPERTIES));
+                if (count++ > limit) {
+                    break;
+                }
+            }
+            children.clear();
+        } else {// 性能较好机器上异步执行
+            // 任务列表
+            List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
+            // 获取节点数据
+            for (String sub : children) {
+                // 对节点路径做处理
+                String path = ZKNodeUtil.concatPath(parentPath, sub);
+                // 判断是否存在
+                if (existingNodes.contains(path)) {
+                    continue;
+                }
+                // 添加到任务列表
+                tasks.add(() -> getNode(client, path, FULL_PROPERTIES));
+                if (count++ > limit) {
+                    break;
+                }
                 if (tasks.size() >= pCount) {
                     list.addAll(ThreadUtil.invoke(tasks));
                     tasks.clear();

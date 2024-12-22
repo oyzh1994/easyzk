@@ -46,10 +46,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * @author oyzh
@@ -469,7 +465,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      */
     private void loadChildAllSync() {
         Task task = TaskBuilder.newBuilder()
-                .onStart(() -> this.loadChild(true))
+                .onStart(() -> this.loadChild(true, 0))
                 .onError(MessageBox::exception)
                 .build();
         task.run();
@@ -707,6 +703,17 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @param loop 递归加载
      */
     public void loadChild(boolean loop) {
+        int limit = ZKSettingStore.SETTING.getNodeLoadLimit();
+        this.loadChild(loop, limit);
+    }
+
+    /**
+     * 加载子节点
+     *
+     * @param loop  递归加载
+     * @param limit 限制数量
+     */
+    public void loadChild(boolean loop, int limit) {
         if (this.isCanceled()) {
             return;
         }
@@ -728,12 +735,10 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                 List<TreeItem<?>> addList = new ArrayList<>();
                 // 移除列表
                 List<TreeItem<?>> delList = new ArrayList<>();
-                // 加载限制
-                int limit = ZKSettingStore.SETTING.getNodeLoadLimit();
                 // 预加载标志位
                 boolean loadPre = false;
                 // 限制标志位
-                AtomicBoolean beLimit = new AtomicBoolean(false);
+                boolean beLimit = false;
                 // 已存在节点
                 List<String> existingNodes = itemList.parallelStream().map(ZKNodeTreeItem::nodePath).toList();
                 // 获取节点列表
@@ -759,7 +764,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                     }
                     // 限制节点加载数量
                     if (limit > 0 && addList.size() >= limit) {
-                        beLimit.set(true);
+                        beLimit = true;
                         ZKMoreTreeItem moreItem = this.moreChildren();
                         if (moreItem != null) {
                             delList.add(moreItem);
@@ -771,7 +776,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                     }
                 }
                 // 处理不限制的情况
-                if (!beLimit.get()) {
+                if (!beLimit) {
                     ZKMoreTreeItem moreItem = this.moreChildren();
                     if (moreItem != null) {
                         delList.add(moreItem);
@@ -792,10 +797,9 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             // 递归处理
             if (loop && !this.isChildEmpty()) {
                 for (ZKNodeTreeItem item : this.itemChildren()) {
-                    if (this.isCanceled() && item.isCanceled()) {
-                        break;
+                    if (!this.isCanceled() && !item.isCanceled()) {
+                        item.loadChild(true, limit);
                     }
-                    item.loadChild(true);
                 }
             }
         } catch (Exception ex) {

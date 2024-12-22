@@ -357,7 +357,7 @@ public class ZKNodeUtil {
                 }
                 // 获取节点
                 list.add(getNode(client, path, FULL_PROPERTIES));
-                if (count++ > limit) {
+                if (limit > 0 && count++ > limit) {
                     break;
                 }
             }
@@ -375,7 +375,7 @@ public class ZKNodeUtil {
                 }
                 // 添加到任务列表
                 tasks.add(() -> getNode(client, path, FULL_PROPERTIES));
-                if (count++ > limit) {
+                if (limit > 0 && count++ > limit) {
                     break;
                 }
                 if (tasks.size() >= pCount) {

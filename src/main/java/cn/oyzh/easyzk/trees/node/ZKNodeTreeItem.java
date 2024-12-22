@@ -273,19 +273,11 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * 加载子节点
      */
     private void loadChildSync() {
-        this.setLoaded(true);
-        this.setLoading(true);
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> this.loadChild(false))
                 .onSuccess(this::expend)
-                .onFinish(() -> {
-                    this.setLoading(false);
-                    this.refresh();
-                })
-                .onError(ex -> {
-                    this.setLoaded(false);
-                    MessageBox.exception(ex);
-                })
+                .onFinish(this::refresh)
+                .onError(MessageBox::exception)
                 .build();
         task.run();
     }
@@ -373,7 +365,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         // fxView.setProp("zkItem", this);
         // fxView.setProp("zkClient", this.client());
         StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class);
-        fxView.setProp("connect", this.connect());
+        fxView.setProp("connect", this.zkConnect());
         fxView.setProp("nodePath", this.nodePath());
         fxView.display();
     }
@@ -404,7 +396,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                 // 删除旧节点
                 this.deleteNode();
                 // 发送事件
-                ZKEventUtil.nodeAdded(this.connect(), newNodePath);
+                ZKEventUtil.nodeAdded(this.zkConnect(), newNodePath);
             } else {// 操作失败
                 MessageBox.warn(I18nHelper.operationFail());
             }
@@ -596,7 +588,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         return this.getTreeView().client();
     }
 
-    public ZKConnect connect() {
+    public ZKConnect zkConnect() {
         return this.getTreeView().connect();
     }
 
@@ -715,6 +707,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         }
         try {
             this.setLoaded(true);
+            this.setLoading(true);
             // 没有子节点
             if (!this.value.hasChildren()) {
                 this.clearChild();
@@ -776,8 +769,8 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             } else if (!this.isCanceled() && !this.client().isConnected()) {  // 非取消、连接关闭情况下，则抛出异常
                 throw new RuntimeException(ex);
             }
-            // this.setSorting(false);
         } finally {
+            this.setLoading(false);
             this.doFilter();
         }
     }
@@ -856,7 +849,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     }
 
     private String iid() {
-        return this.connect().getId();
+        return this.zkConnect().getId();
     }
 
     /**
@@ -961,7 +954,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return zk连接名称
      */
     public String connectName() {
-        return this.connect().getName();
+        return this.zkConnect().getName();
     }
 
     /**
@@ -1056,7 +1049,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         ZKDataHistory history = new ZKDataHistory();
         history.setData(this.unsavedData());
         history.setPath(this.nodePath());
-        history.setInfoId(this.connect().getId());
+        history.setInfoId(this.zkConnect().getId());
         ZKDataHistoryJdbcStore.INSTANCE.replace(history, this.client());
         ZKEventUtil.dataHistoryAdded(history, this);
     }

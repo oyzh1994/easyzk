@@ -26,6 +26,6 @@ public class ZKHistoryRestoreEvent extends Event<byte[]> implements EventFormatt
     }
 
     public ZKConnect connect() {
-        return this.item.connect();
+        return this.item.zkConnect();
     }
 }

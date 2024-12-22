@@ -35,6 +35,13 @@ public class ZKSetting extends Setting {
     @Column
     private Byte authMode;
 
+    /**
+     * 节点加载限制
+     * 0 无限制
+     */
+    @Column
+    private Integer nodeLoadLimit;
+
     // /**
     //  * 搜索-更多-展开状态
     //  * 0|null 不展开
@@ -86,6 +93,18 @@ public class ZKSetting extends Setting {
     // public boolean isSearchMoreExpand() {
     //     return this.searchMoreExpand != null && this.searchMoreExpand == 1;
     // }
+
+    public int nodeLoadLimit() {
+        return this.nodeLoadLimit == null ? 0 : this.nodeLoadLimit;
+    }
+
+    public int calcLimit(int limit, int count) {
+        if (this.nodeLoadLimit() == 0) {
+            return limit;
+        }
+        int size = this.nodeLoadLimit() - count;
+        return Math.min(size, limit);
+    }
 
     @Override
     public void copy(Object t1) {

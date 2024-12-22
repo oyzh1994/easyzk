@@ -111,7 +111,7 @@ public class ZKACLUpdateController extends StageController {
                     acl.setPerms(ZKACLUtil.toPermInt(perms));
                     Stat stat = this.zkClient.setACL(this.zkItem.nodePath(), aclList);
                     if (stat != null) {
-                        ZKEventUtil.nodeACLUpdated(this.zkItem.connect(), this.zkItem.nodePath());
+                        ZKEventUtil.nodeACLUpdated(this.zkItem.zkConnect(), this.zkItem.nodePath());
                         this.closeWindow();
                     } else {
                         MessageBox.warn(I18nHelper.operationFail());

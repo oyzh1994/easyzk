@@ -77,7 +77,7 @@ public class HistoryController extends SubStageController implements Initializab
         if (item == null) {
             return;
         }
-        if (event.data() instanceof ZKNodeTab tab1 && tab1.info() == item.connect()) {
+        if (event.data() instanceof ZKNodeTab tab1 && tab1.info() == item.zkConnect()) {
             this.itemReference = null;
             this.listTable.clearItems();
             this.root.disable();
@@ -127,7 +127,7 @@ public class HistoryController extends SubStageController implements Initializab
                 return;
             }
             String path = item.nodePath();
-            String infoId = item.connect().getId();
+            String infoId = item.zkConnect().getId();
             List<ZKDataHistory> histories;
             if (this.type.isSelected()) {
                 histories = this.historyStore.listServer(infoId, path, item.client());

@@ -21,6 +21,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="550" realHeight="450">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -64,6 +65,17 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </FXCheckBox>
+                <InfoLabel text="%zk.setting.tip1">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <NumberTextField step="100" fx:id="nodeLoadLimit" minVal="0" value="1000"
+                                 tipText="%zk.setting.tip2" flexWidth="100% - 180" prefHeight="25">
+                    <VBox.margin>
+                        <Insets left="30" top="5"/>
+                    </VBox.margin>
+                </NumberTextField>
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.window">

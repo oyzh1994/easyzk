@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKProcessUtil;
+import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
@@ -116,6 +117,12 @@ public class SettingController extends StageController {
      */
     @FXML
     private FXCheckBox authMode;
+
+    /**
+     * 节点加载限制
+     */
+    @FXML
+    private NumberTextField nodeLoadLimit;
 
     /**
      * 主题
@@ -234,6 +241,8 @@ public class SettingController extends StageController {
         if (this.setting.getRememberPageLocation() != null) {
             this.pageLocation.setSelected(this.setting.isRememberPageLocation());
         }
+        // 节点加载限制
+        this.nodeLoadLimit.setValue(this.setting.nodeLoadLimit());
         // 主题相关处理
         this.theme.select(this.setting.getTheme());
         this.fgColor.setColor(StringUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
@@ -265,7 +274,8 @@ public class SettingController extends StageController {
             String fontFamily = this.fontFamily.getValue();
 
             // 提示文字
-            String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
+            String tips = this.checkConfigForRestart(fontSize, fontWeight, fontFamily, locale);
+//            String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
 
             this.setting.setLoadMode(loadMode);
             this.setting.setAuthMode(authMode);
@@ -282,6 +292,8 @@ public class SettingController extends StageController {
             this.setting.setLocale(locale);
             // 透明度相关处理
             this.setting.setOpacity((float) this.opacity.getValue());
+            // 节点加载限制
+            this.setting.setNodeLoadLimit(this.nodeLoadLimit.getIntValue());
             // 页面设置
             this.setting.setRememberPageSize((byte) (this.pageSize.isSelected() ? 1 : 0));
             this.setting.setRememberPageResize((byte) (this.pageResize.isSelected() ? 1 : 0));
@@ -317,22 +329,39 @@ public class SettingController extends StageController {
     /**
      * 检查重启软件配置
      *
-     * @param loadMode   加载模式
-     * @param authMode   认证模式
      * @param fontSize   字体大小
      * @param fontWeight 字体宽度
      * @param fontFamily 字体名称
      * @param locale     区域
      * @return 结果
      */
-    private String checkConfigForRestart(byte loadMode, byte authMode, Byte fontSize, Short fontWeight, String fontFamily, String locale) {
-        if (!Objects.equals(this.setting.getLoadMode(), loadMode) || !Objects.equals(this.setting.getAuthMode(), authMode)
-                || !Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)
+    private String checkConfigForRestart(Byte fontSize, Short fontWeight, String fontFamily, String locale) {
+        if (!Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)
                 || !Objects.equals(this.setting.getFontFamily(), fontFamily) || !Objects.equals(this.setting.getFontWeight(), fontWeight)) {
             return I18nResourceBundle.i18nString("base.restartTip1");
         }
         return "";
     }
+
+//    /**
+//     * 检查重启软件配置
+//     *
+//     * @param loadMode   加载模式
+//     * @param authMode   认证模式
+//     * @param fontSize   字体大小
+//     * @param fontWeight 字体宽度
+//     * @param fontFamily 字体名称
+//     * @param locale     区域
+//     * @return 结果
+//     */
+//    private String checkConfigForRestart(byte loadMode, byte authMode, Byte fontSize, Short fontWeight, String fontFamily, String locale) {
+//        if (!Objects.equals(this.setting.getLoadMode(), loadMode) || !Objects.equals(this.setting.getAuthMode(), authMode)
+//                || !Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)
+//                || !Objects.equals(this.setting.getFontFamily(), fontFamily) || !Objects.equals(this.setting.getFontWeight(), fontWeight)) {
+//            return I18nResourceBundle.i18nString("base.restartTip1");
+//        }
+//        return "";
+//    }
 
     @Override
     protected void bindListeners() {

@@ -262,7 +262,7 @@ public class ZKNodeUtil {
      * @return 子节点列表
      */
     public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath) throws Exception {
-        return getChildNode(client, parentPath, FULL_PROPERTIES);
+        return getChildNode(client, parentPath, FULL_PROPERTIES, null);
     }
 
     /**
@@ -270,9 +270,10 @@ public class ZKNodeUtil {
      *
      * @param parentPath 父节点路径
      * @param properties 查询属性
+     * @param filter     过滤器
      * @return 子节点列表
      */
-    public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, @NonNull String properties) throws Exception {
+    public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, @NonNull String properties, Predicate<String> filter) throws Exception {
         List<ZKNode> list = new ArrayList<>();
         // 获取子节点
         List<String> children = client.getChildren(parentPath);
@@ -289,7 +290,9 @@ public class ZKNodeUtil {
                 // 对节点路径做处理
                 String path = ZKNodeUtil.concatPath(parentPath, sub);
                 // 获取节点
-                list.add(getNode(client, path, properties));
+                if (filter == null || filter.test(path)) {
+                    list.add(getNode(client, path, properties));
+                }
             }
             children.clear();
         } else {// 性能较好机器上异步执行
@@ -299,8 +302,11 @@ public class ZKNodeUtil {
             for (String sub : children) {
                 // 对节点路径做处理
                 String path = ZKNodeUtil.concatPath(parentPath, sub);
-                // 添加到任务列表
-                tasks.add(() -> getNode(client, path, properties));
+                // 获取节点
+                if (filter == null || filter.test(path)) {
+                    // 添加到任务列表
+                    tasks.add(() -> getNode(client, path, properties));
+                }
                 // 分批获取，避免机器爆炸
                 if (tasks.size() >= pCount) {
                     list.addAll(ThreadUtil.invoke(tasks));

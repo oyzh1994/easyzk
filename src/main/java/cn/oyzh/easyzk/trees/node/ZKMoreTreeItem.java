@@ -27,12 +27,14 @@ public class ZKMoreTreeItem extends RichTreeItem<ZKMoreTreeItem.ZKMoreTreeItemVa
         return (ZKNodeTreeItem) parent;
     }
 
-    public ZKConnect zkConnect() {
-        return this.parent().zkConnect();
-    }
-
     @Override
     public void onPrimaryDoubleClick() {
+        if (!this.isLoading()) {
+            ZKNodeTreeItem treeItem = this.parent();
+            if (treeItem != null) {
+                treeItem.loadChildAsync();
+            }
+        }
     }
 
     /**

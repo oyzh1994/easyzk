@@ -30,6 +30,7 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
@@ -45,6 +46,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 
 /**
  * @author oyzh
@@ -263,16 +267,16 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     }
 
     /**
-     * 加载子节点
+     * 加载子节点，异步
      */
-    private void loadChildAsync() {
+    void loadChildAsync() {
         this.startWaiting(this::loadChildSync);
     }
 
     /**
-     * 加载子节点
+     * 加载子节点，同步
      */
-    private void loadChildSync() {
+    void loadChildSync() {
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> this.loadChild(false))
                 .onSuccess(this::expend)
@@ -705,28 +709,37 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         if (this.isCanceled()) {
             return;
         }
+        // 当前树
+        ZKNodeTreeView treeView = this.getTreeView();
+        // 获取选中节点
+        TreeItem<?> selectedItem = treeView == null ? null : treeView.getSelectedItem();
         try {
+            // 设置标志位
             this.setLoaded(true);
             this.setLoading(true);
             // 没有子节点
             if (!this.value.hasChildren()) {
                 this.clearChild();
             } else {
-                // 获取节点列表
-                List<ZKNode> list = ZKNodeUtil.getChildNode(this.client(), this.nodePath());
+                // 节点列表
+                List<ZKNodeTreeItem> itemList = this.itemChildren();
                 // 添加列表
-                List<TreeItem<?>> addList = new ArrayList<>(list.size());
+                List<TreeItem<?>> addList = new ArrayList<>();
                 // 移除列表
-                List<TreeItem<?>> delList = new ArrayList<>(list.size());
-                // 预加载标志位
-                boolean loadPre = false;
+                List<TreeItem<?>> delList = new ArrayList<>();
                 // 加载限制
                 int limit = ZKSettingStore.SETTING.getNodeLoadLimit();
+                // 预加载标志位
+                boolean loadPre = false;
+                // 限制标志位
+                AtomicBoolean beLimit = new AtomicBoolean(false);
+                // 获取节点列表
+                List<ZKNode> list = ZKNodeUtil.getChildNode(this.client(), this.nodePath(), ZKNodeUtil.FULL_PROPERTIES, null);
                 // 遍历列表寻找待更新或者待添加节点
                 f1:
                 for (ZKNode node : list) {
                     // 判断节点是否存在
-                    for (ZKNodeTreeItem item : this.itemChildren()) {
+                    for (ZKNodeTreeItem item : itemList) {
                         if (item.nodeEquals(node)) {
                             item.copy(node);
                             continue f1;
@@ -742,6 +755,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                         loadPre = true;
                     }
                     if (limit > 0 && addList.size() >= limit) {
+                        beLimit.set(true);
                         ZKMoreTreeItem moreItem = this.moreChildren();
                         if (moreItem != null) {
                             delList.add(moreItem);
@@ -750,6 +764,13 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
                             addList.add(new ZKMoreTreeItem(this.getTreeView()));
                         }
                         break;
+                    }
+                }
+                // 处理不限制的情况
+                if (!beLimit.get()) {
+                    ZKMoreTreeItem moreItem = this.moreChildren();
+                    if (moreItem != null) {
+                        delList.add(moreItem);
                     }
                 }
                 // 遍历列表寻找待删除节点
@@ -785,8 +806,143 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             this.setLoading(false);
             this.doFilter();
             this.doSort();
+            // 选中节点
+            if (selectedItem != null) {
+                treeView.select(selectedItem);
+            }
         }
     }
+
+//    /**
+//     * 加载子节点
+//     *
+//     * @param loop 递归加载
+//     */
+//    public void loadChild(boolean loop) {
+//        if (this.isCanceled()) {
+//            return;
+//        }
+//        // 当前树
+//        ZKNodeTreeView treeView = this.getTreeView();
+//        // 获取选中节点
+//        TreeItem<?> selectedItem = treeView == null ? null : treeView.getSelectedItem();
+//        try {
+//            // 设置标志位
+//            this.setLoaded(true);
+//            this.setLoading(true);
+//            // 没有子节点
+//            if (!this.value.hasChildren()) {
+//                this.clearChild();
+//            } else {
+//                List<ZKNodeTreeItem> itemList = this.itemChildren();
+//                // 添加列表
+//                List<TreeItem<?>> addList = new ArrayList<>();
+//                // 移除列表
+//                List<TreeItem<?>> delList = new ArrayList<>();
+//                // 加载限制
+//                int limit = ZKSettingStore.SETTING.getNodeLoadLimit();
+//                // 已查询总数
+//                AtomicInteger count = new AtomicInteger();
+//                // 限制标志位
+//                AtomicBoolean beLimit = new AtomicBoolean(false);
+//                // 过滤器
+//                Predicate<String> filter = path -> {
+//                    // 被限制了，直接返回false
+//                    if (beLimit.get()) {
+//                        return false;
+//                    }
+//                    // 判断节点是否存在
+//                    for (ZKNodeTreeItem item : itemList) {
+//                        if (StringUtil.equals(item.nodePath(), path)) {
+//                            return false;
+//                        }
+//                    }
+//                    // 检查加载限制，并处理
+//                    if (limit > 0 && count.get() >= limit) {
+//                        beLimit.set(true);
+//                        ZKMoreTreeItem moreItem = this.moreChildren();
+//                        if (moreItem != null) {
+//                            delList.add(moreItem);
+//                            addList.add(moreItem);
+//                        } else {
+//                            addList.add(new ZKMoreTreeItem(this.getTreeView()));
+//                        }
+//                        return false;
+//                    }
+//                    // 计数
+//                    count.getAndIncrement();
+//                    return true;
+//                };
+//                // 处理不限制的情况
+//                if (!beLimit.get()) {
+//                    ZKMoreTreeItem moreItem = this.moreChildren();
+//                    if (moreItem != null) {
+//                        delList.add(moreItem);
+//                    }
+//                }
+//                // 获取节点列表
+//                List<ZKNode> list = ZKNodeUtil.getChildNode(this.client(), this.nodePath(), ZKNodeUtil.FULL_PROPERTIES, filter);
+//                // 预加载标志位
+//                boolean loadPre = false;
+//                // 遍历列表寻找待更新或者待添加节点
+//                f1:
+//                for (ZKNode node : list) {
+//                    // 判断节点是否存在
+//                    for (ZKNodeTreeItem item : itemList) {
+//                        if (item.nodeEquals(node)) {
+//                            item.copy(node);
+//                            continue f1;
+//                        }
+//                    }
+//                    // 添加到集合
+//                    addList.add(new ZKNodeTreeItem(node, this.getTreeView()));
+//                    // 预先加载一部分
+//                    if (addList.size() > 20 && !loadPre) {
+//                        this.addChild(addList);
+//                        this.expend();
+//                        addList.clear();
+//                        loadPre = true;
+//                    }
+//                }
+////                // 遍历列表寻找待删除节点
+////                for (ZKNodeTreeItem item : itemList) {
+////                    // 判断节点是否不存在
+////                    if (list.parallelStream().noneMatch(item::nodeEquals)) {
+////                        delList.add(item);
+////                    }
+////                }
+//                // 删除节点
+//                this.removeChild(delList);
+//                // 添加节点
+//                this.addChild(addList);
+//            }
+//            // 递归处理
+//            if (loop && !this.isChildEmpty()) {
+//                for (ZKNodeTreeItem item : this.itemChildren()) {
+//                    if (this.isCanceled() && item.isCanceled()) {
+//                        break;
+//                    }
+//                    item.loadChild(true);
+//                }
+//            }
+//        } catch (Exception ex) {
+//            this.setLoaded(false);
+//            // 无权限
+//            if ((ex instanceof KeeperException.NoAuthException)) {
+//                this.setNeedAuth(true);
+//            } else if (!this.isCanceled() && !this.client().isConnected()) {  // 非取消、连接关闭情况下，则抛出异常
+//                throw new RuntimeException(ex);
+//            }
+//        } finally {
+//            this.setLoading(false);
+//            this.doFilter();
+//            this.doSort();
+//            // 选中节点
+//            if (selectedItem != null) {
+//                treeView.select(selectedItem);
+//            }
+//        }
+//    }
 
     /**
      * 复制节点
@@ -808,7 +964,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     }
 
     /**
-     * 字节点-更多
+     * 子节点-更多
      *
      * @return ZKMoreTreeItem
      */
@@ -818,18 +974,29 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     }
 
     /**
-     * 显示的节点内容
+     * 子节点-node节点列表
      *
-     * @return 节点内容
+     * @return node节点列表
      */
     public List<ZKNodeTreeItem> itemChildren() {
-        return (List) super.unfilteredChildren().filtered(e -> {
-            return e instanceof ZKNodeTreeItem;
-        });
+        FilteredList<TreeItem<?>> list = super.unfilteredChildren().filtered(e -> e instanceof ZKNodeTreeItem);
+        return (List) list;
+    }
+
+    /**
+     * 子节点-node节点数量
+     *
+     * @return node节点数量
+     */
+    public long itemChildrenSize() {
+        return super.unfilteredChildren().filtered(e -> e instanceof ZKNodeTreeItem).size();
     }
 
     @Override
     public int compareTo(Object o) {
+        if (o instanceof ZKMoreTreeItem) {
+            return -1;
+        }
         if (o instanceof ZKNodeTreeItem item) {
             return Comparator.comparing(ZKNodeTreeItem::nodePath).compare(this, item);
         }
@@ -1127,10 +1294,13 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 数据大小
      */
     public int dataSize() {
+        byte[] bytes;
         if (this.isDataUnsaved()) {
-            return this.unsavedData().length;
+            bytes = this.unsavedData();
+        } else {
+            bytes = this.nodeData();
         }
-        return this.nodeData().length;
+        return bytes == null ? 0 : bytes.length;
     }
 
     /**
@@ -1206,7 +1376,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         @Override
         public String extra() {
             String extra;
-            int showNum = this.item().getChildrenSize();
+            long showNum = this.item().itemChildrenSize();
             Integer totalNum = this.item().getNumChildren();
             if (totalNum == null || totalNum == 0) {
                 extra = null;

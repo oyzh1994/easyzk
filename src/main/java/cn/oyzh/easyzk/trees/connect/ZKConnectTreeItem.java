@@ -13,7 +13,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -271,7 +271,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         zkInfo.copy(this.value);
         zkInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         zkInfo.setCollects(Collections.emptyList());
-        if (ZKConnectJdbcStore.INSTANCE.replace(zkInfo)) {
+        if (ZKConnectStore.INSTANCE.replace(zkInfo)) {
             this.connectManager().addConnect(zkInfo);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
@@ -304,7 +304,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         }
         this.value.setName(connectName);
         // 修改名称
-        if (ZKConnectJdbcStore.INSTANCE.replace(this.value)) {
+        if (ZKConnectStore.INSTANCE.replace(this.value)) {
             this.setValue(new ZKConnectTreeItemValue(this));
         } else {
             MessageBox.warn(I18nHelper.operationFail());

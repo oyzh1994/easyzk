@@ -11,10 +11,10 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKAuthTableView;
 import cn.oyzh.easyzk.fx.ZKFilterTableView;
 import cn.oyzh.easyzk.fx.ZKSASLTypeComboBox;
-import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
+import cn.oyzh.easyzk.store.ZKAuthStore;
+import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
-import cn.oyzh.easyzk.store.ZKSASLConfigJdbcStore;
+import cn.oyzh.easyzk.store.ZKSASLConfigStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
@@ -207,7 +207,7 @@ public class ZKConnectUpdateController extends StageController {
     /**
      * zk连接储存对象
      */
-    private final ZKConnectJdbcStore connectStore = ZKConnectJdbcStore.INSTANCE;
+    private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
 
     /**
      * 认证列表
@@ -230,7 +230,7 @@ public class ZKConnectUpdateController extends StageController {
     /**
      * zk认证配置储存
      */
-    private final ZKAuthJdbcStore authStore = ZKAuthJdbcStore.INSTANCE;
+    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
 
     /**
      * 过滤搜索
@@ -246,7 +246,7 @@ public class ZKConnectUpdateController extends StageController {
     /**
      * sasl配置储存
      */
-    private final ZKSASLConfigJdbcStore saslConfigStore = ZKSASLConfigJdbcStore.INSTANCE;
+    private final ZKSASLConfigStore saslConfigStore = ZKSASLConfigStore.INSTANCE;
 
     /**
      * 获取连接地址

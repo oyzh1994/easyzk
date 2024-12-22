@@ -10,18 +10,14 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKAuthTableView;
 import cn.oyzh.easyzk.fx.ZKFilterTableView;
 import cn.oyzh.easyzk.fx.ZKSASLTypeComboBox;
-import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
-import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
-import cn.oyzh.easyzk.zk.ZKSASLUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -204,7 +200,7 @@ public class ZKConnectAddController extends StageController {
     /**
      * zk连接储存对象
      */
-    private final ZKConnectJdbcStore connectStore = ZKConnectJdbcStore.INSTANCE;
+    private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
 
     /**
      * 认证列表

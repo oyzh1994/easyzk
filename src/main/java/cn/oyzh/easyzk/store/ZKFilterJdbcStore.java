@@ -22,17 +22,6 @@ public class ZKFilterJdbcStore extends JdbcStandardStore<ZKFilter> {
      */
     public static final ZKFilterJdbcStore INSTANCE = new ZKFilterJdbcStore();
 
-    // /**
-    //  * 加载已启用的数据列表
-    //  *
-    //  * @param iid zk连接id
-    //  * @return 数据列表
-    //  * @see cn.oyzh.easyzk.domain.ZKConnect
-    //  */
-    // public List<ZKFilter> load(String iid) {
-    //     return super.selectList(QueryParam.of("iid", iid));
-    // }
-
     /**
      * 加载已启用的数据列表
      *
@@ -59,15 +48,6 @@ public class ZKFilterJdbcStore extends JdbcStandardStore<ZKFilter> {
         return result;
     }
 
-    // public boolean delete(String kw) {
-    //     if (StringUtil.isNotBlank(kw)) {
-    //         DeleteParam param = new DeleteParam();
-    //         param.addQueryParam(new QueryParam("kw", kw));
-    //         return this.delete(param);
-    //     }
-    //     return false;
-    // }
-
     /**
      * 根据iid删除数据
      *
@@ -83,22 +63,6 @@ public class ZKFilterJdbcStore extends JdbcStandardStore<ZKFilter> {
         }
         return false;
     }
-
-    // public Paging<ZKFilter> getPage(long pageNo, int limit, String kw, String iid) {
-    //     QueryParam queryParam = new QueryParam("iid", iid);
-    //     PageParam pageParam = new PageParam(limit, pageNo * limit);
-    //     pageParam.addQueryParam(queryParam);
-    //     List<ZKFilter> list = this.selectPage(kw, List.of("kw"), pageParam);
-    //     Paging<ZKFilter> paging;
-    //     if (CollectionUtil.isNotEmpty(list)) {
-    //         long count = this.selectCount(kw, List.of("kw"), QueryParams.of(queryParam));
-    //         paging = new Paging<>(list, limit, count);
-    //         paging.currentPage(pageNo);
-    //     } else {
-    //         paging = new Paging<>(limit);
-    //     }
-    //     return paging;
-    // }
 
     /**
      * 判断是否存在
@@ -119,16 +83,7 @@ public class ZKFilterJdbcStore extends JdbcStandardStore<ZKFilter> {
     }
 
     @Override
-    protected ZKFilter newModel() {
-        return new ZKFilter();
-    }
-
-    @Override
     protected Class<ZKFilter> modelClass() {
         return ZKFilter.class;
     }
-
-    // public Paging<ZKFilter> getPage(long pageNo, int i, String text) {
-    //     return null;
-    // }
 }

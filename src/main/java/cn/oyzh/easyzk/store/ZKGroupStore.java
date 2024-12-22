@@ -16,12 +16,12 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/5/12
  */
-public class ZKGroupJdbcStore extends JdbcStandardStore<ZKGroup> {
+public class ZKGroupStore extends JdbcStandardStore<ZKGroup> {
 
     /**
      * 当前实例
      */
-    public static final ZKGroupJdbcStore INSTANCE = new ZKGroupJdbcStore();
+    public static final ZKGroupStore INSTANCE = new ZKGroupStore();
 
     public List<ZKGroup> load() {
         return super.selectList();
@@ -59,11 +59,6 @@ public class ZKGroupJdbcStore extends JdbcStandardStore<ZKGroup> {
             return super.exist(params);
         }
         return false;
-    }
-
-    @Override
-    protected ZKGroup newModel() {
-        return new ZKGroup();
     }
 
     @Override

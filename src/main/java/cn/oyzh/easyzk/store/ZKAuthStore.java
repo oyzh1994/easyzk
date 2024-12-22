@@ -15,12 +15,12 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class ZKAuthJdbcStore extends JdbcStandardStore<ZKAuth> {
+public class ZKAuthStore extends JdbcStandardStore<ZKAuth> {
 
     /**
      * 当前实例
      */
-    public static final ZKAuthJdbcStore INSTANCE = new ZKAuthJdbcStore();
+    public static final ZKAuthStore INSTANCE = new ZKAuthStore();
 
     /**
      * 加载数据列表
@@ -109,11 +109,6 @@ public class ZKAuthJdbcStore extends JdbcStandardStore<ZKAuth> {
             return super.exist(params);
         }
         return false;
-    }
-
-    @Override
-    protected ZKAuth newModel() {
-        return new ZKAuth();
     }
 
     @Override

@@ -8,12 +8,12 @@ import cn.oyzh.store.jdbc.QueryParam;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKSSHConfigJdbcStore extends JdbcStandardStore<ZKSSHConfig> {
+public class ZKSSHConfigStore extends JdbcStandardStore<ZKSSHConfig> {
 
     /**
      * 当前实例
      */
-    public static final ZKSSHConfigJdbcStore INSTANCE = new ZKSSHConfigJdbcStore();
+    public static final ZKSSHConfigStore INSTANCE = new ZKSSHConfigStore();
 
     public ZKSSHConfig find(String iid) {
         QueryParam param = new QueryParam();
@@ -28,11 +28,6 @@ public class ZKSSHConfigJdbcStore extends JdbcStandardStore<ZKSSHConfig> {
             return super.update(model);
         }
         return this.insert(model);
-    }
-
-    @Override
-    protected ZKSSHConfig newModel() {
-        return new ZKSSHConfig();
     }
 
     @Override

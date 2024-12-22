@@ -16,12 +16,12 @@ import java.util.List;
  * @author oyzh
  * @since 2024/09/26
  */
-public class ZKConnectJdbcStore extends JdbcStandardStore<ZKConnect> {
+public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
 
     /**
      * 当前实例
      */
-    public static final ZKConnectJdbcStore INSTANCE = new ZKConnectJdbcStore();
+    public static final ZKConnectStore INSTANCE = new ZKConnectStore();
 
     public ZKConnect getByIid(String iid) {
         return super.selectOne(QueryParam.of("iid", iid));
@@ -31,7 +31,7 @@ public class ZKConnectJdbcStore extends JdbcStandardStore<ZKConnect> {
         List<ZKConnect> list = super.selectList();
         // 处理ssh信息
         for (ZKConnect info : list) {
-            info.setSshConfig(ZKSSHConfigJdbcStore.INSTANCE.find(info.getId()));
+            info.setSshConfig(ZKSSHConfigStore.INSTANCE.find(info.getId()));
         }
         return list;
     }
@@ -49,21 +49,21 @@ public class ZKConnectJdbcStore extends JdbcStandardStore<ZKConnect> {
             ZKSSHConfig sshConfig = zkConnect.getSshConfig();
             if (sshConfig != null) {
                 sshConfig.setIid(zkConnect.getId());
-                ZKSSHConfigJdbcStore.INSTANCE.replace(sshConfig);
+                ZKSSHConfigStore.INSTANCE.replace(sshConfig);
             } else {
                 DeleteParam param = new DeleteParam();
                 param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
-                ZKSSHConfigJdbcStore.INSTANCE.delete(param);
+                ZKSSHConfigStore.INSTANCE.delete(param);
             }
 
             // sasl处理
             ZKSASLConfig saslConfig = zkConnect.getSaslConfig();
             DeleteParam param = new DeleteParam();
             param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
-            ZKSASLConfigJdbcStore.INSTANCE.delete(param);
+            ZKSASLConfigStore.INSTANCE.delete(param);
             if (saslConfig != null) {
                 saslConfig.setIid(zkConnect.getId());
-                ZKSASLConfigJdbcStore.INSTANCE.replace(saslConfig);
+                ZKSASLConfigStore.INSTANCE.replace(saslConfig);
             } else {
             }
 
@@ -71,19 +71,19 @@ public class ZKConnectJdbcStore extends JdbcStandardStore<ZKConnect> {
             List<String> collects = zkConnect.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
                 for (String collect : collects) {
-                    ZKCollectJdbcStore.INSTANCE.replace(zkConnect.getId(), collect);
+                    ZKCollectStore.INSTANCE.replace(zkConnect.getId(), collect);
                 }
             } else {
-                ZKCollectJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
+                ZKCollectStore.INSTANCE.deleteByIid(zkConnect.getId());
             }
 
             // 认证处理
-            ZKAuthJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
+            ZKAuthStore.INSTANCE.deleteByIid(zkConnect.getId());
             List<ZKAuth> auths = zkConnect.getAuths();
             if (CollectionUtil.isNotEmpty(auths)) {
                 for (ZKAuth auth : auths) {
                     auth.setIid(zkConnect.getId());
-                    ZKAuthJdbcStore.INSTANCE.replace(auth);
+                    ZKAuthStore.INSTANCE.replace(auth);
                 }
             }
 
@@ -98,11 +98,6 @@ public class ZKConnectJdbcStore extends JdbcStandardStore<ZKConnect> {
             }
         }
         return result;
-    }
-
-    @Override
-    protected ZKConnect newModel() {
-        return new ZKConnect();
     }
 
     @Override

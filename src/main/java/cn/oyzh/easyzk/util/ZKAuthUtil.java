@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.util;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.easyzk.store.ZKAuthJdbcStore;
+import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
@@ -15,13 +15,8 @@ import org.apache.zookeeper.server.auth.DigestAuthenticationProvider;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * zk认证工具类
@@ -119,7 +114,7 @@ public class ZKAuthUtil {
      */
     public static List<ZKAuth> loadAuths(String iid) {
         if (ZKSettingStore.SETTING.isAutoAuth()) {
-            return ZKAuthJdbcStore.INSTANCE.loadEnable(iid);
+            return ZKAuthStore.INSTANCE.loadEnable(iid);
         }
         return Collections.emptyList();
     }

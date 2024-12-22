@@ -36,11 +36,6 @@ public class ZKSettingStore extends JdbcKeyValueStore<ZKSetting> {
     }
 
     @Override
-    protected ZKSetting newModel() {
-        return new ZKSetting();
-    }
-
-    @Override
     protected Class<ZKSetting> modelClass() {
         return ZKSetting.class;
     }

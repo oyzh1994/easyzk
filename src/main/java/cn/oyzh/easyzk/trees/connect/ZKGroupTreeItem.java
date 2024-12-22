@@ -6,8 +6,8 @@ import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
-import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectStore;
+import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -50,7 +50,7 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
     /**
      * zk分组储存
      */
-    private final ZKGroupJdbcStore groupStore = ZKGroupJdbcStore.INSTANCE;
+    private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
 
     public ZKGroupTreeItem(@NonNull ZKGroup group, @NonNull RichTreeView treeView) {
         super(treeView);
@@ -166,7 +166,7 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
         if (!this.containsChild(item)) {
             if (!Objects.equals(item.value().getGroupId(), this.value.getGid())) {
                 item.value().setGroupId(this.value.getGid());
-                ZKConnectJdbcStore.INSTANCE.replace(item.value());
+                ZKConnectStore.INSTANCE.replace(item.value());
             }
             super.addChild(item);
         }
@@ -182,7 +182,7 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
     @Override
     public boolean delConnectItem(@NonNull ZKConnectTreeItem item) {
         // 删除连接
-        if (ZKConnectJdbcStore.INSTANCE.delete(item.value())) {
+        if (ZKConnectStore.INSTANCE.delete(item.value())) {
             this.removeChild(item);
             return true;
         }

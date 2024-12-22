@@ -9,8 +9,8 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.dto.ZKConnectExport;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
-import cn.oyzh.easyzk.store.ZKGroupJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectStore;
+import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
@@ -44,12 +44,12 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     /**
      * zk分组储存
      */
-    private final ZKGroupJdbcStore groupStore = ZKGroupJdbcStore.INSTANCE;
+    private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
 
     /**
      * zk信息储存
      */
-    private final ZKConnectJdbcStore infoStore = ZKConnectJdbcStore.INSTANCE;
+    private final ZKConnectStore infoStore = ZKConnectStore.INSTANCE;
 
     public ZKRootTreeItem(@NonNull ZKConnectTreeView treeView) {
         super(treeView);

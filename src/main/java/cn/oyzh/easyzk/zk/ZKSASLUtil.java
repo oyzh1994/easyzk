@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
-import cn.oyzh.easyzk.store.ZKConnectJdbcStore;
-import cn.oyzh.easyzk.store.ZKSASLConfigJdbcStore;
+import cn.oyzh.easyzk.store.ZKConnectStore;
+import cn.oyzh.easyzk.store.ZKSASLConfigStore;
 import cn.oyzh.store.jdbc.QueryParam;
 import cn.oyzh.store.jdbc.SelectParam;
 import lombok.experimental.UtilityClass;
@@ -25,12 +25,12 @@ public class ZKSASLUtil {
     /**
      * 连接存储
      */
-    private static final ZKConnectJdbcStore CONNECT_STORE = ZKConnectJdbcStore.INSTANCE;
+    private static final ZKConnectStore CONNECT_STORE = ZKConnectStore.INSTANCE;
 
     /**
      * sasl配置存储
      */
-    private static final ZKSASLConfigJdbcStore CONFIG_STORE = ZKSASLConfigJdbcStore.INSTANCE;
+    private static final ZKSASLConfigStore CONFIG_STORE = ZKSASLConfigStore.INSTANCE;
 
     /**
      * 注册配置类

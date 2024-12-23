@@ -16,10 +16,16 @@ import lombok.Setter;
 
 public class ZKACLControl extends ZKACL {
 
+    /**
+     * 是否已认证
+     */
     @Getter
     @Setter
     private boolean authed;
 
+    /**
+     * 是否友好
+     */
     @Setter
     @Getter
     private boolean friendly;
@@ -45,6 +51,4 @@ public class ZKACLControl extends ZKACL {
         }
         return null;
     }
-
-
 }

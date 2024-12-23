@@ -52,7 +52,7 @@
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <FXHyperlink text="https://www.iconfont.cn/">
+    <FXHyperlink text="https://www.iconfont.cn">
         <VBox.margin>
             <Insets left="30" top="5"/>
         </VBox.margin>
@@ -72,7 +72,7 @@
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <FXHyperlink text="https://github.com/FXMisc/RichTextFX/">
+    <FXHyperlink text="https://github.com/FXMisc/RichTextFX">
         <VBox.margin>
             <Insets left="30" top="5"/>
         </VBox.margin>
@@ -82,7 +82,7 @@
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <FXHyperlink text="https://nimblygames.com/">
+    <FXHyperlink text="https://nimblygames.com">
         <VBox.margin>
             <Insets left="30" top="5"/>
         </VBox.margin>

@@ -21,7 +21,7 @@ public class ZKProcessUtil {
         if (JarUtil.isInJar()) {
             ProcessUtil.restartApplication("org.springframework.boot.loader.JarLauncher", 100, StageManager::exit);
         } else {// 正常环境
-            ProcessUtil. restartApplication(EasyZKBootstrap.class, 100, StageManager::exit);
+            ProcessUtil.restartApplication(EasyZKBootstrap.class, 100, StageManager::exit);
         }
     }
 }

@@ -4,7 +4,7 @@
     "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}",
     "appIcon": "${projectPath}\\resource\\zoo.png",
     "mainJar": "${projectPath}\\target\\easyzk-${appVersion}.jar",
-    "jrePath": "D:\\Package\\EasyZK\\linux_amd64_jre22",
+    "jrePath": "D:\\Package\\EasyZK\\linux_amd64_jre23",
     "jdkPath": "$SYSTEM",
     "packr": {
         "verbose": true,

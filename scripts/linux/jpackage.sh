@@ -1,1 +1,1 @@
-../jdk22/bin/jpackage --verbose -t app-image -n EasyZK_1.6.4 --vendor oyzh --app-version '1.6.4' --description 'EasyZK Desktop Application.' -i runtime/1.6.4 --main-jar easyzk-1.6.4.jar --icon app.png --runtime-image runtime_jre -d .
+../jdk22/bin/jpackage --verbose -t app-image -n EasyZK_2.0.0 --vendor oyzh --app-version '2.0.0' --description 'EasyZK Desktop Application.' -i runtime/1.6.4 --main-jar easyzk-1.6.4.jar --icon app.png --runtime-image runtime_jre -d .

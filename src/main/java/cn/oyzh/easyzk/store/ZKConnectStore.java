@@ -23,78 +23,84 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
      */
     public static final ZKConnectStore INSTANCE = new ZKConnectStore();
 
-    public ZKConnect getByIid(String iid) {
-        return super.selectOne(QueryParam.of("iid", iid));
-    }
-
+    /**
+     * 加载列表
+     *
+     * @return zk连接列表
+     */
     public List<ZKConnect> load() {
-        List<ZKConnect> list = super.selectList();
-        // 处理ssh信息
-        for (ZKConnect info : list) {
-            info.setSshConfig(ZKSSHConfigStore.INSTANCE.find(info.getId()));
-        }
-        return list;
+        return super.selectList();
     }
 
-    public boolean replace(ZKConnect zkConnect) {
+    /**
+     * 替换
+     *
+     * @param model 模型
+     * @return 结果
+     */
+    public boolean replace(ZKConnect model) {
         boolean result = false;
-        if (zkConnect != null) {
-            if (super.exist(zkConnect.getId())) {
-                result = this.update(zkConnect);
+        if (model != null) {
+            if (super.exist(model.getId())) {
+                result = this.update(model);
             } else {
-                result = this.insert(zkConnect);
+                result = this.insert(model);
             }
 
             // ssh处理
-            ZKSSHConfig sshConfig = zkConnect.getSshConfig();
+            ZKSSHConfig sshConfig = model.getSshConfig();
             if (sshConfig != null) {
-                sshConfig.setIid(zkConnect.getId());
+                sshConfig.setIid(model.getId());
                 ZKSSHConfigStore.INSTANCE.replace(sshConfig);
             } else {
                 DeleteParam param = new DeleteParam();
-                param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
+                param.addQueryParam(new QueryParam("iid", model.getId()));
                 ZKSSHConfigStore.INSTANCE.delete(param);
             }
 
             // sasl处理
-            ZKSASLConfig saslConfig = zkConnect.getSaslConfig();
+            ZKSASLConfig saslConfig = model.getSaslConfig();
             DeleteParam param = new DeleteParam();
-            param.addQueryParam(new QueryParam("iid", zkConnect.getId()));
-            ZKSASLConfigStore.INSTANCE.delete(param);
+            param.addQueryParam(new QueryParam("iid", model.getId()));
             if (saslConfig != null) {
-                saslConfig.setIid(zkConnect.getId());
+                saslConfig.setIid(model.getId());
                 ZKSASLConfigStore.INSTANCE.replace(saslConfig);
             } else {
+                ZKSASLConfigStore.INSTANCE.delete(param);
             }
 
             // 收藏处理
-            List<String> collects = zkConnect.getCollects();
+            List<String> collects = model.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
                 for (String collect : collects) {
-                    ZKCollectStore.INSTANCE.replace(zkConnect.getId(), collect);
+                    ZKCollectStore.INSTANCE.replace(model.getId(), collect);
                 }
-            } else {
-                ZKCollectStore.INSTANCE.deleteByIid(zkConnect.getId());
+                // } else {
+                //     ZKCollectStore.INSTANCE.deleteByIid(model.getId());
             }
 
             // 认证处理
-            ZKAuthStore.INSTANCE.deleteByIid(zkConnect.getId());
-            List<ZKAuth> auths = zkConnect.getAuths();
+            ZKAuthStore.INSTANCE.deleteByIid(model.getId());
+            List<ZKAuth> auths = model.getAuths();
             if (CollectionUtil.isNotEmpty(auths)) {
                 for (ZKAuth auth : auths) {
-                    auth.setIid(zkConnect.getId());
+                    auth.setIid(model.getId());
                     ZKAuthStore.INSTANCE.replace(auth);
                 }
+            } else {
+                ZKAuthStore.INSTANCE.deleteByIid(model.getId());
             }
 
             // 过滤处理
-            ZKFilterJdbcStore.INSTANCE.deleteByIid(zkConnect.getId());
-            List<ZKFilter> filters = zkConnect.getFilters();
+            ZKFilterJdbcStore.INSTANCE.deleteByIid(model.getId());
+            List<ZKFilter> filters = model.getFilters();
             if (CollectionUtil.isNotEmpty(filters)) {
                 for (ZKFilter filter : filters) {
-                    filter.setIid(zkConnect.getId());
+                    filter.setIid(model.getId());
                     ZKFilterJdbcStore.INSTANCE.replace(filter);
                 }
+            } else {
+                ZKFilterJdbcStore.INSTANCE.deleteByIid(model.getId());
             }
         }
         return result;

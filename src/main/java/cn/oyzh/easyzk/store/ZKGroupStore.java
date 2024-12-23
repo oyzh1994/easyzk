@@ -23,20 +23,37 @@ public class ZKGroupStore extends JdbcStandardStore<ZKGroup> {
      */
     public static final ZKGroupStore INSTANCE = new ZKGroupStore();
 
+    /**
+     * 加载数据
+     *
+     * @return 数据列表
+     */
     public List<ZKGroup> load() {
         return super.selectList();
     }
 
-    public boolean replace(ZKGroup group) {
-        if (group != null) {
-            if (this.exist(group.getName()) || super.exist(group.getGid())) {
-                return this.update(group);
+    /**
+     * 替换
+     *
+     * @param model 模型
+     * @return 结果
+     */
+    public boolean replace(ZKGroup model) {
+        if (model != null) {
+            if (this.exist(model.getName()) || super.exist(model.getGid())) {
+                return this.update(model);
             }
-            return this.insert(group);
+            return this.insert(model);
         }
         return false;
     }
 
+    /**
+     * 根据分组名称删除分组
+     *
+     * @param name 分组名称
+     * @return 结果
+     */
     public boolean delete(String name) {
         if (StringUtil.isNotBlank(name)) {
             DeleteParam param = new DeleteParam();
@@ -47,9 +64,9 @@ public class ZKGroupStore extends JdbcStandardStore<ZKGroup> {
     }
 
     /**
-     * 是否存在此分组信息
+     * 是否存在此分组
      *
-     * @param name 分组信息
+     * @param name 分组名称
      * @return 结果
      */
     public boolean exist(String name) {

@@ -47,6 +47,12 @@ public class ZKAuthStore extends JdbcStandardStore<ZKAuth> {
         return super.selectList(selectParam);
     }
 
+    /**
+     * 替换
+     *
+     * @param model 模型
+     * @return 结果
+     */
     public boolean replace(ZKAuth model) {
         boolean result = false;
         if (model != null) {
@@ -75,31 +81,15 @@ public class ZKAuthStore extends JdbcStandardStore<ZKAuth> {
         return false;
     }
 
-    // public boolean delete(String user, String password, String iid) {
-    //     if (StringUtil.isEmpty(user) || StringUtil.isEmpty(password)) {
-    //         Map<String, Object> params = new HashMap<>();
-    //         params.put("iid", iid);
-    //         params.put("user", user);
-    //         params.put("password", password);
-    //         return this.delete(params);
-    //     }
-    //     return false;
-    // }
-
-    // public Paging<ZKAuth> getPage(long pageNo, int limit, String kw) {
-    //     PageParam pageParam = new PageParam(limit, pageNo * limit);
-    //     List<ZKAuth> list = this.selectPage(kw, List.of("user", "password"), pageParam);
-    //     Paging<ZKAuth> paging;
-    //     if (CollectionUtil.isNotEmpty(list)) {
-    //         long count = this.selectCount(kw, List.of("kw"));
-    //         paging = new Paging<>(list, limit, count);
-    //         paging.currentPage(pageNo);
-    //     } else {
-    //         paging = new Paging<>(limit);
-    //     }
-    //     return paging;
-    // }
-
+    /**
+     * 是否存在认证
+     *
+     * @param user     用户名
+     * @param password 密码
+     * @param iid      zk连接id
+     * @return 结果
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
     public boolean exist(String user, String password, String iid) {
         if (StringUtil.isNotBlank(user) && StringUtil.isNotBlank(password) && StringUtil.isNotBlank(iid)) {
             Map<String, Object> params = new HashMap<>();

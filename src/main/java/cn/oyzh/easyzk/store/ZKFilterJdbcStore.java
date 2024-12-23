@@ -36,6 +36,12 @@ public class ZKFilterJdbcStore extends JdbcStandardStore<ZKFilter> {
         return super.selectList(selectParam);
     }
 
+    /**
+     * 替换
+     *
+     * @param model 模型
+     * @return 结果
+     */
     public boolean replace(ZKFilter model) {
         boolean result = false;
         if (model != null) {

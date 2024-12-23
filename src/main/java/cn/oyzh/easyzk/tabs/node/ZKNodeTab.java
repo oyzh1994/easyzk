@@ -706,6 +706,7 @@ public class ZKNodeTab extends DynamicTab {
         private void reloadStat() {
             try {
                 this.activeItem.refreshStat();
+                this.initStat();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);
@@ -941,24 +942,27 @@ public class ZKNodeTab extends DynamicTab {
          * 初始化状态
          */
         public void initStat() {
-            if (this.treeItem == null) {
+            if (this.activeItem == null) {
                 return;
             }
             List<FriendlyInfo<Stat>> statInfos = this.activeItem.statInfos();
-            Set<Node> statItems = this.statBox.lookupAll(".statItem");
-            // 遍历节点
-            int index = 0;
-            for (Node statItem : statItems) {
-                FlexHBox box = (FlexHBox) statItem;
-                FriendlyInfo<Stat> statInfo = statInfos.get(index++);
-                Label label = (Label) box.getChildren().get(0);
-                Label data = (Label) box.getChildren().get(1);
-                data.setFocusTraversable(true);
-                // 设置属性值及属性值
-                FXUtil.runLater(() -> {
-                    label.setText(statInfo.getName(this.statViewSwitch.isSelected()));
-                    data.setText(statInfo.getValue(this.statViewSwitch.isSelected()).toString());
-                });
+            // 有可能为空
+            if (CollectionUtil.isNotEmpty(statInfos)) {
+                Set<Node> statItems = this.statBox.lookupAll(".statItem");
+                // 遍历节点
+                int index = 0;
+                for (Node statItem : statItems) {
+                    FlexHBox box = (FlexHBox) statItem;
+                    FriendlyInfo<Stat> statInfo = statInfos.get(index++);
+                    Label label = (Label) box.getChildren().get(0);
+                    Label data = (Label) box.getChildren().get(1);
+                    data.setFocusTraversable(true);
+                    // 设置属性值及属性值
+                    FXUtil.runLater(() -> {
+                        label.setText(statInfo.getName(this.statViewSwitch.isSelected()));
+                        data.setText(statInfo.getValue(this.statViewSwitch.isSelected()).toString());
+                    });
+                }
             }
         }
 

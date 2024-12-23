@@ -933,11 +933,11 @@ public class ZKClient {
         String old = this.lastUpdate;
         try {
             this.lastUpdate = path;
+            this.doAction("set", path, data);
             Stat stat = this.framework.setData().withVersion(version == null ? -1 : version).forPath(path, data);
             if (stat != null) {
                 ZKEventUtil.nodeUpdated(this, path);
             }
-            this.doAction("set", path, data);
             return stat;
         } catch (Exception ex) {
             this.lastUpdate = old;

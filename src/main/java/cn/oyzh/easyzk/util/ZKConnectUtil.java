@@ -22,18 +22,18 @@ public class ZKConnectUtil {
      * 测试连接
      *
      * @param view 页面
-     * @param info zk信息
+     * @param zkConnect zk信息
      */
-    public static void testConnect(StageAdapter view, ZKConnect info) {
+    public static void testConnect(StageAdapter view, ZKConnect zkConnect) {
         ThreadUtil.startVirtual(() -> {
             try {
                 view.disable();
                 view.waitCursor();
                 view.appendTitle("==" + I18nHelper.connectTesting() + "...");
-                if (info.getName() == null) {
-                    info.setName("测试连接");
+                if (zkConnect.getName() == null) {
+                    zkConnect.setName("测试连接");
                 }
-                ZKClient client = new ZKClient(info);
+                ZKClient client = new ZKClient(zkConnect);
                 // 开始连接
                 client.start();
                 view.enable();

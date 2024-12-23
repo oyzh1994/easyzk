@@ -52,7 +52,7 @@ public class ZKClientUtil {
         return builder.build();
     }
 
-    public static ZKClient newClient(ZKConnect zkInfo) {
-        return new ZKClient(zkInfo);
+    public static ZKClient newClient(ZKConnect zkConnect) {
+        return new ZKClient(zkConnect);
     }
 }

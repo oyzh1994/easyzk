@@ -94,24 +94,10 @@ public class ZKACLUtil {
     public static FriendlyInfo<ACL> parseScheme(@NonNull String schemeStr) {
         FriendlyInfo<ACL> scheme = new FriendlyInfo<>();
         scheme.name("scheme");
-        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-            scheme.friendlyName("认证");
-        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-            scheme.friendlyName("認證");
-        } else {
-            scheme.friendlyName("scheme");
-        }
         scheme.value(schemeStr);
+        scheme.friendlyName(I18nHelper.schema());
         switch (schemeStr.toUpperCase()) {
-            case "IP" -> {
-                if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-                    scheme.friendlyValue("ip认证");
-                } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-                    scheme.friendlyValue("ip認證");
-                } else {
-                    scheme.friendlyValue("ip");
-                }
-            }
+            case "IP" -> scheme.friendlyValue("IP");
             case "WORLD" -> {
                 if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
                     scheme.friendlyValue("开放认证");
@@ -121,24 +107,8 @@ public class ZKACLUtil {
                     scheme.friendlyValue("world");
                 }
             }
-            case "DIGEST" -> {
-                if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-                    scheme.friendlyValue("摘要认证");
-                } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-                    scheme.friendlyValue("摘要認證");
-                } else {
-                    scheme.friendlyValue("digest");
-                }
-            }
-            default -> {
-                if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-                    scheme.friendlyValue("未知");
-                } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-                    scheme.friendlyValue("未知");
-                } else {
-                    scheme.friendlyValue("unknown");
-                }
-            }
+            case "DIGEST" -> scheme.friendlyValue(I18nHelper.digest());
+            default -> scheme.friendlyValue(I18nHelper.unknown());
         }
         return scheme;
     }

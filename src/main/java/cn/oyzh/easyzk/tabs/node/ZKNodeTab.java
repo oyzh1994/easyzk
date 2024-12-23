@@ -1167,7 +1167,7 @@ public class ZKNodeTab extends DynamicTab {
          */
         @EventSubscribe
         public void onNodeAdded(ZKNodeAddedEvent event) {
-            if (event.zkConnect() == this.client.connect()) {
+            if (event.zkConnect() == this.client.zkConnect()) {
                 this.treeView.onNodeAdded(event.data());
             }
         }
@@ -1179,7 +1179,7 @@ public class ZKNodeTab extends DynamicTab {
          */
         @EventSubscribe
         public void onNodeCreated(ZKNodeCreatedEvent event) {
-            if (event.connect() == this.client.connect()) {
+            if (event.connect() == this.client.zkConnect()) {
                 this.treeView.onNodeCreated(event.data());
             }
         }
@@ -1191,7 +1191,7 @@ public class ZKNodeTab extends DynamicTab {
          */
         @EventSubscribe
         public void onNodeRemoved(ZKNodeRemovedEvent event) {
-            if (event.connect() == this.client.connect()) {
+            if (event.connect() == this.client.zkConnect()) {
                 this.treeView.onNodeRemoved(event.data());
             }
         }
@@ -1203,7 +1203,7 @@ public class ZKNodeTab extends DynamicTab {
          */
         @EventSubscribe
         public void onNodeChanged(ZKNodeChangedEvent event) {
-            if (event.connect() == this.client.connect()) {
+            if (event.connect() == this.client.zkConnect()) {
                 this.treeView.onNodeChanged(event.data());
             }
         }
@@ -1215,7 +1215,7 @@ public class ZKNodeTab extends DynamicTab {
          */
         @EventSubscribe
         public void onNodeACLAdded(ZKNodeACLAddedEvent event) {
-            if (event.data() == this.client.connect()) {
+            if (event.data() == this.client.zkConnect()) {
                 this.reloadACL();
                 if (this.aclPaging != null) {
                     this.renderACLView(this.aclPaging.lastPage());
@@ -1230,7 +1230,7 @@ public class ZKNodeTab extends DynamicTab {
          */
         @EventSubscribe
         public void onNodeACLUpdated(ZKNodeACLUpdatedEvent event) {
-            if (event.data() == this.client.connect()) {
+            if (event.data() == this.client.zkConnect()) {
                 Long curPage = this.aclPaging == null ? null : this.aclPaging.currentPage();
                 this.reloadACL();
                 if (curPage != null) {

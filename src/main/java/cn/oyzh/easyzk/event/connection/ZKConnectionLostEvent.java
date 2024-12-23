@@ -18,6 +18,6 @@ public class ZKConnectionLostEvent extends Event<ZKClient> implements EventForma
     }
 
     public ZKConnect connect() {
-        return this.data().connect();
+        return this.data().zkConnect();
     }
 }

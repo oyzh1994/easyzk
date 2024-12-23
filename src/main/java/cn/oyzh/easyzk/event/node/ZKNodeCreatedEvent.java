@@ -21,7 +21,7 @@ public class ZKNodeCreatedEvent extends Event<String> implements EventFormatter 
     private ZKClient client;
 
     public ZKConnect connect(){
-        return this.client.connect();
+        return this.client.zkConnect();
     }
 
     @Override

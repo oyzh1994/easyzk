@@ -19,6 +19,6 @@ public class ZKNodeRemovedEvent extends Event<String>   {
     private ZKClient client;
 
     public ZKConnect connect(){
-        return this.client.connect();
+        return this.client.zkConnect();
     }
 }

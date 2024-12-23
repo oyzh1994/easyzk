@@ -18,6 +18,6 @@ public class ZKConnectionClosedEvent extends Event<ZKClient> implements EventFor
     }
 
     public ZKConnect connect() {
-        return this.data().connect();
+        return this.data().zkConnect();
     }
 }

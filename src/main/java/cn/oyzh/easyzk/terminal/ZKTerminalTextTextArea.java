@@ -259,6 +259,6 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
     }
 
     public ZKConnect connect() {
-        return this.client().connect();
+        return this.client().zkConnect();
     }
 }

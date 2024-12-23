@@ -93,7 +93,7 @@ public class ZKClient {
      * zk信息
      */
     @Getter
-    private final ZKConnect connect;
+    private final ZKConnect zkConnect;
 
     /**
      * 树监听对象
@@ -181,10 +181,10 @@ public class ZKClient {
         return this.state.getReadOnlyProperty();
     }
 
-    public ZKClient(@NonNull ZKConnect connect) {
-        this.connect = connect;
-        if (connect.isSSHForward() && connect.getSshConfig() != null) {
-            this.sshForwarder = new SSHForwarder(connect.getSshConfig());
+    public ZKClient(@NonNull ZKConnect zkConnect) {
+        this.zkConnect = zkConnect;
+        if (zkConnect.isSSHForward() && zkConnect.getSshConfig() != null) {
+            this.sshForwarder = new SSHForwarder(zkConnect.getSshConfig());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || !newValue.isConnected()) {
@@ -208,7 +208,7 @@ public class ZKClient {
      * @return 结果
      */
     public boolean isReadonly() {
-        return this.connect.isReadonly();
+        return this.zkConnect.isReadonly();
     }
 
     /**
@@ -263,7 +263,7 @@ public class ZKClient {
      * @return 结果
      */
     public boolean isEnableListen() {
-        return this.connect.getListen();
+        return this.zkConnect.getListen();
     }
 
     /**
@@ -282,7 +282,7 @@ public class ZKClient {
      * 连接zk
      */
     public void start() {
-        this.start(this.connect.connectTimeOutMs());
+        this.start(this.zkConnect.connectTimeOutMs());
     }
 
     /**
@@ -343,16 +343,16 @@ public class ZKClient {
         // 连接地址
         String host;
         // ssh端口转发
-        if (this.connect.isSSHForward()) {
+        if (this.zkConnect.isSSHForward()) {
             SSHForwardConfig forwardConfig = new SSHForwardConfig();
-            forwardConfig.setHost(this.connect.hostIp());
-            forwardConfig.setPort(this.connect.hostPort());
+            forwardConfig.setHost(this.zkConnect.hostIp());
+            forwardConfig.setPort(this.zkConnect.hostPort());
             int localPort = this.sshForwarder.forward(forwardConfig);
             // 连接信息
             host = "127.0.0.1:" + localPort;
         } else {// 直连
             // 连接信息
-            host = this.connect.hostIp() + ":" + this.connect.hostPort();
+            host = this.zkConnect.hostIp() + ":" + this.zkConnect.hostPort();
         }
         // 加载认证
         this.auths = ZKAuthUtil.loadAuths(this.iid());
@@ -364,8 +364,8 @@ public class ZKClient {
             this.retryPolicy = new RetryOneTime(3_000);
         }
         // 创建客户端
-        this.framework = ZKClientUtil.build(host, this.retryPolicy, this.connect.connectTimeOutMs(), this.connect.sessionTimeOutMs(),
-                authInfos, this.connect.compatibility34(), this.iid(), zoo -> this.zooKeeper = zoo);
+        this.framework = ZKClientUtil.build(host, this.retryPolicy, this.zkConnect.connectTimeOutMs(), this.zkConnect.sessionTimeOutMs(),
+                authInfos, this.zkConnect.compatibility34(), this.iid(), zoo -> this.zooKeeper = zoo);
     }
 
     /**
@@ -386,7 +386,7 @@ public class ZKClient {
             // 清理变量
             this.auths = null;
             // 销毁端口转发
-            if (this.connect.isSSHForward()) {
+            if (this.zkConnect.isSSHForward()) {
                 this.sshForwarder.destroy();
             }
             // 关闭连接
@@ -1088,7 +1088,7 @@ public class ZKClient {
         try {
             QuorumVerifier verifier = this.getCurrentConfig();
             // 老版本实现
-            if (this.connect.compatibility34() || verifier == null) {
+            if (this.zkConnect.compatibility34() || verifier == null) {
                 if (this.exists("/zookeeper/config")) {
                     String data = this.getDataString("/zookeeper/config");
                     if (data != null) {
@@ -1128,7 +1128,7 @@ public class ZKClient {
      * @return 连接名称
      */
     public String connectName() {
-        return this.connect.getName();
+        return this.zkConnect.getName();
     }
 
     /**
@@ -1169,8 +1169,8 @@ public class ZKClient {
      */
     public List<ZKEnvNode> localNodes() {
         List<ZKEnvNode> list = new ArrayList<>();
-        ZKEnvNode host = new ZKEnvNode("host", this.connect.getHost());
-        ZKEnvNode connection = new ZKEnvNode("connection", this.connect.getName());
+        ZKEnvNode host = new ZKEnvNode("host", this.zkConnect.getHost());
+        ZKEnvNode connection = new ZKEnvNode("connection", this.zkConnect.getName());
         ZKEnvNode version = new ZKEnvNode("sdkVersion", Version.getFullVersion());
         ZKEnvNode jdkVersion = new ZKEnvNode("jdkVersion", System.getProperty("java.vm.version"));
         list.add(host);
@@ -1188,7 +1188,7 @@ public class ZKClient {
     public String envi() {
         try {
             this.doAction("envi");
-            return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "envi");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "envi");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -1226,7 +1226,7 @@ public class ZKClient {
     public String srvr() {
         try {
             this.doAction("srvr");
-            return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "srvr");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "srvr");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -1264,7 +1264,7 @@ public class ZKClient {
     public String stat() {
         try {
             this.doAction("stat");
-            return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "stat");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "stat");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -1302,7 +1302,7 @@ public class ZKClient {
     public String conf() {
         try {
             this.doAction("conf");
-            return FourLetterWordMain.send4LetterWord(this.connect.hostIp(), this.connect.hostPort(), "conf");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "conf");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -1338,7 +1338,7 @@ public class ZKClient {
      * @return 结果
      */
     public String iid() {
-        return this.connect.getId();
+        return this.zkConnect.getId();
     }
 
     /**

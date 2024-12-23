@@ -15,6 +15,12 @@ import java.io.File;
 @UtilityClass
 public class ZKCacheUtil {
 
+    /**
+     * 获取基础路径
+     *
+     * @param hashCode hash码
+     * @return 基础路径
+     */
     private static String baseDir(int hashCode) {
         return ZKConst.NODE_CACHE_PATH + hashCode + "_";
     }

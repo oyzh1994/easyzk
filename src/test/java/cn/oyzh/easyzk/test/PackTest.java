@@ -4,7 +4,6 @@ import cn.oyzh.fx.pkg.Packer;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,10 +53,13 @@ public class PackTest {
     public void easyzk_linux_arm64_pack() throws Exception {
         String packagePath = this.getPackagePath();
         String linux_pack_config = packagePath + "linux_arm64_pack_config.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
 
         Packer packer = new Packer();
         packer.registerProjectHandler();
-        packer.pack(linux_pack_config);
+        packer.pack(linux_pack_config, properties);
     }
 
     @Test
@@ -78,7 +80,7 @@ public class PackTest {
         String projectPath = this.getProjectPath();
         String packagePath = this.getPackagePath();
         // String win_amd64_pack_config = packagePath + "win_amd64_pack_config.json";
-       String linux_amd64_pack_config = packagePath + "linux_amd64_pack_config.json";
+        String linux_amd64_pack_config = packagePath + "linux_amd64_pack_config.json";
 //        String linux_arm64_pack_config = packagePath + "linux_arm64_pack_config.json";
 //        String macos_amd64_pack_config = packagePath + "macos_amd64_pack_config.json";
         String baseDir = projectPath.replace("easyzk", "fx-base");
@@ -89,7 +91,7 @@ public class PackTest {
         packer.registerProjectHandler();
         // packer.registerMvnHandler(projectDir, List.of(baseDir));
         // packer.pack(win_amd64_pack_config, properties);
-       packer.pack(linux_amd64_pack_config);
+        packer.pack(linux_amd64_pack_config);
 //        packer.pack(linux_arm64_pack_config);
 //        packer.pack(macos_amd64_pack_config);
     }

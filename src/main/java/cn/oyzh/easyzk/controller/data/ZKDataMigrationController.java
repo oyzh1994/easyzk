@@ -185,6 +185,7 @@ public class ZKDataMigrationController extends StageController {
                 this.updateStatus(I18nHelper.migrationFinished());
                 // 重启应用
                 if (MessageBox.confirm(ZKI18nHelper.migrationTip8())) {
+                    this.closeWindow();
                     ZKProcessUtil.restartApplication();
                 }
             } catch (Exception ex) {

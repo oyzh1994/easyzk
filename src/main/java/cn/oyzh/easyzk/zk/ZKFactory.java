@@ -9,6 +9,8 @@ import org.apache.zookeeper.client.ZKClientConfig;
 import java.util.function.Consumer;
 
 /**
+ * zk工厂
+ *
  * @author oyzh
  * @since 2023/9/27
  */
@@ -44,6 +46,7 @@ public class ZKFactory implements ZookeeperFactory {
         }
         // clientConfig.setProperty(ZKClientConfig.ZOOKEEPER_CLIENT_CNXN_SOCKET, ClientCnxnSocketNetty.class.getName());
         ZooKeeper zooKeeper = new ZooKeeper(connectString, sessionTimeout, watcher, canBeReadOnly, clientConfig);
+        // 消费此zooKeeper对象
         if (this.consumer != null) {
             this.consumer.accept(zooKeeper);
             this.consumer = null;

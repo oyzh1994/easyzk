@@ -248,6 +248,11 @@ public class ZKClient {
      */
     private void closeTreeCache() {
         try {
+            // 移除监听器
+            if (this.cacheListener != null) {
+                this.cacheListener.destroy();
+                this.treeCache.getListenable().removeListener(this.cacheListener);
+            }
             if (this.treeCache != null) {
                 this.treeCache.close();
                 this.treeCache = null;
@@ -393,7 +398,7 @@ public class ZKClient {
             if (this.framework != null) {
                 // 关闭连接
                 TaskManager.startTimeout(this.framework::close, 500);
-                 this.framework = null;
+                this.framework = null;
             }
             // 关闭zk连接及sasl客户端
             ZooKeeper zooKeeper = this.getZooKeeper();

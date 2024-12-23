@@ -12,10 +12,11 @@ import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
 import java.security.Security;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
+ * sasl工具类
+ *
  * @author oyzh
  * @since 2024-12-20
  */
@@ -74,13 +75,7 @@ public class ZKSASLUtil {
                     return false;
                 }
                 // 添加到缓存
-                if ("Digest".equalsIgnoreCase(config.getType())) {
-                    Map<String, String> options = new HashMap<>();
-                    options.put("username", config.getUserName());
-                    options.put("password", config.getPassword());
-                    AppConfigurationEntry entry = new AppConfigurationEntry("org.apache.zookeeper.server.auth.DigestLoginModule", AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, options);
-                    configuration.putAppConfigurationEntry(config.getIid(), entry);
-                }
+                addSaslEntry(config);
                 return true;
             }
         }
@@ -88,21 +83,17 @@ public class ZKSASLUtil {
     }
 
     /**
-     * 更新sasl配置
+     * 添加sasl配置
+     * @param config sasl配置
      */
-    private static void updateSaslEntry() {
-        List<ZKSASLConfig> configs = CONFIG_STORE.selectList();
-        for (ZKSASLConfig config : configs) {
-            if (!config.checkInvalid()) {
-                if ("Digest".equalsIgnoreCase(config.getType())) {
-                    Map<String, String> options = new HashMap<>();
-                    options.put("username", config.getUserName());
-                    options.put("password", config.getPassword());
-                    AppConfigurationEntry entry = new AppConfigurationEntry("org.apache.zookeeper.server.auth.DigestLoginModule", AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, options);
-                    if (Configuration.getConfiguration() instanceof ZKSASLConfiguration configuration) {
-                        configuration.putAppConfigurationEntry(config.getIid(), entry);
-                    }
-                }
+    private static void addSaslEntry(ZKSASLConfig config) {
+        if (Configuration.getConfiguration() instanceof ZKSASLConfiguration configuration) {
+            if ("Digest".equalsIgnoreCase(config.getType())) {
+                Map<String, String> options = new HashMap<>();
+                options.put("username", config.getUserName());
+                options.put("password", config.getPassword());
+                AppConfigurationEntry entry = new AppConfigurationEntry("org.apache.zookeeper.server.auth.DigestLoginModule", AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, options);
+                configuration.putAppConfigurationEntry(config.getIid(), entry);
             }
         }
     }

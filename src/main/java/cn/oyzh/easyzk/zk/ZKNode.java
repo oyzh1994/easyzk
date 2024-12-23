@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.zk;
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKCacheUtil;
@@ -88,83 +87,90 @@ public class ZKNode implements Comparable<ZKNode> {
     @Setter
     private String nodePath;
 
+    /**
+     * 设置节点数据
+     *
+     * @param nodeData 节点数据
+     */
     public void setNodeData(byte[] nodeData) {
-        ZKCacheUtil.cacheData(this.hashCode(),  nodeData,"data");
+        ZKCacheUtil.cacheData(this.hashCode(), nodeData, "data");
     }
 
+    /**
+     * 获取节点数据
+     *
+     * @return 节点数据
+     */
     public byte[] getNodeData() {
         return ZKCacheUtil.loadData(this.hashCode(), "data");
     }
 
+    /**
+     * 是否有节点数据
+     *
+     * @return 结果
+     */
     public boolean hasNodeData() {
         return ZKCacheUtil.hasData(this.hashCode(), "data");
     }
 
+    /**
+     * 获取节点数据大小
+     *
+     * @return 节点数据大小
+     */
     public long getNodeDataSize() {
         return ZKCacheUtil.dataSize(this.hashCode(), "data");
     }
 
+    /**
+     * 清除节点数据
+     */
     public void clearNodeData() {
         ZKCacheUtil.deleteData(this.hashCode(), "data");
     }
 
+    /**
+     * 设置未保存的数据
+     *
+     * @param unsavedData 未保存的数据
+     */
     public void setUnsavedData(byte[] unsavedData) {
-        ZKCacheUtil.cacheData(this.hashCode(),  unsavedData,"unsaved");
+        ZKCacheUtil.cacheData(this.hashCode(), unsavedData, "unsaved");
     }
 
+    /**
+     * 获取未保存的数据
+     *
+     * @return 未保存的数据
+     */
     public byte[] getUnsavedData() {
-        return ZKCacheUtil.loadData(this.hashCode() ,"unsaved");
+        return ZKCacheUtil.loadData(this.hashCode(), "unsaved");
     }
 
+    /**
+     * 是否有未保存的数据
+     *
+     * @return 结果
+     */
     public boolean hasUnsavedData() {
-        return ZKCacheUtil.hasData(this.hashCode(),"unsaved");
+        return ZKCacheUtil.hasData(this.hashCode(), "unsaved");
     }
 
+    /**
+     * 获取未保存的数据大小
+     *
+     * @return 未保存的数据大小
+     */
     public long getUnsavedDataSize() {
         return ZKCacheUtil.dataSize(this.hashCode(), "unsaved");
     }
 
+    /**
+     * 清除未保存的数据
+     */
     public void clearUnsavedData() {
         ZKCacheUtil.deleteData(this.hashCode(), "unsaved");
-    }
-
-    /**
-     * 节点值字符串
-     *
-     * @return 节点值字符串
-     */
-    public String nodeDataStr() {
-        return this.nodeDataStr((Charset) null);
-    }
-
-    /**
-     * 节点值字符串
-     *
-     * @param charset 字符集
-     * @return 节点值字符串
-     */
-    public String nodeDataStr(String charset) {
-        return this.nodeDataStr(TextUtil.getCharset(charset));
-    }
-
-    /**
-     * 节点值字符串
-     *
-     * @param charset 字符集
-     * @return 节点值字符串
-     */
-    public String nodeDataStr(Charset charset) {
-        byte[] bytes = this.getNodeData();
-        if (bytes == null) {
-            return null;
-        }
-        if (bytes.length == 0) {
-            return "";
-        }
-        if (charset == null) {
-            return new String(bytes);
-        }
-        return new String(bytes, charset);
     }
 
     /**
@@ -176,6 +182,7 @@ public class ZKNode implements Comparable<ZKNode> {
     public ZKNode copy(@NonNull ZKNode node) {
         this.acl = node.acl;
         this.stat = node.stat;
+        this.quota = node.quota;
         this.nodePath = node.nodePath;
         this.setNodeData(node.getNodeData());
         return this;

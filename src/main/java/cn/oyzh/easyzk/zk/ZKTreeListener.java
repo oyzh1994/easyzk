@@ -25,20 +25,20 @@ public class ZKTreeListener implements TreeCacheListener {
      * 监听路径
      */
     @Getter
-    private final String path;
+    private String path;
 
     /**
      * zk客户端
      */
     @Getter
-    private final ZKClient zkClient;
+    private ZKClient zkClient;
 
     /**
      * 消息有效期
      */
     @Getter
     @Setter
-    private int maxTimeEffect = 10 * 1000;
+    private Integer maxTimeEffect = 10 * 1000;
 
     public ZKTreeListener(@NonNull ZKClient zkClient) {
         this("/", zkClient);
@@ -94,4 +94,11 @@ public class ZKTreeListener implements TreeCacheListener {
             e.printStackTrace();
         }
     }
+
+    public void destroy() {
+        this.path = null;
+        this.zkClient = null;
+        this.maxTimeEffect = null;
+    }
+
 }

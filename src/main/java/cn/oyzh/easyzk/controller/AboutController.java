@@ -4,6 +4,7 @@ package cn.oyzh.easyzk.controller;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.text.FlexText;
@@ -24,7 +25,7 @@ import javafx.stage.WindowEvent;
         resizable = false,
         iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "about.fxml"
+        value = FXConst.FXML_PATH + "about.fxml"
 )
 public class AboutController extends StageController {
 

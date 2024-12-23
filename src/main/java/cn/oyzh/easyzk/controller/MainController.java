@@ -5,6 +5,7 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -31,8 +32,7 @@ import java.util.List;
         usePrimary = true,
         fullScreenAble = true,
         alwaysOnTopAble = true,
-        // iconUrl = ZKConst.ICON_PATH,
-        value = ZKConst.FXML_BASE_PATH + "main.fxml"
+        value = FXConst.FXML_PATH + "main.fxml"
 )
 public class MainController extends ParentStageController {
 
@@ -149,7 +149,7 @@ public class MainController extends ParentStageController {
         TitleBar titleBar = this.stage.getTitleBar();
         // 加载标题
         if (titleBar != null && !titleBar.isHasContent()) {
-            titleBar.loadContent("/views/header2.fxml");
+            titleBar.loadContent("/fxml/header2.fxml");
         }
     }
 

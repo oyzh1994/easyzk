@@ -11,6 +11,7 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -35,9 +36,8 @@ import java.util.List;
  * @since 2022/06/07
  */
 @StageAttribute(
-        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "auth/zkAuthAuth.fxml"
+        value = FXConst.FXML_PATH + "auth/zkAuthAuth.fxml"
 )
 public class ZKAuthAuthController extends StageController {
 

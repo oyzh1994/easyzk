@@ -22,6 +22,7 @@ import cn.oyzh.easyzk.zk.ZKSASLUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
@@ -49,9 +50,8 @@ import java.util.List;
  * @since 2020/9/15
  */
 @StageAttribute(
-        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "connect/zkConnectUpdate.fxml"
+        value = FXConst.FXML_PATH + "connect/zkConnectUpdate.fxml"
 )
 public class ZKConnectUpdateController extends StageController {
 

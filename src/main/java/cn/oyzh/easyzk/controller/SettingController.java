@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKProcessUtil;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
@@ -40,9 +41,9 @@ import java.util.Objects;
  * @since 2022/08/26
  */
 @StageAttribute(
-        iconUrl = ZKConst.ICON_PATH,
+        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "setting.fxml"
+        value = FXConst.FXML_PATH + "setting.fxml"
 )
 public class SettingController extends StageController {
 

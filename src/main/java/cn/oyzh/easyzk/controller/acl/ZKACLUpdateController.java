@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -31,9 +32,8 @@ import java.util.List;
  * @since 2022/12/20
  */
 @StageAttribute(
-        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "acl/zkACLUpdate.fxml"
+        value = FXConst.FXML_PATH + "acl/zkACLUpdate.fxml"
 )
 public class ZKACLUpdateController extends StageController {
 

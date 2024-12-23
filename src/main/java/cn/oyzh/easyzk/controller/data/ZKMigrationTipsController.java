@@ -22,7 +22,7 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.VIEW_PATH + "data/zkMigrationTips.fxml"
+        value = FXConst.FXML_PATH + "data/zkMigrationTips.fxml"
 )
 public class ZKMigrationTipsController extends StageController {
 

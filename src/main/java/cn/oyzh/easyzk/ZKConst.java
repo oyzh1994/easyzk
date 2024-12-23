@@ -14,11 +14,6 @@ import java.io.File;
 public class ZKConst {
 
     /**
-     * fxml基础地址
-     */
-    public final static String FXML_BASE_PATH = "/views/";
-
-    /**
      * 数据保存路径
      */
     public static final String STORE_PATH = System.getProperty("user.home") + File.separator + ".easyzk" + File.separator;

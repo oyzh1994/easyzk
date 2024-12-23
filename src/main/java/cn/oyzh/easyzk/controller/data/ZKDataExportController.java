@@ -13,6 +13,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
@@ -43,9 +44,8 @@ import java.io.File;
  * @since 2024/11/26
  */
 @StageAttribute(
-        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "data/zkDataExport.fxml"
+        value = FXConst.FXML_PATH + "data/zkDataExport.fxml"
 )
 public class ZKDataExportController extends StageController {
 

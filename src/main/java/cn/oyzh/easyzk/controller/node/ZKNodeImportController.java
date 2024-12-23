@@ -13,6 +13,7 @@ import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
@@ -47,9 +48,8 @@ import java.util.Map;
  * @since 2020/10/14
  */
 @StageAttribute(
-        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "node/zkNodeImport.fxml"
+        value = FXConst.FXML_PATH + "node/zkNodeImport.fxml"
 )
 public class ZKNodeImportController extends StageController {
 

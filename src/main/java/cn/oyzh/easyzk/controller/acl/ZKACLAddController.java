@@ -14,6 +14,7 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.button.CopyButton;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
@@ -51,9 +52,8 @@ import java.util.List;
  * @since 2022/12/19
  */
 @StageAttribute(
-        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = ZKConst.FXML_BASE_PATH + "acl/zkACLAdd.fxml"
+        value = FXConst.FXML_PATH + "acl/zkACLAdd.fxml"
 )
 public class ZKACLAddController extends StageController {
 

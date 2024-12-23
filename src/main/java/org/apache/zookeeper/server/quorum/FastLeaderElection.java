@@ -740,7 +740,7 @@ public class FastLeaderElection implements Election {
         }
 
         /*
-         * First make the views consistent. Sometimes peers will have different
+         * First make the fxml consistent. Sometimes peers will have different
          * zxids for a server depending on timing.
          */
         for (Map.Entry<Long, Vote> entry : votes.entrySet()) {

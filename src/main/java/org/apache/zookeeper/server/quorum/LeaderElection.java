@@ -68,7 +68,7 @@ public class LeaderElection implements Election  {
         result.winner = new Vote(Long.MIN_VALUE, Long.MIN_VALUE);
 
         // First, filter out votes from unheard-from machines. Then
-        // make the views consistent. Sometimes peers will have
+        // make the fxml consistent. Sometimes peers will have
         // different zxids for a server depending on timing.
         final HashMap<InetSocketAddress, Vote> validVotes = new HashMap<InetSocketAddress, Vote>();
         final Map<Long, Long> maxZxids = new HashMap<Long,Long>();

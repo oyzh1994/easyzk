@@ -154,9 +154,9 @@ public class HistoryController extends SubStageController implements Initializab
         if (MessageBox.confirm(I18nHelper.deleteData())) {
             boolean result;
             if (this.type.isSelected()) {
-                result = this.historyStore.deleteServer(history.getInfoId(), item.nodePath(), history.getSaveTime(), item.client());
+                result = this.historyStore.deleteServer(history.getIid(), item.nodePath(), history.getSaveTime(), item.client());
             } else {
-                result = this.historyStore.deleteLocal(history.getInfoId(), item.nodePath(), history.getSaveTime());
+                result = this.historyStore.deleteLocal(history.getIid(), item.nodePath(), history.getSaveTime());
             }
             if (result) {
                 this.refresh();
@@ -182,9 +182,9 @@ public class HistoryController extends SubStageController implements Initializab
         if (MessageBox.confirm(I18nHelper.restoreData())) {
             byte[] bytes;
             if (this.type.isSelected()) {
-                bytes = this.historyStore.getServerData(history.getInfoId(), item.nodePath(), history.getSaveTime(), item.client());
+                bytes = this.historyStore.getServerData(history.getIid(), item.nodePath(), history.getSaveTime(), item.client());
             } else {
-                bytes = this.historyStore.getLocalData(history.getInfoId(), item.nodePath(), history.getSaveTime());
+                bytes = this.historyStore.getLocalData(history.getIid(), item.nodePath(), history.getSaveTime());
             }
             if (bytes == null) {
                 MessageBox.warn(I18nHelper.notFoundData());

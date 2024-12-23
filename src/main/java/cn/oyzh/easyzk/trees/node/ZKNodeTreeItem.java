@@ -703,7 +703,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @param loop 递归加载
      */
     public void loadChild(boolean loop) {
-        int limit = ZKSettingStore.SETTING.getNodeLoadLimit();
+        int limit = ZKSettingStore.SETTING.nodeLoadLimit();
         this.loadChild(loop, limit);
     }
 
@@ -1247,9 +1247,9 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      */
     private void saveHistory() {
         ZKDataHistory history = new ZKDataHistory();
-        history.setData(this.unsavedData());
         history.setPath(this.nodePath());
-        history.setInfoId(this.zkConnect().getId());
+        history.setData(this.unsavedData());
+        history.setIid(this.zkConnect().getId());
         ZKDataHistoryStore.INSTANCE.replace(history, this.client());
         ZKEventUtil.dataHistoryAdded(history, this);
     }

@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
-import cn.oyzh.common.util.ObjectComparator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -49,10 +49,12 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
 
     /**
      * 连接信息id
+     *
+     * @see ZKConnect
      */
     @Setter
     @Column
-    private String infoId;
+    private String iid;
 
     @Override
     public boolean compare(ZKDataHistory t1) {
@@ -65,7 +67,7 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
         if (!Objects.equals(this.path, t1.path)) {
             return false;
         }
-        return Objects.equals(this.infoId, t1.infoId);
+        return Objects.equals(this.iid, t1.iid);
     }
 
     /**
@@ -75,9 +77,9 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
      * @return 当前对象
      */
     public ZKDataHistory copy(@NonNull ZKDataHistory history) {
+        this.iid = history.iid;
         this.data = history.data;
         this.path = history.path;
-        this.infoId = history.infoId;
         this.saveTime = history.saveTime;
         this.dataLength = history.dataLength;
         return this;

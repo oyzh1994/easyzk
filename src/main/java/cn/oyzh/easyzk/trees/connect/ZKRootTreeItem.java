@@ -360,25 +360,26 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     public void loadChild() {
         // 初始化分组
         List<ZKGroup> groups = this.groupStore.load();
+        // List<ZKGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(groups)) {
-            List<ZKGroupTreeItem> groupItems = this.getGroupItems();
             List<TreeItem<?>> list = new ArrayList<>();
-            f1:
+            // f1:
             for (ZKGroup group : groups) {
-                for (ZKGroupTreeItem groupItem : groupItems) {
-                    if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
-                        continue f1;
-                    }
-                }
+                // for (ZKGroupTreeItem groupItem : groupItems) {
+                //     if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
+                //         continue f1;
+                //     }
+                // }
                 list.add(new ZKGroupTreeItem(group, this.getTreeView()));
             }
             this.addChild(list);
         }
         // 初始化连接
         List<ZKConnect> connects = this.infoStore.load();
+        List<ZKGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(connects)) {
             List<ZKConnectTreeItem> connectItems = this.getConnectItems();
-            List<ZKConnect> list = new ArrayList<>();
+            // List<ZKConnect> list = new ArrayList<>();
             f1:
             for (ZKConnect connect : connects) {
                 for (ZKConnectTreeItem connectItem : connectItems) {
@@ -386,9 +387,15 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
                         continue f1;
                     }
                 }
-                list.add(connect);
+                Optional<ZKGroupTreeItem> optional = groupItems.parallelStream().filter(g -> StringUtil.equals(g.getGid(), connect.getGroupId())).findAny();
+                if (optional.isPresent()) {
+                    optional.get().addConnect(connect);
+                } else {
+                    this.addConnect(connect);
+                    // list.add(connect);
+                }
             }
-            this.addConnects(list);
+            // this.addConnects(list);
         }
     }
 

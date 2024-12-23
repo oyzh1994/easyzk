@@ -1,16 +1,16 @@
 package cn.oyzh.easyzk.store;
 
+import cn.oyzh.common.exception.InvalidDataException;
+import cn.oyzh.common.util.MD5Util;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.common.exception.InvalidDataException;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.OrderByParam;
 import cn.oyzh.store.jdbc.QueryParam;
 import cn.oyzh.store.jdbc.SelectParam;
-import cn.oyzh.common.util.MD5Util;
-import cn.oyzh.common.util.StringUtil;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
@@ -23,12 +23,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * zk搜索历史存储
+ * zk数据历史存储
  *
  * @author oyzh
- * @since 2022/12/16
+ * @since 2024/12/16
  */
-//@Slf4j
 public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
 
     /**
@@ -44,27 +43,42 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
     /**
      * 服务端路径
      */
-    private static final String SERVER_PATH = "/_dataHistory/";
+    private static final String SERVER_PATH = "/_data_history/";
 
-    public List<ZKDataHistory> listLocal(String infoId, String path) {
+    /**
+     * 加载本地历史
+     *
+     * @param iid  zk连接id
+     * @param path zk路径
+     * @return 本地历史
+     */
+    public List<ZKDataHistory> listLocal(String iid, String path) {
         SelectParam param = new SelectParam();
-        param.addQueryParam(new QueryParam("infoId", infoId));
+        param.addQueryParam(new QueryParam("iid", iid));
         param.addQueryParam(new QueryParam("path", MD5Util.md5Hex(path)));
-        param.addQueryColumn("infoId");
+        param.addQueryColumn("iid");
         param.addQueryColumn("saveTime");
         param.addQueryColumn("dataLength");
         List<ZKDataHistory> histories = super.selectList(param).reversed();
         return histories.parallelStream().sorted(Comparator.comparingLong(ZKDataHistory::getSaveTime)).collect(Collectors.toList()).reversed();
     }
 
-    public List<ZKDataHistory> listServer(String infoId, String path, ZKClient client) {
+    /**
+     * 加载服务历史
+     *
+     * @param iid    zk连接id
+     * @param path   zk路径
+     * @param client zk客户端
+     * @return 服务历史
+     */
+    public List<ZKDataHistory> listServer(String iid, String path, ZKClient client) {
         try {
-            String dataPath = SERVER_PATH + infoId + "/" + MD5Util.md5Hex(path);
+            String dataPath = SERVER_PATH + iid + "/" + MD5Util.md5Hex(path);
             if (client.exists(dataPath)) {
                 List<ZKDataHistory> histories = new ArrayList<>();
                 for (String node : client.getChildren(dataPath)) {
                     ZKDataHistory history = new ZKDataHistory();
-                    history.setInfoId(infoId);
+                    history.setIid(iid);
                     Stat stat = client.checkExists(dataPath + "/" + node);
                     history.setDataLength(stat.getDataLength());
                     try {
@@ -82,11 +96,18 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         return Collections.emptyList();
     }
 
+    /**
+     * 替换
+     *
+     * @param model  模型
+     * @param client zk客户端
+     * @return 结果
+     */
     public boolean replace(ZKDataHistory model, ZKClient client) {
+        String iid = model.getIid();
         String path = model.getPath();
-        String infoId = model.getInfoId();
-        if (StringUtil.isBlank(path) || StringUtil.isBlank(infoId)) {
-            throw new InvalidDataException("path", "infoId");
+        if (StringUtil.isBlank(path) || StringUtil.isBlank(iid)) {
+            throw new InvalidDataException("path", "iid");
         }
         try {
             model.setPath(MD5Util.md5Hex(path));
@@ -99,15 +120,20 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         }
     }
 
+    /**
+     * 替换本地历史
+     *
+     * @param model 模型
+     */
     private void doLocalReplace(ZKDataHistory model) {
+        String iid = model.getIid();
         String path = model.getPath();
-        String infoId = model.getInfoId();
         // 新增数据
         super.insert(model);
         // 查询总数
         List<QueryParam> queryParams = new ArrayList<>();
         queryParams.add(new QueryParam("path", path));
-        queryParams.add(new QueryParam("infoId", infoId));
+        queryParams.add(new QueryParam("iid", iid));
         long count = super.selectCount(queryParams);
         // 删除超出限制的节点
         if (count > His_Max_Size) {
@@ -119,12 +145,19 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         }
     }
 
+    /**
+     * 替换服务历史
+     *
+     * @param model  模型
+     * @param client zk客户端
+     * @throws Exception 异常
+     */
     private void doServerReplace(ZKDataHistory model, ZKClient client) throws Exception {
+        String iid = model.getIid();
         String path = model.getPath();
-        String infoId = model.getInfoId();
         // 添加节点
         long saveTime = model.getSaveTime();
-        String pPath = SERVER_PATH + infoId + "/" + path;
+        String pPath = SERVER_PATH + iid + "/" + path;
         String dataPath = pPath + "/" + saveTime;
         if (client.exists(dataPath)) {
             client.setData(dataPath, model.getData());
@@ -163,18 +196,37 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         }
     }
 
-    public boolean deleteLocal(String infoId, String path, long saveTime) {
+    /**
+     * 删除本地历史
+     *
+     * @param iid      zk连接id
+     * @param path     zk路径
+     * @param saveTime 保存时间
+     * @return 结果
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
+    public boolean deleteLocal(String iid, String path, long saveTime) {
         DeleteParam deleteParam = new DeleteParam();
-        deleteParam.addQueryParam(new QueryParam("infoId", infoId));
+        deleteParam.addQueryParam(new QueryParam("iid", iid));
         deleteParam.addQueryParam(new QueryParam("saveTime", saveTime));
         deleteParam.addQueryParam(new QueryParam("path", MD5Util.md5Hex(path)));
         deleteParam.setLimit(1L);
         return super.delete(deleteParam);
     }
 
-    public boolean deleteServer(String infoId, String path, long saveTime, ZKClient client) {
+    /**
+     * 删除服务历史
+     *
+     * @param iid      zk连接id
+     * @param path     zk路径
+     * @param saveTime 保存时间
+     * @param client   zk客户端
+     * @return 结果
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
+    public boolean deleteServer(String iid, String path, long saveTime, ZKClient client) {
         try {
-            String dataPath = SERVER_PATH + infoId + "/" + MD5Util.md5Hex(path) + "/" + saveTime;
+            String dataPath = SERVER_PATH + iid + "/" + MD5Util.md5Hex(path) + "/" + saveTime;
             if (client.exists(dataPath)) {
                 client.delete(dataPath);
                 return true;
@@ -190,9 +242,17 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         return ZKDataHistory.class;
     }
 
-    public byte[] getLocalData(String infoId, String path, long saveTime) {
+    /**
+     * 获取本地数据
+     *
+     * @param iid      zk连接id
+     * @param path     zk路径
+     * @param saveTime 保存时间
+     * @return 本地数据
+     */
+    public byte[] getLocalData(String iid, String path, long saveTime) {
         SelectParam param = new SelectParam();
-        param.addQueryParam(new QueryParam("infoId", infoId));
+        param.addQueryParam(new QueryParam("iid", iid));
         param.addQueryParam(new QueryParam("saveTime", saveTime));
         param.addQueryParam(new QueryParam("path", MD5Util.md5Hex(path)));
         param.addQueryColumn("data");
@@ -200,9 +260,18 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         return history == null ? null : history.getData();
     }
 
-    public byte[] getServerData(String infoId, String path, long saveTime, ZKClient client) {
+    /**
+     * 获取服务数据
+     *
+     * @param iid      zk连接id
+     * @param path     zk路径
+     * @param saveTime 保存时间
+     * @param client   zk客户端
+     * @return 服务数据
+     */
+    public byte[] getServerData(String iid, String path, long saveTime, ZKClient client) {
         try {
-            String dataPath = SERVER_PATH + infoId + "/" + MD5Util.md5Hex(path) + "/" + saveTime;
+            String dataPath = SERVER_PATH + iid + "/" + MD5Util.md5Hex(path) + "/" + saveTime;
             if (client.exists(dataPath)) {
                 return client.getData(dataPath);
             }

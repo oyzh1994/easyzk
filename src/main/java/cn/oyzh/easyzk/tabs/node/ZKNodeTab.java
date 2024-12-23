@@ -718,15 +718,7 @@ public class ZKNodeTab extends DynamicTab {
         @FXML
         private void copyNode() {
             try {
-                byte[] bytes;
-                if (this.activeItem.isDataUnsaved()) {
-                    bytes = this.activeItem.unsavedData();
-                } else {
-                    bytes = this.activeItem.nodeData();
-                }
-                if (bytes == null) {
-                    bytes = new byte[0];
-                }
+                byte[] bytes = this.activeItem.getData();
                 String data = this.activeItem.decodeNodePath() + " " + new String(bytes);
                 ClipboardUtil.setStringAndTip(data);
             } catch (Exception ex) {
@@ -750,7 +742,7 @@ public class ZKNodeTab extends DynamicTab {
             try {
                 File file = FileChooserHelper.save(I18nHelper.saveFile(), "", FileChooserHelper.allExtensionFilter());
                 if (file != null) {
-                    FileUtil.writeBytes(this.activeItem.nodeData(), file);
+                    FileUtil.writeBytes(this.activeItem.getNodeData(), file);
                     MessageBox.info(I18nHelper.operationSuccess());
                 }
             } catch (Exception ex) {
@@ -903,16 +895,9 @@ public class ZKNodeTab extends DynamicTab {
                 return;
             }
             NodeGroupUtil.enable(this.dataTab, "dataToBig");
-            byte[] bytes;
-            if (this.activeItem.isDataUnsaved()) {
-                bytes = this.activeItem.unsavedData();
-            } else {
-                bytes = this.activeItem.nodeData();
-            }
+            byte[] bytes = this.activeItem.getData();
             // 转换编码
             bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
-            // 数据可能为null
-            bytes = bytes == null ? "".getBytes() : bytes;
             // 显示检测后的数据
             RichDataType dataType = this.nodeData.showDetectData(new String(bytes, this.charset.getCharset()));
             // 选中格式
@@ -925,12 +910,7 @@ public class ZKNodeTab extends DynamicTab {
          * @param dataType 数据类型
          */
         protected void showData(RichDataType dataType) {
-            byte[] bytes;
-            if (this.activeItem.isDataUnsaved()) {
-                bytes = this.activeItem.unsavedData();
-            } else {
-                bytes = this.activeItem.nodeData();
-            }
+            byte[] bytes = this.activeItem.getData();
             bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
             this.nodeData.showData(dataType, bytes);
         }

@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
-import cn.oyzh.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

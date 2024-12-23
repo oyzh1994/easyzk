@@ -4,7 +4,6 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;

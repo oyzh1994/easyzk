@@ -1,9 +1,9 @@
 package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.common.Const;
+import cn.oyzh.event.EventFormatter;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
-import cn.oyzh.event.EventFormatter;
 import cn.oyzh.fx.plus.event.FXEventListener;
 
 /**

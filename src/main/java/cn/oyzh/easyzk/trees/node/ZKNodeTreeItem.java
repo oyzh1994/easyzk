@@ -206,11 +206,11 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     }
 
     /**
-     * 获取数据
+     * 获取节点数据
      *
      * @return 数据
      */
-    public byte[] nodeData() {
+    public byte[] getNodeData() {
         return this.value.getNodeData();
     }
 
@@ -222,6 +222,24 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     public void nodeData(byte[] data) {
         this.value.setUnsavedData(data);
         this.refresh();
+    }
+
+    /**
+     * 获取数据
+     *
+     * @return 数据
+     */
+    public byte[] getData() {
+        byte[] bytes;
+        if (this.isDataUnsaved()) {
+            bytes = this.getUnsavedData();
+        } else {
+            bytes = this.getNodeData();
+        }
+        if (bytes == null) {
+            bytes = new byte[0];
+        }
+        return bytes;
     }
 
     /**
@@ -393,7 +411,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             // 创建模式
             CreateMode createMode = this.value.isEphemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
             // 创建新节点
-            if (this.client().create(newNodePath, this.nodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
+            if (this.client().create(newNodePath, this.getNodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
                 // 删除旧节点
                 this.deleteNode();
                 // 发送事件
@@ -665,7 +683,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     public boolean saveData() {
         try {
             // 当前数据
-            byte[] data = this.unsavedData();
+            byte[] data = this.getUnsavedData();
             // 更新数据
             Stat stat = this.client().setData(this.nodePath(), data);
             if (stat != null) {
@@ -996,7 +1014,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      *
      * @return node节点数量
      */
-    public long itemChildrenSize() {
+    public int itemChildrenSize() {
         return super.unfilteredChildren().filtered(e -> e instanceof ZKNodeTreeItem).size();
     }
 
@@ -1248,13 +1266,18 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
     private void saveHistory() {
         ZKDataHistory history = new ZKDataHistory();
         history.setPath(this.nodePath());
-        history.setData(this.unsavedData());
+        history.setData(this.getUnsavedData());
         history.setIid(this.zkConnect().getId());
         ZKDataHistoryStore.INSTANCE.replace(history, this.client());
         ZKEventUtil.dataHistoryAdded(history, this);
     }
 
-    public Integer getNumChildren() {
+    /**
+     * 获取子节点数量
+     *
+     * @return 子节点数量
+     */
+    public int getNumChildren() {
         return this.value.getNumChildren();
     }
 
@@ -1282,7 +1305,12 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         }
     }
 
-    public byte[] unsavedData() {
+    /**
+     * 获取未保存的数据
+     *
+     * @return 未保存的数据
+     */
+    public byte[] getUnsavedData() {
         return this.value.getUnsavedData();
     }
 
@@ -1302,13 +1330,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * @return 数据大小
      */
     public int dataSize() {
-        byte[] bytes;
-        if (this.isDataUnsaved()) {
-            bytes = this.unsavedData();
-        } else {
-            bytes = this.nodeData();
-        }
-        return bytes == null ? 0 : bytes.length;
+        return this.getData().length;
     }
 
     /**
@@ -1384,9 +1406,9 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         @Override
         public String extra() {
             String extra;
-            long showNum = this.item().itemChildrenSize();
-            Integer totalNum = this.item().getNumChildren();
-            if (totalNum == null || totalNum == 0) {
+            int totalNum = this.item().getNumChildren();
+            int showNum = this.item().itemChildrenSize();
+            if (totalNum == 0) {
                 extra = null;
             } else if (showNum == totalNum) {
                 extra = "(" + totalNum + ")";

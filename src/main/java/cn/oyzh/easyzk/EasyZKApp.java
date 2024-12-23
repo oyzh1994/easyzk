@@ -15,6 +15,7 @@ import cn.oyzh.event.EventFactory;
 import cn.oyzh.fx.gui.tray.DesktopTrayItem;
 import cn.oyzh.fx.gui.tray.QuitTrayItem;
 import cn.oyzh.fx.gui.tray.SettingTrayItem;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.event.FxEventBus;
 import cn.oyzh.fx.plus.event.FxEventConfig;
 import cn.oyzh.fx.plus.ext.FXApplication;
@@ -47,10 +48,11 @@ public class EasyZKApp extends FXApplication {
     private static final Project PROJECT = Project.load();
 
     public static void main(String[] args) {
+        ZKSASLUtil.registerConfiguration();
         SysConst.storeDir(ZKConst.STORE_PATH);
         SysConst.cacheDir(ZKConst.CACHE_PATH);
-        ZKSASLUtil.registerConfiguration();
         SysConst.projectName(PROJECT.getName());
+        FXConst.appIcon(ZKConst.ICON_PATH);
         EventFactory.registerEventBus(FxEventBus.class);
         EventFactory.syncEventConfig(FxEventConfig.SYNC);
         EventFactory.asyncEventConfig(FxEventConfig.ASYNC);
@@ -70,7 +72,8 @@ public class EasyZKApp extends FXApplication {
             ZKStoreUtil.init();
             // 禁用fx的css日志
             FXUtil.disableCSSLogger();
-            ZKSetting setting= ZKSettingStore.SETTING;
+            // 配置对象
+            ZKSetting setting = ZKSettingStore.SETTING;
             // 应用区域
             I18nManager.apply(setting.getLocale());
             // 应用字体

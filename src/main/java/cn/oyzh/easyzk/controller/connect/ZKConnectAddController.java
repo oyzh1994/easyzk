@@ -42,7 +42,7 @@ import java.util.ArrayList;
  * @since 2020/9/15
  */
 @StageAttribute(
-        iconUrl = ZKConst.ICON_PATH,
+        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "connect/zkConnectAdd.fxml"
 )
@@ -370,14 +370,8 @@ public class ZKConnectAddController extends StageController {
         // ssh配置
         this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
             if (newValue) {
-                // this.sshAuthBox.enable();
-                // this.sshHostBox.enable();
-                // this.sshTimeout.enable();
                 NodeGroupUtil.enable(this.sshTab, "ssh");
             } else {
-                // this.sshAuthBox.disable();
-                // this.sshHostBox.disable();
-                // this.sshTimeout.disable();
                 NodeGroupUtil.disable(this.sshTab, "ssh");
             }
         });

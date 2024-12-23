@@ -21,7 +21,7 @@ import javafx.stage.WindowEvent;
  * @since 2023/11/09
  */
 @StageAttribute(
-        iconUrl = ZKConst.ICON_PATH,
+        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "tool/zkTool.fxml"
 )

@@ -41,7 +41,7 @@ import java.util.List;
  * @since 2020/10/09
  */
 @StageAttribute(
-        iconUrl = ZKConst.ICON_PATH,
+        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeAdd.fxml"
 )

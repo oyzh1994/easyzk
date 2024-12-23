@@ -28,7 +28,7 @@ import java.io.File;
  */
 @StageAttribute(
         resizable = false,
-        iconUrl = ZKConst.ICON_PATH,
+        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = ZKConst.FXML_BASE_PATH + "node/zkNodeQRCode.fxml"
 )

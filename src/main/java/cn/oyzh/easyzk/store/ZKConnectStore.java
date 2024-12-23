@@ -13,6 +13,8 @@ import cn.oyzh.store.jdbc.QueryParam;
 import java.util.List;
 
 /**
+ * zk连接存储
+ *
  * @author oyzh
  * @since 2024/09/26
  */
@@ -22,6 +24,31 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
      * 当前实例
      */
     public static final ZKConnectStore INSTANCE = new ZKConnectStore();
+
+    /**
+     * 认证存储
+     */
+    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+
+    /**
+     * 过滤存储
+     */
+    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
+
+    /**
+     * 收藏存储
+     */
+    private final ZKCollectStore collectStore = ZKCollectStore.INSTANCE;
+
+    /**
+     * ssh配置存储
+     */
+    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
+
+    /**
+     * sasl配置存储
+     */
+    private final ZKSASLConfigStore saslConfigStore = ZKSASLConfigStore.INSTANCE;
 
     /**
      * 加载列表
@@ -51,11 +78,9 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
             ZKSSHConfig sshConfig = model.getSshConfig();
             if (sshConfig != null) {
                 sshConfig.setIid(model.getId());
-                ZKSSHConfigStore.INSTANCE.replace(sshConfig);
+                this.sshConfigStore.replace(sshConfig);
             } else {
-                DeleteParam param = new DeleteParam();
-                param.addQueryParam(new QueryParam("iid", model.getId()));
-                ZKSSHConfigStore.INSTANCE.delete(param);
+                this.sshConfigStore.deleteByIid(model.getId());
             }
 
             // sasl处理
@@ -64,43 +89,37 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
             param.addQueryParam(new QueryParam("iid", model.getId()));
             if (saslConfig != null) {
                 saslConfig.setIid(model.getId());
-                ZKSASLConfigStore.INSTANCE.replace(saslConfig);
+                this.saslConfigStore.replace(saslConfig);
             } else {
-                ZKSASLConfigStore.INSTANCE.delete(param);
+                this.saslConfigStore.delete(param);
             }
 
             // 收藏处理
             List<String> collects = model.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
                 for (String collect : collects) {
-                    ZKCollectStore.INSTANCE.replace(model.getId(), collect);
+                    this.collectStore.replace(model.getId(), collect);
                 }
-                // } else {
-                //     ZKCollectStore.INSTANCE.deleteByIid(model.getId());
             }
 
             // 认证处理
-            ZKAuthStore.INSTANCE.deleteByIid(model.getId());
             List<ZKAuth> auths = model.getAuths();
             if (CollectionUtil.isNotEmpty(auths)) {
+                this.authStore.deleteByIid(model.getId());
                 for (ZKAuth auth : auths) {
                     auth.setIid(model.getId());
                     ZKAuthStore.INSTANCE.replace(auth);
                 }
-            } else {
-                ZKAuthStore.INSTANCE.deleteByIid(model.getId());
             }
 
             // 过滤处理
-            ZKFilterStore.INSTANCE.deleteByIid(model.getId());
             List<ZKFilter> filters = model.getFilters();
             if (CollectionUtil.isNotEmpty(filters)) {
+                this.filterStore.deleteByIid(model.getId());
                 for (ZKFilter filter : filters) {
                     filter.setIid(model.getId());
                     ZKFilterStore.INSTANCE.replace(filter);
                 }
-            } else {
-                ZKFilterStore.INSTANCE.deleteByIid(model.getId());
             }
         }
         return result;

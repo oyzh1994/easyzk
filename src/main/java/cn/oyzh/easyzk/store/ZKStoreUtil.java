@@ -87,7 +87,6 @@ public class ZKStoreUtil {
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject obj = array.getJSONObject(i);
                     ZKConnect connect = new ZKConnect();
-
                     if (obj.containsKey("id")) {
                         connect.setId(obj.getString("id"));
                     }

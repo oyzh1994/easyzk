@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
+import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
@@ -33,5 +34,17 @@ public class ZKSSHConfigStore extends JdbcStandardStore<ZKSSHConfig> {
     @Override
     protected Class<ZKSSHConfig> modelClass() {
         return ZKSSHConfig.class;
+    }
+
+    /**
+     * 根据iid删除
+     *
+     * @param iid zk连接id
+     * @return 结果
+     */
+    public boolean deleteByIid(String iid) {
+        DeleteParam param = new DeleteParam();
+        param.addQueryParam(new QueryParam("iid", iid));
+        return super.delete(param);
     }
 }

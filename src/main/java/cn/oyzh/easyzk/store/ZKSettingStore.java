@@ -5,6 +5,8 @@ import cn.oyzh.store.jdbc.JdbcKeyValueStore;
 
 
 /**
+ * zk设置存储
+ *
  * @author oyzh
  * @since 2024/09/23
  */
@@ -20,6 +22,11 @@ public class ZKSettingStore extends JdbcKeyValueStore<ZKSetting> {
      */
     public static final ZKSetting SETTING = INSTANCE.load();
 
+    /**
+     * 加载
+     *
+     * @return zk设置
+     */
     public ZKSetting load() {
         ZKSetting setting = super.select();
         if (setting == null) {
@@ -28,6 +35,12 @@ public class ZKSettingStore extends JdbcKeyValueStore<ZKSetting> {
         return setting;
     }
 
+    /**
+     * 替换
+     *
+     * @param model 模型
+     * @return 结果
+     */
     public boolean replace(ZKSetting model) {
         if (model != null) {
             return this.update(model);

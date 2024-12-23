@@ -67,7 +67,7 @@ public class EasyZKApp extends FXApplication {
     @Override
     public void init() throws Exception {
         try {
-            JulLog.info("{} init start.", this.appName());
+            JulLog.info("{} init start.", SysConst.projectName());
             // 储存初始化
             ZKStoreUtil.init();
             // 禁用fx的css日志
@@ -143,15 +143,15 @@ public class EasyZKApp extends FXApplication {
         }
     }
 
-    @Override
-    protected String appIcon() {
-        return ZKConst.ICON_PATH;
-    }
-
-    @Override
-    protected String appName() {
-        return PROJECT.getName();
-    }
+    // @Override
+    // protected String appIcon() {
+    //     return ZKConst.ICON_PATH;
+    // }
+    //
+    // @Override
+    // protected String appName() {
+    //     return PROJECT.getName();
+    // }
 
     /**
      * 显示主页

@@ -81,9 +81,9 @@ public class ZKStoreUtil {
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_info.json";
-            String json = FileUtil.readUtf8String(file);
-            JSONArray array = JSONUtil.parseArray(json);
             if (FileUtil.exist(file)) {
+                String json = FileUtil.readUtf8String(file);
+                JSONArray array = JSONUtil.parseArray(json);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject obj = array.getJSONObject(i);
                     ZKConnect connect = new ZKConnect();
@@ -162,9 +162,9 @@ public class ZKStoreUtil {
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_filter.json";
-            String json = FileUtil.readUtf8String(file);
-            JSONArray array = JSONUtil.parseArray(json);
             if (FileUtil.exist(file)) {
+                String json = FileUtil.readUtf8String(file);
+                JSONArray array = JSONUtil.parseArray(json);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject obj = array.getJSONObject(i);
                     ZKFilter filter = new ZKFilter();
@@ -196,28 +196,32 @@ public class ZKStoreUtil {
      */
     public static List<ZKAuth> loadAuths() {
         List<ZKAuth> auths = new ArrayList<>();
-        String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_auth.json";
-        String json = FileUtil.readUtf8String(file);
-        JSONArray array = JSONUtil.parseArray(json);
-        if (FileUtil.exist(file)) {
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject obj = array.getJSONObject(i);
-                ZKAuth auth = new ZKAuth();
-                if (obj.containsKey("uid")) {
-                    auth.setUid(obj.getString("uid"));
+        try {
+            String storePath = SysConst.storeDir();
+            String file = storePath + File.separator + "zk_auth.json";
+            if (FileUtil.exist(file)) {
+                String json = FileUtil.readUtf8String(file);
+                JSONArray array = JSONUtil.parseArray(json);
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    ZKAuth auth = new ZKAuth();
+                    if (obj.containsKey("uid")) {
+                        auth.setUid(obj.getString("uid"));
+                    }
+                    if (obj.containsKey("user")) {
+                        auth.setUser(obj.getString("user"));
+                    }
+                    if (obj.containsKey("password")) {
+                        auth.setPassword(obj.getString("password"));
+                    }
+                    if (obj.containsKey("enable")) {
+                        auth.setEnable(obj.getBooleanValue("enable"));
+                    }
+                    auths.add(auth);
                 }
-                if (obj.containsKey("user")) {
-                    auth.setUser(obj.getString("user"));
-                }
-                if (obj.containsKey("password")) {
-                    auth.setPassword(obj.getString("password"));
-                }
-                if (obj.containsKey("enable")) {
-                    auth.setEnable(obj.getBooleanValue("enable"));
-                }
-                auths.add(auth);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return auths;
     }
@@ -232,9 +236,9 @@ public class ZKStoreUtil {
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_shell_history.json";
-            String json = FileUtil.readUtf8String(file);
-            JSONArray array = JSONUtil.parseArray(json);
             if (FileUtil.exist(file)) {
+                String json = FileUtil.readUtf8String(file);
+                JSONArray array = JSONUtil.parseArray(json);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject obj = array.getJSONObject(i);
                     ZKTerminalHistory history = new ZKTerminalHistory();

@@ -157,6 +157,14 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.listen = zkInfo.listen;
         this.groupId = zkInfo.groupId;
         this.readonly = zkInfo.readonly;
+        this.compatibility = zkInfo.compatibility;
+        this.sessionTimeOut = zkInfo.sessionTimeOut;
+        this.connectTimeOut = zkInfo.connectTimeOut;
+        // 认证
+        this.auths = zkInfo.auths;
+        // 过滤
+        this.filters = zkInfo.filters;
+        // 收藏
         this.collects = zkInfo.collects;
         // ssh
         this.sshConfig = zkInfo.sshConfig;
@@ -164,9 +172,6 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         // sasl
         this.saslAuth = zkInfo.saslAuth;
         this.saslConfig = zkInfo.saslConfig;
-        this.compatibility = zkInfo.compatibility;
-        this.connectTimeOut = zkInfo.connectTimeOut;
-        this.sessionTimeOut = zkInfo.sessionTimeOut;
         return this;
     }
 

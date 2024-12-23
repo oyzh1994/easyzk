@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * zk连接对象
+ * zk连接信息
  *
  * @author oyzh
  * @since 2023/9/20

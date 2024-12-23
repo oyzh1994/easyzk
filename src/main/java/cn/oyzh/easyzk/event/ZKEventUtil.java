@@ -208,13 +208,6 @@ public class ZKEventUtil {
         event.data(info);
         EventUtil.post(event);
     }
-    //
-    // /**
-    //  * 树节点过滤事件
-    //  */
-    // public static void treeChildFilter() {
-    //     EventUtil.postDelay(new TreeChildFilterEvent(), 200);
-    // }
 
     /**
      * 终端打开事件
@@ -245,20 +238,6 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    // /**
-    //  * 认证主页事件
-    //  */
-    // public static void authMain() {
-    //     EventUtil.post(new ZKAuthMainEvent());
-    // }
-
-    // /**
-    //  * 过滤主页事件
-    //  */
-    // public static void filterMain() {
-    //     EventUtil.post(new ZKFilterMainEvent());
-    // }
-
     /**
      * 触发认证添加事件
      */
@@ -270,32 +249,6 @@ public class ZKEventUtil {
         event.password(password);
         EventUtil.post(event);
     }
-
-    // /**
-    //  * 触发认证添加事件
-    //  *
-    //  * @param auth 认证
-    //  */
-    // public static void authAdded(@NonNull ZKAuth auth) {
-    //     if (auth.getEnable()) {
-    //         ZKAuthAddedEvent event = new ZKAuthAddedEvent();
-    //         event.data(auth);
-    //         EventUtil.post(event);
-    //     }
-    // }
-
-    // /**
-    //  * 触发认证启用事件
-    //  *
-    //  * @param auth 认证
-    //  */
-    // public static void authEnabled(@NonNull ZKAuth auth) {
-    //     if (auth.getEnable()) {
-    //         ZKAuthEnabledEvent event = new ZKAuthEnabledEvent();
-    //         event.data(auth);
-    //         EventUtil.post(event);
-    //     }
-    // }
 
     /**
      * 添加分组
@@ -310,15 +263,6 @@ public class ZKEventUtil {
     public static void addConnect() {
         EventUtil.post(new ZKAddConnectEvent());
     }
-
-    // /**
-    //  * 添加过滤配置
-    //  */
-    // public static void filterAdded(ZKFilter filter) {
-    //     ZKFilterAddedEvent event = new ZKFilterAddedEvent();
-    //     event.data(filter);
-    //     EventUtil.post(event);
-    // }
 
     /**
      * 更新日志事件

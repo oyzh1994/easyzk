@@ -14,7 +14,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @Table("t_setting")
-//@Table("t_app_setting")
 @EqualsAndHashCode(callSuper = true)
 public class ZKSetting extends Setting {
 
@@ -41,13 +40,6 @@ public class ZKSetting extends Setting {
      */
     @Column
     private Integer nodeLoadLimit;
-
-    // /**
-    //  * 搜索-更多-展开状态
-    //  * 0|null 不展开
-    //  * 1 展开
-    //  */
-    // private Byte searchMoreExpand;
 
     /**
      * 是否自动认证
@@ -85,33 +77,22 @@ public class ZKSetting extends Setting {
         return this.loadMode != null && this.loadMode == 2;
     }
 
-    // /**
-    //  * 是否展开搜索-更多
-    //  *
-    //  * @return 结果
-    //  */
-    // public boolean isSearchMoreExpand() {
-    //     return this.searchMoreExpand != null && this.searchMoreExpand == 1;
-    // }
-
+    /**
+     * 获取节点加载限制
+     *
+     * @return 节点加载限制
+     */
     public int nodeLoadLimit() {
         return this.nodeLoadLimit == null ? 0 : this.nodeLoadLimit;
     }
 
-    public int calcLimit(int limit, int count) {
-        if (this.nodeLoadLimit() == 0) {
-            return limit;
-        }
-        int size = this.nodeLoadLimit() - count;
-        return Math.min(size, limit);
-    }
-
     @Override
-    public void copy(Object t1) {
-        super.copy(t1);
-        if (t1 instanceof ZKSetting t2) {
-            this.loadMode = t2.loadMode;
-            this.authMode = t2.authMode;
+    public void copy(Object o) {
+        super.copy(o);
+        if (o instanceof ZKSetting setting) {
+            this.loadMode = setting.loadMode;
+            this.authMode = setting.authMode;
+            this.nodeLoadLimit = setting.nodeLoadLimit;
         }
     }
 }

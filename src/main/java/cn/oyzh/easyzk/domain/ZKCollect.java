@@ -26,10 +26,6 @@ public class ZKCollect implements Serializable {
     @Column
     private String path;
 
-    public ZKCollect() {
-
-    }
-
     public ZKCollect(String iid, String path) {
         this.iid = iid;
         this.path = path;

@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.search;
 
 import cn.oyzh.fx.gui.skin.ClearableTextFieldSkin;
 import cn.oyzh.fx.gui.svg.glyph.SettingSVGGlyph;
+import cn.oyzh.fx.plus.controls.list.FXListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.geometry.HPos;
@@ -34,7 +35,16 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
     protected ZKNodeSearchPopup popup;
 
     /**
-     * 显示历史弹窗组件
+     * 初始化弹窗
+     */
+    protected void initPopup() {
+        this.popup = new ZKNodeSearchPopup();
+        this.popup.show(this.getSkinnable());
+        this.popup.setOnIndexSelected(this::onIndexSelected);
+    }
+
+    /**
+     * 显示弹窗
      */
     protected void showPopup() {
         if (this.popup != null) {
@@ -43,10 +53,6 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
             } else {
                 this.popup.show(this.getSkinnable());
             }
-        } else {
-            this.popup = new ZKNodeSearchPopup();
-            this.popup.show(this.getSkinnable());
-            this.popup.setOnIndexSelected(this::onIndexSelected);
         }
     }
 
@@ -67,7 +73,9 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
 
     public ZKNodeSearchTextFieldSkin(TextField textField) {
         super(textField);
-        // 初始化历史按钮
+        // 初始化弹窗
+        this.initPopup();
+        // 初始化按钮
         this.button = new SettingSVGGlyph();
         this.button.setEnableWaiting(false);
         this.button.setFocusTraversable(false);
@@ -86,6 +94,7 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         });
         // 文本变化监听
         this.getSkinnable().textProperty().addListener((observable, oldValue, newValue) -> this.onSearch(this.getText()));
+
     }
 
     public void onSearch(String text) {
@@ -127,5 +136,14 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
             return 0;
         }
         return this.popup.getSelectedIndex();
+    }
+
+    public void setSelectedIndex(int selectedIndex) {
+        if (this.popup != null) {
+            FXListView<String> listView = this.popup.listView();
+            if (listView != null) {
+                listView.selectIndex(selectedIndex);
+            }
+        }
     }
 }

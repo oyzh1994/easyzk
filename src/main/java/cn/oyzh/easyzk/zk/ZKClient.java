@@ -248,12 +248,11 @@ public class ZKClient {
      */
     private void closeTreeCache() {
         try {
-            // 移除监听器
-            if (this.cacheListener != null) {
-                this.cacheListener.destroy();
-                this.treeCache.getListenable().removeListener(this.cacheListener);
-            }
             if (this.treeCache != null) {
+                if (this.cacheListener != null) {
+                    this.cacheListener.destroy();
+                    this.treeCache.getListenable().removeListener(this.cacheListener);
+                }
                 this.treeCache.close();
                 this.treeCache = null;
             }

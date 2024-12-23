@@ -1,17 +1,28 @@
 package cn.oyzh.easyzk.search;
 
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.fx.plus.controls.popup.ListViewPopup;
 import cn.oyzh.i18n.I18nHelper;
 
 import java.util.List;
 
 /**
- * zk搜索历史弹窗
+ * zk节点搜索类型弹窗
  *
  * @author oyzh
  * @since 2023/4/24
  */
 public class ZKNodeSearchPopup extends ListViewPopup<String> {
+
+    @Override
+    protected void initPopup() {
+        super.initContent();
+        this.showingProperty().addListener((observable, oldValue, newValue) -> {
+            if (BooleanUtil.isTrue(newValue)) {
+                super.calcListViewSize();
+            }
+        });
+    }
 
     @Override
     public List<String> getItems() {

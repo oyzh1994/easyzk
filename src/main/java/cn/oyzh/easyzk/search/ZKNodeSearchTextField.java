@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.search;
 
 import cn.oyzh.fx.gui.text.field.LimitTextField;
 import cn.oyzh.fx.plus.event.AnonymousEvent;
-import cn.oyzh.i18n.I18nHelper;
 import javafx.event.EventHandler;
 import javafx.scene.control.Skin;
 import lombok.Getter;
@@ -17,7 +16,12 @@ import lombok.Setter;
 public class ZKNodeSearchTextField extends LimitTextField {
 
     {
-        this.setPromptText(I18nHelper.contains());
+        // this.setPromptText(I18nHelper.contains());
+        this.skinProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                this.skin().setSelectedIndex(0);
+            }
+        });
     }
 
     @Setter

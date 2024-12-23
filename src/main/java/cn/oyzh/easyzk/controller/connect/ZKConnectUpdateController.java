@@ -13,7 +13,7 @@ import cn.oyzh.easyzk.fx.ZKFilterTableView;
 import cn.oyzh.easyzk.fx.ZKSASLTypeComboBox;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.store.ZKConnectStore;
-import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.store.ZKSASLConfigStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
@@ -241,7 +241,7 @@ public class ZKConnectUpdateController extends StageController {
     /**
      * zk过滤配置储存
      */
-    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
+    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
     /**
      * sasl配置储存

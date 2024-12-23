@@ -8,7 +8,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.handler.ZKDataExportHandler;
-import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
@@ -178,7 +178,7 @@ public class ZKDataExportController extends StageController {
     /**
      * 过滤配置储存
      */
-    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
+    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
     /**
      * 导出处理器

@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -54,7 +54,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
     /**
      * 过滤配置储存
      */
-    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
+    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
     /**
      * 初始化过滤配置

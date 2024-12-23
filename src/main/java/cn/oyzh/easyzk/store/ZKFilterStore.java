@@ -15,12 +15,12 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class ZKFilterJdbcStore extends JdbcStandardStore<ZKFilter> {
+public class ZKFilterStore extends JdbcStandardStore<ZKFilter> {
 
     /**
      * 当前实例
      */
-    public static final ZKFilterJdbcStore INSTANCE = new ZKFilterJdbcStore();
+    public static final ZKFilterStore INSTANCE = new ZKFilterStore();
 
     /**
      * 加载已启用的数据列表

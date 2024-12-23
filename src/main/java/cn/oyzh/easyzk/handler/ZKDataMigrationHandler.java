@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.store.ZKConnectStore;
-import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
@@ -64,7 +64,7 @@ public class ZKDataMigrationHandler extends DataHandler {
 
     private ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
 
-    private ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
+    private ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
     private ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
 

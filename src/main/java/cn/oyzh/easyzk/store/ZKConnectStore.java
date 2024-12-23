@@ -92,15 +92,15 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
             }
 
             // 过滤处理
-            ZKFilterJdbcStore.INSTANCE.deleteByIid(model.getId());
+            ZKFilterStore.INSTANCE.deleteByIid(model.getId());
             List<ZKFilter> filters = model.getFilters();
             if (CollectionUtil.isNotEmpty(filters)) {
                 for (ZKFilter filter : filters) {
                     filter.setIid(model.getId());
-                    ZKFilterJdbcStore.INSTANCE.replace(filter);
+                    ZKFilterStore.INSTANCE.replace(filter);
                 }
             } else {
-                ZKFilterJdbcStore.INSTANCE.deleteByIid(model.getId());
+                ZKFilterStore.INSTANCE.deleteByIid(model.getId());
             }
         }
         return result;

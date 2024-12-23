@@ -7,7 +7,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.fx.ZKConnectComboBox;
 import cn.oyzh.easyzk.handler.ZKDataTransportHandler;
-import cn.oyzh.easyzk.store.ZKFilterJdbcStore;
+import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKClientUtil;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
@@ -24,7 +24,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -181,7 +180,7 @@ public class ZKDataTransportController extends StageController {
     /**
      * 过滤配置储存
      */
-    private final ZKFilterJdbcStore filterStore = ZKFilterJdbcStore.INSTANCE;
+    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
     /**
      * 执行传输

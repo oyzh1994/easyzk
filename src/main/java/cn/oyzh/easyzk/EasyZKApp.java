@@ -48,17 +48,20 @@ public class EasyZKApp extends FXApplication {
     private static final Project PROJECT = Project.load();
 
     public static void main(String[] args) {
+        SysConst.projectName(PROJECT.getName());
+        JulLog.info("项目启动中...");
+        // 储存初始化
+        ZKStoreUtil.init();
+        // 注册sasl处理器
         ZKSASLUtil.registerConfiguration();
         SysConst.storeDir(ZKConst.STORE_PATH);
         SysConst.cacheDir(ZKConst.CACHE_PATH);
-        SysConst.projectName(PROJECT.getName());
         FXConst.appIcon(ZKConst.ICON_PATH);
         EventFactory.registerEventBus(FxEventBus.class);
         EventFactory.syncEventConfig(FxEventConfig.SYNC);
         EventFactory.asyncEventConfig(FxEventConfig.ASYNC);
         EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
         TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
-        JulLog.info("项目启动中...");
         // 初始化时区处理器
         // System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
         launch(EasyZKApp.class, args);
@@ -71,8 +74,6 @@ public class EasyZKApp extends FXApplication {
             FXConst.INSTANCE = this;
             // 日志开始
             JulLog.info("{} init start.", SysConst.projectName());
-            // 储存初始化
-            ZKStoreUtil.init();
             // 禁用fx的css日志
             FXUtil.disableCSSLogger();
             // 配置对象

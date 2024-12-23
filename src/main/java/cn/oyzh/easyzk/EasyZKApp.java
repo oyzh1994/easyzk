@@ -67,6 +67,9 @@ public class EasyZKApp extends FXApplication {
     @Override
     public void init() throws Exception {
         try {
+            // fx程序实例
+            FXConst.INSTANCE = this;
+            // 日志开始
             JulLog.info("{} init start.", SysConst.projectName());
             // 储存初始化
             ZKStoreUtil.init();

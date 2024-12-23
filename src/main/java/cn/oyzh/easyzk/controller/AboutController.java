@@ -5,6 +5,7 @@ import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.window.StageAttribute;
@@ -28,19 +29,19 @@ import javafx.stage.WindowEvent;
 public class AboutController extends StageController {
 
     @FXML
-    private FlexText name;
+    private FXText name;
 
     @FXML
-    private FlexText type;
+    private FXText type;
 
     @FXML
-    private FlexText version;
+    private FXText version;
 
     @FXML
-    private FlexText updateDate;
+    private FXText updateDate;
 
     @FXML
-    private FlexText copyright;
+    private FXText copyright;
 
     /**
      * 项目信息

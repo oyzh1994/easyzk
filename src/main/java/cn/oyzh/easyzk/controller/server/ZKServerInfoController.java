@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.controller.connect;
+package cn.oyzh.easyzk.controller.server;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ExecutorUtil;
@@ -28,7 +28,7 @@ import java.util.concurrent.Future;
  */
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
-        value = FXConst.FXML_PATH + "connect/zkServerInfo.fxml"
+        value = FXConst.FXML_PATH + "server/zkServerInfo.fxml"
 )
 public class ZKServerInfoController extends StageController {
 
@@ -85,6 +85,12 @@ public class ZKServerInfoController extends StageController {
      */
     @FXML
     private FlexTableView<ZKClusterNode> clusterTable;
+
+    /**
+     * 汇总信息
+     */
+    @FXML
+    private ZKAggregationController aggregationController;
 
     private ZKClient zkClient;
 

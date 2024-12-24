@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import cn.oyzh.fx.plus.controls.chart.FlexLineChart?>
+<FXTab xmlns="http://javafx.com/javafx"
+       xmlns:fx="http://javafx.com/fxml"
+       fx:controller="cn.oyzh.easyzk.controller.server.ZKAggregationController" text="%base.aggregate">
+    <FlexVBox flexHeight="100%" flexWidth="100%">
+        <FlexHBox flexWidth="100%" flexHeight="50%">
+            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="clientChart">
+                <xAxis>
+                    <CategoryAxis/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="%base.num"/>
+                </yAxis>
+            </FlexLineChart>
+            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="memoryChart">
+                <xAxis>
+                    <CategoryAxis/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Mb"/>
+                </yAxis>
+            </FlexLineChart>
+        </FlexHBox>
+        <FlexHBox flexWidth="100%" flexHeight="50%">
+            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="commandChart">
+                <xAxis>
+                    <CategoryAxis/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="%base.num"/>
+                </yAxis>
+            </FlexLineChart>
+            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="networkChart">
+                <xAxis>
+                    <CategoryAxis/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="KB/s"/>
+                </yAxis>
+            </FlexLineChart>
+        </FlexHBox>
+    </FlexVBox>
+</FXTab>

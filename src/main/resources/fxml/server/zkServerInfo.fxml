@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="cn.oyzh.easyzk.controller.connect.ZKServerInfoController" realHeight="800" realWidth="950">
+        fx:controller="cn.oyzh.easyzk.controller.server.ZKServerInfoController" realHeight="800" realWidth="950">
     <FlexTableView flexWidth="100%" realHeight="80" fx:id="serverTable">
         <columns>
             <FlexTableColumn sortable="false" valueName="zxid" text="%base.id" flexWidth="8%"/>
@@ -24,6 +24,7 @@
         </columns>
     </FlexTableView>
     <FlexTabPane flexWidth="100%" flexHeight="100% - 80">
+        <fx:include fx:id="aggregation" source="zkAggregationTab.fxml"/>
         <FXTab text="%base.client">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox realHeight="30" flexWidth="100% - 28">

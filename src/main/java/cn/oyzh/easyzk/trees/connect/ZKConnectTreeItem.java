@@ -5,7 +5,7 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
-import cn.oyzh.easyzk.controller.connect.ZKServerInfoController;
+import cn.oyzh.easyzk.controller.server.ZKServerInfoController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;

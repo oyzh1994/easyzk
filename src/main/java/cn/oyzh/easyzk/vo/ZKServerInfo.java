@@ -95,14 +95,14 @@ public class ZKServerInfo {
         this.setCommandInfo(commandInfo.toString());
     }
 
-    public double commandReceived() {
-        double val;
+    public int commandReceived() {
+        int val;
         try {
             String commandInfo = this.getCommandInfo();
             if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
                 val = 0;
             } else {
-                val = Double.parseDouble(commandInfo.split("/")[0]);
+                val = Integer.parseInt(commandInfo.split("/")[0]);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -111,14 +111,14 @@ public class ZKServerInfo {
         return val;
     }
 
-    public double commandSent() {
-        double val;
+    public int commandSent() {
+        int val;
         try {
             String commandInfo = this.getCommandInfo();
             if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
                 val = 0;
             } else {
-                val = Double.parseDouble(commandInfo.split("/")[1]);
+                val = Integer.parseInt(commandInfo.split("/")[1]);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -127,14 +127,14 @@ public class ZKServerInfo {
         return val;
     }
 
-    public double commandOutstanding() {
-        double val;
+    public int commandOutstanding() {
+        int val;
         try {
             String commandInfo = this.getCommandInfo();
             if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
                 val = 0;
             } else {
-                val = Double.parseDouble(commandInfo.split("/")[2]);
+                val = Integer.parseInt(commandInfo.split("/")[2]);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

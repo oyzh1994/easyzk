@@ -92,7 +92,15 @@ public class ZKServerInfoController extends StageController {
     @FXML
     private ZKAggregationController aggregationController;
 
+    /**
+     * zk客户端
+     */
     private ZKClient zkClient;
+
+    /**
+     * 刷新任务
+     */
+    private Future<?> refreshTask;
 
     @Override
     protected void bindListeners() {
@@ -103,24 +111,21 @@ public class ZKServerInfoController extends StageController {
     @Override
     public void onStageShown(WindowEvent event) {
         this.zkClient = this.getWindowProp("zkClient");
+        // 初始化基本信息
         this.refreshLocal();
         this.refreshEnvi();
         this.refreshSrvr();
         this.refreshStat();
         this.refreshConf();
         this.refreshCluster();
+        // 初始化刷新任务
         this.initRefreshTask();
+        // 设置信息
         String command = this.command.getText() + "(" + I18nHelper.received() + "/" + I18nHelper.sent() + "/" + I18nHelper.outstanding() + ")";
         this.command.setText(command);
         String latency = this.latency.getText() + "(" + I18nHelper.min() + "/" + I18nHelper.avg() + "/" + I18nHelper.max() + ")" + I18nHelper.millisecond();
         this.latency.setText(latency);
     }
-
-    /**
-     * 刷新任务
-     */
-    private Future<?> refreshTask;
-
 
     /**
      * 初始化自动刷新任务
@@ -147,17 +152,20 @@ public class ZKServerInfoController extends StageController {
      */
     private void renderPane() {
         try {
-            this.serverTable.getItem(0);
-            ZKServerInfo serverInfo = null;
+            // 服务信息
+            ZKServerInfo serverInfo;
+            // 初始化
             if (this.serverTable.isItemEmpty()) {
                 serverInfo = new ZKServerInfo();
                 this.serverTable.setItem(serverInfo);
-            } else {
+            } else {// 获取
                 serverInfo = (ZKServerInfo) this.serverTable.getItem(0);
             }
+            // 获取信息
             List<ZKEnvNode> envNodes = this.zkClient.srvrNodes();
+            // 更新信息
             serverInfo.update(envNodes);
-            // 执行初始化
+            // 初始化图表
             this.aggregationController.init(serverInfo);
         } catch (Exception ex) {
             ex.printStackTrace();

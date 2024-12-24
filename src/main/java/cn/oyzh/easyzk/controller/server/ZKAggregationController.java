@@ -4,11 +4,8 @@ import cn.oyzh.easyzk.vo.ZKServerInfo;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
 import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
 import cn.oyzh.i18n.I18nHelper;
-import com.sun.javafx.charts.Legend;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.Region;
 
 import java.text.SimpleDateFormat;
 
@@ -148,7 +145,7 @@ public class ZKAggregationController {
         int sent = serverInfo.commandSent();
         int outstanding = serverInfo.commandOutstanding();
         String time = this.dateFormat.format(System.currentTimeMillis());
-        ChartHelper.addOrUpdateData(receivedData, time, received*3, 10);
+        ChartHelper.addOrUpdateData(receivedData, time, received, 10);
         ChartHelper.addOrUpdateData(sentData, time, sent, 10);
         ChartHelper.addOrUpdateData(outstandingData, time, outstanding, 10);
     }

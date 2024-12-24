@@ -157,6 +157,8 @@ public class ZKServerInfoController extends StageController {
             }
             List<ZKEnvNode> envNodes = this.zkClient.srvrNodes();
             serverInfo.update(envNodes);
+            // 执行初始化
+            this.aggregationController.init(serverInfo);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -207,5 +209,11 @@ public class ZKServerInfoController extends StageController {
         // 集群信息
         List<ZKClusterNode> clusterNodes = this.zkClient.clusterNodes();
         this.clusterTable.setItem(clusterNodes);
+    }
+
+    @Override
+    public void onWindowHidden(WindowEvent event) {
+        super.onWindowHidden(event);
+        this.closeRefreshTask();
     }
 }

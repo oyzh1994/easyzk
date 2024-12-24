@@ -76,7 +76,6 @@ public class ZKServerInfo {
                 outstanding = envNode.getValue();
             }
         }
-
         StringBuilder commandInfo = new StringBuilder();
         if (received != null) {
             commandInfo.append(received.trim()).append("/");
@@ -94,6 +93,54 @@ public class ZKServerInfo {
             commandInfo.append("N");
         }
         this.setCommandInfo(commandInfo.toString());
+    }
+
+    public double commandReceived() {
+        double val;
+        try {
+            String commandInfo = this.getCommandInfo();
+            if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
+                val = 0;
+            } else {
+                val = Double.parseDouble(commandInfo.split("/")[0]);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            val = 0;
+        }
+        return val;
+    }
+
+    public double commandSent() {
+        double val;
+        try {
+            String commandInfo = this.getCommandInfo();
+            if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
+                val = 0;
+            } else {
+                val = Double.parseDouble(commandInfo.split("/")[1]);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            val = 0;
+        }
+        return val;
+    }
+
+    public double commandOutstanding() {
+        double val;
+        try {
+            String commandInfo = this.getCommandInfo();
+            if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
+                val = 0;
+            } else {
+                val = Double.parseDouble(commandInfo.split("/")[2]);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            val = 0;
+        }
+        return val;
     }
 
     public SimpleStringProperty commandInfoProperty() {
@@ -119,11 +166,45 @@ public class ZKServerInfo {
     }
 
     public void setConnections(String connections) {
-        this.connectionsProperty().set(connections);
+        if (connections != null) {
+            this.connectionsProperty().set(connections.trim());
+        }
+    }
+
+    public int connections() {
+        int val;
+        try {
+            String connections = this.getConnections();
+            if (StringUtil.isBlank(connections) || connections.equals("N/A")) {
+                val = 0;
+            } else {
+                val = Integer.parseInt(connections);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            val = 0;
+        }
+        return val;
     }
 
     public String getConnections() {
         return connectionsProperty == null ? "N/A" : connectionsProperty.getValue();
+    }
+
+    public int nodeCount() {
+        int val;
+        try {
+            String nodeCount = this.getNodeCount();
+            if (StringUtil.isBlank(nodeCount) || nodeCount.equals("N/A")) {
+                val = 0;
+            } else {
+                val = Integer.parseInt(nodeCount);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            val = 0;
+        }
+        return val;
     }
 
     public SimpleStringProperty nodeCountProperty() {
@@ -134,7 +215,9 @@ public class ZKServerInfo {
     }
 
     public void setNodeCount(String nodeCount) {
-        this.nodeCountProperty().set(nodeCount);
+        if (nodeCount != null) {
+            this.nodeCountProperty().set(nodeCount.trim());
+        }
     }
 
     public String getNodeCount() {
@@ -150,6 +233,54 @@ public class ZKServerInfo {
 
     public void setLatencyInfo(String latencyInfo) {
         this.latencyInfoProperty().set(latencyInfo);
+    }
+
+    public double latencyMin() {
+        double val;
+        try {
+            String latencyInfo = this.getLatencyInfo();
+            if (StringUtil.isBlank(latencyInfo) || latencyInfo.equals("N/A")) {
+                val = 0;
+            } else {
+                val = Double.parseDouble(latencyInfo.split("/")[0]);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            val = 0;
+        }
+        return val;
+    }
+
+    public double latencyAvg() {
+        double val;
+        try {
+            String latencyInfo = this.getLatencyInfo();
+            if (StringUtil.isBlank(latencyInfo) || latencyInfo.equals("N/A")) {
+                val = 0;
+            } else {
+                val = Double.parseDouble(latencyInfo.split("/")[1]);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            val = 0;
+        }
+        return val;
+    }
+
+    public double latencyMax() {
+        double val;
+        try {
+            String latencyInfo = this.getLatencyInfo();
+            if (StringUtil.isBlank(latencyInfo) || latencyInfo.equals("N/A")) {
+                val = 0;
+            } else {
+                val = Double.parseDouble(latencyInfo.split("/")[2]);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            val = 0;
+        }
+        return val;
     }
 
     public String getLatencyInfo() {

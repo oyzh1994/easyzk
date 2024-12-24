@@ -1250,7 +1250,7 @@ public class ZKClient {
                 int index = l.indexOf(":");
                 if (index != -1) {
                     String name = l.substring(0, index);
-                    String value = l.substring(index + 1);
+                    String value = l.substring(index + 1).trim();
                     ZKEnvNode envNode = new ZKEnvNode(name, value);
                     list.add(envNode);
                 }

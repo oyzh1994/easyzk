@@ -10,38 +10,38 @@
        fx:controller="cn.oyzh.easyzk.controller.server.ZKAggregationController" text="%base.aggregate">
     <FlexVBox flexHeight="100%" flexWidth="100%">
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="clientChart">
+            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="connectionsChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="%base.num"/>
+                    <NumberAxis/>
                 </yAxis>
             </FlexLineChart>
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="memoryChart">
+            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="nodeCountChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Mb"/>
+                    <NumberAxis />
                 </yAxis>
             </FlexLineChart>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="50%">
+            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="latencyChart">
+                <xAxis>
+                    <CategoryAxis/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="%base.latency"/>
+                </yAxis>
+            </FlexLineChart>
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="commandChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="%base.num"/>
-                </yAxis>
-            </FlexLineChart>
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="networkChart">
-                <xAxis>
-                    <CategoryAxis/>
-                </xAxis>
-                <yAxis>
-                    <NumberAxis label="KB/s"/>
+                    <NumberAxis label="%base.cmd"/>
                 </yAxis>
             </FlexLineChart>
         </FlexHBox>

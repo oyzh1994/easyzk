@@ -1,19 +1,19 @@
 package cn.oyzh.easyzk.controller.server;
 
 import cn.oyzh.easyzk.vo.ZKServerInfo;
+import cn.oyzh.fx.plus.controls.chart.ChartHelper;
 import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
 
 import java.text.SimpleDateFormat;
 
 /**
- * redis客户端信息tab内容组件
+ * zk客户端汇总信息tab内容组件
  *
  * @author oyzh
- * @since 2023/08/01
+ * @since 2024/12/24
  */
 public class ZKAggregationController {
 
@@ -21,25 +21,25 @@ public class ZKAggregationController {
      * 客户端图表
      */
     @FXML
-    private FlexLineChart<String, Number> clientChart;
+    private FlexLineChart<String, Number> connectionsChart;
 
     /**
-     * 内存图表
+     * 节点数量图表
      */
     @FXML
-    private FlexLineChart<String, Number> memoryChart;
+    private FlexLineChart<String, Number> nodeCountChart;
+
+    /**
+     * 延迟图表
+     */
+    @FXML
+    private FlexLineChart<String, Number> latencyChart;
 
     /**
      * 指令图表
      */
     @FXML
     private FlexLineChart<String, Number> commandChart;
-
-    /**
-     * 网络图表
-     */
-    @FXML
-    private FlexLineChart<String, Number> networkChart;
 
     /**
      * 日期格式化
@@ -49,90 +49,105 @@ public class ZKAggregationController {
     /**
      * 执行初始化
      *
-     * @param propProperty 属性对象
+     * @param serverInfo 服务信息
      */
-    public void init(SimpleObjectProperty<ZKServerInfo> propProperty) {
-        propProperty.addListener((observable, oldValue, newValue) -> {
-            this.initClientChart(newValue);
-            this.initMemoryChart(newValue);
-            this.initCommandChart(newValue);
-            this.initNetworkChart(newValue);
-        });
+    public void init(ZKServerInfo serverInfo) {
+        this.initConnectionsChart(serverInfo);
+        this.initNodeCountChart(serverInfo);
+        this.initLatencyChart(serverInfo);
+        this.initCommandChart(serverInfo);
     }
 
     /**
      * 初始化内存图表
      *
-     * @param prop 属性
+     * @param serverInfo 服务信息
      */
-    private void initMemoryChart(ZKServerInfo prop) {
-        XYChart.Series<String, Number> data = this.memoryChart.getChartData(0);
+    private void initNodeCountChart(ZKServerInfo serverInfo) {
+        XYChart.Series<String, Number> data = this.nodeCountChart.getChartData(0);
         if (data == null) {
             data = new XYChart.Series<>();
-            data.setName(I18nHelper.usedMemory());
-            this.memoryChart.addChartData(data);
+            data.setName(I18nHelper.nodeCount());
+            this.nodeCountChart.addChartData(data);
         }
-        // double usedMemory = prop.getUsedMemory() / 1024.0 / 1024;
-        // String time = DATE_FORMAT.format(System.currentTimeMillis());
-        // ChartHelper.addOrUpdateData(data, time, usedMemory, 10);
+        int nodeCount = serverInfo.nodeCount();
+        String time = DATE_FORMAT.format(System.currentTimeMillis());
+        ChartHelper.addOrUpdateData(data, time, nodeCount, 10);
     }
 
     /**
      * 初始化客户端图表
      *
-     * @param prop 属性
+     * @param serverInfo 服务信息
      */
-    private void initClientChart(ZKServerInfo prop) {
-        XYChart.Series<String, Number> data = this.clientChart.getChartData(0);
+    private void initConnectionsChart(ZKServerInfo serverInfo) {
+        XYChart.Series<String, Number> data = this.connectionsChart.getChartData(0);
         if (data == null) {
             data = new XYChart.Series<>();
-            data.setName(I18nHelper.connectedClientNum());
-            this.clientChart.addChartData(data);
+            data.setName(I18nHelper.connections());
+            this.connectionsChart.addChartData(data);
         }
-        // int connectedClients = prop.getConnectedClients();
-        // String time = DATE_FORMAT.format(System.currentTimeMillis());
-        // ChartHelper.addOrUpdateData(data, time, connectedClients, 10);
+        int connections = serverInfo.connections();
+        String time = DATE_FORMAT.format(System.currentTimeMillis());
+        ChartHelper.addOrUpdateData(data, time, connections, 10);
     }
 
     /**
-     * 初始化网络图表
+     * 初始化延迟图表
      *
-     * @param prop 属性
+     * @param serverInfo 服务信息
      */
-    private void initNetworkChart(ZKServerInfo prop) {
-        XYChart.Series<String, Number> inData = this.networkChart.getChartData(0);
-        XYChart.Series<String, Number> outData = this.networkChart.getChartData(1);
-        if (inData == null) {
-            inData = new XYChart.Series<>();
-            inData.setName(I18nHelper.networkInput());
-            outData = new XYChart.Series<>();
-            outData.setName(I18nHelper.networkOutput());
-            this.networkChart.addChartData(inData);
-            this.networkChart.addChartData(outData);
+    private void initLatencyChart(ZKServerInfo serverInfo) {
+        XYChart.Series<String, Number> minData = this.latencyChart.getChartData(0);
+        XYChart.Series<String, Number> avgData = this.latencyChart.getChartData(1);
+        XYChart.Series<String, Number> maxData = this.latencyChart.getChartData(2);
+        if (minData == null) {
+            minData = new XYChart.Series<>();
+            minData.setName(I18nHelper.min());
+            avgData = new XYChart.Series<>();
+            avgData.setName(I18nHelper.avg());
+            maxData = new XYChart.Series<>();
+            maxData.setName(I18nHelper.max());
+            this.latencyChart.addChartData(minData);
+            this.latencyChart.addChartData(avgData);
+            this.latencyChart.addChartData(maxData);
         }
-        // Double inputBytes = prop.getInstantaneousInputKbps();
-        // Double outputBytes = prop.getInstantaneousOutputKbps();
-        // if (inputBytes != null && outputBytes != null) {
-        //     String time = DATE_FORMAT.format(System.currentTimeMillis());
-        //     ChartHelper.addOrUpdateData(inData, time, inputBytes, 10);
-        //     ChartHelper.addOrUpdateData(outData, time, outputBytes, 10);
-        // }
+        double min = serverInfo.latencyMin();
+        double avg = serverInfo.latencyAvg();
+        double max = serverInfo.latencyMax();
+        String time = DATE_FORMAT.format(System.currentTimeMillis());
+        ChartHelper.addOrUpdateData(minData, time, min, 10);
+        ChartHelper.addOrUpdateData(avgData, time, avg, 10);
+        ChartHelper.addOrUpdateData(maxData, time, max, 10);
     }
 
     /**
-     * 初始化命令图表
+     * 初始化指令图表
      *
-     * @param prop 属性
+     * @param serverInfo 属性
      */
-    private void initCommandChart(ZKServerInfo prop) {
-        XYChart.Series<String, Number> data = this.commandChart.getChartData(0);
-        if (data == null) {
-            data = new XYChart.Series<>();
-            data.setName(I18nHelper.execCmdPerSec());
-            this.commandChart.addChartData(data);
+    private void initCommandChart(ZKServerInfo serverInfo) {
+        XYChart.Series<String, Number> receivedData = this.commandChart.getChartData(0);
+        XYChart.Series<String, Number> sentData = this.commandChart.getChartData(1);
+        XYChart.Series<String, Number> outstandingData = this.commandChart.getChartData(2);
+        if (receivedData == null) {
+            receivedData = new XYChart.Series<>();
+            receivedData.setName(I18nHelper.received());
+            sentData = new XYChart.Series<>();
+            sentData.setName(I18nHelper.sent());
+            outstandingData = new XYChart.Series<>();
+            outstandingData.setName(I18nHelper.outstanding());
+            this.commandChart.addChartData(receivedData);
+            this.commandChart.addChartData(sentData);
+            this.commandChart.addChartData(outstandingData);
         }
-        // long opsPerSec = prop.getInstantaneousOpsPerSec();
-        // String time = DATE_FORMAT.format(System.currentTimeMillis());
-        // ChartHelper.addOrUpdateData(data, time, opsPerSec, 10);
+        double received = serverInfo.commandReceived();
+        double sent = serverInfo.commandSent();
+        double outstanding = serverInfo.commandOutstanding();
+        String time = DATE_FORMAT.format(System.currentTimeMillis());
+        ChartHelper.addOrUpdateData(receivedData, time, received, 10);
+        ChartHelper.addOrUpdateData(sentData, time, sent, 10);
+        ChartHelper.addOrUpdateData(outstandingData, time, outstanding, 10);
     }
+
 }

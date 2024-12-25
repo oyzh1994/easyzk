@@ -62,14 +62,14 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
         super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             if (this.value.isExpand()) {
                 this.value.setExpand(false);
-                this.groupStore.replace(this.value);
+                this.groupStore.update(this.value);
             }
         });
         // 监听展开变化
         super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            if (!this.isExpanded()) {
+            if (!this.value.isExpand()) {
                 this.value.setExpand(true);
-                this.groupStore.replace(this.value);
+                this.groupStore.update(this.value);
             }
         });
     }

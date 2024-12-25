@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * zk客户端汇总信息tab内容组件
@@ -110,7 +111,7 @@ public class ZKAggregationController {
             avgData.setName(I18nHelper.avg());
             maxData = new XYChart.Series<>();
             maxData.setName(I18nHelper.max());
-            this.latencyChart.setChartData(minData, avgData, maxData);
+            this.latencyChart.setChartData(List.of(minData, avgData, maxData));
             ChartHelper.initLegend(this.latencyChart);
         }
         double min = serverInfo.latencyMin();
@@ -138,7 +139,7 @@ public class ZKAggregationController {
             sentData.setName(I18nHelper.sent());
             outstandingData = new XYChart.Series<>();
             outstandingData.setName(I18nHelper.outstanding());
-            this.commandChart.setChartData(receivedData, sentData, outstandingData);
+            this.commandChart.setChartData(List.of(receivedData, sentData, outstandingData));
             ChartHelper.initLegend(this.commandChart);
         }
         int received = serverInfo.commandReceived();

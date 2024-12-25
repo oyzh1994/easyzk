@@ -188,14 +188,14 @@
                             <Insets left="5" top="3"/>
                         </HBox.margin>
                     </CharsetComboBox>
-                    <FXText tipText="%base.dataSize" fx:id="dataSize"
+                    <FXText enableTheme="false" tipText="%base.dataSize" fx:id="dataSize"
                             style="-fx-fill: #AD0EB5B2;"
                             realHeight="22">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FXText>
-                    <FXText tipText="%base.loadCost" fx:id="loadTime" style="-fx-fill: #009933;"
+                    <FXText enableTheme="false" tipText="%base.loadCost" fx:id="loadTime" style="-fx-fill: #009933;"
                               realHeight="22">
                         <HBox.margin>
                             <Insets left="5" top="5"/>

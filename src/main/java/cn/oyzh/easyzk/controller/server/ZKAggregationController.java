@@ -70,7 +70,6 @@ public class ZKAggregationController {
             data = new XYChart.Series<>();
             data.setName(I18nHelper.nodeCount());
             this.nodeCountChart.addChartData(data);
-            ChartHelper.initLegend(this.nodeCountChart);
         }
         int nodeCount = serverInfo.nodeCount();
         String time = this.dateFormat.format(System.currentTimeMillis());
@@ -88,7 +87,6 @@ public class ZKAggregationController {
             data = new XYChart.Series<>();
             data.setName(I18nHelper.connections());
             this.connectionsChart.addChartData(data);
-            ChartHelper.initLegend(this.connectionsChart);
         }
         int connections = serverInfo.connections();
         String time = this.dateFormat.format(System.currentTimeMillis());
@@ -112,7 +110,6 @@ public class ZKAggregationController {
             maxData = new XYChart.Series<>();
             maxData.setName(I18nHelper.max());
             this.latencyChart.setChartData(List.of(minData, avgData, maxData));
-            ChartHelper.initLegend(this.latencyChart);
         }
         double min = serverInfo.latencyMin();
         double avg = serverInfo.latencyAvg();
@@ -140,7 +137,6 @@ public class ZKAggregationController {
             outstandingData = new XYChart.Series<>();
             outstandingData.setName(I18nHelper.outstanding());
             this.commandChart.setChartData(List.of(receivedData, sentData, outstandingData));
-            ChartHelper.initLegend(this.commandChart);
         }
         int received = serverInfo.commandReceived();
         int sent = serverInfo.commandSent();

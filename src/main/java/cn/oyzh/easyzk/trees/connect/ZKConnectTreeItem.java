@@ -5,10 +5,10 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
-import cn.oyzh.easyzk.controller.server.ZKServerInfoController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
+import cn.oyzh.easyzk.controller.server.ZKServerInfoController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -130,7 +130,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
     /**
      * 查看服务信息
      */
-    private void serverInfo() {
+    public void serverInfo() {
         StageAdapter fxView = StageManager.parseStage(ZKServerInfoController.class, this.window());
         fxView.setProp("zkInfo", this.value);
         fxView.setProp("zkClient", this.client);
@@ -189,8 +189,9 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             this.setLoaded(true);
             ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
             // ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
+            ZKInformationTreeItem informationItem = new ZKInformationTreeItem(this.getTreeView());
             ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
-            this.setChild(List.of(dataItem, terminalItem));
+            this.setChild(List.of(dataItem, informationItem, terminalItem));
             // this.setChild(List.of(dataItem, queryItem, terminalItem));
         }
     }

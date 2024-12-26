@@ -33,13 +33,13 @@ public class ZKNodeSearchTextField extends LimitTextField {
      *
      * @return 皮肤
      */
-    public ZKNodeSearchFXTextFieldSkin skin() {
-        return (ZKNodeSearchFXTextFieldSkin) this.getSkin();
+    public ZKNodeSearchTextFieldSkin skin() {
+        return (ZKNodeSearchTextFieldSkin) this.getSkin();
     }
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new ZKNodeSearchFXTextFieldSkin(this) {
+        return new ZKNodeSearchTextFieldSkin(this) {
             @Override
             public void onSearch(String text) {
                 super.onSearch(text);

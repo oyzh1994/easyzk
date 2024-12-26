@@ -21,8 +21,8 @@ import lombok.NonNull;
  */
 public class ZKTerminalTab extends DynamicTab {
 
-    public ZKTerminalTab(ZKConnect zkInfo) {
-        this.init(zkInfo);
+    public ZKTerminalTab(ZKConnect zkConnect) {
+        this.init(zkConnect);
     }
 
     @Override

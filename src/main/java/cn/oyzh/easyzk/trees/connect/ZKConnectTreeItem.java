@@ -63,6 +63,11 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      */
     private boolean canceled;
 
+    /**
+     * zk连接存储
+     */
+    private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
+
     public ZKConnectTreeItem(@NonNull ZKConnect value, @NonNull RichTreeView treeView) {
         super(treeView);
         super.setSortable(false);
@@ -132,7 +137,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      */
     public void serverInfo() {
         StageAdapter fxView = StageManager.parseStage(ZKServerInfoController.class, this.window());
-        fxView.setProp("zkInfo", this.value);
+        fxView.setProp("zkConnect", this.value);
         fxView.setProp("zkClient", this.client);
         fxView.display();
     }
@@ -260,7 +265,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             this.closeConnect();
         }
         StageAdapter fxView = StageManager.parseStage(ZKConnectUpdateController.class, this.window());
-        fxView.setProp("zkInfo", this.value());
+        fxView.setProp("zkConnect", this.value());
         fxView.display();
     }
 
@@ -268,12 +273,12 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      * 复制连接
      */
     private void repeatConnect() {
-        ZKConnect zkInfo = new ZKConnect();
-        zkInfo.copy(this.value);
-        zkInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
-        zkInfo.setCollects(Collections.emptyList());
-        if (ZKConnectStore.INSTANCE.replace(zkInfo)) {
-            this.connectManager().addConnect(zkInfo);
+        ZKConnect zkConnect = new ZKConnect();
+        zkConnect.copy(this.value);
+        zkConnect.setName(this.value.getName() + "-" + I18nHelper.repeat());
+        zkConnect.setCollects(Collections.emptyList());
+        if (this.connectStore.insert(zkConnect)) {
+            this.connectManager().addConnect(zkConnect);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -305,7 +310,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         }
         this.value.setName(connectName);
         // 修改名称
-        if (ZKConnectStore.INSTANCE.replace(this.value)) {
+        if (this.connectStore.update(this.value)) {
             this.setValue(new ZKConnectTreeItemValue(this));
         } else {
             MessageBox.warn(I18nHelper.operationFail());

@@ -131,6 +131,7 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
         // 删除关联配置
         if (result) {
             this.authStore.deleteByIid(model.getId());
+            this.filterStore.deleteByIid(model.getId());
             this.collectStore.deleteByIid(model.getId());
             this.sshConfigStore.deleteByIid(model.getId());
             this.saslConfigStore.deleteByIid(model.getId());

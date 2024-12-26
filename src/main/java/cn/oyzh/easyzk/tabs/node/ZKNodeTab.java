@@ -162,7 +162,7 @@ public class ZKNodeTab extends DynamicTab {
      *
      * @return zk信息
      */
-    public ZKConnect info() {
+    public ZKConnect zkConnect() {
         return this.treeItem() == null ? null : this.treeItem().value();
     }
 

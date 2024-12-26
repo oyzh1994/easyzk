@@ -162,8 +162,8 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
     }
 
     @Override
-    public void addConnect(@NonNull ZKConnect zkInfo) {
-        this.addConnectItem(new ZKConnectTreeItem(zkInfo, this.getTreeView()));
+    public void addConnect(@NonNull ZKConnect zkConnect) {
+        this.addConnectItem(new ZKConnectTreeItem(zkConnect, this.getTreeView()));
     }
 
     @Override

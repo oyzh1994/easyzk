@@ -21,7 +21,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2023/10/9
  */
-public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
+public class ZKNodeSearchFXTextFieldSkin extends ClearableTextFieldSkin {
 
     /**
      * 搜索历史按钮
@@ -71,7 +71,7 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         }
     }
 
-    public ZKNodeSearchTextFieldSkin(TextField textField) {
+    public ZKNodeSearchFXTextFieldSkin(TextField textField) {
         super(textField);
         // 初始化弹窗
         this.initPopup();

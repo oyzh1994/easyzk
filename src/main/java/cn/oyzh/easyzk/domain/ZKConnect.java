@@ -147,7 +147,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     /**
      * 复制对象
      *
-     * @param zkInfo zk信息
+     * @param zkConnect zk信息
      * @return 当前对象
      */
     public ZKConnect copy(@NonNull ZKConnect zkConnect) {

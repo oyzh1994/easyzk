@@ -289,7 +289,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         if (MessageBox.confirm(I18nHelper.delete() + " [" + this.value().getName() + "]")) {
             this.closeConnect(false);
             if (this.connectManager().delConnectItem(this)) {
-                ZKEventUtil.infoDeleted(this.value);
+                ZKEventUtil.connectDeleted(this.value);
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }

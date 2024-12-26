@@ -38,14 +38,14 @@ public class ZKConnectExport {
     /**
      * 从zk连接数据生成
      *
-     * @param zkInfos 连接列表
-     * @return ZKInfoExport
+     * @param zkConnects 连接列表
+     * @return ZKConnectExport
      */
-    public static ZKConnectExport fromConnects(@NonNull List<ZKConnect> zkInfos) {
+    public static ZKConnectExport fromConnects(@NonNull List<ZKConnect> zkConnects) {
         ZKConnectExport export = new ZKConnectExport();
         Project project = Project.load();
         export.version = project.getVersion();
-        export.connects = zkInfos;
+        export.connects = zkConnects;
         export.platform = System.getProperty("os.name");
         return export;
     }

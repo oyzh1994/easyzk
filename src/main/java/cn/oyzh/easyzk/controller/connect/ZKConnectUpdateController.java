@@ -365,7 +365,7 @@ public class ZKConnectUpdateController extends StageController {
             this.zkConnect.setFilters(this.filterTable.getFilters());
             // 保存数据
             if (this.connectStore.replace(this.zkConnect)) {
-                ZKEventUtil.infoUpdated(this.zkConnect);
+                ZKEventUtil.connectUpdated(this.zkConnect);
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();
             } else {

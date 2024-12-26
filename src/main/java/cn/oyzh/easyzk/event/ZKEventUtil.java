@@ -179,33 +179,33 @@ public class ZKEventUtil {
     /**
      * 连接已新增事件
      *
-     * @param info zk信息
+     * @param zkConnect zk连接
      */
-    public static void infoAdded(ZKConnect info) {
+    public static void connectAdded(ZKConnect zkConnect) {
         ZKConnectAddedEvent event = new ZKConnectAddedEvent();
-        event.data(info);
+        event.data(zkConnect);
         EventUtil.post(event);
     }
 
     /**
      * 连接已修改事件
      *
-     * @param info zk信息
+     * @param zkConnect zk连接
      */
-    public static void infoUpdated(ZKConnect info) {
+    public static void connectUpdated(ZKConnect zkConnect) {
         ZKConnectUpdatedEvent event = new ZKConnectUpdatedEvent();
-        event.data(info);
+        event.data(zkConnect);
         EventUtil.post(event);
     }
 
     /**
      * 连接已删除事件
      *
-     * @param info zk信息
+     * @param zkConnect zk连接
      */
-    public static void infoDeleted(ZKConnect info) {
+    public static void connectDeleted(ZKConnect zkConnect) {
         ZKConnectDeletedEvent event = new ZKConnectDeletedEvent();
-        event.data(info);
+        event.data(zkConnect);
         EventUtil.post(event);
     }
 

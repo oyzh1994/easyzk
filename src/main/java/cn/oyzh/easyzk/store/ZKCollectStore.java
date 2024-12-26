@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.store;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKCollect;
+import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
@@ -76,9 +77,9 @@ public class ZKCollectStore extends JdbcStandardStore<ZKCollect> {
      */
     public boolean deleteByIid(String iid) {
         if (StringUtil.isEmpty(iid)) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("iid", iid);
-            return this.delete(params);
+            DeleteParam param = new DeleteParam();
+            param.addQueryParam(QueryParam.of("iid", iid));
+            return this.delete(param);
         }
         return false;
     }
@@ -93,10 +94,10 @@ public class ZKCollectStore extends JdbcStandardStore<ZKCollect> {
      */
     public boolean delete(String iid, String path) {
         if (StringUtil.isEmpty(iid) && StringUtil.isEmpty(path)) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("iid", iid);
-            params.put("path", path);
-            return this.delete(params);
+            DeleteParam param = new DeleteParam();
+            param.addQueryParam(QueryParam.of("iid", iid));
+            param.addQueryParam(QueryParam.of("path", path));
+            return this.delete(path);
         }
         return false;
     }

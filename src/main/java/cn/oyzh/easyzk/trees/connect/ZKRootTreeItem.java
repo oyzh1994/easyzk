@@ -47,9 +47,9 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
 
     /**
-     * zk信息储存
+     * zk连接储存
      */
-    private final ZKConnectStore infoStore = ZKConnectStore.INSTANCE;
+    private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
 
     public ZKRootTreeItem(@NonNull ZKConnectTreeView treeView) {
         super(treeView);
@@ -79,7 +79,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
      * 导出连接
      */
     public void exportConnect() {
-        List<ZKConnect> infos = this.infoStore.load();
+        List<ZKConnect> infos = this.connectStore.load();
         if (infos.isEmpty()) {
             MessageBox.warn(I18nHelper.connectionIsEmpty());
             return;
@@ -156,7 +156,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
             List<ZKConnect> connects = export.getConnects();
             if (CollectionUtil.isNotEmpty(connects)) {
                 for (ZKConnect connect : connects) {
-                    if (!this.infoStore.replace(connect)) {
+                    if (!this.connectStore.replace(connect)) {
                         MessageBox.warn(I18nHelper.connect() + " : " + connect.getName() + " " + I18nHelper.importFail());
                     }
                 }
@@ -285,7 +285,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
         if (!this.containsChild(item)) {
             if (item.value().getGroupId() != null) {
                 item.value().setGroupId(null);
-                this.infoStore.update(item.value());
+                this.connectStore.update(item.value());
             }
             super.addChild(item);
             this.expend();
@@ -303,7 +303,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     @Override
     public boolean delConnectItem(@NonNull ZKConnectTreeItem item) {
         // 删除连接
-        if (this.infoStore.delete(item.value())) {
+        if (this.connectStore.delete(item.value())) {
             this.removeChild(item);
             return true;
         }
@@ -375,7 +375,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
             this.addChild(list);
         }
         // 初始化连接
-        List<ZKConnect> connects = this.infoStore.load();
+        List<ZKConnect> connects = this.connectStore.load();
         List<ZKGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(connects)) {
             List<ZKConnectTreeItem> connectItems = this.getConnectItems();

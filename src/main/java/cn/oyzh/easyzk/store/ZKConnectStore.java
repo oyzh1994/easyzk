@@ -126,6 +126,19 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
     }
 
     @Override
+    public boolean delete(ZKConnect model) {
+        boolean result = super.delete(model);
+        // 删除关联配置
+        if (result) {
+            this.authStore.deleteByIid(model.getId());
+            this.collectStore.deleteByIid(model.getId());
+            this.sshConfigStore.deleteByIid(model.getId());
+            this.saslConfigStore.deleteByIid(model.getId());
+        }
+        return result;
+    }
+
+    @Override
     protected Class<ZKConnect> modelClass() {
         return ZKConnect.class;
     }

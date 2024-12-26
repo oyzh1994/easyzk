@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.store;
 
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
+import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
@@ -44,5 +45,17 @@ public class ZKSASLConfigStore extends JdbcStandardStore<ZKSASLConfig> {
      */
     public ZKSASLConfig getByIid(String iid) {
         return super.selectOne(QueryParam.of("iid", iid));
+    }
+
+    /**
+     * 根据zk连接id删除配置
+     *
+     * @param iid zk连接id
+     * @return 结果
+     */
+    public boolean deleteByIid(String iid) {
+        DeleteParam param = new DeleteParam();
+        param.addQueryParam(QueryParam.of("iid", iid));
+        return super.delete(param);
     }
 }

@@ -52,6 +52,11 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
      */
     private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
 
+    /**
+     * zk连接储存
+     */
+    private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
+
     public ZKGroupTreeItem(@NonNull ZKGroup group, @NonNull RichTreeView treeView) {
         super(treeView);
         this.value = group;
@@ -166,7 +171,7 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
         if (!this.containsChild(item)) {
             if (!Objects.equals(item.value().getGroupId(), this.value.getGid())) {
                 item.value().setGroupId(this.value.getGid());
-                ZKConnectStore.INSTANCE.replace(item.value());
+               this.connectStore.replace(item.value());
             }
             super.addChild(item);
         }
@@ -182,7 +187,7 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
     @Override
     public boolean delConnectItem(@NonNull ZKConnectTreeItem item) {
         // 删除连接
-        if (ZKConnectStore.INSTANCE.delete(item.value())) {
+        if (this.connectStore.delete(item.value())) {
             this.removeChild(item);
             return true;
         }

@@ -15,7 +15,7 @@
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis/>
+                    <NumberAxis label="%base.connections"/>
                 </yAxis>
             </FlexLineChart>
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="nodeCountChart">
@@ -23,7 +23,7 @@
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis/>
+                    <NumberAxis label="%base.nodeCount"/>
                 </yAxis>
             </FlexLineChart>
         </FlexHBox>

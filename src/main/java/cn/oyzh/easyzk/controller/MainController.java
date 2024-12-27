@@ -83,13 +83,13 @@ public class MainController extends ParentStageController {
             if (TrayManager.exist()) {
                 JulLog.info("show tray.");
                 event.consume();
-                // 仅隐藏到任务栏
-                this.stage.setIconified(true);
+                // // 仅隐藏到任务栏
+                // this.stage.setIconified(true);
                 // 显示托盘
                 TrayManager.show();
             } else {
                 JulLog.error("tray not support!");
-                MessageBox.warn(I18nHelper.trayNotSupport());
+                // MessageBox.warn(I18nHelper.trayNotSupport());
             }
         }
     }

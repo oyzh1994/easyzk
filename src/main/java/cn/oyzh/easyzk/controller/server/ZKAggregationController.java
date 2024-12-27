@@ -93,8 +93,6 @@ public class ZKAggregationController {
         ChartHelper.addOrUpdateData(data, time, nodeCount, 10);
     }
 
-
-
     /**
      * 初始化延迟图表
      *

@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.i18n.I18nHelper;
 
 /**
  * @author oyzh
@@ -40,11 +41,11 @@ public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<Te
     public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextTextArea terminal) {
         if (terminal.isTemporary()) {
             if (terminal.isConnected()) {
-                terminal.client().close();
+                terminal.client().closeQuiet();
             }
             terminal.connect(command.command());
         } else {
-            terminal.outputByPrompt("非临时连接不支持此操作");
+            terminal.outputByPrompt(I18nHelper.operationNotSupport());
         }
         TerminalExecuteResult result = TerminalExecuteResult.ok();
         result.setIgnoreOutput(true);

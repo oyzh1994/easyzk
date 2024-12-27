@@ -142,6 +142,10 @@ public class ZKClient {
      */
     private final ZKTreeCacheSelector cacheSelector = new ZKTreeCacheSelector();
 
+    /**
+     * 静默关闭标志位
+     */
+    private boolean closeQuietly;
     // /**
     //  * 初始化状态监听器
     //  */
@@ -195,7 +199,12 @@ public class ZKClient {
             if (newValue != null) {
                 switch (newValue) {
                     case LOST -> ZKEventUtil.connectionLost(this);
-                    case CLOSED -> ZKEventUtil.connectionClosed(this);
+                    case CLOSED -> {
+                        if (!this.closeQuietly) {
+                            ZKEventUtil.connectionClosed(this);
+                        }
+                        this.closeQuietly = false;
+                    }
                     case CONNECTED -> ZKEventUtil.connectionSucceed(this);
                 }
             }
@@ -378,6 +387,14 @@ public class ZKClient {
     public void close() {
         this.close1();
         this.state.set(ZKConnState.CLOSED);
+    }
+
+    /**
+     * 关闭zk，静默模式
+     */
+    public void closeQuiet() {
+        this.closeQuietly = true;
+        this.close();
     }
 
     /**

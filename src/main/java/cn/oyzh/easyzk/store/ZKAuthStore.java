@@ -7,6 +7,7 @@ import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 import cn.oyzh.store.jdbc.SelectParam;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,9 @@ public class ZKAuthStore extends JdbcStandardStore<ZKAuth> {
      * @see cn.oyzh.easyzk.domain.ZKConnect
      */
     public List<ZKAuth> loadEnable(String iid) {
+        if (StringUtil.isEmpty(iid)) {
+            return Collections.emptyList();
+        }
         SelectParam selectParam = new SelectParam();
         selectParam.addQueryParam(QueryParam.of("enable", 1));
         selectParam.addQueryParam(QueryParam.of("iid", iid));

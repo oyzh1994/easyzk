@@ -313,6 +313,7 @@ public class ZKConnectUpdateController extends StageController {
             ZKConnect zkConnect = new ZKConnect();
             zkConnect.setHost(host);
             zkConnect.setConnectTimeOut(3);
+            zkConnect.setId(this.zkConnect.getId());
             zkConnect.setSaslAuth(this.saslAuth.isSelected());
             zkConnect.setSshForward(this.sshForward.isSelected());
             if (zkConnect.isSSHForward()) {

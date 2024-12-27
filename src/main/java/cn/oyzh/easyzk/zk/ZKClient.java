@@ -815,6 +815,9 @@ public class ZKClient {
      * @return 节点数据
      */
     public byte[] getData(@NonNull String path) throws Exception {
+        if (this.framework == null) {
+            return null;
+        }
         try {
             this.doAction("get", path);
             return this.framework.getData().forPath(path);
@@ -1472,5 +1475,13 @@ public class ZKClient {
      */
     private void doAction(String action, String params, Object data) {
         ZKEventUtil.clientAction(this.connectName(), action, params, data);
+    }
+
+    /**
+     * 状态是否无效
+     * @return 结果
+     */
+    public boolean isInvalid() {
+      return this.framework == null || this.framework.getState()==CuratorFrameworkState.STOPPED;
     }
 }

@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.store;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
@@ -15,13 +16,6 @@ public class ZKSSHConfigStore extends JdbcStandardStore<ZKSSHConfig> {
      * 当前实例
      */
     public static final ZKSSHConfigStore INSTANCE = new ZKSSHConfigStore();
-
-    public ZKSSHConfig find(String iid) {
-        QueryParam param = new QueryParam();
-        param.setName("iid");
-        param.setData(iid);
-        return super.selectOne(param);
-    }
 
     public boolean replace(ZKSSHConfig model) {
         String iid = model.getIid();
@@ -43,6 +37,9 @@ public class ZKSSHConfigStore extends JdbcStandardStore<ZKSSHConfig> {
      * @return 结果
      */
     public boolean deleteByIid(String iid) {
+        if (StringUtil.isEmpty(iid)) {
+            return false;
+        }
         DeleteParam param = new DeleteParam();
         param.addQueryParam(new QueryParam("iid", iid));
         return super.delete(param);

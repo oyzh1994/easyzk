@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.controller.connect;
 
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
@@ -15,6 +14,7 @@ import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.store.ZKSASLConfigStore;
+import cn.oyzh.easyzk.store.ZKSSHConfigStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
@@ -244,6 +244,11 @@ public class ZKConnectUpdateController extends StageController {
     private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
     /**
+     * ssh配置储存
+     */
+    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
+
+    /**
      * sasl配置储存
      */
     private final ZKSASLConfigStore saslConfigStore = ZKSASLConfigStore.INSTANCE;
@@ -429,7 +434,7 @@ public class ZKConnectUpdateController extends StageController {
         this.listen.setSelected(this.zkConnect.getListen());
         // ssh配置
         this.sshForward.setSelected(this.zkConnect.isSSHForward());
-        ZKSSHConfig sshConfig = this.zkConnect.getSshConfig();
+        ZKSSHConfig sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
         if (sshConfig != null) {
             this.sshHost.setText(sshConfig.getHost());
             this.sshUser.setText(sshConfig.getUser());
@@ -438,8 +443,8 @@ public class ZKConnectUpdateController extends StageController {
             this.sshPassword.setText(sshConfig.getPassword());
         }
         // sasl配置
-        ZKSASLConfig saslConfig = this.saslConfigStore.getByIid(this.zkConnect.getId());
         this.saslAuth.setSelected(this.zkConnect.isSASLAuth());
+        ZKSASLConfig saslConfig = this.saslConfigStore.getByIid(this.zkConnect.getId());
         if (saslConfig != null) {
             this.saslType.select(saslConfig.getType());
             this.saslUser.setText(saslConfig.getUserName());

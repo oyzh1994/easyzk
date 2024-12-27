@@ -44,4 +44,17 @@ public class ZKSSHConfigStore extends JdbcStandardStore<ZKSSHConfig> {
         param.addQueryParam(new QueryParam("iid", iid));
         return super.delete(param);
     }
+
+    /**
+     * 根据zk连接id获取配置
+     *
+     * @param iid zk连接id
+     * @return ssh配置
+     */
+    public ZKSSHConfig getByIid(String iid) {
+        if (StringUtil.isEmpty(iid)) {
+            return null;
+        }
+        return super.selectOne(QueryParam.of("iid", iid));
+    }
 }

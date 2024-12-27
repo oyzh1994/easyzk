@@ -1,5 +1,5 @@
 {
-    "packMode": "packr",
+    "packMode": "jpackage",
     "platform": "win_amd64",
     "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}",
     "appIcon": "${projectPath}\\resource\\zoo.ico",
@@ -118,8 +118,8 @@
             ".*.kotlin_module",
             ".*.dylib",
             ".*.so",
-            "javafx-graphics.*-mac*.jar",
-            "javafx-graphics.*-linux*.jar"
+            "javafx-graphics.*-mac.*.jar",
+            "javafx-graphics.*-linux.*.jar"
         ]
     }
 }

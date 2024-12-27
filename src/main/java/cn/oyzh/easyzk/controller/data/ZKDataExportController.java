@@ -252,7 +252,7 @@ public class ZKDataExportController extends StageController {
                 this.updateStatus(I18nHelper.exportFinished());
                 // 发送消息到托盘
                 if (!this.stage.isFocused()) {
-                    TrayManager.displayInfoMessage(I18nHelper.tips(), I18nHelper.importFinished());
+                    TrayManager.displayInfoMessage(I18nHelper.tips(), I18nHelper.exportFinished());
                 }
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {

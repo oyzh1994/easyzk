@@ -4,6 +4,7 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
@@ -246,6 +247,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
                     .onSuccess(this::refresh)
+                    .onFinish(SystemUtil::gcLater)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);

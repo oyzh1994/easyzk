@@ -6,6 +6,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
@@ -151,57 +152,174 @@
         </FXTab>
         <FXTab text="%base.font">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel text="%base.fontName">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox>
-                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontFamily">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FontFamilyComboBox>
-                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontFamily">
-                        <HBox.margin>
-                            <Insets left="10" top="6"/>
-                        </HBox.margin>
-                    </ResetButton>
-                </FlexHBox>
-                <InfoLabel text="%base.fontSize">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox>
-                    <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontSize">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FontSizeComboBox>
-                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontSize">
-                        <HBox.margin>
-                            <Insets left="10" top="6"/>
-                        </HBox.margin>
-                    </ResetButton>
-                </FlexHBox>
-                <InfoLabel text="%base.fontWeight">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox>
-                    <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontWeight">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FontWeightComboBox>
-                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontWeight">
-                        <HBox.margin>
-                            <Insets left="10" top="6"/>
-                        </HBox.margin>
-                    </ResetButton>
-                </FlexHBox>
+                <FlexTitledPane text="%base.general" expanded="false" autoHide="true"
+                                flexWidth="100%">
+                    <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250">
+                        <InfoLabel text="%base.fontName">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontFamily">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontFamilyComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetFontFamily">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                        <InfoLabel text="%base.fontSize">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontSize">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontSizeComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetFontSize">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                        <InfoLabel text="%base.fontWeight">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontWeight">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontWeightComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetFontWeight">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                    </FlexVBox>
+                </FlexTitledPane>
+                <FlexTitledPane text="%base.editor" expanded="false" autoHide="true"
+                                flexWidth="100%">
+                    <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250">
+                        <InfoLabel text="%base.fontName">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontFamily">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontFamilyComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontFamily">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                        <InfoLabel text="%base.fontSize">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontSize">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontSizeComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontSize">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                        <InfoLabel text="%base.fontWeight">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontWeight">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontWeightComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontWeight">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                    </FlexVBox>
+                </FlexTitledPane>
+                <FlexTitledPane text="%base.terminal" expanded="false" autoHide="true"
+                                flexWidth="100%">
+                    <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250">
+                        <InfoLabel text="%base.fontName">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontFamily">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontFamilyComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontFamily">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                        <InfoLabel text="%base.fontSize">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontSize">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontSizeComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontSize">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                        <InfoLabel text="%base.fontWeight">
+                            <VBox.margin>
+                                <Insets left="30" top="10"/>
+                            </VBox.margin>
+                        </InfoLabel>
+                        <FlexHBox>
+                            <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontWeight">
+                                <HBox.margin>
+                                    <Insets left="30" top="5"/>
+                                </HBox.margin>
+                            </FontWeightComboBox>
+                            <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontWeight">
+                                <HBox.margin>
+                                    <Insets left="10" top="6"/>
+                                </HBox.margin>
+                            </ResetButton>
+                        </FlexHBox>
+                    </FlexVBox>
+                </FlexTitledPane>
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.theme">

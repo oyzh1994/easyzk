@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.controller;
 
 
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKProcessUtil;
@@ -27,6 +26,7 @@ import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.i18n.I18nManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Modality;
@@ -41,7 +41,6 @@ import java.util.Objects;
  * @since 2022/08/26
  */
 @StageAttribute(
-        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "setting.fxml"
 )
@@ -186,6 +185,42 @@ public class SettingController extends StageController {
     private FontFamilyComboBox fontFamily;
 
     /**
+     * 编辑器字体大小
+     */
+    @FXML
+    private FontSizeComboBox editorFontSize;
+
+    /**
+     * 编辑器字体粗细
+     */
+    @FXML
+    private FontWeightComboBox editorFontWeight;
+
+    /**
+     * 编辑器字体名称
+     */
+    @FXML
+    private FontFamilyComboBox editorFontFamily;
+
+    /**
+     * 终端字体大小
+     */
+    @FXML
+    private FontSizeComboBox terminalFontSize;
+
+    /**
+     * 终端字体粗细
+     */
+    @FXML
+    private FontWeightComboBox terminalFontWeight;
+
+    /**
+     * 终端字体名称
+     */
+    @FXML
+    private FontFamilyComboBox terminalFontFamily;
+
+    /**
      * 区域
      */
     @FXML
@@ -253,6 +288,12 @@ public class SettingController extends StageController {
         this.fontSize.selectSize(this.setting.getFontSize());
         this.fontFamily.select(this.setting.getFontFamily());
         this.fontWeight.selectWeight(this.setting.getFontWeight());
+        this.editorFontSize.selectSize(this.setting.getEditorFontSize());
+        this.editorFontFamily.select(this.setting.getEditorFontFamily());
+        this.editorFontWeight.selectWeight(this.setting.getEditorFontWeight());
+        this.terminalFontSize.selectSize(this.setting.getTerminalFontSize());
+        this.terminalFontFamily.select(this.setting.getTerminalFontFamily());
+        this.terminalFontWeight.selectWeight(this.setting.getTerminalFontWeight());
         // 区域相关处理
         this.locale.select(this.setting.getLocale());
         // 透明度相关处理
@@ -273,17 +314,30 @@ public class SettingController extends StageController {
             Byte fontSize = this.fontSize.byteValue();
             short fontWeight = this.fontWeight.getWeight();
             String fontFamily = this.fontFamily.getValue();
+            Byte editorFontSize = this.editorFontSize.byteValue();
+            short editorFontWeight = this.editorFontWeight.getWeight();
+            String editorFontFamily = this.editorFontFamily.getValue();
+            Byte terminalFontSize = this.terminalFontSize.byteValue();
+            short terminalFontWeight = this.terminalFontWeight.getWeight();
+            String terminalFontFamily = this.terminalFontFamily.getValue();
 
             // 提示文字
             String tips = this.checkConfigForRestart(fontSize, fontWeight, fontFamily, locale);
 //            String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
 
+            // 加载模式、认证模式
             this.setting.setLoadMode(loadMode);
             this.setting.setAuthMode(authMode);
             // 字体相关
             this.setting.setFontSize(fontSize);
             this.setting.setFontFamily(fontFamily);
             this.setting.setFontWeight(fontWeight);
+            this.setting.setEditorFontSize(editorFontSize);
+            this.setting.setEditorFontFamily(editorFontFamily);
+            this.setting.setEditorFontWeight(editorFontWeight);
+            this.setting.setTerminalFontSize(terminalFontSize);
+            this.setting.setTerminalFontFamily(terminalFontFamily);
+            this.setting.setTerminalFontWeight(terminalFontWeight);
             // 主题相关
             this.setting.setTheme(this.theme.name());
             this.setting.setBgColor(this.bgColor.getColor());
@@ -411,30 +465,6 @@ public class SettingController extends StageController {
     }
 
     /**
-     * 重置字体名称
-     */
-    @FXML
-    private void resetFontFamily() {
-        this.fontFamily.select(null);
-    }
-
-    /**
-     * 重置字体大小
-     */
-    @FXML
-    private void resetFontSize() {
-        this.fontSize.select(null);
-    }
-
-    /**
-     * 重置字体粗细
-     */
-    @FXML
-    private void resetFontWeight() {
-        this.fontWeight.select(null);
-    }
-
-    /**
      * 重置区域
      */
     @FXML
@@ -453,5 +483,59 @@ public class SettingController extends StageController {
     @Override
     public String getViewTitle() {
         return I18nHelper.settingTitle();
+    }
+
+    /**
+     * 重置字体名称
+     */
+    @FXML
+    private void resetFontFamily() {
+        this.fontFamily.select(ZKSetting.defaultFontFamily());
+    }
+
+    /**
+     * 重置字体大小
+     */
+    @FXML
+    private void resetFontSize() {
+        this.fontSize.selectSize(ZKSetting.defaultFontSize());
+    }
+
+    /**
+     * 重置字体粗细
+     */
+    @FXML
+    private void resetFontWeight() {
+        this.fontWeight.selectWeight(ZKSetting.defaultFontWeight());
+    }
+
+    @FXML
+    private void resetEditorFontFamily( ) {
+        this.editorFontFamily.select(ZKSetting.defaultEditorFontFamily());
+    }
+
+    @FXML
+    private void resetEditorFontSize( ) {
+        this.editorFontSize.selectSize(ZKSetting.defaultEditorFontSize());
+    }
+
+    @FXML
+    private void resetEditorFontWeight( ) {
+        this.editorFontWeight.selectWeight(ZKSetting.defaultEditorFontWeight());
+    }
+
+    @FXML
+    private void resetTerminalFontFamily( ) {
+        this.terminalFontFamily.select(ZKSetting.defaultTerminalFontFamily());
+    }
+
+    @FXML
+    private void resetTerminalFontSize( ) {
+        this.terminalFontSize.selectSize(ZKSetting.defaultTerminalFontSize());
+    }
+
+    @FXML
+    private void resetTerminalFontWeight( ) {
+        this.terminalFontWeight.selectWeight(ZKSetting.defaultTerminalFontWeight());
     }
 }

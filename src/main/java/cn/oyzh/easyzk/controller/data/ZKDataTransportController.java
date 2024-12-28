@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.controller.data;
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.SystemUtil;
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.fx.ZKConnectComboBox;
 import cn.oyzh.easyzk.handler.ZKDataTransportHandler;
@@ -22,6 +21,7 @@ import cn.oyzh.fx.plus.controls.label.FlexLabel;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
+import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
@@ -237,6 +237,10 @@ public class ZKDataTransportController extends StageController {
                 this.transportHandler.doTransport();
                 // 更新状态
                 this.updateStatus(I18nHelper.transportFinished());
+                // 发送消息到托盘
+                if (!this.stage.isFocused()) {
+                    TrayManager.displayInfoMessage(I18nHelper.tips(), I18nHelper.transportFinished());
+                }
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus(I18nHelper.operationCancel());

@@ -286,18 +286,18 @@ public class ZKConnectAddController extends StageController {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
             // 创建zk信息
-            ZKConnect zkInfo = new ZKConnect();
-            zkInfo.setHost(host);
-            zkInfo.setConnectTimeOut(3);
-            zkInfo.setSaslAuth(this.saslAuth.isSelected());
-            zkInfo.setSshForward(this.sshForward.isSelected());
-            if (zkInfo.isSSHForward()) {
-                zkInfo.setSshConfig(this.getSSHConfig());
+            ZKConnect zkConnect = new ZKConnect();
+            zkConnect.setHost(host);
+            zkConnect.setConnectTimeOut(3);
+            zkConnect.setSaslAuth(this.saslAuth.isSelected());
+            zkConnect.setSshForward(this.sshForward.isSelected());
+            if (zkConnect.isSSHForward()) {
+                zkConnect.setSshConfig(this.getSSHConfig());
             }
-            if (zkInfo.isSASLAuth()) {
-                zkInfo.setSaslConfig(this.getSASLConfig());
+            if (zkConnect.isSASLAuth()) {
+                zkConnect.setSaslConfig(this.getSASLConfig());
             }
-            ZKConnectUtil.testConnect(this.stage, zkInfo);
+            ZKConnectUtil.testConnect(this.stage, zkConnect);
         }
     }
 
@@ -316,32 +316,32 @@ public class ZKConnectAddController extends StageController {
         }
         try {
             String name = this.name.getTextTrim();
-            ZKConnect zkInfo = new ZKConnect();
-            zkInfo.setName(name);
+            ZKConnect zkConnect = new ZKConnect();
+            zkConnect.setName(name);
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number sessionTimeOut = this.sessionTimeOut.getValue();
 
-            zkInfo.setHost(host.trim());
+            zkConnect.setHost(host.trim());
             // ssh配置
-            zkInfo.setSshConfig(this.getSSHConfig());
-            zkInfo.setSshForward(this.sshForward.isSelected());
+            zkConnect.setSshConfig(this.getSSHConfig());
+            zkConnect.setSshForward(this.sshForward.isSelected());
             // sasl配置
-            zkInfo.setSaslConfig(this.getSASLConfig());
-            zkInfo.setSaslAuth(this.saslAuth.isSelected());
-            zkInfo.setListen(this.listen.isSelected());
-            zkInfo.setRemark(this.remark.getTextTrim());
-            zkInfo.setReadonly(this.readonly.isSelected());
-            zkInfo.setGroupId(this.group == null ? null : this.group.getGid());
-            zkInfo.setConnectTimeOut(connectTimeOut.intValue());
-            zkInfo.setSessionTimeOut(sessionTimeOut.intValue());
-            zkInfo.setCompatibility(this.compatibility.isSelected() ? 1 : null);
+            zkConnect.setSaslConfig(this.getSASLConfig());
+            zkConnect.setSaslAuth(this.saslAuth.isSelected());
+            zkConnect.setListen(this.listen.isSelected());
+            zkConnect.setRemark(this.remark.getTextTrim());
+            zkConnect.setReadonly(this.readonly.isSelected());
+            zkConnect.setGroupId(this.group == null ? null : this.group.getGid());
+            zkConnect.setConnectTimeOut(connectTimeOut.intValue());
+            zkConnect.setSessionTimeOut(sessionTimeOut.intValue());
+            zkConnect.setCompatibility(this.compatibility.isSelected() ? 1 : null);
             // 认证列表
-            zkInfo.setAuths(this.authTable.getAuths());
+            zkConnect.setAuths(this.authTable.getAuths());
             // 过滤列表
-            zkInfo.setFilters(this.filterTable.getFilters());
+            zkConnect.setFilters(this.filterTable.getFilters());
             // 保存数据
-            if (this.connectStore.replace(zkInfo)) {
-                ZKEventUtil.infoAdded(zkInfo);
+            if (this.connectStore.replace(zkConnect)) {
+                ZKEventUtil.connectAdded(zkConnect);
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();
             } else {

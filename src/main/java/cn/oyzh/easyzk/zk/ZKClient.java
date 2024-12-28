@@ -6,6 +6,7 @@ import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.dto.ZKClusterNode;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
@@ -19,6 +20,7 @@ import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
 import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
+import cn.oyzh.easyzk.store.ZKSSHConfigStore;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.ssh.SSHForwardConfig;
@@ -138,30 +140,24 @@ public class ZKClient {
     private List<ZKAuth> auths;
 
     /**
+     * 静默关闭标志位
+     */
+    private boolean closeQuietly;
+
+    /**
      * 缓存选择器
      */
     private final ZKTreeCacheSelector cacheSelector = new ZKTreeCacheSelector();
-
-    // /**
-    //  * 初始化状态监听器
-    //  */
-    // private final TreeCacheListener initializedListener = (c, e) -> {
-    //     if (e.getType() == TreeCacheEvent.Type.INITIALIZED) {
-    //         // // 设置状态
-    //         // this.initialized = true;
-    //         // 移除自身监听器
-    //         this.treeCache.getListenable().removeListener(this.initializedListener);
-    //         // 关闭节点监听器
-    //         if (!this.isEnableListen()) {
-    //             this.closeTreeCache();
-    //         }
-    //     }
-    // };
 
     /**
      * 连接状态
      */
     private final ReadOnlyObjectWrapper<ZKConnState> state = new ReadOnlyObjectWrapper<>();
+
+    /**
+     * ssh配置储存
+     */
+    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
 
     /**
      * 获取连接状态
@@ -183,9 +179,7 @@ public class ZKClient {
 
     public ZKClient(@NonNull ZKConnect zkConnect) {
         this.zkConnect = zkConnect;
-        if (zkConnect.isSSHForward() && zkConnect.getSshConfig() != null) {
-            this.sshForwarder = new SSHForwarder(zkConnect.getSshConfig());
-        }
+        // 监听连接状态
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || !newValue.isConnected()) {
                 this.closeTreeCache();
@@ -195,7 +189,12 @@ public class ZKClient {
             if (newValue != null) {
                 switch (newValue) {
                     case LOST -> ZKEventUtil.connectionLost(this);
-                    case CLOSED -> ZKEventUtil.connectionClosed(this);
+                    case CLOSED -> {
+                        if (!this.closeQuietly) {
+                            ZKEventUtil.connectionClosed(this);
+                        }
+                        this.closeQuietly = false;
+                    }
                     case CONNECTED -> ZKEventUtil.connectionSucceed(this);
                 }
             }
@@ -346,14 +345,26 @@ public class ZKClient {
     private void initClient() {
         // 连接地址
         String host;
-        // ssh端口转发
+        // 初始化ssh端口转发
         if (this.zkConnect.isSSHForward()) {
-            SSHForwardConfig forwardConfig = new SSHForwardConfig();
-            forwardConfig.setHost(this.zkConnect.hostIp());
-            forwardConfig.setPort(this.zkConnect.hostPort());
-            int localPort = this.sshForwarder.forward(forwardConfig);
-            // 连接信息
-            host = "127.0.0.1:" + localPort;
+            // 初始化ssh转发器
+            ZKSSHConfig sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
+            if (sshConfig != null) {
+                if (this.sshForwarder == null) {
+                    this.sshForwarder = new SSHForwarder(sshConfig);
+                }
+                // ssh配置
+                SSHForwardConfig forwardConfig = new SSHForwardConfig();
+                forwardConfig.setHost(this.zkConnect.hostIp());
+                forwardConfig.setPort(this.zkConnect.hostPort());
+                // 执行连接
+                int localPort = this.sshForwarder.forward(forwardConfig);
+                // 连接信息
+                host = "127.0.0.1:" + localPort;
+            } else {
+                JulLog.warn("ssh forward is enable but ssh config is null");
+                throw new ZKException("ssh forward is enable but ssh config is null");
+            }
         } else {// 直连
             // 连接信息
             host = this.zkConnect.hostIp() + ":" + this.zkConnect.hostPort();
@@ -378,6 +389,14 @@ public class ZKClient {
     public void close() {
         this.close1();
         this.state.set(ZKConnState.CLOSED);
+    }
+
+    /**
+     * 关闭zk，静默模式
+     */
+    public void closeQuiet() {
+        this.closeQuietly = true;
+        this.close();
     }
 
     /**
@@ -798,6 +817,9 @@ public class ZKClient {
      * @return 节点数据
      */
     public byte[] getData(@NonNull String path) throws Exception {
+        if (this.framework == null) {
+            return null;
+        }
         try {
             this.doAction("get", path);
             return this.framework.getData().forPath(path);
@@ -1455,5 +1477,14 @@ public class ZKClient {
      */
     private void doAction(String action, String params, Object data) {
         ZKEventUtil.clientAction(this.connectName(), action, params, data);
+    }
+
+    /**
+     * 状态是否无效
+     *
+     * @return 结果
+     */
+    public boolean isInvalid() {
+        return this.framework == null || this.framework.getState() == CuratorFrameworkState.STOPPED;
     }
 }

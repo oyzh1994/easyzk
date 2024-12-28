@@ -51,7 +51,7 @@ public class ZKDataExportHandler extends DataHandler {
     /**
      * 批量处理大小
      */
-    private int batchSize = 20;
+    private int batchSize = 10;
 
     /**
      * 导出配置

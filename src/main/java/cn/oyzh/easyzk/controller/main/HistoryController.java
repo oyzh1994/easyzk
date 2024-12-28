@@ -77,7 +77,7 @@ public class HistoryController extends SubStageController implements Initializab
         if (item == null) {
             return;
         }
-        if (event.data() instanceof ZKNodeTab tab1 && tab1.info() == item.zkConnect()) {
+        if (event.data() instanceof ZKNodeTab tab1 && tab1.zkConnect() == item.zkConnect()) {
             this.itemReference = null;
             this.listTable.clearItems();
             this.root.disable();

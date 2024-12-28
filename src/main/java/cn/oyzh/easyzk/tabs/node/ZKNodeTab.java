@@ -162,7 +162,7 @@ public class ZKNodeTab extends DynamicTab {
      *
      * @return zk信息
      */
-    public ZKConnect info() {
+    public ZKConnect zkConnect() {
         return this.treeItem() == null ? null : this.treeItem().value();
     }
 
@@ -393,11 +393,16 @@ public class ZKNodeTab extends DynamicTab {
                 this.treeView.client(this.client);
                 // 加载根节点
                 this.treeView.loadRoot();
-            } catch (IllegalStateException ex) {
-                this.closeTab();
             } catch (Exception ex) {
+                this.closeTab();
                 MessageBox.exception(ex);
             }
+            // 状态无效，则关闭，延迟3秒检查
+            TaskManager.startDelay(() -> {
+                if (this.client.isInvalid()) {
+                    this.closeTab();
+                }
+            }, 3000);
         }
 
         /**
@@ -1322,7 +1327,12 @@ public class ZKNodeTab extends DynamicTab {
 
         @FXML
         private void refreshNode() {
-            this.treeView.loadRoot();
+            try {
+                this.treeView.loadRoot();
+            } catch (Exception ex) {
+                this.closeTab();
+                MessageBox.exception(ex);
+            }
         }
 
         @FXML

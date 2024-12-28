@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.util;
 
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.store.ZKAuthStore;
@@ -113,8 +114,10 @@ public class ZKAuthUtil {
      * @see cn.oyzh.easyzk.domain.ZKConnect
      */
     public static List<ZKAuth> loadAuths(String iid) {
-        if (ZKSettingStore.SETTING.isAutoAuth()) {
-            return ZKAuthStore.INSTANCE.loadEnable(iid);
+        if (StringUtil.isNotBlank(iid)) {
+            if (ZKSettingStore.SETTING.isAutoAuth()) {
+                return ZKAuthStore.INSTANCE.loadEnable(iid);
+            }
         }
         return Collections.emptyList();
     }

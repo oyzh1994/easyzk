@@ -25,7 +25,7 @@ public class ZKConnectComboBox extends FlexComboBox<ZKConnect> {
                 return o.getName();
             }
         });
-        List<ZKConnect> infos = ZKConnectStore.INSTANCE.load();
-        this.setItem(infos);
+        List<ZKConnect> connects = ZKConnectStore.INSTANCE.load();
+        this.setItem(connects);
     }
 }

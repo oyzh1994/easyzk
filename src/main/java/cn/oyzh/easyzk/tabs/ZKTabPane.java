@@ -30,9 +30,11 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
 
     @Override
     public void onNodeInitialize() {
-        FXEventListener.super.onNodeInitialize();
-        // 刷新触发事件
-        KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
+        if (!FXEventListener.super.isNodeInitialize()) {
+            FXEventListener.super.onNodeInitialize();
+            // 刷新触发事件
+            KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
+        }
     }
 
     @Override
@@ -96,10 +98,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      *
      * @return 终端tab
      */
-    private ZKTerminalTab getTerminalTab(ZKConnect info) {
-        if (info != null) {
+    private ZKTerminalTab getTerminalTab(ZKConnect zkConnect) {
+        if (zkConnect != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof ZKTerminalTab terminalTab && terminalTab.connect() == info) {
+                if (tab instanceof ZKTerminalTab terminalTab && terminalTab.connect() == zkConnect) {
                     return terminalTab;
                 }
             }
@@ -114,10 +116,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void terminalOpen(ZKTerminalOpenEvent event) {
-        ZKConnect info = event.data();
-        ZKTerminalTab terminalTab = this.getTerminalTab(info);
+        ZKConnect zkConnect = event.data();
+        ZKTerminalTab terminalTab = this.getTerminalTab(zkConnect);
         if (terminalTab == null) {
-            terminalTab = new ZKTerminalTab(info);
+            terminalTab = new ZKTerminalTab(zkConnect);
             super.addTab(terminalTab);
         } else {
             terminalTab.flushGraphic();
@@ -163,9 +165,9 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         }
     }
 
-    private ZKNodeTab getNodeTab(ZKConnect info) {
+    private ZKNodeTab getNodeTab(ZKConnect zkConnect) {
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof ZKNodeTab tab1 && tab1.info() == info) {
+            if (tab instanceof ZKNodeTab tab1 && tab1.zkConnect() == zkConnect) {
                 return tab1;
             }
         }

@@ -222,7 +222,7 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
                     this.outputLine(host + " " + I18nHelper.connectionClosed() + " .");
                     this.enableInput();
                 } else if (t1 == ZKConnState.CONNECTING) {
-                    this.outputLine(host + " " + I18nHelper.connectionConnecting() + " .");
+                    this.outputLine(host + " " + I18nHelper.connectionConnecting() + " .", false);
                 } else if (t1 == ZKConnState.SUSPENDED) {
                     this.outputLine(host + " " + I18nHelper.connectSuspended() + " .");
                     this.enableInput();

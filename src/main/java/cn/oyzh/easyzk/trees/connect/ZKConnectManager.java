@@ -17,9 +17,9 @@ public interface ZKConnectManager {
     /**
      * 添加连接
      *
-     * @param zkInfo 连接信息
+     * @param zkConnect 连接信息
      */
-    void addConnect(@NonNull ZKConnect zkInfo);
+    void addConnect(@NonNull ZKConnect zkConnect);
 
     // /**
     //  * 删除多个连接

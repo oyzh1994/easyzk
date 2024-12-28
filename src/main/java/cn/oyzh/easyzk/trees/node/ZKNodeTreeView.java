@@ -9,7 +9,6 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.gui.tree.view.RichTreeCell;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeLifeCycle;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.control.TreeCell;
@@ -328,10 +327,10 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
     /**
      * 加载根节点
      */
-    public void loadRoot() {
-        // 禁用树
-        this.disable();
+    public void loadRoot() throws Exception {
         try {
+            // 禁用树
+            this.disable();
             // 获取根节点
             ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
             // 生成根节点
@@ -340,10 +339,6 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
             this.setRoot(rootItem);
             // 加载根节点
             rootItem.loadRoot();
-        } catch (IllegalStateException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
         } finally {
             // 启用树
             this.enable();
@@ -368,10 +363,5 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
     @Override
     public void onNodeDestroy() {
         this.client = null;
-    }
-
-    @Override
-    public void onNodeInitialize() {
-
     }
 }

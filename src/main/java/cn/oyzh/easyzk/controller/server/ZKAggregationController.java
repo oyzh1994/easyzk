@@ -60,23 +60,6 @@ public class ZKAggregationController {
     }
 
     /**
-     * 初始化内存图表
-     *
-     * @param serverInfo 服务信息
-     */
-    private void initNodeCountChart(ZKServerInfo serverInfo) {
-        XYChart.Series<String, Integer> data = this.nodeCountChart.getChartData(0);
-        if (data == null) {
-            data = new XYChart.Series<>();
-            data.setName(I18nHelper.nodeCount());
-            this.nodeCountChart.addChartData(data);
-        }
-        int nodeCount = serverInfo.nodeCount();
-        String time = this.dateFormat.format(System.currentTimeMillis());
-        ChartHelper.addOrUpdateData(data, time, nodeCount, 10);
-    }
-
-    /**
      * 初始化客户端图表
      *
      * @param serverInfo 服务信息
@@ -91,6 +74,23 @@ public class ZKAggregationController {
         int connections = serverInfo.connections();
         String time = this.dateFormat.format(System.currentTimeMillis());
         ChartHelper.addOrUpdateData(data, time, connections, 10);
+    }
+
+    /**
+     * 初始化内存图表
+     *
+     * @param serverInfo 服务信息
+     */
+    private void initNodeCountChart(ZKServerInfo serverInfo) {
+        XYChart.Series<String, Integer> data = this.nodeCountChart.getChartData(0);
+        if (data == null) {
+            data = new XYChart.Series<>();
+            data.setName(I18nHelper.nodeCount());
+            this.nodeCountChart.addChartData(data);
+        }
+        int nodeCount = serverInfo.nodeCount();
+        String time = this.dateFormat.format(System.currentTimeMillis());
+        ChartHelper.addOrUpdateData(data, time, nodeCount, 10);
     }
 
     /**

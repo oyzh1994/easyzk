@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.zk;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
 import cn.oyzh.easyzk.store.ZKConnectStore;
@@ -60,7 +61,7 @@ public class ZKSASLUtil {
      * @see ZKConnect
      */
     public static boolean isNeedSasl(String iid) {
-        if (Configuration.getConfiguration() instanceof ZKSASLConfiguration configuration) {
+        if (StringUtil.isNotBlank(iid) && Configuration.getConfiguration() instanceof ZKSASLConfiguration configuration) {
             // 缓存里存在直接返回
             if (configuration.containsAppConfigurationEntry(iid)) {
                 return true;
@@ -84,6 +85,7 @@ public class ZKSASLUtil {
 
     /**
      * 添加sasl配置
+     *
      * @param config sasl配置
      */
     private static void addSaslEntry(ZKSASLConfig config) {

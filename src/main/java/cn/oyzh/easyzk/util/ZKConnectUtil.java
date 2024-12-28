@@ -21,7 +21,7 @@ public class ZKConnectUtil {
     /**
      * 测试连接
      *
-     * @param view 页面
+     * @param view      页面
      * @param zkConnect zk信息
      */
     public static void testConnect(StageAdapter view, ZKConnect zkConnect) {
@@ -29,16 +29,13 @@ public class ZKConnectUtil {
             try {
                 view.disable();
                 view.waitCursor();
-                view.appendTitle("==" + I18nHelper.connectTesting() + "...");
+                view.appendTitle("==" + I18nHelper.connectTesting());
                 if (zkConnect.getName() == null) {
-                    zkConnect.setName("测试连接");
+                    zkConnect.setName(I18nHelper.testConnection());
                 }
                 ZKClient client = new ZKClient(zkConnect);
                 // 开始连接
-                client.start();
-                view.enable();
-                view.defaultCursor();
-                view.restoreTitle();
+                client.start(3_000);
                 if (client.isConnected()) {
                     client.close();
                     MessageBox.okToast(I18nHelper.connectSuccess());

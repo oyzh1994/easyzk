@@ -21,8 +21,8 @@ import lombok.NonNull;
  */
 public class ZKTerminalTab extends DynamicTab {
 
-    public ZKTerminalTab(ZKConnect zkInfo) {
-        this.init(zkInfo);
+    public ZKTerminalTab(ZKConnect zkConnect) {
+        this.init(zkConnect);
     }
 
     @Override
@@ -38,20 +38,20 @@ public class ZKTerminalTab extends DynamicTab {
     /**
      * 初始化
      *
-     * @param info zk信息
+     * @param zkConnect zk连接
      */
-    public void init(ZKConnect info) {
+    public void init(ZKConnect zkConnect) {
         try {
-            if (info == null) {
-                info = new ZKConnect();
-                info.setName(I18nHelper.unnamedConnection());
+            if (zkConnect == null) {
+                zkConnect = new ZKConnect();
+                zkConnect.setName(I18nHelper.unnamedConnection());
             }
             // 刷新图标
             this.flushGraphic();
             // 设置标题
-            super.setTitle(info.getName());
+            super.setTitle(zkConnect.getName());
             // 初始化zk连接
-            this.controller().client(new ZKClient(info));
+            this.controller().client(new ZKClient(zkConnect));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

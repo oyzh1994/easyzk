@@ -18,71 +18,18 @@
     </properties>
 
     <dependencies>
-        <!-- &lt;!&ndash; Spring boot &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>org.springframework.boot</groupId> -->
-        <!--     <artifactId>spring-boot-starter</artifactId> -->
-        <!--     <exclusions> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>jakarta.annotation</groupId> -->
-        <!--             <artifactId>jakarta.annotation-api</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.yaml</groupId> -->
-        <!--             <artifactId>snakeyaml</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-to-slf4j &ndash;&gt; -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.apache.logging.log4j</groupId> -->
-        <!--             <artifactId>log4j-to-slf4j</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         &lt;!&ndash; https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j &ndash;&gt; -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.slf4j</groupId> -->
-        <!--             <artifactId>jul-to-slf4j</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.springframework.boot</groupId> -->
-        <!--             <artifactId>spring-boot-autoconfigure</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.springframework.boot</groupId> -->
-        <!--             <artifactId>spring-boot-starter-logging</artifactId> -->
-        <!--         </exclusion> -->
-        <!--     </exclusions> -->
-        <!-- </dependency> -->
-
-        <!-- &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>org.apache.logging.log4j</groupId> -->
-        <!--     <artifactId>log4j-slf4j2-impl</artifactId> -->
-        <!-- </dependency> -->
-
-        <!-- &lt;!&ndash; 加密工具类库 &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>cn.hutool</groupId> -->
-        <!--     <artifactId>hutool-crypto</artifactId> -->
-        <!--     <version>${hutool.version}</version> -->
-        <!-- </dependency> -->
-
-        <!-- &lt;!&ndash; 扩展工具类库 &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>cn.hutool</groupId> -->
-        <!--     <artifactId>hutool-extra</artifactId> -->
-        <!--     <version>${hutool.version}</version> -->
-        <!--     <scope>provided</scope> -->
-        <!-- </dependency> -->
 
         <!-- excel类库 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>${poi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${poi.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.virtuald</groupId>
+                    <artifactId>curvesapi</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- 二维码工具 -->
@@ -107,43 +54,8 @@
                     <groupId>com.google.guava</groupId>
                     <artifactId>guava</artifactId>
                 </exclusion>
-                <!-- <exclusion> -->
-                <!--     <groupId>org.slf4j</groupId> -->
-                <!--     <artifactId>slf4j-api</artifactId> -->
-                <!-- </exclusion> -->
             </exclusions>
         </dependency>
-
-        <!-- &lt;!&ndash; 手动引入zookeeper，以兼容早期版本 &ndash;&gt; -->
-        <!-- &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>org.apache.zookeeper</groupId> -->
-        <!--     <artifactId>zookeeper</artifactId> -->
-        <!--     &lt;!&ndash; <version>3.9.2</version> &ndash;&gt; -->
-        <!--     <version>3.5.2-alpha</version> -->
-        <!--     <exclusions> -->
-        <!--         &lt;!&ndash; <exclusion> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <groupId>org.slf4j</groupId> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <artifactId>slf4j-api</artifactId> &ndash;&gt; -->
-        <!--         &lt;!&ndash; </exclusion> &ndash;&gt; -->
-        <!--         &lt;!&ndash; <exclusion> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <groupId>log4j</groupId> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <artifactId>log4j</artifactId> &ndash;&gt; -->
-        <!--         &lt;!&ndash; </exclusion> &ndash;&gt; -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.slf4j</groupId> -->
-        <!--             <artifactId>slf4j-reload4j</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>net.java.dev.javacc</groupId> -->
-        <!--             <artifactId>javacc</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>io.netty</groupId> -->
-        <!--             <artifactId>netty</artifactId> -->
-        <!--         </exclusion> -->
-        <!--     </exclusions> -->
-        <!-- </dependency> -->
 
         <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
         <dependency>
@@ -228,19 +140,6 @@
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-terminal</artifactId>
         </dependency>
-
-        <!-- &lt;!&ndash; https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>org.xerial</groupId> -->
-        <!--     <artifactId>sqlite-jdbc</artifactId> -->
-        <!--     <version>${sqllit.version}</version> -->
-        <!--     <exclusions> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.slf4j</groupId> -->
-        <!--             <artifactId>slf4j-api</artifactId> -->
-        <!--         </exclusion> -->
-        <!--     </exclusions> -->
-        <!-- </dependency> -->
 
         <!-- 内存数据库 -->
         <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->

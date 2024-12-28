@@ -147,31 +147,31 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     /**
      * 复制对象
      *
-     * @param zkInfo zk信息
+     * @param zkConnect zk信息
      * @return 当前对象
      */
-    public ZKConnect copy(@NonNull ZKConnect zkInfo) {
-        this.name = zkInfo.name;
-        this.host = zkInfo.host;
-        this.remark = zkInfo.remark;
-        this.listen = zkInfo.listen;
-        this.groupId = zkInfo.groupId;
-        this.readonly = zkInfo.readonly;
-        this.compatibility = zkInfo.compatibility;
-        this.sessionTimeOut = zkInfo.sessionTimeOut;
-        this.connectTimeOut = zkInfo.connectTimeOut;
+    public ZKConnect copy(@NonNull ZKConnect zkConnect) {
+        this.name = zkConnect.name;
+        this.host = zkConnect.host;
+        this.remark = zkConnect.remark;
+        this.listen = zkConnect.listen;
+        this.groupId = zkConnect.groupId;
+        this.readonly = zkConnect.readonly;
+        this.compatibility = zkConnect.compatibility;
+        this.sessionTimeOut = zkConnect.sessionTimeOut;
+        this.connectTimeOut = zkConnect.connectTimeOut;
         // 认证
-        this.auths = zkInfo.auths;
+        this.auths = zkConnect.auths;
         // 过滤
-        this.filters = zkInfo.filters;
+        this.filters = zkConnect.filters;
         // 收藏
-        this.collects = zkInfo.collects;
+        this.collects = zkConnect.collects;
         // ssh
-        this.sshConfig = zkInfo.sshConfig;
-        this.sshForward = zkInfo.sshForward;
+        this.sshConfig = zkConnect.sshConfig;
+        this.sshForward = zkConnect.sshForward;
         // sasl
-        this.saslAuth = zkInfo.saslAuth;
-        this.saslConfig = zkInfo.saslConfig;
+        this.saslAuth = zkConnect.saslAuth;
+        this.saslConfig = zkConnect.saslConfig;
         return this;
     }
 

@@ -33,11 +33,17 @@ public class HeaderController2 extends StageController {
      */
     @FXML
     private void setting() {
-        StageAdapter wrapper = StageManager.getStage(SettingController.class);
+//        StageAdapter wrapper = StageManager.getStage(SettingController.class);
+//        if (wrapper != null) {
+//            wrapper.toFront();
+//        } else {
+//            StageManager.showStage(SettingController.class, this.stage);
+//        }
+        StageAdapter wrapper = StageManager.getStage(SettingController2.class);
         if (wrapper != null) {
             wrapper.toFront();
         } else {
-            StageManager.showStage(SettingController.class, this.stage);
+            StageManager.showStage(SettingController2.class, this.stage);
         }
     }
 

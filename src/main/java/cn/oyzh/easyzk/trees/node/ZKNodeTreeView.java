@@ -360,8 +360,8 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         return false;
     }
 
-    @Override
-    public void onNodeDestroy() {
-        this.client = null;
-    }
+//    @Override
+//    public void onNodeDestroy() {
+//        this.client = null;
+//    }
 }

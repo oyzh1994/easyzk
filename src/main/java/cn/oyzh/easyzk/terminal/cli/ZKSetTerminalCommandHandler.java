@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -37,14 +37,14 @@ public class ZKSetTerminalCommandHandler extends ZKPathTerminalCommandHandler<Te
     }
 
     @Override
-    public String commandHelp(ZKTerminalTextTextArea terminal) {
+    public String commandHelp(ZKTerminalTextArea terminal) {
         return super.commandHelp(terminal)  + "\n" +
                 "-s stats\n" +
                 "-v version";
     }
 
     @Override
-    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextTextArea terminal) {
+    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
         if (terminal.client().isReadonly()) {
             return TerminalExecuteResult.fail(new ReadonlyOperationException());
         }

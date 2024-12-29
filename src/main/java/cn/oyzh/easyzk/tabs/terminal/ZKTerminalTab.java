@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
@@ -97,7 +97,7 @@ public class ZKTerminalTab extends DynamicTab {
          * 命令行文本域
          */
         @FXML
-        private ZKTerminalTextTextArea terminal;
+        private ZKTerminalTextArea terminal;
 
         /**
          * 设置客户端

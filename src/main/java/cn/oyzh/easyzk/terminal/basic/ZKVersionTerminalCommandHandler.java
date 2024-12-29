@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -18,7 +18,7 @@ public class ZKVersionTerminalCommandHandler extends ZKTerminalCommandHandler<Te
     }
 
     @Override
-    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextTextArea terminal) {
+    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             result.setResult("ZooKeeper CLI version: " + Version.getFullVersion());

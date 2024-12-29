@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.terminal.cli;
 
-import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
@@ -35,7 +35,7 @@ public class ZKRemoveWatchesTerminalCommandHandler extends ZKCliTerminalCommandH
     }
 
     @Override
-    public String commandHelp(ZKTerminalTextTextArea terminal) {
+    public String commandHelp(ZKTerminalTextArea terminal) {
         return super.commandHelp(terminal) + "\n" +
                 "-c child watcher type\n" +
                 "-d data watcher type\n" +

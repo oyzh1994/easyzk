@@ -4,13 +4,15 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKConnectInfo;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.terminal.TerminalTextTextArea;
+import cn.oyzh.fx.terminal.TerminalTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
@@ -24,7 +26,7 @@ import org.apache.zookeeper.ZooKeeper;
  * @author oyzh
  * @since 2023/7/21
  */
-public class ZKTerminalTextTextArea extends TerminalTextTextArea {
+public class ZKTerminalTextArea extends TerminalTextArea {
 
     {
         this.keyHandler(ZKTerminalKeyHandler.INSTANCE);
@@ -32,7 +34,17 @@ public class ZKTerminalTextTextArea extends TerminalTextTextArea {
         this.mouseHandler(ZKTerminalMouseHandler.INSTANCE);
         this.historyHandler(ZKTerminalHistoryHandler.INSTANCE);
         this.completeHandler(ZKTerminalCompleteHandler.INSTANCE);
-        super.initContentPrompts();
+    }
+
+    @Override
+    protected void initFont() {
+        // 禁用字体管理
+        super.disableFont();
+        // 初始化字体
+        ZKSetting setting= ZKSettingStore.SETTING;
+        this.setFontSize(setting.getTerminalFontSize());
+        this.setFontFamily(setting.getTerminalFontFamily());
+        this.setFontWeight(setting.getTerminalFontWeight());
     }
 
     /**

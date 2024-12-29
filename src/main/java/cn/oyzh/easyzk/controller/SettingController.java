@@ -322,8 +322,7 @@ public class SettingController extends StageController {
             String terminalFontFamily = this.terminalFontFamily.getValue();
 
             // 提示文字
-            String tips = this.checkConfigForRestart(fontSize, fontWeight, fontFamily, locale);
-//            String tips = this.checkConfigForRestart(loadMode, authMode, fontSize, fontWeight, fontFamily, locale);
+            String tips = this.checkConfigForRestart(locale);
 
             // 加载模式、认证模式
             this.setting.setLoadMode(loadMode);
@@ -384,15 +383,11 @@ public class SettingController extends StageController {
     /**
      * 检查重启软件配置
      *
-     * @param fontSize   字体大小
-     * @param fontWeight 字体宽度
-     * @param fontFamily 字体名称
-     * @param locale     区域
+     * @param locale 区域
      * @return 结果
      */
-    private String checkConfigForRestart(Byte fontSize, Short fontWeight, String fontFamily, String locale) {
-        if (!Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)
-                || !Objects.equals(this.setting.getFontFamily(), fontFamily) || !Objects.equals(this.setting.getFontWeight(), fontWeight)) {
+    private String checkConfigForRestart(String locale) {
+        if (!Objects.equals(this.setting.getLocale(), locale)) {
             return I18nResourceBundle.i18nString("base.restartTip1");
         }
         return "";
@@ -510,32 +505,32 @@ public class SettingController extends StageController {
     }
 
     @FXML
-    private void resetEditorFontFamily( ) {
+    private void resetEditorFontFamily() {
         this.editorFontFamily.select(ZKSetting.defaultEditorFontFamily());
     }
 
     @FXML
-    private void resetEditorFontSize( ) {
+    private void resetEditorFontSize() {
         this.editorFontSize.selectSize(ZKSetting.defaultEditorFontSize());
     }
 
     @FXML
-    private void resetEditorFontWeight( ) {
+    private void resetEditorFontWeight() {
         this.editorFontWeight.selectWeight(ZKSetting.defaultEditorFontWeight());
     }
 
     @FXML
-    private void resetTerminalFontFamily( ) {
+    private void resetTerminalFontFamily() {
         this.terminalFontFamily.select(ZKSetting.defaultTerminalFontFamily());
     }
 
     @FXML
-    private void resetTerminalFontSize( ) {
+    private void resetTerminalFontSize() {
         this.terminalFontSize.selectSize(ZKSetting.defaultTerminalFontSize());
     }
 
     @FXML
-    private void resetTerminalFontWeight( ) {
+    private void resetTerminalFontWeight() {
         this.terminalFontWeight.selectWeight(ZKSetting.defaultTerminalFontWeight());
     }
 }

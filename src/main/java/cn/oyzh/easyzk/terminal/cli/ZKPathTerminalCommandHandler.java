@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
 import cn.oyzh.easyzk.terminal.ZKTerminalUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class ZKPathTerminalCommandHandler<C extends TerminalCommand> extends ZKCliTerminalCommandHandler<C> {
 
     @Override
-    public boolean completion(String line, ZKTerminalTextTextArea terminal) {
+    public boolean completion(String line, ZKTerminalTextArea terminal) {
         // 获取路径
         String path = ZKTerminalUtil.getPath(line);
         if (!StringUtil.contains(path, "/")) {

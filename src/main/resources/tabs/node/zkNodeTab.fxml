@@ -41,6 +41,7 @@
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
+<?import cn.oyzh.easyzk.fx.ZKDataTextArea?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTab.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -173,8 +174,8 @@
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
-                <RichDataTextAreaPane fontSize="12" fx:id="nodeData" flexHeight="100% - 60"
-                                      flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" groupId="dataToBig"/>
+                <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 60"
+                                flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" groupId="dataToBig"/>
                 <FlexHBox flexWidth="100%" flexHeight="30">
                     <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
                                      onMousePrimaryClicked="#showHistory">

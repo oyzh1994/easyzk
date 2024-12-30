@@ -5,6 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKProcessUtil;
+import cn.oyzh.fx.gui.setting.SettingLeftContent;
 import cn.oyzh.fx.gui.setting.SettingLeftItem;
 import cn.oyzh.fx.gui.setting.SettingLeftTreeView;
 import cn.oyzh.fx.gui.setting.SettingMainPane;
@@ -50,6 +51,9 @@ import java.util.Objects;
 )
 public class SettingController2 extends StageController {
 
+    /**
+     * 主面板
+     */
     @FXML
     private SettingMainPane root;
 
@@ -412,8 +416,7 @@ public class SettingController2 extends StageController {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        FlexVBox vBox = (FlexVBox)  this.root.getLeft();
-        SettingLeftTreeView treeView = (SettingLeftTreeView) vBox.getChild(0);
+        SettingLeftTreeView treeView = this.root.getLeftTreeView();
         treeView.addItem(SettingLeftItem.of(I18nHelper.zk(), "zk_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.window(), "window_box"));
         SettingTreeItem fontItem = treeView.addItem(SettingLeftItem.of(I18nHelper.font()));
@@ -422,6 +425,7 @@ public class SettingController2 extends StageController {
         fontItem.addItem(SettingLeftItem.of(I18nHelper.terminal(), "font_terminal_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.theme(), "theme_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.locale(), "locale_box"));
+        treeView.selectItem("zk_box");
         super.onStageShown(event);
         this.stage.hideOnEscape();
     }

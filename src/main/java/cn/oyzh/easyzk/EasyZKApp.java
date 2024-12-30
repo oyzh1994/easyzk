@@ -10,6 +10,7 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
+import cn.oyzh.easyzk.terminal.ZKTerminalManager;
 import cn.oyzh.easyzk.zk.ZKSASLUtil;
 import cn.oyzh.event.EventFactory;
 import cn.oyzh.fx.gui.tray.DesktopTrayItem;
@@ -98,6 +99,8 @@ public class EasyZKApp extends FXApplication {
     @Override
     public void start(Stage primaryStage) {
         super.start(primaryStage);
+        // 注册命令
+        ZKTerminalManager.registerHandlers();
         // 显示迁移弹窗
         if (ZKStoreUtil.checkOlder()) {
             FXUtil.runWait(() -> StageManager.showStage(ZKMigrationTipsController.class), 1000);
@@ -146,16 +149,6 @@ public class EasyZKApp extends FXApplication {
             JulLog.warn("不支持系统托盘!", ex);
         }
     }
-
-    // @Override
-    // protected String appIcon() {
-    //     return ZKConst.ICON_PATH;
-    // }
-    //
-    // @Override
-    // protected String appName() {
-    //     return PROJECT.getName();
-    // }
 
     /**
      * 显示主页

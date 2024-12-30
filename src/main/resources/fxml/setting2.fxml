@@ -30,7 +30,7 @@
         </SettingLeftTreeView>
     </left>
     <right>
-        <FlexVBox flexWidth="100%" flexHeight="100% - 50">
+        <FlexVBox flexWidth="100%" flexHeight="100% - 80">
             <FlexVBox managedBindVisible="true" visible="false" fx:id="zk_box" flexWidth="100%" flexHeight="100%"
                       groupId="setting_item">
                 <InfoLabel text="%base.load">

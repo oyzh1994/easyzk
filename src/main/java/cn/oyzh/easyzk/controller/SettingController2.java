@@ -427,7 +427,7 @@ public class SettingController2 extends StageController {
         SettingLeftTreeView treeView = this.root.getLeftTreeView();
         treeView.addItem(SettingLeftItem.of(I18nHelper.zk(), "zk_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.window(), "window_box"));
-        SettingTreeItem fontItem = treeView.addItem(SettingLeftItem.of(I18nHelper.font()));
+        SettingTreeItem fontItem = treeView.addItem(SettingLeftItem.of(I18nHelper.font(),"font"));
         fontItem.addItem(SettingLeftItem.of(I18nHelper.general(), "font_general_box"));
         fontItem.addItem(SettingLeftItem.of(I18nHelper.editor(), "font_editor_box"));
         fontItem.addItem(SettingLeftItem.of(I18nHelper.terminal(), "font_terminal_box"));

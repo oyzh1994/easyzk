@@ -1,432 +1,432 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.gui.button.ResetButton?>
-<?import cn.oyzh.fx.gui.button.SaveButton?>
-<?import cn.oyzh.fx.gui.label.InfoLabel?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
-<?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?>
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.text.FlexSlider?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
-<?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
-<?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
-<?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
-<?import cn.oyzh.fx.plus.i18n.LocaleComboBox?>
-<?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.text.field.NumberTextField?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="550" realHeight="450">
-    <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
-        <FXTab text="%base.zk">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel text="%base.load">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <fx:define>
-                    <FXToggleGroup fx:id="loadMode"/>
-                </fx:define>
-                <FXHBox>
-                    <FXRadioButton toggleGroup="$loadMode" text="%zk.setting.loadFirst"
-                                   realHeight="25" selected="true" fx:id="loadMode0" userData="0">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FXRadioButton>
-                    <FXRadioButton toggleGroup="$loadMode" text="%zk.setting.loadAll"
-                                   realHeight="25" fx:id="loadMode1" userData="1">
-                        <HBox.margin>
-                            <Insets left="10" top="5"/>
-                        </HBox.margin>
-                    </FXRadioButton>
-                    <FXRadioButton toggleGroup="$loadMode" text="%zk.setting.loadRoot"
-                                   realHeight="25" fx:id="loadMode2" userData="2">
-                        <HBox.margin>
-                            <Insets left="10" top="5"/>
-                        </HBox.margin>
-                    </FXRadioButton>
-                </FXHBox>
-                <InfoLabel text="%base.auth">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FXCheckBox tipText="%zk.info.autoAuthTip" text="%base.autoAuth" selected="true" fx:id="authMode">
-                    <VBox.margin>
-                        <Insets left="30" top="5"/>
-                    </VBox.margin>
-                </FXCheckBox>
-                <InfoLabel text="%zk.setting.tip1">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <NumberTextField step="100" fx:id="nodeLoadLimit" minVal="0" value="1000"
-                                 tipText="%zk.setting.tip2" flexWidth="100% - 180" prefHeight="25">
-                    <VBox.margin>
-                        <Insets left="30" top="5"/>
-                    </VBox.margin>
-                </NumberTextField>
-            </FlexVBox>
-        </FXTab>
-        <FXTab text="%base.window">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel text="%base.close">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox>
-                    <fx:define>
-                        <FXToggleGroup fx:id="exitMode"/>
-                    </fx:define>
-                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode3" realHeight="25" selected="true"
-                                   fx:id="exitMode0" userData="0">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FXRadioButton>
-                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode1" realHeight="25" fx:id="exitMode1"
-                                   userData="1">
-                        <HBox.margin>
-                            <Insets left="10" top="5"/>
-                        </HBox.margin>
-                    </FXRadioButton>
-                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode2" realHeight="25" fx:id="exitMode2"
-                                   userData="2">
-                        <HBox.margin>
-                            <Insets left="10" top="5"/>
-                        </HBox.margin>
-                    </FXRadioButton>
-                </FlexHBox>
-                <InfoLabel text="%base.remember">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox>
-                    <FXCheckBox text="%base.windowSize" selected="true" fx:id="pageSize">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FXCheckBox>
-                    <FXCheckBox text="%base.windowLocation" fx:id="pageLocation">
-                        <HBox.margin>
-                            <Insets left="10" top="5"/>
-                        </HBox.margin>
-                    </FXCheckBox>
-                    <FXCheckBox text="%base.windowResize" fx:id="pageResize">
-                        <HBox.margin>
-                            <Insets left="10" top="5"/>
-                        </HBox.margin>
-                    </FXCheckBox>
-                </FlexHBox>
-                <InfoLabel text="%base.opacity">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox>
-                    <FlexSlider realHeight="25" fx:id="opacity" min="40" value="100">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FlexSlider>
-                    <ResetButton realWidth="80" realHeight="25" onAction="#resetOpacity">
-                        <HBox.margin>
-                            <Insets left="10" top="6"/>
-                        </HBox.margin>
-                    </ResetButton>
-                </FlexHBox>
-            </FlexVBox>
-        </FXTab>
-        <FXTab text="%base.font">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexTitledPane text="%base.general" expanded="false" autoHide="true"
-                                flexWidth="100%">
-                    <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250">
-                        <InfoLabel text="%base.fontName">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontFamily">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontFamilyComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetFontFamily">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                        <InfoLabel text="%base.fontSize">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontSize">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontSizeComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetFontSize">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                        <InfoLabel text="%base.fontWeight">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontWeight">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontWeightComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetFontWeight">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                    </FlexVBox>
-                </FlexTitledPane>
-                <FlexTitledPane text="%base.editor" expanded="false" autoHide="true"
-                                flexWidth="100%">
-                    <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250">
-                        <InfoLabel text="%base.fontName">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontFamily">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontFamilyComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontFamily">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                        <InfoLabel text="%base.fontSize">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontSize">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontSizeComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontSize">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                        <InfoLabel text="%base.fontWeight">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontWeight">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontWeightComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontWeight">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                    </FlexVBox>
-                </FlexTitledPane>
-                <FlexTitledPane text="%base.terminal" expanded="false" autoHide="true"
-                                flexWidth="100%">
-                    <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250">
-                        <InfoLabel text="%base.fontName">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontFamily">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontFamilyComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontFamily">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                        <InfoLabel text="%base.fontSize">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontSize">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontSizeComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontSize">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                        <InfoLabel text="%base.fontWeight">
-                            <VBox.margin>
-                                <Insets left="30" top="10"/>
-                            </VBox.margin>
-                        </InfoLabel>
-                        <FlexHBox>
-                            <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontWeight">
-                                <HBox.margin>
-                                    <Insets left="30" top="5"/>
-                                </HBox.margin>
-                            </FontWeightComboBox>
-                            <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontWeight">
-                                <HBox.margin>
-                                    <Insets left="10" top="6"/>
-                                </HBox.margin>
-                            </ResetButton>
-                        </FlexHBox>
-                    </FlexVBox>
-                </FlexTitledPane>
-            </FlexVBox>
-        </FXTab>
-        <FXTab text="%base.theme">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel text="%base.themeName">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="%base.themeTip"
-                               fx:id="theme">
-                    <VBox.margin>
-                        <Insets left="30" top="5"/>
-                    </VBox.margin>
-                </ThemeComboBox>
-                <InfoLabel text="%base.fgColor">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox fx:id="fgColorBox" disable="true">
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.fgColorTip"
-                                     fx:id="fgColor">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FlexColorPicker>
-                    <ResetButton prefWidth="80" realHeight="25"
-                                 onAction="#resetFgColor">
-                        <HBox.margin>
-                            <Insets left="10" top="6"/>
-                        </HBox.margin>
-                    </ResetButton>
-                </FlexHBox>
-                <InfoLabel text="%base.bgColor">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox fx:id="bgColorBox" disable="true">
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.bgColorTip"
-                                     fx:id="bgColor">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FlexColorPicker>
-                    <ResetButton realWidth="80" realHeight="25"
-                                 onAction="#resetBgColor">
-                        <HBox.margin>
-                            <Insets left="10" top="6"/>
-                        </HBox.margin>
-                    </ResetButton>
-                </FlexHBox>
-                <InfoLabel text="%base.accentColor">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox fx:id="accentColorBox" disable="true">
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.accentColorTip"
-                                     fx:id="accentColor">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </FlexColorPicker>
-                    <ResetButton realWidth="80" realHeight="25"
-                                 onAction="#resetAccentColor">
-                        <HBox.margin>
-                            <Insets left="10" top="6"/>
-                        </HBox.margin>
-                    </ResetButton>
-                </FlexHBox>
-            </FlexVBox>
-        </FXTab>
-        <FXTab text="%base.locale">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel text="%base.language">
-                    <VBox.margin>
-                        <Insets left="30" top="10"/>
-                    </VBox.margin>
-                </InfoLabel>
-                <FlexHBox>
-                    <LocaleComboBox realHeight="30" flexWidth="100% - 225" initIndex="0" fx:id="locale">
-                        <HBox.margin>
-                            <Insets left="30" top="5"/>
-                        </HBox.margin>
-                    </LocaleComboBox>
-                    <ResetButton realWidth="80" realHeight="25"
-                                 onAction="#resetLocale">
-                        <HBox.margin>
-                            <Insets left="10" top="6"/>
-                        </HBox.margin>
-                    </ResetButton>
-                </FlexHBox>
-            </FlexVBox>
-        </FXTab>
-    </FlexTabPane>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <SaveButton onAction="#saveSetting">
-            <HBox.margin>
-                <Insets left="30" top="10"/>
-            </HBox.margin>
-        </SaveButton>
-        <CancelButton>
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </CancelButton>
-    </FlexHBox>
-</FlexVBox>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <?import cn.oyzh.fx.gui.button.CancelButton?> -->
+<!-- <?import cn.oyzh.fx.gui.button.ResetButton?> -->
+<!-- <?import cn.oyzh.fx.gui.button.SaveButton?> -->
+<!-- <?import cn.oyzh.fx.gui.label.InfoLabel?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.tab.FXTab?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.text.FlexSlider?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?> -->
+<!-- <?import cn.oyzh.fx.plus.font.FontFamilyComboBox?> -->
+<!-- <?import cn.oyzh.fx.plus.font.FontSizeComboBox?> -->
+<!-- <?import cn.oyzh.fx.plus.font.FontWeightComboBox?> -->
+<!-- <?import cn.oyzh.fx.plus.i18n.LocaleComboBox?> -->
+<!-- <?import cn.oyzh.fx.plus.theme.ThemeComboBox?> -->
+<!-- <?import javafx.geometry.Insets?> -->
+<!-- <?import javafx.scene.layout.HBox?> -->
+<!-- <?import javafx.scene.layout.VBox?> -->
+<!-- <?import cn.oyzh.fx.gui.text.field.NumberTextField?> -->
+<!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!--           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="550" realHeight="450"> -->
+<!--     <FlexTabPane flexWidth="100%" flexHeight="100% - 60"> -->
+<!--         <FXTab text="%base.zk"> -->
+<!--             <FlexVBox flexWidth="100%" flexHeight="100%"> -->
+<!--                 <InfoLabel text="%base.load"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <fx:define> -->
+<!--                     <FXToggleGroup fx:id="loadMode"/> -->
+<!--                 </fx:define> -->
+<!--                 <FXHBox> -->
+<!--                     <FXRadioButton toggleGroup="$loadMode" text="%zk.setting.loadFirst" -->
+<!--                                    realHeight="25" selected="true" fx:id="loadMode0" userData="0"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="30" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXRadioButton> -->
+<!--                     <FXRadioButton toggleGroup="$loadMode" text="%zk.setting.loadAll" -->
+<!--                                    realHeight="25" fx:id="loadMode1" userData="1"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXRadioButton> -->
+<!--                     <FXRadioButton toggleGroup="$loadMode" text="%zk.setting.loadRoot" -->
+<!--                                    realHeight="25" fx:id="loadMode2" userData="2"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXRadioButton> -->
+<!--                 </FXHBox> -->
+<!--                 <InfoLabel text="%base.auth"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <FXCheckBox tipText="%zk.info.autoAuthTip" text="%base.autoAuth" selected="true" fx:id="authMode"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="5"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </FXCheckBox> -->
+<!--                 <InfoLabel text="%zk.setting.tip1"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <NumberTextField step="100" fx:id="nodeLoadLimit" minVal="0" value="1000" -->
+<!--                                  tipText="%zk.setting.tip2" flexWidth="100% - 180" prefHeight="25"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="5"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </NumberTextField> -->
+<!--             </FlexVBox> -->
+<!--         </FXTab> -->
+<!--         <FXTab text="%base.window"> -->
+<!--             <FlexVBox flexWidth="100%" flexHeight="100%"> -->
+<!--                 <InfoLabel text="%base.close"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <FlexHBox> -->
+<!--                     <fx:define> -->
+<!--                         <FXToggleGroup fx:id="exitMode"/> -->
+<!--                     </fx:define> -->
+<!--                     <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode3" realHeight="25" selected="true" -->
+<!--                                    fx:id="exitMode0" userData="0"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="30" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXRadioButton> -->
+<!--                     <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode1" realHeight="25" fx:id="exitMode1" -->
+<!--                                    userData="1"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXRadioButton> -->
+<!--                     <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode2" realHeight="25" fx:id="exitMode2" -->
+<!--                                    userData="2"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXRadioButton> -->
+<!--                 </FlexHBox> -->
+<!--                 <InfoLabel text="%base.remember"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <FlexHBox> -->
+<!--                     <FXCheckBox text="%base.windowSize" selected="true" fx:id="pageSize"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="30" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXCheckBox> -->
+<!--                     <FXCheckBox text="%base.windowLocation" fx:id="pageLocation"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXCheckBox> -->
+<!--                     <FXCheckBox text="%base.windowResize" fx:id="pageResize"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FXCheckBox> -->
+<!--                 </FlexHBox> -->
+<!--                 <InfoLabel text="%base.opacity"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <FlexHBox> -->
+<!--                     <FlexSlider realHeight="25" fx:id="opacity" min="40" value="100"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="30" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FlexSlider> -->
+<!--                     <ResetButton realWidth="80" realHeight="25" onAction="#resetOpacity"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="6"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </ResetButton> -->
+<!--                 </FlexHBox> -->
+<!--             </FlexVBox> -->
+<!--         </FXTab> -->
+<!--         <FXTab text="%base.font"> -->
+<!--             <FlexVBox flexWidth="100%" flexHeight="100%"> -->
+<!--                 <FlexTitledPane text="%base.general" expanded="false" autoHide="true" -->
+<!--                                 flexWidth="100%"> -->
+<!--                     <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250"> -->
+<!--                         <InfoLabel text="%base.fontName"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontFamily"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontFamilyComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetFontFamily"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                         <InfoLabel text="%base.fontSize"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontSize"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontSizeComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetFontSize"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                         <InfoLabel text="%base.fontWeight"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontWeight"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontWeightComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetFontWeight"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                     </FlexVBox> -->
+<!--                 </FlexTitledPane> -->
+<!--                 <FlexTitledPane text="%base.editor" expanded="false" autoHide="true" -->
+<!--                                 flexWidth="100%"> -->
+<!--                     <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250"> -->
+<!--                         <InfoLabel text="%base.fontName"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontFamily"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontFamilyComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontFamily"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                         <InfoLabel text="%base.fontSize"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontSize"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontSizeComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontSize"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                         <InfoLabel text="%base.fontWeight"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontWeight"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontWeightComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetEditorFontWeight"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                     </FlexVBox> -->
+<!--                 </FlexTitledPane> -->
+<!--                 <FlexTitledPane text="%base.terminal" expanded="false" autoHide="true" -->
+<!--                                 flexWidth="100%"> -->
+<!--                     <FlexVBox flexWidth="100%" prefHeight="250" minHeight="250"> -->
+<!--                         <InfoLabel text="%base.fontName"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontFamily"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontFamilyComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontFamily"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                         <InfoLabel text="%base.fontSize"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontSize"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontSizeComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontSize"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                         <InfoLabel text="%base.fontWeight"> -->
+<!--                             <VBox.margin> -->
+<!--                                 <Insets left="30" top="10"/> -->
+<!--                             </VBox.margin> -->
+<!--                         </InfoLabel> -->
+<!--                         <FlexHBox> -->
+<!--                             <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontWeight"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="30" top="5"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </FontWeightComboBox> -->
+<!--                             <ResetButton realWidth="80" realHeight="25" onAction="#resetTerminalFontWeight"> -->
+<!--                                 <HBox.margin> -->
+<!--                                     <Insets left="10" top="6"/> -->
+<!--                                 </HBox.margin> -->
+<!--                             </ResetButton> -->
+<!--                         </FlexHBox> -->
+<!--                     </FlexVBox> -->
+<!--                 </FlexTitledPane> -->
+<!--             </FlexVBox> -->
+<!--         </FXTab> -->
+<!--         <FXTab text="%base.theme"> -->
+<!--             <FlexVBox flexWidth="100%" flexHeight="100%"> -->
+<!--                 <InfoLabel text="%base.themeName"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="%base.themeTip" -->
+<!--                                fx:id="theme"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="5"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </ThemeComboBox> -->
+<!--                 <InfoLabel text="%base.fgColor"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <FlexHBox fx:id="fgColorBox" disable="true"> -->
+<!--                     <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.fgColorTip" -->
+<!--                                      fx:id="fgColor"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="30" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FlexColorPicker> -->
+<!--                     <ResetButton prefWidth="80" realHeight="25" -->
+<!--                                  onAction="#resetFgColor"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="6"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </ResetButton> -->
+<!--                 </FlexHBox> -->
+<!--                 <InfoLabel text="%base.bgColor"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <FlexHBox fx:id="bgColorBox" disable="true"> -->
+<!--                     <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.bgColorTip" -->
+<!--                                      fx:id="bgColor"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="30" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FlexColorPicker> -->
+<!--                     <ResetButton realWidth="80" realHeight="25" -->
+<!--                                  onAction="#resetBgColor"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="6"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </ResetButton> -->
+<!--                 </FlexHBox> -->
+<!--                 <InfoLabel text="%base.accentColor"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <FlexHBox fx:id="accentColorBox" disable="true"> -->
+<!--                     <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.accentColorTip" -->
+<!--                                      fx:id="accentColor"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="30" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </FlexColorPicker> -->
+<!--                     <ResetButton realWidth="80" realHeight="25" -->
+<!--                                  onAction="#resetAccentColor"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="6"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </ResetButton> -->
+<!--                 </FlexHBox> -->
+<!--             </FlexVBox> -->
+<!--         </FXTab> -->
+<!--         <FXTab text="%base.locale"> -->
+<!--             <FlexVBox flexWidth="100%" flexHeight="100%"> -->
+<!--                 <InfoLabel text="%base.language"> -->
+<!--                     <VBox.margin> -->
+<!--                         <Insets left="30" top="10"/> -->
+<!--                     </VBox.margin> -->
+<!--                 </InfoLabel> -->
+<!--                 <FlexHBox> -->
+<!--                     <LocaleComboBox realHeight="30" flexWidth="100% - 225" initIndex="0" fx:id="locale"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="30" top="5"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </LocaleComboBox> -->
+<!--                     <ResetButton realWidth="80" realHeight="25" -->
+<!--                                  onAction="#resetLocale"> -->
+<!--                         <HBox.margin> -->
+<!--                             <Insets left="10" top="6"/> -->
+<!--                         </HBox.margin> -->
+<!--                     </ResetButton> -->
+<!--                 </FlexHBox> -->
+<!--             </FlexVBox> -->
+<!--         </FXTab> -->
+<!--     </FlexTabPane> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         <SaveButton onAction="#saveSetting"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="30" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </SaveButton> -->
+<!--         <CancelButton> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </CancelButton> -->
+<!--     </FlexHBox> -->
+<!-- </FlexVBox> -->

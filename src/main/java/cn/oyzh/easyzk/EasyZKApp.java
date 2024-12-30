@@ -4,7 +4,7 @@ import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.controller.MainController;
-import cn.oyzh.easyzk.controller.SettingController;
+import cn.oyzh.easyzk.controller.SettingController2;
 import cn.oyzh.easyzk.controller.data.ZKMigrationTipsController;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
@@ -178,13 +178,13 @@ public class EasyZKApp extends FXApplication {
      */
     private void showSetting() {
         FXUtil.runLater(() -> {
-            StageAdapter wrapper = StageManager.getStage(SettingController.class);
+            StageAdapter wrapper = StageManager.getStage(SettingController2.class);
             if (wrapper != null) {
                 JulLog.info("front setting.");
                 wrapper.toFront();
             } else {
                 JulLog.info("show setting.");
-                StageManager.showStage(SettingController.class, StageManager.getPrimaryStage());
+                StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
             }
         });
     }

@@ -28,7 +28,12 @@ public class ZKSettingStore extends JdbcKeyValueStore<ZKSetting> {
      * @return zk设置
      */
     public ZKSetting load() {
-        ZKSetting setting = super.select();
+        ZKSetting setting = null;
+        try {
+            setting = super.select();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         if (setting == null) {
             setting = new ZKSetting();
         }

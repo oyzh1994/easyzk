@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.plus.FXConst;
@@ -125,31 +124,41 @@ public class MainController extends ParentStageController {
 
     @Override
     public void onStageInitialize(StageAdapter stage) {
-        super.onStageInitialize(stage);
-        // 设置上次保存的页面大小
-        if (this.setting.isRememberPageSize()) {
-            if (this.setting.isPageMaximized()) {
-                this.stage.setMaximized(true);
-                JulLog.debug("view maximized");
-            } else if (this.setting.getPageWidth() != null && this.setting.getPageHeight() != null) {
-                this.stage.setSize(this.setting.getPageWidth(), this.setting.getPageHeight());
-                JulLog.debug("view width:{} height:{}", this.setting.getPageWidth(), this.setting.getPageHeight());
+        try {
+            super.onStageInitialize(stage);
+            // 设置上次保存的页面大小
+            if (this.setting.isRememberPageSize()) {
+                if (this.setting.isPageMaximized()) {
+                    this.stage.setMaximized(true);
+                    JulLog.debug("view maximized");
+                } else if (this.setting.getPageWidth() != null && this.setting.getPageHeight() != null) {
+                    this.stage.setSize(this.setting.getPageWidth(), this.setting.getPageHeight());
+                    JulLog.debug("view width:{} height:{}", this.setting.getPageWidth(), this.setting.getPageHeight());
+                }
             }
-        }
-        // 设置上次保存的页面位置
-        if (this.setting.isRememberPageLocation() && !this.setting.isPageMaximized() && this.setting.getPageScreenX() != null && this.setting.getPageScreenY() != null) {
-            this.stage.setLocation(this.setting.getPageScreenX(), this.setting.getPageScreenY());
-            JulLog.debug("view x:{} y:{}", this.setting.getPageScreenX(), this.setting.getPageScreenY());
+            // 设置上次保存的页面位置
+            if (this.setting.isRememberPageLocation() && !this.setting.isPageMaximized() && this.setting.getPageScreenX() != null && this.setting.getPageScreenY() != null) {
+                this.stage.setLocation(this.setting.getPageScreenX(), this.setting.getPageScreenY());
+                JulLog.debug("view x:{} y:{}", this.setting.getPageScreenX(), this.setting.getPageScreenY());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JulLog.warn("onStageInitialize error", ex);
         }
     }
 
     @Override
     public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
-        TitleBar titleBar = this.stage.getTitleBar();
-        // 加载标题
-        if (titleBar != null && !titleBar.isHasContent()) {
-            titleBar.loadContent("/fxml/header2.fxml");
+        try {
+            super.onStageShown(event);
+            TitleBar titleBar = this.stage.getTitleBar();
+            // 加载标题
+            if (titleBar != null && !titleBar.isHasContent()) {
+                titleBar.loadContent("/fxml/header2.fxml");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JulLog.warn("onStageInitialize error", ex);
         }
     }
 

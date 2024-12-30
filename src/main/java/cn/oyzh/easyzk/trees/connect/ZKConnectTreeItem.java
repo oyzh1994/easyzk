@@ -206,7 +206,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      * 导入数据
      */
     private void importData() {
-        StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class);
+        StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class, this.window());
         fxView.setProp("connect", this.value);
         fxView.display();
     }
@@ -219,7 +219,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         // if (adapter != null) {
         //     adapter.disappear();
         // }
-        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class);
+        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class, this.window());
         adapter.setProp("sourceInfo", this.value);
         adapter.display();
     }

@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.controller.data;
 
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.fx.plus.FXConst;
@@ -20,7 +19,6 @@ import javafx.stage.WindowEvent;
  * @since 2024/11/25
  */
 @StageAttribute(
-        // iconUrl = ZKConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/zkMigrationTips.fxml"
 )
@@ -43,19 +41,19 @@ public class ZKMigrationTipsController extends StageController {
     @Override
     public void onWindowHidden(WindowEvent event) {
         super.onWindowHidden(event);
-        if(this.ignoreMigration.isSelected()){
+        if (this.ignoreMigration.isSelected()) {
             ZKStoreUtil.ignoreMigration();
         }
     }
 
     @FXML
-    private void close( ) {
+    private void close() {
         super.closeWindow();
     }
 
     @FXML
-    private void migration( ) {
+    private void migration() {
         this.close();
-        StageManager.showStage(ZKDataMigrationController.class);
+        StageManager.showStage(ZKDataMigrationController.class, StageManager.getPrimaryStage());
     }
 }

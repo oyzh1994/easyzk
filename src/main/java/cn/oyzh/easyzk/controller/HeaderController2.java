@@ -82,7 +82,7 @@ public class HeaderController2 extends StageController {
         if (wrapper != null) {
             wrapper.toFront();
         } else {
-            StageManager.showStage(ZKDataTransportController.class);
+            StageManager.showStage(ZKDataTransportController.class, this.stage);
         }
     }
 
@@ -115,6 +115,6 @@ public class HeaderController2 extends StageController {
      */
     @FXML
     private void migration() {
-        StageManager.showStage(ZKDataMigrationController.class);
+        StageManager.showStage(ZKDataMigrationController.class, this.stage);
     }
 }

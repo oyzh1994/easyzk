@@ -40,7 +40,6 @@ import cn.oyzh.easyzk.terminal.fourletterword.ZKStatCommandHandler;
 import cn.oyzh.easyzk.terminal.fourletterword.ZKWchcCommandHandler;
 import cn.oyzh.easyzk.terminal.fourletterword.ZKWchpCommandHandler;
 import cn.oyzh.easyzk.terminal.fourletterword.ZKWchsCommandHandler;
-import cn.oyzh.fx.terminal.standard.ClearTerminalCommand;
 import cn.oyzh.fx.terminal.standard.ClearTerminalCommandHandler;
 import cn.oyzh.fx.terminal.standard.HelpTerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
@@ -53,7 +52,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ZKTerminalManager {
 
-    public static void registerHandlers(){
+    /**
+     * 注册处理器
+     */
+    public static void registerHandlers() {
         // 标准命令
         TerminalManager.registerHandler(HelpTerminalCommandHandler.class);
         TerminalManager.registerHandler(ClearTerminalCommandHandler.class);

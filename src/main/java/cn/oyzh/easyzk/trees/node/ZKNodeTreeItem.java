@@ -383,7 +383,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
         // StageAdapter fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
         // fxView.setProp("zkItem", this);
         // fxView.setProp("zkClient", this.client());
-        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class);
+        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
         fxView.setProp("connect", this.zkConnect());
         fxView.setProp("nodePath", this.nodePath());
         fxView.display();

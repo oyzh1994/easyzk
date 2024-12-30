@@ -49,23 +49,28 @@ public class EasyZKApp extends FXApplication {
     private static final Project PROJECT = Project.load();
 
     public static void main(String[] args) {
-        SysConst.projectName(PROJECT.getName());
-        JulLog.info("项目启动中...");
-        // 储存初始化
-        ZKStoreUtil.init();
-        // 注册sasl处理器
-        ZKSASLUtil.registerConfiguration();
-        SysConst.storeDir(ZKConst.STORE_PATH);
-        SysConst.cacheDir(ZKConst.CACHE_PATH);
-        FXConst.appIcon(ZKConst.ICON_PATH);
-        EventFactory.registerEventBus(FxEventBus.class);
-        EventFactory.syncEventConfig(FxEventConfig.SYNC);
-        EventFactory.asyncEventConfig(FxEventConfig.ASYNC);
-        EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
-        TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
-        // 初始化时区处理器
-        // System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
-        launch(EasyZKApp.class, args);
+        try {
+            SysConst.projectName(PROJECT.getName());
+            JulLog.info("项目启动中...");
+            // 储存初始化
+            ZKStoreUtil.init();
+            // 注册sasl处理器
+            ZKSASLUtil.registerConfiguration();
+            SysConst.storeDir(ZKConst.STORE_PATH);
+            SysConst.cacheDir(ZKConst.CACHE_PATH);
+            FXConst.appIcon(ZKConst.ICON_PATH);
+            EventFactory.registerEventBus(FxEventBus.class);
+            EventFactory.syncEventConfig(FxEventConfig.SYNC);
+            EventFactory.asyncEventConfig(FxEventConfig.ASYNC);
+            EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
+            TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
+            // 初始化时区处理器
+            // System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
+            launch(EasyZKApp.class, args);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JulLog.warn("main error", ex);
+        }
     }
 
     @Override
@@ -93,36 +98,47 @@ public class EasyZKApp extends FXApplication {
             super.init();
         } catch (Exception ex) {
             ex.printStackTrace();
+            JulLog.warn("main error", ex);
         }
     }
 
     @Override
     public void start(Stage primaryStage) {
-        super.start(primaryStage);
-        // 注册命令
-        ZKTerminalManager.registerHandlers();
-        // 显示迁移弹窗
-        if (ZKStoreUtil.checkOlder()) {
-            FXUtil.runWait(() -> StageManager.showStage(ZKMigrationTipsController.class), 1000);
+        try {
+            super.start(primaryStage);
+            // 注册命令
+            ZKTerminalManager.registerHandlers();
+            // 显示迁移弹窗
+            if (ZKStoreUtil.checkOlder()) {
+                FXUtil.runWait(() -> StageManager.showStage(ZKMigrationTipsController.class, primaryStage), 1000);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JulLog.warn("start error", ex);
         }
     }
 
     @Override
     protected void showMainView() {
-        // 显示主页面
-        StageManager.showStage(MainController.class);
+        try {
+            // 显示主页面
+            StageManager.showStage(MainController.class);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JulLog.warn("showMainView error", ex);
+        }
     }
 
     @Override
     protected void initSystemTray() {
-        if (!TrayManager.supported()) {
-            JulLog.warn("tray is not supported.");
-            return;
-        }
-        if (TrayManager.exist()) {
-            return;
-        }
         try {
+            if (!TrayManager.supported()) {
+                JulLog.warn("tray is not supported.");
+                return;
+            }
+            if (TrayManager.exist()) {
+                return;
+            }
             // 初始化
             TrayManager.init(ZKConst.TRAY_ICON_PATH);
             // 设置标题

@@ -135,13 +135,30 @@
                         </HBox.margin>
                     </FXCheckBox>
                 </FlexHBox>
-                <InfoLabel text="%base.opacity">
+                <InfoLabel text="%base.windowOpacity">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox>
-                    <FlexSlider realHeight="25" fx:id="opacity" min="40" value="100">
+                    <FlexSlider realHeight="25" fx:id="opacity" min="50" value="100">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FlexSlider>
+                    <ResetButton realWidth="80" realHeight="30" onAction="#resetOpacity">
+                        <HBox.margin>
+                            <Insets left="10" top="5"/>
+                        </HBox.margin>
+                    </ResetButton>
+                </FlexHBox>
+                <InfoLabel text="%base.titleBarOpacity">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FlexHBox>
+                    <FlexSlider realHeight="25" fx:id="titleBarOpacity" min="50" value="100">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>

@@ -85,7 +85,7 @@ public class EasyZKApp extends FXApplication {
             // 应用主题
             ThemeManager.apply(setting.themeConfig());
             // 应用透明度
-            OpacityManager.apply(setting.getOpacity());
+            OpacityManager.apply(setting.opacityConfig());
             // 注册异常处理器
             MessageBox.registerExceptionParser(ZKExceptionParser.INSTANCE);
             // 调用父类

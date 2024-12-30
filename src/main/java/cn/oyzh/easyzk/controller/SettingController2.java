@@ -5,7 +5,6 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKProcessUtil;
-import cn.oyzh.fx.gui.setting.SettingLeftContent;
 import cn.oyzh.fx.gui.setting.SettingLeftItem;
 import cn.oyzh.fx.gui.setting.SettingLeftTreeView;
 import cn.oyzh.fx.gui.setting.SettingMainPane;
@@ -14,7 +13,6 @@ import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
 import cn.oyzh.fx.plus.controls.text.FlexSlider;
@@ -238,10 +236,16 @@ public class SettingController2 extends StageController {
     private LocaleComboBox locale;
 
     /**
-     * 透明度
+     * 窗口透明度
      */
     @FXML
     private FlexSlider opacity;
+
+    /**
+     * 标题栏透明度
+     */
+    @FXML
+    private FlexSlider titleBarOpacity;
 
     /**
      * 配置对象
@@ -311,6 +315,9 @@ public class SettingController2 extends StageController {
         if (this.setting.getOpacity() != null) {
             this.opacity.setValue(this.setting.getOpacity());
         }
+        if (this.setting.getTitleBarOpacity() != null) {
+            this.titleBarOpacity.setValue(this.setting.getTitleBarOpacity());
+        }
     }
 
     /**
@@ -357,6 +364,7 @@ public class SettingController2 extends StageController {
             this.setting.setLocale(locale);
             // 透明度相关处理
             this.setting.setOpacity((float) this.opacity.getValue());
+            this.setting.setTitleBarOpacity((float) this.titleBarOpacity.getValue());
             // 节点加载限制
             this.setting.setNodeLoadLimit(this.nodeLoadLimit.getIntValue());
             // 页面设置
@@ -374,7 +382,7 @@ public class SettingController2 extends StageController {
             // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
             // 应用透明度配置
-            OpacityManager.apply((float) this.opacity.getValue());
+            OpacityManager.apply(this.setting.opacityConfig());
             // 提示不为空，说明需要重启，则执行重启
             if (StringUtil.isNotBlank(tips) && MessageBox.confirm(tips)) {
                 ZKProcessUtil.restartApplication();
@@ -468,6 +476,14 @@ public class SettingController2 extends StageController {
     @FXML
     private void resetOpacity() {
         this.opacity.setValue(OpacityManager.defaultOpacity * 100);
+    }
+
+    /**
+     * 重置标题栏透明度
+     */
+    @FXML
+    private void resetTitleBarOpacity() {
+        this.titleBarOpacity.setValue(OpacityManager.defaultOpacity * 100);
     }
 
     @Override

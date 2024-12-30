@@ -44,7 +44,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         ZKSetting setting= ZKSettingStore.SETTING;
         this.setFontSize(setting.getTerminalFontSize());
         this.setFontFamily(setting.getTerminalFontFamily());
-        this.setFontWeight(setting.getTerminalFontWeight());
+        this.setFontWeight2(setting.getTerminalFontWeight());
     }
 
     /**

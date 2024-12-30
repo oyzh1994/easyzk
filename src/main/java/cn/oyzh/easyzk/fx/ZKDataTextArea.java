@@ -14,6 +14,6 @@ public class ZKDataTextArea extends RichDataTextAreaPane {
         ZKSetting setting= ZKSettingStore.SETTING;
         this.setFontSize(setting.getEditorFontSize());
         this.setFontFamily(setting.getEditorFontFamily());
-        this.setFontWeight(setting.getEditorFontWeight());
+        this.setFontWeight2(setting.getEditorFontWeight());
     }
 }

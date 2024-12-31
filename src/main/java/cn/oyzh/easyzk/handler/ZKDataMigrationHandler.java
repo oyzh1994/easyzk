@@ -12,7 +12,7 @@ import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
-import cn.oyzh.easyzk.terminal.ZKTerminalHistoryJdbcStore;
+import cn.oyzh.easyzk.terminal.ZKTerminalHistoryStore;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.i18n.I18nHelper;
 import lombok.Setter;
@@ -68,7 +68,7 @@ public class ZKDataMigrationHandler extends DataHandler {
 
     private ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
 
-    private ZKTerminalHistoryJdbcStore terminalHistoryStore = ZKTerminalHistoryJdbcStore.INSTANCE;
+    private ZKTerminalHistoryStore terminalHistoryStore = ZKTerminalHistoryStore.INSTANCE;
 
     /**
      * 执行传输

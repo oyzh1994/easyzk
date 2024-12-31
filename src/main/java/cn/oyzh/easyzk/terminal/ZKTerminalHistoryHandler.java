@@ -25,7 +25,7 @@ public class ZKTerminalHistoryHandler extends BaseTerminalHistoryHandler {
     /**
      * 存储器
      */
-    private final ZKTerminalHistoryJdbcStore historyStore = ZKTerminalHistoryJdbcStore.INSTANCE;
+    private final ZKTerminalHistoryStore historyStore = ZKTerminalHistoryStore.INSTANCE;
 
     @Override
     public void clearHistory() {

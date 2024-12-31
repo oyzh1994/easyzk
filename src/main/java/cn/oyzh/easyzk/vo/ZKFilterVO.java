@@ -16,7 +16,7 @@ import java.util.List;
  * @author oyzh
  * @since 2022/12/20
  */
-public class ZKFilterVO extends ZKFilter   {
+public class ZKFilterVO extends ZKFilter {
 
     /**
      * 转换

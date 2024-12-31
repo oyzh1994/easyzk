@@ -108,7 +108,7 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
                 this.authStore.deleteByIid(model.getId());
                 for (ZKAuth auth : auths) {
                     auth.setIid(model.getId());
-                    ZKAuthStore.INSTANCE.replace(auth);
+                    this.authStore.replace(auth);
                 }
             }
 
@@ -118,7 +118,7 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
                 this.filterStore.deleteByIid(model.getId());
                 for (ZKFilter filter : filters) {
                     filter.setIid(model.getId());
-                    ZKFilterStore.INSTANCE.replace(filter);
+                    this.filterStore.replace(filter);
                 }
             }
         }

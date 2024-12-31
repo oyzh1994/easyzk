@@ -2,29 +2,16 @@
 <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.label.AboutSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.MigrationSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.ToolsSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FlexHBox xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.HeaderController2" realHeight="30">
-    <!-- <SVGLabel text="%base.auth" onMousePrimaryClicked="#auth" url="/font/audit.svg" -->
-    <!--           size="12"> -->
-    <!--     <HBox.margin> -->
-    <!--         <Insets left="10" top="8"/> -->
-    <!--     </HBox.margin> -->
-    <!-- </SVGLabel> -->
-    <!-- <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12"> -->
-    <!--     <HBox.margin> -->
-    <!--         <Insets left="10" top="8"/> -->
-    <!--     </HBox.margin> -->
-    <!-- </FilterSVGLabel> -->
     <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">
         <HBox.margin>
             <Insets left="10" top="8"/>

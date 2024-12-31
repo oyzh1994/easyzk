@@ -29,6 +29,7 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.TerminalConst;
+import cn.oyzh.fx.terminal.util.TerminalManager;
 import cn.oyzh.i18n.I18nManager;
 import javafx.stage.Stage;
 
@@ -107,7 +108,7 @@ public class EasyZKApp extends FXApplication {
         try {
             super.start(primaryStage);
             // 注册命令
-            ZKTerminalManager.registerHandlers();
+            TerminalManager.setLoadHandlerAction(ZKTerminalManager::registerHandlers);
             // 显示迁移弹窗
             if (ZKStoreUtil.checkOlder()) {
                 FXUtil.runWait(() -> StageManager.showStage(ZKMigrationTipsController.class, primaryStage), 1000);

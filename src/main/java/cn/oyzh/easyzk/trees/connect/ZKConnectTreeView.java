@@ -109,8 +109,8 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      * @param event 事件
      */
     @EventSubscribe
-    private void infoAdded(ZKConnectAddedEvent event) {
-        this.getRoot().infoAdded(event.data());
+    private void connectAdded(ZKConnectAddedEvent event) {
+        this.getRoot().connectAdded(event.data());
     }
 
     /**
@@ -119,8 +119,8 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      * @param event 事件
      */
     @EventSubscribe
-    private void infoUpdated(ZKConnectUpdatedEvent event) {
-        this.getRoot().infoUpdated(event.data());
+    private void connectUpdated(ZKConnectUpdatedEvent event) {
+        this.getRoot().connectUpdated(event.data());
     }
 
     /**

@@ -241,6 +241,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
     public void closeConnect(boolean waiting) {
         Runnable func = () -> {
             this.client.close();
+            this.setLoaded(false);
             this.clearChild();
         };
         if (waiting) {
@@ -387,7 +388,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         }
     }
 
-    public String infoName() {
+    public String connectName() {
         return this.value.getName();
     }
 

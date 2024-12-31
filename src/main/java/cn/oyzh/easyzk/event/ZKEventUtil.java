@@ -219,22 +219,22 @@ public class ZKEventUtil {
     /**
      * 终端打开事件
      *
-     * @param info zk信息
+     * @param zkConnect zk连接
      */
-    public static void terminalOpen(ZKConnect info) {
+    public static void terminalOpen(ZKConnect zkConnect) {
         ZKTerminalOpenEvent event = new ZKTerminalOpenEvent();
-        event.data(info);
+        event.data(zkConnect);
         EventUtil.post(event);
     }
 
     /**
      * 终端关闭事件
      *
-     * @param info zk信息
+     * @param zkConnect zk连接
      */
-    public static void terminalClose(ZKConnect info) {
+    public static void terminalClose(ZKConnect zkConnect) {
         ZKTerminalCloseEvent event = new ZKTerminalCloseEvent();
-        event.data(info);
+        event.data(zkConnect);
         EventUtil.post(event);
     }
 

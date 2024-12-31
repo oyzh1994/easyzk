@@ -202,42 +202,42 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         return BooleanUtil.isTrue(this.readonly);
     }
 
-    /**
-     * 是否被收藏
-     *
-     * @param path 路径
-     * @return 结果
-     */
-    public boolean isCollect(@NonNull String path) {
-        return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(path);
-    }
-
-    /**
-     * 添加收藏
-     *
-     * @param path 路径
-     */
-    public void addCollect(@NonNull String path) {
-        if (this.collects == null) {
-            this.collects = new ArrayList<>();
-        }
-        if (!this.collects.contains(path)) {
-            this.collects.add(path);
-        }
-    }
-
-    /**
-     * 取消收藏
-     *
-     * @param path 路径
-     * @return 结果
-     */
-    public boolean removeCollect(@NonNull String path) {
-        if (this.collects != null) {
-            return this.collects.remove(path);
-        }
-        return false;
-    }
+    // /**
+    //  * 是否被收藏
+    //  *
+    //  * @param path 路径
+    //  * @return 结果
+    //  */
+    // public boolean isCollect(@NonNull String path) {
+    //     return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(path);
+    // }
+    //
+    // /**
+    //  * 添加收藏
+    //  *
+    //  * @param path 路径
+    //  */
+    // public void addCollect(@NonNull String path) {
+    //     if (this.collects == null) {
+    //         this.collects = new ArrayList<>();
+    //     }
+    //     if (!this.collects.contains(path)) {
+    //         this.collects.add(path);
+    //     }
+    // }
+    //
+    // /**
+    //  * 取消收藏
+    //  *
+    //  * @param path 路径
+    //  * @return 结果
+    //  */
+    // public boolean removeCollect(@NonNull String path) {
+    //     if (this.collects != null) {
+    //         return this.collects.remove(path);
+    //     }
+    //     return false;
+    // }
 
     /**
      * 获取会话超时

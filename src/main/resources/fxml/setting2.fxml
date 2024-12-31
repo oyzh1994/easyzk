@@ -151,11 +151,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetOpacity"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.titleBarOpacity">
                     <VBox.margin>
@@ -173,11 +168,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetOpacity"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="font_general_box" flexWidth="100%"
@@ -198,11 +188,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetFontFamily"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.fontSize">
                     <VBox.margin>
@@ -220,11 +205,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetFontSize"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.fontWeight">
                     <VBox.margin>
@@ -242,11 +222,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetFontWeight"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="font_editor_box" flexWidth="100%"
@@ -267,11 +242,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetEditorFontFamily"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.fontSize">
                     <VBox.margin>
@@ -289,11 +259,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetEditorFontSize"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.fontWeight">
                     <VBox.margin>
@@ -311,11 +276,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetEditorFontWeight"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="font_terminal_box" flexWidth="100%"
@@ -336,11 +296,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetTerminalFontFamily"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.fontSize">
                     <VBox.margin>
@@ -358,11 +313,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetTerminalFontSize"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.fontWeight">
                     <VBox.margin>
@@ -380,11 +330,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" onAction="#resetTerminalFontWeight"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="theme_box" flexWidth="100%" flexHeight="100%"
@@ -417,12 +362,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton prefWidth="80" realHeight="30" -->
-                    <!--              onAction="#resetFgColor"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.bgColor">
                     <VBox.margin>
@@ -441,12 +380,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" -->
-                    <!--              onAction="#resetBgColor"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
                 <InfoLabel text="%base.accentColor">
                     <VBox.margin>
@@ -465,12 +398,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" -->
-                    <!--              onAction="#resetAccentColor"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="locale_box" flexWidth="100%" flexHeight="100%"
@@ -491,12 +418,6 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ResetSVGGlyph>
-                    <!-- <ResetButton realWidth="80" realHeight="30" -->
-                    <!--              onAction="#resetLocale"> -->
-                    <!--     <HBox.margin> -->
-                    <!--         <Insets left="10" top="5"/> -->
-                    <!--     </HBox.margin> -->
-                    <!-- </ResetButton> -->
                 </FlexHBox>
             </FlexVBox>
         </FlexVBox>

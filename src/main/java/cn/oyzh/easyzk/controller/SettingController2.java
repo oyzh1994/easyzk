@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
 import cn.oyzh.fx.plus.controls.text.FlexSlider;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.domain.Setting;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
@@ -372,20 +373,22 @@ public class SettingController2 extends StageController {
             this.setting.setRememberPageResize((byte) (this.pageResize.isSelected() ? 1 : 0));
             this.setting.setRememberPageLocation((byte) (this.pageLocation.isSelected() ? 1 : 0));
             this.setting.setExitMode((byte) Integer.parseInt(this.exitMode.selectedUserData()));
-            this.settingStore.replace(this.setting);
-            // 关闭窗口
-            this.closeWindow();
-            // 应用区域配置
-            I18nManager.apply(this.setting.getLocale());
-            // 应用字体配置
-            FontManager.apply(this.setting.fontConfig());
-            // 应用主题配置
-            ThemeManager.apply(this.setting.themeConfig());
-            // 应用透明度配置
-            OpacityManager.apply(this.setting.opacityConfig());
-            // 提示不为空，说明需要重启，则执行重启
-            if (StringUtil.isNotBlank(tips) && MessageBox.confirm(tips)) {
-                ZKProcessUtil.restartApplication();
+            // 更新设置
+            if (this.settingStore.update(this.setting)) {
+                // 关闭窗口
+                this.closeWindow();
+                // 应用区域配置
+                I18nManager.apply(this.setting.getLocale());
+                // 应用字体配置
+                FontManager.apply(this.setting.fontConfig());
+                // 应用主题配置
+                ThemeManager.apply(this.setting.themeConfig());
+                // 应用透明度配置
+                OpacityManager.apply(this.setting.opacityConfig());
+                // 提示不为空，说明需要重启，则执行重启
+                if (StringUtil.isNotBlank(tips) && MessageBox.confirm(tips)) {
+                    ZKProcessUtil.restartApplication();
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -427,7 +430,7 @@ public class SettingController2 extends StageController {
         SettingLeftTreeView treeView = this.root.getLeftTreeView();
         treeView.addItem(SettingLeftItem.of(I18nHelper.zk(), "zk_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.window(), "window_box"));
-        SettingTreeItem fontItem = treeView.addItem(SettingLeftItem.of(I18nHelper.font(),"font"));
+        SettingTreeItem fontItem = treeView.addItem(SettingLeftItem.of(I18nHelper.font(), "font"));
         fontItem.addItem(SettingLeftItem.of(I18nHelper.general(), "font_general_box"));
         fontItem.addItem(SettingLeftItem.of(I18nHelper.editor(), "font_editor_box"));
         fontItem.addItem(SettingLeftItem.of(I18nHelper.terminal(), "font_terminal_box"));
@@ -496,7 +499,7 @@ public class SettingController2 extends StageController {
      */
     @FXML
     private void resetFontFamily() {
-        this.fontFamily.select(ZKSetting.defaultFontFamily());
+        this.fontFamily.select(Setting.defaultFontFamily());
     }
 
     /**
@@ -504,7 +507,7 @@ public class SettingController2 extends StageController {
      */
     @FXML
     private void resetFontSize() {
-        this.fontSize.selectSize(ZKSetting.defaultFontSize());
+        this.fontSize.selectSize(Setting.defaultFontSize());
     }
 
     /**
@@ -512,36 +515,36 @@ public class SettingController2 extends StageController {
      */
     @FXML
     private void resetFontWeight() {
-        this.fontWeight.selectWeight(ZKSetting.defaultFontWeight());
+        this.fontWeight.selectWeight(Setting.defaultFontWeight());
     }
 
     @FXML
     private void resetEditorFontFamily() {
-        this.editorFontFamily.select(ZKSetting.defaultEditorFontFamily());
+        this.editorFontFamily.select(Setting.defaultEditorFontFamily());
     }
 
     @FXML
     private void resetEditorFontSize() {
-        this.editorFontSize.selectSize(ZKSetting.defaultEditorFontSize());
+        this.editorFontSize.selectSize(Setting.defaultEditorFontSize());
     }
 
     @FXML
     private void resetEditorFontWeight() {
-        this.editorFontWeight.selectWeight(ZKSetting.defaultEditorFontWeight());
+        this.editorFontWeight.selectWeight(Setting.defaultEditorFontWeight());
     }
 
     @FXML
     private void resetTerminalFontFamily() {
-        this.terminalFontFamily.select(ZKSetting.defaultTerminalFontFamily());
+        this.terminalFontFamily.select(Setting.defaultTerminalFontFamily());
     }
 
     @FXML
     private void resetTerminalFontSize() {
-        this.terminalFontSize.selectSize(ZKSetting.defaultTerminalFontSize());
+        this.terminalFontSize.selectSize(Setting.defaultTerminalFontSize());
     }
 
     @FXML
     private void resetTerminalFontWeight() {
-        this.terminalFontWeight.selectWeight(ZKSetting.defaultTerminalFontWeight());
+        this.terminalFontWeight.selectWeight(Setting.defaultTerminalFontWeight());
     }
 }

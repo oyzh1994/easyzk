@@ -36,6 +36,10 @@ public class ZKAuthStore extends JdbcStandardStore<ZKAuth> {
         return super.selectList(QueryParam.of("iid", iid));
     }
 
+    public List<ZKAuth> loadByIid(String iid) {
+        return super.selectList(QueryParam.of("iid", iid));
+    }
+
     /**
      * 加载已启用的数据列表
      *

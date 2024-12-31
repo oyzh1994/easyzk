@@ -5,7 +5,6 @@
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.button.TestButton?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
@@ -152,11 +151,11 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </SwitchToggleSwitch>
-                <AccentLabel text="%base.host">
+                <InfoLabel text="%base.host">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
-                </AccentLabel>
+                </InfoLabel>
                 <FlexHBox disable="true" groupId="ssh">
                     <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30"
                                         flexWidth="100% - 285" maxLen="1024">

@@ -42,6 +42,10 @@ public class ZKFilterStore extends JdbcStandardStore<ZKFilter> {
         return super.selectList(selectParam);
     }
 
+    public List<ZKFilter> loadByIid(String iid) {
+        return super.selectList(QueryParam.of("iid", iid));
+    }
+
     /**
      * 替换
      *
@@ -98,4 +102,5 @@ public class ZKFilterStore extends JdbcStandardStore<ZKFilter> {
     protected Class<ZKFilter> modelClass() {
         return ZKFilter.class;
     }
+
 }

@@ -162,18 +162,6 @@ public class ZKConnectUpdateController extends StageController {
     @FXML
     private ClearableTextField sshPassword;
 
-    // /**
-    //  * ssh连接组件
-    //  */
-    // @FXML
-    // private FlexHBox sshHostBox;
-    //
-    // /**
-    //  * ssh认证组件
-    //  */
-    // @FXML
-    // private FlexHBox sshAuthBox;
-
     /**
      * ssh面板
      */
@@ -467,7 +455,7 @@ public class ZKConnectUpdateController extends StageController {
      */
     private void initFilterDataList() {
         if (!this.filterTable.hasData()) {
-            List<ZKFilter> list = this.filterStore.selectList(QueryParam.of("iid", this.zkConnect.getId()));
+            List<ZKFilter> list = this.filterStore.loadByIid(this.zkConnect.getId());
             this.filterTable.setFilters(list);
         } else {
             this.filterTable.setKw(this.filterSearchKW.getText());
@@ -505,7 +493,7 @@ public class ZKConnectUpdateController extends StageController {
      */
     private void initAuthDataList() {
         if (!this.authTable.hasData()) {
-            List<ZKAuth> list = this.authStore.selectList(QueryParam.of("iid", this.zkConnect.getId()));
+            List<ZKAuth> list = this.authStore.loadByIid(this.zkConnect.getId());
             this.authTable.setAuths(list);
         } else {
             this.authTable.setKw(this.authSearchKW.getText());

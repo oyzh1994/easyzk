@@ -150,18 +150,6 @@ public class ZKConnectAddController extends StageController {
     @FXML
     private ClearableTextField sshPassword;
 
-    // /**
-    //  * ssh连接组件
-    //  */
-    // @FXML
-    // private FlexHBox sshHostBox;
-    //
-    // /**
-    //  * ssh认证组件
-    //  */
-    // @FXML
-    // private FlexHBox sshAuthBox;
-
     /**
      * ssh面板
      */
@@ -285,7 +273,7 @@ public class ZKConnectAddController extends StageController {
         if (StringUtil.isBlank(host) || StringUtil.isBlank(host.split(":")[0])) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
-            // 创建zk信息
+            // 创建zk连接
             ZKConnect zkConnect = new ZKConnect();
             zkConnect.setHost(host);
             zkConnect.setConnectTimeOut(3);

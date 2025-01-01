@@ -51,6 +51,9 @@ public class ZKClientActionEvent extends Event<String> implements EventFormatter
         if (this.params != null) {
             return String.format("%s > %s %s", this.data(), this.action, this.params);
         }
+        if (this.actionData != null) {
+            return String.format("%s > %s %s", this.data(), this.action, this.actionData);
+        }
         return String.format("%s > %s", this.data(), this.action);
     }
 }

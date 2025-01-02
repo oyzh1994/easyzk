@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.thread.ThreadLocalUtil;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
@@ -21,7 +22,6 @@ import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import cn.oyzh.easyzk.store.ZKSSHConfigStore;
-import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
@@ -542,7 +542,7 @@ public class ZKClient {
     public Stat setACL(@NonNull String path, @NonNull List<ACL> aclList, Integer version) throws Exception {
         this.throwReadonlyException();
         try {
-            this.doAction("setAcl", path, ZKACLUtil.toAclStr(aclList));
+            ZKClientActionUtil.forSetAclAction(this.connectName(), path, false, false, version, aclList);
             return this.framework.setACL().withVersion(version == null ? -1 : version).withACL(aclList).forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
@@ -564,9 +564,10 @@ public class ZKClient {
         this.throwReadonlyException();
         String path = null;
         try {
+            ThreadLocalUtil.setVal("connectName", this.connectName());
             for (String s : paths) {
                 path = s;
-                this.doAction("setAcl", path, aclList);
+                // this.doAction("setAcl", path, aclList);
                 this.framework.setACL().withVersion(-1).withACL(aclList).forPath(path);
             }
         } catch (Exception ex) {
@@ -631,6 +632,7 @@ public class ZKClient {
         ZooKeeper zooKeeper = this.getZooKeeper();
         if (zooKeeper != null) {
             String data = user + ":" + password;
+            ThreadLocalUtil.setVal("connectName", this.connectName());
             this.doAction("addAuth", "digest", data);
             zooKeeper.addAuthInfo("digest", data.getBytes());
             // ZKAuthUtil.setAuthed(this, user, password);
@@ -716,7 +718,7 @@ public class ZKClient {
             } else {
                 nodePath = builder.forPath(path, data);
             }
-            this.doAction("create", path, data);
+            ZKClientActionUtil.forCreateAction(this.connectName(), path, data, createMode, aclList, ttl);
             return nodePath;
         } catch (Exception ex) {
             this.lastCreate = old;
@@ -779,7 +781,7 @@ public class ZKClient {
      */
     public List<String> getChildren(@NonNull String path) throws Exception {
         try {
-            this.doAction("ls", path);
+            ZKClientActionUtil.forGetAction(this.connectName(), path, false, false);
             return this.framework.getChildren().forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
@@ -798,7 +800,7 @@ public class ZKClient {
      */
     public void getChildren(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
         try {
-            this.doAction("ls", path);
+            ZKClientActionUtil.forLsAction(this.connectName(), path, false, false, false);
             this.framework.getChildren().inBackground(callback).forPath(path);
         } catch (IllegalStateException ignore) {
         } catch (Exception ex) {
@@ -821,7 +823,7 @@ public class ZKClient {
             return null;
         }
         try {
-            this.doAction("get", path);
+            ZKClientActionUtil.forGetAction(this.connectName(), path, false, false);
             return this.framework.getData().forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
@@ -840,7 +842,7 @@ public class ZKClient {
      */
     public void getData(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
         try {
-            this.doAction("get", path);
+            ZKClientActionUtil.forGetAction(this.connectName(), path, false, false);
             this.framework.getData().inBackground(callback).forPath(path);
         } catch (IllegalStateException ignore) {
         } catch (Exception ex) {
@@ -874,7 +876,7 @@ public class ZKClient {
      */
     public List<ACL> getACL(@NonNull String path) throws Exception {
         try {
-            this.doAction("getAcl", path);
+            ZKClientActionUtil.forGetAclAction(this.connectName(), path, false);
             return this.framework.getACL().forPath(path);
         } catch (Exception ex) {
             if (ex instanceof KeeperException.NoAuthException) {
@@ -893,7 +895,7 @@ public class ZKClient {
      */
     public void getACL(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
         try {
-            this.doAction("getAcl", path);
+            ZKClientActionUtil.forGetAclAction(this.connectName(), path, false);
             this.framework.getACL().inBackground(callback).forPath(path);
         } catch (IllegalStateException ignore) {
         } catch (Exception ex) {
@@ -954,7 +956,7 @@ public class ZKClient {
         String old = this.lastUpdate;
         try {
             this.lastUpdate = path;
-            this.doAction("set", path, data);
+            ZKClientActionUtil.forSetAction(this.connectName(), path, data, version, false);
             Stat stat = this.framework.setData().withVersion(version == null ? -1 : version).forPath(path, data);
             if (stat != null) {
                 ZKEventUtil.nodeUpdated(this, path);
@@ -977,7 +979,7 @@ public class ZKClient {
      */
     public void sync(@NonNull String path) throws Exception {
         this.throwReadonlyException();
-        this.doAction("sync", path);
+        ZKClientActionUtil.forSyncAction("sync", path);
         this.framework.sync().forPath(path);
     }
 
@@ -1008,7 +1010,7 @@ public class ZKClient {
                 builder.deletingChildrenIfNeeded();
             }
             builder.forPath(path);
-            this.doAction("delete", path);
+            ZKClientActionUtil.forDeleteAction(this.connectName(), path, version);
             ZKEventUtil.nodeDeleted(this, path, delChildren);
         } catch (Exception ex) {
             this.lastDelete = old;
@@ -1030,7 +1032,7 @@ public class ZKClient {
         if (this.framework == null) {
             return null;
         }
-        this.doAction("stat", path);
+        ZKClientActionUtil.forStatAction(this.connectName(), path, false);
         return this.framework.checkExists().forPath(path);
     }
 
@@ -1042,7 +1044,7 @@ public class ZKClient {
      */
     public void checkExists(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
         try {
-            this.doAction("stat", path);
+            ZKClientActionUtil.forStatAction(this.connectName(), path, false);
             this.framework.checkExists().inBackground(callback).forPath(path);
         } catch (IllegalStateException ignore) {
         }
@@ -1213,7 +1215,7 @@ public class ZKClient {
      */
     public String envi() {
         try {
-            this.doAction("envi");
+            ZKClientActionUtil.forAction(this.connectName(),"envi");
             return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "envi");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1251,7 +1253,7 @@ public class ZKClient {
      */
     public String srvr() {
         try {
-            this.doAction("srvr");
+            ZKClientActionUtil.forAction(this.connectName(), "srvr");
             return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "srvr");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1289,7 +1291,7 @@ public class ZKClient {
      */
     public String stat() {
         try {
-            this.doAction("stat");
+            ZKClientActionUtil.forAction(this.connectName(), "stat");
             return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "stat");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1327,7 +1329,7 @@ public class ZKClient {
      */
     public String conf() {
         try {
-            this.doAction("conf");
+            ZKClientActionUtil.forAction(this.connectName(),"conf");
             return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "conf");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1447,36 +1449,6 @@ public class ZKClient {
             }
         }
         return false;
-    }
-
-    /**
-     * 执行操作
-     *
-     * @param action 操作
-     */
-    private void doAction(String action) {
-        ZKEventUtil.clientAction(this.connectName(), action, null, null);
-    }
-
-    /**
-     * 执行操作
-     *
-     * @param action 操作
-     * @param params 参数
-     */
-    private void doAction(String action, String params) {
-        ZKEventUtil.clientAction(this.connectName(), action, params, null);
-    }
-
-    /**
-     * 执行操作
-     *
-     * @param action 操作
-     * @param params 参数
-     * @param data   数据
-     */
-    private void doAction(String action, String params, Object data) {
-        ZKEventUtil.clientAction(this.connectName(), action, params, data);
     }
 
     /**

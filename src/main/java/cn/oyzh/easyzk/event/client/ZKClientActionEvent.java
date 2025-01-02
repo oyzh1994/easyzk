@@ -7,6 +7,10 @@ import cn.oyzh.i18n.I18nHelper;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author oyzh
  * @since 2024-12-20
@@ -18,39 +22,83 @@ public class ZKClientActionEvent extends Event<String> implements EventFormatter
     private String action;
 
     @Setter
-    @Accessors(fluent = true, chain = false)
-    private String params;
+    private List<ZKClientActionArgument> arguments = new ArrayList<>();
 
-    private Object actionData;
-
-    public void actionData(Object actionData) {
-        if (actionData instanceof String s) {
-            if (s.length() > 1024) {
-                this.actionData = I18nHelper.dataTooLarge();
-            } else {
-                this.actionData = s;
-            }
-        } else if (actionData instanceof byte[] bytes) {
-            if (bytes.length > 1024) {
-                this.actionData = I18nHelper.dataTooLarge();
-            } else {
-                this.actionData = new String(bytes);
-            }
-        } else if (actionData instanceof Number n) {
-            this.actionData = n.doubleValue();
-        } else if (actionData != null) {
-            this.actionData = JSONUtil.toJson(actionData);
-        }
+    public void arguments(List<ZKClientActionArgument>  arguments) {
+        this.arguments.addAll(arguments);
     }
+
+    public void arguments(ZKClientActionArgument... arguments) {
+        this.arguments.addAll(Arrays.asList(arguments));
+    }
+
+    public void argument(ZKClientActionArgument argument) {
+        this.arguments.add(argument);
+    }
+
+    public void argument(String argument, Object value) {
+        this.arguments.add(new ZKClientActionArgument(argument, value));
+    }
+
+    public void argument(Object value) {
+        this.arguments.add(new ZKClientActionArgument(value));
+    }
+
+    // public void params(Object...params) {
+    //     if (actionData instanceof String s) {
+    //         if (s.length() > 1024) {
+    //             this.actionData = I18nHelper.dataTooLarge();
+    //         } else {
+    //             this.actionData = s;
+    //         }
+    //     } else if (actionData instanceof byte[] bytes) {
+    //         if (bytes.length > 1024) {
+    //             this.actionData = I18nHelper.dataTooLarge();
+    //         } else {
+    //             this.actionData = new String(bytes);
+    //         }
+    //     } else if (actionData instanceof Number n) {
+    //         this.actionData = n.doubleValue();
+    //     } else if (actionData != null) {
+    //         this.actionData = JSONUtil.toJson(actionData);
+    //     }
+    // }
 
     @Override
     public String eventFormat() {
-        if (this.params != null && this.actionData != null) {
-            return String.format("%s > %s %s %s", this.data(), this.action, this.params, this.actionData);
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.data());
+        sb.append(" >");
+        sb.append(this.action);
+        for (Object param : this.arguments) {
+            sb.append(" ");
+            if (param instanceof String s) {
+                if (s.length() > 1024) {
+                    sb.append(I18nHelper.dataTooLarge());
+                } else {
+                    sb.append(s);
+                }
+            } else if (param instanceof byte[] bytes) {
+                if (bytes.length > 1024) {
+                    sb.append(I18nHelper.dataTooLarge());
+                } else {
+                    sb.append(new String(bytes));
+                }
+            } else if (param instanceof Number n) {
+                sb.append(n);
+            } else if (param != null) {
+                sb.append(JSONUtil.toJson(param));
+            }
         }
-        if (this.params != null) {
-            return String.format("%s > %s %s", this.data(), this.action, this.params);
-        }
-        return String.format("%s > %s", this.data(), this.action);
+        // if (this.params != null && this.actionData != null) {
+        //     return String.format("%s > %s %s %s", this.data(), this.action, this.params, this.actionData);
+        // }
+        // if (this.params != null) {
+        //     return String.format("%s > %s %s", this.data(), this.action, this.params);
+        // }
+        // return String.format("%s > %s", this.data(), this.action);
+
+        return sb.toString();
     }
+
 }

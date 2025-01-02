@@ -290,7 +290,7 @@ public class ZKACLUtil {
      * @param aclList 权限列表
      * @return 权限控制字符串
      */
-    public static String toAclStr(List<ACL> aclList) {
+    public static String toAclStr(List<? extends ACL> aclList) {
         StringBuilder builder = new StringBuilder();
         for (ACL acl : aclList) {
             builder.append(",").append(acl.getId().getScheme())

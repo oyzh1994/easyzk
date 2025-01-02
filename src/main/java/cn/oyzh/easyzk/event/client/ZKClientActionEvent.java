@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.event.client;
 
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
@@ -68,26 +69,30 @@ public class ZKClientActionEvent extends Event<String> implements EventFormatter
     public String eventFormat() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.data());
-        sb.append(" >");
+        sb.append(" > ");
         sb.append(this.action);
-        for (Object param : this.arguments) {
+        for (ZKClientActionArgument argument : this.arguments) {
             sb.append(" ");
-            if (param instanceof String s) {
+            if(StringUtil.isNotBlank(argument.getArgument())){
+                sb.append(argument.getArgument()).append(" ");
+            }
+            Object value = argument.getValue();
+            if (value instanceof String s) {
                 if (s.length() > 1024) {
                     sb.append(I18nHelper.dataTooLarge());
                 } else {
                     sb.append(s);
                 }
-            } else if (param instanceof byte[] bytes) {
+            } else if (value instanceof byte[] bytes) {
                 if (bytes.length > 1024) {
                     sb.append(I18nHelper.dataTooLarge());
                 } else {
                     sb.append(new String(bytes));
                 }
-            } else if (param instanceof Number n) {
+            } else if (value instanceof Number n) {
                 sb.append(n);
-            } else if (param != null) {
-                sb.append(JSONUtil.toJson(param));
+            } else if (value != null) {
+                sb.append(JSONUtil.toJson(value));
             }
         }
         // if (this.params != null && this.actionData != null) {
@@ -97,7 +102,6 @@ public class ZKClientActionEvent extends Event<String> implements EventFormatter
         //     return String.format("%s > %s %s", this.data(), this.action, this.params);
         // }
         // return String.format("%s > %s", this.data(), this.action);
-
         return sb.toString();
     }
 

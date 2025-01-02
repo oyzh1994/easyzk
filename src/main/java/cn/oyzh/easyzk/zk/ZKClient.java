@@ -633,7 +633,7 @@ public class ZKClient {
         if (zooKeeper != null) {
             String data = user + ":" + password;
             ThreadLocalUtil.setVal("connectName", this.connectName());
-            this.doAction("addAuth", "digest", data);
+            ZKClientActionUtil.forAddAuthAction(this.connectName(), "digest", data);
             zooKeeper.addAuthInfo("digest", data.getBytes());
             // ZKAuthUtil.setAuthed(this, user, password);
             this.setAuthed(user, password);
@@ -979,7 +979,7 @@ public class ZKClient {
      */
     public void sync(@NonNull String path) throws Exception {
         this.throwReadonlyException();
-        ZKClientActionUtil.forSyncAction("sync", path);
+        ZKClientActionUtil.forSyncAction(this.connectName(), path);
         this.framework.sync().forPath(path);
     }
 
@@ -1062,7 +1062,7 @@ public class ZKClient {
         if (path.equals("/")) {
             return false;
         }
-        this.doAction("setquota", path);
+        ZKClientActionUtil.forSetQuotaAction(this.connectName(), path, bytes, num);
         return SetQuotaCommand.createQuota(this.getZooKeeper(), path, bytes, num);
     }
 
@@ -1078,7 +1078,7 @@ public class ZKClient {
         if (path.equals("/")) {
             return false;
         }
-        this.doAction("delquota", path);
+        ZKClientActionUtil.forDelQuotaAction(this.connectName(), path, bytes, count);
         return DelQuotaCommand.delQuota(this.getZooKeeper(), path, bytes, count);
     }
 
@@ -1093,7 +1093,7 @@ public class ZKClient {
         }
         String absolutePath = Quotas.quotaZookeeper + path + "/" + Quotas.limitNode;
         byte[] data = this.getData(absolutePath);
-        this.doAction("listquota", path);
+        ZKClientActionUtil.forListQuotaAction(this.connectName(), path);
         return new StatsTrack(new String(data));
     }
 
@@ -1215,7 +1215,7 @@ public class ZKClient {
      */
     public String envi() {
         try {
-            ZKClientActionUtil.forAction(this.connectName(),"envi");
+            ZKClientActionUtil.forAction(this.connectName(), "envi");
             return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "envi");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1329,7 +1329,7 @@ public class ZKClient {
      */
     public String conf() {
         try {
-            ZKClientActionUtil.forAction(this.connectName(),"conf");
+            ZKClientActionUtil.forAction(this.connectName(), "conf");
             return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "conf");
         } catch (Exception ex) {
             ex.printStackTrace();

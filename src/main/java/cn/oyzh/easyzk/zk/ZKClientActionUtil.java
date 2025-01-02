@@ -164,4 +164,41 @@ public class ZKClientActionUtil {
         arguments.add(ZKClientActionArgument.ofArgument(path));
         ZKEventUtil.clientAction(connectName, "sync", arguments);
     }
+
+    public static void forListQuotaAction(String connectName, String path) {
+        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        arguments.add(ZKClientActionArgument.ofArgument(path));
+        ZKEventUtil.clientAction(connectName, "listquota", arguments);
+    }
+
+    public static void forDelQuotaAction(String connectName, String path, boolean bytes, boolean count) {
+        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        if (bytes) {
+            arguments.add(ZKClientActionArgument.ofArgument("-b"));
+        }
+        if (count) {
+            arguments.add(ZKClientActionArgument.ofArgument("-n"));
+        }
+        arguments.add(ZKClientActionArgument.ofArgument(path));
+        ZKEventUtil.clientAction(connectName, "delquota", arguments);
+    }
+
+    public static void forSetQuotaAction(String connectName, String path, long bytes, long count) {
+        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        if (bytes >= 0) {
+            arguments.add(ZKClientActionArgument.ofArgument("-b", bytes));
+        }
+        if (count >= 0) {
+            arguments.add(ZKClientActionArgument.ofArgument("-n", count));
+        }
+        arguments.add(ZKClientActionArgument.ofArgument(path));
+        ZKEventUtil.clientAction(connectName, "setquota", arguments);
+    }
+
+    public static void forAddAuthAction(String connectName, String scheme, String auth) {
+        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        arguments.add(ZKClientActionArgument.ofArgument(scheme));
+        arguments.add(ZKClientActionArgument.ofArgument(auth));
+        ZKEventUtil.clientAction(connectName, "addauth", arguments);
+    }
 }

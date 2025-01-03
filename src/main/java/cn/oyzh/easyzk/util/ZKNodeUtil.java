@@ -361,7 +361,7 @@ public class ZKNodeUtil {
                     break;
                 }
             }
-            children.clear();
+//            children.clear();
         } else {// 性能较好机器上异步执行
             // 任务列表
             List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
@@ -387,8 +387,11 @@ public class ZKNodeUtil {
             if (!tasks.isEmpty()) {
                 list.addAll(ThreadUtil.invoke(tasks));
             }
-            tasks.clear();
-            children.clear();
+//            tasks.clear();
+//            children.clear();
+        }
+        if (list.size() > limit) {
+            return list.subList(0, limit);
         }
         return list;
     }

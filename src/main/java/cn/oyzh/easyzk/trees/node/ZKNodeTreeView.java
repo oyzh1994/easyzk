@@ -318,12 +318,16 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         try {
             // 禁用树
             this.disable();
-            // 获取根节点
-            ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
-            // 生成根节点
-            ZKNodeTreeItem rootItem = new ZKNodeTreeItem(rootNode, this);
-            // 设置根节点
-            this.setRoot(rootItem);
+            ZKNodeTreeItem rootItem = this.getRoot();
+            // 初始化根节点
+            if (this.getRoot() == null) {
+                // 获取根节点
+                ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
+                // 生成根节点
+                rootItem = new ZKNodeTreeItem(rootNode, this);
+                // 设置根节点
+                this.setRoot(rootItem);
+            }
             // 加载根节点
             rootItem.loadRoot();
         } finally {

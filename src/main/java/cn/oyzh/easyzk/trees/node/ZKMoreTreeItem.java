@@ -28,12 +28,12 @@ public class ZKMoreTreeItem extends RichTreeItem<ZKMoreTreeItem.ZKMoreTreeItemVa
 
     @Override
     public void onPrimaryDoubleClick() {
-        if (!this.isLoading()) {
+//        if (!this.isLoading()) {
             ZKNodeTreeItem treeItem = this.parent();
             if (treeItem != null) {
-                treeItem.loadChildAsync();
+                treeItem.loadChild();
             }
-        }
+//        }
     }
 
     /**

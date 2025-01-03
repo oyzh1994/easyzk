@@ -390,7 +390,7 @@ public class ZKNodeUtil {
 //            tasks.clear();
 //            children.clear();
         }
-        if (list.size() > limit) {
+        if (limit > 0 && list.size() > limit) {
             return list.subList(0, limit);
         }
         return list;

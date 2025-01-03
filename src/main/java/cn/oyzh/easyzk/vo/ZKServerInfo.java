@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.List;
 
 /**
- * redis信息属性项目
+ * zk信息属性项目
  *
  * @author oyzh
  * @since 2023/08/01

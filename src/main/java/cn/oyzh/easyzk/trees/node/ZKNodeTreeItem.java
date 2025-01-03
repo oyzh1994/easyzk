@@ -380,9 +380,6 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      * 导出zk节点
      */
     public void exportData() {
-        // StageAdapter fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
-        // fxView.setProp("zkItem", this);
-        // fxView.setProp("zkClient", this.client());
         StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
         fxView.setProp("connect", this.zkConnect());
         fxView.setProp("nodePath", this.nodePath());
@@ -501,7 +498,6 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      */
     public void collapseAll() {
         Task task = TaskBuilder.newBuilder()
-                // .onFinish(this::stopWaiting)
                 .onStart(() -> this.collapseAll(this))
                 .onSuccess(() -> this.getTreeView().select(this))
                 .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))
@@ -514,7 +510,6 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
      */
     public void expandAll() {
         Task task = TaskBuilder.newBuilder()
-                // .onFinish(this::stopWaiting)
                 .onStart(() -> this.expandAll(this))
                 .onSuccess(() -> this.getTreeView().select(this))
                 .onError(ex -> MessageBox.exception(ex, I18nHelper.operationFail()))

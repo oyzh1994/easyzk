@@ -79,7 +79,7 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         this.button = new SettingSVGGlyph();
         this.button.setEnableWaiting(false);
         this.button.setFocusTraversable(false);
-        this.button.setPadding(new Insets(0));
+//        this.button.setPadding(new Insets(0));
         this.button.setOnMousePrimaryClicked(e -> this.showPopup());
         this.button.setOnMouseMoved(mouseEvent -> this.button.setColor("#E36413"));
         this.button.setOnMouseExited(mouseEvent -> this.button.setColor(this.getButtonColor()));

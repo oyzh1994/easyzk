@@ -18,6 +18,7 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,11 +41,11 @@ public class MainController extends ParentStageController {
      */
     private final Project project = Project.load();
 
-    // /**
-    //  * 头部页面
-    //  */
-    // @FXML
-    // private HeaderController headerController;
+    /**
+     * 头部页面
+     */
+    @FXML
+    private HeaderController3 headerController;
 
     /**
      * zk主页业务
@@ -57,10 +58,15 @@ public class MainController extends ParentStageController {
      */
     private final ZKSetting setting = ZKSettingStore.SETTING;
 
+    /**
+     * 设置存储
+     */
+    private final ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
+
     @Override
     public List<? extends StageController> getSubControllers() {
-        return Collections.singletonList(this.zkMainController);
-        // return Arrays.asList(this.zkMainController, this.headerController);
+        return Arrays.asList(this.zkMainController, this.headerController);
+//        return Collections.singletonList(this.zkMainController);
     }
 
     @Override
@@ -81,10 +87,6 @@ public class MainController extends ParentStageController {
         } else if (this.setting.isExitTray()) {// 系统托盘
             if (TrayManager.exist()) {
                 JulLog.info("show tray.");
-                event.consume();
-                // // 仅隐藏到任务栏
-                // this.stage.setIconified(true);
-                // 显示托盘
                 TrayManager.show();
             } else {
                 JulLog.error("tray not support!");
@@ -92,12 +94,6 @@ public class MainController extends ParentStageController {
             }
         }
     }
-
-    // @Override
-    // public void onWindowShowing(WindowEvent event) {
-    //     super.onWindowShowing(event);
-    //     this.stage.title(this.project.getName() + "-v" + this.project.getVersion());
-    // }
 
     @Override
     public void onSystemExit() {
@@ -117,8 +113,10 @@ public class MainController extends ParentStageController {
         }
         // 保存页面信息
         if (savePageInfo) {
-            ZKSettingStore.INSTANCE.replace(this.setting);
+            this.settingStore.replace(this.setting);
         }
+        // 关闭托盘
+        TrayManager.destroy();
         super.onSystemExit();
     }
 

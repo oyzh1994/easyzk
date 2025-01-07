@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.gui.svg.glyph.*?>
+<?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<FlexVBox xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.HeaderController3" flexHeight="100%" realHeight="30">
+    <TransportSVGGlyph onMousePrimaryClicked="#transport" size="12">
+        <VBox.margin>
+            <Insets left="10" top="60"/>
+        </VBox.margin>
+    </TransportSVGGlyph>
+    <ToolsSVGGlyph onMousePrimaryClicked="#tool" size="13">
+        <VBox.margin>
+            <Insets left="10" top="15"/>
+        </VBox.margin>
+    </ToolsSVGGlyph>
+    <MigrationSVGGlyph onMousePrimaryClicked="#migration" size="12">
+        <VBox.margin>
+            <Insets left="10" top="15"/>
+        </VBox.margin>
+    </MigrationSVGGlyph>
+    <AboutSVGGlyph onMousePrimaryClicked="#about" size="13">
+        <VBox.margin>
+            <Insets left="10" top="15"/>
+        </VBox.margin>
+    </AboutSVGGlyph>
+    <Layout1SVGGlyph onMousePrimaryClicked="#layout1" size="12">
+        <VBox.margin>
+            <Insets left="10" top="15"/>
+        </VBox.margin>
+    </Layout1SVGGlyph>
+    <Layout2SVGGlyph onMousePrimaryClicked="#layout2" size="12">
+        <VBox.margin>
+            <Insets left="10" top="15"/>
+        </VBox.margin>
+    </Layout2SVGGlyph>
+    <FlexPane flexWidth="100%" flexHeight="100% - 276">
+
+    </FlexPane>
+    <QuitSVGGlyph onMousePrimaryClicked="#quit" size="12">
+        <VBox.margin>
+            <Insets left="10" top="15"/>
+        </VBox.margin>
+    </QuitSVGGlyph>
+    <SettingSVGGlyph onMousePrimaryClicked="#setting" size="14">
+        <VBox.margin>
+            <Insets left="10" top="15"/>
+        </VBox.margin>
+    </SettingSVGGlyph>
+</FlexVBox>

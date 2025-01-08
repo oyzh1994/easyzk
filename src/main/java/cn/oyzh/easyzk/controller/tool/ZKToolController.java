@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.LongAdder;
  * @since 2023/11/09
  */
 @StageAttribute(
-        modality = Modality.WINDOW_MODAL,
+        modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "tool/zkTool.fxml"
 )
 public class ZKToolController extends StageController {

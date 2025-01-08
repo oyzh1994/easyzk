@@ -11,6 +11,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.button.ClearButton?>
+<?import cn.oyzh.fx.gui.button.CalcButton?>
+<?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyzk.controller.tool.ZKToolController" realWidth="850" realHeight="600">
     <FXTab text="%base.digest">
@@ -55,6 +58,32 @@
                         <Insets left="30" top="20"/>
                     </HBox.margin>
                 </SubmitButton>
+            </FlexHBox>
+        </FlexVBox>
+    </FXTab>
+    <FXTab text="%base.cache">
+        <FlexVBox flexHeight="100%" flexWidth="100%">
+            <InfoLabel text="%base.info">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </InfoLabel>
+            <ReadOnlyTextArea fx:id="cacheArea" flexWidth="100% - 140" flexHeight="100% - 150">
+                <VBox.margin>
+                    <Insets left="30" top="5"/>
+                </VBox.margin>
+            </ReadOnlyTextArea>
+            <FlexHBox flexWidth="100%" realHeight="50">
+                <CalcButton onAction="#calcCache" realHeight="30">
+                    <HBox.margin>
+                        <Insets left="30" top="20"/>
+                    </HBox.margin>
+                </CalcButton>
+                <ClearButton onAction="#clearCache" prefHeight="30">
+                    <HBox.margin>
+                        <Insets left="10" top="20"/>
+                    </HBox.margin>
+                </ClearButton>
             </FlexHBox>
         </FlexVBox>
     </FXTab>

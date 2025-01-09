@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.controller.node;
 
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
@@ -17,9 +16,9 @@ import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -69,13 +68,7 @@ public class ZKNodeAddController extends StageController {
      * 节点数据
      */
     @FXML
-    private FlexTextArea nodeData;
-
-    // /**
-    //  * 节点路径预览组件
-    //  */
-    // @FXML
-    // private VBox nodePathPreviewBox;
+    private RichDataTextArea nodeData;
 
     /**
      * 节点路径预览
@@ -311,10 +304,8 @@ public class ZKNodeAddController extends StageController {
         this.nodePath.addTextChangeListener((observableValue, s, t1) -> {
             if (StringUtil.isNotBlank(t1)) {
                 this.nodePathText = ZKNodeUtil.concatPath(this.parentNode.getText(), t1).trim();
-                // this.nodePathPreviewBox.setVisible(true);
             } else {
                 this.nodePathText = "";
-                // this.nodePathPreviewBox.setVisible(false);
             }
             this.nodePathPreview.setText(this.nodePathText);
         });
@@ -362,7 +353,6 @@ public class ZKNodeAddController extends StageController {
             this.parentNode.setVisible(false);
         }
         this.nodePath.requestFocus();
-        // this.nodePathPreviewBox.managedProperty().bind(this.nodePathPreviewBox.visibleProperty());
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);

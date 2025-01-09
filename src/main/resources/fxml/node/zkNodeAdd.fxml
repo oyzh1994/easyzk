@@ -16,13 +16,13 @@
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="650">
-    <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
+    <FlexTabPane flexWidth="100%" flexHeight="100% - 80">
         <FXTab text="%base.data" fx:id="dataTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexVBox fx:id="parentNodeBox">
@@ -64,30 +64,32 @@
                             <Insets left="30" top="10"/>
                         </VBox.margin>
                     </InfoLabel>
-                    <FlexTextArea fx:id="nodeData" flexHeight="100% - 40"
-                                  tipText="%base.dataTip"
-                                  flexWidth="100% - 140">
-                        <VBox.margin>
-                            <Insets left="30" top="5"/>
-                        </VBox.margin>
-                    </FlexTextArea>
-                    <FlexVBox>
-                        <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-                            <VBox.margin>
-                                <Insets left="5" top="10"/>
-                            </VBox.margin>
-                        </PasteSVGGlyph>
-                        <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-                            <VBox.margin>
-                                <Insets left="5" top="10"/>
-                            </VBox.margin>
-                        </ClearSVGGlyph>
-                        <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                            <VBox.margin>
-                                <Insets left="5" top="10"/>
-                            </VBox.margin>
-                        </JSONSVGGlyph>
-                    </FlexVBox>
+                    <FlexHBox flexHeight="100% - 40">
+                        <RichDataTextArea fx:id="nodeData" flexHeight="100% "
+                                          tipText="%base.dataTip"
+                                          flexWidth="100% - 140">
+                            <HBox.margin>
+                                <Insets left="30" top="5"/>
+                            </HBox.margin>
+                        </RichDataTextArea>
+                        <FlexVBox>
+                            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                                <VBox.margin>
+                                    <Insets left="5" top="10"/>
+                                </VBox.margin>
+                            </PasteSVGGlyph>
+                            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                                <VBox.margin>
+                                    <Insets left="5" top="10"/>
+                                </VBox.margin>
+                            </ClearSVGGlyph>
+                            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                                <VBox.margin>
+                                    <Insets left="5" top="10"/>
+                                </VBox.margin>
+                            </JSONSVGGlyph>
+                        </FlexVBox>
+                    </FlexHBox>
                 </FlexVBox>
                 <FlexVBox>
                     <InfoLabel text="%base.preview">

@@ -39,6 +39,13 @@ chmod -R +x EasyZK.app
 ###### mac无法启动解决方案2
 chmod -R 755 /路径/EasyZK.app(可拖入命令行窗口)
 
+###### mac无法启动解决方案3
+当在macOS上运行.app文件时提示“已损坏，无法打开”，你可以尝试以下几种解决方法：
+1. 允许“任何来源”下载的App运行‌
+   打开“系统偏好设置”->“安全性与隐私”->“通用”选项卡。
+   检查是否已经启用了“任何来源”选项。如果没有启用，先点击左下角的小黄锁图标解锁，然后选中“任何来源”‌1。
+   如果“任何来源”选项不可用，可以打开终端，输入命令sudo spctl --master-disable，然后按提示输入电脑的登录密码并回车，即可启用“任何来源”选项‌12。
+
 ###### jvm参数
 --add-opens java.base/java.time.zone=ALL-UNNAMED
 -Dprism.verbose=true

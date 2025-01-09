@@ -1,9 +1,8 @@
 package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
-import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
-import cn.oyzh.fx.gui.svg.glyph.ServerSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
@@ -34,7 +33,8 @@ public class ZKInformationTreeItem extends RichTreeItem<ZKInformationTreeItem.ZK
 
     @Override
     public void onPrimaryDoubleClick() {
-        this.parent().serverInfo();
+//        this.parent().serverInfo();
+        ZKEventUtil.serverInfo(this.parent().client());
     }
 
     /**

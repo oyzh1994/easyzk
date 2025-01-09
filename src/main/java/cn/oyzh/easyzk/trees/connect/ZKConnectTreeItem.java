@@ -9,7 +9,6 @@ import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
-import cn.oyzh.easyzk.controller.server.ZKServerInfoController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -85,7 +84,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
-            FXMenuItem server = MenuItemHelper.serverInfo("12", this::serverInfo);
+//            FXMenuItem server = MenuItemHelper.serverInfo("12", this::serverInfo);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
@@ -97,7 +96,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
-            items.add(server);
+//            items.add(server);
         } else {
             FXMenuItem connect = MenuItemHelper.startConnect("12", this::connect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
@@ -132,16 +131,16 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         fxView.setProp("nodePath", "/");
         fxView.display();
     }
-
-    /**
-     * 查看服务信息
-     */
-    public void serverInfo() {
-        StageAdapter fxView = StageManager.parseStage(ZKServerInfoController.class, this.window());
-        fxView.setProp("zkConnect", this.value);
-        fxView.setProp("zkClient", this.client);
-        fxView.display();
-    }
+//
+//    /**
+//     * 查看服务信息
+//     */
+//    public void serverInfo() {
+//        StageAdapter fxView = StageManager.parseStage(ZKServerInfoController.class, this.window());
+//        fxView.setProp("zkConnect", this.value);
+//        fxView.setProp("zkClient", this.client);
+//        fxView.display();
+//    }
 
     /**
      * 取消连接

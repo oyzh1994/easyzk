@@ -13,6 +13,7 @@ import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionConnectedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionLostEvent;
+import cn.oyzh.easyzk.event.connection.ZKServerInfoEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.group.ZKGroupAddedEvent;
 import cn.oyzh.easyzk.event.group.ZKGroupDeletedEvent;
@@ -429,5 +430,16 @@ public class ZKEventUtil {
         event.action(action);
         event.arguments(arguments);
         EventUtil.postAsync(event);
+    }
+
+    /**
+     * 服务信息事件
+     *
+     * @param client redis客户端
+     */
+    public static void serverInfo(ZKClient client) {
+        ZKServerInfoEvent event = new ZKServerInfoEvent();
+        event.data(client);
+        EventUtil.post(event);
     }
 }

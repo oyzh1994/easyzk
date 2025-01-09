@@ -4,13 +4,16 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
+import cn.oyzh.easyzk.event.connection.ZKServerInfoEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.changelog.ZKChangelogTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.easyzk.tabs.server.ZKServerTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
@@ -262,6 +265,43 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         ZKNodeTab connectTab = this.getNodeTab(event.connect());
         if (connectTab != null) {
             connectTab.restoreData(event.data());
+        }
+    }
+
+    /**
+     * 获取服务信息tab
+     *
+     * @param client redis客户端
+     * @return 服务信息tab
+     */
+    private ZKServerTab getServerInfoTab(ZKClient client) {
+        if (client != null) {
+            for (Tab tab : this.getTabs()) {
+                if (tab instanceof ZKServerTab serverTab && serverTab.redisConnect() == client.redisConnect()) {
+                    return serverTab;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 初始化服务信息tab
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void serverInfo(ZKServerInfoEvent event) {
+        ZKServerTab serverTab = this.getServerInfoTab(event.data());
+        if (serverTab == null) {
+            serverTab = new RedisServerTab();
+            serverTab.init(event.data());
+            super.addTab(serverTab);
+        } else {
+            serverTab.flushGraphic();
+        }
+        if (!serverTab.isSelected()) {
+            this.select(serverTab);
         }
     }
 }

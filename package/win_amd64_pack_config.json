@@ -20,7 +20,7 @@
         "type": "zip"
     },
     "jdeps": {
-        "multi-release": 22,
+        "multi-release": 23,
         "summary": true,
         "skips": [
             "javafx-.*.jar"

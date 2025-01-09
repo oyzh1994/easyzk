@@ -10,7 +10,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/3/8
  */
-public class PackTest {
+public class ZKPack {
 
     private String getProjectPath() {
         String projectPath = getClass().getResource("").getPath();

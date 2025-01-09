@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyzk.tabs.server.ZKSrvrController" text="Srvr">
+       fx:controller="cn.oyzh.easyzk.tabs.server.ZKSrvrTabController" text="Srvr">
     <FlexVBox flexWidth="100%" flexHeight="100%">
         <FlexHBox realHeight="30" flexWidth="100% - 28">
             <RefreshSVGGlyph onMousePrimaryClicked="#refreshSrvr">

@@ -57,43 +57,43 @@ public class ZKServerTabController extends ParentTabController {
      * 汇总信息
      */
     @FXML
-    private ZKAggregationController aggregationController;
+    private ZKAggregationTabController aggregationController;
 
     /**
      * 服务信息
      */
     @FXML
-    private ZKSrvrController srvrController;
+    private ZKSrvrTabController srvrController;
 
     /**
      * 状态信息
      */
     @FXML
-    private ZKStatController statController;
+    private ZKStatTabController statController;
 
     /**
      * 本地信息
      */
     @FXML
-    private ZKLocalController localController;
+    private ZKLocalTabController localController;
 
     /**
      * 配置信息
      */
     @FXML
-    private ZKConfController confController;
+    private ZKConfTabController confController;
 
     /**
      * 环境信息
      */
     @FXML
-    private ZKEnviController enviController;
+    private ZKEnviTabController enviController;
 
     /**
      * 集群信息
      */
     @FXML
-    private ZKClusterController clusterController;
+    private ZKClusterTabController clusterController;
 
     /**
      * 刷新任务

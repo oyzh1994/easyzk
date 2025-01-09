@@ -1,13 +1,11 @@
 package cn.oyzh.easyzk.tabs.server;
 
-import cn.oyzh.easyzk.dto.ZKClusterNode;
+import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import javafx.fxml.FXML;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * zk客户端汇总信息tab内容组件
@@ -15,13 +13,13 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2024/12/24
  */
-public class ZKClusterController extends SubTabController {
+public class ZKSrvrTabController extends SubTabController {
 
     /**
-     * 集群列表
+     * 服务信息
      */
     @FXML
-    private FlexTableView<ZKClusterNode> clusterTable;
+    private FlexTableView<ZKEnvNode> srvrTable;
 
     @Override
     public ZKServerTabController parent() {
@@ -29,10 +27,10 @@ public class ZKClusterController extends SubTabController {
     }
 
     @FXML
-    private void refreshCluster() {
-        // 集群信息
-        List<ZKClusterNode> clusterNodes = this.parent().client().clusterNodes();
-        this.clusterTable.setItem(clusterNodes);
+    private void refreshSrvr() {
+        // 服务信息
+        List<ZKEnvNode> srvrNodes = this.parent().client().srvrNodes();
+        this.srvrTable.setItem(srvrNodes);
     }
 
     @Override
@@ -40,7 +38,7 @@ public class ZKClusterController extends SubTabController {
         super.bindListeners();
         this.getTab().selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                this.refreshCluster();
+                this.refreshSrvr();
             }
         });
     }

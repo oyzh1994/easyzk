@@ -7,7 +7,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyzk.tabs.server.ZKAggregationController" text="%base.aggregate">
+       fx:controller="cn.oyzh.easyzk.tabs.server.ZKAggregationTabController" text="%base.aggregate">
     <FlexVBox flexHeight="100%" flexWidth="100%">
         <FlexHBox flexWidth="100%" flexHeight="50%">
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="connectionsChart">

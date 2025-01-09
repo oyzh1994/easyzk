@@ -5,9 +5,7 @@ import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import javafx.fxml.FXML;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * zk客户端汇总信息tab内容组件
@@ -15,13 +13,14 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2024/12/24
  */
-public class ZKEnviController extends SubTabController {
+public class ZKStatTabController extends SubTabController {
 
     /**
-     * 服务端环境
+     * 状态信息
      */
     @FXML
-    private FlexTableView<ZKEnvNode> enviTable;
+    private FlexTableView<ZKEnvNode> statTable;
+
 
     @Override
     public ZKServerTabController parent() {
@@ -29,10 +28,10 @@ public class ZKEnviController extends SubTabController {
     }
 
     @FXML
-    private void refreshEnvi() {
-        // 服务端环境信息
-        List<ZKEnvNode> serverEnviNodes = this.parent().client().enviNodes();
-        this.enviTable.setItem(serverEnviNodes);
+    private void refreshStat() {
+        // 状态信息
+        List<ZKEnvNode> statNodes = this.parent().client().statNodes();
+        this.statTable.setItem(statNodes);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class ZKEnviController extends SubTabController {
         super.bindListeners();
         this.getTab().selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                this.refreshEnvi();
+                this.refreshStat();
             }
         });
     }

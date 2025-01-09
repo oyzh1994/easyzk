@@ -17,7 +17,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024/12/24
  */
-public class ZKAggregationController extends SubTabController {
+public class ZKAggregationTabController extends SubTabController {
 
     /**
      * 客户端图表

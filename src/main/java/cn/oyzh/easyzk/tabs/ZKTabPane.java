@@ -4,7 +4,7 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
-import cn.oyzh.easyzk.event.connection.ZKServerInfoEvent;
+import cn.oyzh.easyzk.event.connection.ZKServerEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
@@ -274,10 +274,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      * @param client redis客户端
      * @return 服务信息tab
      */
-    private ZKServerTab getServerInfoTab(ZKClient client) {
+    private ZKServerTab getServerTab(ZKClient client) {
         if (client != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof ZKServerTab serverTab && serverTab.redisConnect() == client.redisConnect()) {
+                if (tab instanceof ZKServerTab serverTab && serverTab.zkConnect() == client.zkConnect()) {
                     return serverTab;
                 }
             }
@@ -291,10 +291,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      * @param event 事件
      */
     @EventSubscribe
-    public void serverInfo(ZKServerInfoEvent event) {
-        ZKServerTab serverTab = this.getServerInfoTab(event.data());
+    public void server(ZKServerEvent event) {
+        ZKServerTab serverTab = this.getServerTab(event.data());
         if (serverTab == null) {
-            serverTab = new RedisServerTab();
+            serverTab = new ZKServerTab();
             serverTab.init(event.data());
             super.addTab(serverTab);
         } else {

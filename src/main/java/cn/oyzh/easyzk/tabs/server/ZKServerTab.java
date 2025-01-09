@@ -18,13 +18,13 @@ import javafx.scene.Cursor;
 public class ZKServerTab extends DynamicTab {
 
     @Override
-    public RedisServerTabController controller() {
-        return (RedisServerTabController) super.controller();
+    public ZKServerTabController controller() {
+        return (ZKServerTabController) super.controller();
     }
 
     @Override
     protected String url() {
-        return "/tabs/server/redisServerTabContent.fxml";
+        return "/tabs/server/zkServerTab.fxml";
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ZKServerTab extends DynamicTab {
      *
      * @param client redis客户端
      */
-    public void init(RedisClient client) {
+    public void init(ZKClient client) {
         try {
             // 设置文本
             this.setText(I18nHelper.serverInfo() + "-" + client.connectName());
@@ -91,5 +91,6 @@ public class ZKServerTab extends DynamicTab {
         super.onTabCloseRequest(event);
         this.closeRefreshTask();
     }
+
 
 }

@@ -7,5 +7,5 @@ import cn.oyzh.event.Event;
  * @author oyzh
  * @since 2024/4/1
  */
-public class ZKServerInfoEvent extends Event<ZKClient> {
+public class ZKServerEvent extends Event<ZKClient> {
 }

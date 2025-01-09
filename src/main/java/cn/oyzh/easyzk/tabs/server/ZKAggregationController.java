@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs.server;
 
 import cn.oyzh.easyzk.vo.ZKServerInfo;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
 import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
 import cn.oyzh.i18n.I18nHelper;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024/12/24
  */
-public class ZKAggregationController {
+public class ZKAggregationController extends SubTabController {
 
     /**
      * 客户端图表

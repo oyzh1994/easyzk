@@ -5,15 +5,16 @@ import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.easyzk.vo.ZKServerInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.plus.FXConst;
-import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.stage.Modality;
-import javafx.stage.WindowEvent;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 import java.util.concurrent.Future;
@@ -25,11 +26,14 @@ import java.util.concurrent.Future;
  * @author oyzh
  * @since 2022/08/25
  */
-@StageAttribute(
-        modality = Modality.WINDOW_MODAL,
-        value = FXConst.FXML_PATH + "server/zkServerInfo.fxml"
-)
-public class ZKServerController extends StageController {
+public class ZKServerTabController extends ParentTabController {
+
+    /**
+     * zk客户端
+     */
+    @Getter
+    @Accessors(chain = true, fluent = true)
+    private ZKClient client;
 
     /**
      * 服务信息
@@ -50,66 +54,59 @@ public class ZKServerController extends StageController {
     private FlexTableColumn<ZKServerInfo, String> command;
 
     /**
-     * 状态信息
-     */
-    @FXML
-    private FlexTableView<ZKEnvNode> statTable;
-
-    /**
-     * 配置信息
-     */
-    @FXML
-    private FlexTableView<ZKEnvNode> confTable;
-
-    /**
-     * 服务信息
-     */
-    @FXML
-    private FlexTableView<ZKEnvNode> srvrTable;
-
-    /**
-     * 客户端环境
-     */
-    @FXML
-    private FlexTableView<ZKEnvNode> localEnvTable;
-
-    /**
-     * 服务端环境
-     */
-    @FXML
-    private FlexTableView<ZKEnvNode> serverEnvTable;
-
-    /**
      * 汇总信息
      */
     @FXML
     private ZKAggregationController aggregationController;
 
     /**
-     * zk客户端
+     * 服务信息
      */
-    private ZKClient zkClient;
+    @FXML
+    private ZKSrvrController srvrController;
+
+    /**
+     * 状态信息
+     */
+    @FXML
+    private ZKStatController statController;
+
+    /**
+     * 本地信息
+     */
+    @FXML
+    private ZKLocalController localController;
+
+    /**
+     * 配置信息
+     */
+    @FXML
+    private ZKConfController confController;
+
+    /**
+     * 环境信息
+     */
+    @FXML
+    private ZKEnviController enviController;
+
+    /**
+     * 集群信息
+     */
+    @FXML
+    private ZKClusterController clusterController;
 
     /**
      * 刷新任务
      */
     private Future<?> refreshTask;
 
-    @Override
-    protected void bindListeners() {
-        super.bindListeners();
-        this.stage.hideOnEscape();
-    }
-
-    @Override
-    public void onStageShown(WindowEvent event) {
-        this.zkClient = this.getWindowProp("zkClient");
-        // 初始化基本信息
-        this.refreshLocal();
-        this.refreshEnvi();
-        this.refreshSrvr();
-        this.refreshStat();
-        this.refreshConf();
+    /**
+     * 设置zk客户端
+     *
+     * @param client zk客户端
+     */
+    public void init(ZKClient client) {
+        this.client = client;
         // 设置信息
         String command = this.command.getText() + "(" + I18nHelper.received() + "/" + I18nHelper.sent() + "/" + I18nHelper.outstanding() + ")";
         this.command.setText(command);
@@ -136,6 +133,7 @@ public class ZKServerController extends StageController {
             JulLog.debug("RefreshTask closed.");
         } catch (Exception ex) {
             ex.printStackTrace();
+            JulLog.error("closeRefreshTask error", ex);
         }
     }
 
@@ -154,60 +152,27 @@ public class ZKServerController extends StageController {
                 serverInfo = (ZKServerInfo) this.serverTable.getItem(0);
             }
             // 获取信息
-            List<ZKEnvNode> envNodes = this.zkClient.srvrNodes();
+            List<ZKEnvNode> envNodes = this.client.srvrNodes();
             // 更新信息
             serverInfo.update(envNodes);
             // 初始化图表
             this.aggregationController.init(serverInfo);
         } catch (Exception ex) {
             ex.printStackTrace();
+            JulLog.error("renderPane error", ex);
         }
     }
 
     @Override
-    public String getViewTitle() {
-        return I18nHelper.serverInfo();
+    public void onTabClose(DynamicTab tab, Event event) {
+        super.onTabClose(tab, event);
+        this.closeRefreshTask();
     }
-
-    @FXML
-    private void refreshLocal() {
-        // 客户端环境信息
-        List<ZKEnvNode> localEnviNodes = this.zkClient.localNodes();
-        this.localEnvTable.setItem(localEnviNodes);
-    }
-
-    @FXML
-    private void refreshEnvi() {
-        // 服务端环境信息
-        List<ZKEnvNode> serverEnviNodes = this.zkClient.enviNodes();
-        this.serverEnvTable.setItem(serverEnviNodes);
-    }
-
-    @FXML
-    private void refreshSrvr() {
-        // 服务信息
-        List<ZKEnvNode> srvrNodes = this.zkClient.srvrNodes();
-        this.srvrTable.setItem(srvrNodes);
-    }
-
-    @FXML
-    private void refreshStat() {
-        // 状态信息
-        List<ZKEnvNode> statNodes = this.zkClient.statNodes();
-        this.statTable.setItem(statNodes);
-    }
-
-    @FXML
-    private void refreshConf() {
-        // 配置信息
-        List<ZKEnvNode> confNodes = this.zkClient.confNodes();
-        this.confTable.setItem(confNodes);
-    }
-
 
     @Override
-    public void onWindowHidden(WindowEvent event) {
-        super.onWindowHidden(event);
-        this.closeRefreshTask();
+    public List<? extends DynamicTabController> getSubControllers() {
+        return List.of(this.aggregationController, this.localController, this.srvrController,
+                this.statController, this.clusterController, this.localController,
+                this.confController, this.enviController);
     }
 }

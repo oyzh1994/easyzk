@@ -34,7 +34,7 @@ public class ZKInformationTreeItem extends RichTreeItem<ZKInformationTreeItem.ZK
     @Override
     public void onPrimaryDoubleClick() {
 //        this.parent().serverInfo();
-        ZKEventUtil.serverInfo(this.parent().client());
+        ZKEventUtil.server(this.parent().client());
     }
 
     /**

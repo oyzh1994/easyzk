@@ -112,16 +112,19 @@ public class ZKServerTabController extends ParentTabController {
         this.command.setText(command);
         String latency = this.latency.getText() + "(" + I18nHelper.min() + "/" + I18nHelper.avg() + "/" + I18nHelper.max() + ")" + I18nHelper.millisecond();
         this.latency.setText(latency);
-        // 初始化刷新任务
-        this.initRefreshTask();
     }
 
     /**
      * 初始化自动刷新任务
      */
     private void initRefreshTask() {
-        this.refreshTask = ExecutorUtil.start(this::renderPane, 0, 3_000);
-        JulLog.debug("RefreshTask started.");
+        try {
+            this.refreshTask = ExecutorUtil.start(this::renderPane, 0, 3_000);
+            JulLog.debug("RefreshTask started.");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JulLog.error("initRefreshTask error", ex);
+        }
     }
 
     /**
@@ -142,25 +145,36 @@ public class ZKServerTabController extends ParentTabController {
      */
     private void renderPane() {
         try {
-            // 服务信息
-            ZKServerInfo serverInfo;
-            // 初始化
-            if (this.serverTable.isItemEmpty()) {
-                serverInfo = new ZKServerInfo();
-                this.serverTable.setItem(serverInfo);
-            } else {// 获取
-                serverInfo = (ZKServerInfo) this.serverTable.getItem(0);
+            JulLog.info("renderPane started.");
+            if (this.client != null) {
+                // 服务信息
+                ZKServerInfo serverInfo;
+                // 初始化
+                if (this.serverTable.isItemEmpty()) {
+                    serverInfo = new ZKServerInfo();
+                    this.serverTable.setItem(serverInfo);
+                } else {// 获取
+                    serverInfo = (ZKServerInfo) this.serverTable.getItem(0);
+                }
+                // 获取信息
+                List<ZKEnvNode> envNodes = this.client.srvrNodes();
+                // 更新信息
+                serverInfo.update(envNodes);
+                // 初始化图表
+                this.aggregationController.init(serverInfo);
             }
-            // 获取信息
-            List<ZKEnvNode> envNodes = this.client.srvrNodes();
-            // 更新信息
-            serverInfo.update(envNodes);
-            // 初始化图表
-            this.aggregationController.init(serverInfo);
+            JulLog.info("renderPane finished.");
         } catch (Exception ex) {
             ex.printStackTrace();
             JulLog.error("renderPane error", ex);
         }
+    }
+
+    @Override
+    public void onTabInit(DynamicTab tab) {
+        super.onTabInit(tab);
+        // 初始化刷新任务
+        this.initRefreshTask();
     }
 
     @Override

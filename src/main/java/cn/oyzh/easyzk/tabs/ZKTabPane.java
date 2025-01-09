@@ -209,51 +209,12 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         if (terminalTab != null) {
             terminalTab.closeTab();
         }
+        // 检查连接是否相同
+        ZKServerTab serverTab = this.getServerTab(event.connect());
+        if (serverTab != null) {
+            serverTab.closeTab();
+        }
     }
-
-    // /**
-    //  * 获取认证tab
-    //  *
-    //  * @return 认证tab
-    //  */
-    // public ZKAuthTab getAuthTab() {
-    //     return super.getTab(ZKAuthTab.class);
-    // }
-    //
-    // /**
-    //  * 初始化认证tab
-    //  */
-    // @EventSubscribe
-    // private void authMain(ZKAuthMainEvent event) {
-    //     ZKAuthTab tab = this.getAuthTab();
-    //     if (tab == null) {
-    //         tab = new ZKAuthTab();
-    //         super.addTab(tab);
-    //     }
-    //     this.select(tab);
-    // }
-
-    // /**
-    //  * 获取过滤tab
-    //  *
-    //  * @return 过滤tab
-    //  */
-    // private ZKFilterTab getFilterTab() {
-    //     return super.getTab(ZKFilterTab.class);
-    // }
-    //
-    // /**
-    //  * 初始化过滤tab
-    //  */
-    // @EventSubscribe
-    // private void filterMain(ZKFilterMainEvent event) {
-    //     ZKFilterTab tab = this.getFilterTab();
-    //     if (tab == null) {
-    //         tab = new ZKFilterTab();
-    //         super.addTab(tab);
-    //     }
-    //     this.select(tab);
-    // }
 
     /**
      * 恢复数据
@@ -271,13 +232,13 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     /**
      * 获取服务信息tab
      *
-     * @param client redis客户端
+     * @param connect zk连接
      * @return 服务信息tab
      */
-    private ZKServerTab getServerTab(ZKClient client) {
-        if (client != null) {
+    private ZKServerTab getServerTab(ZKConnect connect) {
+        if (connect != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof ZKServerTab serverTab && serverTab.zkConnect() == client.zkConnect()) {
+                if (tab instanceof ZKServerTab serverTab && serverTab.zkConnect() == connect) {
                     return serverTab;
                 }
             }
@@ -292,7 +253,7 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     public void server(ZKServerEvent event) {
-        ZKServerTab serverTab = this.getServerTab(event.data());
+        ZKServerTab serverTab = this.getServerTab(event.zkConnect());
         if (serverTab == null) {
             serverTab = new ZKServerTab();
             serverTab.init(event.data());

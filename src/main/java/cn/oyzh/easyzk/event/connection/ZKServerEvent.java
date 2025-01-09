@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.event.connection;
 
+import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
 
@@ -8,4 +9,8 @@ import cn.oyzh.event.Event;
  * @since 2024/4/1
  */
 public class ZKServerEvent extends Event<ZKClient> {
+
+    public ZKConnect zkConnect() {
+        return this.data().zkConnect();
+    }
 }

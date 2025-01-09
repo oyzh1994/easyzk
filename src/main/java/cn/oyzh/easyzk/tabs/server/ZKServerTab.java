@@ -82,15 +82,19 @@ public class ZKServerTab extends DynamicTab {
 
     @Override
     protected void onTabClosed(Event event) {
-        super.onTabClosed(event);
         this.closeRefreshTask();
+        super.onTabClosed(event);
     }
 
     @Override
     protected void onTabCloseRequest(Event event) {
-        super.onTabCloseRequest(event);
         this.closeRefreshTask();
+        super.onTabCloseRequest(event);
     }
 
-
+    @Override
+    public void closeTab() {
+        this.closeRefreshTask();
+        super.closeTab();
+    }
 }

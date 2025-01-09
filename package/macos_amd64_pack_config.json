@@ -69,7 +69,7 @@
             ".*.so",
             "javafx-graphics.*-win.*.jar",
             "javafx-graphics.*-mac-aarch64.jar",
-            "javafx-graphics*-linux.*.jar"
+            "javafx-graphics.*-linux.*.jar"
         ]
     }
 }

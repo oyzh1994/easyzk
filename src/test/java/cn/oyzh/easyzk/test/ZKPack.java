@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.test;
 
+import cn.oyzh.common.util.OSUtil;
 import cn.oyzh.fx.pkg.Packer;
 import org.junit.Test;
 
@@ -12,9 +13,14 @@ import java.util.Map;
  */
 public class ZKPack {
 
+
     private String getProjectPath() {
         String projectPath = getClass().getResource("").getPath();
-        projectPath = projectPath.substring(1, projectPath.indexOf("/target/"));
+        if (OSUtil.isWindows()) {
+            projectPath = projectPath.substring(1, projectPath.indexOf("/target/"));
+        } else {
+            projectPath = projectPath.substring(0, projectPath.indexOf("/target/"));
+        }
         return projectPath;
     }
 
@@ -75,6 +81,21 @@ public class ZKPack {
         packer.pack(macos_pack_config, properties);
     }
 
+
+    @Test
+    public void easyzk_macos_arm64_pack() throws Exception {
+        String packagePath = this.getPackagePath();
+        String macos_arm64_pack_config = packagePath + "macos_arm64_pack_config.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
+
+        Packer packer = new Packer();
+        packer.registerProjectHandler();
+        packer.registerJdepsHandler();
+        packer.pack(macos_arm64_pack_config, properties);
+    }
+
     @Test
     public void easyzk_all_pack() throws Exception {
         String projectPath = this.getProjectPath();
@@ -83,6 +104,8 @@ public class ZKPack {
         String linux_amd64_pack_config = packagePath + "linux_amd64_pack_config.json";
         String linux_arm64_pack_config = packagePath + "linux_arm64_pack_config.json";
         String macos_amd64_pack_config = packagePath + "macos_amd64_pack_config.json";
+        String macos_arm64_pack_config = packagePath + "macos_arm64_pack_config.json";
+
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", projectPath);
         Packer packer = new Packer();
@@ -95,5 +118,6 @@ public class ZKPack {
         packer.pack(linux_amd64_pack_config, properties);
         packer.pack(linux_arm64_pack_config, properties);
         packer.pack(macos_amd64_pack_config, properties);
+        packer.pack(macos_arm64_pack_config, properties);
     }
 }

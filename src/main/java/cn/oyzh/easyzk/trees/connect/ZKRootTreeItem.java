@@ -358,6 +358,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
 
     @Override
     public void loadChild() {
+        this.clearChild();
         // 初始化分组
         List<ZKGroup> groups = this.groupStore.load();
         // List<ZKGroupTreeItem> groupItems = this.getGroupItems();

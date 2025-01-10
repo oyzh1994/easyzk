@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller.tool;
 
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.NumberUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
@@ -9,6 +10,7 @@ import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -57,11 +59,11 @@ public class ZKToolController extends StageController {
     @FXML
     private void genDigest() {
         try {
-            if(StringUtil.isBlank(this.user.getText())){
+            if (StringUtil.isBlank(this.user.getText())) {
                 this.user.requestFocus();
                 return;
             }
-            if(StringUtil.isBlank(this.pwd.getText())){
+            if (StringUtil.isBlank(this.pwd.getText())) {
                 this.pwd.requestFocus();
                 return;
             }
@@ -115,14 +117,16 @@ public class ZKToolController extends StageController {
     @FXML
     private void calcCache() {
         this.disable();
-        try {
-            this.cacheArea.setText("calc cache start.");
-            File dir = new File(ZKConst.CACHE_PATH);
-            this.doCalcCache(dir, new AtomicInteger(0), new LongAdder());
-            this.cacheArea.appendLine("calc cache finish.");
-        } finally {
-            this.enable();
-        }
+        this.cacheArea.setText("calc cache start.");
+        ThreadUtil.start(() -> {
+            try {
+                File dir = new File(ZKConst.CACHE_PATH);
+                this.doCalcCache(dir, new AtomicInteger(0), new LongAdder());
+            } finally {
+                this.cacheArea.appendLine("calc cache finish.");
+                this.enable();
+            }
+        }, 100);
     }
 
     /**
@@ -137,7 +141,7 @@ public class ZKToolController extends StageController {
             fileSize.add(file.length());
             fileCount.incrementAndGet();
             String sizeInfo = NumberUtil.formatSize(fileSize.longValue());
-            this.cacheArea.setText("find file: " + fileCount.get() + " total size: " + sizeInfo);
+            FXUtil.runWait(() -> this.cacheArea.setText("find file: " + fileCount.get() + " total size: " + sizeInfo));
         } else {
             File[] files = file.listFiles();
             if (files != null) {
@@ -153,29 +157,37 @@ public class ZKToolController extends StageController {
      */
     @FXML
     private void clearCache() {
-        try {
-            this.cacheArea.setText("clear cache start.");
-            File dir = new File(ZKConst.CACHE_PATH);
-            this.doClearCache(dir);
-            this.cacheArea.appendLine("clear cache finish.");
-        } finally {
-            this.enable();
-        }
+        this.cacheArea.setText("clear cache start.");
+        ThreadUtil.start(() -> {
+            try {
+                File dir = new File(ZKConst.CACHE_PATH);
+                this.doClearCache(dir, new AtomicInteger(0), new LongAdder());
+            } finally {
+                this.cacheArea.appendLine("clear cache finish.");
+                this.enable();
+            }
+        }, 100);
     }
 
     /**
      * 清理缓存
      *
-     * @param file 文件
+     * @param file      文件
+     * @param fileCount 文件总数
+     * @param fileSize  文件大小
      */
-    private void doClearCache(File file) {
+    private void doClearCache(File file, AtomicInteger fileCount, LongAdder fileSize) {
         if (file.isFile()) {
+            fileSize.add(file.length());
+            fileCount.incrementAndGet();
+            String sizeInfo = NumberUtil.formatSize(fileSize.longValue());
             file.delete();
+            FXUtil.runWait(() -> this.cacheArea.setText("delete file: " + fileCount.get() + " total size: " + sizeInfo));
         } else {
             File[] files = file.listFiles();
             if (files != null) {
                 for (File file1 : files) {
-                    this.doClearCache(file1);
+                    this.doClearCache(file1, fileCount, fileSize);
                 }
             }
         }

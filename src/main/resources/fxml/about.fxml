@@ -62,7 +62,8 @@
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <FXHyperlink text="https://github.com/mkpaz/atlantafx">
+    <FXHyperlink text="https://github.com/libgdx/packr">
+<!--    <FXHyperlink text="https://github.com/mkpaz/atlantafx">-->
         <VBox.margin>
             <Insets left="30" top="5"/>
         </VBox.margin>

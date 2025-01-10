@@ -1,9 +1,9 @@
 {
     "packMode": "jpackage",
     "platform": "win_amd64",
-    "dest": "D:\\Package\\EasyZK\\${appVersion}\\EasyZK_${appVersion}",
-    "appIcon": "${projectPath}\\resource\\zoo.ico",
-    "mainJar": "${projectPath}\\target\\easyzk-${appVersion}.jar",
+    "dest": "C:/Package/EasyZK/${appVersion}/EasyZK_${appVersion}",
+    "appIcon": "${projectPath}/resource/zoo.ico",
+    "mainJar": "${projectPath}/target/easyzk-${appVersion}.jar",
     "jdkPath": "$SYSTEM",
     "packr": {
         "verbose": true,

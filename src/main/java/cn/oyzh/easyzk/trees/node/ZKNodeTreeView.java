@@ -306,11 +306,6 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         }
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
-
     /**
      * 加载根节点
      */
@@ -350,9 +345,4 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         }
         return false;
     }
-
-//    @Override
-//    public void onNodeDestroy() {
-//        this.client = null;
-//    }
 }

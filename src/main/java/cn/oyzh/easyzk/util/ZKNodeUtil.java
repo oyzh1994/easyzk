@@ -334,17 +334,22 @@ public class ZKNodeUtil {
      * @return 子节点列表
      */
     public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, List<String> existingNodes, int limit) throws Exception {
-        List<ZKNode> list = new ArrayList<>();
         // 获取子节点
-        List<String> children = client.getChildren(parentPath);
+        List<String> children = null;
+        try {
+            // 获取子节点
+            children = client.getChildren(parentPath);
+        } catch (Exception _) {
+
+        }
         // 为空，直接返回
         if (CollectionUtil.isEmpty(children)) {
             return Collections.emptyList();
         }
         // 处理器核心数量
+        List<ZKNode> list = new ArrayList<>();
+        // 数据列表
         int pCount = RuntimeUtil.processorCount();
-        // 已加载数量
-        int count = 0;
         // 性能较差机器上同步执行
         if (pCount < 4) {
             // 获取节点数据
@@ -356,12 +361,14 @@ public class ZKNodeUtil {
                     continue;
                 }
                 // 获取节点
-                list.add(getNode(client, path, FULL_PROPERTIES));
-                if (limit > 0 && count++ > limit) {
+                try {
+                    list.add(getNode(client, path, FULL_PROPERTIES));
+                } catch (Exception ignore) {
+                }
+                if (limit > 0 && list.size() > limit) {
                     break;
                 }
             }
-//            children.clear();
         } else {// 性能较好机器上异步执行
             // 任务列表
             List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
@@ -374,8 +381,14 @@ public class ZKNodeUtil {
                     continue;
                 }
                 // 添加到任务列表
-                tasks.add(() -> getNode(client, path, FULL_PROPERTIES));
-                if (limit > 0 && count++ > limit) {
+                tasks.add(() -> {
+                    try {
+                        return getNode(client, path, FULL_PROPERTIES);
+                    } catch (Exception ignore) {
+                    }
+                    return null;
+                });
+                if (limit > 0 && list.size() > limit) {
                     break;
                 }
                 if (tasks.size() >= pCount) {
@@ -387,8 +400,6 @@ public class ZKNodeUtil {
             if (!tasks.isEmpty()) {
                 list.addAll(ThreadUtil.invoke(tasks));
             }
-//            tasks.clear();
-//            children.clear();
         }
         if (limit > 0 && list.size() > limit) {
             return list.subList(0, limit);

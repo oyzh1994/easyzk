@@ -11,6 +11,7 @@ import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
+import cn.oyzh.easyzk.controller.node.ZKNodeSearchController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -1313,7 +1314,15 @@ public class ZKNodeTab extends DynamicTab {
             }
         }
 
-        public void doSearch(MouseEvent mouseEvent) {
+        @FXML
+        private void doSearch() {
+            StageAdapter adapter = StageManager.getStage(ZKNodeSearchController.class);
+            if (adapter == null) {
+                adapter = StageManager.parseStage(ZKNodeSearchController.class);
+                adapter.display();
+            } else {
+                adapter.toFront();
+            }
         }
     }
 }

@@ -11,7 +11,9 @@ public class ZKSearchParam {
 
     private String keyword;
 
-    private boolean loadAll;
+    private boolean matchCase;
+
+    private boolean matchFull;
 
     private boolean searchPath;
 
@@ -26,20 +28,23 @@ public class ZKSearchParam {
         if (param == this) {
             return true;
         }
-        if (param instanceof ZKSearchParam zkSearchParam) {
-            if (zkSearchParam.loadAll && !this.loadAll) {
+        if (param instanceof ZKSearchParam searchParam) {
+            if (searchParam.matchCase && !this.matchCase) {
                 return false;
             }
-            if (zkSearchParam.searchData && !this.searchData) {
+            if (searchParam.matchFull && !this.matchFull) {
                 return false;
             }
-            if (zkSearchParam.searchPath && !this.searchPath) {
+            if (searchParam.searchData && !this.searchData) {
                 return false;
             }
-            if (!StringUtil.equalsIgnoreCase(zkSearchParam.action, this.action)) {
+            if (searchParam.searchPath && !this.searchPath) {
                 return false;
             }
-            return StringUtil.equalsIgnoreCase(zkSearchParam.keyword, this.keyword);
+            if (!StringUtil.equalsIgnoreCase(searchParam.action, this.action)) {
+                return false;
+            }
+            return StringUtil.equalsIgnoreCase(searchParam.keyword, this.keyword);
         }
         return false;
     }

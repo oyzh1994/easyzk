@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller.node;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.search.ZKSearchCompleteEvent;
@@ -10,10 +11,14 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -43,7 +48,16 @@ public class ZKNodeSearchController extends StageController {
     private FXCheckBox searchData;
 
     @FXML
-    private FXCheckBox loadAll;
+    private FXCheckBox matchCase;
+
+    @FXML
+    private FXCheckBox matchFull;
+
+    @FXML
+    private SVGGlyph next;
+
+    @FXML
+    private SVGGlyph prev;
 
     private ZKConnect zkConnect;
 
@@ -51,6 +65,7 @@ public class ZKNodeSearchController extends StageController {
     public void onStageShown(WindowEvent event) {
         this.zkConnect = this.getWindowProp("zkConnect");
         this.stage.hideOnEscape();
+        super.onStageShown(event);
     }
 
     @Override
@@ -64,18 +79,32 @@ public class ZKNodeSearchController extends StageController {
         return I18nResourceBundle.i18nString("zk.title.node.search");
     }
 
+    @Override
+    protected void bindListeners() {
+        super.bindListeners();
+        this.prev.disableProperty().bind(this.next.disableProperty());
+        this.keyword.addTextChangeListener((observable, oldValue, newValue) -> {
+            if (StringUtil.isBlank(newValue)) {
+                this.next.disable();
+            } else {
+                this.next.enable();
+            }
+        });
+    }
+
     private ZKSearchParam getParam() {
         ZKSearchParam param = new ZKSearchParam();
-        param.setKeyword(keyword.getText());
-        param.setSearchPath(searchPath.isSelected());
-        param.setSearchData(searchData.isSelected());
-        param.setLoadAll(loadAll.isSelected());
+        param.setKeyword(this.keyword.getText());
+        param.setMatchCase(this.matchCase.isSelected());
+        param.setMatchFull(this.matchFull.isSelected());
+        param.setSearchPath(this.searchPath.isSelected());
+        param.setSearchData(this.searchData.isSelected());
         return param;
     }
 
     @FXML
     private void keywordKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER && event.isControlDown()) {
+        if (event.getCode() == KeyCode.ENTER && event.isAltDown()) {
             this.searchPrev();
         } else if (event.getCode() == KeyCode.ENTER) {
             this.searchNext();
@@ -86,24 +115,23 @@ public class ZKNodeSearchController extends StageController {
     private void searchPrev() {
         ZKSearchParam param = getParam();
         param.setAction("prev");
+        this.next.disable();
         ZKEventUtil.searchTrigger(param, this.zkConnect);
-        this.disable();
-        this.keyword.requestFocus();
     }
 
     @FXML
     private void searchNext() {
         ZKSearchParam param = getParam();
         param.setAction("next");
+        this.next.disable();
         ZKEventUtil.searchTrigger(param, this.zkConnect);
-        this.disable();
-        this.keyword.requestFocus();
     }
 
     @EventSubscribe
     public void onSearchComplete(ZKSearchCompleteEvent event) {
         if (event.data() == this.zkConnect) {
-            this.enable();
+            this.next.enable();
+            this.keyword.requestFocus();
         }
     }
 }

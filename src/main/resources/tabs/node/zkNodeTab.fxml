@@ -42,7 +42,7 @@
         <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
         </ZKNodeTreeView>
         <FlexHBox flexWidth="100%" flexHeight="30">
-            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch">
+            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch" appendTipText="(CTRL/COMMAND+F)">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>

@@ -1,6 +1,8 @@
 package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -365,33 +367,43 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
             this.currentNode = null;
         }
         String kw = param.getKeyword();
-        ZKNodeTreeItem findNode = null;
+        ZKNodeTreeItem foundNode = null;
         boolean findStart = this.currentNode == null;
         for (ZKNodeTreeItem node : list) {
             if (this.currentNode != null && node == this.currentNode) {
                 findStart = true;
                 continue;
             }
-            if (findStart) {
-                if (param.isSearchPath() && node.nodePath().contains(kw)) {
-                    findNode = node;
-                    break;
-                }
-                byte[] nodeData = node.getData();
-                if (param.isSearchData() && nodeData != null && new String(nodeData).contains(kw)) {
-                    findNode = node;
+            if (!findStart) {
+                continue;
+            }
+            if (param.isSearchPath()) {
+                String nodePath = node.nodePath();
+                int index = TextUtil.findIndex(nodePath, kw, null, param.isMatchCase(), param.isMatchFull());
+                if (index != -1) {
+                    foundNode = node;
                     break;
                 }
             }
+            if (param.isSearchData()) {
+                byte[] nodeData = node.getData();
+                if (nodeData != null) {
+                    int index = TextUtil.findIndex(new String(nodeData), kw, null, param.isMatchCase(), param.isMatchFull());
+                    if (index != -1) {
+                        foundNode = node;
+                        break;
+                    }
+                }
+            }
         }
-        if (findNode != null) {
-            this.currentNode = findNode;
-            this.select(findNode);
+        if (foundNode != null) {
+            this.currentNode = foundNode;
+            this.selectAndScroll(foundNode);
         } else {
             this.currentNode = null;
         }
         ZKEventUtil.searchComplete(this.connect());
-        return findNode != null;
+        return foundNode != null;
     }
 
     public void onSearchFinish() {

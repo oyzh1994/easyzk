@@ -12,7 +12,7 @@ import java.util.Locale;
  * @author oyzh
  * @since 2024/4/19
  */
-public class ZKNodeSearchTypeComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
+public class ZKNodeFilterTypeComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
 
     {
         NodeManager.init(this);

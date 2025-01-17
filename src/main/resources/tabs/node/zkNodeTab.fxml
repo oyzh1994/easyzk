@@ -2,8 +2,8 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLTableView?>
 <?import cn.oyzh.easyzk.fx.ZKDataTextArea?>
-<?import cn.oyzh.easyzk.fx.filter.ZKNodeSearchTextField?>
-<?import cn.oyzh.easyzk.fx.filter.ZKNodeSearchTypeComboBox?>
+<?import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTextField?>
+<?import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTypeComboBox?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
@@ -27,26 +27,26 @@
           fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTab.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="30" flexWidth="100%">
-            <ZKNodeSearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType">
+            <ZKNodeFilterTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
-            </ZKNodeSearchTypeComboBox>
-            <ZKNodeSearchTextField onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
+            </ZKNodeFilterTypeComboBox>
+            <ZKNodeFilterTextField onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
                                    flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
-            </ZKNodeSearchTextField>
+            </ZKNodeFilterTextField>
         </FlexHBox>
         <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
         </ZKNodeTreeView>
         <FlexHBox flexWidth="100%" flexHeight="30">
-            <SearchSVGLabel size="16" onMousePrimaryClicked="#search">
+            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
-            </SearchSVGLabel>
+            </SearchSVGGlyph>
             <AddSVGGlyph size="16" onMousePrimaryClicked="#addNode">
                 <HBox.margin>
                     <Insets left="5" top="5"/>

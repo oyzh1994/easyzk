@@ -23,8 +23,8 @@ import cn.oyzh.easyzk.event.node.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
-import cn.oyzh.easyzk.fx.filter.ZKNodeSearchTextField;
-import cn.oyzh.easyzk.fx.filter.ZKNodeSearchTypeComboBox;
+import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTextField;
+import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTypeComboBox;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
@@ -222,16 +222,16 @@ public class ZKNodeTab extends DynamicTab {
         private ZKNodeTreeView treeView;
 
         /**
-         * 搜索类型
+         * 过滤类型
          */
         @FXML
-        private ZKNodeSearchTypeComboBox searchType;
+        private ZKNodeFilterTypeComboBox filterType;
 
         /**
-         * 搜索内容
+         * 过滤内容
          */
         @FXML
-        private ZKNodeSearchTextField filterKW;
+        private ZKNodeFilterTextField filterKW;
 
         /**
          * 右侧zk属性组件
@@ -246,7 +246,7 @@ public class ZKNodeTab extends DynamicTab {
         private FXToggleSwitch statViewSwitch;
 
         /**
-         * 内容搜索组件
+         * 内容过滤组件
          */
         @FXML
         private ClearableTextField dataSearch;
@@ -1019,8 +1019,8 @@ public class ZKNodeTab extends DynamicTab {
             super.bindListeners();
             // 监听选中变化
             this.treeView.selectItemChanged(this::initItem);
-            // 搜索处理
-            this.searchType.selectedIndexChanged((observable, oldValue, newValue) -> this.doSearch());
+            // 过滤处理
+            this.filterType.selectedIndexChanged((observable, oldValue, newValue) -> this.doFilter());
             // undo监听
             this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
             // redo监听
@@ -1031,7 +1031,7 @@ public class ZKNodeTab extends DynamicTab {
             this.aclViewSwitch.selectedChanged((t3, t2, t1) -> this.initACL());
             // 切换显示监听
             this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
-            // 节点内容搜索
+            // 节点内容过滤
             this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setSearchText(newValue));
             // 格式监听
             this.format.selectedItemChanged((t1, t2, t3) -> {
@@ -1148,13 +1148,13 @@ public class ZKNodeTab extends DynamicTab {
         }
 
         /**
-         * 执行搜索
+         * 执行过滤
          */
         @FXML
         private void doFilter() {
-            String kw = this.searchKW.getTextTrim();
-            int mode = this.searchKW.getSelectedIndex();
-            int type = this.searchType.getSelectedIndex();
+            String kw = this.filterKW.getTextTrim();
+            int mode = this.filterKW.getSelectedIndex();
+            int type = this.filterType.getSelectedIndex();
             this.treeView.itemFilter().setKw(kw);
             this.treeView.itemFilter().setType((byte) type);
             this.treeView.itemFilter().setMatchMode((byte) mode);
@@ -1265,39 +1265,6 @@ public class ZKNodeTab extends DynamicTab {
             }
         }
 
-        // /**
-        //  * 认证已添加事件
-        //  *
-        //  * @param event 事件
-        //  */
-        // @EventSubscribe
-        // private void authAdded(ZKAuthAddedEvent event) {
-        //     try {
-        //         ZKAuth auth = event.data();
-        //         if (auth.isEnable()) {
-        //             this.treeView.authChanged(auth);
-        //             this.flushTab();
-        //         }
-        //     } catch (Exception ex) {
-        //         MessageBox.exception(ex);
-        //     }
-        // }
-
-        // /**
-        //  * 认证已启用事件
-        //  *
-        //  * @param event 事件
-        //  */
-        // @EventSubscribe
-        // private void authEnabled(ZKAuthEnabledEvent event) {
-        //     try {
-        //         this.treeView.authChanged(event.data());
-        //         this.flushTab();
-        //     } catch (Exception ex) {
-        //         MessageBox.exception(ex);
-        //     }
-        // }
-
         @FXML
         private void addNode() {
             StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
@@ -1344,6 +1311,9 @@ public class ZKNodeTab extends DynamicTab {
                 this.treeView.sortDesc();
                 this.sortPane.asc();
             }
+        }
+
+        public void doSearch(MouseEvent mouseEvent) {
         }
     }
 }

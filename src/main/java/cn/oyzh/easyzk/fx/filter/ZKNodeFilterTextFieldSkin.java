@@ -16,29 +16,29 @@ import javafx.scene.paint.Color;
 import lombok.Getter;
 
 /**
- * 搜索文本输入框皮肤
+ * 过滤文本输入框皮肤
  *
  * @author oyzh
  * @since 2023/10/9
  */
-public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
+public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
 
     /**
-     * 搜索历史按钮
+     * 过滤历史按钮
      */
     protected final SVGGlyph button;
 
     /**
-     * 搜索历史弹窗
+     * 过滤历史弹窗
      */
     @Getter
-    protected ZKNodeSearchPopup popup;
+    protected ZKNodeFilterPopup popup;
 
     /**
      * 初始化弹窗
      */
     protected void initPopup() {
-        this.popup = new ZKNodeSearchPopup();
+        this.popup = new ZKNodeFilterPopup();
         this.popup.show(this.getSkinnable());
         this.popup.setOnIndexSelected(this::onIndexSelected);
     }
@@ -71,7 +71,7 @@ public class ZKNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         }
     }
 
-    public ZKNodeSearchTextFieldSkin(TextField textField) {
+    public ZKNodeFilterTextFieldSkin(TextField textField) {
         super(textField);
         // 初始化弹窗
         this.initPopup();

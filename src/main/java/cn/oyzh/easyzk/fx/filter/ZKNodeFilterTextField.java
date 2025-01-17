@@ -8,12 +8,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 搜索文本域
+ * 过滤文本域
  *
  * @author oyzh
  * @since 2023/10/24
  */
-public class ZKNodeSearchTextField extends LimitTextField {
+public class ZKNodeFilterTextField extends LimitTextField {
 
     {
         this.skinProperty().addListener((observable, oldValue, newValue) -> {
@@ -32,13 +32,13 @@ public class ZKNodeSearchTextField extends LimitTextField {
      *
      * @return 皮肤
      */
-    public ZKNodeSearchTextFieldSkin skin() {
-        return (ZKNodeSearchTextFieldSkin) this.getSkin();
+    public ZKNodeFilterTextFieldSkin skin() {
+        return (ZKNodeFilterTextFieldSkin) this.getSkin();
     }
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new ZKNodeSearchTextFieldSkin(this) {
+        return new ZKNodeFilterTextFieldSkin(this) {
             @Override
             public void onSearch(String text) {
                 super.onSearch(text);

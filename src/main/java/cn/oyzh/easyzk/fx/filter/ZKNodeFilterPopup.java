@@ -7,12 +7,12 @@ import cn.oyzh.i18n.I18nHelper;
 import java.util.List;
 
 /**
- * zk节点搜索类型弹窗
+ * zk节点过滤类型弹窗
  *
  * @author oyzh
  * @since 2023/4/24
  */
-public class ZKNodeSearchPopup extends ListViewPopup<String> {
+public class ZKNodeFilterPopup extends ListViewPopup<String> {
 
     @Override
     protected void initPopup() {

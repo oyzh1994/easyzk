@@ -367,7 +367,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         String kw = param.getKeyword();
         ZKNodeTreeItem findNode = null;
         boolean findStart = this.currentNode == null;
-        for (ZKNodeTreeItem node : this.getAllNodeItem()) {
+        for (ZKNodeTreeItem node : list) {
             if (this.currentNode != null && node == this.currentNode) {
                 findStart = true;
                 continue;

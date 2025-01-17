@@ -302,7 +302,9 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             // 非根节点 + 子节点 + 持久节点
             if (!this.value.isRoot() && this.value.isChildren() && this.isPersistent()) {
                 FXMenuItem rename = MenuItemHelper.renameNode("12", this::rename);
+                FXMenuItem cloneNode = MenuItemHelper.cloneNode("12", this::cloneNode);
                 items.add(rename);
+                items.add(cloneNode);
             }
             // 非根节点
             if (!this.value.isRoot()) {
@@ -333,6 +335,37 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItem.ZKNodeTreeItemVa
             items.add(auth);
         }
         return items;
+    }
+
+    /**
+     * 克隆节点
+     */
+    private void cloneNode() {
+        // 判断是否符合要求
+        if (this.isRoot() || this.value.isParent() || this.value.isEphemeral()) {
+            return;
+        }
+        String nodeName = this.value.nodeName() + "-" + I18nHelper.clone1();
+        // 检查是否存在
+        String parentPath = ZKNodeUtil.getParentPath(this.value.nodePath());
+        String newNodePath = ZKNodeUtil.concatPath(parentPath, nodeName);
+        try {
+            if (this.client().exists(newNodePath)) {
+                MessageBox.warn(I18nHelper.node() + " [" + newNodePath + "] " + I18nHelper.alreadyExists());
+                return;
+            }
+            // 创建模式
+            CreateMode createMode = this.value.isEphemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
+            // 创建新节点
+            if (this.client().create(newNodePath, this.getNodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
+                // 发送事件
+                ZKEventUtil.nodeAdded(this.zkConnect(), newNodePath);
+            } else {// 操作失败
+                MessageBox.warn(I18nHelper.operationFail());
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
+        }
     }
 
     /**

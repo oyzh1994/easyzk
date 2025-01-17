@@ -10,6 +10,7 @@ cn.oyzh.easyzk.EasyZKBootstrap.main
  https://gitee.com/oyzh1994/base
 2. fx-base工程  
  https://gitee.com/oyzh1994/fx-base
+3. jdk版本要求23
 
 ###### 结构说明 
 docker -> zookeeper的docker启动配置文件等

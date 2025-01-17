@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.search;
+package cn.oyzh.easyzk.fx.filter;
 
 import cn.oyzh.fx.gui.text.field.LimitTextField;
 import cn.oyzh.fx.plus.event.AnonymousEvent;
@@ -16,7 +16,6 @@ import lombok.Setter;
 public class ZKNodeSearchTextField extends LimitTextField {
 
     {
-        // this.setPromptText(I18nHelper.contains());
         this.skinProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 this.skin().setSelectedIndex(0);

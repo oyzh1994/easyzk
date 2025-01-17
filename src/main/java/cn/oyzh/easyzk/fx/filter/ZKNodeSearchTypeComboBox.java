@@ -1,10 +1,9 @@
-package cn.oyzh.easyzk.search;
+package cn.oyzh.easyzk.fx.filter;
 
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 import cn.oyzh.fx.plus.node.NodeManager;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.scene.control.Hyperlink;
 
 import java.util.List;
 import java.util.Locale;

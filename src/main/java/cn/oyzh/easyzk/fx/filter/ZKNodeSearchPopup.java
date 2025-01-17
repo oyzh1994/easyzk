@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.search;
+package cn.oyzh.easyzk.fx.filter;
 
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.fx.plus.controls.popup.ListViewPopup;

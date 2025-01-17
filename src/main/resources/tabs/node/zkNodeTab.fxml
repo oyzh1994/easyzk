@@ -2,8 +2,8 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLTableView?>
 <?import cn.oyzh.easyzk.fx.ZKDataTextArea?>
-<?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
-<?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
+<?import cn.oyzh.easyzk.fx.filter.ZKNodeSearchTextField?>
+<?import cn.oyzh.easyzk.fx.filter.ZKNodeSearchTypeComboBox?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
@@ -32,7 +32,7 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeSearchTypeComboBox>
-            <ZKNodeSearchTextField onAction="#doSearch" onSearch="#doSearch" fx:id="searchKW" realHeight="24"
+            <ZKNodeSearchTextField onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
                                    flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -42,6 +42,11 @@
         <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
         </ZKNodeTreeView>
         <FlexHBox flexWidth="100%" flexHeight="30">
+            <SearchSVGLabel size="16" onMousePrimaryClicked="#search">
+                <HBox.margin>
+                    <Insets left="5" top="5"/>
+                </HBox.margin>
+            </SearchSVGLabel>
             <AddSVGGlyph size="16" onMousePrimaryClicked="#addNode">
                 <HBox.margin>
                     <Insets left="5" top="5"/>

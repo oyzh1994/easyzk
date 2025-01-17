@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.search;
+package cn.oyzh.easyzk.fx.filter;
 
 import cn.oyzh.fx.gui.skin.ClearableTextFieldSkin;
 import cn.oyzh.fx.gui.svg.glyph.SettingSVGGlyph;

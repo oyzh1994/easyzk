@@ -23,8 +23,8 @@ import cn.oyzh.easyzk.event.node.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
-import cn.oyzh.easyzk.search.ZKNodeSearchTextField;
-import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox;
+import cn.oyzh.easyzk.fx.filter.ZKNodeSearchTextField;
+import cn.oyzh.easyzk.fx.filter.ZKNodeSearchTypeComboBox;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
@@ -231,7 +231,7 @@ public class ZKNodeTab extends DynamicTab {
          * 搜索内容
          */
         @FXML
-        private ZKNodeSearchTextField searchKW;
+        private ZKNodeSearchTextField filterKW;
 
         /**
          * 右侧zk属性组件
@@ -1151,7 +1151,7 @@ public class ZKNodeTab extends DynamicTab {
          * 执行搜索
          */
         @FXML
-        private void doSearch() {
+        private void doFilter() {
             String kw = this.searchKW.getTextTrim();
             int mode = this.searchKW.getSelectedIndex();
             int type = this.searchType.getSelectedIndex();

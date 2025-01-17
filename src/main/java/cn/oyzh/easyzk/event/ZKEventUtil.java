@@ -30,9 +30,13 @@ import cn.oyzh.easyzk.event.node.ZKNodeDeletedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeUpdatedEvent;
+import cn.oyzh.easyzk.event.search.ZKSearchCompleteEvent;
+import cn.oyzh.easyzk.event.search.ZKSearchFinishEvent;
+import cn.oyzh.easyzk.event.search.ZKSearchTriggerEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
+import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -440,6 +444,40 @@ public class ZKEventUtil {
     public static void server(ZKClient client) {
         ZKServerEvent event = new ZKServerEvent();
         event.data(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 搜索触发事件
+     *
+     * @param zkConnect zk客户端
+     */
+    public static void searchTrigger(ZKSearchParam param, ZKConnect zkConnect) {
+        ZKSearchTriggerEvent event = new ZKSearchTriggerEvent();
+        event.data(zkConnect);
+        event.param(param);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 搜索完成事件
+     *
+     * @param zkConnect zk客户端
+     */
+    public static void searchComplete(ZKConnect zkConnect) {
+        ZKSearchCompleteEvent event = new ZKSearchCompleteEvent();
+        event.data(zkConnect);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 搜索结束事件
+     *
+     * @param zkConnect zk客户端
+     */
+    public static void searchFinish(ZKConnect zkConnect) {
+        ZKSearchFinishEvent event = new ZKSearchFinishEvent();
+        event.data(zkConnect);
         EventUtil.post(event);
     }
 }

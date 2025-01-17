@@ -3,6 +3,8 @@ package cn.oyzh.easyzk.trees.node;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -344,5 +346,56 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
             }
         }
         return false;
+    }
+
+    private ZKSearchParam searchParam;
+
+    private ZKNodeTreeItem currentNode;
+
+    public boolean onSearchTrigger(ZKSearchParam param) {
+        if (this.searchParam == null || !this.searchParam.equals(param)) {
+            this.currentNode = null;
+        }
+        this.searchParam = param;
+        List<ZKNodeTreeItem> list = this.getAllNodeItem();
+        if (!param.isNext()) {
+            list = list.reversed();
+        }
+        if (list.isEmpty() || !list.contains(this.currentNode)) {
+            this.currentNode = null;
+        }
+        String kw = param.getKeyword();
+        ZKNodeTreeItem findNode = null;
+        boolean findStart = this.currentNode == null;
+        for (ZKNodeTreeItem node : this.getAllNodeItem()) {
+            if (this.currentNode != null && node == this.currentNode) {
+                findStart = true;
+                continue;
+            }
+            if (findStart) {
+                if (param.isSearchPath() && node.nodePath().contains(kw)) {
+                    findNode = node;
+                    break;
+                }
+                byte[] nodeData = node.getData();
+                if (param.isSearchData() && nodeData != null && new String(nodeData).contains(kw)) {
+                    findNode = node;
+                    break;
+                }
+            }
+        }
+        if (findNode != null) {
+            this.currentNode = findNode;
+            this.select(findNode);
+        } else {
+            this.currentNode = null;
+        }
+        ZKEventUtil.searchComplete(this.connect());
+        return findNode != null;
+    }
+
+    public void onSearchFinish() {
+        this.currentNode = null;
+        this.searchParam = null;
     }
 }

@@ -22,10 +22,13 @@ import cn.oyzh.easyzk.event.node.ZKNodeAddedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeChangedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
+import cn.oyzh.easyzk.event.search.ZKSearchFinishEvent;
+import cn.oyzh.easyzk.event.search.ZKSearchTriggerEvent;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
 import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTypeComboBox;
+import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
@@ -1319,9 +1322,39 @@ public class ZKNodeTab extends DynamicTab {
             StageAdapter adapter = StageManager.getStage(ZKNodeSearchController.class);
             if (adapter == null) {
                 adapter = StageManager.parseStage(ZKNodeSearchController.class);
+                adapter.setProp("zkConnect", this.client.zkConnect());
                 adapter.display();
             } else {
                 adapter.toFront();
+            }
+        }
+
+        /**
+         * 节点已添加事件
+         *
+         * @param event 事件
+         */
+        @EventSubscribe
+        public void onSearchTrigger(ZKSearchTriggerEvent event) {
+            if (event.data() == this.client.zkConnect()) {
+                ZKSearchParam param = event.param();
+                boolean found = this.treeView.onSearchTrigger(param);
+                if (found) {
+                    this.nodeData.setSearchText(param.getKeyword());
+                }
+            }
+        }
+
+        /**
+         * 节点已添加事件
+         *
+         * @param event 事件
+         */
+        @EventSubscribe
+        public void onSearchFinish(ZKSearchFinishEvent event) {
+            if (event.data() == this.client.zkConnect()) {
+                this.treeView.onSearchFinish();
+                this.nodeData.setSearchText(this.filterKW.getText());
             }
         }
     }

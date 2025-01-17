@@ -11,6 +11,7 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ import java.util.concurrent.atomic.LongAdder;
  * @since 2023/11/09
  */
 @StageAttribute(
+        stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "tool/zkTool.fxml"
 )

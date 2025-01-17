@@ -30,7 +30,7 @@
         </SettingLeftTreeView>
     </left>
     <right>
-        <FlexVBox flexWidth="100%" flexHeight="100% - 80">
+        <FlexVBox flexWidth="100%" flexHeight="100% - 110">
             <FlexVBox managedBindVisible="true" visible="false" fx:id="zk_box" flexWidth="100%" flexHeight="100%"
                       groupId="setting_item">
                 <InfoLabel text="%base.load">
@@ -426,12 +426,12 @@
         <SettingRightAction flexWidth="100%" realHeight="50">
             <SaveButton onAction="#saveSetting">
                 <HBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="20"/>
                 </HBox.margin>
             </SaveButton>
             <CancelButton>
                 <HBox.margin>
-                    <Insets left="20" top="10"/>
+                    <Insets left="15" top="20"/>
                 </HBox.margin>
             </CancelButton>
         </SettingRightAction>

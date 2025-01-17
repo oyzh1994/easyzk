@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
+import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.stage.WindowEvent;
  * @since 2024/11/25
  */
 @StageAttribute(
+        stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/zkMigrationTips.fxml"
 )

@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
@@ -42,6 +43,7 @@ import java.util.List;
  */
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
+        stageStyle = FXStageStyle.UNIFIED,
         value = FXConst.FXML_PATH + "node/zkNodeAdd.fxml"
 )
 public class ZKNodeAddController extends StageController {

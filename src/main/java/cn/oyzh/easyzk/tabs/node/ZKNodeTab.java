@@ -98,6 +98,16 @@ public class ZKNodeTab extends DynamicTab {
         this.flush();
     }
 
+    @Override
+    public void initNode() {
+        super.initNode();
+        this.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                ZKEventUtil.searchClose(this.zkConnect());
+            }
+        });
+    }
+
     /**
      * zk树节点
      */
@@ -196,6 +206,13 @@ public class ZKNodeTab extends DynamicTab {
         } else {
             super.onTabCloseRequest(event);
         }
+    }
+
+    /**
+     * 执行搜索
+     */
+    public void doSearch() {
+        this.controller().doSearch();
     }
 
     /**
@@ -1318,27 +1335,31 @@ public class ZKNodeTab extends DynamicTab {
         }
 
         @FXML
-        private void doSearch() {
+        public void doSearch() {
             StageAdapter adapter = StageManager.getStage(ZKNodeSearchController.class);
-            if (adapter == null) {
+            if (adapter != null && adapter.getProp("zkConnect") == this.client.zkConnect()) {
+                adapter.toFront();
+            } else {
+                if (adapter != null) {
+                    adapter.disappear();
+                }
                 adapter = StageManager.parseStage(ZKNodeSearchController.class);
                 adapter.setProp("zkConnect", this.client.zkConnect());
                 adapter.display();
-            } else {
-                adapter.toFront();
             }
         }
 
         /**
-         * 节点已添加事件
+         * 搜索触发事件
          *
          * @param event 事件
          */
         @EventSubscribe
-        public void onSearchTrigger(ZKSearchTriggerEvent event) {
+        private void onSearchTrigger(ZKSearchTriggerEvent event) {
             if (event.data() == this.client.zkConnect()) {
                 ZKSearchParam param = event.param();
                 boolean found = this.treeView.onSearchTrigger(param);
+                // 设置搜索文本
                 if (found) {
                     this.nodeData.setSearchText(param.getKeyword());
                 }
@@ -1346,14 +1367,15 @@ public class ZKNodeTab extends DynamicTab {
         }
 
         /**
-         * 节点已添加事件
+         * 搜索结束事件
          *
          * @param event 事件
          */
         @EventSubscribe
-        public void onSearchFinish(ZKSearchFinishEvent event) {
+        private void onSearchFinish(ZKSearchFinishEvent event) {
             if (event.data() == this.client.zkConnect()) {
                 this.treeView.onSearchFinish();
+                // 设置搜索文本
                 this.nodeData.setSearchText(this.filterKW.getText());
             }
         }

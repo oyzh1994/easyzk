@@ -350,26 +350,45 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         return false;
     }
 
+    /**
+     * 搜索参数
+     */
     private ZKSearchParam searchParam;
 
+    /**
+     * 当前节点
+     */
     private ZKNodeTreeItem currentNode;
 
+    /**
+     * 搜索触发事件
+     *
+     * @param param 参数
+     * @return 是否找到节点
+     */
     public boolean onSearchTrigger(ZKSearchParam param) {
+        // 判断当前参数是否变化
         if (this.searchParam == null || !this.searchParam.equals(param)) {
             this.currentNode = null;
         }
         this.searchParam = param;
+        // 节点列表
         List<ZKNodeTreeItem> list = this.getAllNodeItem();
+        // 判断是往前还是往后搜索
         if (!param.isNext()) {
             list = list.reversed();
         }
+        // 判断状态
         if (list.isEmpty() || !list.contains(this.currentNode)) {
             this.currentNode = null;
         }
         String kw = param.getKeyword();
         ZKNodeTreeItem foundNode = null;
+        // 搜索开始标志位
         boolean findStart = this.currentNode == null;
+        // 遍历节点
         for (ZKNodeTreeItem node : list) {
+            // 寻找到节点，则可以开始搜索了
             if (this.currentNode != null && node == this.currentNode) {
                 findStart = true;
                 continue;
@@ -377,6 +396,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
             if (!findStart) {
                 continue;
             }
+            // 搜索路径
             if (param.isSearchPath()) {
                 String nodePath = node.nodePath();
                 int index = TextUtil.findIndex(nodePath, kw, null, param.isMatchCase(), param.isMatchFull());
@@ -385,6 +405,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
                     break;
                 }
             }
+            // 搜索值
             if (param.isSearchData()) {
                 byte[] nodeData = node.getData();
                 if (nodeData != null) {
@@ -396,16 +417,21 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
                 }
             }
         }
+        // 找到节点就更新当前节点，方便下次搜索
         if (foundNode != null) {
             this.currentNode = foundNode;
             this.selectAndScroll(foundNode);
         } else {
             this.currentNode = null;
         }
+        // 搜索完成事件
         ZKEventUtil.searchComplete(this.connect());
         return foundNode != null;
     }
 
+    /**
+     * 搜索结束事件
+     */
     public void onSearchFinish() {
         this.currentNode = null;
         this.searchParam = null;

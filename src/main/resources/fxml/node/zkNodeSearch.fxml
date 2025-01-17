@@ -15,12 +15,12 @@
                 <Insets left="15" top="15"/>
             </HBox.margin>
         </ClearableTextField>
-        <NextSVGGlyph fx:id="next" sizeStr="16" onMousePrimaryClicked="#searchNext" appendTipText="ENTER" disable="true">
+        <NextSVGGlyph fx:id="next" sizeStr="16" onMousePrimaryClicked="#searchNext" appendTipText="(ENTER)" disable="true">
             <HBox.margin>
                 <Insets left="5" top="22"/>
             </HBox.margin>
         </NextSVGGlyph>
-        <PrevSVGGlyph fx:id="prev" sizeStr="16" onMousePrimaryClicked="#searchPrev" appendTipText="ALT+ENTER" disable="true">
+        <PrevSVGGlyph fx:id="prev" sizeStr="16" onMousePrimaryClicked="#searchPrev" appendTipText="(ALT+ENTER)" disable="true">
             <HBox.margin>
                 <Insets left="5" top="22"/>
             </HBox.margin>

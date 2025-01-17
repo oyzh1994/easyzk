@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.OSUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
@@ -13,15 +14,16 @@ import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.server.ZKServerTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
-import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.FXEventListener;
+import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * zk切换面板
@@ -35,8 +37,23 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     public void onNodeInitialize() {
         if (!FXEventListener.super.isNodeInitialize()) {
             FXEventListener.super.onNodeInitialize();
-            // 刷新触发事件
+            // 刷新
             KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
+            // 搜索
+            KeyHandler searchKeyHandler = new KeyHandler();
+            searchKeyHandler.handler(e -> {
+                if(this.getSelectedItem() instanceof ZKNodeTab nodeTab) {
+                    nodeTab.doSearch();
+                }
+            });
+            searchKeyHandler.keyCode(KeyCode.F);
+            if (OSUtil.isMacOS()) {
+                searchKeyHandler.metaDown(true);
+            } else {
+                searchKeyHandler.controlDown(true);
+            }
+            searchKeyHandler.keyType(KeyEvent.KEY_RELEASED);
+            KeyListener.addHandler(this, searchKeyHandler);
         }
     }
 

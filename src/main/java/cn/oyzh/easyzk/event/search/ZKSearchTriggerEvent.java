@@ -8,6 +8,12 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 
+/**
+ * 搜索触发事件
+ *
+ * @author oyzh
+ * @since 2025/01/17
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = false, fluent = true)

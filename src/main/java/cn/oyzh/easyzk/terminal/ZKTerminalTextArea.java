@@ -108,7 +108,6 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         this.client = client;
         this.disableInput();
         this.outputLine(I18nResourceBundle.i18nString("zk.home.welcome"));
-        // this.outputLine("欢迎使用EasyZK!");
         this.outputLine("Powered By oyzh(2020-2024).");
         this.flushPrompt();
         if (this.isTemporary()) {
@@ -185,7 +184,11 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * 常驻连接处理
      */
     private void initByPermanent() {
-        this.start();
+//        this.start();
+        this.flushPrompt();
+        this.appendByPrompt("");
+        this.enableInput();
+        this.flushAndMoveCaretAnd();
     }
 
     /**

@@ -46,7 +46,7 @@ public class ZKTerminalTreeItem extends RichTreeItem<ZKTerminalTreeItem.ZKTermin
     }
 
     private void open() {
-        ZKEventUtil.terminalOpen(this.parent().value());
+        ZKEventUtil.terminalOpen(this.parent().client());
     }
 
     @Override

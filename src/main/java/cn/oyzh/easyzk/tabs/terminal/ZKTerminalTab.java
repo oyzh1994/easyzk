@@ -21,9 +21,13 @@ import lombok.NonNull;
  */
 public class ZKTerminalTab extends DynamicTab {
 
-    public ZKTerminalTab(ZKConnect zkConnect) {
-        this.init(zkConnect);
+    public ZKTerminalTab(ZKClient client) {
+        this.init(client);
     }
+//
+//    public ZKTerminalTab(ZKConnect connect) {
+//        this.init(connect);
+//    }
 
     @Override
     public void flushGraphic() {
@@ -35,23 +39,52 @@ public class ZKTerminalTab extends DynamicTab {
         }
     }
 
+//    /**
+//     * 初始化
+//     *
+//     * @param zkConnect zk连接
+//     */
+//    public void init(ZKConnect zkConnect) {
+//        try {
+//            if (zkConnect == null) {
+//                zkConnect = new ZKConnect();
+//                zkConnect.setName(I18nHelper.unnamedConnection());
+//            }
+//            // 刷新图标
+//            this.flushGraphic();
+//            // 设置标题
+//            super.setTitle(zkConnect.getName());
+//            // 初始化zk连接
+//            this.controller().client(new ZKClient(zkConnect));
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+
     /**
      * 初始化
      *
-     * @param zkConnect zk连接
+     * @param client zk客户端
      */
-    public void init(ZKConnect zkConnect) {
+    public void init(ZKClient client) {
         try {
-            if (zkConnect == null) {
-                zkConnect = new ZKConnect();
-                zkConnect.setName(I18nHelper.unnamedConnection());
+            if (client == null) {
+                ZKConnect connect = new ZKConnect();
+                connect.setName(I18nHelper.unnamedConnection());
+                // 刷新图标
+                this.flushGraphic();
+                // 设置标题
+                super.setTitle(connect.getName());
+                // 初始化zk连接
+                this.controller().client(new ZKClient(connect));
+            } else {
+                // 刷新图标
+                this.flushGraphic();
+                // 设置标题
+                super.setTitle(client.zkConnect().getName());
+                // 初始化zk连接
+                this.controller().client(client);
             }
-            // 刷新图标
-            this.flushGraphic();
-            // 设置标题
-            super.setTitle(zkConnect.getName());
-            // 初始化zk连接
-            this.controller().client(new ZKClient(zkConnect));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -128,7 +161,9 @@ public class ZKTerminalTab extends DynamicTab {
 
         @Override
         public void onTabClose(DynamicTab tab, Event event) {
-            ZKConnectUtil.close(this.client(), true);
+            if (this.terminal.isTemporary()) {
+                ZKConnectUtil.close(this.client(), true, true);
+            }
             super.onTabClose(tab, event);
         }
     }

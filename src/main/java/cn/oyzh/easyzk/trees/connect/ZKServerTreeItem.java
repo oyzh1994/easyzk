@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.trees.connect;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
-import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.ServerSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
@@ -65,14 +65,14 @@ public class ZKServerTreeItem extends RichTreeItem<ZKServerTreeItem.ZKInformatio
         @Override
         public SVGGlyph graphic() {
             if (this.graphic == null) {
-                this.graphic = new InfoSVGGlyph("10");
+                this.graphic = new ServerSVGGlyph("10");
             }
             return super.graphic();
         }
 
         @Override
         public String name() {
-            return I18nHelper.info();
+            return I18nHelper.server();
         }
     }
 }

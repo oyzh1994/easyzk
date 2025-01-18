@@ -14,6 +14,7 @@ import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
 import cn.oyzh.easyzk.tabs.server.ZKServerTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
@@ -116,12 +117,13 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     /**
      * 获取终端tab
      *
+     * @param client zk客户端
      * @return 终端tab
      */
-    private ZKTerminalTab getTerminalTab(ZKConnect zkConnect) {
-        if (zkConnect != null) {
+    private ZKTerminalTab getTerminalTab(ZKClient client) {
+        if (client != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof ZKTerminalTab terminalTab && terminalTab.connect() == zkConnect) {
+                if (tab instanceof ZKTerminalTab terminalTab && terminalTab.client() == client) {
                     return terminalTab;
                 }
             }
@@ -136,10 +138,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void terminalOpen(ZKTerminalOpenEvent event) {
-        ZKConnect zkConnect = event.data();
-        ZKTerminalTab terminalTab = this.getTerminalTab(zkConnect);
+        ZKClient client = event.data();
+        ZKTerminalTab terminalTab = this.getTerminalTab(client);
         if (terminalTab == null) {
-            terminalTab = new ZKTerminalTab(zkConnect);
+            terminalTab = new ZKTerminalTab(client);
             super.addTab(terminalTab);
         } else {
             terminalTab.flushGraphic();
@@ -222,7 +224,7 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
             connectTab.closeTab();
         }
         // 检查连接是否相同
-        ZKTerminalTab terminalTab = this.getTerminalTab(event.connect());
+        ZKTerminalTab terminalTab = this.getTerminalTab(event.data());
         if (terminalTab != null) {
             terminalTab.closeTab();
         }

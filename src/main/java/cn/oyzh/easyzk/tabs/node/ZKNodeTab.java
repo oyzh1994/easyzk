@@ -149,17 +149,18 @@ public class ZKNodeTab extends DynamicTab {
 
     @Override
     public void flushGraphicColor() {
-        SVGGlyph graphic = this.treeItem().itemGraphic();
-        if (graphic == null) {
-            return;
-        }
-        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
-        if (glyph == null) {
-            return;
-        }
-        if (graphic.getColor() != glyph.getColor()) {
-            glyph.setColor(graphic.getColor());
-        }
+//        SVGGlyph graphic = this.treeItem().itemGraphic();
+//        if (graphic == null) {
+//            return;
+//        }
+//        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+//        if (glyph == null) {
+//            return;
+//        }
+//        if (graphic.getColor() != glyph.getColor()) {
+//            glyph.setColor(graphic.getColor());
+//        }
+        super.flushGraphicColor();
     }
 
     /**

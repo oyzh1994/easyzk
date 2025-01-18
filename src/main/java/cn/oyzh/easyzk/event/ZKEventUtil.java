@@ -228,22 +228,22 @@ public class ZKEventUtil {
     /**
      * 终端打开事件
      *
-     * @param info zk信息
+     * @param client zk客户端
      */
-    public static void terminalOpen(ZKConnect info) {
+    public static void terminalOpen(ZKClient client) {
         ZKTerminalOpenEvent event = new ZKTerminalOpenEvent();
-        event.data(info);
+        event.data(client);
         EventUtil.post(event);
     }
 
     /**
      * 终端关闭事件
      *
-     * @param info zk信息
+     * @param client zk客户端
      */
-    public static void terminalClose(ZKConnect info) {
+    public static void terminalClose(ZKClient client) {
         ZKTerminalCloseEvent event = new ZKTerminalCloseEvent();
-        event.data(info);
+        event.data(client);
         EventUtil.post(event);
     }
 
@@ -451,7 +451,8 @@ public class ZKEventUtil {
     /**
      * 搜索触发事件
      *
-     * @param zkConnect zk客户端
+     * @param param     搜索参数
+     * @param zkConnect zk连接
      */
     public static void searchTrigger(ZKSearchParam param, ZKConnect zkConnect) {
         ZKSearchTriggerEvent event = new ZKSearchTriggerEvent();
@@ -463,7 +464,7 @@ public class ZKEventUtil {
     /**
      * 搜索完成事件
      *
-     * @param zkConnect zk客户端
+     * @param zkConnect zk连接
      */
     public static void searchComplete(ZKConnect zkConnect) {
         ZKSearchCompleteEvent event = new ZKSearchCompleteEvent();
@@ -474,7 +475,7 @@ public class ZKEventUtil {
     /**
      * 搜索结束事件
      *
-     * @param zkConnect zk客户端
+     * @param zkConnect zk连接
      */
     public static void searchFinish(ZKConnect zkConnect) {
         ZKSearchFinishEvent event = new ZKSearchFinishEvent();
@@ -485,7 +486,7 @@ public class ZKEventUtil {
     /**
      * 搜索关闭事件
      *
-     * @param zkConnect zk客户端
+     * @param zkConnect zk连接
      */
     public static void searchClose(ZKConnect zkConnect) {
         ZKSearchCloseEvent event = new ZKSearchCloseEvent();

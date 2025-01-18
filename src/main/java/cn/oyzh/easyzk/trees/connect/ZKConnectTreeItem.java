@@ -151,10 +151,6 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
                         this.canceled = false;
                         this.closeConnect(false);
                     } else {
-                        // ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
-                        // ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
-                        // ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
-                        // this.setChild(List.of(dataItem, queryItem, terminalItem));
                         this.loadChild();
                         this.expend();
                     }
@@ -177,11 +173,11 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         if (!this.isLoaded()) {
             this.setLoaded(true);
             ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
-            // ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
-            ZKInformationTreeItem informationItem = new ZKInformationTreeItem(this.getTreeView());
+            ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
+            ZKServerTreeItem informationItem = new ZKServerTreeItem(this.getTreeView());
             ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
-            this.setChild(List.of(dataItem, informationItem, terminalItem));
-            // this.setChild(List.of(dataItem, queryItem, terminalItem));
+//            this.setChild(List.of(dataItem, informationItem, terminalItem));
+            this.setChild(List.of(dataItem, informationItem, queryItem, terminalItem));
         }
     }
 

@@ -2,12 +2,18 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author oyzh
@@ -26,6 +32,14 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemVa
         return (ZKConnectTreeItem) treeItem;
     }
 
+    @Override
+    public List<MenuItem> getMenuItems() {
+        List<MenuItem> items = new ArrayList<>();
+        FXMenuItem openData = MenuItemHelper.openData("12", this::open);
+        items.add(openData);
+        return items;
+    }
+
     public ZKConnect connect() {
         return this.parent().value();
     }
@@ -42,8 +56,7 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemVa
         return super.bitValue().get(7);
     }
 
-    @Override
-    public void onPrimaryDoubleClick() {
+    private void open() {
         if (!this.isOpening()) {
             this.setOpening(true);
             super.startWaiting(() -> {
@@ -54,6 +67,11 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemVa
                 }
             });
         }
+    }
+
+    @Override
+    public void onPrimaryDoubleClick() {
+        this.open();
     }
 
     /**

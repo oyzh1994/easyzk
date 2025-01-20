@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryAddedEvent;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tree.view.RichTreeCell;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -129,5 +130,13 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
     @EventSubscribe
     private void addConnect(ZKAddConnectEvent event) {
         StageManager.showStage(ZKConnectAddController.class, this.window());
+    }
+
+    /**
+     * 查询已添加事件
+     */
+    @EventSubscribe
+    private void queryAdded(ZKQueryAddedEvent event) {
+        this.getRoot().queryAdded(event.data());
     }
 }

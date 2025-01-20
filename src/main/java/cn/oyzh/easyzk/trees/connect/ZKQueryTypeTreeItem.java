@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKQueryStore;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -35,6 +36,10 @@ public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItem.ZKQuer
     public ZKConnectTreeItem parent() {
         TreeItem<?> parent = this.getParent();
         return (ZKConnectTreeItem) parent;
+    }
+
+    public ZKClient client() {
+        return this.parent().client();
     }
 
     public ZKConnect zkConnect() {
@@ -83,6 +88,11 @@ public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItem.ZKQuer
             super.onPrimaryDoubleClick();
         }
     }
+
+    public void add(ZKQuery query) {
+        this.addChild(new ZKQueryTreeItem(query, this.getTreeView()));
+    }
+
 
     /**
      * zk树节点值

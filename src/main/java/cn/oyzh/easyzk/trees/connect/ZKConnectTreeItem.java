@@ -10,6 +10,7 @@ import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph;
@@ -368,6 +369,10 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
 
     public String getId() {
         return this.value.getId();
+    }
+
+    public ZKQueryTypeTreeItem queryTypeItem() {
+        return (ZKQueryTypeTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof ZKQueryTypeTreeItem).findAny().get();
     }
 
     /**

@@ -44,9 +44,5 @@ public class ZKQuery implements Serializable {
     @Column
     private String content;
 
-    public ZKQuery(String iid, String content) {
-        this.iid = iid;
-        this.content = content;
-    }
 
 }

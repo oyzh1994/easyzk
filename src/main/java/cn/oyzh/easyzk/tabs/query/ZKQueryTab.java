@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
@@ -59,6 +60,10 @@ public class ZKQueryTab extends DynamicTab {
     }
 
     public void init(ZKClient client) {
-        this.controller().init(client);
+        this.controller().init(client, null);
+    }
+
+    public void init(ZKClient client, ZKQuery query) {
+        this.controller().init(client, query);
     }
 }

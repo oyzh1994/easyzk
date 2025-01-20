@@ -7,6 +7,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.dto.ZKConnectExport;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectStore;
@@ -397,6 +398,17 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
                 }
             }
             // this.addConnects(list);
+        }
+    }
+
+    public void queryAdded(ZKQuery query) {
+        List<ZKConnectTreeItem> items = this.getConnectItems();
+        if (items != null) {
+            for (ZKConnectTreeItem item : items) {
+                if (StringUtil.equals(item.getId(), query.getIid())) {
+                    item.queryTypeItem().add(query);
+                }
+            }
         }
     }
 

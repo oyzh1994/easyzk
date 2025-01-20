@@ -1,15 +1,21 @@
 package cn.oyzh.easyzk.tabs.query;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.dto.ZKQueryParam;
 import cn.oyzh.easyzk.dto.ZKQueryResult;
+import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
@@ -24,6 +30,9 @@ import java.util.ResourceBundle;
  */
 public class ZKQueryTabController extends DynamicTabController {
 
+
+    private ZKQuery query;
+
     private ZKClient zkClient;
 
     @FXML
@@ -32,16 +41,39 @@ public class ZKQueryTabController extends DynamicTabController {
     @FXML
     private FlexTabPane resultTabPane;
 
+    private final ZKQueryStore queryStore = ZKQueryStore.INSTANCE;
+
     public ZKConnect zkConnect() {
         return this.zkClient.zkConnect();
     }
 
-    public void init(ZKClient client) {
+    public void init(ZKClient client, ZKQuery query) {
         this.zkClient = client;
+        if (query == null) {
+            query = new ZKQuery();
+            query.setIid(client.iid());
+            query.setName(I18nHelper.unnamedQuery());
+        }
+        this.query = query;
+        this.content.setText(query.getContent());
     }
 
     @FXML
     private void save() {
+        try {
+            this.query.setContent(this.content.getText());
+            if (this.query.getUid() == null) {
+                String name = MessageBox.prompt(I18nHelper.pleaseInputName());
+                if (StringUtil.isNotBlank(name)) {
+                    this.queryStore.insert(this.query);
+                    ZKEventUtil.queryAdded(this.query);
+                }
+            } else {
+                this.queryStore.update(this.query);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

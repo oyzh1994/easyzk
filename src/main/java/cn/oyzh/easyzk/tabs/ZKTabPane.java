@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.connection.ZKServerEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.query.ZKAddQueryEvent;
+import cn.oyzh.easyzk.event.query.ZKOpenQueryEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.changelog.ZKChangelogTab;
@@ -314,5 +315,23 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         ZKQueryTab queryTab = new ZKQueryTab();
         queryTab.init(event.data());
         super.addTab(queryTab);
+    }
+
+    /**
+     * 打开查询
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void openQuery(ZKOpenQueryEvent event) {
+        ZKQueryTab queryTab = this.getQueryTab(event.zkConnect());
+        if (queryTab == null) {
+            queryTab = new ZKQueryTab();
+            queryTab.init(event.getClient(), event.data());
+            super.addTab(queryTab);
+        }
+        if (!queryTab.isSelected()) {
+            this.select(queryTab);
+        }
     }
 }

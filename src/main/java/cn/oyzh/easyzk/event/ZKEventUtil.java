@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.event;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.client.ZKClientActionArgument;
 import cn.oyzh.easyzk.event.client.ZKClientActionEvent;
@@ -31,6 +32,8 @@ import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeUpdatedEvent;
 import cn.oyzh.easyzk.event.query.ZKAddQueryEvent;
+import cn.oyzh.easyzk.event.query.ZKOpenQueryEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryAddedEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchCloseEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchCompleteEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchFinishEvent;
@@ -498,11 +501,35 @@ public class ZKEventUtil {
     /**
      * 添加查询事件
      *
-     * @param client zk连接
+     * @param client zk查询
      */
     public static void addQuery(ZKClient client) {
         ZKAddQueryEvent event = new ZKAddQueryEvent();
         event.data(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询已添加事件
+     *
+     * @param query zk查询
+     */
+    public static void queryAdded(ZKQuery query) {
+        ZKQueryAddedEvent event = new ZKQueryAddedEvent();
+        event.data(query);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询打开事件
+     *
+     * @param client zk客户端
+     * @param query  zk查询
+     */
+    public static void openQuery(ZKClient client, ZKQuery query) {
+        ZKOpenQueryEvent event = new ZKOpenQueryEvent();
+        event.data(query);
+        event.setClient(client);
         EventUtil.post(event);
     }
 }

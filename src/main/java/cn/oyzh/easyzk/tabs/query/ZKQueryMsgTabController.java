@@ -4,6 +4,7 @@ import cn.oyzh.easyzk.dto.ZKQueryParam;
 import cn.oyzh.easyzk.dto.ZKQueryResult;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
 /**
@@ -18,7 +19,8 @@ public class ZKQueryMsgTabController extends DynamicTabController {
     private ReadOnlyTextArea msg;
 
     public void init(ZKQueryParam param, ZKQueryResult result) {
-        this.msg.appendText(param.getContent());
+        this.msg.appendLine(param.getContent());
+        this.msg.appendLine("> " + result.getMessage());
+        this.msg.appendLine("> " + I18nHelper.cost() + ": " + result.costSeconds());
     }
-
 }

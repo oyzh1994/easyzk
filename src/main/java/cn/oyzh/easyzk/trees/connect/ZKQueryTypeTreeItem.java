@@ -71,6 +71,7 @@ public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItem.ZKQuer
                     items.add(new ZKQueryTreeItem(query, this.getTreeView()));
                 }
                 this.setChild(items);
+                this.expend();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 this.setLoaded(false);

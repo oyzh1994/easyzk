@@ -78,16 +78,27 @@ public class ZKQueryTabController extends DynamicTabController {
 
     @FXML
     private void run() {
-        ZKQueryParam param = new ZKQueryParam();
-        param.setContent(content.getText());
-        ZKQueryResult result = this.zkClient.query(param);
-        this.content.flexHeight("50% - 70");
-        this.resultTabPane.setVisible(true);
-        this.resultTabPane.clearChild();
-        if (param.isGet()) {
-            this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
+        try {
+            ZKQueryParam param = new ZKQueryParam();
+            param.setContent(this.content.getText());
+            ZKQueryResult result = this.zkClient.query(param);
+            this.content.flexHeight("50% - 70");
+            this.resultTabPane.setVisible(true);
+            this.resultTabPane.clearChild();
+            if (param.isGet()) {
+                this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
+                if (result.isSuccess()) {
+                    this.resultTabPane.addTab(new ZKQueryDataTab(param.getPath(), result.getData(), this.zkClient));
+                    this.resultTabPane.select(1);
+                } else {
+                    this.resultTabPane.select(0);
+                }
+            }
+            this.content.parentAutosize();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
         }
-        this.content.parentAutosize();
     }
 
 }

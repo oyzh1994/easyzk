@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyzk.fx.ZKDataTextArea?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.gui.svg.glyph.RunSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryTabController">
+          fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryDataTabController">
     <FlexHBox realHeight="35" flexWidth="100%">
-        <SaveSVGGlyph size="16" onMousePrimaryClicked="#save">
+        <SaveSVGGlyph disable="true" fx:id="save" size="16" onMousePrimaryClicked="#save">
             <HBox.margin>
                 <Insets left="5" top="15"/>
             </HBox.margin>
         </SaveSVGGlyph>
-        <RunSVGGlyph size="16" onMousePrimaryClicked="#run">
+        <UndoSVGGlyph disable="true" fx:id="undo" size="16" onMousePrimaryClicked="#undo">
             <HBox.margin>
                 <Insets left="5" top="15"/>
             </HBox.margin>
-        </RunSVGGlyph>
+        </UndoSVGGlyph>
+        <RedoSVGGlyph disable="true" fx:id="redo" size="16" onMousePrimaryClicked="#redo">
+            <HBox.margin>
+                <Insets left="5" top="15"/>
+            </HBox.margin>
+        </RedoSVGGlyph>
     </FlexHBox>
-    <RichDataTextArea fx:id="content" showLine="false" promptText="%base.contentTip1" flexWidth="100% - 30" flexHeight="100% - 70">
+    <ZKDataTextArea fx:id="data" flexWidth="100% - 30" flexHeight="100% - 40">
         <VBox.margin>
             <Insets left="5" top="5"/>
         </VBox.margin>
-    </RichDataTextArea>
-    <FlexTabPane fx:id="resultTabPane" flexHeight="50%" managedBindVisible="true" visible="false">
-
-    </FlexTabPane>
+    </ZKDataTextArea>
 </FlexVBox>

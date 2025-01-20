@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.dto;
 
+import cn.oyzh.common.util.StringUtil;
 import lombok.Data;
 
 /**
@@ -18,22 +19,22 @@ public class ZKQueryParam {
     }
 
     public boolean isLs() {
-        String[] prams = getPrams();
+        String[] prams = this.getPrams();
         return "ls".equalsIgnoreCase(prams[0]);
     }
 
     public boolean isGet() {
-        String[] prams = getPrams();
+        String[] prams = this.getPrams();
         return "get".equalsIgnoreCase(prams[0]);
     }
 
     public boolean isSet() {
-        String[] prams = getPrams();
+        String[] prams = this.getPrams();
         return "set".equalsIgnoreCase(prams[0]);
     }
 
     public boolean isGetACL() {
-        String[] prams = getPrams();
+        String[] prams = this.getPrams();
         return "getAcl".equalsIgnoreCase(prams[0]);
     }
 
@@ -61,7 +62,7 @@ public class ZKQueryParam {
     }
 
     public String getData() {
-        String[] prams = getPrams();
+        String[] prams = this.getPrams();
         if (this.isSet()) {
             if (this.hasParamStat()) {
                 return prams[3];
@@ -72,7 +73,7 @@ public class ZKQueryParam {
     }
 
     public boolean hasParamStat() {
-        String[] prams = getPrams();
+        String[] prams = this.getPrams();
         return "-s".equals(prams[1]);
     }
 }

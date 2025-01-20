@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.dto;
 
+import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
 import org.apache.zookeeper.Quotas;
 import org.apache.zookeeper.data.ACL;
@@ -30,4 +31,7 @@ public class ZKQueryResult {
 
     private List<String> nodes;
 
+    public String costSeconds() {
+        return String.format("%.2f"+ I18nHelper.seconds(), this.cost / 1000.0);
+    }
 }

@@ -312,9 +312,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     public void addQuery(ZKAddQueryEvent event) {
-        ZKQueryTab queryTab = new ZKQueryTab();
-        queryTab.init(event.data());
+        ZKQueryTab queryTab = new ZKQueryTab(event.data(), null);
+//        queryTab.init(event.data());
         super.addTab(queryTab);
+        this.select(queryTab);
     }
 
     /**
@@ -326,8 +327,8 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     public void openQuery(ZKOpenQueryEvent event) {
         ZKQueryTab queryTab = this.getQueryTab(event.zkConnect());
         if (queryTab == null) {
-            queryTab = new ZKQueryTab();
-            queryTab.init(event.getClient(), event.data());
+            queryTab = new ZKQueryTab(event.getClient(), event.data());
+//            queryTab.init(event.getClient(), event.data());
             super.addTab(queryTab);
         }
         if (!queryTab.isSelected()) {

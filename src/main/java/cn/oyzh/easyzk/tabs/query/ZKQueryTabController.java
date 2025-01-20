@@ -18,6 +18,7 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import lombok.Getter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ import java.util.ResourceBundle;
  */
 public class ZKQueryTabController extends DynamicTabController {
 
+    @Getter
     private ZKQuery query;
 
     private ZKClient zkClient;
@@ -66,6 +68,7 @@ public class ZKQueryTabController extends DynamicTabController {
             if (this.query.getUid() == null) {
                 String name = MessageBox.prompt(I18nHelper.pleaseInputName());
                 if (StringUtil.isNotBlank(name)) {
+                    this.query.setName(name);
                     this.queryStore.insert(this.query);
                     ZKEventUtil.queryAdded(this.query);
                 }
@@ -90,6 +93,17 @@ public class ZKQueryTabController extends DynamicTabController {
                 this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
                 if (result.isSuccess()) {
                     this.resultTabPane.addTab(new ZKQueryDataTab(param.getPath(), result.getData(), this.zkClient));
+                    if (param.hasParamStat()) {
+                        this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                    }
+                    this.resultTabPane.select(1);
+                } else {
+                    this.resultTabPane.select(0);
+                }
+            } else if (param.isLs()) {
+                this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
+                if (result.isSuccess()) {
+                    this.resultTabPane.addTab(new ZKQueryNodeTab(param.getPath(), result.getNodes()));
                     if (param.hasParamStat()) {
                         this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
                     }

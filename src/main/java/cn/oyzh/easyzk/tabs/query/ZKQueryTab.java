@@ -25,8 +25,9 @@ import java.util.ResourceBundle;
  */
 public class ZKQueryTab extends DynamicTab {
 
-    public ZKQueryTab() {
+    public ZKQueryTab(ZKClient client, ZKQuery query) {
         super();
+        this.init(client, query);
         super.flush();
     }
 
@@ -52,7 +53,11 @@ public class ZKQueryTab extends DynamicTab {
 
     @Override
     public String getTabTitle() {
-        return I18nHelper.query();
+        return I18nHelper.query() + "-" + this.query().getName();
+    }
+
+    public ZKQuery query() {
+        return this.controller().getQuery();
     }
 
     public ZKConnect zkConnect() {

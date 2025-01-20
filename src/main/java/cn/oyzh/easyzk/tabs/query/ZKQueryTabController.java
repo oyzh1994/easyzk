@@ -30,7 +30,6 @@ import java.util.ResourceBundle;
  */
 public class ZKQueryTabController extends DynamicTabController {
 
-
     private ZKQuery query;
 
     private ZKClient zkClient;
@@ -53,9 +52,11 @@ public class ZKQueryTabController extends DynamicTabController {
             query = new ZKQuery();
             query.setIid(client.iid());
             query.setName(I18nHelper.unnamedQuery());
+        } else {
+            this.content.setText(query.getContent());
+            this.content.setPromptText(null);
         }
         this.query = query;
-        this.content.setText(query.getContent());
     }
 
     @FXML

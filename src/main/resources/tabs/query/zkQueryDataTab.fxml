@@ -8,26 +8,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryDataTabController">
     <FlexHBox realHeight="35" flexWidth="100%">
-        <SaveSVGGlyph disable="true" fx:id="save" size="16" onMousePrimaryClicked="#save">
+        <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0">
+            <HBox.margin>
+                <Insets left="5" top="15"/>
+            </HBox.margin>
+        </RichDataTypeComboBox>
+        <SaveSVGGlyph enableWaiting="false" disable="true" tipText="%base.saveTip1" fx:id="save" size="16" onMousePrimaryClicked="#save">
             <HBox.margin>
                 <Insets left="5" top="15"/>
             </HBox.margin>
         </SaveSVGGlyph>
-        <UndoSVGGlyph disable="true" fx:id="undo" size="16" onMousePrimaryClicked="#undo">
+        <UndoSVGGlyph disable="true" tipText="%base.undoTip1" fx:id="undo" size="16" onMousePrimaryClicked="#undo">
             <HBox.margin>
                 <Insets left="5" top="15"/>
             </HBox.margin>
         </UndoSVGGlyph>
-        <RedoSVGGlyph disable="true" fx:id="redo" size="16" onMousePrimaryClicked="#redo">
+        <RedoSVGGlyph disable="true" tipText="%base.redoTip1" fx:id="redo" size="16" onMousePrimaryClicked="#redo">
             <HBox.margin>
                 <Insets left="5" top="15"/>
             </HBox.margin>
         </RedoSVGGlyph>
     </FlexHBox>
-    <ZKDataTextArea fx:id="data" flexWidth="100% - 30" flexHeight="100% - 40">
+    <ZKDataTextArea onKeyPressed="#onDataKeyPressed" fx:id="data" flexWidth="100% - 30" flexHeight="100% - 40">
         <VBox.margin>
             <Insets left="5" top="5"/>
         </VBox.margin>

@@ -22,12 +22,12 @@
             </HBox.margin>
         </RunSVGGlyph>
     </FlexHBox>
-    <RichDataTextArea fx:id="content" showLine="false" promptText="%base.contentTip1" flexWidth="100% - 30" flexHeight="100% - 70">
+    <RichDataTextArea fx:id="content" promptText="%base.contentTip1" flexWidth="100% - 30" flexHeight="100% - 70">
         <VBox.margin>
             <Insets left="5" top="5"/>
         </VBox.margin>
     </RichDataTextArea>
-    <FlexTabPane fx:id="resultTabPane" flexHeight="50%" managedBindVisible="true" visible="false">
+    <FlexTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="50%" managedBindVisible="true" visible="false">
 
     </FlexTabPane>
 </FlexVBox>

@@ -7,11 +7,13 @@ import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.connection.ZKServerEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryRestoreEvent;
+import cn.oyzh.easyzk.event.query.ZKAddQueryEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.changelog.ZKChangelogTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.easyzk.tabs.query.ZKQueryTab;
 import cn.oyzh.easyzk.tabs.server.ZKServerTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -43,7 +45,7 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
             // 搜索
             KeyHandler searchKeyHandler = new KeyHandler();
             searchKeyHandler.handler(e -> {
-                if(this.getSelectedItem() instanceof ZKNodeTab nodeTab) {
+                if (this.getSelectedItem() instanceof ZKNodeTab nodeTab) {
                     nodeTab.doSearch();
                 }
             });
@@ -283,5 +285,34 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         if (!serverTab.isSelected()) {
             this.select(serverTab);
         }
+    }
+
+    /**
+     * 获取查询tab
+     *
+     * @param connect zk连接
+     * @return 查询tab
+     */
+    private ZKQueryTab getQueryTab(ZKConnect connect) {
+        if (connect != null) {
+            for (Tab tab : this.getTabs()) {
+                if (tab instanceof ZKQueryTab queryTab && queryTab.zkConnect() == connect) {
+                    return queryTab;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 添加查询
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void addQuery(ZKAddQueryEvent event) {
+        ZKQueryTab queryTab = new ZKQueryTab();
+        queryTab.init(event.data());
+        super.addTab(queryTab);
     }
 }

@@ -30,6 +30,7 @@ import cn.oyzh.easyzk.event.node.ZKNodeDeletedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeUpdatedEvent;
+import cn.oyzh.easyzk.event.query.ZKAddQueryEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchCloseEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchCompleteEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchFinishEvent;
@@ -491,6 +492,17 @@ public class ZKEventUtil {
     public static void searchClose(ZKConnect zkConnect) {
         ZKSearchCloseEvent event = new ZKSearchCloseEvent();
         event.data(zkConnect);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 添加查询事件
+     *
+     * @param client zk连接
+     */
+    public static void addQuery(ZKClient client) {
+        ZKAddQueryEvent event = new ZKAddQueryEvent();
+        event.data(client);
         EventUtil.post(event);
     }
 }

@@ -7,10 +7,13 @@ import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.dto.ZKClusterNode;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
+import cn.oyzh.easyzk.dto.ZKQueryParam;
+import cn.oyzh.easyzk.dto.ZKQueryResult;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
@@ -1458,5 +1461,33 @@ public class ZKClient {
      */
     public boolean isInvalid() {
         return this.framework == null || this.framework.getState() == CuratorFrameworkState.STOPPED;
+    }
+
+    public ZKQueryResult query(ZKQueryParam param) {
+        ZKQueryResult result = new ZKQueryResult();
+        long start = System.currentTimeMillis();
+        try {
+            String nodePath = param.getPath();
+            if (param.isLs()) {
+                result.setNodes(this.getChildren(nodePath));
+            } else if (param.isGet()) {
+                result.setData(this.getData(nodePath));
+            } else if (param.isSet()) {
+                this.setData(nodePath, param.getData());
+            } else if (param.isGetACL()) {
+                result.setACLList(this.getACL(nodePath));
+            }
+            if (param.hasParamStat()) {
+                result.setStat(this.checkExists(nodePath));
+            }
+            result.setSuccess(true);
+            result.setMessage("OK");
+        } catch (Exception ex) {
+            result.setSuccess(false);
+            result.setMessage(ex.getMessage());
+        }
+        long end = System.currentTimeMillis();
+        result.setCost(end - start);
+        return result;
     }
 }

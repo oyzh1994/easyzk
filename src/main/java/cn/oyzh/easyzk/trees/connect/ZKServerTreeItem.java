@@ -30,7 +30,7 @@ public class ZKServerTreeItem extends RichTreeItem<ZKServerTreeItem.ZKInformatio
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem openServer = MenuItemHelper.openServer("12", this::open);
+        FXMenuItem openServer = MenuItemHelper.openServer("12", this::loadChild);
         items.add(openServer);
         return items;
     }
@@ -45,13 +45,14 @@ public class ZKServerTreeItem extends RichTreeItem<ZKServerTreeItem.ZKInformatio
         return this.parent().value();
     }
 
-    private void open() {
+    @Override
+    public void loadChild() {
         ZKEventUtil.server(this.parent().client());
     }
 
     @Override
     public void onPrimaryDoubleClick() {
-        this.open();
+        this.loadChild();
     }
 
     /**

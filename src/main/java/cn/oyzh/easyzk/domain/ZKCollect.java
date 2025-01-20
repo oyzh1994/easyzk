@@ -15,7 +15,9 @@ import java.io.Serializable;
 public class ZKCollect implements Serializable {
 
     /**
-     * 信息id
+     * 连接id
+     *
+     * @see ZKConnect
      */
     @Column
     private String iid;

@@ -40,18 +40,19 @@ public class ZKTerminalTreeItem extends RichTreeItem<ZKTerminalTreeItem.ZKTermin
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::open);
+        FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::loadChild);
         items.add(openTerminal);
         return items;
     }
 
-    private void open() {
+    @Override
+    public void loadChild() {
         ZKEventUtil.terminalOpen(this.parent().client());
     }
 
     @Override
     public void onPrimaryDoubleClick() {
-       this.open();
+       this.loadChild();
     }
 
     /**

@@ -35,7 +35,7 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemVa
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem openData = MenuItemHelper.openData("12", this::open);
+        FXMenuItem openData = MenuItemHelper.openData("12", this::loadChild);
         items.add(openData);
         return items;
     }
@@ -56,7 +56,8 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemVa
         return super.bitValue().get(7);
     }
 
-    private void open() {
+    @Override
+    public void loadChild() {
         if (!this.isOpening()) {
             this.setOpening(true);
             super.startWaiting(() -> {
@@ -71,7 +72,7 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItem.ZKDataTreeItemVa
 
     @Override
     public void onPrimaryDoubleClick() {
-        this.open();
+        this.loadChild();
     }
 
     /**

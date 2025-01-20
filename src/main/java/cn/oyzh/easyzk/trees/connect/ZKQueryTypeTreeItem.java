@@ -1,7 +1,8 @@
 package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.domain.ZKQuery;
+import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -20,11 +21,13 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/30
  */
-public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItem.ZKQueryTreeItemValue> {
+public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItem.ZKQueryTypeTreeItemValue> {
 
-    public ZKQueryTreeItem(RichTreeView treeView) {
+    private final ZKQueryStore queryStore=ZKQueryStore.INSTANCE;
+
+    public ZKQueryTypeTreeItem(RichTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKQueryTreeItemValue());
+        this.setValue(new ZKQueryTypeTreeItemValue());
     }
 
     @Override
@@ -40,17 +43,22 @@ public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItem.ZKQueryTreeIte
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem openQuery = MenuItemHelper.openQuery("12", this::open);
+        FXMenuItem openQuery = MenuItemHelper.openQuery("12", this::loadChild);
         items.add(openQuery);
         return items;
     }
 
-    private void open() {
+    @Override
+    public void loadChild() {
+       String iid= this.parent().getId();
+
+      List<ZKQuery> queries= this.queryStore.list(iid);
+
     }
 
     @Override
     public void onPrimaryDoubleClick() {
-        this.open();
+        this.loadChild();
     }
 
     /**
@@ -59,7 +67,7 @@ public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItem.ZKQueryTreeIte
      * @author oyzh
      * @since 2023/4/7
      */
-    public static class ZKQueryTreeItemValue extends RichTreeItemValue {
+    public static class ZKQueryTypeTreeItemValue extends RichTreeItemValue {
 
         @Override
         public SVGGlyph graphic() {

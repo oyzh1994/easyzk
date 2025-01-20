@@ -239,29 +239,29 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     /**
      * 连接新增事件
      *
-     * @param info 连接
+     * @param zkConnect zk连接
      */
-    public void infoAdded(ZKConnect info) {
-        this.addConnect(info);
+    public void connectAdded(ZKConnect zkConnect) {
+        this.addConnect(zkConnect);
     }
 
     /**
      * 连接变更事件
      *
-     * @param info 连接
+     * @param zkConnect zk连接
      */
-    public void infoUpdated(ZKConnect info) {
+    public void connectUpdated(ZKConnect zkConnect) {
         f1:
         for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
-                if (connectTreeItem.value() == info) {
-                    connectTreeItem.value(info);
+                if (connectTreeItem.value() == zkConnect) {
+                    connectTreeItem.value(zkConnect);
                     break;
                 }
             } else if (item instanceof ZKGroupTreeItem groupTreeItem) {
                 for (ZKConnectTreeItem connectTreeItem : groupTreeItem.getConnectItems()) {
-                    if (connectTreeItem.value() == info) {
-                        connectTreeItem.value(info);
+                    if (connectTreeItem.value() == zkConnect) {
+                        connectTreeItem.value(zkConnect);
                         break f1;
                     }
                 }

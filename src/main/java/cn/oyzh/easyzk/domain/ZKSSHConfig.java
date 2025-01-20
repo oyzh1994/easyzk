@@ -14,8 +14,8 @@ import java.io.Serializable;
  * @since 2024-09-26
  */
 @Data
-@Table("t_ssh_config")
 @EqualsAndHashCode(callSuper = true)
+@Table("t_ssh_config")
 public class ZKSSHConfig extends SSHConnect implements Serializable {
 
     /**

@@ -27,6 +27,14 @@ public class ZKSetting extends Setting {
     private Byte loadMode;
 
     /**
+     * 节点视图
+     * 0|null 节点名称
+     * 1 节点路径
+     */
+    @Column
+    private Byte viewport;
+
+    /**
      * 节点认证
      * 0|null 自动认证
      * 1 不自动认证
@@ -57,6 +65,15 @@ public class ZKSetting extends Setting {
      */
     public boolean isLoadAll() {
         return this.loadMode != null && this.loadMode == 1;
+    }
+
+    /**
+     * 是否显示节点路径
+     *
+     * @return 结果
+     */
+    public boolean isShowNodePath() {
+        return this.viewport != null && this.viewport == 1;
     }
 
     /**

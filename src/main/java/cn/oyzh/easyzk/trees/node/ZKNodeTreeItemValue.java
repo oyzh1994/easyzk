@@ -1,6 +1,8 @@
 package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.gui.svg.glyph.LockSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -14,6 +16,11 @@ import lombok.NonNull;
  * @since 2023/4/7
  */
 public class ZKNodeTreeItemValue extends RichTreeItemValue {
+
+    /**
+     * 当前设置
+     */
+    private final ZKSetting setting = ZKSettingStore.SETTING;
 
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
         super(item);
@@ -93,6 +100,9 @@ public class ZKNodeTreeItemValue extends RichTreeItemValue {
 
     @Override
     public String name() {
+        if (this.setting.isShowNodePath()) {
+            return this.item().decodeNodePath();
+        }
         return this.item().decodeNodeName();
     }
 }

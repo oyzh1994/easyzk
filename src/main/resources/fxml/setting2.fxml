@@ -61,6 +61,28 @@
                         </HBox.margin>
                     </FXRadioButton>
                 </FXHBox>
+                <InfoLabel text="%base.viewport">
+                    <VBox.margin>
+                        <Insets left="30"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <fx:define>
+                    <FXToggleGroup fx:id="viewport"/>
+                </fx:define>
+                <FXHBox>
+                    <FXRadioButton toggleGroup="$viewport" text="%base.nodeName"
+                                   realHeight="25" selected="true" fx:id="viewport0" userData="0">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FXRadioButton>
+                    <FXRadioButton toggleGroup="$viewport" text="%base.nodePath"
+                                   realHeight="25" fx:id="viewport1" userData="1">
+                        <HBox.margin>
+                            <Insets left="10" top="5"/>
+                        </HBox.margin>
+                    </FXRadioButton>
+                </FXHBox>
                 <InfoLabel text="%base.auth">
                     <VBox.margin>
                         <Insets left="30" top="10"/>

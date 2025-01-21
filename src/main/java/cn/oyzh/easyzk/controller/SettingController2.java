@@ -123,6 +123,24 @@ public class SettingController2 extends StageController {
     private RadioButton loadMode2;
 
     /**
+     * 节点视图
+     */
+    @FXML
+    private FXToggleGroup viewport;
+
+    /**
+     * 节点视图0
+     */
+    @FXML
+    private RadioButton viewport0;
+
+    /**
+     * 节点视图1
+     */
+    @FXML
+    private RadioButton viewport1;
+
+    /**
      * 节点自动认证
      */
     @FXML
@@ -295,6 +313,13 @@ public class SettingController2 extends StageController {
                 case 2 -> this.loadMode2.setSelected(true);
             }
         }
+        // 节点显示处理
+        if (this.setting.getViewport() != null) {
+            switch (this.setting.getViewport()) {
+                case 0 -> this.viewport0.setSelected(true);
+                case 1 -> this.viewport1.setSelected(true);
+            }
+        }
         // 节点认证处理
         if (this.setting.getAuthMode() != null) {
             this.authMode.setSelected(this.setting.isAutoAuth());
@@ -350,6 +375,7 @@ public class SettingController2 extends StageController {
         try {
             byte authMode = (byte) (this.authMode.isSelected() ? 0 : 1);
             byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
+            byte viewport = Byte.parseByte(this.viewport.selectedUserData());
             String locale = this.locale.name();
             Byte fontSize = this.fontSize.byteValue();
             short fontWeight = this.fontWeight.getWeight();
@@ -367,8 +393,11 @@ public class SettingController2 extends StageController {
             // 提示文字
             String tips = this.checkConfigForRestart(locale);
 
-            // 加载模式、认证模式
+            // 加载模式
             this.setting.setLoadMode(loadMode);
+            // 视图模式
+            this.setting.setViewport(viewport);
+            // 认证模式
             this.setting.setAuthMode(authMode);
             // 字体相关
             this.setting.setFontSize(fontSize);

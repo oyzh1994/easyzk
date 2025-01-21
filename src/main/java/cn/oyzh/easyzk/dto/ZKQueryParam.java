@@ -1,7 +1,16 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.util.ZKACLUtil;
 import lombok.Data;
+import lombok.Getter;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.data.ACL;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 /**
  * zk查询参数
@@ -9,88 +18,172 @@ import lombok.Data;
  * @author oyzh
  * @since 2025/01/20
  */
-@Data
 public class ZKQueryParam {
 
+    @Getter
     private String content;
 
-    public String[] getPrams() {
-        return this.content.split(" ");
+    private List<String> params;
+
+    public void setContent(String content) {
+        this.content = content;
+        String[] arr = this.content.trim().split(" ");
+        this.params = new ArrayList<>();
+        for (String s : arr) {
+            if (!s.isBlank()) {
+                this.params.add(s);
+            }
+        }
     }
 
     public boolean isLs() {
-        String[] prams = this.getPrams();
-        return "ls".equalsIgnoreCase(prams[0]);
+        return "ls".equalsIgnoreCase(this.params.getFirst());
     }
 
     public boolean isLs2() {
-        String[] prams = this.getPrams();
-        return "ls2".equalsIgnoreCase(prams[0]);
+        return "ls2".equalsIgnoreCase(this.params.getFirst());
     }
 
     public boolean isGet() {
-        String[] prams = this.getPrams();
-        return "get".equalsIgnoreCase(prams[0]);
+        return "get".equalsIgnoreCase(this.params.getFirst());
     }
 
     public boolean isSet() {
-        String[] prams = this.getPrams();
-        return "set".equalsIgnoreCase(prams[0]);
+        return "set".equalsIgnoreCase(this.params.getFirst());
+    }
+
+    public boolean isCreate() {
+        return "create".equalsIgnoreCase(this.params.getFirst());
     }
 
     public boolean isGetACL() {
-        String[] prams = this.getPrams();
-        return "getAcl".equalsIgnoreCase(prams[0]);
+        return "getAcl".equalsIgnoreCase(this.params.getFirst());
     }
 
     public String getPath() {
-        String[] prams = this.getPrams();
         if (this.isLs2()) {
-            return prams[1];
+            return this.params.get(1);
         }
         if (this.isLs()) {
             if (this.hasParamStat()) {
-                return prams[2];
+                return this.params.get(2);
             }
-            return prams[1];
+            return this.params.get(1);
         }
         if (this.isGet()) {
             if (this.hasParamStat()) {
-                return prams[2];
+                return this.params.get(2);
             }
-            return prams[1];
+            return this.params.get(1);
         }
         if (this.isSet()) {
             if (this.hasParamStat()) {
-                return prams[2];
+                return this.params.get(2);
             }
-            return prams[1];
+            return this.params.get(1);
         }
         if (this.isGetACL()) {
             if (this.hasParamStat()) {
-                return prams[2];
+                return this.params.get(2);
             }
-            return prams[1];
+            return this.params.get(1);
+        }
+        if (this.isCreate()) {
+            int index = 0;
+            for (String param : this.params) {
+                if (index == 0 || param.equals("-s")
+                        || param.equals("-c")
+                        || param.equals("-e")) {
+                    index++;
+                    continue;
+                }
+                return param;
+            }
         }
         return null;
     }
 
     public String getData() {
-        String[] prams = this.getPrams();
         if (this.isSet()) {
             if (this.hasParamStat()) {
-                return prams[3];
+                return this.params.get(3);
             }
-            return prams[2];
+            return this.params.get(2);
+        }
+        if (this.isCreate()) {
+            int index = 0;
+            for (String param : this.params) {
+                if (index == 0 || param.equals("-s")
+                        || param.equals("-c")
+                        || param.equals("-e")
+                        || param.startsWith("/")) {
+                    index++;
+                    continue;
+                }
+                return param;
+            }
         }
         return null;
     }
 
+    public CreateMode getCreateMode() {
+        boolean ephemeral = false;
+        boolean container = false;
+        boolean sequential = false;
+        for (String param : params) {
+            if (param.equals("-e")) {
+                ephemeral = true;
+            } else if (param.equals("-c")) {
+                container = true;
+            } else if (param.equals("-s")) {
+                sequential = true;
+            }
+        }
+        if (container) {
+            return CreateMode.CONTAINER;
+        }
+        if (sequential && ephemeral) {
+            return CreateMode.EPHEMERAL_SEQUENTIAL;
+        }
+        if (ephemeral) {
+            return CreateMode.EPHEMERAL;
+        }
+        if (sequential) {
+            return CreateMode.PERSISTENT_SEQUENTIAL;
+        }
+        return CreateMode.PERSISTENT;
+    }
+
+    public List<ACL> getACL() {
+        List<ACL> aclList = List.of(ZKACLUtil.OPEN_ACL);
+        if (this.isCreate()) {
+            int index = 0;
+            for (String param : this.params) {
+                if (index == 0 || param.equals("-s")
+                        || param.equals("-c")
+                        || param.equals("-e")
+                        || param.startsWith("/") || !param.contains(":")) {
+                    index++;
+                    continue;
+                }
+                aclList = ZKACLUtil.parseAcl(param);
+            }
+        }
+        return aclList;
+    }
+
     public boolean hasParamStat() {
-        if(this.isLs2()){
+        if (this.isCreate()) {
+            return false;
+        }
+        if (this.isLs2()) {
             return true;
         }
-        String[] prams = this.getPrams();
-        return "-s".equals(prams[1]);
+        for (String param : this.params) {
+            if ("-s".equals(param)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

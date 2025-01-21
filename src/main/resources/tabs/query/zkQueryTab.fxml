@@ -25,7 +25,7 @@
     </FlexHBox>
     <ZKQueryTextArea onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1" flexWidth="100% - 30" flexHeight="100% - 70">
         <VBox.margin>
-            <Insets top="5"/>
+            <Insets left="5" top="5"/>
         </VBox.margin>
     </ZKQueryTextArea>
     <FlexTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="70%" managedBindVisible="true"

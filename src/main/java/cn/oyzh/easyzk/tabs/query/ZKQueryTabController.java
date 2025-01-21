@@ -134,6 +134,8 @@ public class ZKQueryTabController extends DynamicTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
+            } else if (param.isCreate()) {
+                this.resultTabPane.select(0);
             }
             this.content.parentAutosize();
         } catch (Exception ex) {
@@ -153,10 +155,10 @@ public class ZKQueryTabController extends DynamicTabController {
 
     @Override
     public void onCloseRequest(DynamicTab tab, Event event) {
-        if (this.unsaved && MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
-            super.onCloseRequest(tab, event);
-        } else {
+        if (this.unsaved && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             event.consume();
+        } else {
+            super.onCloseRequest(tab, event);
         }
     }
 }

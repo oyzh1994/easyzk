@@ -769,9 +769,11 @@ public class ZKClient {
      * @param cParents   在需要的时候是否创建父节点
      */
     public String create(@NonNull String path, String data, @NonNull List<ACL> aclList, Long ttl, @NonNull CreateMode createMode, boolean cParents) throws Exception {
-        byte[] bytes = null;
+        byte[] bytes;
         if (data != null) {
             bytes = data.getBytes();
+        } else {
+            bytes = new byte[0];
         }
         return this.create(path, bytes, aclList, ttl, createMode, cParents);
     }
@@ -1476,6 +1478,8 @@ public class ZKClient {
                 this.setData(nodePath, param.getData());
             } else if (param.isGetACL()) {
                 result.setACLList(this.getACL(nodePath));
+            } else if (param.isCreate()) {
+                this.create(param.getPath(), param.getData(), param.getACL(), param.getCreateMode());
             }
             if (param.hasParamStat()) {
                 result.setStat(this.checkExists(nodePath));

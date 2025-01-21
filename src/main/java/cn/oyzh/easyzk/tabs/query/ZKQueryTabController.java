@@ -120,6 +120,9 @@ public class ZKQueryTabController extends DynamicTabController {
                     this.resultTabPane.select(0);
                 }
             } else if (param.isSet()) {
+                if (result.isSuccess() && param.hasParamStat()) {
+                    this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                }
                 this.resultTabPane.select(0);
             } else if (param.isGetACL()) {
                 if (result.isSuccess()) {

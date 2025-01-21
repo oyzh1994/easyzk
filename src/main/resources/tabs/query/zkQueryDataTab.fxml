@@ -14,7 +14,7 @@
     <FlexHBox realHeight="35" flexWidth="100%">
         <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0">
             <HBox.margin>
-                <Insets left="5" top="15"/>
+                <Insets left="5" top="12"/>
             </HBox.margin>
         </RichDataTypeComboBox>
         <SaveSVGGlyph enableWaiting="false" disable="true" tipText="%base.saveTip1" fx:id="save" size="16" onMousePrimaryClicked="#save">

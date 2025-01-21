@@ -104,6 +104,8 @@ public class ZKQueryPromptPopup extends FXPopup {
         PROMPT_CODES.add(KeyCode.DIGIT7);
         PROMPT_CODES.add(KeyCode.DIGIT8);
         PROMPT_CODES.add(KeyCode.DIGIT9);
+        // 其他字符
+        PROMPT_CODES.add(KeyCode.MINUS);
 
         // 更新字符
         UPDATE_CODES.add(KeyCode.BACK_SPACE);
@@ -247,7 +249,7 @@ public class ZKQueryPromptPopup extends FXPopup {
         // 获取token
         this.token = ZKQueryTokenAnalyzer.INSTANCE.currentToken(content, cartPos);
         // 处理token
-        if (this.token != null && this.token.isNotEmpty()) {
+        if (this.token != null && ( this.token.isPossibilityParam() || this.token.isNotEmpty())) {
             // 生成标志位
             int promptFlagVal = this.promptFlag.incrementAndGet();
             // 延迟显示提示词

@@ -13,8 +13,9 @@ public class ZKQueryPromptItem {
 
     /**
      * 类型
-     * 1 keyword
-     * 2 node
+     * 1 关键字
+     * 2 节点
+     * 3 参数
      */
     private byte type;
 
@@ -49,5 +50,14 @@ public class ZKQueryPromptItem {
      */
     public boolean isNodeType() {
         return 2 == this.type;
+    }
+
+    /**
+     * 是否参数类型
+     *
+     * @return 结果
+     */
+    public boolean isParamType() {
+        return 3 == this.type;
     }
 }

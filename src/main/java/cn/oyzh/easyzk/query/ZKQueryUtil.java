@@ -33,6 +33,11 @@ public class ZKQueryUtil {
      */
     private static final Set<String> KEYWORDS = new HashSet<>();
 
+    /**
+     * 参数
+     */
+    private static final Set<String> PARAMS = new HashSet<>();
+
     static {
         // 设置内容提示符
         Collection<TerminalCommandHandler<?, ?>> handlers = TerminalManager.listHandler();
@@ -47,6 +52,9 @@ public class ZKQueryUtil {
                 KEYWORDS.add(handler.commandFullName());
             }
         }
+        PARAMS.add("-s");
+        PARAMS.add("-e");
+        PARAMS.add("-c");
     }
 
     public static Set<String> getKeywords() {
@@ -62,6 +70,10 @@ public class ZKQueryUtil {
         if (nodes != null) {
             NODES.addAll(nodes);
         }
+    }
+
+    public static Set<String> getParams() {
+        return PARAMS;
     }
 
     public static double clacCorr(String str, String text) {
@@ -89,7 +101,7 @@ public class ZKQueryUtil {
      * @return 结果
      */
     public static List<ZKQueryPromptItem> initPrompts(ZKQueryToken token, float minCorr) {
-        if (token == null || token.isEmpty()) {
+        if (token == null) {
             return Collections.emptyList();
         }
         // 当前提示词
@@ -124,6 +136,17 @@ public class ZKQueryUtil {
                     item.setCorrelation(corr);
                     items.add(item);
                 }
+            }));
+        }
+        // 参数
+        if (token.isPossibilityParam()) {
+            System.out.println("----");
+            tasks.add(() -> ZKQueryUtil.getParams().parallelStream().forEach(param -> {
+                ZKQueryPromptItem item = new ZKQueryPromptItem();
+                item.setType((byte) 3);
+                item.setContent(param);
+                item.setCorrelation(1);
+                items.add(item);
             }));
         }
         // 执行任务

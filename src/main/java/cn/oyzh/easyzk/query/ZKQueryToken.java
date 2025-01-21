@@ -50,6 +50,10 @@ public class ZKQueryToken {
         return this.token != null && this.isNotEmpty() && this.token == ' ' && this.getPath() != null;
     }
 
+    public boolean isPossibilityParam() {
+        return this.token != null && this.token == '-';
+    }
+
     public String getPath() {
         String[] arr = this.content.split(" ");
         for (String s : arr) {
@@ -59,5 +63,4 @@ public class ZKQueryToken {
         }
         return null;
     }
-
 }

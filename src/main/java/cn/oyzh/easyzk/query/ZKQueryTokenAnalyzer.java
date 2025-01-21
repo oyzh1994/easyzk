@@ -30,7 +30,7 @@ public class ZKQueryTokenAnalyzer {
             // 当前位置
             int tokenIndex = 0;
             Character tokenType = null;
-            if (content.contains(" ")) {
+            if (content.contains(" ") || content.contains("-")) {
                 char[] chars = ArrayUtil.reverse(content.toCharArray());
                 for (int i = 0; i < chars.length; i++) {
                     char c = chars[i];
@@ -40,6 +40,12 @@ public class ZKQueryTokenAnalyzer {
                     }
                     // 寻找操作符
                     if (c == ' ') {
+                        tokenType = c;
+                        tokenIndex = chars.length - i;
+                        break;
+                    }
+                    // 寻找操作符
+                    if (c == '-') {
                         tokenType = c;
                         tokenIndex = chars.length - i - 1;
                         break;

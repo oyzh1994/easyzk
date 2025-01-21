@@ -173,6 +173,10 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
             svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
             label.setRealWidth(240);
+        } else if (item.isParamType()) {
+            SVGGlyph svgGlyph = new SVGGlyph("/font/param.svg", "12");
+            svgGlyph.setColor(Color.BLACK);
+            label = new SVGLabel(item.getContent(), svgGlyph);
         }
         if (label != null) {
             label.setTipText(item.getContent());

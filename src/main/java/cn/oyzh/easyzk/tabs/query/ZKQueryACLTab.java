@@ -1,0 +1,36 @@
+package cn.oyzh.easyzk.tabs.query;
+
+import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.i18n.I18nHelper;
+import org.apache.zookeeper.data.ACL;
+
+import java.util.List;
+
+/**
+ * @author oyzh
+ * @since 2025/01/21
+ */
+public class ZKQueryACLTab extends DynamicTab {
+
+    public ZKQueryACLTab(List<ACL> aclList) {
+        super();
+        super.flush();
+        this.controller().init(aclList);
+    }
+
+    @Override
+    protected String url() {
+        return "/tabs/query/zkQueryACLTab.fxml";
+    }
+
+    @Override
+    protected ZKQueryACLTabController controller() {
+        return (ZKQueryACLTabController) super.controller();
+    }
+
+    @Override
+    public String getTabTitle() {
+        return I18nHelper.acl();
+    }
+
+}

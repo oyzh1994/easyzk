@@ -66,6 +66,12 @@ public class ZKQueryParam {
             }
             return prams[1];
         }
+        if (this.isGetACL()) {
+            if (this.hasParamStat()) {
+                return prams[2];
+            }
+            return prams[1];
+        }
         return null;
     }
 

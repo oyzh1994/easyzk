@@ -1,31 +1,19 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.easyzk.dto.ZKQueryParam;
-import cn.oyzh.easyzk.dto.ZKQueryResult;
 import cn.oyzh.easyzk.fx.ZKDataTextArea;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
-import cn.oyzh.i18n.I18nHelper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-
-import java.nio.charset.Charset;
 
 /**
- * zk更新日志tab内容组件
- *
  * @author oyzh
- * @since 2024/04/07
+ * @since 2025/01/20
  */
 public class ZKQueryDataTabController extends DynamicTabController {
 

@@ -2,15 +2,12 @@ package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.i18n.I18nHelper;
-import org.apache.zookeeper.data.Stat;
 
 import java.util.List;
 
 /**
- * zk更新日志表tab
- *
  * @author oyzh
- * @since 2024/04/07
+ * @since 2025/01/20
  */
 public class ZKQueryNodeTab extends DynamicTab {
 

@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.gui.svg.glyph.RunSVGGlyph?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryTabController">
-    <FlexHBox realHeight="35" flexWidth="100%">
-        <SaveSVGGlyph size="16" onMousePrimaryClicked="#save">
-            <HBox.margin>
-                <Insets left="5" top="15"/>
-            </HBox.margin>
-        </SaveSVGGlyph>
-        <RunSVGGlyph size="16" onMousePrimaryClicked="#run">
-            <HBox.margin>
-                <Insets left="5" top="15"/>
-            </HBox.margin>
-        </RunSVGGlyph>
-    </FlexHBox>
-    <RichDataTextArea fx:id="content" showLine="false" promptText="%base.contentTip1" flexWidth="100% - 30" flexHeight="100% - 70">
-        <VBox.margin>
-            <Insets left="5" top="5"/>
-        </VBox.margin>
-    </RichDataTextArea>
-    <FlexTabPane fx:id="resultTabPane">
-
-    </FlexTabPane>
-</FlexVBox>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<FlexTableView fx:id="aclTable" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+               fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryACLTabController">
+    <columns>
+        <FlexTableColumn valueName="param1" flexWidth="30%"  text="%base.id"/>
+        <FlexTableColumn valueName="param2" flexWidth="30%"  text="%base.schema"/>
+        <FlexTableColumn valueName="param3" flexWidth="40% - 12"  text="%base.perms"/>
+    </columns>
+</FlexTableView>

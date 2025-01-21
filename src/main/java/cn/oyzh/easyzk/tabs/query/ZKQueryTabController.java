@@ -10,29 +10,19 @@ import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 /**
- * zk更新日志tab内容组件
- *
  * @author oyzh
- * @since 2024/04/07
+ * @since 2025/01/20
  */
 public class ZKQueryTabController extends DynamicTabController {
 
@@ -130,6 +120,16 @@ public class ZKQueryTabController extends DynamicTabController {
                 }
             } else if (param.isSet()) {
                 this.resultTabPane.select(0);
+            } else if (param.isGetACL()) {
+                if (result.isSuccess()) {
+                    this.resultTabPane.addTab(new ZKQueryACLTab(result.getACLList()));
+                    if (param.hasParamStat()) {
+                        this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                    }
+                    this.resultTabPane.select(1);
+                } else {
+                    this.resultTabPane.select(0);
+                }
             }
             this.content.parentAutosize();
         } catch (Exception ex) {

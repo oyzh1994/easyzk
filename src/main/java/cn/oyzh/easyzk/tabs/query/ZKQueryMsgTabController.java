@@ -8,10 +8,8 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
 /**
- * zk更新日志tab内容组件
- *
  * @author oyzh
- * @since 2024/04/07
+ * @since 2025/01/20
  */
 public class ZKQueryMsgTabController extends DynamicTabController {
 

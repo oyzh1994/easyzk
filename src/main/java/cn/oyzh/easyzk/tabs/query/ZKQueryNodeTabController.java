@@ -5,16 +5,13 @@ import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
-import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * zk更新日志tab内容组件
- *
  * @author oyzh
- * @since 2024/04/07
+ * @since 2025/01/20
  */
 public class ZKQueryNodeTabController extends DynamicTabController {
 

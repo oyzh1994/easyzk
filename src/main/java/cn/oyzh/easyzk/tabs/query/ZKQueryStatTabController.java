@@ -1,29 +1,17 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.easyzk.dto.ZKQueryParam;
-import cn.oyzh.easyzk.dto.ZKQueryResult;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
-import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.MapValueFactory;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * zk更新日志tab内容组件
- *
  * @author oyzh
- * @since 2024/04/07
+ * @since 2025/01/20
  */
 public class ZKQueryStatTabController extends DynamicTabController {
 

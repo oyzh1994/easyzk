@@ -3,9 +3,12 @@ package cn.oyzh.easyzk.query;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.terminal.TerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,6 +19,10 @@ import java.util.Set;
  * @since 2025/01/21
  */
 public class ZKQueryTextArea extends TerminalTextArea {
+
+    @Getter
+    @Setter
+    private ZKClient client;
 
     /**
      * 提示词组件

@@ -2,6 +2,8 @@ package cn.oyzh.easyzk.query;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.easyzk.util.ZKNodeUtil;
+import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.controls.popup.FXPopup;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.theme.ThemeManager;
@@ -19,6 +21,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
@@ -154,7 +157,26 @@ public class ZKQueryPromptPopup extends FXPopup {
      * @param token 提示词
      * @return 结果
      */
-    public synchronized boolean initPrompts(ZKQueryToken token) {
+    public synchronized boolean initPrompts(ZKQueryToken token, ZKClient zkClient) {
+        if (token.isPossibilityNode()) {
+            try {
+                String path = token.getPath();
+                if (path == null) {
+                    ZKQueryUtil.setNodes(null);
+                } else {
+                    List<String> children = zkClient.getChildren(token.getPath());
+                    if (CollectionUtil.isNotEmpty(children)) {
+                        List<String> list = new ArrayList<>();
+                        for (String s : children) {
+                            list.add(ZKNodeUtil.concatPath(path, s));
+                        }
+                        ZKQueryUtil.setNodes(list);
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
         // 提示词列表
         List<ZKQueryPromptItem> items = ZKQueryUtil.initPrompts(token, 0.5f);
         // 初始化数据
@@ -232,8 +254,8 @@ public class ZKQueryPromptPopup extends FXPopup {
             TaskManager.startDelay("query:prompt" + this.hashCode(), () -> {
                 // 初始化提示词
                 if (this.promptFlag.get() == promptFlagVal) {
-                    if (this.initPrompts(this.token)) {
-                        this.show(area);
+                    if (this.initPrompts(this.token, area.getClient())) {
+                        this.showPrompt(area);
                     } else {
                         this.hide();
                     }
@@ -250,7 +272,7 @@ public class ZKQueryPromptPopup extends FXPopup {
      *
      * @param area 文本域
      */
-    private void show(ZKQueryTextArea area) {
+    private void showPrompt(ZKQueryTextArea area) {
         RenderService.submitFXLater(() -> {
             Optional<Bounds> optional = area.getCaretBounds();
             // 显示提示词

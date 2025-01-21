@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.query;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.util.ZKNodeUtil;
 import lombok.Data;
 import lombok.ToString;
 
@@ -28,9 +29,8 @@ public class ZKQueryToken {
     private String content;
 
     /**
-     * 1 空格
-     * 2 .
-     * 3 `
+     * 1 null
+     * 2 空格
      */
     private Character token;
 
@@ -43,6 +43,21 @@ public class ZKQueryToken {
     }
 
     public boolean isPossibilityKeyword() {
-        return this.token == null || ' ' == this.token;
+        return this.token == null;
     }
+
+    public boolean isPossibilityNode() {
+        return this.token != null && this.isNotEmpty() && this.token == ' ' && this.getPath() != null;
+    }
+
+    public String getPath() {
+        String[] arr = this.content.split(" ");
+        for (String s : arr) {
+            if (s.startsWith("/")) {
+                return ZKNodeUtil.getParentPath(s);
+            }
+        }
+        return null;
+    }
+
 }

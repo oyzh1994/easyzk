@@ -51,6 +51,7 @@ public class ZKQueryTabController extends DynamicTabController {
 
     public void init(ZKClient client, ZKQuery query) {
         this.zkClient = client;
+        this.content.setClient(client);
         if (query == null) {
             query = new ZKQuery();
             query.setIid(client.iid());

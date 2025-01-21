@@ -24,6 +24,11 @@ import java.util.stream.Collectors;
 public class ZKQueryUtil {
 
     /**
+     * 节点列表
+     */
+    private static final Set<String> NODES = new HashSet<>();
+
+    /**
      * 关键字
      */
     private static final Set<String> KEYWORDS = new HashSet<>();
@@ -46,6 +51,17 @@ public class ZKQueryUtil {
 
     public static Set<String> getKeywords() {
         return KEYWORDS;
+    }
+
+    public static Set<String> getNodes() {
+        return NODES;
+    }
+
+    public static void setNodes(Collection<String> nodes) {
+        NODES.clear();
+        if (nodes != null) {
+            NODES.addAll(nodes);
+        }
     }
 
     public static double clacCorr(String str, String text) {
@@ -91,6 +107,20 @@ public class ZKQueryUtil {
                     ZKQueryPromptItem item = new ZKQueryPromptItem();
                     item.setType((byte) 1);
                     item.setContent(keyword);
+                    item.setCorrelation(corr);
+                    items.add(item);
+                }
+            }));
+        }
+        // 节点
+        if (token.isPossibilityNode()) {
+            tasks.add(() -> ZKQueryUtil.getNodes().parallelStream().forEach(node -> {
+                // 计算相关度
+                double corr = ZKQueryUtil.clacCorr(node, text);
+                if (corr > minCorr) {
+                    ZKQueryPromptItem item = new ZKQueryPromptItem();
+                    item.setType((byte) 2);
+                    item.setContent(node);
                     item.setCorrelation(corr);
                     items.add(item);
                 }

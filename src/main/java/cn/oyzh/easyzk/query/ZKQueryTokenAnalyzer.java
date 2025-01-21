@@ -45,13 +45,11 @@ public class ZKQueryTokenAnalyzer {
                         break;
                     }
                 }
-            } else {
-                tokenType = ' ';
             }
             String tokenContent = content.substring(tokenIndex);
             token.setToken(tokenType);
             token.setEndIndex(currentIndex);
-            token.setStartIndex(tokenIndex + 1);
+            token.setStartIndex(tokenIndex);
             token.setContent(tokenContent.trim());
             return token;
         } catch (Exception ex) {

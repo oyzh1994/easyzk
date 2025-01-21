@@ -47,7 +47,7 @@ public class ZKQueryToken {
     }
 
     public boolean isPossibilityNode() {
-        return this.token != null && this.isNotEmpty() && this.token == ' ' && this.getPath() != null;
+        return this.token != null && this.isNotEmpty() && this.token == ' ';
     }
 
     public boolean isPossibilityParam() {
@@ -55,11 +55,8 @@ public class ZKQueryToken {
     }
 
     public String getPath() {
-        String[] arr = this.content.split(" ");
-        for (String s : arr) {
-            if (s.startsWith("/")) {
-                return ZKNodeUtil.getParentPath(s);
-            }
+        if (this.content.startsWith("/")) {
+            return ZKNodeUtil.getParentPath(this.content);
         }
         return null;
     }

@@ -106,6 +106,7 @@ public class ZKQueryPromptPopup extends FXPopup {
         PROMPT_CODES.add(KeyCode.DIGIT9);
         // 其他字符
         PROMPT_CODES.add(KeyCode.MINUS);
+        PROMPT_CODES.add(KeyCode.SLASH);
 
         // 更新字符
         UPDATE_CODES.add(KeyCode.BACK_SPACE);
@@ -166,7 +167,7 @@ public class ZKQueryPromptPopup extends FXPopup {
                 if (path == null) {
                     ZKQueryUtil.setNodes(null);
                 } else {
-                    List<String> children = zkClient.getChildren(token.getPath());
+                    List<String> children = zkClient.getChildren(path);
                     if (CollectionUtil.isNotEmpty(children)) {
                         List<String> list = new ArrayList<>();
                         for (String s : children) {

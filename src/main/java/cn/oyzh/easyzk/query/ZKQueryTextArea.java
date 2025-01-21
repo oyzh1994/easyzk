@@ -72,6 +72,7 @@ public class ZKQueryTextArea extends TerminalTextArea {
                 set.add(handler.commandFullName());
             }
         }
+        set.addAll(ZKQueryUtil.getParams());
         this.setContentPrompts(set);
     }
 }

@@ -20,17 +20,11 @@ public class ZKQueryResult {
 
     private Stat stat;
 
-    private byte[] data;
-
     private Object result;
 
     private String message;
 
     private boolean success;
-
-    private List<ACL> aCLList;
-
-    private List<String> nodes;
 
     public String costSeconds() {
         return String.format("%.2f"+ I18nHelper.seconds(), this.cost / 1000.0);

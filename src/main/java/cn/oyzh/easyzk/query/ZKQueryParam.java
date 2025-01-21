@@ -72,6 +72,14 @@ public class ZKQueryParam {
         return "stat".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isSetQuota() {
+        return "setquota".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isListquota() {
+        return "listquota".equalsIgnoreCase(this.getCommand());
+    }
+
     public String getPath() {
         try {
             if (this.isGetEphemerals()) {
@@ -79,7 +87,7 @@ public class ZKQueryParam {
                     return this.params.get(1);
                 }
             }
-            if (this.isSync() || this.isLs2() || this.isGetAllChildrenNumber() || this.isStat()) {
+            if (this.isSync() || this.isLs2() || this.isGetAllChildrenNumber() || this.isStat() || this.isListquota()) {
                 return this.params.get(1);
             }
             if (this.isLs()) {
@@ -197,7 +205,7 @@ public class ZKQueryParam {
         if (this.isCreate()) {
             return false;
         }
-        if (this.isLs2()||this.isStat()) {
+        if (this.isLs2() || this.isStat()) {
             return true;
         }
         for (String param : this.params) {
@@ -211,4 +219,6 @@ public class ZKQueryParam {
     public String getCommand() {
         return this.params.getFirst();
     }
+
+
 }

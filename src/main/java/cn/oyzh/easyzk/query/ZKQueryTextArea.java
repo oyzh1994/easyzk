@@ -59,19 +59,7 @@ public class ZKQueryTextArea extends TerminalTextArea {
     @Override
     protected void initContentPrompts() {
         // 设置内容提示符
-        Collection<TerminalCommandHandler<?, ?>> handlers = TerminalManager.listHandler();
-        Set<String> set = new HashSet<>();
-        for (TerminalCommandHandler<?, ?> handler : handlers) {
-            if (StringUtil.isNotBlank(handler.commandName())) {
-                set.add(handler.commandName());
-            }
-            if (StringUtil.isNotBlank(handler.commandSubName())) {
-                set.add(handler.commandSubName());
-            }
-            if (StringUtil.isNotBlank(handler.commandFullName())) {
-                set.add(handler.commandFullName());
-            }
-        }
+        Set<String> set = ZKQueryUtil.getKeywords();
         set.addAll(ZKQueryUtil.getParams());
         this.setContentPrompts(set);
     }

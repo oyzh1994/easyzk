@@ -1493,26 +1493,28 @@ public class ZKClient {
         try {
             String nodePath = param.getPath();
             if (param.isLs() || param.isLs2()) {
-                result.setNodes(this.getChildren(nodePath));
+                result.setResult(this.getChildren(nodePath));
             } else if (param.isGet()) {
-                result.setData(this.getData(nodePath));
+                result.setResult(this.getData(nodePath));
             } else if (param.isSet()) {
                 this.setData(nodePath, param.getData());
             } else if (param.isGetACL()) {
-                result.setACLList(this.getACL(nodePath));
+                result.setResult(this.getACL(nodePath));
             } else if (param.isSync()) {
                 this.sync(nodePath);
             } else if (param.isCreate()) {
                 this.create(nodePath, param.getData(), param.getACL(), param.getCreateMode());
             } else if (param.isGetEphemerals()) {
                 if (nodePath == null) {
-                    result.setNodes(this.getEphemerals());
+                    result.setResult(this.getEphemerals());
                 } else {
-                    result.setNodes(this.getEphemerals(nodePath));
+                    result.setResult(this.getEphemerals(nodePath));
                 }
             } else if (param.isGetAllChildrenNumber()) {
                 result.setResult(this.getAllChildrenNumber(nodePath));
             } else if (param.isStat()) {
+            } else if (param.isListquota()) {
+                result.setResult(this.listQuota(nodePath));
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

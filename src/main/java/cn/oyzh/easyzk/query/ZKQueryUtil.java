@@ -40,19 +40,25 @@ public class ZKQueryUtil {
 
     static {
         // 关键字
+        // 数据
         KEYWORDS.add("get");
         KEYWORDS.add("set");
+        KEYWORDS.add("sync");
+        // 权限
         KEYWORDS.add("setAcl");
         KEYWORDS.add("getAcl");
+        // 子节点
         KEYWORDS.add("ls");
         KEYWORDS.add("ls2");
         KEYWORDS.add("stat");
-        KEYWORDS.add("deleteall");
-        KEYWORDS.add("rmr");
-        KEYWORDS.add("create");
         KEYWORDS.add("getEphemerals");
-        KEYWORDS.add("sync");
         KEYWORDS.add("getAllChildrenNumber");
+        // 删除
+        KEYWORDS.add("rmr");
+        KEYWORDS.add("delete");
+        KEYWORDS.add("deleteall");
+        KEYWORDS.add("create");
+        // 配额
         KEYWORDS.add("setquota");
         KEYWORDS.add("delquota");
         KEYWORDS.add("listquota");
@@ -61,6 +67,8 @@ public class ZKQueryUtil {
         PARAMS.add("-s");
         PARAMS.add("-e");
         PARAMS.add("-c");
+        PARAMS.add("-n");
+        PARAMS.add("-b");
     }
 
     public static Set<String> getKeywords() {

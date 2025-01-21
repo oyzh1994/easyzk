@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.tabs.node;
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.file.FileUtil;
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.TextUtil;
@@ -303,16 +304,16 @@ public class ZKNodeTabController extends DynamicTabController {
         try {
             if (this.activeItem != null) {
                 String id = this.tabPane.getSelectTabId();
-                if (id.equals("dataTab")) {
+                if ("dataTab".equals(id)) {
                     // 初始化数据
                     this.initData();
-                } else if (id.equals("statTab")) {
+                } else if ("statTab".equals(id)) {
                     // 初始化状态
                     this.initStat();
-                } else if (id.equals("aclTab")) {
+                } else if ("aclTab".equals(id)) {
                     // 初始化acl
                     this.initACL();
-                } else if (id.equals("quotaTab")) {
+                } else if ("quotaTab".equals(id)) {
                     // 初始化配额
                     this.initQuota();
                 }
@@ -326,6 +327,7 @@ public class ZKNodeTabController extends DynamicTabController {
                 // 禁用组件
                 this.tabPane.disable();
             }
+            JulLog.info("select node color:{}", this.activeItem.getValue().graphicColor());
             // 刷新tab
             this.flushTab();
             // 触发事件

@@ -1,11 +1,9 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.query;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import cn.oyzh.fx.terminal.TerminalTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
 
@@ -17,7 +15,22 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryTextArea extends RichDataTextAreaPane {
+public class ZKQueryTextArea extends TerminalTextArea {
+
+    /**
+     * 提示词组件
+     */
+    private final ZKQueryPromptPopup promptPopup = new ZKQueryPromptPopup();
+
+    {
+        this.showLineNum();
+        this.setOnMouseReleased(e -> this.promptPopup.hide());
+//        this.addTextChangeListener((observable, oldValue, newValue) -> this.initTextStyle());
+        this.promptPopup.setOnItemSelected(item -> this.promptPopup.autoComplete(this, item));
+        this.focusedProperty().addListener((observable, oldValue, newValue) -> this.promptPopup.hide());
+        this.setOnKeyReleased(event -> this.promptPopup.prompt(this, event));
+    }
+
 
     @Override
     protected void init() {

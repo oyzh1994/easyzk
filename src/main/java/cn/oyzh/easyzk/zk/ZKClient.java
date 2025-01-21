@@ -1513,6 +1513,8 @@ public class ZKClient {
             } else if (param.isGetAllChildrenNumber()) {
                 result.setResult(this.getAllChildrenNumber(nodePath));
             } else if (param.isStat()) {
+            } else if (param.isSetQuota()) {
+                this.createQuota(nodePath, param.getB(), param.getN());
             } else if (param.isListquota()) {
                 result.setResult(this.listQuota(nodePath));
             } else {

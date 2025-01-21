@@ -126,6 +126,26 @@ public class ZKQueryParam {
                     return param;
                 }
             }
+            if (this.isSetQuota()) {
+                int index = 0;
+                boolean isParam = false;
+                for (String param : this.params) {
+                    if (index == 0) {
+                        index++;
+                        continue;
+                    }
+                    if (param.startsWith("-")) {
+                        index++;
+                        isParam = true;
+                        continue;
+                    }
+                    if (isParam) {
+                        isParam = false;
+                        continue;
+                    }
+                    return param;
+                }
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -153,6 +173,34 @@ public class ZKQueryParam {
             }
         }
         return null;
+    }
+
+    public long getB() {
+        boolean isParam = false;
+        for (String param : this.params) {
+            if (param.equals("-b")) {
+                isParam = true;
+                continue;
+            }
+            if (isParam) {
+                return Long.parseLong(param);
+            }
+        }
+        return -1;
+    }
+
+    public int getN() {
+        boolean isParam = false;
+        for (String param : this.params) {
+            if (param.equals("-n")) {
+                isParam = true;
+                continue;
+            }
+            if (isParam) {
+                return Integer.parseInt(param);
+            }
+        }
+        return -1;
     }
 
     public CreateMode getCreateMode() {

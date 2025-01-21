@@ -14,6 +14,8 @@ import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ import java.util.Objects;
  */
 public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItemValue> {
 
+    @Getter
+    @Accessors(fluent = true)
     private final ZKQuery value;
 
     private final ZKQueryStore queryStore = ZKQueryStore.INSTANCE;

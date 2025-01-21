@@ -31,6 +31,6 @@ public class ZKQueryTreeItemValue extends RichTreeItemValue {
 
     @Override
     public String name() {
-        return this.item().value.getName();
+        return this.item().value().getName();
     }
 }

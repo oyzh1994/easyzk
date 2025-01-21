@@ -10,24 +10,19 @@ import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -43,7 +38,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectTreeItemValue> {
+public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 
     /**
      * zk信息
@@ -375,43 +370,4 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         return (ZKQueryTypeTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof ZKQueryTypeTreeItem).findAny().get();
     }
 
-    /**
-     * zk树节点值
-     *
-     * @author oyzh
-     * @since 2023/4/7
-     */
-    @Accessors(chain = true, fluent = true)
-    public static class ZKConnectTreeItemValue extends RichTreeItemValue {
-
-        public ZKConnectTreeItemValue(@NonNull ZKConnectTreeItem item) {
-            super(item);
-        }
-
-        @Override
-        protected ZKConnectTreeItem item() {
-            return (ZKConnectTreeItem) super.item();
-        }
-
-        @Override
-        public String name() {
-            return this.item().value().getName();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new ZookeeperSVGGlyph(12);
-            }
-            return super.graphic();
-        }
-
-        @Override
-        public Color graphicColor() {
-            if (this.item().isConnected() || this.item().isConnecting()) {
-                return Color.GREEN;
-            }
-            return super.graphicColor();
-        }
-    }
 }

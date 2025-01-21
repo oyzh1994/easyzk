@@ -7,11 +7,8 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
-import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.i18n.I18nHelper;
@@ -26,7 +23,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/1/30
  */
-public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItem.ZKQueryTreeItemValue> {
+public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItemValue> {
 
     private final ZKQuery value;
 
@@ -103,34 +100,4 @@ public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItem.ZKQueryTreeIte
         this.loadChild();
     }
 
-    /**
-     * zk树节点值
-     *
-     * @author oyzh
-     * @since 2023/4/7
-     */
-    public static class ZKQueryTreeItemValue extends RichTreeItemValue {
-
-        public ZKQueryTreeItemValue(ZKQueryTreeItem item) {
-            super(item);
-        }
-
-        @Override
-        protected ZKQueryTreeItem item() {
-            return (ZKQueryTreeItem) super.item();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new QuerySVGGlyph("10");
-            }
-            return super.graphic();
-        }
-
-        @Override
-        public String name() {
-            return this.item().value.getName();
-        }
-    }
 }

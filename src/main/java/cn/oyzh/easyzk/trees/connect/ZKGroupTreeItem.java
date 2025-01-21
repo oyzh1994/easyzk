@@ -9,11 +9,8 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
-import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
@@ -23,7 +20,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -38,7 +34,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeItemValue> implements ZKConnectManager {
+public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItemValue> implements ZKConnectManager {
 
     /**
      * 分组对象
@@ -230,42 +226,4 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItem.ZKGroupTreeIte
         return this.value.getGid();
     }
 
-    /**
-     * zk树group值
-     *
-     * @author oyzh
-     * @since 2023/4/7
-     */
-    public static class ZKGroupTreeItemValue extends RichTreeItemValue {
-
-        public ZKGroupTreeItemValue(@NonNull ZKGroupTreeItem item) {
-            super(item);
-        }
-
-        @Override
-        protected ZKGroupTreeItem item() {
-            return (ZKGroupTreeItem) super.item();
-        }
-
-        @Override
-        public String name() {
-            return this.item().value().getName();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new GroupSVGGlyph("10");
-            }
-            return super.graphic();
-        }
-
-        @Override
-        public Color graphicColor() {
-            if (this.item().isChildEmpty()) {
-                return super.graphicColor();
-            }
-            return Color.DEEPSKYBLUE;
-        }
-    }
 }

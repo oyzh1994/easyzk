@@ -6,13 +6,9 @@ import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
-import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 
@@ -23,7 +19,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/30
  */
-public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItem.ZKQueryTypeTreeItemValue> {
+public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItemValue> {
 
     private final ZKQueryStore queryStore = ZKQueryStore.INSTANCE;
 
@@ -95,25 +91,4 @@ public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItem.ZKQuer
     }
 
 
-    /**
-     * zk树节点值
-     *
-     * @author oyzh
-     * @since 2023/4/7
-     */
-    public static class ZKQueryTypeTreeItemValue extends RichTreeItemValue {
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new QuerySVGGlyph("10");
-            }
-            return super.graphic();
-        }
-
-        @Override
-        public String name() {
-            return I18nHelper.query();
-        }
-    }
 }

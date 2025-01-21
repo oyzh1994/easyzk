@@ -14,8 +14,6 @@ import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -40,7 +38,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemValue> implements ZKConnectManager {
+public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements ZKConnectManager {
 
     /**
      * zk分组储存
@@ -412,25 +410,4 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
         }
     }
 
-    /**
-     * zk树节点值
-     *
-     * @author oyzh
-     * @since 2023/4/7
-     */
-    public static class ZKRootTreeItemValue extends RichTreeItemValue {
-
-        @Override
-        public String name() {
-            return I18nHelper.zk();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new SVGGlyph("/font/Zookeeper1.svg", 12);
-            }
-            return super.graphic();
-        }
-    }
 }

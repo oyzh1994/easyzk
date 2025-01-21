@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.tabs;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.OSUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.connection.ZKServerEvent;
@@ -292,12 +293,13 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      * 获取查询tab
      *
      * @param connect zk连接
+     * @param query   查询
      * @return 查询tab
      */
-    private ZKQueryTab getQueryTab(ZKConnect connect) {
+    private ZKQueryTab getQueryTab(ZKConnect connect, ZKQuery query) {
         if (connect != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof ZKQueryTab queryTab && queryTab.zkConnect() == connect) {
+                if (tab instanceof ZKQueryTab queryTab && queryTab.zkConnect() == connect && queryTab.query() == query) {
                     return queryTab;
                 }
             }
@@ -313,7 +315,6 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     @EventSubscribe
     public void addQuery(ZKAddQueryEvent event) {
         ZKQueryTab queryTab = new ZKQueryTab(event.data(), null);
-//        queryTab.init(event.data());
         super.addTab(queryTab);
         this.select(queryTab);
     }
@@ -325,10 +326,9 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     public void openQuery(ZKOpenQueryEvent event) {
-        ZKQueryTab queryTab = this.getQueryTab(event.zkConnect());
+        ZKQueryTab queryTab = this.getQueryTab(event.zkConnect(), event.data());
         if (queryTab == null) {
             queryTab = new ZKQueryTab(event.getClient(), event.data());
-//            queryTab.init(event.getClient(), event.data());
             super.addTab(queryTab);
         }
         if (!queryTab.isSelected()) {

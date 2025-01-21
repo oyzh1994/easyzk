@@ -29,8 +29,5 @@
     </RichDataTextArea>
     <FlexTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="70%" managedBindVisible="true"
                  visible="false">
-        <VBox.margin>
-            <Insets top="5"/>
-        </VBox.margin>
     </FlexTabPane>
 </FlexVBox>

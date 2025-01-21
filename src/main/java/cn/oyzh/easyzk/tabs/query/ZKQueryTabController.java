@@ -19,6 +19,7 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -106,8 +107,8 @@ public class ZKQueryTabController extends DynamicTabController {
             this.content.flexHeight("30% - 70");
             this.resultTabPane.setVisible(true);
             this.resultTabPane.clearChild();
+            this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
             if (param.isGet()) {
-                this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
                 if (result.isSuccess()) {
                     this.resultTabPane.addTab(new ZKQueryDataTab(param.getPath(), result.getData(), this.zkClient));
                     if (param.hasParamStat()) {
@@ -118,7 +119,6 @@ public class ZKQueryTabController extends DynamicTabController {
                     this.resultTabPane.select(0);
                 }
             } else if (param.isLs() || param.isLs2()) {
-                this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
                 if (result.isSuccess()) {
                     this.resultTabPane.addTab(new ZKQueryNodeTab(param.getPath(), result.getNodes()));
                     if (param.hasParamStat()) {
@@ -128,6 +128,8 @@ public class ZKQueryTabController extends DynamicTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
+            } else if (param.isSet()) {
+                this.resultTabPane.select(0);
             }
             this.content.parentAutosize();
         } catch (Exception ex) {
@@ -142,6 +144,15 @@ public class ZKQueryTabController extends DynamicTabController {
             this.save();
         } else if (KeyboardUtil.isCtrlR(event)) {
             this.run();
+        }
+    }
+
+    @Override
+    public void onCloseRequest(DynamicTab tab, Event event) {
+        if (this.unsaved && MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+            super.onCloseRequest(tab, event);
+        } else {
+            event.consume();
         }
     }
 }

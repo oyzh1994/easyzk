@@ -119,6 +119,14 @@ public class ZKQueryTabController extends DynamicTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
+            } else if (param.isGetEphemerals()) {
+                if (result.isSuccess()) {
+                    String path = param.getPath() == null ? "/" : param.getPath();
+                    this.resultTabPane.addTab(new ZKQueryNodeTab(path, result.getNodes()));
+                    this.resultTabPane.select(1);
+                } else {
+                    this.resultTabPane.select(0);
+                }
             } else if (param.isSet()) {
                 if (result.isSuccess() && param.hasParamStat()) {
                     this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));

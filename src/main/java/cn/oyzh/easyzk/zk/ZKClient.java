@@ -7,7 +7,6 @@ import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.dto.ZKClusterNode;
@@ -54,6 +53,7 @@ import org.apache.zookeeper.Version;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.cli.DelQuotaCommand;
+import org.apache.zookeeper.cli.GetEphemeralsCommand;
 import org.apache.zookeeper.cli.SetQuotaCommand;
 import org.apache.zookeeper.client.FourLetterWordMain;
 import org.apache.zookeeper.client.ZooKeeperSaslClient;
@@ -797,25 +797,25 @@ public class ZKClient {
         }
     }
 
-    /**
-     * 获取子节点(异步)
-     *
-     * @param path     路径
-     * @param callback 回调函数
-     */
-    public void getChildren(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
-        try {
-            ZKClientActionUtil.forLsAction(this.connectName(), path, false, false, false);
-            this.framework.getChildren().inBackground(callback).forPath(path);
-        } catch (IllegalStateException ignore) {
-        } catch (Exception ex) {
-            if (ex instanceof KeeperException.NoAuthException) {
-                JulLog.error("path:{} NoAuth!", path);
-                throw new ZKNoChildPermException(path);
-            }
-            throw ex;
-        }
-    }
+//    /**
+//     * 获取子节点(异步)
+//     *
+//     * @param path     路径
+//     * @param callback 回调函数
+//     */
+//    public void getChildren(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
+//        try {
+//            ZKClientActionUtil.forLsAction(this.connectName(), path, false, false, false);
+//            this.framework.getChildren().inBackground(callback).forPath(path);
+//        } catch (IllegalStateException ignore) {
+//        } catch (Exception ex) {
+//            if (ex instanceof KeeperException.NoAuthException) {
+//                JulLog.error("path:{} NoAuth!", path);
+//                throw new ZKNoChildPermException(path);
+//            }
+//            throw ex;
+//        }
+//    }
 
     /**
      * 获取节点数据
@@ -1041,19 +1041,19 @@ public class ZKClient {
         return this.framework.checkExists().forPath(path);
     }
 
-    /**
-     * 获取状态(异步)
-     *
-     * @param path     路径
-     * @param callback 回调函数
-     */
-    public void checkExists(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
-        try {
-            ZKClientActionUtil.forStatAction(this.connectName(), path, false);
-            this.framework.checkExists().inBackground(callback).forPath(path);
-        } catch (IllegalStateException ignore) {
-        }
-    }
+//    /**
+//     * 获取状态(异步)
+//     *
+//     * @param path     路径
+//     * @param callback 回调函数
+//     */
+//    public void checkExists(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
+//        try {
+//            ZKClientActionUtil.forStatAction(this.connectName(), path, false);
+//            this.framework.checkExists().inBackground(callback).forPath(path);
+//        } catch (IllegalStateException ignore) {
+//        }
+//    }
 
     /**
      * 创建配额
@@ -1100,6 +1100,22 @@ public class ZKClient {
         byte[] data = this.getData(absolutePath);
         ZKClientActionUtil.forListQuotaAction(this.connectName(), path);
         return new StatsTrack(new String(data));
+    }
+
+    /**
+     * 获取临时节点
+     */
+    public List<String> getEphemerals() throws Exception {
+        return this.zooKeeper.getEphemerals();
+    }
+
+    /**
+     * 获取临时节点
+     *
+     * @param path 路径
+     */
+    public List<String> getEphemerals(String path) throws Exception {
+        return this.zooKeeper.getEphemerals(path);
     }
 
     /**
@@ -1481,7 +1497,13 @@ public class ZKClient {
             } else if (param.isSync()) {
                 this.sync(nodePath);
             } else if (param.isCreate()) {
-                this.create(param.getPath(), param.getData(), param.getACL(), param.getCreateMode());
+                this.create(nodePath, param.getData(), param.getACL(), param.getCreateMode());
+            } else if (param.isGetEphemerals()) {
+                if (nodePath == null) {
+                    result.setNodes(this.getEphemerals());
+                } else {
+                    result.setNodes(this.getEphemerals(nodePath));
+                }
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

@@ -37,75 +37,88 @@ public class ZKQueryParam {
     }
 
     public boolean isLs() {
-        return "ls".equalsIgnoreCase(this.params.getFirst());
+        return "ls".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isGetEphemerals() {
+        return "getEphemerals".equalsIgnoreCase(this.getCommand());
     }
 
     public boolean isLs2() {
-        return "ls2".equalsIgnoreCase(this.params.getFirst());
+        return "ls2".equalsIgnoreCase(this.getCommand());
     }
 
     public boolean isGet() {
-        return "get".equalsIgnoreCase(this.params.getFirst());
+        return "get".equalsIgnoreCase(this.getCommand());
     }
 
     public boolean isSet() {
-        return "set".equalsIgnoreCase(this.params.getFirst());
+        return "set".equalsIgnoreCase(this.getCommand());
     }
 
     public boolean isCreate() {
-        return "create".equalsIgnoreCase(this.params.getFirst());
+        return "create".equalsIgnoreCase(this.getCommand());
     }
 
     public boolean isSync() {
-        return "sync".equalsIgnoreCase(this.params.getFirst());
+        return "sync".equalsIgnoreCase(this.getCommand());
     }
 
     public boolean isGetACL() {
-        return "getAcl".equalsIgnoreCase(this.params.getFirst());
+        return "getAcl".equalsIgnoreCase(this.getCommand());
     }
 
     public String getPath() {
-        if (this.isLs2()) {
-            return this.params.get(1);
-        }
-        if (this.isSync()) {
-            return this.params.get(1);
-        }
-        if (this.isLs()) {
-            if (this.hasParamStat()) {
-                return this.params.get(2);
+        try {
+            if (this.isLs2()) {
+                return this.params.get(1);
             }
-            return this.params.get(1);
-        }
-        if (this.isGet()) {
-            if (this.hasParamStat()) {
-                return this.params.get(2);
-            }
-            return this.params.get(1);
-        }
-        if (this.isSet()) {
-            if (this.hasParamStat()) {
-                return this.params.get(2);
-            }
-            return this.params.get(1);
-        }
-        if (this.isGetACL()) {
-            if (this.hasParamStat()) {
-                return this.params.get(2);
-            }
-            return this.params.get(1);
-        }
-        if (this.isCreate()) {
-            int index = 0;
-            for (String param : this.params) {
-                if (index == 0 || param.equals("-s")
-                        || param.equals("-c")
-                        || param.equals("-e")) {
-                    index++;
-                    continue;
+            if (this.isGetEphemerals()) {
+                if (this.params.size() == 2) {
+                    return this.params.get(1);
                 }
-                return param;
             }
+            if (this.isSync()) {
+                return this.params.get(1);
+            }
+            if (this.isLs()) {
+                if (this.hasParamStat()) {
+                    return this.params.get(2);
+                }
+                return this.params.get(1);
+            }
+            if (this.isGet()) {
+                if (this.hasParamStat()) {
+                    return this.params.get(2);
+                }
+                return this.params.get(1);
+            }
+            if (this.isSet()) {
+                if (this.hasParamStat()) {
+                    return this.params.get(2);
+                }
+                return this.params.get(1);
+            }
+            if (this.isGetACL()) {
+                if (this.hasParamStat()) {
+                    return this.params.get(2);
+                }
+                return this.params.get(1);
+            }
+            if (this.isCreate()) {
+                int index = 0;
+                for (String param : this.params) {
+                    if (index == 0 || param.equals("-s")
+                            || param.equals("-c")
+                            || param.equals("-e")) {
+                        index++;
+                        continue;
+                    }
+                    return param;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return null;
     }

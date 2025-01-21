@@ -328,6 +328,8 @@ public class ZKNodeTabController extends DynamicTabController {
                 this.tabPane.disable();
             }
             JulLog.info("select node color:{}", this.activeItem.getValue().graphicColor());
+            // 刷新树
+            this.treeView.refresh();
             // 刷新tab
             this.flushTab();
             // 触发事件

@@ -332,6 +332,60 @@
                     </ResetSVGGlyph>
                 </FlexHBox>
             </FlexVBox>
+            <FlexVBox managedBindVisible="true" visible="false" fx:id="font_query_box" flexWidth="100%"
+                      flexHeight="100%" groupId="setting_item">
+                <InfoLabel text="%base.fontName">
+                    <VBox.margin>
+                        <Insets left="30"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FlexHBox>
+                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="queryFontFamily">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FontFamilyComboBox>
+                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontFamily">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ResetSVGGlyph>
+                </FlexHBox>
+                <InfoLabel text="%base.fontSize">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FlexHBox>
+                    <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="queryFontSize">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FontSizeComboBox>
+                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontSize">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ResetSVGGlyph>
+                </FlexHBox>
+                <InfoLabel text="%base.fontWeight">
+                    <VBox.margin>
+                        <Insets left="30" top="10"/>
+                    </VBox.margin>
+                </InfoLabel>
+                <FlexHBox>
+                    <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="queryFontWeight">
+                        <HBox.margin>
+                            <Insets left="30" top="5"/>
+                        </HBox.margin>
+                    </FontWeightComboBox>
+                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontWeight">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ResetSVGGlyph>
+                </FlexHBox>
+            </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="theme_box" flexWidth="100%" flexHeight="100%"
                       groupId="setting_item">
                 <InfoLabel text="%base.themeName">

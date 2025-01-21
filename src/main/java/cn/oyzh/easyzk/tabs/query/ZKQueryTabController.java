@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.dto.ZKQueryParam;
 import cn.oyzh.easyzk.dto.ZKQueryResult;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.fx.ZKQueryTextArea;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
@@ -38,7 +39,7 @@ public class ZKQueryTabController extends DynamicTabController {
     private ZKClient zkClient;
 
     @FXML
-    private RichDataTextArea content;
+    private ZKQueryTextArea content;
 
     @FXML
     private FlexTabPane resultTabPane;

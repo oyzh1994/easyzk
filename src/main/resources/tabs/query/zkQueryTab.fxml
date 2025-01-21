@@ -8,6 +8,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.easyzk.fx.ZKQueryTextArea?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryTabController">
     <FlexHBox realHeight="35" flexWidth="100%">
@@ -22,11 +23,11 @@
             </HBox.margin>
         </RunSVGGlyph>
     </FlexHBox>
-    <RichDataTextArea onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1" flexWidth="100% - 30" flexHeight="100% - 70">
+    <ZKQueryTextArea onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1" flexWidth="100% - 30" flexHeight="100% - 70">
         <VBox.margin>
             <Insets top="5"/>
         </VBox.margin>
-    </RichDataTextArea>
+    </ZKQueryTextArea>
     <FlexTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="70%" managedBindVisible="true"
                  visible="false">
     </FlexTabPane>

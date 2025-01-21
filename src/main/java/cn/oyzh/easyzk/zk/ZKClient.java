@@ -1478,8 +1478,12 @@ public class ZKClient {
                 this.setData(nodePath, param.getData());
             } else if (param.isGetACL()) {
                 result.setACLList(this.getACL(nodePath));
+            } else if (param.isSync()) {
+                this.sync(nodePath);
             } else if (param.isCreate()) {
                 this.create(param.getPath(), param.getData(), param.getACL(), param.getCreateMode());
+            } else {
+                throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }
             if (param.hasParamStat()) {
                 result.setStat(this.checkExists(nodePath));

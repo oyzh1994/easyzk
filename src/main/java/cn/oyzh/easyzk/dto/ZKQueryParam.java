@@ -56,12 +56,19 @@ public class ZKQueryParam {
         return "create".equalsIgnoreCase(this.params.getFirst());
     }
 
+    public boolean isSync() {
+        return "sync".equalsIgnoreCase(this.params.getFirst());
+    }
+
     public boolean isGetACL() {
         return "getAcl".equalsIgnoreCase(this.params.getFirst());
     }
 
     public String getPath() {
         if (this.isLs2()) {
+            return this.params.get(1);
+        }
+        if (this.isSync()) {
             return this.params.get(1);
         }
         if (this.isLs()) {
@@ -185,5 +192,9 @@ public class ZKQueryParam {
             }
         }
         return false;
+    }
+
+    public String getCommand() {
+        return this.params.getFirst();
     }
 }

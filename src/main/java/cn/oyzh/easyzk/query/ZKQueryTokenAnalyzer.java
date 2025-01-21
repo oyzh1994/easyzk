@@ -4,10 +4,8 @@ import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.StringUtil;
 
 /**
- * db查询文本域
- *
  * @author oyzh
- * @since 2024/02/18
+ * @since 2025/01/21
  */
 public class ZKQueryTokenAnalyzer {
 

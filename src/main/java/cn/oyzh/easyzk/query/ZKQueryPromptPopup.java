@@ -21,15 +21,14 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 /**
- * 查询提示框
+ * 查询弹框
  *
  * @author oyzh
- * @since 2024/02/21
+ * @since 2025/01/21
  */
 public class ZKQueryPromptPopup extends FXPopup {
 
@@ -250,7 +249,7 @@ public class ZKQueryPromptPopup extends FXPopup {
         // 获取token
         this.token = ZKQueryTokenAnalyzer.INSTANCE.currentToken(content, cartPos);
         // 处理token
-        if (this.token != null && ( this.token.isPossibilityParam() || this.token.isNotEmpty())) {
+        if (this.token != null && (this.token.isPossibilityParam() || this.token.isNotEmpty())) {
             // 生成标志位
             int promptFlagVal = this.promptFlag.incrementAndGet();
             // 延迟显示提示词

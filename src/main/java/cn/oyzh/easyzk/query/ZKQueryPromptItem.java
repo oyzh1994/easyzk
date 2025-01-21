@@ -6,7 +6,7 @@ import lombok.Data;
  * 查询提示内容
  *
  * @author oyzh
- * @since 2024/02/21
+ * @since 2025/01/21
  */
 @Data
 public class ZKQueryPromptItem {

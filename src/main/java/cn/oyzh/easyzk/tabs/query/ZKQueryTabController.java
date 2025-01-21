@@ -95,7 +95,7 @@ public class ZKQueryTabController extends DynamicTabController {
             ZKQueryParam param = new ZKQueryParam();
             param.setContent(this.content.getText());
             ZKQueryResult result = this.zkClient.query(param);
-            this.content.flexHeight("30% - 70");
+            this.content.flexHeight("30% - 60");
             this.resultTabPane.setVisible(true);
             this.resultTabPane.clearChild();
             this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));

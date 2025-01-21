@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<FlexTableView fx:id="aclTable" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-               fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryACLTabController">
-    <columns>
-        <FlexTableColumn valueName="param1" flexWidth="30%"  text="%base.id"/>
-        <FlexTableColumn valueName="param2" flexWidth="30%"  text="%base.schema"/>
-        <FlexTableColumn valueName="param3" flexWidth="40% - 12"  text="%base.perms"/>
-    </columns>
-</FlexTableView>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<FlexVBox xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryACLTabController" flexWidth="100% - 30" flexHeight="100%">
+    <FlexTableView fx:id="aclTable" flexWidth="100%" flexHeight="100%">
+        <columns>
+            <FlexTableColumn valueName="param1" flexWidth="30%" text="%base.id"/>
+            <FlexTableColumn valueName="param2" flexWidth="30%" text="%base.schema"/>
+            <FlexTableColumn valueName="param3" flexWidth="40% - 12" text="%base.perms"/>
+        </columns>
+        <VBox.margin>
+            <Insets left="5" top="5"/>
+        </VBox.margin>
+    </FlexTableView>
+</FlexVBox>

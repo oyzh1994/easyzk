@@ -14,28 +14,28 @@
     <FlexHBox realHeight="35" flexWidth="100%">
         <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0">
             <HBox.margin>
-                <Insets left="5" top="12"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </RichDataTypeComboBox>
         <SaveSVGGlyph enableWaiting="false" disable="true" tipText="%base.saveTip1" fx:id="save" size="16" onMousePrimaryClicked="#save">
             <HBox.margin>
-                <Insets left="5" top="15"/>
+                <Insets left="5" top="10"/>
             </HBox.margin>
         </SaveSVGGlyph>
         <UndoSVGGlyph disable="true" tipText="%base.undoTip1" fx:id="undo" size="16" onMousePrimaryClicked="#undo">
             <HBox.margin>
-                <Insets left="5" top="15"/>
+                <Insets left="5" top="10"/>
             </HBox.margin>
         </UndoSVGGlyph>
         <RedoSVGGlyph disable="true" tipText="%base.redoTip1" fx:id="redo" size="16" onMousePrimaryClicked="#redo">
             <HBox.margin>
-                <Insets left="5" top="15"/>
+                <Insets left="5" top="10"/>
             </HBox.margin>
         </RedoSVGGlyph>
     </FlexHBox>
-    <ZKDataTextArea onKeyPressed="#onDataKeyPressed" fx:id="data" flexWidth="100% - 30" flexHeight="100% - 40">
+    <ZKDataTextArea onKeyPressed="#onDataKeyPressed" fx:id="data" flexWidth="100% - 30" flexHeight="100% - 35">
         <VBox.margin>
-            <Insets left="5" top="5"/>
+            <Insets left="5"/>
         </VBox.margin>
     </ZKDataTextArea>
 </FlexVBox>

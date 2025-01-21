@@ -13,13 +13,8 @@ public class ZKQueryPromptItem {
 
     /**
      * 类型
-     * 1 database
-     * 2 table
-     * 3 column
-     * 4 keyword
-     * 5 view
-     * 6 function
-     * 7 procedure
+     * 1 keyword
+     * 2 node
      */
     private byte type;
 
@@ -39,69 +34,20 @@ public class ZKQueryPromptItem {
     private String extContent;
 
     /**
-     * 是否数据库类型
-     *
-     * @return 结果
-     */
-    public boolean isDatabaseType() {
-        return 1 == this.type;
-    }
-
-    /**
-     * 是否表类型
-     *
-     * @return 结果
-     */
-    public boolean isTableType() {
-        return 2 == this.type;
-    }
-
-    /**
-     * 是否字段类型
-     *
-     * @return 结果
-     */
-    public boolean isColumnType() {
-        return 3 == this.type;
-    }
-
-    /**
      * 是否关键字类型
      *
      * @return 结果
      */
     public boolean isKeywordType() {
-        return 4 == this.type;
+        return 1 == this.type;
     }
 
     /**
-     * 是否视图类型
+     * 是否节点类型
      *
      * @return 结果
      */
-    public boolean isViewType() {
-        return 5 == this.type;
-    }
-
-    /**
-     * 是否函数类型
-     *
-     * @return 结果
-     */
-    public boolean isFunctionType() {
-        return 6 == this.type;
-    }
-
-    /**
-     * 是否过程类型
-     *
-     * @return 结果
-     */
-    public boolean isProcedureType() {
-        return 7 == this.type;
-    }
-
-    public String wrapContent( ) {
-        return this.content;
+    public boolean isNodeType() {
+        return 2 == this.type;
     }
 }

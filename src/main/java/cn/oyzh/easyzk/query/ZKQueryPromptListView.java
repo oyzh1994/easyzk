@@ -164,36 +164,12 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
      */
     private SVGLabel initPromptLabel(ZKQueryPromptItem item) {
         SVGLabel label = null;
-        if (item.isDatabaseType()) {
-            SVGGlyph svgGlyph = new SVGGlyph("/font/database2.svg", "12");
-            svgGlyph.setColor(Color.BLACK);
-            label = new SVGLabel(item.getContent(), svgGlyph);
-        } else if (item.isKeywordType()) {
+         if (item.isKeywordType()) {
             SVGGlyph svgGlyph = new SVGGlyph("/font/keywords.svg", "12");
             svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
-        } else if (item.isTableType()) {
-            SVGGlyph svgGlyph = new SVGGlyph("/font/table2.svg", "12");
-            svgGlyph.setColor(Color.BLACK);
-            label = new SVGLabel(item.getContent(), svgGlyph);
-            label.setRealWidth(240);
-        } else if (item.isColumnType()) {
-            SVGGlyph svgGlyph = new SVGGlyph("/font/column-3.svg", "12");
-            svgGlyph.setColor(Color.BLACK);
-            label = new SVGLabel(item.getContent(), svgGlyph);
-            label.setRealWidth(240);
-        } else if (item.isViewType()) {
-            ViewSVGGlyph svgGlyph = new ViewSVGGlyph("12");
-            svgGlyph.setColor(Color.BLACK);
-            label = new SVGLabel(item.getContent(), svgGlyph);
-            label.setRealWidth(240);
-        } else if (item.isFunctionType()) {
-            FunctionSVGGlyph svgGlyph = new FunctionSVGGlyph("12");
-            svgGlyph.setColor(Color.BLACK);
-            label = new SVGLabel(item.getContent(), svgGlyph);
-            label.setRealWidth(240);
-        } else if (item.isProcedureType()) {
-            ProcedureSVGGlyph svgGlyph = new ProcedureSVGGlyph("12");
+        } else if (item.isNodeType()) {
+            SVGGlyph svgGlyph = new SVGGlyph("/font/file-text.svg", "12");
             svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
             label.setRealWidth(240);
@@ -211,15 +187,16 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
      * @return 组件
      */
     private FlexLabel initExtLabel(ZKQueryPromptItem item) {
-        FlexLabel label = null;
-        if (item.isTableType() || item.isViewType() || item.isColumnType()) {
-            label = new FlexLabel(item.getExtContent());
-            label.setTextFill(Color.valueOf("#D3D3D3"));
-        }
-        if (label != null) {
-            label.setTipText(item.getContent());
-        }
-        return label;
+//        FlexLabel label = null;
+//        if (item.isTableType() || item.isViewType() || item.isColumnType()) {
+//            label = new FlexLabel(item.getExtContent());
+//            label.setTextFill(Color.valueOf("#D3D3D3"));
+//        }
+//        if (label != null) {
+//            label.setTipText(item.getContent());
+//        }
+//        return label;
+        return null;
     }
 
     /**

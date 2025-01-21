@@ -89,7 +89,7 @@ public class ZKQueryUtil {
                 double corr = ZKQueryUtil.clacCorr(keyword, text);
                 if (corr > minCorr) {
                     ZKQueryPromptItem item = new ZKQueryPromptItem();
-                    item.setType((byte) 4);
+                    item.setType((byte) 1);
                     item.setContent(keyword);
                     item.setCorrelation(corr);
                     items.add(item);

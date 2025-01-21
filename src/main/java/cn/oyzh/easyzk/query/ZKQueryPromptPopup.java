@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.query;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.fx.plus.controls.popup.FXPopup;
+import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -275,7 +276,7 @@ public class ZKQueryPromptPopup extends FXPopup {
         try {
             if (this.token != null) {
                 IndexRange range = new IndexRange(this.token.getStartIndex(), this.token.getEndIndex());
-                area.replaceText(range, item.wrapContent());
+                area.replaceText(range, item.getContent());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -303,37 +304,37 @@ public class ZKQueryPromptPopup extends FXPopup {
     private boolean isGeneralKeyEvent(KeyEvent event) {
         KeyCode code = event.getCode();
         // 保存
-        if (event.isControlDown() && KeyCode.S == code) {
+        if (KeyboardUtil.isSave(event)) {
             return true;
         }
         // 剪切
-        if (event.isControlDown() && KeyCode.X == code) {
+        if (KeyboardUtil.isCut(event)) {
             return true;
         }
         // 粘贴
-        if (event.isControlDown() && KeyCode.V == code) {
+        if (KeyboardUtil.isPaste(event)) {
             return true;
         }
         // 复制
-        if (event.isControlDown() && KeyCode.C == code) {
+        if (KeyboardUtil.isCopy(event)) {
             return true;
         }
         // 全选
-        if (event.isControlDown() && KeyCode.A == code) {
+        if (KeyboardUtil.isSelectAll(event)) {
             return true;
         }
         // 撤销
-        if (event.isControlDown() && KeyCode.Z == code) {
+        if (KeyboardUtil.isUndo(event)) {
             return true;
         }
         // 重做
-        if (event.isControlDown() && KeyCode.Y == code) {
+        if (KeyboardUtil.isRedo(event)) {
             return true;
         }
-        // 注释
-        if (event.isControlDown() && KeyCode.SLASH == code) {
-            return true;
-        }
+//        // 注释
+//        if (event.isControlDown() && KeyCode.SLASH == code) {
+//            return true;
+//        }
         return false;
     }
 }

@@ -53,6 +53,9 @@ public class ZKQueryTab extends DynamicTab {
 
     @Override
     public String getTabTitle() {
+        if (this.controller().isUnsaved()) {
+            return I18nHelper.query() + "-" + this.query().getName() + " *";
+        }
         return I18nHelper.query() + "-" + this.query().getName();
     }
 

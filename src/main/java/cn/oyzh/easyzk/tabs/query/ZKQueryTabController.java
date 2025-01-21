@@ -13,10 +13,14 @@ import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 
@@ -33,6 +37,12 @@ public class ZKQueryTabController extends DynamicTabController {
 
     @Getter
     private ZKQuery query;
+
+    /**
+     * 未保存标志位
+     */
+    @Getter
+    private boolean unsaved;
 
     private ZKClient zkClient;
 
@@ -54,10 +64,15 @@ public class ZKQueryTabController extends DynamicTabController {
             query = new ZKQuery();
             query.setIid(client.iid());
             query.setName(I18nHelper.unnamedQuery());
+            this.unsaved = true;
         } else {
             this.content.setText(query.getContent());
             this.content.setPromptText(null);
         }
+        this.content.addTextChangeListener((observable, oldValue, newValue) -> {
+            this.unsaved = true;
+            this.flushTab();
+        });
         this.query = query;
     }
 
@@ -75,6 +90,8 @@ public class ZKQueryTabController extends DynamicTabController {
             } else {
                 this.queryStore.update(this.query);
             }
+            this.unsaved = false;
+            this.flushTab();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -119,4 +136,12 @@ public class ZKQueryTabController extends DynamicTabController {
         }
     }
 
+    @FXML
+    private void onContentKeyPressed(KeyEvent event) {
+        if (KeyboardUtil.isCtrlS(event)) {
+            this.save();
+        } else if (KeyboardUtil.isCtrlR(event)) {
+            this.run();
+        }
+    }
 }

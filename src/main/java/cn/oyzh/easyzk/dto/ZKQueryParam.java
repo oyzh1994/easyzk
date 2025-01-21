@@ -44,6 +44,10 @@ public class ZKQueryParam {
         return "getEphemerals".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isGetAllChildrenNumber() {
+        return "getAllChildrenNumber".equalsIgnoreCase(this.getCommand());
+    }
+
     public boolean isLs2() {
         return "ls2".equalsIgnoreCase(this.getCommand());
     }
@@ -70,15 +74,12 @@ public class ZKQueryParam {
 
     public String getPath() {
         try {
-            if (this.isLs2()) {
-                return this.params.get(1);
-            }
             if (this.isGetEphemerals()) {
                 if (this.params.size() == 2) {
                     return this.params.get(1);
                 }
             }
-            if (this.isSync()) {
+            if (this.isSync() || this.isLs2() || this.isGetAllChildrenNumber()) {
                 return this.params.get(1);
             }
             if (this.isLs()) {

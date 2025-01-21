@@ -23,6 +23,8 @@ public class ZKQueryResult {
 
     private byte[] data;
 
+    private Object result;
+
     private String message;
 
     private boolean success;

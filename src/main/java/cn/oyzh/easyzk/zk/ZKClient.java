@@ -53,7 +53,6 @@ import org.apache.zookeeper.Version;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.cli.DelQuotaCommand;
-import org.apache.zookeeper.cli.GetEphemeralsCommand;
 import org.apache.zookeeper.cli.SetQuotaCommand;
 import org.apache.zookeeper.client.FourLetterWordMain;
 import org.apache.zookeeper.client.ZooKeeperSaslClient;
@@ -1119,6 +1118,13 @@ public class ZKClient {
     }
 
     /**
+     * 获取全部节点数量
+     */
+    public int getAllChildrenNumber(String path) throws Exception {
+        return this.zooKeeper.getAllChildrenNumber(path);
+    }
+
+    /**
      * 获取当前配置
      *
      * @return 配置
@@ -1504,6 +1510,8 @@ public class ZKClient {
                 } else {
                     result.setNodes(this.getEphemerals(nodePath));
                 }
+            } else if (param.isGetAllChildrenNumber()) {
+                result.setResult(this.getAllChildrenNumber(nodePath));
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

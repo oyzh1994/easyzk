@@ -30,9 +30,7 @@ public class ZKQueryTokenAnalyzer {
             // 当前位置
             int tokenIndex = 0;
             Character tokenType = null;
-            if (!content.contains(" ")) {
-                tokenIndex = 0;
-            } else {
+            if (content.contains(" ")) {
                 char[] chars = ArrayUtil.reverse(content.toCharArray());
                 for (int i = 0; i < chars.length; i++) {
                     char c = chars[i];
@@ -47,10 +45,9 @@ public class ZKQueryTokenAnalyzer {
                         break;
                     }
                 }
+            } else {
+                tokenType = ' ';
             }
-//            if (tokenType == null) {
-//                return null;
-//            }
             String tokenContent = content.substring(tokenIndex);
             token.setToken(tokenType);
             token.setEndIndex(currentIndex);

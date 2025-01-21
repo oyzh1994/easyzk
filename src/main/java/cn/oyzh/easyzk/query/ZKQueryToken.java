@@ -45,28 +45,4 @@ public class ZKQueryToken {
     public boolean isPossibilityKeyword() {
         return this.token == null || ' ' == this.token;
     }
-
-    public boolean isPossibilityTable() {
-        return true;
-    }
-
-    public boolean isPossibilityView() {
-        return true;
-    }
-
-    public boolean isPossibilityFunction() {
-        return true;
-    }
-
-    public boolean isPossibilityProcedure() {
-        return true;
-    }
-
-    public boolean isPossibilityColumn() {
-        return true;
-    }
-
-    public boolean isPossibilityDatabase() {
-        return '`' == this.token || ' ' == this.token;
-    }
 }

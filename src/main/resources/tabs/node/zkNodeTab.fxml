@@ -24,7 +24,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTab.ZKNodeTabController">
+          fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="30" flexWidth="100%">
             <ZKNodeFilterTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">
@@ -111,7 +111,8 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </RedoSVGGlyph>
-                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1" groupId="dataToBig">
+                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1"
+                                   groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
@@ -183,7 +184,7 @@
                         </HBox.margin>
                     </FXText>
                     <FXText enableTheme="false" tipText="%base.loadCost" fx:id="loadTime" style="-fx-fill: #009933;"
-                              realHeight="22">
+                            realHeight="22">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>

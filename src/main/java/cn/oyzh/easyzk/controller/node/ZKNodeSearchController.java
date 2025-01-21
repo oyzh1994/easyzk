@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.controller.node;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.event.search.ZKSearchCloseEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchCompleteEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchTriggerEvent;
 import cn.oyzh.easyzk.search.ZKSearchParam;
@@ -132,6 +133,13 @@ public class ZKNodeSearchController extends StageController {
         if (event.data() == this.zkConnect) {
             this.next.enable();
             this.keyword.requestFocus();
+        }
+    }
+
+    @EventSubscribe
+    public void onSearchClose(ZKSearchCloseEvent event) {
+        if (event.data() == this.zkConnect) {
+          this.closeWindow();
         }
     }
 }

@@ -23,6 +23,11 @@ public class ZKQueryParam {
         return "ls".equalsIgnoreCase(prams[0]);
     }
 
+    public boolean isLs2() {
+        String[] prams = this.getPrams();
+        return "ls2".equalsIgnoreCase(prams[0]);
+    }
+
     public boolean isGet() {
         String[] prams = this.getPrams();
         return "get".equalsIgnoreCase(prams[0]);
@@ -40,6 +45,9 @@ public class ZKQueryParam {
 
     public String getPath() {
         String[] prams = this.getPrams();
+        if (this.isLs2()) {
+            return prams[1];
+        }
         if (this.isLs()) {
             if (this.hasParamStat()) {
                 return prams[2];
@@ -73,6 +81,9 @@ public class ZKQueryParam {
     }
 
     public boolean hasParamStat() {
+        if(this.isLs2()){
+            return true;
+        }
         String[] prams = this.getPrams();
         return "-s".equals(prams[1]);
     }

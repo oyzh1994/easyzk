@@ -100,7 +100,7 @@ public class ZKQueryTabController extends DynamicTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
-            } else if (param.isLs()) {
+            } else if (param.isLs() || param.isLs2()) {
                 this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
                 if (result.isSuccess()) {
                     this.resultTabPane.addTab(new ZKQueryNodeTab(param.getPath(), result.getNodes()));

@@ -33,18 +33,18 @@ public class ZKQueryStatTabController extends DynamicTabController {
 
     public void init(Stat stat) {
         List<KeyValueProperty<String, Object>> data = new ArrayList<>();
+        data.add(KeyValueProperty.of("pzxid", stat.getPzxid()));
+
         data.add(KeyValueProperty.of("czxid", stat.getCzxid()));
         data.add(KeyValueProperty.of("ctime", stat.getCtime()));
+
+        data.add(KeyValueProperty.of("mzxid", stat.getMzxid()));
+        data.add(KeyValueProperty.of("mtime", stat.getMtime()));
 
         data.add(KeyValueProperty.of("version", stat.getVersion()));
         data.add(KeyValueProperty.of("cversion", stat.getCversion()));
         data.add(KeyValueProperty.of("aversion", stat.getAversion()));
         data.add(KeyValueProperty.of("aversion", stat.getEphemeralOwner()));
-
-        data.add(KeyValueProperty.of("mzxid", stat.getMzxid()));
-        data.add(KeyValueProperty.of("mtime", stat.getMtime()));
-
-        data.add(KeyValueProperty.of("pzxid", stat.getPzxid()));
 
         data.add(KeyValueProperty.of("dataLength", stat.getDataLength()));
         data.add(KeyValueProperty.of("numChildren", stat.getNumChildren()));

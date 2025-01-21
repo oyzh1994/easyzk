@@ -1468,7 +1468,7 @@ public class ZKClient {
         long start = System.currentTimeMillis();
         try {
             String nodePath = param.getPath();
-            if (param.isLs()) {
+            if (param.isLs() || param.isLs2()) {
                 result.setNodes(this.getChildren(nodePath));
             } else if (param.isGet()) {
                 result.setData(this.getData(nodePath));

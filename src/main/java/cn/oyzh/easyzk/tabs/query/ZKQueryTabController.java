@@ -3,8 +3,8 @@ package cn.oyzh.easyzk.tabs.query;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKQuery;
-import cn.oyzh.easyzk.dto.ZKQueryParam;
-import cn.oyzh.easyzk.dto.ZKQueryResult;
+import cn.oyzh.easyzk.query.ZKQueryParam;
+import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.query.ZKQueryTextArea;
 import cn.oyzh.easyzk.store.ZKQueryStore;
@@ -146,6 +146,13 @@ public class ZKQueryTabController extends DynamicTabController {
                 this.resultTabPane.select(0);
             } else if (param.isSync()) {
                 this.resultTabPane.select(0);
+            } else if (param.isStat()) {
+                if (result.isSuccess()) {
+                    this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                    this.resultTabPane.select(1);
+                } else {
+                    this.resultTabPane.select(0);
+                }
             }
             this.content.parentAutosize();
         } catch (Exception ex) {

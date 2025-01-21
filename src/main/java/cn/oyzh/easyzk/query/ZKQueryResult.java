@@ -1,8 +1,7 @@
-package cn.oyzh.easyzk.dto;
+package cn.oyzh.easyzk.query;
 
 import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
-import org.apache.zookeeper.Quotas;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 

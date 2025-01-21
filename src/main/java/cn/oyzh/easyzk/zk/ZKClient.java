@@ -11,8 +11,8 @@ import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.dto.ZKClusterNode;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
-import cn.oyzh.easyzk.dto.ZKQueryParam;
-import cn.oyzh.easyzk.dto.ZKQueryResult;
+import cn.oyzh.easyzk.query.ZKQueryParam;
+import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
@@ -1512,6 +1512,7 @@ public class ZKClient {
                 }
             } else if (param.isGetAllChildrenNumber()) {
                 result.setResult(this.getAllChildrenNumber(nodePath));
+            } else if (param.isStat()) {
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

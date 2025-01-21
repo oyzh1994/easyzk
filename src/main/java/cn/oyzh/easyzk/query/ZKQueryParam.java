@@ -1,16 +1,12 @@
-package cn.oyzh.easyzk.dto;
+package cn.oyzh.easyzk.query;
 
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.util.ZKACLUtil;
-import lombok.Data;
 import lombok.Getter;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.ACL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * zk查询参数
@@ -72,6 +68,10 @@ public class ZKQueryParam {
         return "getAcl".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isStat() {
+        return "stat".equalsIgnoreCase(this.getCommand());
+    }
+
     public String getPath() {
         try {
             if (this.isGetEphemerals()) {
@@ -79,7 +79,7 @@ public class ZKQueryParam {
                     return this.params.get(1);
                 }
             }
-            if (this.isSync() || this.isLs2() || this.isGetAllChildrenNumber()) {
+            if (this.isSync() || this.isLs2() || this.isGetAllChildrenNumber() || this.isStat()) {
                 return this.params.get(1);
             }
             if (this.isLs()) {
@@ -197,7 +197,7 @@ public class ZKQueryParam {
         if (this.isCreate()) {
             return false;
         }
-        if (this.isLs2()) {
+        if (this.isLs2()||this.isStat()) {
             return true;
         }
         for (String param : this.params) {

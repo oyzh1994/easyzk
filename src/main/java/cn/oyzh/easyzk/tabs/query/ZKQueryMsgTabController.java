@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.easyzk.dto.ZKQueryParam;
-import cn.oyzh.easyzk.dto.ZKQueryResult;
+import cn.oyzh.easyzk.query.ZKQueryParam;
+import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.i18n.I18nHelper;

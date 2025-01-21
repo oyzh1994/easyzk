@@ -39,19 +39,25 @@ public class ZKQueryUtil {
     private static final Set<String> PARAMS = new HashSet<>();
 
     static {
-        // 设置内容提示符
-        Collection<TerminalCommandHandler<?, ?>> handlers = TerminalManager.listHandler();
-        for (TerminalCommandHandler<?, ?> handler : handlers) {
-            if (StringUtil.isNotBlank(handler.commandName())) {
-                KEYWORDS.add(handler.commandName());
-            }
-            if (StringUtil.isNotBlank(handler.commandSubName())) {
-                KEYWORDS.add(handler.commandSubName());
-            }
-            if (StringUtil.isNotBlank(handler.commandFullName())) {
-                KEYWORDS.add(handler.commandFullName());
-            }
-        }
+        // 关键字
+        KEYWORDS.add("get");
+        KEYWORDS.add("set");
+        KEYWORDS.add("setAcl");
+        KEYWORDS.add("getAcl");
+        KEYWORDS.add("ls");
+        KEYWORDS.add("ls2");
+        KEYWORDS.add("stat");
+        KEYWORDS.add("deleteall");
+        KEYWORDS.add("rmr");
+        KEYWORDS.add("create");
+        KEYWORDS.add("getEphemerals");
+        KEYWORDS.add("sync");
+        KEYWORDS.add("getAllChildrenNumber");
+        KEYWORDS.add("setquota");
+        KEYWORDS.add("delquota");
+        KEYWORDS.add("listquota");
+
+        // 参数
         PARAMS.add("-s");
         PARAMS.add("-e");
         PARAMS.add("-c");

@@ -78,15 +78,15 @@ public class ZKQueryUtil {
         return NODES;
     }
 
+    public static Set<String> getParams() {
+        return PARAMS;
+    }
+
     public static void setNodes(Collection<String> nodes) {
         NODES.clear();
         if (nodes != null) {
             NODES.addAll(nodes);
         }
-    }
-
-    public static Set<String> getParams() {
-        return PARAMS;
     }
 
     public static double clacCorr(String str, String text) {
@@ -125,9 +125,9 @@ public class ZKQueryUtil {
         List<Runnable> tasks = new ArrayList<>();
         // 关键字
         if (token.isPossibilityKeyword()) {
-            tasks.add(() -> ZKQueryUtil.getKeywords().parallelStream().forEach(keyword -> {
+            tasks.add(() -> getKeywords().parallelStream().forEach(keyword -> {
                 // 计算相关度
-                double corr = ZKQueryUtil.clacCorr(keyword, text);
+                double corr = clacCorr(keyword, text);
                 if (corr > minCorr) {
                     ZKQueryPromptItem item = new ZKQueryPromptItem();
                     item.setType((byte) 1);
@@ -139,9 +139,9 @@ public class ZKQueryUtil {
         }
         // 节点
         if (token.isPossibilityNode()) {
-            tasks.add(() -> ZKQueryUtil.getNodes().parallelStream().forEach(node -> {
+            tasks.add(() -> getNodes().parallelStream().forEach(node -> {
                 // 计算相关度
-                double corr = ZKQueryUtil.clacCorr(node, text);
+                double corr = clacCorr(node, text);
                 if (corr > minCorr) {
                     ZKQueryPromptItem item = new ZKQueryPromptItem();
                     item.setType((byte) 2);
@@ -153,8 +153,7 @@ public class ZKQueryUtil {
         }
         // 参数
         if (token.isPossibilityParam()) {
-            System.out.println("----");
-            tasks.add(() -> ZKQueryUtil.getParams().parallelStream().forEach(param -> {
+            tasks.add(() -> getParams().parallelStream().forEach(param -> {
                 ZKQueryPromptItem item = new ZKQueryPromptItem();
                 item.setType((byte) 3);
                 item.setContent(param);
@@ -163,10 +162,11 @@ public class ZKQueryUtil {
             }));
         }
         // 执行任务
-        ThreadUtil.submit(tasks);
+        ThreadUtil.submitVirtual(tasks);
         // 根据相关度排序
-        List<ZKQueryPromptItem> itemList = items.parallelStream().sorted(Comparator.comparingDouble(ZKQueryPromptItem::getCorrelation)).collect(Collectors.toList());
-        // 反转列表
-        return itemList.reversed();
+        return items.parallelStream()
+                .sorted(Comparator.comparingDouble(ZKQueryPromptItem::getCorrelation))
+                .collect(Collectors.toList())
+                .reversed();
     }
 }

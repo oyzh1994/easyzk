@@ -160,6 +160,7 @@ public class ZKQueryPromptPopup extends FXPopup {
      * @return 结果
      */
     public synchronized boolean initPrompts(ZKQueryToken token, ZKClient zkClient) {
+        // 初始化提示的子节点列表
         if (token.isPossibilityNode()) {
             try {
                 String path = token.getPath();
@@ -178,6 +179,8 @@ public class ZKQueryPromptPopup extends FXPopup {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        } else {
+            ZKQueryUtil.setNodes(null);
         }
         // 提示词列表
         List<ZKQueryPromptItem> items = ZKQueryUtil.initPrompts(token, 0.5f);

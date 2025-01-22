@@ -36,13 +36,13 @@ public class ZKQueryTokenAnalyzer {
                     if (c == '\n') {
                         return null;
                     }
-                    // 寻找操作符
+                    // 寻找操作符1
                     if (c == ' ') {
                         tokenType = c;
                         tokenIndex = chars.length - i;
                         break;
                     }
-                    // 寻找操作符
+                    // 寻找操作符2
                     if (c == '-') {
                         tokenType = c;
                         tokenIndex = chars.length - i - 1;

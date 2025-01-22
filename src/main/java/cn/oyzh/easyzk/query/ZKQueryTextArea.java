@@ -15,6 +15,9 @@ import java.util.Set;
  */
 public class ZKQueryTextArea extends TerminalTextArea {
 
+    /**
+     * zk客户端
+     */
     @Getter
     @Setter
     private ZKClient client;
@@ -25,14 +28,17 @@ public class ZKQueryTextArea extends TerminalTextArea {
     private final ZKQueryPromptPopup promptPopup = new ZKQueryPromptPopup();
 
     {
-        this.showLineNum();
+//        this.showLineNum();
         this.setOnMouseReleased(e -> this.promptPopup.hide());
 //        this.addTextChangeListener((observable, oldValue, newValue) -> this.initTextStyle());
         this.promptPopup.setOnItemSelected(item -> this.promptPopup.autoComplete(this, item));
-        this.focusedProperty().addListener((observable, oldValue, newValue) -> this.promptPopup.hide());
+        this.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                this.promptPopup.hide();
+            }
+        });
         this.setOnKeyReleased(event -> this.promptPopup.prompt(this, event));
     }
-
 
     @Override
     protected void init() {

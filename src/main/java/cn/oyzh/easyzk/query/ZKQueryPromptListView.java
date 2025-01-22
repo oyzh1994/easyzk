@@ -23,9 +23,9 @@ import java.util.List;
 public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
 
     {
-        this.setRealWidth(480);
-        this.setRealHeight(360);
-        this.setPadding(new Insets(0));
+        this.setRealWidth(360);
+        this.setRealHeight(240);
+        this.setPadding(Insets.EMPTY);
     }
 
     /**
@@ -135,21 +135,20 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
         List<FlexHBox> boxList = new ArrayList<>();
         // 初始化节点内容
         for (ZKQueryPromptItem item : items) {
-            FlexHBox box = new FlexHBox();
-            this.initBox(box);
+            FlexHBox box = this.initBox();
             // 提示组件
             SVGLabel promptLabel = this.initPromptLabel(item);
             box.addChild(promptLabel);
-            // 额外组件
-            FlexLabel extLabel = this.initExtLabel(item);
-            if (extLabel != null) {
-                box.addChild(extLabel);
-            }
+//            // 额外组件
+//            FlexLabel extLabel = this.initExtLabel(item);
+//            if (extLabel != null) {
+//                box.addChild(extLabel);
+//            }
             box.setProp("item", item);
             boxList.add(box);
-            System.out.println(item + "=" + item.getContent());
+//            System.out.println(item + "=" + item.getContent());
         }
-        System.out.println("----------->");
+//        System.out.println("----------->");
         this.setItem(boxList);
     }
 
@@ -161,7 +160,7 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
      */
     private SVGLabel initPromptLabel(ZKQueryPromptItem item) {
         SVGLabel label = null;
-         if (item.isKeywordType()) {
+        if (item.isKeywordType()) {
             SVGGlyph svgGlyph = new SVGGlyph("/font/keywords.svg", "12");
             svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
@@ -181,13 +180,13 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
         return label;
     }
 
-    /**
-     * 初始化额外信息组件
-     *
-     * @param item 提示词
-     * @return 组件
-     */
-    private FlexLabel initExtLabel(ZKQueryPromptItem item) {
+//    /**
+//     * 初始化额外信息组件
+//     *
+//     * @param item 提示词
+//     * @return 组件
+//     */
+//    private FlexLabel initExtLabel(ZKQueryPromptItem item) {
 //        FlexLabel label = null;
 //        if (item.isTableType() || item.isViewType() || item.isColumnType()) {
 //            label = new FlexLabel(item.getExtContent());
@@ -197,21 +196,21 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
 //            label.setTipText(item.getContent());
 //        }
 //        return label;
-        return null;
-    }
+//    }
 
     /**
      * 初始化提示词组件
      *
-     * @param box 提示词组件
+     * @return FlexHBox 提示词组件
      */
-    private void initBox(FlexHBox box) {
+    private FlexHBox initBox() {
+        FlexHBox box = new FlexHBox();
         // 设置高度
         box.setRealHeight(20);
-        // 设置内边距
-        box.setPadding(new Insets(0));
         // 设置鼠标样式
         box.setCursor(Cursor.HAND);
+        // 设置内边距
+        box.setPadding(Insets.EMPTY);
         // 鼠标点击事件
         box.setOnMouseClicked(event -> {
             if (MouseUtil.isSingleClick(event)) {
@@ -220,5 +219,6 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
                 this.onItemPicked.run();
             }
         });
+        return box;
     }
 }

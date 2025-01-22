@@ -19,10 +19,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import lombok.Getter;
-import org.apache.zookeeper.StatsTrack;
-import org.apache.zookeeper.data.ACL;
-
-import java.util.List;
 
 /**
  * @author oyzh
@@ -30,6 +26,9 @@ import java.util.List;
  */
 public class ZKQueryTabController extends DynamicTabController {
 
+    /**
+     * 查询对象
+     */
     @Getter
     private ZKQuery query;
 
@@ -39,14 +38,26 @@ public class ZKQueryTabController extends DynamicTabController {
     @Getter
     private boolean unsaved;
 
+    /**
+     * zk客户端
+     */
     private ZKClient zkClient;
 
+    /**
+     * 当前内容
+     */
     @FXML
     private ZKQueryTextArea content;
 
+    /**
+     * 结果面板
+     */
     @FXML
     private FlexTabPane resultTabPane;
 
+    /**
+     * 查询存储
+     */
     private final ZKQueryStore queryStore = ZKQueryStore.INSTANCE;
 
     public ZKConnect zkConnect() {
@@ -105,8 +116,7 @@ public class ZKQueryTabController extends DynamicTabController {
             this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
             if (param.isGet()) {
                 if (result.isSuccess()) {
-                    byte[] bytes = (byte[]) result.getResult();
-                    this.resultTabPane.addTab(new ZKQueryDataTab(param.getPath(), bytes, this.zkClient));
+                    this.resultTabPane.addTab(new ZKQueryDataTab(param.getPath(), result.asData(), this.zkClient));
                     if (param.hasParamStat()) {
                         this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
                     }
@@ -116,8 +126,7 @@ public class ZKQueryTabController extends DynamicTabController {
                 }
             } else if (param.isLs() || param.isLs2()) {
                 if (result.isSuccess()) {
-                    List<String> nodes = (List<String>) result.getResult();
-                    this.resultTabPane.addTab(new ZKQueryNodeTab(param.getPath(), nodes));
+                    this.resultTabPane.addTab(new ZKQueryNodeTab(param.getPath(), result.asNode()));
                     if (param.hasParamStat()) {
                         this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
                     }
@@ -127,9 +136,8 @@ public class ZKQueryTabController extends DynamicTabController {
                 }
             } else if (param.isGetEphemerals()) {
                 if (result.isSuccess()) {
-                    List<String> nodes = (List<String>) result.getResult();
                     String path = param.getPath() == null ? "/" : param.getPath();
-                    this.resultTabPane.addTab(new ZKQueryNodeTab(path, nodes));
+                    this.resultTabPane.addTab(new ZKQueryNodeTab(path, result.asNode()));
                     this.resultTabPane.select(1);
                 } else {
                     this.resultTabPane.select(0);
@@ -141,8 +149,7 @@ public class ZKQueryTabController extends DynamicTabController {
                 this.resultTabPane.select(0);
             } else if (param.isGetACL()) {
                 if (result.isSuccess()) {
-                    List<ACL> aclList = (List<ACL>) result.getResult();
-                    this.resultTabPane.addTab(new ZKQueryACLTab(aclList));
+                    this.resultTabPane.addTab(new ZKQueryACLTab(result.asACL()));
                     if (param.hasParamStat()) {
                         this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
                     }
@@ -162,8 +169,7 @@ public class ZKQueryTabController extends DynamicTabController {
                 }
             } else if (param.isListquota()) {
                 if (result.isSuccess()) {
-                    StatsTrack track = (StatsTrack) result.getResult();
-                    this.resultTabPane.addTab(new ZKQueryQuotaTab(track));
+                    this.resultTabPane.addTab(new ZKQueryQuotaTab(result.asQuota()));
                     this.resultTabPane.select(1);
                 } else {
                     this.resultTabPane.select(0);

@@ -4,6 +4,10 @@ import cn.oyzh.common.util.StringUtil;
 import lombok.Data;
 
 
+/**
+ * @author oyzh
+ * @since 2025/01/17
+ */
 @Data
 public class ZKSearchParam {
 

@@ -24,6 +24,7 @@ import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import cn.oyzh.easyzk.store.ZKSSHConfigStore;
+import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
@@ -1520,13 +1521,15 @@ public class ZKClient {
                 result.setResult(this.getAllChildrenNumber(nodePath));
             } else if (param.isStat()) {
             } else if (param.isSetQuota()) {
-                this.createQuota(nodePath, param.getB(), param.getN());
+                this.createQuota(nodePath, param.getParamB(), param.getParamN());
             } else if (param.isListquota()) {
                 result.setResult(this.listQuota(nodePath));
             } else if (param.isRmr() || param.isDeleteall()) {
                 this.delete(nodePath, null, true);
             } else if (param.isDelete()) {
                 this.delete(nodePath, null, false);
+            } else if (param.isSetACL()) {
+                this.setACL(nodePath, param.getACL(), param.getParamV());
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

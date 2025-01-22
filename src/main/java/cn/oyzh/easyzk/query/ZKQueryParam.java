@@ -92,6 +92,10 @@ public class ZKQueryParam {
         return "delete".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isSetACL() {
+        return "setAcl".equalsIgnoreCase(this.getCommand());
+    }
+
     public String getPath() {
         try {
             if (this.isGetEphemerals()) {
@@ -139,7 +143,7 @@ public class ZKQueryParam {
                     return param;
                 }
             }
-            if (this.isSetQuota()) {
+            if (this.isSetQuota() || this.isSetACL()) {
                 int index = 0;
                 boolean isParam = false;
                 for (String param : this.params) {
@@ -188,7 +192,7 @@ public class ZKQueryParam {
         return null;
     }
 
-    public long getB() {
+    public long getParamB() {
         boolean isParam = false;
         for (String param : this.params) {
             if (param.equals("-b")) {
@@ -202,10 +206,24 @@ public class ZKQueryParam {
         return -1;
     }
 
-    public int getN() {
+    public int getParamN() {
         boolean isParam = false;
         for (String param : this.params) {
             if (param.equals("-n")) {
+                isParam = true;
+                continue;
+            }
+            if (isParam) {
+                return Integer.parseInt(param);
+            }
+        }
+        return -1;
+    }
+
+    public int getParamV() {
+        boolean isParam = false;
+        for (String param : this.params) {
+            if (param.equals("-v")) {
                 isParam = true;
                 continue;
             }
@@ -252,7 +270,20 @@ public class ZKQueryParam {
                 if (index == 0 || param.equals("-s")
                         || param.equals("-c")
                         || param.equals("-e")
-                        || param.startsWith("/") || !param.contains(":")) {
+                        || param.startsWith("/")
+                        || !param.contains(":")) {
+                    index++;
+                    continue;
+                }
+                aclList = ZKACLUtil.parseAcl(param);
+            }
+        } else if (this.isSetACL()) {
+            int index = 0;
+            for (String param : this.params) {
+                if (index == 0 || param.equals("-s")
+                        || param.equals("-v")
+                        || param.startsWith("/")
+                        || !param.contains(":")) {
                     index++;
                     continue;
                 }

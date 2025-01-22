@@ -69,6 +69,7 @@ public class ZKQueryUtil {
         PARAMS.add("-c");
         PARAMS.add("-n");
         PARAMS.add("-b");
+        PARAMS.add("-v");
     }
 
     public static Set<String> getKeywords() {

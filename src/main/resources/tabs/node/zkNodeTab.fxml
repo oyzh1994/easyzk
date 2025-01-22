@@ -21,7 +21,7 @@
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
-<?import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTypeComboBox?>
+<?import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox?>
 <?import cn.oyzh.easyzk.filter.ZKNodeFilterTextField?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">

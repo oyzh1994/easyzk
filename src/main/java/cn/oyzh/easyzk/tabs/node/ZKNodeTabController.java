@@ -25,7 +25,7 @@ import cn.oyzh.easyzk.event.search.ZKSearchTriggerEvent;
 import cn.oyzh.easyzk.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
-import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTypeComboBox;
+import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
@@ -1044,7 +1044,10 @@ public class ZKNodeTabController extends DynamicTabController {
         byte mode = this.filterKW.filterMode();
         // 搜索范围
         byte scope = this.filterKW.filterScope();
+        // 过滤类型
         int type = this.filterType.getSelectedIndex();
+        // 设置高亮是否匹配大小写
+        this.treeView.highlightMatchCase(mode == 3 || mode == 1);
         // 仅在搜索路径的情况下设置节点高亮
         if (scope == 2 || scope == 0) {
             this.treeView.highlightText(kw);

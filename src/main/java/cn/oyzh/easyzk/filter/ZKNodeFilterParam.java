@@ -10,12 +10,24 @@ import lombok.Data;
 @Data
 public class ZKNodeFilterParam {
 
+    /**
+     * 匹配大小写
+     */
     private boolean matchCase;
 
+    /**
+     * 匹配全文
+     */
     private boolean matchFull;
 
+    /**
+     * 搜索路径
+     */
     private boolean searchPath = true;
 
+    /**
+     * 搜索数据
+     */
     private boolean searchData = true;
 
     @Override

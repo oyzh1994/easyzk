@@ -143,7 +143,17 @@ public class ZKQueryParam {
                     return param;
                 }
             }
-            if (this.isSetQuota() || this.isSetACL()) {
+            if (this.isSetACL()) {
+                int index = 0;
+                for (String param : this.params) {
+                    if (index == 0 || param.equals("-s")) {
+                        index++;
+                        continue;
+                    }
+                    return param;
+                }
+            }
+            if (this.isSetQuota()) {
                 int index = 0;
                 boolean isParam = false;
                 for (String param : this.params) {
@@ -311,6 +321,4 @@ public class ZKQueryParam {
     public String getCommand() {
         return this.params.getFirst();
     }
-
-
 }

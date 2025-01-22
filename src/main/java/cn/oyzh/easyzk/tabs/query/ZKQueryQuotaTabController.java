@@ -5,7 +5,6 @@ import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
 import org.apache.zookeeper.StatsTrack;
-import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
 import java.util.List;

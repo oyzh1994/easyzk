@@ -2,10 +2,7 @@ package cn.oyzh.easyzk.query;
 
 import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
-import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
-
-import java.util.List;
 
 /**
  * zk查询结果

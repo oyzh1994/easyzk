@@ -2,8 +2,6 @@ package cn.oyzh.easyzk.query;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
-import cn.oyzh.fx.terminal.util.TerminalManager;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;

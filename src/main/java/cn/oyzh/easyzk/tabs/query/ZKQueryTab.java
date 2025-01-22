@@ -5,7 +5,6 @@ import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Cursor;
 
 /**

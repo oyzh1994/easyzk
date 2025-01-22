@@ -1,10 +1,8 @@
 package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.easyzk.util.ZKACLUtil;
-import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.fx.plus.property.KeyValueProperty;
 import cn.oyzh.fx.plus.property.Param3Property;
 import javafx.fxml.FXML;
 import org.apache.zookeeper.data.ACL;

@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

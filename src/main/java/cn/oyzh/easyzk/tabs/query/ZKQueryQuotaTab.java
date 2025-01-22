@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.tabs.query;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.i18n.I18nHelper;
 import org.apache.zookeeper.StatsTrack;
-import org.apache.zookeeper.data.Stat;
 
 /**
  * @author oyzh

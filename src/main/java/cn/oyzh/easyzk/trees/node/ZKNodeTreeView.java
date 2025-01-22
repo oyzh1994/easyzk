@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.common.log.JulLog;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;

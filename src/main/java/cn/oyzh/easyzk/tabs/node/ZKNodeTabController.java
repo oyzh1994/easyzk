@@ -1043,6 +1043,7 @@ public class ZKNodeTabController extends DynamicTabController {
         String kw = this.filterKW.getTextTrim();
         int mode = this.filterKW.getSelectedIndex();
         int type = this.filterType.getSelectedIndex();
+        this.treeView.highlightText(kw);
         this.treeView.itemFilter().setKw(kw);
         this.treeView.itemFilter().setType((byte) type);
         this.treeView.itemFilter().setMatchMode((byte) mode);

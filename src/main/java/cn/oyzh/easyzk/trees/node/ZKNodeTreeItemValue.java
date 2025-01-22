@@ -24,6 +24,7 @@ public class ZKNodeTreeItemValue extends RichTreeItemValue {
 
     public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
         super(item);
+        super.setRichMode(true);
     }
 
     @Override

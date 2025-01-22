@@ -328,7 +328,7 @@ public class ZKClient {
                 // // 设置认证信息为已认证
                 // ZKAuthUtil.setAuthed(this, ZKAuthUtil.loadAuths(this.iid()));
             } else {// 连接未成功则关闭
-                this.close1();
+                this.closeInner();
                 if (this.state.get() == ZKConnState.FAILED) {
                     this.state.set(null);
                 } else {
@@ -390,7 +390,7 @@ public class ZKClient {
      * 关闭zk
      */
     public void close() {
-        this.close1();
+        this.closeInner();
         this.state.set(ZKConnState.CLOSED);
     }
 
@@ -405,7 +405,7 @@ public class ZKClient {
     /**
      * 关闭zk实际业务
      */
-    private void close1() {
+    private void closeInner() {
         try {
             // 关闭树监听
             this.closeTreeCache();

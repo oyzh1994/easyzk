@@ -23,7 +23,7 @@ import java.util.Objects;
 
 /**
  * @author oyzh
- * @since 2023/1/30
+ * @since 2025/01/20
  */
 public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItemValue> {
 
@@ -68,8 +68,12 @@ public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItemValue> {
     @Override
     public void delete() {
         if (MessageBox.confirm(I18nHelper.deleteQuery() + "[" + this.value.getName() + "]?")) {
-            this.queryStore.delete(this.value);
-            super.delete();
+            if (this.queryStore.delete(this.value)) {
+                super.remove();
+                ZKEventUtil.queryDeleted(this.value);
+            } else {
+                MessageBox.warn(I18nHelper.operationFail());
+            }
         }
     }
 
@@ -89,6 +93,7 @@ public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItemValue> {
         // 修改名称
         if (this.queryStore.update(this.value)) {
             this.setValue(new ZKQueryTreeItemValue(this));
+            ZKEventUtil.queryRenamed(this.value);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -103,5 +108,4 @@ public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItemValue> {
     public void onPrimaryDoubleClick() {
         this.loadChild();
     }
-
 }

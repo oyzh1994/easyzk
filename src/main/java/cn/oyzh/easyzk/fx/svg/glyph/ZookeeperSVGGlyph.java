@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.fx;
+package cn.oyzh.easyzk.fx.svg.glyph;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 
@@ -12,7 +12,8 @@ public class ZookeeperSVGGlyph extends SVGGlyph {
         super("/font/Zookeeper1.svg");
     }
 
-    public ZookeeperSVGGlyph(double size) {
-        super("/font/Zookeeper1.svg", size);
+    public ZookeeperSVGGlyph(String size) {
+        this();
+        this.setSizeStr(size);
     }
 }

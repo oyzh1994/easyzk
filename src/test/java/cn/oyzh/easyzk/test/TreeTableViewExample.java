@@ -1,15 +1,13 @@
 package cn.oyzh.easyzk.test;
 
-import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph;
+import cn.oyzh.easyzk.fx.svg.glyph.ZookeeperSVGGlyph;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 

@@ -10,6 +10,8 @@ import cn.oyzh.easyzk.event.connection.ZKServerEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryRestoreEvent;
 import cn.oyzh.easyzk.event.query.ZKAddQueryEvent;
 import cn.oyzh.easyzk.event.query.ZKOpenQueryEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryDeletedEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryRenamedEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.changelog.ZKChangelogTab;
@@ -308,14 +310,13 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     /**
      * 获取查询tab
      *
-     * @param connect zk连接
-     * @param query   查询
+     * @param query 查询
      * @return 查询tab
      */
-    private ZKQueryTab getQueryTab(ZKConnect connect, ZKQuery query) {
-        if (connect != null) {
+    private ZKQueryTab getQueryTab(ZKQuery query) {
+        if (query != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof ZKQueryTab queryTab && queryTab.zkConnect() == connect && queryTab.query() == query) {
+                if (tab instanceof ZKQueryTab queryTab && queryTab.query() == query) {
                     return queryTab;
                 }
             }
@@ -342,13 +343,39 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     public void openQuery(ZKOpenQueryEvent event) {
-        ZKQueryTab queryTab = this.getQueryTab(event.zkConnect(), event.data());
+        ZKQueryTab queryTab = this.getQueryTab(event.data());
         if (queryTab == null) {
             queryTab = new ZKQueryTab(event.getClient(), event.data());
             super.addTab(queryTab);
         }
         if (!queryTab.isSelected()) {
             this.select(queryTab);
+        }
+    }
+
+    /**
+     * 查询更名
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void queryRenamed(ZKQueryRenamedEvent event) {
+        ZKQueryTab queryTab = this.getQueryTab(event.data());
+        if (queryTab != null) {
+            queryTab.flushTitle();
+        }
+    }
+
+    /**
+     * 查询删除
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void queryDeleted(ZKQueryDeletedEvent event) {
+        ZKQueryTab queryTab = this.getQueryTab(event.data());
+        if (queryTab != null) {
+            queryTab.closeTab();
         }
     }
 }

@@ -1,5 +1,7 @@
 package cn.oyzh.easyzk.query;
 
+import cn.oyzh.easyzk.fx.svg.glyph.KeywordsSVGGlyph;
+import cn.oyzh.easyzk.fx.svg.glyph.ParamSVGGlyph;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.label.FlexLabel;
 import cn.oyzh.fx.plus.controls.list.FlexListView;
@@ -161,17 +163,17 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
     private SVGLabel initPromptLabel(ZKQueryPromptItem item) {
         SVGLabel label = null;
         if (item.isKeywordType()) {
-            SVGGlyph svgGlyph = new SVGGlyph("/font/keywords.svg", "12");
-            svgGlyph.setColor(Color.BLACK);
+            SVGGlyph svgGlyph = new KeywordsSVGGlyph("12");
+//            svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
         } else if (item.isNodeType()) {
             SVGGlyph svgGlyph = new SVGGlyph("/font/file-text.svg", "12");
-            svgGlyph.setColor(Color.BLACK);
+//            svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
             label.setRealWidth(240);
         } else if (item.isParamType()) {
-            SVGGlyph svgGlyph = new SVGGlyph("/font/param.svg", "12");
-            svgGlyph.setColor(Color.BLACK);
+            SVGGlyph svgGlyph = new ParamSVGGlyph("12");
+//            svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
         }
         if (label != null) {

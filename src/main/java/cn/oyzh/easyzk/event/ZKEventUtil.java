@@ -34,6 +34,8 @@ import cn.oyzh.easyzk.event.node.ZKNodeUpdatedEvent;
 import cn.oyzh.easyzk.event.query.ZKAddQueryEvent;
 import cn.oyzh.easyzk.event.query.ZKOpenQueryEvent;
 import cn.oyzh.easyzk.event.query.ZKQueryAddedEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryDeletedEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryRenamedEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchCloseEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchCompleteEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchFinishEvent;
@@ -530,6 +532,28 @@ public class ZKEventUtil {
         ZKOpenQueryEvent event = new ZKOpenQueryEvent();
         event.data(query);
         event.setClient(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询更名事件
+     *
+     * @param query zk查询
+     */
+    public static void queryRenamed(ZKQuery query) {
+        ZKQueryRenamedEvent event = new ZKQueryRenamedEvent();
+        event.data(query);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询删除事件
+     *
+     * @param query zk查询
+     */
+    public static void queryDeleted(ZKQuery query) {
+        ZKQueryDeletedEvent event = new ZKQueryDeletedEvent();
+        event.data(query);
         EventUtil.post(event);
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.fx.ZKConnectComboBox?>
-<?import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph?>
+<?import cn.oyzh.easyzk.fx.svg.glyph.ZookeeperSVGGlyph?>
 <?import cn.oyzh.fx.gui.button.NextStepButton?>
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>

@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.tabs.node;
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.file.FileUtil;
-import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.TextUtil;
@@ -23,9 +22,9 @@ import cn.oyzh.easyzk.event.node.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchFinishEvent;
 import cn.oyzh.easyzk.event.search.ZKSearchTriggerEvent;
+import cn.oyzh.easyzk.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
-import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTypeComboBox;
 import cn.oyzh.easyzk.search.ZKSearchParam;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
@@ -323,11 +322,11 @@ public class ZKNodeTabController extends DynamicTabController {
                 this.tabPane.enable();
                 // 检查状态
                 FXUtil.runLater(this::checkStatus, 100);
+//                JulLog.info("select node color:{}", this.activeItem.getValue().graphicColor());
             } else {
                 // 禁用组件
                 this.tabPane.disable();
             }
-            JulLog.info("select node color:{}", this.activeItem.getValue().graphicColor());
             // 刷新树
             this.treeView.refresh();
             // 刷新tab
@@ -1041,13 +1040,29 @@ public class ZKNodeTabController extends DynamicTabController {
     @FXML
     private void doFilter() {
         String kw = this.filterKW.getTextTrim();
-        int mode = this.filterKW.getSelectedIndex();
+        // 搜索模式
+        byte mode = this.filterKW.filterMode();
+        // 搜索范围
+        byte scope = this.filterKW.filterScope();
         int type = this.filterType.getSelectedIndex();
-        this.treeView.highlightText(kw);
+        // 仅在搜索路径的情况下设置节点高亮
+        if (scope == 2 || scope == 0) {
+            this.treeView.highlightText(kw);
+        } else {
+            this.treeView.highlightText(null);
+        }
+        // 仅在搜索数据的情况下设置内容高亮
+        if (scope == 2 || scope == 1) {
+            this.nodeData.setSearchText(kw);
+        } else {
+            this.nodeData.setSearchText(this.dataSearch.getTextTrim());
+        }
         this.treeView.itemFilter().setKw(kw);
+        this.treeView.itemFilter().setScope(scope);
+        this.treeView.itemFilter().setMatchMode(mode);
         this.treeView.itemFilter().setType((byte) type);
-        this.treeView.itemFilter().setMatchMode((byte) mode);
         this.treeView.filter();
+
     }
 
     /**
@@ -1244,7 +1259,7 @@ public class ZKNodeTabController extends DynamicTabController {
         if (event.data() == this.client.zkConnect()) {
             this.treeView.onSearchFinish();
             // 设置搜索文本
-            this.nodeData.setSearchText(this.filterKW.getText());
+            this.nodeData.setSearchText(this.dataSearch.getText());
         }
     }
 }

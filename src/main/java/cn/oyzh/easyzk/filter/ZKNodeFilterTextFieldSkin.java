@@ -1,10 +1,15 @@
-package cn.oyzh.easyzk.fx.filter;
+package cn.oyzh.easyzk.filter;
 
+import cn.oyzh.easyzk.popups.ZKFilterSettingPopupController;
 import cn.oyzh.fx.gui.skin.ClearableTextFieldSkin;
 import cn.oyzh.fx.gui.svg.glyph.SettingSVGGlyph;
 import cn.oyzh.fx.plus.controls.list.FXListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.theme.ThemeManager;
+import cn.oyzh.fx.plus.window.PopupAdapter;
+import cn.oyzh.fx.plus.window.PopupManager;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -32,15 +37,22 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
      * 过滤历史弹窗
      */
     @Getter
-    protected ZKNodeFilterPopup popup;
+    protected PopupAdapter popup;
 
-    /**
-     * 初始化弹窗
-     */
-    protected void initPopup() {
-        this.popup = new ZKNodeFilterPopup();
-        this.popup.show(this.getSkinnable());
-        this.popup.setOnIndexSelected(this::onIndexSelected);
+    private ObjectProperty<ZKNodeFilterParam> filterParamProperty;
+
+    public ZKNodeFilterParam filterParam() {
+        if (this.filterParamProperty == null) {
+            return new ZKNodeFilterParam();
+        }
+        return this.filterParamProperty.get();
+    }
+
+    public ObjectProperty<ZKNodeFilterParam> filterParamProperty() {
+        if (this.filterParamProperty == null) {
+            this.filterParamProperty = new SimpleObjectProperty<>();
+        }
+        return this.filterParamProperty;
     }
 
     /**
@@ -48,18 +60,17 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
      */
     protected void showPopup() {
         if (this.popup != null) {
-            if (this.popup.isShowing()) {
-                this.closePopup();
-            } else {
-                this.popup.show(this.getSkinnable());
-            }
+            this.closePopup();
         }
-    }
-
-    public void onIndexSelected(int index) {
-        this.closePopup();
-        this.onSearch(this.getSkinnable().getText());
-        this.getSkinnable().setPromptText(this.popup.getItems().get(index));
+        this.popup = PopupManager.parsePopup(ZKFilterSettingPopupController.class);
+        this.popup.setProp("filterParam", this.filterParam());
+        this.popup.setSubmitHandler(o -> {
+            if (o instanceof ZKNodeFilterParam param) {
+                this.filterParamProperty().set(param);
+                this.onSearch(this.getText());
+            }
+        });
+        this.popup.show(this.button);
     }
 
     /**
@@ -73,13 +84,10 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
 
     public ZKNodeFilterTextFieldSkin(TextField textField) {
         super(textField);
-        // 初始化弹窗
-        this.initPopup();
         // 初始化按钮
         this.button = new SettingSVGGlyph();
         this.button.setEnableWaiting(false);
         this.button.setFocusTraversable(false);
-//        this.button.setPadding(new Insets(0));
         this.button.setOnMousePrimaryClicked(e -> this.showPopup());
         this.button.setOnMouseMoved(mouseEvent -> this.button.setColor("#E36413"));
         this.button.setOnMouseExited(mouseEvent -> this.button.setColor(this.getButtonColor()));
@@ -128,21 +136,5 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
         }
         // 设置组件位置
         super.positionInArea(this.button, 3, y * 0.9, w, h, btnSize, HPos.LEFT, VPos.CENTER);
-    }
-
-    public int getSelectedIndex() {
-        if (this.popup == null) {
-            return 0;
-        }
-        return this.popup.getSelectedIndex();
-    }
-
-    public void setSelectedIndex(int selectedIndex) {
-        if (this.popup != null) {
-            FXListView<String> listView = this.popup.listView();
-            if (listView != null) {
-                listView.selectIndex(selectedIndex);
-            }
-        }
     }
 }

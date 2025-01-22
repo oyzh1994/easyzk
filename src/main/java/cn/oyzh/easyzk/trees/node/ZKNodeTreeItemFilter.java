@@ -30,6 +30,15 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
     private byte type;
 
     /**
+     * 0: 路径
+     * 1: 数据
+     * 2: 路径+数据
+     */
+    @Setter
+    @Getter
+    private byte scope;
+
+    /**
      * 关键字
      */
     @Getter
@@ -38,9 +47,9 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
 
     /**
      * 0. 包含
-     * 1. 包含 + 大小写符合
+     * 1. 包含+大小写符合
      * 2. 全字匹配
-     * 3. 全字匹配 + 大小写符合
+     * 3. 全字匹配+大小写符合
      */
     @Getter
     @Setter
@@ -68,7 +77,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
         // 根节点直接展示
         if (item instanceof ZKNodeTreeItem treeItem) {
             // 根节点不参与过滤
-            if(treeItem.isRoot()){
+            if (treeItem.isRoot()) {
                 return true;
             }
             // 仅收藏
@@ -90,17 +99,50 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
             }
             // 关键字
             if (StringUtil.isNotBlank(this.kw)) {
-                if (this.matchMode == 0) {
-                    return StringUtil.containsIgnoreCase(nodePath, this.kw);
-                }
-                if (this.matchMode == 1) {
-                    return StringUtil.contains(nodePath, this.kw);
-                }
-                if (this.matchMode == 2) {
-                    return StringUtil.equalsIgnoreCase(nodePath, this.kw);
-                }
-                if (this.matchMode == 3) {
-                    return StringUtil.equals(nodePath, this.kw);
+                // 路径
+                if (this.scope == 0) {
+                    if (this.matchMode == 0) {
+                        return StringUtil.containsIgnoreCase(nodePath, this.kw);
+                    }
+                    if (this.matchMode == 1) {
+                        return StringUtil.contains(nodePath, this.kw);
+                    }
+                    if (this.matchMode == 2) {
+                        return StringUtil.equalsIgnoreCase(nodePath, this.kw);
+                    }
+                    if (this.matchMode == 3) {
+                        return StringUtil.equals(nodePath, this.kw);
+                    }
+                } else if (this.scope == 1) {// 数据
+                    byte[] bytes = treeItem.getData();
+                    String nodeData = new String(bytes);
+                    if (this.matchMode == 0) {
+                        return StringUtil.containsIgnoreCase(nodeData, this.kw);
+                    }
+                    if (this.matchMode == 1) {
+                        return StringUtil.contains(nodeData, this.kw);
+                    }
+                    if (this.matchMode == 2) {
+                        return StringUtil.equalsIgnoreCase(nodeData, this.kw);
+                    }
+                    if (this.matchMode == 3) {
+                        return StringUtil.equals(nodeData, this.kw);
+                    }
+                } else if (this.scope == 2) {// 路径+数据
+                    byte[] bytes = treeItem.getData();
+                    String nodeData = new String(bytes);
+                    if (this.matchMode == 0) {
+                        return StringUtil.containsIgnoreCase(nodePath, this.kw) || StringUtil.containsIgnoreCase(nodeData, this.kw);
+                    }
+                    if (this.matchMode == 1) {
+                        return StringUtil.contains(nodePath, this.kw) || StringUtil.contains(nodeData, this.kw);
+                    }
+                    if (this.matchMode == 2) {
+                        return StringUtil.equalsIgnoreCase(nodePath, this.kw) || StringUtil.equalsIgnoreCase(nodeData, this.kw);
+                    }
+                    if (this.matchMode == 3) {
+                        return StringUtil.equals(nodePath, this.kw) || StringUtil.equals(nodeData, this.kw);
+                    }
                 }
             }
         }

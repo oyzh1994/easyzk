@@ -2,8 +2,6 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLTableView?>
 <?import cn.oyzh.easyzk.fx.ZKDataTextArea?>
-<?import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTextField?>
-<?import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTypeComboBox?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
@@ -23,6 +21,8 @@
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
+<?import cn.oyzh.easyzk.fx.filter.ZKNodeFilterTypeComboBox?>
+<?import cn.oyzh.easyzk.filter.ZKNodeFilterTextField?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">

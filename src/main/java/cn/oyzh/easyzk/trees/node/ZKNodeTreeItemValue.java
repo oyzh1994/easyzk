@@ -82,6 +82,11 @@ public class ZKNodeTreeItemValue extends RichTreeItemValue {
     }
 
     @Override
+    public Color extraColor() {
+        return Color.FORESTGREEN;
+    }
+
+    @Override
     public Color graphicColor() {
         Color color;
         // 节点已删除

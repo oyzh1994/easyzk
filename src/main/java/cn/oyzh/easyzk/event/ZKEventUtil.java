@@ -36,10 +36,6 @@ import cn.oyzh.easyzk.event.query.ZKOpenQueryEvent;
 import cn.oyzh.easyzk.event.query.ZKQueryAddedEvent;
 import cn.oyzh.easyzk.event.query.ZKQueryDeletedEvent;
 import cn.oyzh.easyzk.event.query.ZKQueryRenamedEvent;
-import cn.oyzh.easyzk.event.search.ZKSearchCloseEvent;
-import cn.oyzh.easyzk.event.search.ZKSearchCompleteEvent;
-import cn.oyzh.easyzk.event.search.ZKSearchFinishEvent;
-import cn.oyzh.easyzk.event.search.ZKSearchTriggerEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
@@ -454,51 +450,51 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 搜索触发事件
-     *
-     * @param param     搜索参数
-     * @param zkConnect zk连接
-     */
-    public static void searchTrigger(ZKSearchParam param, ZKConnect zkConnect) {
-        ZKSearchTriggerEvent event = new ZKSearchTriggerEvent();
-        event.data(zkConnect);
-        event.param(param);
-        EventUtil.post(event);
-    }
-
-    /**
-     * 搜索完成事件
-     *
-     * @param zkConnect zk连接
-     */
-    public static void searchComplete(ZKConnect zkConnect) {
-        ZKSearchCompleteEvent event = new ZKSearchCompleteEvent();
-        event.data(zkConnect);
-        EventUtil.post(event);
-    }
-
-    /**
-     * 搜索结束事件
-     *
-     * @param zkConnect zk连接
-     */
-    public static void searchFinish(ZKConnect zkConnect) {
-        ZKSearchFinishEvent event = new ZKSearchFinishEvent();
-        event.data(zkConnect);
-        EventUtil.post(event);
-    }
-
-    /**
-     * 搜索关闭事件
-     *
-     * @param zkConnect zk连接
-     */
-    public static void searchClose(ZKConnect zkConnect) {
-        ZKSearchCloseEvent event = new ZKSearchCloseEvent();
-        event.data(zkConnect);
-        EventUtil.post(event);
-    }
+//    /**
+//     * 搜索触发事件
+//     *
+//     * @param param     搜索参数
+//     * @param zkConnect zk连接
+//     */
+//    public static void searchTrigger(ZKSearchParam param, ZKConnect zkConnect) {
+//        ZKSearchTriggerEvent event = new ZKSearchTriggerEvent();
+//        event.data(zkConnect);
+//        event.param(param);
+//        EventUtil.post(event);
+//    }
+//
+//    /**
+//     * 搜索完成事件
+//     *
+//     * @param zkConnect zk连接
+//     */
+//    public static void searchComplete(ZKConnect zkConnect) {
+//        ZKSearchCompleteEvent event = new ZKSearchCompleteEvent();
+//        event.data(zkConnect);
+//        EventUtil.post(event);
+//    }
+//
+//    /**
+//     * 搜索结束事件
+//     *
+//     * @param zkConnect zk连接
+//     */
+//    public static void searchFinish(ZKConnect zkConnect) {
+//        ZKSearchFinishEvent event = new ZKSearchFinishEvent();
+//        event.data(zkConnect);
+//        EventUtil.post(event);
+//    }
+//
+//    /**
+//     * 搜索关闭事件
+//     *
+//     * @param zkConnect zk连接
+//     */
+//    public static void searchClose(ZKConnect zkConnect) {
+//        ZKSearchCloseEvent event = new ZKSearchCloseEvent();
+//        event.data(zkConnect);
+//        EventUtil.post(event);
+//    }
 
     /**
      * 添加查询事件

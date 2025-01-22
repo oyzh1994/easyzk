@@ -5,12 +5,12 @@ import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.OSUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
-import cn.oyzh.easyzk.controller.node.ZKNodeSearchController;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
@@ -20,8 +20,6 @@ import cn.oyzh.easyzk.event.node.ZKNodeAddedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeChangedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
-import cn.oyzh.easyzk.event.search.ZKSearchFinishEvent;
-import cn.oyzh.easyzk.event.search.ZKSearchTriggerEvent;
 import cn.oyzh.easyzk.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
@@ -37,6 +35,7 @@ import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
+import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
@@ -49,6 +48,8 @@ import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.keyboard.KeyHandler;
+import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
@@ -66,6 +67,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 import lombok.Getter;
@@ -85,6 +87,12 @@ import java.util.Set;
  * @since 2023/05/21
  */
 public class ZKNodeTabController extends DynamicTabController {
+
+    /**
+     * 根节点
+     */
+    @FXML
+    private FlexHBox root;
 
     /**
      * 左侧节点
@@ -969,6 +977,17 @@ public class ZKNodeTabController extends DynamicTabController {
         NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
         resizeHelper.widthLimit(240f, 750f);
         resizeHelper.initResizeEvent();
+        // 搜索
+        KeyHandler searchKeyHandler = new KeyHandler();
+        searchKeyHandler.handler(e -> this.filterKW.requestFocus());
+        searchKeyHandler.keyCode(KeyCode.F);
+        if (OSUtil.isMacOS()) {
+            searchKeyHandler.metaDown(true);
+        } else {
+            searchKeyHandler.controlDown(true);
+        }
+        searchKeyHandler.keyType(KeyEvent.KEY_RELEASED);
+        KeyListener.addHandler(this.root, searchKeyHandler);
     }
 
     /**
@@ -1220,49 +1239,49 @@ public class ZKNodeTabController extends DynamicTabController {
         }
     }
 
-    @FXML
-    public void doSearch() {
-        StageAdapter adapter = StageManager.getStage(ZKNodeSearchController.class);
-        if (adapter != null && adapter.getProp("zkConnect") == this.client.zkConnect()) {
-            adapter.toFront();
-        } else {
-            if (adapter != null) {
-                adapter.disappear();
-            }
-            adapter = StageManager.parseStage(ZKNodeSearchController.class);
-            adapter.setProp("zkConnect", this.client.zkConnect());
-            adapter.display();
-        }
-    }
+//    @FXML
+//    public void doSearch() {
+//        StageAdapter adapter = StageManager.getStage(ZKNodeSearchController.class);
+//        if (adapter != null && adapter.getProp("zkConnect") == this.client.zkConnect()) {
+//            adapter.toFront();
+//        } else {
+//            if (adapter != null) {
+//                adapter.disappear();
+//            }
+//            adapter = StageManager.parseStage(ZKNodeSearchController.class);
+//            adapter.setProp("zkConnect", this.client.zkConnect());
+//            adapter.display();
+//        }
+//    }
 
-    /**
-     * 搜索触发事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void onSearchTrigger(ZKSearchTriggerEvent event) {
-        if (event.data() == this.client.zkConnect()) {
-            ZKSearchParam param = event.param();
-            boolean found = this.treeView.onSearchTrigger(param);
-            // 设置搜索文本
-            if (found) {
-                this.nodeData.setSearchText(param.getKeyword());
-            }
-        }
-    }
-
-    /**
-     * 搜索结束事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void onSearchFinish(ZKSearchFinishEvent event) {
-        if (event.data() == this.client.zkConnect()) {
-            this.treeView.onSearchFinish();
-            // 设置搜索文本
-            this.nodeData.setSearchText(this.dataSearch.getText());
-        }
-    }
+//    /**
+//     * 搜索触发事件
+//     *
+//     * @param event 事件
+//     */
+//    @EventSubscribe
+//    private void onSearchTrigger(ZKSearchTriggerEvent event) {
+//        if (event.data() == this.client.zkConnect()) {
+//            ZKSearchParam param = event.param();
+//            boolean found = this.treeView.onSearchTrigger(param);
+//            // 设置搜索文本
+//            if (found) {
+//                this.nodeData.setSearchText(param.getKeyword());
+//            }
+//        }
+//    }
+//
+//    /**
+//     * 搜索结束事件
+//     *
+//     * @param event 事件
+//     */
+//    @EventSubscribe
+//    private void onSearchFinish(ZKSearchFinishEvent event) {
+//        if (event.data() == this.client.zkConnect()) {
+//            this.treeView.onSearchFinish();
+//            // 设置搜索文本
+//            this.nodeData.setSearchText(this.dataSearch.getText());
+//        }
+//    }
 }

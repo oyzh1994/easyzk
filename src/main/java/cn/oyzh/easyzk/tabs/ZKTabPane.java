@@ -49,21 +49,21 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
             FXEventListener.super.onNodeInitialize();
             // 刷新
             KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
-            // 搜索
-            KeyHandler searchKeyHandler = new KeyHandler();
-            searchKeyHandler.handler(e -> {
-                if (this.getSelectedItem() instanceof ZKNodeTab nodeTab) {
-                    nodeTab.doSearch();
-                }
-            });
-            searchKeyHandler.keyCode(KeyCode.F);
-            if (OSUtil.isMacOS()) {
-                searchKeyHandler.metaDown(true);
-            } else {
-                searchKeyHandler.controlDown(true);
-            }
-            searchKeyHandler.keyType(KeyEvent.KEY_RELEASED);
-            KeyListener.addHandler(this, searchKeyHandler);
+//            // 搜索
+//            KeyHandler searchKeyHandler = new KeyHandler();
+//            searchKeyHandler.handler(e -> {
+//                if (this.getSelectedItem() instanceof ZKNodeTab nodeTab) {
+//                    nodeTab.doSearch();
+//                }
+//            });
+//            searchKeyHandler.keyCode(KeyCode.F);
+//            if (OSUtil.isMacOS()) {
+//                searchKeyHandler.metaDown(true);
+//            } else {
+//                searchKeyHandler.controlDown(true);
+//            }
+//            searchKeyHandler.keyType(KeyEvent.KEY_RELEASED);
+//            KeyListener.addHandler(this, searchKeyHandler);
         }
     }
 

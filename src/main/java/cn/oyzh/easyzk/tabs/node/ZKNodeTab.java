@@ -27,15 +27,15 @@ public class ZKNodeTab extends DynamicTab {
         this.flush();
     }
 
-    @Override
-    public void initNode() {
-        super.initNode();
-        this.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                ZKEventUtil.searchClose(this.zkConnect());
-            }
-        });
-    }
+//    @Override
+//    public void initNode() {
+//        super.initNode();
+//        this.selectedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!newValue) {
+//                ZKEventUtil.searchClose(this.zkConnect());
+//            }
+//        });
+//    }
 
     /**
      * zk树节点
@@ -138,12 +138,10 @@ public class ZKNodeTab extends DynamicTab {
         }
     }
 
-    /**
-     * 执行搜索
-     */
-    public void doSearch() {
-        this.controller().doSearch();
-    }
-
-
+//    /**
+//     * 执行搜索
+//     */
+//    public void doSearch() {
+//        this.controller().doSearch();
+//    }
 }

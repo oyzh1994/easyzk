@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.*?>
 <?import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox?>
 <?import cn.oyzh.easyzk.filter.ZKNodeFilterTextField?>
-<FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+<FlexHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="30" flexWidth="100%">
@@ -32,7 +32,7 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeFilterTypeComboBox>
-            <ZKNodeFilterTextField onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
+            <ZKNodeFilterTextField tipText="CTRL/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
                                    flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -42,11 +42,11 @@
         <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
         </ZKNodeTreeView>
         <FlexHBox flexWidth="100%" flexHeight="30">
-            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch" appendTipText="(CTRL/COMMAND+F)">
-                <HBox.margin>
-                    <Insets left="5" top="5"/>
-                </HBox.margin>
-            </SearchSVGGlyph>
+<!--            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch" appendTipText="(CTRL/COMMAND+F)">-->
+<!--                <HBox.margin>-->
+<!--                    <Insets left="5" top="5"/>-->
+<!--                </HBox.margin>-->
+<!--            </SearchSVGGlyph>-->
             <AddSVGGlyph size="16" onMousePrimaryClicked="#addNode">
                 <HBox.margin>
                     <Insets left="5" top="5"/>

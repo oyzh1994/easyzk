@@ -30,6 +30,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * zk切换面板
  *
@@ -222,20 +225,33 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void connectionClosed(ZKConnectionClosedEvent event) {
-        ZKNodeTab connectTab = this.getNodeTab(event.connect());
-        // 要检查连接和客户端是否相同
-        if (connectTab != null && connectTab.client() == event.data()) {
-            connectTab.closeTab();
-        }
-        // 检查连接是否相同
-        ZKTerminalTab terminalTab = this.getTerminalTab(event.data());
-        if (terminalTab != null) {
-            terminalTab.closeTab();
-        }
-        // 检查连接是否相同
-        ZKServerTab serverTab = this.getServerTab(event.connect());
-        if (serverTab != null) {
-            serverTab.closeTab();
+//        ZKNodeTab connectTab = this.getNodeTab(event.connect());
+//        // 要检查连接和客户端是否相同
+//        if (connectTab != null && connectTab.client() == event.data()) {
+//            connectTab.closeTab();
+//        }
+//        // 检查连接是否相同
+//        ZKTerminalTab terminalTab = this.getTerminalTab(event.data());
+//        if (terminalTab != null) {
+//            terminalTab.closeTab();
+//        }
+//        // 检查连接是否相同
+//        ZKServerTab serverTab = this.getServerTab(event.data());
+//        if (serverTab != null) {
+//            serverTab.closeTab();
+//        }
+        List<Tab> tabs = new ArrayList<>(this.getTabs());
+        for (Tab tab : tabs) {
+            // 服务tab
+            if (tab instanceof ZKServerTab serverTab && serverTab.zkConnect() == event.connect()) {
+                serverTab.closeTab();
+            } else if (tab instanceof ZKTerminalTab terminalTab && terminalTab.zkConnect() == event.connect()) {// 终端tab
+                terminalTab.closeTab();
+            } else if (tab instanceof ZKTerminalTab connectTab && connectTab.zkConnect() == event.connect()) {// 连接tab
+                connectTab.closeTab();
+            } else if (tab instanceof ZKQueryTab queryTab && queryTab.zkConnect() == event.connect()) {// 查询tab
+                queryTab.closeTab();
+            }
         }
     }
 

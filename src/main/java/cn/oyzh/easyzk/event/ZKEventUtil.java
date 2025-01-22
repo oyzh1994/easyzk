@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
-import cn.oyzh.easyzk.event.client.ZKClientActionArgument;
+import cn.oyzh.easyzk.action.ZKClientActionArgument;
 import cn.oyzh.easyzk.event.client.ZKClientActionEvent;
 import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;

@@ -42,7 +42,7 @@ public abstract class ZKFourLetterWordCommandHandler<C extends TerminalCommand> 
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             terminal.disable();
-            ZKConnect connect = terminal.connect();
+            ZKConnect connect = terminal.zkConnect();
             String execResult = this.furLetterWordCommand().exec(connect.hostIp(), connect.hostPort());
             result.setResult(execResult);
         } catch (Exception ex) {

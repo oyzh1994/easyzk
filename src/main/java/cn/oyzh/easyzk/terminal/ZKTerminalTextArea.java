@@ -82,8 +82,8 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         } else {
             str = this.client.connectName();
         }
-        if (this.connect().getHost() != null) {
-            str += "@" + this.connect().getHost();
+        if (this.zkConnect().getHost() != null) {
+            str += "@" + this.zkConnect().getHost();
         }
         if (this.isConnecting()) {
             str += "(" + I18nHelper.connectIng() + ")> ";
@@ -123,7 +123,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * @return 结果
      */
     public boolean isTemporary() {
-        return this.connect().getId() == null;
+        return this.zkConnect().getId() == null;
     }
 
     /**
@@ -162,7 +162,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         this.connectInfo = ZKConnectUtil.parse(input);
         if (this.connectInfo != null) {
             this.disable();
-            ZKConnectUtil.copyConnect(this.connectInfo, this.connect());
+            ZKConnectUtil.copyConnect(this.connectInfo, this.zkConnect());
             this.start();
         }
     }
@@ -225,7 +225,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
             this.stateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
                 // 获取连接
-                String host = this.connect().getHost();
+                String host = this.zkConnect().getHost();
                 if (t1 == ZKConnState.CONNECTED) {
                     this.outputLine(host + I18nHelper.connectSuccess() + " .");
                     this.outputLine(I18nHelper.terminalTip2());
@@ -273,7 +273,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         }
     }
 
-    public ZKConnect connect() {
+    public ZKConnect zkConnect() {
         return this.client().zkConnect();
     }
 }

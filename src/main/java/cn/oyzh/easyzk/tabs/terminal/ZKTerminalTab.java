@@ -98,8 +98,8 @@ public class ZKTerminalTab extends DynamicTab {
      *
      * @return zk信息
      */
-    public ZKConnect connect() {
-        return this.controller().connect();
+    public ZKConnect zkConnect() {
+        return this.controller().zkConnect();
     }
 
     @Override

@@ -1,7 +1,11 @@
-package cn.oyzh.easyzk.event.client;
+package cn.oyzh.easyzk.action;
 
 import lombok.Data;
 
+/**
+ * @author oyzh
+ * @since 2025-01-02
+ */
 @Data
 public class ZKClientActionArgument {
 

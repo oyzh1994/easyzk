@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.event.client;
 
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.action.ZKClientActionArgument;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;

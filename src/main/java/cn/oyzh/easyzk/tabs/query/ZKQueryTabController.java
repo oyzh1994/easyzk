@@ -150,7 +150,8 @@ public class ZKQueryTabController extends DynamicTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
-            } else if (param.isCreate() || param.isSync() || param.isSetQuota()) {
+            } else if (param.isCreate() || param.isSync() || param.isSetQuota() || param.isRmr() || param.isDeleteall()
+                    || param.isDelete()) {
                 this.resultTabPane.select(0);
             } else if (param.isStat()) {
                 if (result.isSuccess()) {

@@ -44,6 +44,11 @@ public class ZKQueryUtil {
         KEYWORDS.add("get");
         KEYWORDS.add("set");
         KEYWORDS.add("sync");
+        // 节点
+        KEYWORDS.add("rmr");
+        KEYWORDS.add("delete");
+        KEYWORDS.add("deleteall");
+        KEYWORDS.add("create");
         // 权限
         KEYWORDS.add("setAcl");
         KEYWORDS.add("getAcl");
@@ -53,11 +58,6 @@ public class ZKQueryUtil {
         KEYWORDS.add("stat");
         KEYWORDS.add("getEphemerals");
         KEYWORDS.add("getAllChildrenNumber");
-        // 删除
-        KEYWORDS.add("rmr");
-        KEYWORDS.add("delete");
-        KEYWORDS.add("deleteall");
-        KEYWORDS.add("create");
         // 配额
         KEYWORDS.add("setquota");
         KEYWORDS.add("delquota");

@@ -1487,6 +1487,12 @@ public class ZKClient {
         return this.framework == null || this.framework.getState() == CuratorFrameworkState.STOPPED;
     }
 
+    /**
+     * 执行查询
+     *
+     * @param param 查询参数
+     * @return 查询结果
+     */
     public ZKQueryResult query(ZKQueryParam param) {
         ZKQueryResult result = new ZKQueryResult();
         long start = System.currentTimeMillis();
@@ -1517,6 +1523,10 @@ public class ZKClient {
                 this.createQuota(nodePath, param.getB(), param.getN());
             } else if (param.isListquota()) {
                 result.setResult(this.listQuota(nodePath));
+            } else if (param.isRmr() || param.isDeleteall()) {
+                this.delete(nodePath, null, true);
+            } else if (param.isDelete()) {
+                this.delete(nodePath, null, false);
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

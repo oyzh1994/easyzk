@@ -80,6 +80,18 @@ public class ZKQueryParam {
         return "listquota".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isRmr() {
+        return "rmr".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isDeleteall() {
+        return "deleteall".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isDelete() {
+        return "delete".equalsIgnoreCase(this.getCommand());
+    }
+
     public String getPath() {
         try {
             if (this.isGetEphemerals()) {
@@ -87,7 +99,8 @@ public class ZKQueryParam {
                     return this.params.get(1);
                 }
             }
-            if (this.isSync() || this.isLs2() || this.isGetAllChildrenNumber() || this.isStat() || this.isListquota()) {
+            if (this.isSync() || this.isLs2() || this.isGetAllChildrenNumber() || this.isStat() || this.isListquota()
+                    || this.isRmr() || this.isDeleteall() || this.isDelete()) {
                 return this.params.get(1);
             }
             if (this.isLs()) {

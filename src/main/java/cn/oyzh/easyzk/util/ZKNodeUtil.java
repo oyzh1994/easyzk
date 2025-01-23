@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.util;
 
+import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -350,64 +352,101 @@ public class ZKNodeUtil {
         if (CollectionUtil.isEmpty(children)) {
             return Collections.emptyList();
         }
-        // 处理器核心数量
-        List<ZKNode> list = new ArrayList<>();
         // 数据列表
-        int pCount = RuntimeUtil.processorCount();
-        // 性能较差机器上同步执行
-        if (pCount < 4) {
-            // 获取节点数据
-            for (String sub : children) {
-                // 对节点路径做处理
-                String path = ZKNodeUtil.concatPath(parentPath, sub);
-                // 判断是否存在
-                if (existingNodes.contains(path)) {
-                    continue;
-                }
-                // 获取节点
+        List<ZKNode> list = new CopyOnWriteArrayList<>();
+        // 处理器核心数量
+//        int pCount = RuntimeUtil.processorCount();
+//        // 性能较差机器上同步执行
+//        if (pCount < 4) {
+//            // 获取节点数据
+//            for (String sub : children) {
+//                // 对节点路径做处理
+//                String path = ZKNodeUtil.concatPath(parentPath, sub);
+//                // 判断是否存在
+//                if (existingNodes.contains(path)) {
+//                    continue;
+//                }
+//                // 获取节点
+//                try {
+//                    list.add(getNode(client, path, FULL_PROPERTIES));
+//                } catch (Exception ignore) {
+//                }
+//                if (limit > 0 && list.size() > limit) {
+//                    break;
+//                }
+//            }
+//        } else {// 性能较好机器上异步执行
+        // 任务列表
+//        List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
+////        List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
+//        DownLatch latch = new DownLatch(tasks.size());
+//        // 获取节点数据
+//        for (String sub : children) {
+//            // 对节点路径做处理
+//            String path = ZKNodeUtil.concatPath(parentPath, sub);
+//            // 判断是否存在
+//            if (existingNodes.contains(path)) {
+//                continue;
+//            }
+//            // 添加到任务列表
+//            tasks.add(() -> {
+//                try {
+//                    return getNode(client, path, FULL_PROPERTIES);
+//                } catch (Exception ignore) {
+//                }finally {
+//                    latch.countDown();
+//                }
+//                return null;
+//            });
+//            if (limit > 0 && list.size() > limit) {
+//                break;
+//            }
+//            // 如果任务列表达到核心数2倍，则开始执行此部分任务，并清空任务列表
+//            if (tasks.size() >= pCount * 2) {
+//                list.addAll(ThreadUtil.invoke(tasks));
+//                tasks.clear();
+//            }
+//        }
+//
+//        // 处理尾部数据
+//        if (!tasks.isEmpty()) {
+//            list.addAll(ThreadUtil.invoke(tasks));
+//        }
+////        }
+//        if (limit > 0 && list.size() > limit) {
+//            return list.subList(0, limit);
+//        }
+        // 节点列表
+        List<String> nodes = new ArrayList<>(children.size());
+        // 获取节点数据
+        for (String sub : children) {
+            // 对节点路径做处理
+            String path = ZKNodeUtil.concatPath(parentPath, sub);
+            // 判断是否存在
+            if (existingNodes.contains(path)) {
+                continue;
+            }
+            // 添加到集合
+            nodes.add(path);
+            // 判断是否要限制
+            if (limit > 0 && nodes.size() > limit) {
+                break;
+            }
+        }
+        // 闭锁
+        DownLatch latch = new DownLatch(nodes.size());
+        // 获取节点
+        for (String node : nodes) {
+            ThreadUtil.startVirtual(() -> {
                 try {
-                    list.add(getNode(client, path, FULL_PROPERTIES));
+                    list.add(getNode(client, node));
                 } catch (Exception ignore) {
+                } finally {
+                    latch.countDown();
                 }
-                if (limit > 0 && list.size() > limit) {
-                    break;
-                }
-            }
-        } else {// 性能较好机器上异步执行
-            // 任务列表
-            List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
-            // 获取节点数据
-            for (String sub : children) {
-                // 对节点路径做处理
-                String path = ZKNodeUtil.concatPath(parentPath, sub);
-                // 判断是否存在
-                if (existingNodes.contains(path)) {
-                    continue;
-                }
-                // 添加到任务列表
-                tasks.add(() -> {
-                    try {
-                        return getNode(client, path, FULL_PROPERTIES);
-                    } catch (Exception ignore) {
-                    }
-                    return null;
-                });
-                if (limit > 0 && list.size() > limit) {
-                    break;
-                }
-                if (tasks.size() >= pCount) {
-                    list.addAll(ThreadUtil.invoke(tasks));
-                    tasks.clear();
-                }
-            }
-            // 处理尾部数据
-            if (!tasks.isEmpty()) {
-                list.addAll(ThreadUtil.invoke(tasks));
-            }
+            });
         }
-        if (limit > 0 && list.size() > limit) {
-            return list.subList(0, limit);
-        }
+        latch.await();
         return list;
     }
 

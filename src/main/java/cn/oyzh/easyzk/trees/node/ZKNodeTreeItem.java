@@ -4,6 +4,7 @@ import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
+import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.auth.ZKAuthAuthController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
@@ -273,7 +274,11 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
     public void loadChild() {
         if (!this.isLoading()) {
             Task task = TaskBuilder.newBuilder()
-                    .onStart(() -> this.loadChild(false))
+                    .onStart(() -> {
+                        CostUtil.record();
+                        this.loadChild(false);
+                        CostUtil.printCost();
+                    })
                     .onFinish(this::expend)
                     .onSuccess(this::refresh)
                     .onError(MessageBox::exception)
@@ -494,7 +499,11 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      */
     private void loadChildAll() {
         Task task = TaskBuilder.newBuilder()
-                .onStart(() -> this.loadChild(true, 0))
+                .onStart(() -> {
+                    CostUtil.record();
+                    this.loadChild(true, 0);
+                    CostUtil.printCost();
+                })
                 .onFinish(this::expend)
                 .onSuccess(this::refresh)
                 .onError(MessageBox::exception)

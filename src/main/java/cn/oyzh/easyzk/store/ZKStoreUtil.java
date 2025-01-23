@@ -5,6 +5,7 @@ import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.json.JSONArray;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
@@ -13,10 +14,15 @@ import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.jdbc.JdbcConst;
 import cn.oyzh.store.jdbc.JdbcDialect;
+import cn.oyzh.store.jdbc.JdbcManager;
 import lombok.experimental.UtilityClass;
+import org.h2.engine.Database;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,13 @@ public class ZKStoreUtil {
         JdbcConst.dbCacheSize(1024);
         JdbcConst.dbDialect(JdbcDialect.H2);
         JdbcConst.dbFile(ZKConst.STORE_PATH + "db");
+        try {
+            JdbcManager.takeoff();
+        } catch (Exception ex) {
+            if (StringUtil.containsAny(ex.getMessage(), "Database may be already in use")) {
+                MessageBox.warn(I18nHelper.programTip1());
+            }
+        }
     }
 
     /**

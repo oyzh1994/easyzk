@@ -12,7 +12,6 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.i18n.I18nHelper;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import org.apache.zookeeper.KeeperException;
 
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -80,38 +78,44 @@ public class ZKNodeUtil {
         ZKNode node = new ZKNode();
         // 设置节点路径
         node.nodePath(path);
-        // 异常
-        AtomicReference<Exception> exceptionReference = new AtomicReference<>();
-        // 设置zk状态
-        if (properties.contains("s")) {
-            try {
-                node.stat(client.checkExists(path));
-            } catch (KeeperException.NoAuthException ignored) {
-            } catch (Exception ex) {
-                exceptionReference.set(ex);
-            }
-        }
-        // 设置zk访问控制
-        if (properties.contains("a")) {
-            try {
-                node.acl(client.getACL(path));
-            } catch (KeeperException.NoAuthException ignored) {
-            } catch (Exception ex) {
-                exceptionReference.set(ex);
-            }
-        }
-        // 设置zk数据
-        if (properties.contains("d")) {
-            try {
-                node.setNodeData(client.getData(path));
-            } catch (KeeperException.NoAuthException ignored) {
-            } catch (Exception ex) {
-                exceptionReference.set(ex);
-            }
-        }
+//        // 异常
+//        AtomicReference<Exception> exceptionReference = new AtomicReference<>();
+//        // 设置zk状态
+//        if (properties.contains("s")) {
+//            try {
+//                node.stat(client.checkExists(path));
+//            } catch (KeeperException.NoAuthException ignored) {
+//            } catch (Exception ex) {
+//                exceptionReference.set(ex);
+//            }
+//        }
+//        // 设置zk访问控制
+//        if (properties.contains("a")) {
+//            try {
+//                node.acl(client.getACL(path));
+//            } catch (KeeperException.NoAuthException ignored) {
+//            } catch (Exception ex) {
+//                exceptionReference.set(ex);
+//            }
+//        }
+//        // 设置zk数据
+//        if (properties.contains("d")) {
+//            try {
+//                node.setNodeData(client.getData(path));
+//            } catch (KeeperException.NoAuthException ignored) {
+//            } catch (Exception ex) {
+//                exceptionReference.set(ex);
+//            }
+//        }
+//        // 抛出异常
+//        if (exceptionReference.get() != null) {
+//            throw exceptionReference.get();
+//        }
+        // 执行任务
+        Exception exception = ZKNodeTask.of(node, client, path, properties);
         // 抛出异常
-        if (exceptionReference.get() != null) {
-            throw exceptionReference.get();
+        if (exception != null) {
+            throw exception;
         }
         // 设置加载时间
         long end = System.currentTimeMillis();
@@ -295,7 +299,7 @@ public class ZKNodeUtil {
                     list.add(getNode(client, path, properties));
                 }
             }
-            children.clear();
+//            children.clear();
         } else {// 性能较好机器上异步执行
             // 任务列表
             List<Callable<ZKNode>> tasks = new ArrayList<>(children.size());
@@ -318,8 +322,8 @@ public class ZKNodeUtil {
             if (!tasks.isEmpty()) {
                 list.addAll(ThreadUtil.invoke(tasks));
             }
-            tasks.clear();
-            children.clear();
+//            tasks.clear();
+//            children.clear();
         }
         return list;
     }

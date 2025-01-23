@@ -295,19 +295,19 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
             items.add(cancel);
         } else {
             // 持久节点
-            if (this.isPersistent()) {
+            if (this.isPersistentNode()) {
                 FXMenuItem add = MenuItemHelper.addNode("12", this::addNode);
                 items.add(add);
             }
             // 非根节点 + 子节点 + 持久节点
-            if (!this.value.isRoot() && this.value.isChildren() && this.isPersistent()) {
+            if (!this.isRootNode() && this.isChildrenNode() && this.isPersistentNode()) {
                 FXMenuItem rename = MenuItemHelper.renameNode("12", this::rename);
                 FXMenuItem cloneNode = MenuItemHelper.cloneNode("12", this::cloneNode);
                 items.add(rename);
                 items.add(cloneNode);
             }
             // 非根节点
-            if (!this.value.isRoot()) {
+            if (!this.isRootNode()) {
                 FXMenuItem delete = MenuItemHelper.deleteNode("12", this::delete);
                 items.add(delete);
             }
@@ -315,7 +315,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
             FXMenuItem reload = MenuItemHelper.refreshData("12", this::reloadChild);
             items.add(reload);
             // 父节点
-            if (this.value.isParent()) {
+            if (this.isParentNode()) {
                 FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
                 FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
                 FXMenuItem expandAll = MenuItemHelper.expandAll("12", this::expandAll);
@@ -326,7 +326,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
                 items.add(collapseAll);
             }
             // 持久节点 + 有读取权限
-            if (this.isPersistent() && this.value.hasReadPerm()) {
+            if (this.isPersistentNode() && this.hasReadPerm()) {
                 FXMenuItem export = MenuItemHelper.exportData("12", this::exportData);
                 items.add(export);
             }
@@ -342,12 +342,12 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      */
     private void cloneNode() {
         // 判断是否符合要求
-        if (this.isRoot() || this.value.isParent() || this.value.isEphemeral()) {
+        if (this.isRootNode() || this.isParentNode() || this.isEphemeralNode()) {
             return;
         }
-        String nodeName = this.value.nodeName() + "-" + I18nHelper.clone1();
+        String nodeName = this.nodeName() + "-" + I18nHelper.clone1();
         // 检查是否存在
-        String parentPath = ZKNodeUtil.getParentPath(this.value.nodePath());
+        String parentPath = ZKNodeUtil.getParentPath(this.nodePath());
         String newNodePath = ZKNodeUtil.concatPath(parentPath, nodeName);
         try {
             if (this.client().exists(newNodePath)) {
@@ -355,9 +355,9 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
                 return;
             }
             // 创建模式
-            CreateMode createMode = this.value.isEphemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
+            CreateMode createMode = this.isEphemeralNode() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
             // 创建新节点
-            if (this.client().create(newNodePath, this.getNodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
+            if (this.client().create(newNodePath, this.getNodeData(), List.copyOf(this.acl()), null, createMode, true) != null) {
                 // 发送事件
                 ZKEventUtil.nodeAdded(this.zkConnect(), newNodePath);
             } else {// 操作失败
@@ -366,6 +366,15 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
+    }
+
+    /**
+     * 节点名称
+     *
+     * @return 节点名称
+     */
+    public String nodeName() {
+        return this.value.nodeName();
     }
 
     /**
@@ -408,16 +417,16 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
     @Override
     public void rename() {
         // 判断是否符合要求
-        if (this.isRoot() || this.value.isParent() || this.value.isEphemeral()) {
+        if (this.isRootNode() || this.isParentNode() || this.isEphemeralNode()) {
             return;
         }
-        String nodeName = MessageBox.prompt(I18nHelper.pleaseInputNodeName(), this.value.nodeName());
+        String nodeName = MessageBox.prompt(I18nHelper.pleaseInputNodeName(), this.nodeName());
         // 名称为空或名称跟当前名称相同，则忽略
-        if (StringUtil.isBlank(nodeName) || Objects.equals(nodeName, this.value.nodeName())) {
+        if (StringUtil.isBlank(nodeName) || Objects.equals(nodeName, this.nodeName())) {
             return;
         }
         // 检查是否存在
-        String parentPath = ZKNodeUtil.getParentPath(this.value.nodePath());
+        String parentPath = ZKNodeUtil.getParentPath(this.nodePath());
         String newNodePath = ZKNodeUtil.concatPath(parentPath, nodeName);
         try {
             if (this.client().exists(newNodePath)) {
@@ -425,9 +434,9 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
                 return;
             }
             // 创建模式
-            CreateMode createMode = this.value.isEphemeral() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
+            CreateMode createMode = this.isEphemeralNode() ? CreateMode.EPHEMERAL : CreateMode.PERSISTENT;
             // 创建新节点
-            if (this.client().create(newNodePath, this.getNodeData(), List.copyOf(this.value.acl()), null, createMode, true) != null) {
+            if (this.client().create(newNodePath, this.getNodeData(), List.copyOf(this.acl()), null, createMode, true) != null) {
                 // 删除旧节点
                 this.deleteNode();
                 // 发送事件
@@ -443,11 +452,11 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
     @Override
     public void delete() {
         // 根节点
-        if (this.isRoot()) {
+        if (this.isRootNode()) {
             return;
         }
         // 父节点
-        if (!MessageBox.confirm(I18nHelper.delete() + " [" + this.value.decodeNodePath() + "] ", I18nHelper.areYouSure())) {
+        if (!MessageBox.confirm(I18nHelper.delete() + " [" + this.decodeNodePath() + "] ", I18nHelper.areYouSure())) {
             return;
         }
         // 创建任务
@@ -465,7 +474,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
         try {
             ZKNodeTreeItem parent = this.parent();
             // 执行删除
-            this.client().delete(this.nodePath(), null, this.value.isParent());
+            this.client().delete(this.nodePath(), null, this.isParentNode());
             // 刷新状态
             if (parent != null) {
                 parent.refreshStat();
@@ -792,6 +801,11 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
                 this.addChild(addList);
                 // 递归处理
                 if (loop && this.itemChildrenSize() > 0) {
+//                    List<Runnable> tasks = new ArrayList<>();
+//                    for (ZKNodeTreeItem item : this.itemChildren()) {
+//                        tasks.add(() -> item.loadChild(true, limit));
+//                    }
+//                    ThreadUtil.submitVirtual(tasks);
                     for (ZKNodeTreeItem item : this.itemChildren()) {
                         item.loadChild(true, limit);
                     }
@@ -981,7 +995,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      *
      * @return 结果
      */
-    public boolean isPersistent() {
+    public boolean isPersistentNode() {
         return this.value.isPersistent();
     }
 
@@ -990,17 +1004,35 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      *
      * @return 结果
      */
-    public boolean isEphemeral() {
+    public boolean isEphemeralNode() {
         return this.value.isEphemeral();
     }
 
     /**
-     * 是否临时节点
+     * 是否根节点
      *
      * @return 结果
      */
-    public boolean isRoot() {
+    public boolean isRootNode() {
         return this.value.isRoot();
+    }
+
+    /**
+     * 是否子节点
+     *
+     * @return 结果
+     */
+    public boolean isChildrenNode() {
+        return this.value.isChildren();
+    }
+
+    /**
+     * 是否父节点
+     *
+     * @return 结果
+     */
+    public boolean isParentNode() {
+        return this.value.isParent();
     }
 
     /**
@@ -1141,7 +1173,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      * 加载根节点
      */
     public void loadRoot() {
-        if (this.isRoot()) {
+        if (this.isRootNode()) {
             ZKSetting setting = ZKSettingStore.SETTING;
             if (setting.isLoadFirst()) {
                 this.loadChild();
@@ -1164,7 +1196,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
     public void destroy() {
         this.value.clearNodeData();
         this.value.clearUnsavedData();
-        if (!this.isRoot()) {
+        if (!this.isRootNode()) {
             this.value = null;
             super.destroy();
         }

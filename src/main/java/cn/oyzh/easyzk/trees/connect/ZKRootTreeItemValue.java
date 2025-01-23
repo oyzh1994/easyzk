@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
+import cn.oyzh.easyzk.fx.svg.glyph.ZookeeperSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
@@ -20,7 +21,7 @@ public class ZKRootTreeItemValue extends RichTreeItemValue {
     @Override
     public SVGGlyph graphic() {
         if (this.graphic == null) {
-            this.graphic = new SVGGlyph("/font/Zookeeper1.svg", 12);
+            this.graphic = new ZookeeperSVGGlyph("12");
         }
         return super.graphic();
     }

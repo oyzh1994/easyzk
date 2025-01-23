@@ -77,7 +77,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
         // 根节点直接展示
         if (item instanceof ZKNodeTreeItem treeItem) {
             // 根节点不参与过滤
-            if (treeItem.isRoot()) {
+            if (treeItem.isRootNode()) {
                 return true;
             }
             // 仅收藏
@@ -85,11 +85,11 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 仅持久节点
-            if (2 == this.type && treeItem.isEphemeral()) {
+            if (2 == this.type && treeItem.isEphemeralNode()) {
                 return false;
             }
             // 仅临时节点
-            if (3 == this.type && !treeItem.isEphemeral()) {
+            if (3 == this.type && !treeItem.isEphemeralNode()) {
                 return false;
             }
             String nodePath = treeItem.decodeNodePath();

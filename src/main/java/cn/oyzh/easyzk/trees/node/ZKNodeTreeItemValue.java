@@ -2,6 +2,8 @@ package cn.oyzh.easyzk.trees.node;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.easyzk.fx.svg.glyph.NodeSVGGlyph;
+import cn.oyzh.easyzk.fx.svg.glyph.TempSVGGlyph;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.gui.svg.glyph.LockSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
@@ -41,27 +43,26 @@ public class ZKNodeTreeItemValue extends RichTreeItemValue {
         boolean changed = false;
         if (this.graphic == null) {
             changed = true;
-        } else if (this.item().isNeedAuth() && StringUtil.notEquals(this.graphic.getProp("_type"), "3")) {
+        } else if (this.item().isNeedAuth() && StringUtil.notContains(this.graphic.getUrl(), "lock")) {
             changed = true;
-        } else if (this.item().isEphemeral() && StringUtil.notEquals(this.graphic.getProp("_type"), "2")) {
+        } else if (this.item().isEphemeralNode() && StringUtil.notContains(this.graphic.getUrl(), "temp")) {
             changed = true;
-        } else if (StringUtil.notEquals(this.graphic.getProp("_type"), "1")) {
+        } else if (StringUtil.notContains(this.graphic.getUrl(), "file-text")) {
             changed = true;
         }
         if (changed) {
             if (this.item().isNeedAuth()) {
                 this.graphic = new LockSVGGlyph("11");
-                this.graphic.setProp("_type", "3");
-            } else if (this.item().isEphemeral()) {
-                this.graphic = new SVGGlyph("/font/temp.svg", 11);
-                this.graphic.setProp("_type", "2");
+            } else if (this.item().isEphemeralNode()) {
+                this.graphic = new TempSVGGlyph("11");
             } else {
-                this.graphic = new SVGGlyph("/font/file-text.svg", 11);
-                this.graphic.setProp("_type", "1");
+                this.graphic = new NodeSVGGlyph("11");
             }
-        }
-        if (this.graphic != null) {
             this.graphic.disableTheme();
+            if (!this.item().isParentNode()) {
+                this.graphic.disableWaiting();
+            }
+            this.graphic.setColor(this.graphicColor());
         }
         return super.graphic();
     }

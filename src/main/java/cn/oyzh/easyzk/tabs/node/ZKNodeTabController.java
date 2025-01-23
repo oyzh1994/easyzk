@@ -894,7 +894,7 @@ public class ZKNodeTabController extends DynamicTabController {
         if (this.treeItem == null) {
             return;
         }
-        if (this.activeItem.isRoot()) {
+        if (this.activeItem.isRootNode()) {
             this.quotaTab.getContent().setDisable(true);
         } else {
             this.quotaTab.getContent().setDisable(false);

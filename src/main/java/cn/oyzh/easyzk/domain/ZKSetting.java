@@ -73,7 +73,7 @@ public class ZKSetting extends Setting {
      * @return 结果
      */
     public boolean isShowNodePath() {
-        return this.viewport != null && this.viewport == 1;
+        return this.viewport == null || this.viewport == 1;
     }
 
     /**

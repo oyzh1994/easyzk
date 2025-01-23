@@ -26,15 +26,27 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
 )
 public class ZKFilterSettingPopupController extends PopupController {
 
+    /**
+     * 搜索路径
+     */
     @FXML
     private FXCheckBox searchPath;
 
+    /**
+     * 搜索数据
+     */
     @FXML
     private FXCheckBox searchData;
 
+    /**
+     * 匹配大小写
+     */
     @FXML
     private FXCheckBox matchCase;
 
+    /**
+     * 匹配全文
+     */
     @FXML
     private FXCheckBox matchFull;
 
@@ -67,6 +79,7 @@ public class ZKFilterSettingPopupController extends PopupController {
     @Override
     public void onWindowShowing(WindowEvent event) {
         super.onWindowShowing(event);
+        // 初始化
         ZKNodeFilterParam filterParam = this.getWindowProp("filterParam");
         if (filterParam != null) {
             this.matchCase.setSelected(filterParam.isMatchCase());

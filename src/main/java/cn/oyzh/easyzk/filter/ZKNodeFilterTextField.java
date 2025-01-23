@@ -11,10 +11,13 @@ import lombok.Setter;
  * 过滤文本域
  *
  * @author oyzh
- * @since 2023/10/24
+ * @since 2025/01/23
  */
 public class ZKNodeFilterTextField extends LimitTextField {
 
+    /**
+     * 搜索事件处理
+     */
     @Setter
     @Getter
     private EventHandler<AnonymousEvent<Object>> onSearch;
@@ -41,10 +44,20 @@ public class ZKNodeFilterTextField extends LimitTextField {
         };
     }
 
+    /**
+     * 获取过滤参数
+     *
+     * @return 过滤参数
+     */
     public ZKNodeFilterParam filterParam() {
         return this.skin().filterParam();
     }
 
+    /**
+     * 获取过滤模式
+     *
+     * @return 过滤模式
+     */
     public byte filterMode() {
         ZKNodeFilterParam filterParam = this.filterParam();
         if (filterParam.isMatchCase() && filterParam.isMatchFull()) {
@@ -59,6 +72,11 @@ public class ZKNodeFilterTextField extends LimitTextField {
         return 0;
     }
 
+    /**
+     * 获取过滤范围
+     *
+     * @return 过滤范围
+     */
     public byte filterScope() {
         ZKNodeFilterParam filterParam = this.filterParam();
         if (filterParam.isSearchData() && filterParam.isSearchPath()) {

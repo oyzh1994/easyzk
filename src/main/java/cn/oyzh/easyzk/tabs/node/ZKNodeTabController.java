@@ -927,7 +927,7 @@ public class ZKNodeTabController extends DynamicTabController {
         // 切换显示监听
         this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
         // 节点内容过滤
-        this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setSearchText(newValue));
+        this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setHighlightText(newValue));
         // 格式监听
         this.format.selectedItemChanged((t1, t2, t3) -> {
             if (this.format.isStringFormat()) {
@@ -1075,9 +1075,9 @@ public class ZKNodeTabController extends DynamicTabController {
         }
         // 仅在搜索数据的情况下设置内容高亮
         if (scope == 2 || scope == 1) {
-            this.nodeData.setSearchText(kw);
+            this.nodeData.setHighlightText(kw);
         } else {
-            this.nodeData.setSearchText(this.dataSearch.getTextTrim());
+            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
         }
         this.treeView.itemFilter().setKw(kw);
         this.treeView.itemFilter().setScope(scope);

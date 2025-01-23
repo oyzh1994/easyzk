@@ -9,14 +9,12 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * 过滤类型选择框
+ *
  * @author oyzh
- * @since 2024/4/19
+ * @since 2025/01/22
  */
 public class ZKNodeFilterTypeComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
-
-    {
-        NodeManager.init(this);
-    }
 
     @Override
     public List<String> values(Locale locale) {

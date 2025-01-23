@@ -3,13 +3,10 @@ package cn.oyzh.easyzk.filter;
 import cn.oyzh.easyzk.popups.ZKFilterSettingPopupController;
 import cn.oyzh.fx.gui.skin.ClearableTextFieldSkin;
 import cn.oyzh.fx.gui.svg.glyph.SettingSVGGlyph;
-import cn.oyzh.fx.plus.controls.list.FXListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -24,35 +21,31 @@ import lombok.Getter;
  * 过滤文本输入框皮肤
  *
  * @author oyzh
- * @since 2023/10/9
+ * @since 2025/01/23
  */
 public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
 
     /**
-     * 过滤历史按钮
+     * 过滤设置按钮
      */
     protected final SVGGlyph button;
 
     /**
-     * 过滤历史弹窗
+     * 过滤设置弹窗
      */
     @Getter
     protected PopupAdapter popup;
 
-    private ObjectProperty<ZKNodeFilterParam> filterParamProperty;
+    /**
+     * 过滤参数
+     */
+    private ZKNodeFilterParam filterParam;
 
     public ZKNodeFilterParam filterParam() {
-        if (this.filterParamProperty == null) {
-            return new ZKNodeFilterParam();
+        if (this.filterParam == null) {
+            this.filterParam = new ZKNodeFilterParam();
         }
-        return this.filterParamProperty.get();
-    }
-
-    public ObjectProperty<ZKNodeFilterParam> filterParamProperty() {
-        if (this.filterParamProperty == null) {
-            this.filterParamProperty = new SimpleObjectProperty<>();
-        }
-        return this.filterParamProperty;
+        return this.filterParam;
     }
 
     /**
@@ -66,7 +59,7 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
         this.popup.setProp("filterParam", this.filterParam());
         this.popup.setSubmitHandler(o -> {
             if (o instanceof ZKNodeFilterParam param) {
-                this.filterParamProperty().set(param);
+                this.filterParam = param;
                 this.onSearch(this.getText());
             }
         });
@@ -104,6 +97,11 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
         this.getSkinnable().textProperty().addListener((observable, oldValue, newValue) -> this.onSearch(this.getText()));
     }
 
+    /**
+     * 搜索触发事件
+     *
+     * @param text 当前内容
+     */
     public void onSearch(String text) {
         this.closePopup();
     }

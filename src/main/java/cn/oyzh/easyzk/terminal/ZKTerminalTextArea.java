@@ -41,7 +41,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         // 禁用字体管理
         super.disableFont();
         // 初始化字体
-        ZKSetting setting= ZKSettingStore.SETTING;
+        ZKSetting setting = ZKSettingStore.SETTING;
         this.setFontSize(setting.getTerminalFontSize());
         this.setFontFamily(setting.getTerminalFontFamily());
         this.setFontWeight2(setting.getTerminalFontWeight());
@@ -123,7 +123,14 @@ public class ZKTerminalTextArea extends TerminalTextArea {
      * @return 结果
      */
     public boolean isTemporary() {
-        return this.zkConnect().getId() == null;
+        return this.client.iid() == null;
+    }
+
+    @Override
+    public void outputPrompt() {
+        if (!this.client.isConnecting()) {
+            super.outputPrompt();
+        }
     }
 
     /**
@@ -177,7 +184,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         this.outputLine("-r " + I18nHelper.readonlyMode());
         this.appendByPrompt("connect -timeout 3000 -server localhost:2181");
         this.enableInput();
-        this.flushAndMoveCaretAnd();
+        this.flushAndMoveCaretEnd();
     }
 
     /**
@@ -188,7 +195,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
         this.flushPrompt();
         this.appendByPrompt("");
         this.enableInput();
-        this.flushAndMoveCaretAnd();
+        this.flushAndMoveCaretEnd();
     }
 
     /**
@@ -197,7 +204,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     private void start() {
         TaskManager.start(() -> {
             try {
-                this.intStatListener();
+                this.initStatListener();
                 this.client.start();
             } catch (Exception ex) {
                 this.onError(ZKExceptionParser.INSTANCE.apply(ex));
@@ -210,7 +217,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     /**
      * 刷新光标并移动到尾部
      */
-    private void flushAndMoveCaretAnd() {
+    private void flushAndMoveCaretEnd() {
         ExecutorUtil.start(() -> {
             this.flushCaret();
             this.moveCaretEnd();
@@ -220,7 +227,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     /**
      * 初始化连接状态监听器
      */
-    private void intStatListener() {
+    private void initStatListener() {
         if (this.stateChangeListener == null) {
             this.stateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
@@ -254,7 +261,7 @@ public class ZKTerminalTextArea extends TerminalTextArea {
                     if (this.connectInfo != null) {
                         this.appendByPrompt(this.connectInfo.getInput());
                     }
-                    this.flushAndMoveCaretAnd();
+                    this.flushAndMoveCaretEnd();
                     this.enableInput();
                 }
                 JulLog.info("connState={}", t1);

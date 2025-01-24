@@ -55,30 +55,36 @@ public class ZKTerminalTab extends DynamicTab {
 //        }
 //    }
 
+    @Override
+    protected String getTabTitle() {
+        return this.zkConnect().getName();
+    }
+
     /**
      * 初始化
      *
      * @param client zk客户端
      */
-    public void init(ZKClient client) {
+    private void init(ZKClient client) {
         try {
             if (client == null) {
                 ZKConnect connect = new ZKConnect();
                 connect.setName(I18nHelper.unnamedConnection());
                 // 刷新图标
                 this.flushGraphic();
-                // 设置标题
-                super.setTitle(connect.getName());
+//                // 设置标题
+//                super.setTitle(connect.getName());
                 // 初始化zk连接
                 this.controller().client(new ZKClient(connect));
             } else {
                 // 刷新图标
                 this.flushGraphic();
-                // 设置标题
-                super.setTitle(client.zkConnect().getName());
+//                // 设置标题
+//                super.setTitle(client.zkConnect().getName());
                 // 初始化zk连接
                 this.controller().client(client);
             }
+            this.flushTitle();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -975,7 +975,7 @@ public class ZKNodeTabController extends DynamicTabController {
         NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
         resizeHelper.widthLimit(240f, 750f);
         resizeHelper.initResizeEvent();
-        // 搜索
+        // 过滤
         KeyHandler searchKeyHandler = new KeyHandler();
         searchKeyHandler.handler(e -> this.filterKW.requestFocus());
         searchKeyHandler.keyCode(KeyCode.F);
@@ -1057,21 +1057,21 @@ public class ZKNodeTabController extends DynamicTabController {
     @FXML
     private void doFilter() {
         String kw = this.filterKW.getTextTrim();
-        // 搜索模式
+        // 过滤模式
         byte mode = this.filterKW.filterMode();
-        // 搜索范围
+        // 过滤范围
         byte scope = this.filterKW.filterScope();
         // 过滤类型
         int type = this.filterType.getSelectedIndex();
         // 设置高亮是否匹配大小写
         this.treeView.highlightMatchCase(mode == 3 || mode == 1);
-        // 仅在搜索路径的情况下设置节点高亮
+        // 仅在过滤路径的情况下设置节点高亮
         if (scope == 2 || scope == 0) {
             this.treeView.highlightText(kw);
         } else {
             this.treeView.highlightText(null);
         }
-        // 仅在搜索数据的情况下设置内容高亮
+        // 仅在过滤数据的情况下设置内容高亮
         if (scope == 2 || scope == 1) {
             this.nodeData.setHighlightText(kw);
         } else {

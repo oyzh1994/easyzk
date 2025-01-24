@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.query;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.terminal.TerminalTextArea;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryTextArea extends TerminalTextArea {
+public class ZKQueryTextArea extends RichDataTextAreaPane {
 
     /**
      * zk客户端
@@ -41,12 +41,11 @@ public class ZKQueryTextArea extends TerminalTextArea {
     }
 
     @Override
-    protected void init() {
-        super.init();
+    public void initNode() {
+        this.initFont();
         this.initContentPrompts();
     }
 
-    @Override
     protected void initFont() {
         // 禁用字体管理
         super.disableFont();
@@ -58,7 +57,7 @@ public class ZKQueryTextArea extends TerminalTextArea {
     }
 
     @Override
-    protected void initContentPrompts() {
+    public void initContentPrompts() {
         // 设置内容提示符
         Set<String> set = ZKQueryUtil.getKeywords();
         set.addAll(ZKQueryUtil.getParams());

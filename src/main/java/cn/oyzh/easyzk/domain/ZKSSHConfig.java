@@ -10,6 +10,8 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
+ * zk连接ssh配置
+ *
  * @author oyzh
  * @since 2024-09-26
  */
@@ -20,6 +22,7 @@ public class ZKSSHConfig extends SSHConnect implements Serializable {
 
     /**
      * 连接id
+     *
      * @see ZKConnect
      */
     @Column

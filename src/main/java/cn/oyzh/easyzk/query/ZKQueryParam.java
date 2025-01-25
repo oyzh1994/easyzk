@@ -16,11 +16,22 @@ import java.util.List;
  */
 public class ZKQueryParam {
 
+    /**
+     * 内容
+     */
     @Getter
     private String content;
 
+    /**
+     * 参数
+     */
     private List<String> params;
 
+    /**
+     * 设置内容
+     *
+     * @param content 内容
+     */
     public void setContent(String content) {
         this.content = content;
         String[] arr = this.content.trim().split(" ");

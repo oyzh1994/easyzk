@@ -369,5 +369,4 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
     public ZKQueryTypeTreeItem queryTypeItem() {
         return (ZKQueryTypeTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof ZKQueryTypeTreeItem).findAny().get();
     }
-
 }

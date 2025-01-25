@@ -7,6 +7,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * zk收藏
+ *
  * @author oyzh
  * @since 2024-09-26
  */
@@ -32,5 +34,4 @@ public class ZKCollect implements Serializable {
         this.iid = iid;
         this.path = path;
     }
-
 }

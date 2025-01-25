@@ -36,7 +36,7 @@ import java.util.List;
 
 
 /**
- * zk子节点添加业务
+ * zk节点添加业务
  *
  * @author oyzh
  * @since 2020/10/09

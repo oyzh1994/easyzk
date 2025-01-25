@@ -433,6 +433,4 @@ public class ZKDataExportController extends StageController {
         this.exportPath = this.getWindowProp("nodePath");
         this.nodePath.setText(this.exportPath);
     }
-
-
 }

@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 import lombok.Getter;
 
 /**
- * 过滤文本输入框皮肤
+ * zk节点过滤文本域皮肤
  *
  * @author oyzh
  * @since 2025/01/23

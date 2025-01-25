@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 过滤文本域
+ * zk节点过滤文本域
  *
  * @author oyzh
  * @since 2025/01/23

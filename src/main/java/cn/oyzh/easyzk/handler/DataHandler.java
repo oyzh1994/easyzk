@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 /**
+ * 数据处理器
+ *
  * @author oyzh
  * @since 2024/08/29
  */
@@ -94,10 +96,9 @@ public class DataHandler {
 
     /**
      * 更新忽略进度
-     *
      */
-    protected void processedSkip( ) {
-      this.processed(0);
+    protected void processedSkip() {
+        this.processed(0);
     }
 
     /**

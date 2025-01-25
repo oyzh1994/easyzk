@@ -43,6 +43,4 @@ public class ZKQuery implements Serializable {
      */
     @Column
     private String content;
-
-
 }

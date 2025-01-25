@@ -7,7 +7,7 @@ import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 /**
- * sasl配置
+ * zk sasl配置存储
  *
  * @author oyzh
  * @since 2024/09/26

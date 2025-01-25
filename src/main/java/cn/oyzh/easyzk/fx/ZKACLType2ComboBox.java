@@ -21,15 +21,15 @@ public class ZKACLType2ComboBox extends FlexComboBox<String> implements I18nSele
     @Override
     public List<String> values(Locale locale) {
         this.clearItems();
-        if (locale == Locale.SIMPLIFIED_CHINESE) {
+        if (locale == Locale.SIMPLIFIED_CHINESE || locale == Locale.PRC) {
             this.addItem("开放认证(WORLD)");
             this.addItem(I18nHelper.digestAuth() + "(DIGEST)");
             this.addItem("IP");
-        } else if (locale == Locale.TRADITIONAL_CHINESE) {
+        } else if (locale == Locale.TRADITIONAL_CHINESE || locale == Locale.TAIWAN) {
             this.addItem("開放認證(WORLD)");
             this.addItem(I18nHelper.digestAuth() + "(DIGEST)");
             this.addItem("IP");
-        } else if (locale == Locale.ENGLISH) {
+        } else {
             this.addItem("WORLD");
             this.addItem("DIGEST");
             this.addItem("IP");

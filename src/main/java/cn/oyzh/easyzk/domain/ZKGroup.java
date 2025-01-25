@@ -7,7 +7,7 @@ import cn.oyzh.store.jdbc.Table;
 import lombok.EqualsAndHashCode;
 
 /**
- * zk树分组
+ * zk连接分组
  *
  * @author oyzh
  * @since 2023/5/12

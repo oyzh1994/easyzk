@@ -14,7 +14,7 @@ import javafx.stage.WindowEvent;
 
 
 /**
- * zk迁移业务
+ * zk迁移提醒
  *
  * @author oyzh
  * @since 2024/11/25

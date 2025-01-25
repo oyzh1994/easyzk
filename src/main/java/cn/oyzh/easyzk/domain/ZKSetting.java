@@ -108,6 +108,7 @@ public class ZKSetting extends Setting {
         super.copy(o);
         if (o instanceof ZKSetting setting) {
             this.loadMode = setting.loadMode;
+            this.viewport = setting.viewport;
             this.authMode = setting.authMode;
             this.nodeLoadLimit = setting.nodeLoadLimit;
         }

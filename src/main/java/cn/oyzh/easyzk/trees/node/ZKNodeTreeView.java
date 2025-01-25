@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * zk树
+ * zk节点树
  *
  * @author oyzh
- * @since 2023/1/29
+ * @since 2024/11/29
  */
 public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
 

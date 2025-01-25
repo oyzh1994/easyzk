@@ -4,6 +4,8 @@ import lombok.Data;
 
 
 /**
+ * zk节点过滤参数
+ *
  * @author oyzh
  * @since 2025/01/22
  */

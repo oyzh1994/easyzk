@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @author oyzh
- * @since 2023/1/30
+ * @since 2024/01/25
  */
 public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItemValue> {
 
@@ -89,6 +89,4 @@ public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItemValue> 
     public void add(ZKQuery query) {
         this.addChild(new ZKQueryTreeItem(query, this.getTreeView()));
     }
-
-
 }

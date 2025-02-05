@@ -80,7 +80,7 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
         // 初始化按钮
         this.button = new SettingSVGGlyph();
         this.button.setEnableWaiting(false);
-        this.button.setFocusTraversable(false);
+//        this.button.setFocusTraversable(false);
         this.button.setOnMousePrimaryClicked(e -> this.showPopup());
         this.button.setOnMouseMoved(mouseEvent -> this.button.setColor("#E36413"));
         this.button.setOnMouseExited(mouseEvent -> this.button.setColor(this.getButtonColor()));

@@ -37,7 +37,7 @@ public class ZKNodeTreeItemValue extends RichTreeItemValue {
     @Override
     public SVGGlyph graphic() {
         if (this.graphic != null && this.graphic.isWaiting()) {
-            this.graphic.enableTheme();
+//            this.graphic.enableTheme();
             return this.graphic;
         }
         boolean changed = false;

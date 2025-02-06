@@ -50,6 +50,9 @@ public class EasyZKApp extends FXApplication {
 
     public static void main(String[] args) {
         try {
+            // 抗锯齿优化
+            System.setProperty("prism.text", "t2k");
+            System.setProperty("prism.lcdtext", "false");
             SysConst.projectName(PROJECT.getName());
             JulLog.info("项目启动中...");
             // 储存初始化

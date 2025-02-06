@@ -169,7 +169,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
         if (!this.isLoaded()) {
             this.setLoaded(true);
             ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
-            ZKQueryTypeTreeItem queryItem = new ZKQueryTypeTreeItem(this.getTreeView());
+            ZKQueriesTreeItem queryItem = new ZKQueriesTreeItem(this.getTreeView());
             ZKServerTreeItem informationItem = new ZKServerTreeItem(this.getTreeView());
             ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
 //            this.setChild(List.of(dataItem, informationItem, terminalItem));
@@ -366,7 +366,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
         return this.value.getId();
     }
 
-    public ZKQueryTypeTreeItem queryTypeItem() {
-        return (ZKQueryTypeTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof ZKQueryTypeTreeItem).findAny().get();
+    public ZKQueriesTreeItem queryTypeItem() {
+        return (ZKQueriesTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof ZKQueriesTreeItem).findAny().get();
     }
 }

@@ -40,9 +40,9 @@ public class ZKQueryTreeItem extends RichTreeItem<ZKQueryTreeItemValue> {
     }
 
     @Override
-    public ZKQueryTypeTreeItem parent() {
+    public ZKQueriesTreeItem parent() {
         TreeItem<?> parent = this.getParent();
-        return (ZKQueryTypeTreeItem) parent;
+        return (ZKQueriesTreeItem) parent;
     }
 
     public ZKClient client() {

@@ -19,13 +19,13 @@ import java.util.List;
  * @author oyzh
  * @since 2024/01/25
  */
-public class ZKQueryTypeTreeItem extends RichTreeItem<ZKQueryTypeTreeItemValue> {
+public class ZKQueriesTreeItem extends RichTreeItem<ZKQueriesTreeItemValue> {
 
     private final ZKQueryStore queryStore = ZKQueryStore.INSTANCE;
 
-    public ZKQueryTypeTreeItem(RichTreeView treeView) {
+    public ZKQueriesTreeItem(RichTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKQueryTypeTreeItemValue());
+        this.setValue(new ZKQueriesTreeItemValue());
     }
 
     @Override

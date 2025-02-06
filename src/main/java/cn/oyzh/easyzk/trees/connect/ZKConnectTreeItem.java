@@ -217,8 +217,8 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
-                    .onSuccess(this::refresh)
-                    .onFinish(SystemUtil::gcLater)
+                    .onFinish(this::refresh)
+                    .onSuccess(SystemUtil::gcLater)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);

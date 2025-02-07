@@ -404,10 +404,9 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
         if (items != null) {
             for (ZKConnectTreeItem item : items) {
                 if (StringUtil.equals(item.getId(), query.getIid())) {
-                    item.queryTypeItem().add(query);
+                    item.queriesItem().add(query);
                 }
             }
         }
     }
-
 }

@@ -107,6 +107,7 @@ public class ZKQueryTabController extends DynamicTabController {
     @FXML
     private void run() {
         try {
+            this.disableTab();
             ZKQueryParam param = new ZKQueryParam();
             param.setContent(this.content.getText());
             ZKQueryResult result = this.zkClient.query(param);
@@ -179,6 +180,8 @@ public class ZKQueryTabController extends DynamicTabController {
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
+        } finally {
+            this.enableTab();
         }
     }
 

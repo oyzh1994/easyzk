@@ -1,9 +1,8 @@
 package cn.oyzh.easyzk.query;
 
-import cn.oyzh.easyzk.fx.svg.glyph.KeywordsSVGGlyph;
-import cn.oyzh.easyzk.fx.svg.glyph.ParamSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.KeywordsSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.ParamSVGGlyph;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.label.FlexLabel;
 import cn.oyzh.fx.plus.controls.list.FlexListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;

@@ -22,7 +22,7 @@
 <?import cn.oyzh.fx.gui.setting.SettingMainPane?>
 <?import cn.oyzh.fx.gui.setting.SettingLeftTreeView?>
 <?import cn.oyzh.fx.gui.setting.SettingRightAction?>
-<?import cn.oyzh.fx.gui.svg.glyph.ResetSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <SettingMainPane fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
                  fx:controller="cn.oyzh.easyzk.controller.SettingController2" realWidth="700" realHeight="450">
     <left>
@@ -168,11 +168,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FlexSlider>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetOpacity">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetOpacity">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.titleBarOpacity">
                     <VBox.margin>
@@ -185,11 +185,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FlexSlider>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetTitleBarOpacity">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetTitleBarOpacity">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="font_general_box" flexWidth="100%"
@@ -205,11 +205,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontFamilyComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetFontFamily">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetFontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.fontSize">
                     <VBox.margin>
@@ -222,11 +222,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontSizeComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetFontSize">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetFontSize">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.fontWeight">
                     <VBox.margin>
@@ -239,11 +239,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontWeightComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetFontWeight">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetFontWeight">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="font_editor_box" flexWidth="100%"
@@ -259,11 +259,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontFamilyComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetEditorFontFamily">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetEditorFontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.fontSize">
                     <VBox.margin>
@@ -276,11 +276,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontSizeComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetEditorFontSize">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetEditorFontSize">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.fontWeight">
                     <VBox.margin>
@@ -293,11 +293,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontWeightComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetEditorFontWeight">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetEditorFontWeight">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="font_terminal_box" flexWidth="100%"
@@ -313,11 +313,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontFamilyComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetTerminalFontFamily">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetTerminalFontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.fontSize">
                     <VBox.margin>
@@ -330,11 +330,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontSizeComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetTerminalFontSize">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetTerminalFontSize">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.fontWeight">
                     <VBox.margin>
@@ -347,11 +347,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontWeightComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetTerminalFontWeight">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetTerminalFontWeight">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="font_query_box" flexWidth="100%"
@@ -367,11 +367,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontFamilyComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontFamily">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.fontSize">
                     <VBox.margin>
@@ -384,11 +384,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontSizeComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontSize">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontSize">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.fontWeight">
                     <VBox.margin>
@@ -401,11 +401,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FontWeightComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontWeight">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontWeight">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="theme_box" flexWidth="100%" flexHeight="100%"
@@ -433,11 +433,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetFgColor">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetFgColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.bgColor">
                     <VBox.margin>
@@ -451,11 +451,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetBgColor">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetBgColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
                 <InfoLabel text="%base.accentColor">
                     <VBox.margin>
@@ -469,11 +469,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetAccentColor">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetAccentColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox managedBindVisible="true" visible="false" fx:id="locale_box" flexWidth="100%" flexHeight="100%"
@@ -489,11 +489,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </LocaleComboBox>
-                    <ResetSVGGlyph size="16" onMousePrimaryClicked="#resetLocale">
+                    <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetLocale">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ResetSVGGlyph>
+                    </UndoSVGGlyph>
                 </FlexHBox>
             </FlexVBox>
         </FlexVBox>

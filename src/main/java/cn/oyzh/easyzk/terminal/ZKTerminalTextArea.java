@@ -37,6 +37,12 @@ public class ZKTerminalTextArea extends TerminalTextArea {
     }
 
     @Override
+    protected void initTextArea() {
+        super.initTextArea();
+        super.initContentPrompts();
+    }
+
+    @Override
     protected void initFont() {
         // 禁用字体管理
         super.disableFont();

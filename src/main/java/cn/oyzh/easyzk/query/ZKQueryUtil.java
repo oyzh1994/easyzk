@@ -137,6 +137,16 @@ public class ZKQueryUtil {
                 }
             }));
         }
+        // 参数
+        if (token.isPossibilityParam()) {
+            tasks.add(() -> getParams().parallelStream().forEach(param -> {
+                ZKQueryPromptItem item = new ZKQueryPromptItem();
+                item.setType((byte) 2);
+                item.setContent(param);
+                item.setCorrelation(1);
+                items.add(item);
+            }));
+        }
         // 节点
         if (token.isPossibilityNode()) {
             tasks.add(() -> getNodes().parallelStream().forEach(node -> {
@@ -144,21 +154,11 @@ public class ZKQueryUtil {
                 double corr = clacCorr(node, text);
                 if (corr > minCorr) {
                     ZKQueryPromptItem item = new ZKQueryPromptItem();
-                    item.setType((byte) 2);
+                    item.setType((byte) 3);
                     item.setContent(node);
                     item.setCorrelation(corr);
                     items.add(item);
                 }
-            }));
-        }
-        // 参数
-        if (token.isPossibilityParam()) {
-            tasks.add(() -> getParams().parallelStream().forEach(param -> {
-                ZKQueryPromptItem item = new ZKQueryPromptItem();
-                item.setType((byte) 3);
-                item.setContent(param);
-                item.setCorrelation(1);
-                items.add(item);
             }));
         }
         // 执行任务

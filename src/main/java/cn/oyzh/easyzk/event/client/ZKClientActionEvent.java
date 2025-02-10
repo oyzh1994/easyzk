@@ -24,7 +24,7 @@ public class ZKClientActionEvent extends Event<String> implements EventFormatter
     private String action;
 
     @Setter
-    private List<ZKClientActionArgument> arguments = new ArrayList<>();
+    private List<ZKClientActionArgument> arguments = new ArrayList<>(12);
 
     public void arguments(List<ZKClientActionArgument>  arguments) {
         this.arguments.addAll(arguments);

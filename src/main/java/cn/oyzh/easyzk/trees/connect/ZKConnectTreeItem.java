@@ -72,7 +72,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(12);
         if (this.isConnecting()) {
             FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("12", this::cancelConnect);
             items.add(cancelConnect);

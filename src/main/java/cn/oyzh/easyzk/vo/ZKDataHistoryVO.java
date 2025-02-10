@@ -48,7 +48,7 @@ public class ZKDataHistoryVO extends ZKDataHistory implements Index {
      * @return zk数据历史列表
      */
     public static List<ZKDataHistoryVO> convert(@NonNull List<ZKDataHistory> list) {
-        List<ZKDataHistoryVO> voList = new ArrayList<>();
+        List<ZKDataHistoryVO> voList = new ArrayList<>(list.size());
         for (int i = 0; i < list.size(); i++) {
             voList.add(convert(list.get(i), i + 1));
         }

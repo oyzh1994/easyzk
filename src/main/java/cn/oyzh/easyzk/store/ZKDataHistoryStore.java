@@ -75,7 +75,7 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         try {
             String dataPath = SERVER_PATH + iid + "/" + MD5Util.md5Hex(path);
             if (client.exists(dataPath)) {
-                List<ZKDataHistory> histories = new ArrayList<>();
+                List<ZKDataHistory> histories = new ArrayList<>(24);
                 for (String node : client.getChildren(dataPath)) {
                     ZKDataHistory history = new ZKDataHistory();
                     history.setIid(iid);
@@ -131,7 +131,7 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         // 新增数据
         super.insert(model);
         // 查询总数
-        List<QueryParam> queryParams = new ArrayList<>();
+        List<QueryParam> queryParams = new ArrayList<>(4);
         queryParams.add(new QueryParam("path", path));
         queryParams.add(new QueryParam("iid", iid));
         long count = super.selectCount(queryParams);

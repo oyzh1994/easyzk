@@ -44,7 +44,7 @@ public class ZKQueriesTreeItem extends RichTreeItem<ZKQueriesTreeItemValue> {
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(2);
         FXMenuItem addQuery = MenuItemHelper.addQuery("12", this::addQuery);
         items.add(addQuery);
         return items;
@@ -62,7 +62,7 @@ public class ZKQueriesTreeItem extends RichTreeItem<ZKQueriesTreeItemValue> {
                 this.setLoading(true);
                 String iid = this.parent().getId();
                 List<ZKQuery> queries = this.queryStore.list(iid);
-                List<TreeItem<?>> items = new ArrayList<>();
+                List<TreeItem<?>> items = new ArrayList<>(queries.size());
                 for (ZKQuery query : queries) {
                     items.add(new ZKQueryTreeItem(query, this.getTreeView()));
                 }

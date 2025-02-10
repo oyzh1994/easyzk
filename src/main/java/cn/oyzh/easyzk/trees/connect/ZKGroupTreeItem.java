@@ -77,7 +77,7 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItemValue> implemen
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(4);
         FXMenuItem addConnect = MenuItemHelper.addConnect("12", this::addConnect);
         FXMenuItem renameGroup = MenuItemHelper.renameGroup("12", this::rename);
         FXMenuItem delGroup = MenuItemHelper.deleteGroup("12", this::delete);

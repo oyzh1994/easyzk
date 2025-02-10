@@ -60,7 +60,7 @@ public class ZKConnectExport {
         JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObject(json);
         ZKConnectExport export = new ZKConnectExport();
-        export.connects = new ArrayList<>();
+        export.connects = new ArrayList<>(12);
         export.version = object.getString("version");
         export.connects = object.getBeanList("connects", ZKConnect.class);
         return export;

@@ -39,7 +39,7 @@ public class ZKAuthTableView extends FlexTableView<ZKAuthVO> {
     }
 
     public List<ZKAuth> getAuths() {
-        List<ZKAuth> list = new ArrayList<>();
+        List<ZKAuth> list = new ArrayList<>(this.list.size());
         for (ZKAuthVO authVO : this.list) {
             if (authVO != null && StringUtil.isNotBlank(authVO.getUser()) && StringUtil.isNotBlank(authVO.getPassword())) {
                 list.add(authVO);
@@ -49,7 +49,7 @@ public class ZKAuthTableView extends FlexTableView<ZKAuthVO> {
     }
 
     private void initDataList() {
-        List<ZKAuthVO> list = new ArrayList<>();
+        List<ZKAuthVO> list = new ArrayList<>(12);
         if (this.list != null) {
             for (ZKAuthVO authVO : this.list) {
                 if (StringUtil.isBlank(this.kw) || StringUtil.containsIgnoreCase(authVO.getUser(), this.kw)
@@ -63,7 +63,7 @@ public class ZKAuthTableView extends FlexTableView<ZKAuthVO> {
 
     public void addAuth(ZKAuthVO authVO) {
         if (this.list == null) {
-            this.list = new ArrayList<>();
+            this.list = new ArrayList<>(12);
         }
         this.list.add(authVO);
         this.initDataList();

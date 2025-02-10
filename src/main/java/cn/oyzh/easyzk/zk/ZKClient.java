@@ -1140,7 +1140,7 @@ public class ZKClient {
      * @return 集群服务列表
      */
     public List<ZKClusterNode> clusterNodes() {
-        List<ZKClusterNode> servers = new ArrayList<>();
+        List<ZKClusterNode> servers = new ArrayList<>(8);
         try {
             QuorumVerifier verifier = this.getCurrentConfig();
             // 老版本实现
@@ -1225,7 +1225,7 @@ public class ZKClient {
      * @return 结果
      */
     public List<ZKEnvNode> localNodes() {
-        List<ZKEnvNode> list = new ArrayList<>();
+        List<ZKEnvNode> list = new ArrayList<>(8);
         ZKEnvNode host = new ZKEnvNode("host", this.zkConnect.getHost());
         ZKEnvNode connection = new ZKEnvNode("connection", this.zkConnect.getName());
         ZKEnvNode version = new ZKEnvNode("sdkVersion", Version.getFullVersion());

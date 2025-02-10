@@ -289,7 +289,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(12);
         if (this.isLoading()) {
             FXMenuItem cancel = MenuItemHelper.cancelOperation("11", this::cancel);
             items.add(cancel);

@@ -43,7 +43,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forCreateAction(String connectName, String path, byte[] data, CreateMode createMode, List<? extends ACL> aclList, Long ttl) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(12);
         if (createMode.isSequential()) {
             arguments.add(ZKClientActionArgument.ofArgument("-s"));
         }
@@ -63,7 +63,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forSetAction(String connectName, String path, byte[] data, Integer version, boolean stat) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(12);
         if (stat) {
             arguments.add(ZKClientActionArgument.ofArgument("-s"));
         }
@@ -77,7 +77,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forLsAction(String connectName, String path, boolean stat, boolean watch, boolean recursion) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(12);
         if (stat) {
             arguments.add(ZKClientActionArgument.ofArgument("-s"));
         }
@@ -92,7 +92,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forGetAction(String connectName, String path, boolean stat, boolean watch) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(12);
         if (stat) {
             arguments.add(ZKClientActionArgument.ofArgument("-s"));
         }
@@ -104,7 +104,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forSetAclAction(String connectName, String path, boolean stat, boolean recursion, Integer version, List<? extends ACL> aclList) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(12);
         if (stat) {
             arguments.add(ZKClientActionArgument.ofArgument("-s"));
         }
@@ -120,7 +120,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forGetAclAction(String connectName, String path, boolean watch) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(12);
         if (watch) {
             arguments.add(ZKClientActionArgument.ofArgument("-w"));
         }
@@ -129,7 +129,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forStatAction(String connectName, String path, boolean watch) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(12);
         if (watch) {
             arguments.add(ZKClientActionArgument.ofArgument("-w"));
         }
@@ -138,25 +138,25 @@ public class ZKClientActionUtil {
     }
 
     public static void forGetEphemeralsAction(String connectName, String path) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(12);
         arguments.add(ZKClientActionArgument.ofArgument(path));
         ZKEventUtil.clientAction(connectName, "getEphemerals", arguments);
     }
 
     public static void forGetAllChildrenNumberAction(String connectName, String path) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(4);
         arguments.add(ZKClientActionArgument.ofArgument(path));
         ZKEventUtil.clientAction(connectName, "getAllChildrenNumber", arguments);
     }
 
     public static void forSyncAction(String connectName, String path) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(4);
         arguments.add(ZKClientActionArgument.ofArgument(path));
         ZKEventUtil.clientAction(connectName, "sync", arguments);
     }
 
     public static void forDeleteAction(String connectName, String path, Integer version) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(4);
         if (version != null) {
             arguments.add(ZKClientActionArgument.ofArgument("-v", version));
         }
@@ -165,13 +165,13 @@ public class ZKClientActionUtil {
     }
 
     public static void forListQuotaAction(String connectName, String path) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(4);
         arguments.add(ZKClientActionArgument.ofArgument(path));
         ZKEventUtil.clientAction(connectName, "listquota", arguments);
     }
 
     public static void forDelQuotaAction(String connectName, String path, boolean bytes, boolean count) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(8);
         if (bytes) {
             arguments.add(ZKClientActionArgument.ofArgument("-b"));
         }
@@ -183,7 +183,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forSetQuotaAction(String connectName, String path, long bytes, long count) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(8);
         if (bytes >= 0) {
             arguments.add(ZKClientActionArgument.ofArgument("-b", bytes));
         }
@@ -195,7 +195,7 @@ public class ZKClientActionUtil {
     }
 
     public static void forAddAuthAction(String connectName, String scheme, String auth) {
-        List<ZKClientActionArgument> arguments = new ArrayList<>();
+        List<ZKClientActionArgument> arguments = new ArrayList<>(4);
         arguments.add(ZKClientActionArgument.ofArgument(scheme));
         arguments.add(ZKClientActionArgument.ofArgument(auth));
         ZKEventUtil.clientAction(connectName, "addauth", arguments);

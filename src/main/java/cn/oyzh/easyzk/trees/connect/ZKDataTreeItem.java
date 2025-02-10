@@ -31,7 +31,7 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItemValue> {
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(2);
         FXMenuItem openData = MenuItemHelper.openData("12", this::loadChild);
         items.add(openData);
         return items;

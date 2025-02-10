@@ -385,7 +385,7 @@ public class ZKNode implements Comparable<ZKNode> {
     public List<ZKACL> getACLByType(@NonNull String type) {
         if (!this.aclEmpty()) {
             type = type.toLowerCase();
-            List<ZKACL> aclList = new ArrayList<>();
+            List<ZKACL> aclList = new ArrayList<>(12);
             for (ZKACL acl : this.acl()) {
                 if (acl.schemeVal().equals(type)) {
                     aclList.add(acl);

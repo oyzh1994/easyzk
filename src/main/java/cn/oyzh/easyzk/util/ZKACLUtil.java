@@ -165,7 +165,7 @@ public class ZKACLUtil {
         if (acl == null || acl.isEmpty()) {
             return ZooDefs.Ids.OPEN_ACL_UNSAFE;
         }
-        List<ACL> aclList = new ArrayList<>();
+        List<ACL> aclList = new ArrayList<>(12);
         for (String str : acl.split(",")) {
             if (str.isEmpty()) {
                 continue;

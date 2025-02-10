@@ -35,7 +35,7 @@ public class ZKTerminalTreeItem extends RichTreeItem<ZKTerminalTreeItemValue> {
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(2);
         FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::loadChild);
         items.add(openTerminal);
         return items;

@@ -270,7 +270,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
      * @return List<ZKNodeTreeItem>
      */
     private List<ZKNodeTreeItem> getAllNodeItem() {
-        List<ZKNodeTreeItem> list = new ArrayList<>();
+        List<ZKNodeTreeItem> list = new ArrayList<>(128);
         this.getAllNodeItem(this.getRoot(), list);
         return list;
     }

@@ -20,9 +20,7 @@ import cn.oyzh.store.jdbc.JdbcConst;
 import cn.oyzh.store.jdbc.JdbcDialect;
 import cn.oyzh.store.jdbc.JdbcManager;
 import lombok.experimental.UtilityClass;
-import org.h2.engine.Database;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +56,7 @@ public class ZKStoreUtil {
      * @return 旧版本分组数据
      */
     public static List<ZKGroup> loadGroups() {
-        List<ZKGroup> groups = new ArrayList<>();
+        List<ZKGroup> groups = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_group.json";
@@ -92,7 +90,7 @@ public class ZKStoreUtil {
      * @return 旧版本连接数据
      */
     public static List<ZKConnect> loadConnects() {
-        List<ZKConnect> connects = new ArrayList<>();
+        List<ZKConnect> connects = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_info.json";
@@ -173,7 +171,7 @@ public class ZKStoreUtil {
      * @return 旧版本过滤数据
      */
     public static List<ZKFilter> loadFilters() {
-        List<ZKFilter> filters = new ArrayList<>();
+        List<ZKFilter> filters = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_filter.json";
@@ -210,7 +208,7 @@ public class ZKStoreUtil {
      * @return 旧版本认证数据
      */
     public static List<ZKAuth> loadAuths() {
-        List<ZKAuth> auths = new ArrayList<>();
+        List<ZKAuth> auths = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_auth.json";
@@ -247,7 +245,7 @@ public class ZKStoreUtil {
      * @return 旧版本终端历史数据
      */
     public static List<ZKTerminalHistory> loadTerminalHistory() {
-        List<ZKTerminalHistory> histories = new ArrayList<>();
+        List<ZKTerminalHistory> histories = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_shell_history.json";

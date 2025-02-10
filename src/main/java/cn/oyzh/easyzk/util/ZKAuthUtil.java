@@ -41,7 +41,7 @@ public class ZKAuthUtil {
      */
     public static List<AuthInfo> toAuthInfo(List<? extends ZKAuth> auths) {
         if (CollectionUtil.isNotEmpty(auths)) {
-            List<AuthInfo> authInfos = new ArrayList<>();
+            List<AuthInfo> authInfos = new ArrayList<>(auths.size());
             for (ZKAuth auth : auths) {
                 authInfos.add(new AuthInfo("digest", (auth.getUser() + ":" + auth.getPassword()).getBytes()));
             }

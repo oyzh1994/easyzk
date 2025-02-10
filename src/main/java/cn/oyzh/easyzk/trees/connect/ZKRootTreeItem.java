@@ -59,7 +59,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(4);
         FXMenuItem addConnect = MenuItemHelper.addConnect("12", this::addConnect);
         FXMenuItem exportConnect = MenuItemHelper.exportConnect("12", this::exportConnect);
         FXMenuItem importConnect = MenuItemHelper.importConnect("12", this::importConnect);

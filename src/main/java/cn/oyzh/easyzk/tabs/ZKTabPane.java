@@ -244,10 +244,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
             // 服务tab
             if (tab instanceof ZKServerTab serverTab && serverTab.zkConnect() == event.connect()) {
                 serverTab.closeTab();
+            } else if (tab instanceof ZKNodeTab nodeTab && nodeTab.zkConnect() == event.connect()) {// 连接tab
+                nodeTab.closeTab();
             } else if (tab instanceof ZKTerminalTab terminalTab && terminalTab.zkConnect() == event.connect()) {// 终端tab
                 terminalTab.closeTab();
-            } else if (tab instanceof ZKTerminalTab connectTab && connectTab.zkConnect() == event.connect()) {// 连接tab
-                connectTab.closeTab();
             } else if (tab instanceof ZKQueryTab queryTab && queryTab.zkConnect() == event.connect()) {// 查询tab
                 queryTab.closeTab();
             }

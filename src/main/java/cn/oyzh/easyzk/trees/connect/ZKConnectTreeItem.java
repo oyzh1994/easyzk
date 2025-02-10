@@ -170,7 +170,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
             this.setLoaded(true);
             ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
             ZKQueriesTreeItem queryItem = new ZKQueriesTreeItem(this.getTreeView());
-            ZKServerTreeItem informationItem = new ZKServerTreeItem(this.getTreeView());
+            ZKServerInfoTreeItem informationItem = new ZKServerInfoTreeItem(this.getTreeView());
             ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
 //            this.setChild(List.of(dataItem, informationItem, terminalItem));
             this.setChild(List.of(dataItem, informationItem, queryItem, terminalItem));

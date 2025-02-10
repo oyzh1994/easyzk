@@ -16,11 +16,11 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/30
  */
-public class ZKServerTreeItem extends RichTreeItem<ZKServerTreeItemValue> {
+public class ZKServerInfoTreeItem extends RichTreeItem<ZKServerInfoTreeItemValue> {
 
-    public ZKServerTreeItem(RichTreeView treeView) {
+    public ZKServerInfoTreeItem(RichTreeView treeView) {
         super(treeView);
-        this.setValue(new ZKServerTreeItemValue());
+        this.setValue(new ZKServerInfoTreeItemValue());
     }
 
     @Override

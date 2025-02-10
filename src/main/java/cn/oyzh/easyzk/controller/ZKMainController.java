@@ -11,6 +11,8 @@ import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKDataTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKQueriesTreeItem;
+import cn.oyzh.easyzk.trees.connect.ZKQueryTreeItem;
+import cn.oyzh.easyzk.trees.connect.ZKServerInfoTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKTerminalTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.event.Layout1Event;
@@ -154,6 +156,10 @@ public class ZKMainController extends ParentStageController {
         } else if (event.data() instanceof ZKDataTreeItem treeItem) {
             this.flushViewTitle(treeItem.zkConnect());
         } else if (event.data() instanceof ZKQueriesTreeItem treeItem) {
+            this.flushViewTitle(treeItem.zkConnect());
+        } else if (event.data() instanceof ZKQueryTreeItem treeItem) {
+            this.flushViewTitle(treeItem.zkConnect());
+        } else if (event.data() instanceof ZKServerInfoTreeItem treeItem) {
             this.flushViewTitle(treeItem.zkConnect());
         } else if (event.data() instanceof ZKTerminalTreeItem treeItem) {
             this.flushViewTitle(treeItem.zkConnect());

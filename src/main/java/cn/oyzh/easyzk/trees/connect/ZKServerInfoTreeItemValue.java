@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
-import cn.oyzh.fx.gui.svg.glyph.ServerSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
@@ -11,18 +11,18 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/4/7
  */
-public class ZKServerTreeItemValue extends RichTreeItemValue {
+public class ZKServerInfoTreeItemValue extends RichTreeItemValue {
 
     @Override
     public SVGGlyph graphic() {
         if (this.graphic == null) {
-            this.graphic = new ServerSVGGlyph("10");
+            this.graphic = new InfoSVGGlyph("11");
         }
         return super.graphic();
     }
 
     @Override
     public String name() {
-        return I18nHelper.server();
+        return I18nHelper.info();
     }
 }

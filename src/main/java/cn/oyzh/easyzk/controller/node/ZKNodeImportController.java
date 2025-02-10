@@ -289,7 +289,7 @@ public class ZKNodeImportController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.zkClient = this.getWindowProp("zkClient");
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
         this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StringUtil.isNotBlank(t1)));

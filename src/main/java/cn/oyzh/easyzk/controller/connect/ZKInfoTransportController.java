@@ -291,7 +291,7 @@
 //     }
 //
 //     @Override
-//     public void onStageShown(WindowEvent event) {
+//     public void onWindowShown(WindowEvent event) {
 //         // 来源连接不为null，则禁用来源选项
 //         this.formInfo = this.stage.getProp("formConnect");
 //         if (this.formInfo != null) {

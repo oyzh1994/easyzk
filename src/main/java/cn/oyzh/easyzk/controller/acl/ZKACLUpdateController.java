@@ -125,8 +125,8 @@ public class ZKACLUpdateController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         this.acl = this.getWindowProp("acl");
         // 获取初始化对象
         this.zkItem = this.getWindowProp("zkItem");

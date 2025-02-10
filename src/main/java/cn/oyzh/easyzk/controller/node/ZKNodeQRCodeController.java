@@ -43,7 +43,7 @@ public class ZKNodeQRCodeController extends StageController {
     private ImageView qrcode;
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.stage.hideOnEscape();
         this.initQRCode();
     }

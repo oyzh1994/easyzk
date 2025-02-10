@@ -427,8 +427,8 @@ public class ZKDataExportController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         this.connect = this.getWindowProp("connect");
         this.exportPath = this.getWindowProp("nodePath");
         this.nodePath.setText(this.exportPath);

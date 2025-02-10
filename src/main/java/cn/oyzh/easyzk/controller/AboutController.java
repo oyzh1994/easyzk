@@ -49,7 +49,7 @@ public class AboutController extends StageController {
     private final Project project = Project.load();
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         // 当舞台被显示时，设置名称文本框的文本为项目名称
         this.name.setText(this.project.getName());
         // 设置版本文本框的文本为项目版本号

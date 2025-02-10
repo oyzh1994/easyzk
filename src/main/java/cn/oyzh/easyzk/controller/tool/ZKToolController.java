@@ -87,7 +87,7 @@ public class ZKToolController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         this.user.addTextChangeListener((observableValue, s, t1) -> {

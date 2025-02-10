@@ -301,8 +301,8 @@
 //     }
 //
 //     @Override
-//     public void onStageShown(WindowEvent event) {
-//         super.onStageShown(event);
+//     public void onWindowShown(WindowEvent event) {
+//         super.onWindowShown(event);
 //         TreeItem<?> item = this.getWindowProp("zkItem");
 //         if (item instanceof ZKNodeTreeItem treeItem) {
 //             this.client = this.getWindowProp("zkClient");

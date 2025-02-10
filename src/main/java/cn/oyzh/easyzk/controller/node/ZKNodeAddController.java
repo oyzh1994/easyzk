@@ -344,7 +344,7 @@ public class ZKNodeAddController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.parentNodeBox.managedProperty().bind(this.parentNode.visibleProperty());
         ZKNodeTreeItem zkItem = this.getWindowProp("zkItem");
         this.zkClient = this.getWindowProp("zkClient");
@@ -357,7 +357,7 @@ public class ZKNodeAddController extends StageController {
         this.nodePath.requestFocus();
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
-        super.onStageShown(event);
+        super.onWindowShown(event);
     }
 
     @Override

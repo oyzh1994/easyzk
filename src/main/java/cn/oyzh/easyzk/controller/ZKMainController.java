@@ -83,8 +83,8 @@ public class ZKMainController extends ParentStageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
             this.resizeLeft(this.setting.getPageLeftWidth());

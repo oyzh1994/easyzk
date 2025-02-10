@@ -379,8 +379,8 @@ public class ZKConnectAddController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         this.group = this.getWindowProp("group");
         this.initAuthDataList();
         this.initFilterDataList();

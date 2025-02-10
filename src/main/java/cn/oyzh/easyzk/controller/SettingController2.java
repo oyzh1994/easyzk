@@ -482,7 +482,7 @@ public class SettingController2 extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         SettingLeftTreeView treeView = this.root.getLeftTreeView();
         treeView.addItem(SettingLeftItem.of(I18nHelper.zk(), "zk_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.window(), "window_box"));
@@ -494,7 +494,7 @@ public class SettingController2 extends StageController {
         treeView.addItem(SettingLeftItem.of(I18nHelper.theme(), "theme_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.locale(), "locale_box"));
         treeView.selectItem("zk_box");
-        super.onStageShown(event);
+        super.onWindowShown(event);
         this.stage.hideOnEscape();
     }
 

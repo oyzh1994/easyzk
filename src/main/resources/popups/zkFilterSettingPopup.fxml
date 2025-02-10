@@ -32,12 +32,12 @@
         </FXCheckBox>
     </FlexHBox>
     <FlexHBox>
-        <SubmitSVGGlyph onMousePrimaryClicked="#apply" sizeStr="16,14">
+        <SubmitSVGGlyph onMousePrimaryClicked="#apply" sizeStr="15,11">
             <HBox.margin>
                 <Insets left="15" top="15"/>
             </HBox.margin>
         </SubmitSVGGlyph>
-        <CloseSVGGlyph onMousePrimaryClicked="#close" sizeStr="14">
+        <CloseSVGGlyph onMousePrimaryClicked="#close" sizeStr="11">
             <HBox.margin>
                 <Insets left="15" top="15"/>
             </HBox.margin>

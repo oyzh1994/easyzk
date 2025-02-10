@@ -30,6 +30,6 @@ public class ZKChangelogTabController extends DynamicTabController {
         // 更新日志列表
         List<Changelog> changelogs = ChangelogManager.load();
         // 初始化更新日志
-        this.changelog.init(changelogs);
+        this.changelog.init(changelogs.reversed());
     }
 }

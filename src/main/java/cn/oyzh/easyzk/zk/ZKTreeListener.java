@@ -100,5 +100,4 @@ public class ZKTreeListener implements TreeCacheListener {
         this.zkClient = null;
         this.maxTimeEffect = null;
     }
-
 }

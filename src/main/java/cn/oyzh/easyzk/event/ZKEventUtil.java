@@ -1,9 +1,10 @@
 package cn.oyzh.easyzk.event;
 
+import cn.oyzh.easyzk.action.ZKClientActionArgument;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
-import cn.oyzh.easyzk.event.client.ZKClientActionArgument;
 import cn.oyzh.easyzk.event.client.ZKClientActionEvent;
 import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
@@ -30,6 +31,11 @@ import cn.oyzh.easyzk.event.node.ZKNodeDeletedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeSelectedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeUpdatedEvent;
+import cn.oyzh.easyzk.event.query.ZKAddQueryEvent;
+import cn.oyzh.easyzk.event.query.ZKOpenQueryEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryAddedEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryDeletedEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryRenamedEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
@@ -223,22 +229,22 @@ public class ZKEventUtil {
     /**
      * 终端打开事件
      *
-     * @param info zk信息
+     * @param client zk客户端
      */
-    public static void terminalOpen(ZKConnect info) {
+    public static void terminalOpen(ZKClient client) {
         ZKTerminalOpenEvent event = new ZKTerminalOpenEvent();
-        event.data(info);
+        event.data(client);
         EventUtil.post(event);
     }
 
     /**
      * 终端关闭事件
      *
-     * @param info zk信息
+     * @param client zk客户端
      */
-    public static void terminalClose(ZKConnect info) {
+    public static void terminalClose(ZKClient client) {
         ZKTerminalCloseEvent event = new ZKTerminalCloseEvent();
-        event.data(info);
+        event.data(client);
         EventUtil.post(event);
     }
 
@@ -440,6 +446,109 @@ public class ZKEventUtil {
     public static void server(ZKClient client) {
         ZKServerEvent event = new ZKServerEvent();
         event.data(client);
+        EventUtil.post(event);
+    }
+
+//    /**
+//     * 搜索触发事件
+//     *
+//     * @param param     搜索参数
+//     * @param zkConnect zk连接
+//     */
+//    public static void searchTrigger(ZKSearchParam param, ZKConnect zkConnect) {
+//        ZKSearchTriggerEvent event = new ZKSearchTriggerEvent();
+//        event.data(zkConnect);
+//        event.param(param);
+//        EventUtil.post(event);
+//    }
+//
+//    /**
+//     * 搜索完成事件
+//     *
+//     * @param zkConnect zk连接
+//     */
+//    public static void searchComplete(ZKConnect zkConnect) {
+//        ZKSearchCompleteEvent event = new ZKSearchCompleteEvent();
+//        event.data(zkConnect);
+//        EventUtil.post(event);
+//    }
+//
+//    /**
+//     * 搜索结束事件
+//     *
+//     * @param zkConnect zk连接
+//     */
+//    public static void searchFinish(ZKConnect zkConnect) {
+//        ZKSearchFinishEvent event = new ZKSearchFinishEvent();
+//        event.data(zkConnect);
+//        EventUtil.post(event);
+//    }
+//
+//    /**
+//     * 搜索关闭事件
+//     *
+//     * @param zkConnect zk连接
+//     */
+//    public static void searchClose(ZKConnect zkConnect) {
+//        ZKSearchCloseEvent event = new ZKSearchCloseEvent();
+//        event.data(zkConnect);
+//        EventUtil.post(event);
+//    }
+
+    /**
+     * 添加查询事件
+     *
+     * @param client zk查询
+     */
+    public static void addQuery(ZKClient client) {
+        ZKAddQueryEvent event = new ZKAddQueryEvent();
+        event.data(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询已添加事件
+     *
+     * @param query zk查询
+     */
+    public static void queryAdded(ZKQuery query) {
+        ZKQueryAddedEvent event = new ZKQueryAddedEvent();
+        event.data(query);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询打开事件
+     *
+     * @param client zk客户端
+     * @param query  zk查询
+     */
+    public static void openQuery(ZKClient client, ZKQuery query) {
+        ZKOpenQueryEvent event = new ZKOpenQueryEvent();
+        event.data(query);
+        event.setClient(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询更名事件
+     *
+     * @param query zk查询
+     */
+    public static void queryRenamed(ZKQuery query) {
+        ZKQueryRenamedEvent event = new ZKQueryRenamedEvent();
+        event.data(query);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询删除事件
+     *
+     * @param query zk查询
+     */
+    public static void queryDeleted(ZKQuery query) {
+        ZKQueryDeletedEvent event = new ZKQueryDeletedEvent();
+        event.data(query);
         EventUtil.post(event);
     }
 }

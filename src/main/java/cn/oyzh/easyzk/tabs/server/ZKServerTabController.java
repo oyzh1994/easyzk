@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 
 
 /**
- * zk配置信息业务
+ * zk服务信息业务
  *
  * @author oyzh
  * @since 2022/08/25

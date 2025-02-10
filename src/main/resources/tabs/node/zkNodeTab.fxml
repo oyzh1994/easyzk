@@ -2,8 +2,6 @@
 
 <?import cn.oyzh.easyzk.fx.ZKACLTableView?>
 <?import cn.oyzh.easyzk.fx.ZKDataTextArea?>
-<?import cn.oyzh.easyzk.search.ZKNodeSearchTextField?>
-<?import cn.oyzh.easyzk.search.ZKNodeSearchTypeComboBox?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
@@ -23,25 +21,32 @@
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
-<FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTab.ZKNodeTabController">
+<?import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox?>
+<?import cn.oyzh.easyzk.filter.ZKNodeFilterTextField?>
+<FlexHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+          fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="30" flexWidth="100%">
-            <ZKNodeSearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType">
+            <ZKNodeFilterTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
-            </ZKNodeSearchTypeComboBox>
-            <ZKNodeSearchTextField onAction="#doSearch" onSearch="#doSearch" fx:id="searchKW" realHeight="24"
+            </ZKNodeFilterTypeComboBox>
+            <ZKNodeFilterTextField tipText="CTRL/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
                                    flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
-            </ZKNodeSearchTextField>
+            </ZKNodeFilterTextField>
         </FlexHBox>
         <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
         </ZKNodeTreeView>
         <FlexHBox flexWidth="100%" flexHeight="30">
+<!--            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch" appendTipText="(CTRL/COMMAND+F)">-->
+<!--                <HBox.margin>-->
+<!--                    <Insets left="5" top="5"/>-->
+<!--                </HBox.margin>-->
+<!--            </SearchSVGGlyph>-->
             <AddSVGGlyph size="16" onMousePrimaryClicked="#addNode">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -106,7 +111,8 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </RedoSVGGlyph>
-                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1" groupId="dataToBig">
+                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1"
+                                   groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
@@ -178,7 +184,7 @@
                         </HBox.margin>
                     </FXText>
                     <FXText enableTheme="false" tipText="%base.loadCost" fx:id="loadTime" style="-fx-fill: #009933;"
-                              realHeight="22">
+                            realHeight="22">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>

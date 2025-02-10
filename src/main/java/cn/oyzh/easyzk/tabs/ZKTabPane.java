@@ -2,15 +2,21 @@ package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
 import cn.oyzh.easyzk.event.connection.ZKServerEvent;
 import cn.oyzh.easyzk.event.history.ZKHistoryRestoreEvent;
+import cn.oyzh.easyzk.event.query.ZKAddQueryEvent;
+import cn.oyzh.easyzk.event.query.ZKOpenQueryEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryDeletedEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryRenamedEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.tabs.changelog.ZKChangelogTab;
 import cn.oyzh.easyzk.tabs.home.ZKHomeTab;
 import cn.oyzh.easyzk.tabs.node.ZKNodeTab;
+import cn.oyzh.easyzk.tabs.query.ZKQueryTab;
 import cn.oyzh.easyzk.tabs.server.ZKServerTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -22,6 +28,9 @@ import cn.oyzh.fx.plus.keyboard.KeyListener;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * zk切换面板
@@ -35,8 +44,23 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     public void onNodeInitialize() {
         if (!FXEventListener.super.isNodeInitialize()) {
             FXEventListener.super.onNodeInitialize();
-            // 刷新触发事件
+            // 刷新
             KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
+//            // 搜索
+//            KeyHandler searchKeyHandler = new KeyHandler();
+//            searchKeyHandler.handler(e -> {
+//                if (this.getSelectedItem() instanceof ZKNodeTab nodeTab) {
+//                    nodeTab.doSearch();
+//                }
+//            });
+//            searchKeyHandler.keyCode(KeyCode.F);
+//            if (OSUtil.isMacOS()) {
+//                searchKeyHandler.metaDown(true);
+//            } else {
+//                searchKeyHandler.controlDown(true);
+//            }
+//            searchKeyHandler.keyType(KeyEvent.KEY_RELEASED);
+//            KeyListener.addHandler(this, searchKeyHandler);
         }
     }
 
@@ -99,12 +123,13 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
     /**
      * 获取终端tab
      *
+     * @param client zk客户端
      * @return 终端tab
      */
-    private ZKTerminalTab getTerminalTab(ZKConnect zkConnect) {
-        if (zkConnect != null) {
+    private ZKTerminalTab getTerminalTab(ZKClient client) {
+        if (client != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof ZKTerminalTab terminalTab && terminalTab.connect() == zkConnect) {
+                if (tab instanceof ZKTerminalTab terminalTab && terminalTab.client() == client) {
                     return terminalTab;
                 }
             }
@@ -119,10 +144,10 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void terminalOpen(ZKTerminalOpenEvent event) {
-        ZKConnect zkConnect = event.data();
-        ZKTerminalTab terminalTab = this.getTerminalTab(zkConnect);
+        ZKClient client = event.data();
+        ZKTerminalTab terminalTab = this.getTerminalTab(client);
         if (terminalTab == null) {
-            terminalTab = new ZKTerminalTab(zkConnect);
+            terminalTab = new ZKTerminalTab(client);
             super.addTab(terminalTab);
         } else {
             terminalTab.flushGraphic();
@@ -199,20 +224,33 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void connectionClosed(ZKConnectionClosedEvent event) {
-        ZKNodeTab connectTab = this.getNodeTab(event.connect());
-        // 要检查连接和客户端是否相同
-        if (connectTab != null && connectTab.client() == event.data()) {
-            connectTab.closeTab();
-        }
-        // 检查连接是否相同
-        ZKTerminalTab terminalTab = this.getTerminalTab(event.connect());
-        if (terminalTab != null) {
-            terminalTab.closeTab();
-        }
-        // 检查连接是否相同
-        ZKServerTab serverTab = this.getServerTab(event.connect());
-        if (serverTab != null) {
-            serverTab.closeTab();
+//        ZKNodeTab connectTab = this.getNodeTab(event.connect());
+//        // 要检查连接和客户端是否相同
+//        if (connectTab != null && connectTab.client() == event.data()) {
+//            connectTab.closeTab();
+//        }
+//        // 检查连接是否相同
+//        ZKTerminalTab terminalTab = this.getTerminalTab(event.data());
+//        if (terminalTab != null) {
+//            terminalTab.closeTab();
+//        }
+//        // 检查连接是否相同
+//        ZKServerTab serverTab = this.getServerTab(event.data());
+//        if (serverTab != null) {
+//            serverTab.closeTab();
+//        }
+        List<Tab> tabs = new ArrayList<>(this.getTabs());
+        for (Tab tab : tabs) {
+            // 服务tab
+            if (tab instanceof ZKServerTab serverTab && serverTab.zkConnect() == event.connect()) {
+                serverTab.closeTab();
+            } else if (tab instanceof ZKNodeTab nodeTab && nodeTab.zkConnect() == event.connect()) {// 连接tab
+                nodeTab.closeTab();
+            } else if (tab instanceof ZKTerminalTab terminalTab && terminalTab.zkConnect() == event.connect()) {// 终端tab
+                terminalTab.closeTab();
+            } else if (tab instanceof ZKQueryTab queryTab && queryTab.zkConnect() == event.connect()) {// 查询tab
+                queryTab.closeTab();
+            }
         }
     }
 
@@ -263,6 +301,78 @@ public class ZKTabPane extends DynamicTabPane implements FXEventListener {
         }
         if (!serverTab.isSelected()) {
             this.select(serverTab);
+        }
+    }
+
+    /**
+     * 获取查询tab
+     *
+     * @param query 查询
+     * @return 查询tab
+     */
+    private ZKQueryTab getQueryTab(ZKQuery query) {
+        if (query != null) {
+            for (Tab tab : this.getTabs()) {
+                if (tab instanceof ZKQueryTab queryTab && queryTab.query() == query) {
+                    return queryTab;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 添加查询
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void addQuery(ZKAddQueryEvent event) {
+        ZKQueryTab queryTab = new ZKQueryTab(event.data(), null);
+        super.addTab(queryTab);
+        this.select(queryTab);
+    }
+
+    /**
+     * 打开查询
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void openQuery(ZKOpenQueryEvent event) {
+        ZKQueryTab queryTab = this.getQueryTab(event.data());
+        if (queryTab == null) {
+            queryTab = new ZKQueryTab(event.getClient(), event.data());
+            super.addTab(queryTab);
+        }
+        if (!queryTab.isSelected()) {
+            this.select(queryTab);
+        }
+    }
+
+    /**
+     * 查询更名
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void queryRenamed(ZKQueryRenamedEvent event) {
+        ZKQueryTab queryTab = this.getQueryTab(event.data());
+        if (queryTab != null) {
+            queryTab.flushTitle();
+        }
+    }
+
+    /**
+     * 查询删除
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void queryDeleted(ZKQueryDeletedEvent event) {
+        ZKQueryTab queryTab = this.getQueryTab(event.data());
+        if (queryTab != null) {
+            queryTab.closeTab();
         }
     }
 }

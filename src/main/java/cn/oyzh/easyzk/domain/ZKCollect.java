@@ -7,6 +7,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * zk收藏
+ *
  * @author oyzh
  * @since 2024-09-26
  */
@@ -15,7 +17,9 @@ import java.io.Serializable;
 public class ZKCollect implements Serializable {
 
     /**
-     * 信息id
+     * 连接id
+     *
+     * @see ZKConnect
      */
     @Column
     private String iid;
@@ -30,5 +34,4 @@ public class ZKCollect implements Serializable {
         this.iid = iid;
         this.path = path;
     }
-
 }

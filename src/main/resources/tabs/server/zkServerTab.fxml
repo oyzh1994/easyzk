@@ -16,7 +16,7 @@
             <FlexTableColumn sortable="false" fx:id="command" valueName="commandInfo" text="%base.cmd" flexWidth="29% - 12"/>
         </columns>
     </FlexTableView>
-    <FlexTabPane flexWidth="100%" flexHeight="100% - 80">
+    <FlexTabPane flexWidth="100%" flexHeight="100% - 120">
         <fx:include fx:id="aggregation" source="zkAggregationTab.fxml"/>
         <fx:include fx:id="local" source="zkLocalTab.fxml"/>
         <fx:include fx:id="srvr" source="zkSrvrTab.fxml"/>

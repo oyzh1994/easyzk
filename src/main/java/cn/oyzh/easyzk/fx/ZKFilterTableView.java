@@ -39,7 +39,7 @@ public class ZKFilterTableView extends FlexTableView<ZKFilterVO> {
     }
 
     public List<ZKFilter> getFilters() {
-        List<ZKFilter> list = new ArrayList<>();
+        List<ZKFilter> list = new ArrayList<>(this.list.size());
         for (ZKFilterVO filterVO : this.list) {
             if (filterVO != null && StringUtil.isNotBlank(filterVO.getKw())) {
                 list.add(filterVO);
@@ -49,7 +49,7 @@ public class ZKFilterTableView extends FlexTableView<ZKFilterVO> {
     }
 
     private void initDataList() {
-        List<ZKFilterVO> list = new ArrayList<>();
+        List<ZKFilterVO> list = new ArrayList<>(12);
         if (this.list != null) {
             for (ZKFilterVO filter : this.list) {
                 if (StringUtil.isBlank(this.kw) || StringUtil.containsIgnoreCase(filter.getKw(), this.kw)) {
@@ -62,7 +62,7 @@ public class ZKFilterTableView extends FlexTableView<ZKFilterVO> {
 
     public void addFilter(ZKFilterVO filter) {
         if (this.list == null) {
-            this.list = new ArrayList<>();
+            this.list = new ArrayList<>(12);
         }
         this.list.add(filter);
         this.initDataList();

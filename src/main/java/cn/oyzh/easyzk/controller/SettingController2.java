@@ -123,6 +123,24 @@ public class SettingController2 extends StageController {
     private RadioButton loadMode2;
 
     /**
+     * 节点视图
+     */
+    @FXML
+    private FXToggleGroup viewport;
+
+    /**
+     * 节点视图0
+     */
+    @FXML
+    private RadioButton viewport0;
+
+    /**
+     * 节点视图1
+     */
+    @FXML
+    private RadioButton viewport1;
+
+    /**
      * 节点自动认证
      */
     @FXML
@@ -231,6 +249,24 @@ public class SettingController2 extends StageController {
     private FontFamilyComboBox terminalFontFamily;
 
     /**
+     * 查询字体大小
+     */
+    @FXML
+    private FontSizeComboBox queryFontSize;
+
+    /**
+     * 查询字体粗细
+     */
+    @FXML
+    private FontWeightComboBox queryFontWeight;
+
+    /**
+     * 查询字体名称
+     */
+    @FXML
+    private FontFamilyComboBox queryFontFamily;
+
+    /**
      * 区域
      */
     @FXML
@@ -277,6 +313,13 @@ public class SettingController2 extends StageController {
                 case 2 -> this.loadMode2.setSelected(true);
             }
         }
+        // 节点显示处理
+        if (this.setting.getViewport() != null) {
+            switch (this.setting.getViewport()) {
+                case 0 -> this.viewport0.setSelected(true);
+                case 1 -> this.viewport1.setSelected(true);
+            }
+        }
         // 节点认证处理
         if (this.setting.getAuthMode() != null) {
             this.authMode.setSelected(this.setting.isAutoAuth());
@@ -310,6 +353,9 @@ public class SettingController2 extends StageController {
         this.terminalFontSize.selectSize(this.setting.getTerminalFontSize());
         this.terminalFontFamily.select(this.setting.getTerminalFontFamily());
         this.terminalFontWeight.selectWeight(this.setting.getTerminalFontWeight());
+        this.queryFontSize.selectSize(this.setting.getQueryFontSize());
+        this.queryFontFamily.select(this.setting.getQueryFontFamily());
+        this.queryFontWeight.selectWeight(this.setting.getQueryFontWeight());
         // 区域相关处理
         this.locale.select(this.setting.getLocale());
         // 透明度相关处理
@@ -329,6 +375,7 @@ public class SettingController2 extends StageController {
         try {
             byte authMode = (byte) (this.authMode.isSelected() ? 0 : 1);
             byte loadMode = Byte.parseByte(this.loadMode.selectedUserData());
+            byte viewport = Byte.parseByte(this.viewport.selectedUserData());
             String locale = this.locale.name();
             Byte fontSize = this.fontSize.byteValue();
             short fontWeight = this.fontWeight.getWeight();
@@ -339,12 +386,18 @@ public class SettingController2 extends StageController {
             Byte terminalFontSize = this.terminalFontSize.byteValue();
             short terminalFontWeight = this.terminalFontWeight.getWeight();
             String terminalFontFamily = this.terminalFontFamily.getValue();
+            Byte queryFontSize = this.queryFontSize.byteValue();
+            short queryFontWeight = this.queryFontWeight.getWeight();
+            String queryFontFamily = this.queryFontFamily.getValue();
 
             // 提示文字
             String tips = this.checkConfigForRestart(locale);
 
-            // 加载模式、认证模式
+            // 加载模式
             this.setting.setLoadMode(loadMode);
+            // 视图模式
+            this.setting.setViewport(viewport);
+            // 认证模式
             this.setting.setAuthMode(authMode);
             // 字体相关
             this.setting.setFontSize(fontSize);
@@ -356,6 +409,9 @@ public class SettingController2 extends StageController {
             this.setting.setTerminalFontSize(terminalFontSize);
             this.setting.setTerminalFontFamily(terminalFontFamily);
             this.setting.setTerminalFontWeight(terminalFontWeight);
+            this.setting.setQueryFontSize(queryFontSize);
+            this.setting.setQueryFontFamily(queryFontFamily);
+            this.setting.setQueryFontWeight(queryFontWeight);
             // 主题相关
             this.setting.setTheme(this.theme.name());
             this.setting.setBgColor(this.bgColor.getColor());
@@ -426,7 +482,7 @@ public class SettingController2 extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         SettingLeftTreeView treeView = this.root.getLeftTreeView();
         treeView.addItem(SettingLeftItem.of(I18nHelper.zk(), "zk_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.window(), "window_box"));
@@ -434,10 +490,11 @@ public class SettingController2 extends StageController {
         fontItem.addItem(SettingLeftItem.of(I18nHelper.general(), "font_general_box"));
         fontItem.addItem(SettingLeftItem.of(I18nHelper.editor(), "font_editor_box"));
         fontItem.addItem(SettingLeftItem.of(I18nHelper.terminal(), "font_terminal_box"));
+        fontItem.addItem(SettingLeftItem.of(I18nHelper.query(), "font_query_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.theme(), "theme_box"));
         treeView.addItem(SettingLeftItem.of(I18nHelper.locale(), "locale_box"));
         treeView.selectItem("zk_box");
-        super.onStageShown(event);
+        super.onWindowShown(event);
         this.stage.hideOnEscape();
     }
 
@@ -546,5 +603,20 @@ public class SettingController2 extends StageController {
     @FXML
     private void resetTerminalFontWeight() {
         this.terminalFontWeight.selectWeight(Setting.defaultTerminalFontWeight());
+    }
+
+    @FXML
+    private void resetQueryFontFamily() {
+        this.queryFontFamily.select(Setting.defaultQueryFontFamily());
+    }
+
+    @FXML
+    private void resetQueryFontSize() {
+        this.queryFontSize.selectSize(Setting.defaultQueryFontSize());
+    }
+
+    @FXML
+    private void resetQueryFontWeight() {
+        this.queryFontWeight.selectWeight(Setting.defaultQueryFontWeight());
     }
 }

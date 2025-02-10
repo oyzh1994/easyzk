@@ -165,7 +165,7 @@ public class ZKACLUtil {
         if (acl == null || acl.isEmpty()) {
             return ZooDefs.Ids.OPEN_ACL_UNSAFE;
         }
-        List<ACL> aclList = new ArrayList<>();
+        List<ACL> aclList = new ArrayList<>(12);
         for (String str : acl.split(",")) {
             if (str.isEmpty()) {
                 continue;
@@ -225,6 +225,17 @@ public class ZKACLUtil {
      * @return 字符串权限
      */
     public static String toPermStr(int permInt) {
+        return toPermStr(permInt, null);
+    }
+
+    /**
+     * 解析权限为字符串
+     *
+     * @param permInt int值权限
+     * @param joinStr 拼接字符串
+     * @return 字符串权限
+     */
+    public static String toPermStr(int permInt, String joinStr) {
         StringBuilder permStr = new StringBuilder(NumberUtil.getBinaryStr(permInt));
         int i = 5 - permStr.length();
         if (i > 5 || i < 0) {
@@ -235,19 +246,22 @@ public class ZKACLUtil {
         }
         StringBuilder builder = new StringBuilder();
         if (permStr.charAt(0) == '1') {
-            builder.append("a");
+            builder.append(joinStr).append("a");
         }
         if (permStr.charAt(1) == '1') {
-            builder.append("d");
+            builder.append(joinStr).append("d");
         }
         if (permStr.charAt(2) == '1') {
-            builder.append("c");
+            builder.append(joinStr).append("c");
         }
         if (permStr.charAt(3) == '1') {
-            builder.append("w");
+            builder.append(joinStr).append("w");
         }
         if (permStr.charAt(4) == '1') {
-            builder.append("r");
+            builder.append(joinStr).append("r");
+        }
+        if (StringUtil.isNotBlank(joinStr) && !builder.isEmpty()) {
+            return builder.substring(1);
         }
         return builder.toString();
     }

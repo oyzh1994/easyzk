@@ -28,7 +28,6 @@ import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.terminal.TerminalConst;
 import cn.oyzh.fx.terminal.util.TerminalManager;
 import cn.oyzh.i18n.I18nManager;
 import javafx.stage.Stage;
@@ -51,6 +50,9 @@ public class EasyZKApp extends FXApplication {
 
     public static void main(String[] args) {
         try {
+            // 抗锯齿优化
+            System.setProperty("prism.text", "t2k");
+            System.setProperty("prism.lcdtext", "false");
             SysConst.projectName(PROJECT.getName());
             JulLog.info("项目启动中...");
             // 储存初始化

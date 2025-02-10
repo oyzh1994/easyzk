@@ -20,10 +20,10 @@ public class ZKAuthTypeComboBox extends FlexComboBox<String> implements I18nSele
     @Override
     public List<String> values(Locale locale) {
         this.clearItems();
-        if (locale == Locale.TRADITIONAL_CHINESE) {
+        if (locale == Locale.TRADITIONAL_CHINESE || locale == Locale.TAIWAN) {
             this.addItem("用戶密碼明文");
             this.addItem("已有認證信息");
-        } else if (locale == Locale.SIMPLIFIED_CHINESE) {
+        } else if (locale == Locale.SIMPLIFIED_CHINESE || locale == Locale.PRC) {
             this.addItem("用户密码明文");
             this.addItem("已有认证信息");
         } else {

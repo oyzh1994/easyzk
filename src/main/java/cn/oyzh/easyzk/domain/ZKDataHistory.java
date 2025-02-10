@@ -14,7 +14,7 @@ import java.util.Objects;
  * zk数据历史
  *
  * @author oyzh
- * @since 2024/4/23
+ * @since 2024/04/23
  */
 @Getter
 @Table("t_data_history")
@@ -65,6 +65,9 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
             return true;
         }
         if (!Objects.equals(this.path, t1.path)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataLength, t1.dataLength)) {
             return false;
         }
         return Objects.equals(this.iid, t1.iid);

@@ -111,5 +111,9 @@ chmod -R 755 /路径/EasyZK.app(可拖入命令行窗口)
 ![img27.png](resource/md/img27.png)
 ###### 截图28
 ![img28.png](resource/md/img28.png)
-###### 截图27
+###### 截图29
 ![img29.png](resource/md/img29.png)
+###### 截图30
+![img30.png](resource/md/img30.png)
+###### 截图31
+![img31.png](resource/md/img31.png)

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.gui.svg.glyph.NextSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.PrevSVGGlyph?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeSearchController" realWidth="330" realHeight="95">
+    <FlexHBox>
+        <ClearableTextField onKeyPressed="#keywordKeyPressed" fx:id="keyword" prefWidth="250" prefHeight="25" promptText="%base.searchKWTip">
+            <HBox.margin>
+                <Insets left="15" top="15"/>
+            </HBox.margin>
+        </ClearableTextField>
+        <NextSVGGlyph fx:id="next" sizeStr="16" onMousePrimaryClicked="#searchNext" appendTipText="(ENTER)" disable="true">
+            <HBox.margin>
+                <Insets left="5" top="22"/>
+            </HBox.margin>
+        </NextSVGGlyph>
+        <PrevSVGGlyph fx:id="prev" sizeStr="16" onMousePrimaryClicked="#searchPrev" appendTipText="(ALT+ENTER)" disable="true">
+            <HBox.margin>
+                <Insets left="5" top="22"/>
+            </HBox.margin>
+        </PrevSVGGlyph>
+    </FlexHBox>
+    <FlexHBox>
+        <FXCheckBox fx:id="searchPath" text="%base.path" selected="true">
+            <HBox.margin>
+                <Insets left="15" top="15"/>
+            </HBox.margin>
+        </FXCheckBox>
+        <FXCheckBox fx:id="searchData" text="%base.data" selected="true">
+            <HBox.margin>
+                <Insets left="5" top="15"/>
+            </HBox.margin>
+        </FXCheckBox>
+        <FXCheckBox fx:id="matchCase" text="%base.matchCase" >
+            <HBox.margin>
+                <Insets left="5" top="15"/>
+            </HBox.margin>
+        </FXCheckBox>
+        <FXCheckBox fx:id="matchFull" text="%base.matchFull" >
+            <HBox.margin>
+                <Insets left="5" top="15"/>
+            </HBox.margin>
+        </FXCheckBox>
+    </FlexHBox>
+</FlexVBox>

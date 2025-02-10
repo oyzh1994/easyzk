@@ -1,11 +1,13 @@
 package cn.oyzh.easyzk.util;
 
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import lombok.experimental.UtilityClass;
 
 /**
  * @author oyzh
  * @since 2024/5/13
  */
+@UtilityClass
 public class ZKI18nHelper {
 
     public static final String NODE_TIP1 = "zk.nodeTip1";

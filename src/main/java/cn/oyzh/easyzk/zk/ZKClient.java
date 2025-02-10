@@ -5,6 +5,7 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.thread.ThreadLocalUtil;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.easyzk.action.ZKClientActionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
@@ -21,6 +22,8 @@ import cn.oyzh.easyzk.exception.ZKNoCreatePermException;
 import cn.oyzh.easyzk.exception.ZKNoDeletePermException;
 import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
+import cn.oyzh.easyzk.query.ZKQueryParam;
+import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.store.ZKSSHConfigStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.ssh.SSHForwardConfig;
@@ -325,7 +328,7 @@ public class ZKClient {
                 // // 设置认证信息为已认证
                 // ZKAuthUtil.setAuthed(this, ZKAuthUtil.loadAuths(this.iid()));
             } else {// 连接未成功则关闭
-                this.close1();
+                this.closeInner();
                 if (this.state.get() == ZKConnState.FAILED) {
                     this.state.set(null);
                 } else {
@@ -387,7 +390,7 @@ public class ZKClient {
      * 关闭zk
      */
     public void close() {
-        this.close1();
+        this.closeInner();
         this.state.set(ZKConnState.CLOSED);
     }
 
@@ -402,7 +405,7 @@ public class ZKClient {
     /**
      * 关闭zk实际业务
      */
-    private void close1() {
+    private void closeInner() {
         try {
             // 关闭树监听
             this.closeTreeCache();
@@ -766,9 +769,11 @@ public class ZKClient {
      * @param cParents   在需要的时候是否创建父节点
      */
     public String create(@NonNull String path, String data, @NonNull List<ACL> aclList, Long ttl, @NonNull CreateMode createMode, boolean cParents) throws Exception {
-        byte[] bytes = null;
+        byte[] bytes;
         if (data != null) {
             bytes = data.getBytes();
+        } else {
+            bytes = new byte[0];
         }
         return this.create(path, bytes, aclList, ttl, createMode, cParents);
     }
@@ -792,25 +797,25 @@ public class ZKClient {
         }
     }
 
-    /**
-     * 获取子节点(异步)
-     *
-     * @param path     路径
-     * @param callback 回调函数
-     */
-    public void getChildren(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
-        try {
-            ZKClientActionUtil.forLsAction(this.connectName(), path, false, false, false);
-            this.framework.getChildren().inBackground(callback).forPath(path);
-        } catch (IllegalStateException ignore) {
-        } catch (Exception ex) {
-            if (ex instanceof KeeperException.NoAuthException) {
-                JulLog.error("path:{} NoAuth!", path);
-                throw new ZKNoChildPermException(path);
-            }
-            throw ex;
-        }
-    }
+//    /**
+//     * 获取子节点(异步)
+//     *
+//     * @param path     路径
+//     * @param callback 回调函数
+//     */
+//    public void getChildren(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
+//        try {
+//            ZKClientActionUtil.forLsAction(this.connectName(), path, false, false, false);
+//            this.framework.getChildren().inBackground(callback).forPath(path);
+//        } catch (IllegalStateException ignore) {
+//        } catch (Exception ex) {
+//            if (ex instanceof KeeperException.NoAuthException) {
+//                JulLog.error("path:{} NoAuth!", path);
+//                throw new ZKNoChildPermException(path);
+//            }
+//            throw ex;
+//        }
+//    }
 
     /**
      * 获取节点数据
@@ -1036,19 +1041,19 @@ public class ZKClient {
         return this.framework.checkExists().forPath(path);
     }
 
-    /**
-     * 获取状态(异步)
-     *
-     * @param path     路径
-     * @param callback 回调函数
-     */
-    public void checkExists(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
-        try {
-            ZKClientActionUtil.forStatAction(this.connectName(), path, false);
-            this.framework.checkExists().inBackground(callback).forPath(path);
-        } catch (IllegalStateException ignore) {
-        }
-    }
+//    /**
+//     * 获取状态(异步)
+//     *
+//     * @param path     路径
+//     * @param callback 回调函数
+//     */
+//    public void checkExists(@NonNull String path, @NonNull BackgroundCallback callback) throws Exception {
+//        try {
+//            ZKClientActionUtil.forStatAction(this.connectName(), path, false);
+//            this.framework.checkExists().inBackground(callback).forPath(path);
+//        } catch (IllegalStateException ignore) {
+//        }
+//    }
 
     /**
      * 创建配额
@@ -1098,6 +1103,29 @@ public class ZKClient {
     }
 
     /**
+     * 获取临时节点
+     */
+    public List<String> getEphemerals() throws Exception {
+        return this.zooKeeper.getEphemerals();
+    }
+
+    /**
+     * 获取临时节点
+     *
+     * @param path 路径
+     */
+    public List<String> getEphemerals(String path) throws Exception {
+        return this.zooKeeper.getEphemerals(path);
+    }
+
+    /**
+     * 获取全部节点数量
+     */
+    public int getAllChildrenNumber(String path) throws Exception {
+        return this.zooKeeper.getAllChildrenNumber(path);
+    }
+
+    /**
      * 获取当前配置
      *
      * @return 配置
@@ -1112,7 +1140,7 @@ public class ZKClient {
      * @return 集群服务列表
      */
     public List<ZKClusterNode> clusterNodes() {
-        List<ZKClusterNode> servers = new ArrayList<>();
+        List<ZKClusterNode> servers = new ArrayList<>(8);
         try {
             QuorumVerifier verifier = this.getCurrentConfig();
             // 老版本实现
@@ -1187,6 +1215,7 @@ public class ZKClient {
     public void addStateListener(ChangeListener<ZKConnState> stateListener) {
         if (stateListener != null) {
             this.state.addListener(stateListener);
+//            this.state.addListener(new WeakChangeListener<>(stateListener));
         }
     }
 
@@ -1196,7 +1225,7 @@ public class ZKClient {
      * @return 结果
      */
     public List<ZKEnvNode> localNodes() {
-        List<ZKEnvNode> list = new ArrayList<>();
+        List<ZKEnvNode> list = new ArrayList<>(8);
         ZKEnvNode host = new ZKEnvNode("host", this.zkConnect.getHost());
         ZKEnvNode connection = new ZKEnvNode("connection", this.zkConnect.getName());
         ZKEnvNode version = new ZKEnvNode("sdkVersion", Version.getFullVersion());
@@ -1458,5 +1487,64 @@ public class ZKClient {
      */
     public boolean isInvalid() {
         return this.framework == null || this.framework.getState() == CuratorFrameworkState.STOPPED;
+    }
+
+    /**
+     * 执行查询
+     *
+     * @param param 查询参数
+     * @return 查询结果
+     */
+    public ZKQueryResult query(ZKQueryParam param) {
+        ZKQueryResult result = new ZKQueryResult();
+        long start = System.currentTimeMillis();
+        try {
+            String nodePath = param.getPath();
+            if (param.isLs() || param.isLs2()) {
+                result.setResult(this.getChildren(nodePath));
+            } else if (param.isGet()) {
+                result.setResult(this.getData(nodePath));
+            } else if (param.isSet()) {
+                this.setData(nodePath, param.getData());
+            } else if (param.isGetACL()) {
+                result.setResult(this.getACL(nodePath));
+            } else if (param.isSync()) {
+                this.sync(nodePath);
+            } else if (param.isCreate()) {
+                this.create(nodePath, param.getData(), param.getACL(), param.getCreateMode());
+            } else if (param.isGetEphemerals()) {
+                if (nodePath == null) {
+                    result.setResult(this.getEphemerals());
+                } else {
+                    result.setResult(this.getEphemerals(nodePath));
+                }
+            } else if (param.isGetAllChildrenNumber()) {
+                result.setResult(this.getAllChildrenNumber(nodePath));
+            } else if (param.isStat()) {
+            } else if (param.isSetQuota()) {
+                this.createQuota(nodePath, param.getParamB(), param.getParamN());
+            } else if (param.isListquota()) {
+                result.setResult(this.listQuota(nodePath));
+            } else if (param.isRmr() || param.isDeleteall()) {
+                this.delete(nodePath, null, true);
+            } else if (param.isDelete()) {
+                this.delete(nodePath, null, false);
+            } else if (param.isSetACL()) {
+                this.setACL(nodePath, param.getACL(), param.getParamV());
+            } else {
+                throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
+            }
+            if (param.hasParamStat()) {
+                result.setStat(this.checkExists(nodePath));
+            }
+            result.setSuccess(true);
+            result.setMessage("OK");
+        } catch (Exception ex) {
+            result.setSuccess(false);
+            result.setMessage(ex.getMessage());
+        }
+        long end = System.currentTimeMillis();
+        result.setCost(end - start);
+        return result;
     }
 }

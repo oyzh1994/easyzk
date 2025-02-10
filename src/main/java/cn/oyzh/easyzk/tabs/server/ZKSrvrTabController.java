@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import java.util.List;
 
 /**
- * zk客户端汇总信息tab内容组件
+ * zk客户端srvr信息tab内容组件
  *
  * @author oyzh
  * @since 2024/12/24

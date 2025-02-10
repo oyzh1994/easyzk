@@ -36,7 +36,7 @@ public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<T
         try {
             return super.execute(command, terminal);
         } finally {
-            ZKEventUtil.terminalClose(terminal.connect());
+            ZKEventUtil.terminalClose(terminal.client());
         }
     }
 }

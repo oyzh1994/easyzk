@@ -10,6 +10,7 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ import java.io.File;
 @StageAttribute(
         resizable = false,
         modality = Modality.WINDOW_MODAL,
+        stageStyle = FXStageStyle.UTILITY,
         value = FXConst.FXML_PATH + "node/zkNodeQRCode.fxml"
 )
 public class ZKNodeQRCodeController extends StageController {
@@ -41,7 +43,7 @@ public class ZKNodeQRCodeController extends StageController {
     private ImageView qrcode;
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.stage.hideOnEscape();
         this.initQRCode();
     }

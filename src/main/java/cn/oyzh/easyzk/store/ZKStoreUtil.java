@@ -5,6 +5,7 @@ import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.json.JSONArray;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
@@ -13,8 +14,11 @@ import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.jdbc.JdbcConst;
 import cn.oyzh.store.jdbc.JdbcDialect;
+import cn.oyzh.store.jdbc.JdbcManager;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
@@ -22,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * zk存储工具类
+ *
  * @author oyzh
  * @since 2024-09-23
  */
@@ -35,6 +41,13 @@ public class ZKStoreUtil {
         JdbcConst.dbCacheSize(1024);
         JdbcConst.dbDialect(JdbcDialect.H2);
         JdbcConst.dbFile(ZKConst.STORE_PATH + "db");
+        try {
+            JdbcManager.takeoff();
+        } catch (Exception ex) {
+            if (StringUtil.containsAny(ex.getMessage(), "Database may be already in use")) {
+                MessageBox.warn(I18nHelper.programTip1());
+            }
+        }
     }
 
     /**
@@ -43,7 +56,7 @@ public class ZKStoreUtil {
      * @return 旧版本分组数据
      */
     public static List<ZKGroup> loadGroups() {
-        List<ZKGroup> groups = new ArrayList<>();
+        List<ZKGroup> groups = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_group.json";
@@ -77,7 +90,7 @@ public class ZKStoreUtil {
      * @return 旧版本连接数据
      */
     public static List<ZKConnect> loadConnects() {
-        List<ZKConnect> connects = new ArrayList<>();
+        List<ZKConnect> connects = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_info.json";
@@ -158,7 +171,7 @@ public class ZKStoreUtil {
      * @return 旧版本过滤数据
      */
     public static List<ZKFilter> loadFilters() {
-        List<ZKFilter> filters = new ArrayList<>();
+        List<ZKFilter> filters = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_filter.json";
@@ -195,7 +208,7 @@ public class ZKStoreUtil {
      * @return 旧版本认证数据
      */
     public static List<ZKAuth> loadAuths() {
-        List<ZKAuth> auths = new ArrayList<>();
+        List<ZKAuth> auths = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_auth.json";
@@ -232,7 +245,7 @@ public class ZKStoreUtil {
      * @return 旧版本终端历史数据
      */
     public static List<ZKTerminalHistory> loadTerminalHistory() {
-        List<ZKTerminalHistory> histories = new ArrayList<>();
+        List<ZKTerminalHistory> histories = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "zk_shell_history.json";

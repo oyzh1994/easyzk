@@ -37,7 +37,7 @@ public class ZKAuthVO extends ZKAuth {
      * @return zk认证vo列表
      */
     public static List<ZKAuthVO> convert(@NonNull List<ZKAuth> list) {
-        List<ZKAuthVO> voList = new ArrayList<>();
+        List<ZKAuthVO> voList = new ArrayList<>(list.size());
         for (ZKAuth zkAuth : list) {
             voList.add(convert(zkAuth));
         }

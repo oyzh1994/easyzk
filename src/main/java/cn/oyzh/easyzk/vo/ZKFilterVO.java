@@ -37,7 +37,7 @@ public class ZKFilterVO extends ZKFilter {
      * @return zk过滤vo列表
      */
     public static List<ZKFilterVO> convert(@NonNull List<ZKFilter> list) {
-        List<ZKFilterVO> voList = new ArrayList<>();
+        List<ZKFilterVO> voList = new ArrayList<>(list.size());
         for (ZKFilter filter : list) {
             voList.add(convert(filter));
         }

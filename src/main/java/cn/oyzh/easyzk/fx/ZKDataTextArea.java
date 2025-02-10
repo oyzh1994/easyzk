@@ -6,6 +6,10 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 
+/**
+ * @author oyzh
+ * @since 2024/12/29
+ */
 public class ZKDataTextArea extends RichDataTextAreaPane {
 
     @Override
@@ -25,7 +29,7 @@ public class ZKDataTextArea extends RichDataTextAreaPane {
         // 禁用字体管理
         super.disableFont();
         // 初始化字体
-        ZKSetting setting= ZKSettingStore.SETTING;
+        ZKSetting setting = ZKSettingStore.SETTING;
         this.setFontSize(setting.getEditorFontSize());
         this.setFontFamily(setting.getEditorFontFamily());
         this.setFontWeight2(setting.getEditorFontWeight());

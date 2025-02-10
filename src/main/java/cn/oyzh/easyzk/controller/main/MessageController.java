@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 
 
 /**
- * zk数据历史业务
+ * zk消息业务
  *
  * @author oyzh
  * @since 2024/04/23
@@ -20,11 +20,10 @@ public class MessageController extends SubStageController   {
     private ZKMsgTextArea msgArea;
 
     /**
-     * 清空节点消息
+     * 清空消息
      */
     @FXML
     private void clearMsg() {
         this.msgArea.clear();
     }
-
 }

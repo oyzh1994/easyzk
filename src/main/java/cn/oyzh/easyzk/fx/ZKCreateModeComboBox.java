@@ -20,13 +20,13 @@ public class ZKCreateModeComboBox extends FlexComboBox<String> implements I18nSe
     @Override
     public List<String> values(Locale locale) {
         this.clearItems();
-        if (locale == Locale.TRADITIONAL_CHINESE) {
+        if (locale == Locale.TRADITIONAL_CHINESE || locale == Locale.TAIWAN) {
             this.addItem("持久節點(PERSISTENT)");
             this.addItem("臨時節點(EPHEMERAL)");
             this.addItem("持久順序節點(PERSISTENT_SEQUENTIAL)");
             this.addItem("臨時順序節點(EPHEMERAL_SEQUENTIAL)");
             this.addItem("容器節點(CONTAINER)");
-        } else if (locale == Locale.SIMPLIFIED_CHINESE) {
+        } else if (locale == Locale.SIMPLIFIED_CHINESE || locale == Locale.PRC) {
             this.addItem("持久节点(PERSISTENT)");
             this.addItem("临时节点(EPHEMERAL)");
             this.addItem("持久顺序节点(PERSISTENT_SEQUENTIAL)");

@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.terminal.cli.ZKAddAuthTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.cli.ZKCloseTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.cli.ZKCreateTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.cli.ZKDelQuotaTerminalCommandHandler;
+import cn.oyzh.easyzk.terminal.cli.ZKDeleteTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.cli.ZKDeleteallTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.cli.ZKGetAclTerminalCommandHandler;
 import cn.oyzh.easyzk.terminal.cli.ZKGetAllChildrenNumberCommandHandler;
@@ -69,6 +70,7 @@ public class ZKTerminalManager {
         TerminalManager.registerHandler(ZKCloseTerminalCommandHandler.class);
         TerminalManager.registerHandler(ZKCreateTerminalCommandHandler.class);
         TerminalManager.registerHandler(ZKDeleteallTerminalCommandHandler.class);
+        TerminalManager.registerHandler(ZKDeleteTerminalCommandHandler.class);
         TerminalManager.registerHandler(ZKDelQuotaTerminalCommandHandler.class);
         TerminalManager.registerHandler(ZKGetAclTerminalCommandHandler.class);
         TerminalManager.registerHandler(ZKGetAllChildrenNumberCommandHandler.class);

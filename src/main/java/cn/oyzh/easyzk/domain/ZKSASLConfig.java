@@ -8,6 +8,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * zk连接sasl配置
+ *
  * @author oyzh
  * @since 2024-12-20
  */
@@ -57,5 +59,4 @@ public class ZKSASLConfig implements Serializable {
         }
         return false;
     }
-
 }

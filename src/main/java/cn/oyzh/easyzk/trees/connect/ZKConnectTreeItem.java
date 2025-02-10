@@ -12,21 +12,17 @@ import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.fx.ZookeeperSVGGlyph;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -42,7 +38,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectTreeItemValue> {
+public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 
     /**
      * zk信息
@@ -76,27 +72,24 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(12);
         if (this.isConnecting()) {
             FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("12", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
             FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
-            FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
-//            FXMenuItem server = MenuItemHelper.serverInfo("12", this::serverInfo);
+            FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
-            // server.setDisable(!this.client.initialized());
 
             items.add(closeConnect);
             items.add(editConnect);
-            items.add(repeatConnect);
+            items.add(cloneConnect);
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
-//            items.add(server);
         } else {
             FXMenuItem connect = MenuItemHelper.startConnect("12", this::connect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
@@ -105,7 +98,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
-            FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
+            FXMenuItem cloneConnect = MenuItemHelper.repeatConnect("12", this::cloneConnect);
 
             items.add(connect);
             items.add(editConnect);
@@ -113,7 +106,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
-            items.add(repeatConnect);
+            items.add(cloneConnect);
             items.add(deleteConnect);
         }
         return items;
@@ -123,24 +116,11 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      * 导出zk节点
      */
     public void exportData() {
-        // StageAdapter fxView = StageManager.parseStage(ZKNodeExportController.class, this.window());
-        // fxView.setProp("zkItem", this);
-        // fxView.setProp("zkClient", this.client());
         StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
         fxView.setProp("connect", this.value);
         fxView.setProp("nodePath", "/");
         fxView.display();
     }
-//
-//    /**
-//     * 查看服务信息
-//     */
-//    public void serverInfo() {
-//        StageAdapter fxView = StageManager.parseStage(ZKServerInfoController.class, this.window());
-//        fxView.setProp("zkConnect", this.value);
-//        fxView.setProp("zkClient", this.client);
-//        fxView.display();
-//    }
 
     /**
      * 取消连接
@@ -167,10 +147,6 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
                         this.canceled = false;
                         this.closeConnect(false);
                     } else {
-                        // ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
-                        // ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
-                        // ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
-                        // this.setChild(List.of(dataItem, queryItem, terminalItem));
                         this.loadChild();
                         this.expend();
                     }
@@ -193,11 +169,11 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         if (!this.isLoaded()) {
             this.setLoaded(true);
             ZKDataTreeItem dataItem = new ZKDataTreeItem(this.getTreeView());
-            // ZKQueryTreeItem queryItem = new ZKQueryTreeItem(this.getTreeView());
-            ZKInformationTreeItem informationItem = new ZKInformationTreeItem(this.getTreeView());
+            ZKQueriesTreeItem queryItem = new ZKQueriesTreeItem(this.getTreeView());
+            ZKServerInfoTreeItem informationItem = new ZKServerInfoTreeItem(this.getTreeView());
             ZKTerminalTreeItem terminalItem = new ZKTerminalTreeItem(this.getTreeView());
-            this.setChild(List.of(dataItem, informationItem, terminalItem));
-            // this.setChild(List.of(dataItem, queryItem, terminalItem));
+//            this.setChild(List.of(dataItem, informationItem, terminalItem));
+            this.setChild(List.of(dataItem, informationItem, queryItem, terminalItem));
         }
     }
 
@@ -214,10 +190,6 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
      * 传输数据
      */
     private void transportData() {
-        // StageAdapter adapter = StageManager.getStage(ZKDataTransportController.class);
-        // if (adapter != null) {
-        //     adapter.disappear();
-        // }
         StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class, this.window());
         adapter.setProp("sourceInfo", this.value);
         adapter.display();
@@ -245,8 +217,8 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
-                    .onSuccess(this::refresh)
-                    .onFinish(SystemUtil::gcLater)
+                    .onFinish(this::refresh)
+                    .onSuccess(SystemUtil::gcLater)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);
@@ -271,12 +243,12 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
     }
 
     /**
-     * 复制连接
+     * 克隆连接
      */
-    private void repeatConnect() {
+    private void cloneConnect() {
         ZKConnect zkConnect = new ZKConnect();
         zkConnect.copy(this.value);
-        zkConnect.setName(this.value.getName() + "-" + I18nHelper.repeat());
+        zkConnect.setName(this.value.getName() + "-" + I18nHelper.clone1());
         zkConnect.setCollects(Collections.emptyList());
         if (this.connectStore.insert(zkConnect)) {
             this.connectManager().addConnect(zkConnect);
@@ -394,43 +366,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItem.ZKConnectT
         return this.value.getId();
     }
 
-    /**
-     * zk树节点值
-     *
-     * @author oyzh
-     * @since 2023/4/7
-     */
-    @Accessors(chain = true, fluent = true)
-    public static class ZKConnectTreeItemValue extends RichTreeItemValue {
-
-        public ZKConnectTreeItemValue(@NonNull ZKConnectTreeItem item) {
-            super(item);
-        }
-
-        @Override
-        protected ZKConnectTreeItem item() {
-            return (ZKConnectTreeItem) super.item();
-        }
-
-        @Override
-        public String name() {
-            return this.item().value().getName();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new ZookeeperSVGGlyph(12);
-            }
-            return super.graphic();
-        }
-
-        @Override
-        public Color graphicColor() {
-            if (this.item().isConnected() || this.item().isConnecting()) {
-                return Color.GREEN;
-            }
-            return super.graphicColor();
-        }
+    public ZKQueriesTreeItem queriesItem() {
+        return (ZKQueriesTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof ZKQueriesTreeItem).findAny().get();
     }
 }

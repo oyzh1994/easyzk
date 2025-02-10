@@ -33,9 +33,9 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.store.jdbc.QueryParam;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -50,7 +50,8 @@ import java.util.List;
  * @since 2020/9/15
  */
 @StageAttribute(
-        modality = Modality.WINDOW_MODAL,
+        stageStyle = FXStageStyle.UNIFIED,
+        modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "connect/zkConnectUpdate.fxml"
 )
 public class ZKConnectUpdateController extends StageController {
@@ -408,8 +409,8 @@ public class ZKConnectUpdateController extends StageController {
     }
 
     @Override
-    public void onStageShown(@NonNull WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(@NonNull WindowEvent event) {
+        super.onWindowShown(event);
         this.zkConnect = this.getWindowProp("zkConnect");
         this.name.setText(this.zkConnect.getName());
         this.remark.setText(this.zkConnect.getRemark());

@@ -10,7 +10,9 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.tabs.ZKTabPane;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKDataTreeItem;
+import cn.oyzh.easyzk.trees.connect.ZKQueriesTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKQueryTreeItem;
+import cn.oyzh.easyzk.trees.connect.ZKServerInfoTreeItem;
 import cn.oyzh.easyzk.trees.connect.ZKTerminalTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.event.Layout1Event;
@@ -83,8 +85,8 @@ public class ZKMainController extends ParentStageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
             this.resizeLeft(this.setting.getPageLeftWidth());
@@ -153,7 +155,11 @@ public class ZKMainController extends ParentStageController {
             this.flushViewTitle(treeItem.value());
         } else if (event.data() instanceof ZKDataTreeItem treeItem) {
             this.flushViewTitle(treeItem.zkConnect());
+        } else if (event.data() instanceof ZKQueriesTreeItem treeItem) {
+            this.flushViewTitle(treeItem.zkConnect());
         } else if (event.data() instanceof ZKQueryTreeItem treeItem) {
+            this.flushViewTitle(treeItem.zkConnect());
+        } else if (event.data() instanceof ZKServerInfoTreeItem treeItem) {
             this.flushViewTitle(treeItem.zkConnect());
         } else if (event.data() instanceof ZKTerminalTreeItem treeItem) {
             this.flushViewTitle(treeItem.zkConnect());

@@ -16,7 +16,6 @@ import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -386,7 +385,7 @@ public class ZKNode implements Comparable<ZKNode> {
     public List<ZKACL> getACLByType(@NonNull String type) {
         if (!this.aclEmpty()) {
             type = type.toLowerCase();
-            List<ZKACL> aclList = new ArrayList<>();
+            List<ZKACL> aclList = new ArrayList<>(12);
             for (ZKACL acl : this.acl()) {
                 if (acl.schemeVal().equals(type)) {
                     aclList.add(acl);

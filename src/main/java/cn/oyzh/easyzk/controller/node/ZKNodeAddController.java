@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
@@ -35,13 +36,14 @@ import java.util.List;
 
 
 /**
- * zk子节点添加业务
+ * zk节点添加业务
  *
  * @author oyzh
  * @since 2020/10/09
  */
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
+        stageStyle = FXStageStyle.UNIFIED,
         value = FXConst.FXML_PATH + "node/zkNodeAdd.fxml"
 )
 public class ZKNodeAddController extends StageController {
@@ -342,7 +344,7 @@ public class ZKNodeAddController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.parentNodeBox.managedProperty().bind(this.parentNode.visibleProperty());
         ZKNodeTreeItem zkItem = this.getWindowProp("zkItem");
         this.zkClient = this.getWindowProp("zkClient");
@@ -355,7 +357,7 @@ public class ZKNodeAddController extends StageController {
         this.nodePath.requestFocus();
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
-        super.onStageShown(event);
+        super.onWindowShown(event);
     }
 
     @Override

@@ -11,7 +11,6 @@ public class ReadonlyOperationException extends ZKException {
     public ReadonlyOperationException() {
         this(I18nResourceBundle.i18nString("base.readonlyMode", "base.notSupport", "base.current", "base.operation"));
         // this("只读模式不支持此操作");
-
     }
 
     public ReadonlyOperationException(String msg) {

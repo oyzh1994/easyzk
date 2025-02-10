@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
+<?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import javafx.geometry.Insets?>
+<FlexVBox xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryMsgTabController" flexWidth="100% - 30" flexHeight="100%">
+    <ReadOnlyTextArea fx:id="msg" flexHeight="100% - 5" flexWidth="100%">
+        <VBox.margin>
+            <Insets left="5" top="5"/>
+        </VBox.margin>
+    </ReadOnlyTextArea>
+</FlexVBox>

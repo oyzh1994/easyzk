@@ -7,14 +7,13 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.dto.ZKConnectExport;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -39,7 +38,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/1/29
  */
-public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemValue> implements ZKConnectManager {
+public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements ZKConnectManager {
 
     /**
      * zk分组储存
@@ -60,7 +59,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(4);
         FXMenuItem addConnect = MenuItemHelper.addConnect("12", this::addConnect);
         FXMenuItem exportConnect = MenuItemHelper.exportConnect("12", this::exportConnect);
         FXMenuItem importConnect = MenuItemHelper.importConnect("12", this::importConnect);
@@ -239,29 +238,29 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
     /**
      * 连接新增事件
      *
-     * @param info 连接
+     * @param zkConnect zk连接
      */
-    public void infoAdded(ZKConnect info) {
-        this.addConnect(info);
+    public void connectAdded(ZKConnect zkConnect) {
+        this.addConnect(zkConnect);
     }
 
     /**
      * 连接变更事件
      *
-     * @param info 连接
+     * @param zkConnect zk连接
      */
-    public void infoUpdated(ZKConnect info) {
+    public void connectUpdated(ZKConnect zkConnect) {
         f1:
         for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof ZKConnectTreeItem connectTreeItem) {
-                if (connectTreeItem.value() == info) {
-                    connectTreeItem.value(info);
+                if (connectTreeItem.value() == zkConnect) {
+                    connectTreeItem.value(zkConnect);
                     break;
                 }
             } else if (item instanceof ZKGroupTreeItem groupTreeItem) {
                 for (ZKConnectTreeItem connectTreeItem : groupTreeItem.getConnectItems()) {
-                    if (connectTreeItem.value() == info) {
-                        connectTreeItem.value(info);
+                    if (connectTreeItem.value() == zkConnect) {
+                        connectTreeItem.value(zkConnect);
                         break f1;
                     }
                 }
@@ -400,25 +399,14 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItem.ZKRootTreeItemVa
         }
     }
 
-    /**
-     * zk树节点值
-     *
-     * @author oyzh
-     * @since 2023/4/7
-     */
-    public static class ZKRootTreeItemValue extends RichTreeItemValue {
-
-        @Override
-        public String name() {
-            return I18nHelper.zk();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new SVGGlyph("/font/Zookeeper1.svg", 12);
+    public void queryAdded(ZKQuery query) {
+        List<ZKConnectTreeItem> items = this.getConnectItems();
+        if (items != null) {
+            for (ZKConnectTreeItem item : items) {
+                if (StringUtil.equals(item.getId(), query.getIid())) {
+                    item.queriesItem().add(query);
+                }
             }
-            return super.graphic();
         }
     }
 }

@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.controller.acl;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -490,8 +489,8 @@ public class ZKACLAddController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         // 获取初始化对象
         this.zkItem = this.getWindowProp("zkItem");
         this.zkClient = this.getWindowProp("zkClient");

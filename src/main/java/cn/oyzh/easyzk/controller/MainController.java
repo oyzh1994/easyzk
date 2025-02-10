@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -70,7 +69,7 @@ public class MainController extends ParentStageController {
     }
 
     @Override
-    public void onStageCloseRequest(WindowEvent event) {
+    public void onWindowCloseRequest(WindowEvent event) {
         JulLog.warn("main view closing.");
         // 直接退出应用
         if (this.setting.isExitDirectly()) {
@@ -146,9 +145,9 @@ public class MainController extends ParentStageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         try {
-            super.onStageShown(event);
+            super.onWindowShown(event);
             TitleBar titleBar = this.stage.getTitleBar();
             // 加载标题
             if (titleBar != null && !titleBar.isHasContent()) {

@@ -10,7 +10,7 @@ import javafx.event.Event;
 import javafx.scene.Cursor;
 
 /**
- * redis服务信息tab
+ * zk服务信息tab
  *
  * @author oyzh
  * @since 2023/08/01
@@ -40,7 +40,7 @@ public class ZKServerTab extends DynamicTab {
     /**
      * 初始化
      *
-     * @param client redis客户端
+     * @param client zk客户端
      */
     public void init(ZKClient client) {
         try {
@@ -63,18 +63,18 @@ public class ZKServerTab extends DynamicTab {
     }
 
     /**
-     * redis信息
+     * zk信息
      *
-     * @return redis信息
+     * @return zk信息
      */
     public ZKConnect zkConnect() {
         return this.controller().client().zkConnect();
     }
 
     /**
-     * redis客户端
+     * zk客户端
      *
-     * @return redis客户端
+     * @return zk客户端
      */
     public ZKClient client() {
         return this.controller().client();

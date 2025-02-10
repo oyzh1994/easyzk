@@ -20,7 +20,7 @@ public class ZKTerminalHistoryHandler extends BaseTerminalHistoryHandler {
     /**
      * 缓存记录
      */
-    private final List<ZKTerminalHistory> cecheList = new ArrayList<>();
+    private final List<ZKTerminalHistory> cecheList = new ArrayList<>(24);
 
     /**
      * 存储器

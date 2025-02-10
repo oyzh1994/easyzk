@@ -26,7 +26,7 @@ public enum ZKConnState {
         }
     },
     /**
-     * 已暂停
+     * 已中断
      */
     SUSPENDED {
         public boolean isConnected() {

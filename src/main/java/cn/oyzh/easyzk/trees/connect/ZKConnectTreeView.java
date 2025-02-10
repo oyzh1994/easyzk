@@ -6,6 +6,7 @@ import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
+import cn.oyzh.easyzk.event.query.ZKQueryAddedEvent;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tree.view.RichTreeCell;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -20,7 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
 
 /**
- * zk树
+ * zk连接树
  *
  * @author oyzh
  * @since 2023/1/29
@@ -109,8 +110,8 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      * @param event 事件
      */
     @EventSubscribe
-    private void infoAdded(ZKConnectAddedEvent event) {
-        this.getRoot().infoAdded(event.data());
+    private void connectAdded(ZKConnectAddedEvent event) {
+        this.getRoot().connectAdded(event.data());
     }
 
     /**
@@ -119,8 +120,8 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      * @param event 事件
      */
     @EventSubscribe
-    private void infoUpdated(ZKConnectUpdatedEvent event) {
-        this.getRoot().infoUpdated(event.data());
+    private void connectUpdated(ZKConnectUpdatedEvent event) {
+        this.getRoot().connectUpdated(event.data());
     }
 
     /**
@@ -129,5 +130,13 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
     @EventSubscribe
     private void addConnect(ZKAddConnectEvent event) {
         StageManager.showStage(ZKConnectAddController.class, this.window());
+    }
+
+    /**
+     * 查询已添加事件
+     */
+    @EventSubscribe
+    private void queryAdded(ZKQueryAddedEvent event) {
+        this.getRoot().queryAdded(event.data());
     }
 }

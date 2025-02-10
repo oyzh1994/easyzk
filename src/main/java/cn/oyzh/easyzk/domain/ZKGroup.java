@@ -4,13 +4,15 @@ import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.domain.TreeGroup;
 import cn.oyzh.store.jdbc.Table;
+import lombok.EqualsAndHashCode;
 
 /**
- * zk树分组
+ * zk连接分组
  *
  * @author oyzh
  * @since 2023/5/12
  */
+@EqualsAndHashCode(callSuper = true)
 @Table("t_group")
 public class ZKGroup extends TreeGroup implements ObjectComparator<ZKGroup> {
 

@@ -1,0 +1,54 @@
+package cn.oyzh.easyzk.filter;
+
+import lombok.Data;
+
+
+/**
+ * zk节点过滤参数
+ *
+ * @author oyzh
+ * @since 2025/01/22
+ */
+@Data
+public class ZKNodeFilterParam {
+
+    /**
+     * 匹配大小写
+     */
+    private boolean matchCase;
+
+    /**
+     * 匹配全文
+     */
+    private boolean matchFull;
+
+    /**
+     * 搜索路径
+     */
+    private boolean searchPath = true;
+
+    /**
+     * 搜索数据
+     */
+    private boolean searchData = true;
+
+    @Override
+    public boolean equals(Object param) {
+        if (param == this) {
+            return true;
+        }
+        if (param instanceof ZKNodeFilterParam searchParam) {
+            if (searchParam.matchCase && !this.matchCase) {
+                return false;
+            }
+            if (searchParam.matchFull && !this.matchFull) {
+                return false;
+            }
+            if (searchParam.searchData && !this.searchData) {
+                return false;
+            }
+            return !searchParam.searchPath || this.searchPath;
+        }
+        return false;
+    }
+}

@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.tabs;
 
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.common.util.OSUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
@@ -25,12 +24,10 @@ import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.FXEventListener;
-import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.List;

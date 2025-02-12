@@ -45,7 +45,7 @@ public class ZKPack {
     @Test
     public void easyzk_win_amd64_exe() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_amd64_msi.json";
+        String win_pack_config = packagePath + "/win/win_amd64_exe.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);

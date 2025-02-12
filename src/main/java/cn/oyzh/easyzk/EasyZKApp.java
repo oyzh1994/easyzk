@@ -30,6 +30,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.util.TerminalManager;
 import cn.oyzh.i18n.I18nManager;
+import com.sun.javafx.application.PlatformImpl;
 import javafx.stage.Stage;
 
 import java.awt.event.MouseEvent;
@@ -62,11 +63,13 @@ public class EasyZKApp extends FXApplication {
             SysConst.storeDir(ZKConst.STORE_PATH);
             SysConst.cacheDir(ZKConst.CACHE_PATH);
             FXConst.appIcon(ZKConst.ICON_PATH);
+            // 事件总线
             EventFactory.registerEventBus(FxEventBus.class);
             EventFactory.syncEventConfig(FxEventConfig.SYNC);
             EventFactory.asyncEventConfig(FxEventConfig.ASYNC);
             EventFactory.defaultEventConfig(FxEventConfig.DEFAULT);
             // TerminalConst.scanBase("cn.oyzh.easyzk.terminal");
+            PlatformImpl.isCaspian();
             // 初始化时区处理器
             // System.setProperty("java.time.zone.DefaultZoneRulesProvider", LocalZoneRulesProvider.class.getName());
             launch(EasyZKApp.class, args);

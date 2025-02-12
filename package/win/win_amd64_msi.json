@@ -14,6 +14,9 @@
 		"verbose": true,
 		"vendor": "oyzh",
 		"type": "msi",
+		"win-menu": true,
+		"win-shortcut": true,
+		"win-dir-chooser": true,
 		"description": "这是一个Zookeeper管理工具，提供导入、导出、传输、终端、可视化操作等功能."
 	},
 	"jdeps": {

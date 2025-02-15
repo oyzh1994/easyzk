@@ -146,9 +146,9 @@ public class SSHTerminalApp2 extends Application {
         root.getChildren().add(outputArea = new TextArea());
         outputArea.setPrefHeight(800);
 
-        userField.setText("root");
-        passField.setText("Oyzh.1994");
-        hostField.setText("120.24.176.61");
+        userField.setText("");
+        passField.setText("");
+        hostField.setText("");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("SSH Terminal");

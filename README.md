@@ -5,6 +5,9 @@
 ###### 启动入口
 cn.oyzh.easyzk.EasyZKBootstrap.main
 
+###### 下载地址
+https://gitee.com/oyzh1994/easyzk/releases
+
 ###### 依赖说明
 1. base工程  
  https://gitee.com/oyzh1994/base
@@ -136,3 +139,5 @@ chmod -R 755 /路径/EasyZK.app(可拖入命令行窗口)
 ![img30.png](resource/md/img30.png)
 ###### 截图31
 ![img31.png](resource/md/img31.png)
+###### 截图32
+![img32.png](resource/md/img32.png)

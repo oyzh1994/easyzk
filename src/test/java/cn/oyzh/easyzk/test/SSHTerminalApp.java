@@ -40,8 +40,8 @@ public class SSHTerminalApp extends Application {
         new Thread(() -> {
             try {
                 JSch jsch = new JSch();
-                Session session = jsch.getSession("root", "120.24.176.61", 22);
-                session.setPassword("Oyzh.1994");
+                Session session = jsch.getSession("", "", 22);
+                session.setPassword("");
                 session.setConfig("StrictHostKeyChecking", "no");
                 session.connect();
 

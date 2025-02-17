@@ -46,6 +46,8 @@ public class SSHTerminalApp2 extends Application {
             session.connect();
 
             channel = (ChannelShell) session.openChannel("shell");
+            channel.setPty(true);
+            channel.setPtySize(1000, 1000, 0, 0);
             channel.connect();
 
             in = channel.getInputStream();
@@ -60,19 +62,19 @@ public class SSHTerminalApp2 extends Application {
 
     private void readOutput() {
         try {
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[4 * 1024];
             while (true) {
+                StringBuilder builder = new StringBuilder();
                 int len = in.read(buffer);
                 if (len <= 0) {
-                    break;
+                    continue;
                 }
                 String data = new String(buffer, 0, len);
-//                Platform.runLater(() -> appendText(data));
-                System.out.println(data);
-//                System.out.println(data.endsWith("\n"));
-//                System.out.println(data.endsWith("\r\n"));
-//                System.out.println(data.endsWith("\r"));
-//                System.out.println(data.endsWith("# "));
+                builder.append(data);
+                if (!builder.isEmpty()) {
+                    String output = builder.toString();
+                    Platform.runLater(() -> appendText(output));
+                }
             }
         } catch (IOException e) {
             appendText("Read error: " + e.getMessage());
@@ -94,6 +96,16 @@ public class SSHTerminalApp2 extends Application {
         inputField.clear();
         try {
             out.write(0x03);
+            out.flush();
+        } catch (IOException e) {
+            appendText("Send error: " + e.getMessage());
+        }
+    }
+
+    private void sendEscCommand() {
+        inputField.clear();
+        try {
+            out.write(27);
             out.flush();
         } catch (IOException e) {
             appendText("Send error: " + e.getMessage());
@@ -141,14 +153,16 @@ public class SSHTerminalApp2 extends Application {
         button3.setOnAction(event -> {
             sendCtrlCCommand();
         });
-        HBox box1 = new HBox(button2, button3);
+        Button button4 = new Button("esc");
+        button4.setOnAction(event -> {
+            sendEscCommand();
+        });
+        HBox box1 = new HBox(button2, button3, button4);
         root.getChildren().add(box1);
         root.getChildren().add(outputArea = new TextArea());
         outputArea.setPrefHeight(800);
 
-        userField.setText("");
-        passField.setText("");
-        hostField.setText("");
+       
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("SSH Terminal");

@@ -30,7 +30,6 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.util.TerminalManager;
 import cn.oyzh.i18n.I18nManager;
-import com.sun.javafx.application.PlatformImpl;
 import javafx.stage.Stage;
 
 import java.awt.event.MouseEvent;

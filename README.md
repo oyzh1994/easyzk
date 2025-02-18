@@ -16,10 +16,10 @@ https://gitee.com/oyzh1994/easyzk/releases
 3. jdk版本要求23
 
 ###### 结构说明 
-docker -> docker配置文件
-package -> 打包相关配置
-resource -> 项目相关资源文件
-scripts -> 项目相关脚本文件(已废弃)
+docker -> docker配置文件  
+package -> 打包相关配置  
+resource -> 项目相关资源文件  
+scripts -> 项目相关脚本文件(已废弃)  
 src -> 项目相关代码
 
 # Maven
@@ -62,7 +62,7 @@ exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示
 配置 -> package -> macos -> macos_arm64_image.json  
 入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_image  
 ###### 注意事项
-dmg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
+dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 
 # Docker
 ###### docker启动zk(单个)

@@ -59,6 +59,12 @@ public class ZKQueryDataTabController extends DynamicTabController {
             } else if (this.format.isJsonFormat()) {
                 this.data.showJsonData(this.data.getText());
                 this.data.setEditable(true);
+            } else if (this.format.isXmlFormat()) {
+                this.data.showXmlData(this.data.getText());
+                this.data.setEditable(true);
+            } else if (this.format.isHtmlFormat()) {
+                this.data.showHtmlData(this.data.getText());
+                this.data.setEditable(true);
             } else if (this.format.isBinaryFormat()) {
                 this.data.showBinaryData(this.data.getText());
                 this.data.setEditable(false);

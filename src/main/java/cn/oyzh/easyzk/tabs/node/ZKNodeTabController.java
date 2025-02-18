@@ -934,6 +934,12 @@ public class ZKNodeTabController extends DynamicTabController {
             } else if (this.format.isJsonFormat()) {
                 this.showData(RichDataType.JSON);
                 this.nodeData.setEditable(true);
+            } else if (this.format.isXmlFormat()) {
+                this.showData(RichDataType.XML);
+                this.nodeData.setEditable(true);
+            } else if (this.format.isHtmlFormat()) {
+                this.showData(RichDataType.HTML);
+                this.nodeData.setEditable(true);
             } else if (this.format.isBinaryFormat()) {
                 this.showData(RichDataType.BINARY);
                 this.nodeData.setEditable(false);

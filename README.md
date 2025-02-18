@@ -52,6 +52,9 @@ https://github.com/wixtoolset/wix3/releases
 exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示程序图标的问题
 
 ###### macos arm64
+###### (推荐)pkg打包
+配置 -> package -> macos -> macos_arm64_pkg.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_pkg
 ###### dmg打包 
 配置 -> package -> macos -> macos_arm64_dmg.json  
 入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_dmg  

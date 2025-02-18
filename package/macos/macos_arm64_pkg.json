@@ -14,7 +14,7 @@
 	"jpackage": {
 		"verbose": true,
 		"vendor": "oyzh",
-		"type": "dmg",
+		"type": "pkg",
 		"mac-package-identifier": "cn.oyzh.easyzk",
 		"description": "这是一个Zookeeper管理工具，提供导入、导出、传输、终端、可视化操作等功能."
 	},

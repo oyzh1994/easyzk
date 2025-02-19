@@ -15,7 +15,7 @@
 <?import cn.oyzh.fx.plus.controls.box.*?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.*?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
@@ -79,7 +79,7 @@
             </PositioningSVGGlyph>
         </FlexHBox>
     </FlexVBox>
-    <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
+    <FXTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
                  flexHeight="100%"
                  rotateGraphic="true" disable="true">
         <FXTab text="%base.data" fx:id="dataTab">
@@ -276,12 +276,12 @@
                 </FlexHBox>
                 <ZKACLTableView fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 30">
                     <columns>
-                        <FlexTableColumn flexWidth="40%" text="%base.identify" sortable="false" valueName="idControl"/>
-                        <FlexTableColumn flexWidth="36%" text="%base.perms" sortable="false" valueName="permsControl"/>
-                        <FlexTableColumn flexWidth="12%" text="%base.schema" sortable="false"
-                                         valueName="schemaControl"/>
-                        <FlexTableColumn flexWidth="12% - 12" text="%base.status"
-                                         sortable="false" valueName="statusControl"/>
+                        <FXTableColumn flexWidth="40%" text="%base.identify" sortable="false" valueName="idControl"/>
+                        <FXTableColumn flexWidth="36%" text="%base.perms" sortable="false" valueName="permsControl"/>
+                        <FXTableColumn flexWidth="12%" text="%base.schema" sortable="false"
+                                       valueName="schemaControl"/>
+                        <FXTableColumn flexWidth="12% - 12" text="%base.status"
+                                       sortable="false" valueName="statusControl"/>
                     </columns>
                 </ZKACLTableView>
             </FlexVBox>
@@ -350,5 +350,5 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-    </FlexTabPane>
+    </FXTabPane>
 </FlexHBox>

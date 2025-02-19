@@ -1,7 +1,7 @@
 <!--<?xml version="1.0" encoding="UTF-8"?>-->
 <!--<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>-->
 <!--<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>-->
-<!--<?import cn.oyzh.fx.plus.controls.chart.FlexLineChart?>-->
+<!--<?import cn.oyzh.fx.plus.controls.chart.FXLineChart?>-->
 <!--<?import cn.oyzh.fx.plus.controls.tab.FXTab?>-->
 <!--<?import javafx.scene.chart.CategoryAxis?>-->
 <!--<?import javafx.scene.chart.NumberAxis?>-->

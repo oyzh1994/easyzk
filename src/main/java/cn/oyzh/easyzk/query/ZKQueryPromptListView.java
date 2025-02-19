@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.query;
 import cn.oyzh.fx.gui.svg.glyph.KeywordsSVGGlyph;
 import cn.oyzh.fx.gui.svg.glyph.ParamSVGGlyph;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.list.FlexListView;
+import cn.oyzh.fx.plus.controls.list.FXListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.mouse.MouseUtil;
@@ -21,7 +21,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
+public class ZKQueryPromptListView extends FXListView<FlexHBox> {
 
     {
         this.setRealWidth(360);
@@ -141,7 +141,7 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
             SVGLabel promptLabel = this.initPromptLabel(item);
             box.addChild(promptLabel);
 //            // 额外组件
-//            FlexLabel extLabel = this.initExtLabel(item);
+//            FXLabel extLabel = this.initExtLabel(item);
 //            if (extLabel != null) {
 //                box.addChild(extLabel);
 //            }
@@ -187,10 +187,10 @@ public class ZKQueryPromptListView extends FlexListView<FlexHBox> {
 //     * @param item 提示词
 //     * @return 组件
 //     */
-//    private FlexLabel initExtLabel(ZKQueryPromptItem item) {
-//        FlexLabel label = null;
+//    private FXLabel initExtLabel(ZKQueryPromptItem item) {
+//        FXLabel label = null;
 //        if (item.isTableType() || item.isViewType() || item.isColumnType()) {
-//            label = new FlexLabel(item.getExtContent());
+//            label = new FXLabel(item.getExtContent());
 //            label.setTextFill(Color.valueOf("#D3D3D3"));
 //        }
 //        if (label != null) {

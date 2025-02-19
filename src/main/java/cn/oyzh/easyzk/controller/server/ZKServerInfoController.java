@@ -9,7 +9,7 @@
 //import cn.oyzh.fx.plus.FXConst;
 //import cn.oyzh.fx.plus.controller.StageController;
 //import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-//import cn.oyzh.fx.plus.controls.table.FlexTableView;
+//import cn.oyzh.fx.plus.controls.table.FXTableView;
 //import cn.oyzh.fx.plus.window.StageAttribute;
 //import cn.oyzh.i18n.I18nHelper;
 //import javafx.fxml.FXML;
@@ -36,7 +36,7 @@
 //     * 服务信息
 //     */
 //    @FXML
-//    private FlexTableView<ZKServerInfo> serverTable;
+//    private FXTableView<ZKServerInfo> serverTable;
 //
 //    /**
 //     * 延迟信息
@@ -54,37 +54,37 @@
 //     * 状态信息
 //     */
 //    @FXML
-//    private FlexTableView<ZKEnvNode> statTable;
+//    private FXTableView<ZKEnvNode> statTable;
 //
 //    /**
 //     * 配置信息
 //     */
 //    @FXML
-//    private FlexTableView<ZKEnvNode> confTable;
+//    private FXTableView<ZKEnvNode> confTable;
 //
 //    /**
 //     * 服务信息
 //     */
 //    @FXML
-//    private FlexTableView<ZKEnvNode> srvrTable;
+//    private FXTableView<ZKEnvNode> srvrTable;
 //
 //    /**
 //     * 客户端环境
 //     */
 //    @FXML
-//    private FlexTableView<ZKEnvNode> localEnvTable;
+//    private FXTableView<ZKEnvNode> localEnvTable;
 //
 //    /**
 //     * 服务端环境
 //     */
 //    @FXML
-//    private FlexTableView<ZKEnvNode> serverEnvTable;
+//    private FXTableView<ZKEnvNode> serverEnvTable;
 //
 //    /**
 //     * 集群列表
 //     */
 //    @FXML
-//    private FlexTableView<ZKClusterNode> clusterTable;
+//    private FXTableView<ZKClusterNode> clusterTable;
 //
 //    /**
 //     * 汇总信息

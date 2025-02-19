@@ -13,7 +13,7 @@ import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -94,7 +94,7 @@ public class ZKNodeAddController extends StageController {
      * 创建模式下拉选择框
      */
     @FXML
-    private FlexComboBox<String> createMode;
+    private FXComboBox<String> createMode;
 
     /**
      * zk客户端
@@ -110,7 +110,7 @@ public class ZKNodeAddController extends StageController {
      * 权限类型
      */
     @FXML
-    private FlexComboBox<String> aclType;
+    private FXComboBox<String> aclType;
 
     /**
      * 权限组件

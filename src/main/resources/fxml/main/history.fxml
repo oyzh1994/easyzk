@@ -2,8 +2,8 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.HistorySVGGlyph?>
@@ -39,13 +39,13 @@
                 </HBox.margin>
             </FXToggleSwitch>
         </FlexHBox>
-        <FlexTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
+        <FXTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
-                <FlexTableColumn realWidth="120" text="%base.saveTime" valueName="saveTimeFormated"/>
-                <FlexTableColumn flexWidth="85% - 135" text="%base.size" valueName="dataSize"/>
+                <FXTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
+                <FXTableColumn realWidth="120" text="%base.saveTime" valueName="saveTimeFormated"/>
+                <FXTableColumn flexWidth="85% - 135" text="%base.size" valueName="dataSize"/>
             </columns>
-        </FlexTableView>
+        </FXTableView>
     </FlexVBox>
 </FXTab>
 

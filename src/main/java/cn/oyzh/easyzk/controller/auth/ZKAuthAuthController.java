@@ -14,7 +14,7 @@ import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.converter.SimpleStringConverter;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
@@ -80,7 +80,7 @@ public class ZKAuthAuthController extends StageController {
      * 认证方式
      */
     @FXML
-    private FlexComboBox<String> authType;
+    private FXComboBox<String> authType;
 
     /**
      * 认证方式1
@@ -98,7 +98,7 @@ public class ZKAuthAuthController extends StageController {
      * 认证信息列表
      */
     @FXML
-    private FlexComboBox<ZKAuth> authList;
+    private FXComboBox<ZKAuth> authList;
 
     /**
      * 认证储存

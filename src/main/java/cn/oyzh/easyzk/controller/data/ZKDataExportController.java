@@ -17,7 +17,7 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.button.FlexButton;
+import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
@@ -138,7 +138,7 @@ public class ZKDataExportController extends StageController {
      * 结束导出按钮
      */
     @FXML
-    private FlexButton stopExportBtn;
+    private FXButton stopExportBtn;
 
     /**
      * 导出状态

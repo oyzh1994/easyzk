@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class ZKQueryNodeTabController extends DynamicTabController {
 
     @FXML
-    private FlexTableView<KeyValueProperty<String, String>> nodeTable;
+    private FXTableView<KeyValueProperty<String, String>> nodeTable;
 
     public void init(String path, List<String> nodes) {
         List<KeyValueProperty<String, String>> data = new ArrayList<>();

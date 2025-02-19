@@ -18,16 +18,16 @@
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.text.area.FXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.connect.ZKConnectAddController" realWidth="750" realHeight="400">
-    <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
+    <FXTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.name">
@@ -131,12 +131,12 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <FlexTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip"
+                <FXTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip"
                               maxLen="100">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
-                </FlexTextArea>
+                </FXTextArea>
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.ssh" fx:id="sshTab">
@@ -278,11 +278,11 @@
                 <ZKAuthTableView flexHeight="100% - 50" flexWidth="100% - 50" fx:id="authTable"
                                  copyCellDataOnDoubleClicked="true">
                     <columns>
-                        <FlexTableColumn flexWidth="35%" text="%base.userName" valueName="userControl"/>
-                        <FlexTableColumn flexWidth="45%" text="%base.password" valueName="passwordControl"
-                                         sortable="false"/>
-                        <FlexTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
-                                         sortable="false"/>
+                        <FXTableColumn flexWidth="35%" text="%base.userName" valueName="userControl"/>
+                        <FXTableColumn flexWidth="45%" text="%base.password" valueName="passwordControl"
+                                       sortable="false"/>
+                        <FXTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
+                                       sortable="false"/>
                     </columns>
                     <VBox.margin>
                         <Insets left="30"/>
@@ -313,11 +313,11 @@
                 <ZKFilterTableView flexHeight="100% - 50" flexWidth="100% - 50" fx:id="filterTable"
                                    copyCellDataOnDoubleClicked="true">
                     <columns>
-                        <FlexTableColumn flexWidth="60%" text="%base.kw" valueName="kwControl"/>
-                        <FlexTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl"
-                                         sortable="false"/>
-                        <FlexTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
-                                         sortable="false"/>
+                        <FXTableColumn flexWidth="60%" text="%base.kw" valueName="kwControl"/>
+                        <FXTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl"
+                                       sortable="false"/>
+                        <FXTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
+                                       sortable="false"/>
                     </columns>
                     <VBox.margin>
                         <Insets left="30"/>
@@ -325,7 +325,7 @@
                 </ZKFilterTableView>
             </FlexVBox>
         </FXTab>
-    </FlexTabPane>
+    </FXTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
         <TestButton onAction="#testConnect" iconSizePercent="0.8">
             <HBox.margin>

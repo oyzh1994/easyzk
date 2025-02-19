@@ -6,7 +6,7 @@
 <?import cn.oyzh.fx.gui.text.field.ReadOnlyTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -14,7 +14,7 @@
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.button.CalcButton?>
 <?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
-<FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyzk.controller.tool.ZKToolController" realWidth="850" realHeight="600">
     <FXTab text="%base.digest">
         <FlexVBox flexHeight="100%" flexWidth="100%">
@@ -87,4 +87,4 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-</FlexTabPane>
+</FXTabPane>

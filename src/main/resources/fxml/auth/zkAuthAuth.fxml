@@ -9,7 +9,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.combo.FXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -65,11 +65,11 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <FlexComboBox fx:id="authList" realHeight="30" flexWidth="100% - 200">
+        <FXComboBox fx:id="authList" realHeight="30" flexWidth="100% - 200">
             <VBox.margin>
                 <Insets left="30" top="5"/>
             </VBox.margin>
-        </FlexComboBox>
+        </FXComboBox>
     </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <UnLockButton onAction="#auth" text="%base.auth">

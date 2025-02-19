@@ -19,7 +19,7 @@ import cn.oyzh.fx.gui.event.Layout1Event;
 import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.node.NodeResizer;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -45,7 +45,7 @@ public class ZKMainController extends ParentStageController {
      * 左侧组件
      */
     @FXML
-    private FlexTabPane tabPaneLeft;
+    private FXTabPane tabPaneLeft;
 
     /**
      * zk切换面板

@@ -7,7 +7,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
+<?import cn.oyzh.fx.plus.controls.picker.FXColorPicker?>
 <?import cn.oyzh.fx.plus.controls.text.FlexSlider?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
@@ -427,12 +427,12 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox fx:id="fgColorBox" disable="true">
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.fgColorTip"
-                                     fx:id="fgColor">
+                    <FXColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.fgColorTip"
+                                   fx:id="fgColor">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
-                    </FlexColorPicker>
+                    </FXColorPicker>
                     <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetFgColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -445,12 +445,12 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox fx:id="bgColorBox" disable="true">
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.bgColorTip"
-                                     fx:id="bgColor">
+                    <FXColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.bgColorTip"
+                                   fx:id="bgColor">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
-                    </FlexColorPicker>
+                    </FXColorPicker>
                     <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetBgColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -463,12 +463,12 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FlexHBox fx:id="accentColorBox" disable="true">
-                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.accentColorTip"
-                                     fx:id="accentColor">
+                    <FXColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.accentColorTip"
+                                   fx:id="accentColor">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
-                    </FlexColorPicker>
+                    </FXColorPicker>
                     <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetAccentColor">
                         <HBox.margin>
                             <Insets left="10" top="10"/>

@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.filter;
 
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 import cn.oyzh.i18n.I18nHelper;
 
@@ -13,7 +13,7 @@ import java.util.Locale;
  * @author oyzh
  * @since 2025/01/22
  */
-public class ZKNodeFilterTypeComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
+public class ZKNodeFilterTypeComboBox extends FXComboBox<String> implements I18nSelectAdapter<String> {
 
     @Override
     public List<String> values(Locale locale) {

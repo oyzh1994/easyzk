@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
 import org.apache.zookeeper.data.Stat;
@@ -17,7 +17,7 @@ public class ZKQueryStatTabController extends DynamicTabController {
 
 
     @FXML
-    private FlexTableView<KeyValueProperty<String,Object>> statTable;
+    private FXTableView<KeyValueProperty<String,Object>> statTable;
 
     public void init(Stat stat) {
         List<KeyValueProperty<String, Object>> data = new ArrayList<>();

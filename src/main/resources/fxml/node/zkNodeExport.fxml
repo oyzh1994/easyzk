@@ -34,7 +34,7 @@
 <!--     &lt;!&ndash;             <Insets left="20" top="10"/> &ndash;&gt; -->
 <!--     &lt;!&ndash;         </HBox.margin> &ndash;&gt; -->
 <!--     &lt;!&ndash;     </AccentLabel> &ndash;&gt; -->
-<!--     &lt;!&ndash;     <FlexComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="%base.formatTip" &ndash;&gt; -->
+<!--     &lt;!&ndash;     <FXComboBox stateManager="$stateManager" realWidth="130" initIndex="0" tipText="%base.formatTip" &ndash;&gt; -->
 <!--     &lt;!&ndash;                   fx:id="format"> &ndash;&gt; -->
 <!--     &lt;!&ndash;         <items> &ndash;&gt; -->
 <!--     &lt;!&ndash;             <FXCollections fx:factory="observableArrayList"> &ndash;&gt; -->
@@ -45,7 +45,7 @@
 <!--     &lt;!&ndash;         <HBox.margin> &ndash;&gt; -->
 <!--     &lt;!&ndash;             <Insets left="10" top="12"/> &ndash;&gt; -->
 <!--     &lt;!&ndash;         </HBox.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;     </FlexComboBox> &ndash;&gt; -->
+<!--     &lt;!&ndash;     </FXComboBox> &ndash;&gt; -->
 <!--     &lt;!&ndash;     <FlexFlowPane fx:id="prettyPane"> &ndash;&gt; -->
 <!--     &lt;!&ndash;         <FXLabel text="%base.pretty" maxWidth="100"> &ndash;&gt; -->
 <!--     &lt;!&ndash;             <FlowPane.margin> &ndash;&gt; -->
@@ -64,7 +64,7 @@
 <!--     &lt;!&ndash;                 <Insets left="10" top="20"/> &ndash;&gt; -->
 <!--     &lt;!&ndash;             </FlowPane.margin> &ndash;&gt; -->
 <!--     &lt;!&ndash;         </FXLabel> &ndash;&gt; -->
-<!--     &lt;!&ndash;         <FlexComboBox stateManager="$stateManager" prefWidth="100" fx:id="prefix"> &ndash;&gt; -->
+<!--     &lt;!&ndash;         <FXComboBox stateManager="$stateManager" prefWidth="100" fx:id="prefix"> &ndash;&gt; -->
 <!--     &lt;!&ndash;             <items> &ndash;&gt; -->
 <!--     &lt;!&ndash;                 <FXCollections fx:factory="observableArrayList"> &ndash;&gt; -->
 <!--     &lt;!&ndash;                     <String fx:value="create"/> &ndash;&gt; -->
@@ -74,7 +74,7 @@
 <!--     &lt;!&ndash;             <FlowPane.margin> &ndash;&gt; -->
 <!--     &lt;!&ndash;                 <Insets left="5" top="12"/> &ndash;&gt; -->
 <!--     &lt;!&ndash;             </FlowPane.margin> &ndash;&gt; -->
-<!--     &lt;!&ndash;         </FlexComboBox> &ndash;&gt; -->
+<!--     &lt;!&ndash;         </FXComboBox> &ndash;&gt; -->
 <!--     &lt;!&ndash;     </FlexFlowPane> &ndash;&gt; -->
 <!--     &lt;!&ndash; </FlexHBox> &ndash;&gt; -->
 <!--     <FlexHBox flexWidth="100%" realHeight="50"> -->

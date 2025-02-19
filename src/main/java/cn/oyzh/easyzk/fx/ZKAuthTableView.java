@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.fx;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024-12-19
  */
-public class ZKAuthTableView extends FlexTableView<ZKAuthVO> {
+public class ZKAuthTableView extends FXTableView<ZKAuthVO> {
 
     /**
      * 当前过滤列表

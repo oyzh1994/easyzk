@@ -4,8 +4,8 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -20,21 +20,21 @@
                 </HBox.margin>
             </RefreshSVGGlyph>
         </FlexHBox>
-        <FlexTableView flexWidth="100% - 28" fx:id="clusterTable" flexHeight="100%- 30">
+        <FXTableView flexWidth="100% - 28" fx:id="clusterTable" flexHeight="100%- 30">
             <VBox.margin>
                 <Insets left="12" top="5"/>
             </VBox.margin>
             <columns>
-                <FlexTableColumn flexWidth="10%" valueName="id" text="%base.No"/>
-                <FlexTableColumn flexWidth="10%" valueName="weight" text="%base.weight"/>
-                <FlexTableColumn flexWidth="16%" valueName="type" text="%base.type"/>
-                <FlexTableColumn flexWidth="20%" valueName="clientAddr" text="%base.clientAddr"
-                                 sortable="false"/>
-                <FlexTableColumn flexWidth="22%" valueName="addr" text="%zk.node.service.tableCol.addr"
-                                 sortable="false"/>
-                <FlexTableColumn flexWidth="22% - 10" valueName="electionAddr"
-                                 text="%zk.node.service.tableCol.electionAddr" sortable="false"/>
+                <FXTableColumn flexWidth="10%" valueName="id" text="%base.No"/>
+                <FXTableColumn flexWidth="10%" valueName="weight" text="%base.weight"/>
+                <FXTableColumn flexWidth="16%" valueName="type" text="%base.type"/>
+                <FXTableColumn flexWidth="20%" valueName="clientAddr" text="%base.clientAddr"
+                               sortable="false"/>
+                <FXTableColumn flexWidth="22%" valueName="addr" text="%zk.node.service.tableCol.addr"
+                               sortable="false"/>
+                <FXTableColumn flexWidth="22% - 10" valueName="electionAddr"
+                               text="%zk.node.service.tableCol.electionAddr" sortable="false"/>
             </columns>
-        </FlexTableView>
+        </FXTableView>
     </FlexVBox>
 </FXTab>

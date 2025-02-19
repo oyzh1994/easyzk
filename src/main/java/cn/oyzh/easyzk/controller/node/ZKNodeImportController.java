@@ -15,9 +15,9 @@ import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.button.FlexButton;
+import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
-import cn.oyzh.fx.plus.controls.text.FlexText;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -61,7 +61,7 @@ public class ZKNodeImportController extends StageController {
      * 脚本信息
      */
     @FXML
-    private FlexText scriptInfo;
+    private FXText scriptInfo;
 
     /**
      * 忽略已存在的节点
@@ -79,7 +79,7 @@ public class ZKNodeImportController extends StageController {
      * 导入按钮
      */
     @FXML
-    private FlexButton importBtn;
+    private FXButton importBtn;
 
     // /**
     //  * 状态管理器
@@ -91,7 +91,7 @@ public class ZKNodeImportController extends StageController {
      * 结束导入按钮
      */
     @FXML
-    private FlexButton stopImportBtn;
+    private FXButton stopImportBtn;
 
     /**
      * 导入状态

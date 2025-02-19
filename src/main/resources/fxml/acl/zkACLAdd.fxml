@@ -12,9 +12,9 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.combo.FXComboBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.text.area.FXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -128,11 +128,11 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <FlexComboBox fx:id="digestInfo3" realHeight="30" flexWidth="100% - 140">
+        <FXComboBox fx:id="digestInfo3" realHeight="30" flexWidth="100% - 140">
             <VBox.margin>
                 <Insets left="30" top="5"/>
             </VBox.margin>
-        </FlexComboBox>
+        </FXComboBox>
     </FlexVBox>
     <FlexVBox flexWidth="100%" managedBindVisible="true" visible="false" fx:id="ip1ACL">
         <InfoLabel text="%base.ipAddr">
@@ -159,13 +159,13 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <FlexTextArea
+        <FXTextArea
                 tipText="%zk.acl.add.ipContentTip"
                 fx:id="ipContent2" prefHeight="160" flexWidth="100% - 140">
             <VBox.margin>
                 <Insets left="30" top="5"/>
             </VBox.margin>
-        </FlexTextArea>
+        </FXTextArea>
     </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addACL">

@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.fx;
 
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 import cn.oyzh.fx.plus.node.NodeManager;
 
@@ -11,7 +11,7 @@ import java.util.Locale;
  * @author oyzh
  * @since 2024/4/11
  */
-public class ZKCreateModeComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
+public class ZKCreateModeComboBox extends FXComboBox<String> implements I18nSelectAdapter<String> {
 
     {
         NodeManager.init(this);

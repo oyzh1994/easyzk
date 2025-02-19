@@ -14,7 +14,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
@@ -56,49 +56,49 @@
     <FlexVBox fx:id="step1" flexHeight="100% - 80" flexWidth="100%">
         <FlexHBox flexHeight="100% - 60" flexWidth="100%">
             <FlexVBox flexHeight="100%" flexWidth="50% - 5" nodeOrientation="RIGHT_TO_LEFT">
-                <FlexLabel text="%base.source" realHeight="30" fontWeight="BOLD" fontSize="16"
+                <FXLabel text="%base.source" realHeight="30" fontWeight="BOLD" fontSize="16"
                            style="-fx-text-fill: yellowgreen">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
-                </FlexLabel>
-                <FlexLabel text="%base.connect" realHeight="30">
+                </FXLabel>
+                <FXLabel text="%base.connect" realHeight="30">
                     <VBox.margin>
                         <Insets left="30" top="15"/>
                     </VBox.margin>
-                </FlexLabel>
+                </FXLabel>
                 <ZKConnectComboBox fx:id="sourceInfo" realHeight="30" flexWidth="100% - 50">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ZKConnectComboBox>
-                <FlexLabel text="%base.charset" realHeight="30">
+                <FXLabel text="%base.charset" realHeight="30">
                     <VBox.margin>
                         <Insets left="30" top="15"/>
                     </VBox.margin>
-                </FlexLabel>
+                </FXLabel>
                 <CharsetComboBox fx:id="sourceCharset" realHeight="30" flexWidth="100% - 50">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </CharsetComboBox>
-                <FlexLabel text="%base.info" realHeight="30" fontWeight="BOLD" fontSize="16"
+                <FXLabel text="%base.info" realHeight="30" fontWeight="BOLD" fontSize="16"
                            style="-fx-text-fill: yellowgreen">
                     <VBox.margin>
                         <Insets left="30" top="30"/>
                     </VBox.margin>
-                </FlexLabel>
+                </FXLabel>
                 <FlexHBox realHeight="25" flexWidth="100%">
                     <FXLabel text="%base.host" realWidth="80">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FlexLabel fx:id="sourceHost" flexWidth="100% - 100">
+                    <FXLabel fx:id="sourceHost" flexWidth="100% - 100">
                         <HBox.margin>
                             <Insets left="10" top="5"/>
                         </HBox.margin>
-                    </FlexLabel>
+                    </FXLabel>
                 </FlexHBox>
                 <FlexHBox realHeight="25" flexWidth="100%">
                     <FXLabel text="%base.charset" realWidth="80">
@@ -106,57 +106,57 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FlexLabel fx:id="sourceCharsetName" flexWidth="100% - 100">
+                    <FXLabel fx:id="sourceCharsetName" flexWidth="100% - 100">
                         <HBox.margin>
                             <Insets left="10" top="5"/>
                         </HBox.margin>
-                    </FlexLabel>
+                    </FXLabel>
                 </FlexHBox>
             </FlexVBox>
             <FlexVBox flexHeight="100%" flexWidth="50% -5">
-                <FlexLabel text="%base.target" realHeight="30" fontWeight="BOLD" fontSize="16"
+                <FXLabel text="%base.target" realHeight="30" fontWeight="BOLD" fontSize="16"
                            style="-fx-text-fill: mediumturquoise">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
-                </FlexLabel>
-                <FlexLabel text="%base.connect" realHeight="30">
+                </FXLabel>
+                <FXLabel text="%base.connect" realHeight="30">
                     <VBox.margin>
                         <Insets left="30" top="15"/>
                     </VBox.margin>
-                </FlexLabel>
+                </FXLabel>
                 <ZKConnectComboBox fx:id="targetInfo" realHeight="30" flexWidth="100% - 50">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ZKConnectComboBox>
-                <FlexLabel text="%base.charset" realHeight="30">
+                <FXLabel text="%base.charset" realHeight="30">
                     <VBox.margin>
                         <Insets left="30" top="15"/>
                     </VBox.margin>
-                </FlexLabel>
+                </FXLabel>
                 <CharsetComboBox fx:id="targetCharset" realHeight="30" flexWidth="100% - 50">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </CharsetComboBox>
-                <FlexLabel text="%base.info" realHeight="30" fontWeight="BOLD" fontSize="16"
+                <FXLabel text="%base.info" realHeight="30" fontWeight="BOLD" fontSize="16"
                            style="-fx-text-fill: mediumturquoise">
                     <VBox.margin>
                         <Insets left="30" top="30"/>
                     </VBox.margin>
-                </FlexLabel>
+                </FXLabel>
                 <FlexHBox realHeight="25" flexWidth="100%">
                     <FXLabel text="%base.host" realWidth="80">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FlexLabel fx:id="targetHost" flexWidth="100% - 100">
+                    <FXLabel fx:id="targetHost" flexWidth="100% - 100">
                         <HBox.margin>
                             <Insets left="10" top="5"/>
                         </HBox.margin>
-                    </FlexLabel>
+                    </FXLabel>
                 </FlexHBox>
                 <FlexHBox realHeight="25" flexWidth="100%">
                     <FXLabel text="%base.charset" realWidth="80">
@@ -164,11 +164,11 @@
                             <Insets left="30" top="5"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FlexLabel fx:id="targetCharsetName" flexWidth="100% - 100">
+                    <FXLabel fx:id="targetCharsetName" flexWidth="100% - 100">
                         <HBox.margin>
                             <Insets left="10" top="5"/>
                         </HBox.margin>
-                    </FlexLabel>
+                    </FXLabel>
                 </FlexHBox>
             </FlexVBox>
         </FlexHBox>

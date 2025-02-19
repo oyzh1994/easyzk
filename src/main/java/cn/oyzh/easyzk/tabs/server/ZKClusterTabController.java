@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs.server;
 
 import cn.oyzh.easyzk.dto.ZKClusterNode;
 import cn.oyzh.fx.gui.tabs.SubTabController;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import javafx.fxml.FXML;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class ZKClusterTabController extends SubTabController {
      * 集群列表
      */
     @FXML
-    private FlexTableView<ZKClusterNode> clusterTable;
+    private FXTableView<ZKClusterNode> clusterTable;
 
     @Override
     public ZKServerTabController parent() {

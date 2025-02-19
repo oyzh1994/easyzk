@@ -14,7 +14,7 @@ import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
+import cn.oyzh.fx.plus.controls.picker.FXColorPicker;
 import cn.oyzh.fx.plus.controls.text.FlexSlider;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.domain.AppSetting;
@@ -162,19 +162,19 @@ public class SettingController2 extends StageController {
      * 背景色
      */
     @FXML
-    private FlexColorPicker bgColor;
+    private FXColorPicker bgColor;
 
     /**
      * 前景色
      */
     @FXML
-    private FlexColorPicker fgColor;
+    private FXColorPicker fgColor;
 
     /**
      * 强调色
      */
     @FXML
-    private FlexColorPicker accentColor;
+    private FXColorPicker accentColor;
 
     /**
      * 背景色

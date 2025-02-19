@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.tabs.server;
 import cn.oyzh.easyzk.vo.ZKServerInfo;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
-import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
+import cn.oyzh.fx.plus.controls.chart.FXLineChart;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
@@ -23,25 +23,25 @@ public class ZKAggregationTabController extends SubTabController {
      * 客户端图表
      */
     @FXML
-    private FlexLineChart<String, Integer> connectionsChart;
+    private FXLineChart<String, Integer> connectionsChart;
 
     /**
      * 节点数量图表
      */
     @FXML
-    private FlexLineChart<String, Integer> nodeCountChart;
+    private FXLineChart<String, Integer> nodeCountChart;
 
     /**
      * 延迟图表
      */
     @FXML
-    private FlexLineChart<String, Number> latencyChart;
+    private FXLineChart<String, Number> latencyChart;
 
     /**
      * 指令图表
      */
     @FXML
-    private FlexLineChart<String, Integer> commandChart;
+    private FXLineChart<String, Integer> commandChart;
 
     /**
      * 日期格式化

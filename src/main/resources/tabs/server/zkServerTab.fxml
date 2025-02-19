@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.box.FXVBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.tabs.server.ZKServerTabController" realHeight="800" realWidth="950">
-    <FlexTableView flexWidth="100%" realHeight="80" fx:id="serverTable">
+    <FXTableView flexWidth="100%" realHeight="80" fx:id="serverTable">
         <columns>
-            <FlexTableColumn sortable="false" valueName="zxid" text="%base.id" flexWidth="8%"/>
-            <FlexTableColumn sortable="false" valueName="mode" text="%base.mode" flexWidth="10%"/>
-            <FlexTableColumn sortable="false" valueName="version" text="%base.version" flexWidth="8%"/>
-            <FlexTableColumn sortable="false" valueName="connections" text="%base.connections" flexWidth="10%"/>
-            <FlexTableColumn sortable="false" valueName="nodeCount" text="%base.nodeCount" flexWidth="10%"/>
-            <FlexTableColumn sortable="false" fx:id="latency" valueName="latencyInfo" text="%base.latency" flexWidth="25%"/>
-            <FlexTableColumn sortable="false" fx:id="command" valueName="commandInfo" text="%base.cmd" flexWidth="29% - 12"/>
+            <FXTableColumn sortable="false" valueName="zxid" text="%base.id" flexWidth="8%"/>
+            <FXTableColumn sortable="false" valueName="mode" text="%base.mode" flexWidth="10%"/>
+            <FXTableColumn sortable="false" valueName="version" text="%base.version" flexWidth="8%"/>
+            <FXTableColumn sortable="false" valueName="connections" text="%base.connections" flexWidth="10%"/>
+            <FXTableColumn sortable="false" valueName="nodeCount" text="%base.nodeCount" flexWidth="10%"/>
+            <FXTableColumn sortable="false" fx:id="latency" valueName="latencyInfo" text="%base.latency" flexWidth="25%"/>
+            <FXTableColumn sortable="false" fx:id="command" valueName="commandInfo" text="%base.cmd" flexWidth="29% - 12"/>
         </columns>
-    </FlexTableView>
-    <FlexTabPane flexWidth="100%" flexHeight="100% - 120">
+    </FXTableView>
+    <FXTabPane flexWidth="100%" flexHeight="100% - 120">
         <fx:include fx:id="aggregation" source="zkAggregationTab.fxml"/>
         <fx:include fx:id="local" source="zkLocalTab.fxml"/>
         <fx:include fx:id="srvr" source="zkSrvrTab.fxml"/>
@@ -24,5 +24,5 @@
         <fx:include fx:id="envi" source="zkEnviTab.fxml"/>
         <fx:include fx:id="stat" source="zkStatTab.fxml"/>
         <fx:include fx:id="cluster" source="zkClusterTab.fxml"/>
-    </FlexTabPane>
+    </FXTabPane>
 </FXVBox>

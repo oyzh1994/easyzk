@@ -8,8 +8,8 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableColumn;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -39,19 +39,19 @@ public class ZKServerTabController extends ParentTabController {
      * 服务信息
      */
     @FXML
-    private FlexTableView<ZKServerInfo> serverTable;
+    private FXTableView<ZKServerInfo> serverTable;
 
     /**
      * 延迟信息
      */
     @FXML
-    private FlexTableColumn<ZKServerInfo, String> latency;
+    private FXTableColumn<ZKServerInfo, String> latency;
 
     /**
      * 命令信息
      */
     @FXML
-    private FlexTableColumn<ZKServerInfo, String> command;
+    private FXTableColumn<ZKServerInfo, String> command;
 
     /**
      * 汇总信息

@@ -18,8 +18,8 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
-import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
+import cn.oyzh.fx.plus.controls.text.area.FXTextArea;
 import cn.oyzh.fx.plus.converter.SimpleStringConverter;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
@@ -88,7 +88,7 @@ public class ZKACLAddController extends StageController {
      * 权限类型
      */
     @FXML
-    private FlexComboBox<String> aclType;
+    private FXComboBox<String> aclType;
 
     /**
      * digest权限处理1
@@ -142,7 +142,7 @@ public class ZKACLAddController extends StageController {
      * 摘要信息3，已有账密
      */
     @FXML
-    private FlexComboBox<ZKAuth> digestInfo3;
+    private FXComboBox<ZKAuth> digestInfo3;
 
     /**
      * 摘要信息
@@ -172,7 +172,7 @@ public class ZKACLAddController extends StageController {
      * IP多IP内容
      */
     @FXML
-    private FlexTextArea ipContent2;
+    private FXTextArea ipContent2;
 
     /**
      * 节点互斥器

@@ -14,7 +14,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
 <?import javafx.geometry.Insets?>
@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="650">
-    <FlexTabPane flexWidth="100%" flexHeight="100% - 80">
+    <FXTabPane flexWidth="100%" flexHeight="100% - 80">
         <FXTab text="%base.data" fx:id="dataTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexVBox fx:id="parentNodeBox">
@@ -194,7 +194,7 @@
                 </FlexVBox>
             </FlexVBox>
         </FXTab>
-    </FlexTabPane>
+    </FXTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addNode">
             <HBox.margin>

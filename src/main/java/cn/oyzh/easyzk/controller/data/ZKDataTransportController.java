@@ -15,9 +15,9 @@ import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.button.FlexButton;
+import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
-import cn.oyzh.fx.plus.controls.label.FlexLabel;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -91,7 +91,7 @@ public class ZKDataTransportController extends StageController {
      * 来源字符集名称
      */
     @FXML
-    private FlexLabel sourceCharsetName;
+    private FXLabel sourceCharsetName;
 
     /**
      * 目标信息
@@ -109,19 +109,19 @@ public class ZKDataTransportController extends StageController {
      * 目标字符集名称
      */
     @FXML
-    private FlexLabel targetCharsetName;
+    private FXLabel targetCharsetName;
 
     /**
      * 来源主机
      */
     @FXML
-    private FlexLabel sourceHost;
+    private FXLabel sourceHost;
 
     /**
      * 目标主机
      */
     @FXML
-    private FlexLabel targetHost;
+    private FXLabel targetHost;
 
     /**
      * 来源客户端
@@ -137,7 +137,7 @@ public class ZKDataTransportController extends StageController {
      * 结束传输按钮
      */
     @FXML
-    private FlexButton stopTransportBtn;
+    private FXButton stopTransportBtn;
 
     /**
      * 传输状态

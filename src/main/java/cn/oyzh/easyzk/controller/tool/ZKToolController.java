@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.text.area.FXTextArea;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
@@ -111,7 +111,7 @@ public class ZKToolController extends StageController {
      * 缓存文本域
      */
     @FXML
-    private FlexTextArea cacheArea;
+    private FXTextArea cacheArea;
 
     /**
      * 计算缓存

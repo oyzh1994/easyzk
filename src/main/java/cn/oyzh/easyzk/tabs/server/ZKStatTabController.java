@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs.server;
 
 import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.fx.gui.tabs.SubTabController;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import javafx.fxml.FXML;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class ZKStatTabController extends SubTabController {
      * 状态信息
      */
     @FXML
-    private FlexTableView<ZKEnvNode> statTable;
+    private FXTableView<ZKEnvNode> statTable;
 
 
     @Override

@@ -11,7 +11,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.text.FlexText?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -33,11 +33,11 @@
             </HBox.margin>
         </FileButton>
     </FlexHBox>
-    <FlexText fx:id="scriptInfo" managedBindVisible="true" visible="false" fontSize="11">
+    <FXText fx:id="scriptInfo" managedBindVisible="true" visible="false" fontSize="11">
         <VBox.margin>
             <Insets left="110"/>
         </VBox.margin>
-    </FlexText>
+    </FXText>
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
@@ -97,16 +97,16 @@
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <FlexText fill="#666" text="%zk.node.import.tip1">
+        <FXText fill="#666" text="%zk.node.import.tip1">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
-        </FlexText>
-        <FlexText fill="#666" text="%zk.node.import.tip2">
+        </FXText>
+        <FXText fill="#666" text="%zk.node.import.tip2">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
-        </FlexText>
+        </FXText>
         <VBox.margin>
             <Insets left="110"/>
         </VBox.margin>

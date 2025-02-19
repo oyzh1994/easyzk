@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.chart.FlexLineChart?>
+<?import cn.oyzh.fx.plus.controls.chart.FXLineChart?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -10,40 +10,40 @@
        fx:controller="cn.oyzh.easyzk.tabs.server.ZKAggregationTabController" text="%base.aggregate">
     <FlexVBox flexHeight="100%" flexWidth="100%">
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="connectionsChart">
+            <FXLineChart flexWidth="50%" flexHeight="100%" fx:id="connectionsChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
                     <NumberAxis label="%base.connections"/>
                 </yAxis>
-            </FlexLineChart>
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="nodeCountChart">
+            </FXLineChart>
+            <FXLineChart flexWidth="50%" flexHeight="100%" fx:id="nodeCountChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
                     <NumberAxis label="%base.nodeCount"/>
                 </yAxis>
-            </FlexLineChart>
+            </FXLineChart>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="latencyChart">
+            <FXLineChart flexWidth="50%" flexHeight="100%" fx:id="latencyChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
                     <NumberAxis label="%base.latency"/>
                 </yAxis>
-            </FlexLineChart>
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="commandChart">
+            </FXLineChart>
+            <FXLineChart flexWidth="50%" flexHeight="100%" fx:id="commandChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
                     <NumberAxis label="%base.cmd"/>
                 </yAxis>
-            </FlexLineChart>
+            </FXLineChart>
         </FlexHBox>
     </FlexVBox>
 </FXTab>

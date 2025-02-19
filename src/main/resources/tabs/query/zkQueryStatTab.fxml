@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableView?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
-<FlexVBox xmlns:fx="http://javafx.com/fxml/1" flexWidth="100% - 30" flexHeight="100%"
+<FXVBox xmlns:fx="http://javafx.com/fxml/1" flexWidth="100% - 30" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryStatTabController">
     <FXTableView fx:id="statTable" flexWidth="100%" flexHeight="100%">
         <columns>
@@ -15,4 +15,4 @@
             <Insets left="5" top="5"/>
         </VBox.margin>
     </FXTableView>
-</FlexVBox>
+</FXVBox>

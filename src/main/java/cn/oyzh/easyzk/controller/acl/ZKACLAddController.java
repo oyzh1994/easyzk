@@ -15,8 +15,8 @@ import cn.oyzh.fx.gui.button.CopyButton;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.controls.text.area.FXTextArea;
@@ -70,7 +70,7 @@ public class ZKACLAddController extends StageController {
      * 权限
      */
     @FXML
-    private FlexHBox perms;
+    private FXHBox perms;
 
     /**
      * 节点路径
@@ -82,7 +82,7 @@ public class ZKACLAddController extends StageController {
      * 权限组件
      */
     @FXML
-    private FlexVBox permsBox;
+    private FXVBox permsBox;
 
     /**
      * 权限类型

@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.query;
 
 import cn.oyzh.fx.gui.svg.glyph.KeywordsSVGGlyph;
 import cn.oyzh.fx.gui.svg.glyph.ParamSVGGlyph;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.list.FXListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
@@ -21,7 +21,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryPromptListView extends FXListView<FlexHBox> {
+public class ZKQueryPromptListView extends FXListView<FXHBox> {
 
     {
         this.setRealWidth(360);
@@ -74,7 +74,7 @@ public class ZKQueryPromptListView extends FXListView<FlexHBox> {
      * @return 结果
      */
     public synchronized boolean hasPicked() {
-        FlexHBox box = this.getSelectedItem();
+        FXHBox box = this.getSelectedItem();
         return box != null && this.currentPickIndex != -1;
     }
 
@@ -84,7 +84,7 @@ public class ZKQueryPromptListView extends FXListView<FlexHBox> {
      * @return 结果
      */
     public ZKQueryPromptItem getPickedItem() {
-        FlexHBox hBox = this.getSelectedItem();
+        FXHBox hBox = this.getSelectedItem();
         if (hBox != null) {
             ZKQueryPromptItem item = hBox.getProp("item");
             if (item != null) {
@@ -103,7 +103,7 @@ public class ZKQueryPromptListView extends FXListView<FlexHBox> {
     private void applyBackground(int pickedIndex) {
         if (this.currentPickIndex >= 0) {
             try {
-                FlexHBox hBox1 = (FlexHBox) this.getItem(this.currentPickIndex);
+                FXHBox hBox1 = (FXHBox) this.getItem(this.currentPickIndex);
                 if (hBox1 != null) {
                     hBox1.setBackground(null);
                 }
@@ -113,7 +113,7 @@ public class ZKQueryPromptListView extends FXListView<FlexHBox> {
         }
         if (pickedIndex >= 0) {
             try {
-                FlexHBox hBox1 = (FlexHBox) this.getItem(pickedIndex);
+                FXHBox hBox1 = (FXHBox) this.getItem(pickedIndex);
                 if (hBox1 != null) {
                     hBox1.setBackground(ControlUtil.background(Color.DEEPSKYBLUE));
                 }
@@ -133,10 +133,10 @@ public class ZKQueryPromptListView extends FXListView<FlexHBox> {
         // 应用背景色
         this.applyBackground(-1);
         // 初始化数据
-        List<FlexHBox> boxList = new ArrayList<>();
+        List<FXHBox> boxList = new ArrayList<>();
         // 初始化节点内容
         for (ZKQueryPromptItem item : items) {
-            FlexHBox box = this.initBox();
+            FXHBox box = this.initBox();
             // 提示组件
             SVGLabel promptLabel = this.initPromptLabel(item);
             box.addChild(promptLabel);
@@ -202,10 +202,10 @@ public class ZKQueryPromptListView extends FXListView<FlexHBox> {
     /**
      * 初始化提示词组件
      *
-     * @return FlexHBox 提示词组件
+     * @return FXHBox 提示词组件
      */
-    private FlexHBox initBox() {
-        FlexHBox box = new FlexHBox();
+    private FXHBox initBox() {
+        FXHBox box = new FXHBox();
         // 设置高度
         box.setRealHeight(20);
         // 设置鼠标样式

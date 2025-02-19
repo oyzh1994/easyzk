@@ -9,8 +9,8 @@
 <?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
@@ -19,10 +19,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.data.ZKDataImportController" realWidth="800" realHeight="600">
-    <FlexHBox flexWidth="100%" realHeight="80">
-        <FlexHBox flexHeight="100%" flexWidth="100%">
+    <FXHBox flexWidth="100%" realHeight="80">
+        <FXHBox flexHeight="100%" flexWidth="100%">
             <ImportSVGGlyph sizeStr="40,40" color="yellowgreen">
                 <HBox.margin>
                     <Insets left="30" top="20"/>
@@ -33,10 +33,10 @@
                     <Insets left="15" top="30"/>
                 </HBox.margin>
             </FXText>
-        </FlexHBox>
-    </FlexHBox>
-    <FlexVBox fx:id="step1" flexHeight="100% - 80" flexWidth="100%">
-        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+        </FXHBox>
+    </FXHBox>
+    <FXVBox fx:id="step1" flexHeight="100% - 80" flexWidth="100%">
+        <FXVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.fileFormat">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -65,8 +65,8 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </FXRadioButton>
-        </FlexVBox>
-        <FlexHBox flexWidth="100%" realHeight="50">
+        </FXVBox>
+        <FXHBox flexWidth="100%" realHeight="50">
             <NextStepButton onAction="#showStep2" realHeight="30" iconSizePercent="0.75">
                 <HBox.margin>
                     <Insets left="30" top="10"/>
@@ -78,16 +78,16 @@
                     <Insets left="15" top="10"/>
                 </HBox.margin>
             </OldButton>
-        </FlexHBox>
-    </FlexVBox>
-    <FlexVBox fx:id="step2" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
-        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+        </FXHBox>
+    </FXVBox>
+    <FXVBox fx:id="step2" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
+        <FXVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.filePath">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexHBox flexWidth="100%">
+            <FXHBox flexWidth="100%">
                 <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
@@ -98,7 +98,7 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXText>
-            </FlexHBox>
+            </FXHBox>
             <InfoLabel text="%base.options">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -130,8 +130,8 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </NumberTextField>
-        </FlexVBox>
-        <FlexHBox flexWidth="100%" realHeight="50">
+        </FXVBox>
+        <FXHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep1" groupId="exec" realHeight="30" iconSizePercent="0.75">
                 <HBox.margin>
                     <Insets left="30" top="10"/>
@@ -142,10 +142,10 @@
                     <Insets left="15" top="10"/>
                 </HBox.margin>
             </NextStepButton>
-        </FlexHBox>
-    </FlexVBox>
-    <!-- <FlexVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false"> -->
-    <!--     <FlexVBox flexHeight="100% - 60" flexWidth="100%"> -->
+        </FXHBox>
+    </FXVBox>
+    <!-- <FXVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false"> -->
+    <!--     <FXVBox flexHeight="100% - 60" flexWidth="100%"> -->
     <!--         <InfoLabel text="%base.connection"> -->
     <!--             <VBox.margin> -->
     <!--                 <Insets left="30" top="20"/> -->
@@ -157,8 +157,8 @@
     <!--             </VBox.margin> -->
     <!--         </FXText> -->
     <!--         -->
-    <!--     </FlexVBox> -->
-    <!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+    <!--     </FXVBox> -->
+    <!--     <FXHBox flexWidth="100%" realHeight="50"> -->
     <!--         <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75"> -->
     <!--             <HBox.margin> -->
     <!--                 <Insets left="30" top="10"/> -->
@@ -169,10 +169,10 @@
     <!--                 <Insets left="15" top="10"/> -->
     <!--             </HBox.margin> -->
     <!--         </NextStepButton> -->
-    <!--     </FlexHBox> -->
-    <!-- </FlexVBox> -->
-    <FlexVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
-        <FlexVBox flexWidth="100%" flexHeight="100% - 60">
+    <!--     </FXHBox> -->
+    <!-- </FXVBox> -->
+    <FXVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
+        <FXVBox flexWidth="100%" flexHeight="100% - 60">
             <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="importMsg" flexWidth="100% - 60"
                          flexHeight="100% - 30">
                 <VBox.margin>
@@ -184,8 +184,8 @@
                     <Insets left="30"/>
                 </VBox.margin>
             </InfoLabel>
-        </FlexVBox>
-        <FlexHBox flexWidth="100%" realHeight="50">
+        </FXVBox>
+        <FXHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75">
                 <HBox.margin>
                     <Insets left="30" top="10"/>
@@ -201,6 +201,6 @@
                     <Insets left="15" top="10"/>
                 </HBox.margin>
             </StopButton>
-        </FlexHBox>
-    </FlexVBox>
-</FlexVBox>
+        </FXHBox>
+    </FXVBox>
+</FXVBox>

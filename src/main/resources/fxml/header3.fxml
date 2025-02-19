@@ -2,11 +2,11 @@
 <?import cn.oyzh.fx.gui.svg.glyph.*?>
 <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.pane.FXPane?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
-<FlexVBox xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.HeaderController3" flexHeight="100%" realHeight="30">
     <TransportSVGGlyph onMousePrimaryClicked="#transport" size="12">
         <VBox.margin>
@@ -51,4 +51,4 @@
             <Insets left="10" top="15"/>
         </VBox.margin>
     </SettingSVGGlyph>
-</FlexVBox>
+</FXVBox>

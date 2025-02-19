@@ -6,17 +6,17 @@
 <!-- <?import cn.oyzh.fx.gui.button.StopButton?> -->
 <!-- <?import cn.oyzh.fx.gui.button.TransportButton?> -->
 <!-- <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXVBox?> -->
 <!-- <?import cn.oyzh.fx.gui.label.AccentLabel?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.label.FXLabel?> -->
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
 <!-- <?import javafx.scene.layout.VBox?> -->
 <!-- <?import javafx.scene.text.Text?> -->
-<!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyzk.controller.info.ZKInfoTransportController" realWidth="850" realHeight="620"> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.source" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -37,8 +37,8 @@
 <!--                 <Insets left="5" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </CharsetComboBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.target" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -59,8 +59,8 @@
 <!--                 <Insets left="5" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </CharsetComboBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.options" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -76,22 +76,22 @@
 <!--                 <Insets left="10" top="18"/> -->
 <!--             </HBox.margin> -->
 <!--         </FXCheckBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" flexHeight="100% - 350"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" flexHeight="100% - 350"> -->
 <!--         <AccentLabel text="%base.process" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </AccentLabel> -->
-<!--         <FlexVBox flexWidth="100% - 145" flexHeight="100%"> -->
+<!--         <FXVBox flexWidth="100% - 145" flexHeight="100%"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="10" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--             <MsgTextArea lineLimit="300" fx:id="transportMsg" flexWidth="100%" flexHeight="100% - 20"/> -->
 <!--             <FXLabel fx:id="transportStatus"/> -->
-<!--         </FlexVBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         </FXVBox> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <TransportButton groupId="exec" fx:id="transportBtn" onAction="#doTransport" realHeight="30" iconSizePercent="0.75"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="110" top="10"/> -->
@@ -107,8 +107,8 @@
 <!--                 <Insets left="15" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </CloseButton> -->
-<!--     </FlexHBox> -->
-<!--     <FlexVBox flexWidth="100%" fontSize="12"> -->
+<!--     </FXHBox> -->
+<!--     <FXVBox flexWidth="100%" fontSize="12"> -->
 <!--         <FXLabel text="%base.tip" textFill="#666"> -->
 <!--             <VBox.margin> -->
 <!--                 <Insets top="10"/> -->
@@ -132,5 +132,5 @@
 <!--         <VBox.margin> -->
 <!--             <Insets left="110"/> -->
 <!--         </VBox.margin> -->
-<!--     </FlexVBox> -->
-<!-- </FlexVBox> -->
+<!--     </FXVBox> -->
+<!-- </FXVBox> -->

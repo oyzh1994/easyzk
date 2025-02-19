@@ -12,7 +12,7 @@ import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.converter.SimpleStringConverter;
@@ -86,13 +86,13 @@ public class ZKAuthAuthController extends StageController {
      * 认证方式1
      */
     @FXML
-    private FlexVBox authType1;
+    private FXVBox authType1;
 
     /**
      * 认证方式2
      */
     @FXML
-    private FlexVBox authType2;
+    private FXVBox authType2;
 
     /**
      * 认证信息列表

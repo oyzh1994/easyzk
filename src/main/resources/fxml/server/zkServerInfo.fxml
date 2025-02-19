@@ -1,7 +1,7 @@
 <!--<?xml version="1.0" encoding="UTF-8"?>-->
 <!--<?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>-->
-<!--<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>-->
-<!--<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>-->
+<!--<?import cn.oyzh.fx.plus.controls.box.FXHBox?>-->
+<!--<?import cn.oyzh.fx.plus.controls.box.FXVBox?>-->
 <!--<?import cn.oyzh.fx.plus.controls.box.FXVBox?>-->
 <!--<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>-->
 <!--<?import cn.oyzh.fx.plus.controls.tab.FXTab?>-->
@@ -26,14 +26,14 @@
 <!--    <FXTabPane flexWidth="100%" flexHeight="100% - 80">-->
 <!--        <fx:include fx:id="aggregation" source="zkAggregationTab.fxml"/>-->
 <!--        <FXTab text="%base.client">-->
-<!--            <FlexVBox flexWidth="100%" flexHeight="100%">-->
-<!--                <FlexHBox realHeight="30" flexWidth="100% - 28">-->
+<!--            <FXVBox flexWidth="100%" flexHeight="100%">-->
+<!--                <FXHBox realHeight="30" flexWidth="100% - 28">-->
 <!--                    <RefreshSVGGlyph onMousePrimaryClicked="#refreshLocal">-->
 <!--                        <HBox.margin>-->
 <!--                            <Insets left="12" top="10"/>-->
 <!--                        </HBox.margin>-->
 <!--                    </RefreshSVGGlyph>-->
-<!--                </FlexHBox>-->
+<!--                </FXHBox>-->
 <!--                <FXTableView flexWidth="100% - 28" fx:id="localEnvTable" flexHeight="100%- 30">-->
 <!--                    <VBox.margin>-->
 <!--                        <Insets left="12" top="5"/>-->
@@ -43,17 +43,17 @@
 <!--                        <FlexTableColumn flexWidth="65% - 12" valueName="value" text="%base.value"/>-->
 <!--                    </columns>-->
 <!--                </FXTableView>-->
-<!--            </FlexVBox>-->
+<!--            </FXVBox>-->
 <!--        </FXTab>-->
 <!--        <FXTab text="Envi">-->
-<!--            <FlexVBox flexWidth="100%" flexHeight="100%">-->
-<!--                <FlexHBox realHeight="30" flexWidth="100% - 28">-->
+<!--            <FXVBox flexWidth="100%" flexHeight="100%">-->
+<!--                <FXHBox realHeight="30" flexWidth="100% - 28">-->
 <!--                    <RefreshSVGGlyph onMousePrimaryClicked="#refreshEnvi">-->
 <!--                        <HBox.margin>-->
 <!--                            <Insets left="12" top="10"/>-->
 <!--                        </HBox.margin>-->
 <!--                    </RefreshSVGGlyph>-->
-<!--                </FlexHBox>-->
+<!--                </FXHBox>-->
 <!--                <FXTableView flexWidth="100% - 28" fx:id="serverEnvTable" flexHeight="100% - 30">-->
 <!--                    <VBox.margin>-->
 <!--                        <Insets left="12" top="5"/>-->
@@ -63,17 +63,17 @@
 <!--                        <FlexTableColumn flexWidth="65% - 12" valueName="value" text="%base.value"/>-->
 <!--                    </columns>-->
 <!--                </FXTableView>-->
-<!--            </FlexVBox>-->
+<!--            </FXVBox>-->
 <!--        </FXTab>-->
 <!--        <FXTab text="Srvr">-->
-<!--            <FlexVBox flexWidth="100%" flexHeight="100%">-->
-<!--                <FlexHBox realHeight="30" flexWidth="100% - 28">-->
+<!--            <FXVBox flexWidth="100%" flexHeight="100%">-->
+<!--                <FXHBox realHeight="30" flexWidth="100% - 28">-->
 <!--                    <RefreshSVGGlyph onMousePrimaryClicked="#refreshSrvr">-->
 <!--                        <HBox.margin>-->
 <!--                            <Insets left="12" top="10"/>-->
 <!--                        </HBox.margin>-->
 <!--                    </RefreshSVGGlyph>-->
-<!--                </FlexHBox>-->
+<!--                </FXHBox>-->
 <!--                <FXTableView flexWidth="100% - 28" fx:id="srvrTable" flexHeight="100% - 30">-->
 <!--                    <VBox.margin>-->
 <!--                        <Insets left="12" top="5"/>-->
@@ -83,17 +83,17 @@
 <!--                        <FlexTableColumn flexWidth="65% - 12" valueName="value" text="%base.value"/>-->
 <!--                    </columns>-->
 <!--                </FXTableView>-->
-<!--            </FlexVBox>-->
+<!--            </FXVBox>-->
 <!--        </FXTab>-->
 <!--        <FXTab text="Stat">-->
-<!--            <FlexVBox flexWidth="100%" flexHeight="100%">-->
-<!--                <FlexHBox realHeight="30" flexWidth="100% - 28">-->
+<!--            <FXVBox flexWidth="100%" flexHeight="100%">-->
+<!--                <FXHBox realHeight="30" flexWidth="100% - 28">-->
 <!--                    <RefreshSVGGlyph onMousePrimaryClicked="#refreshStat">-->
 <!--                        <HBox.margin>-->
 <!--                            <Insets left="12" top="10"/>-->
 <!--                        </HBox.margin>-->
 <!--                    </RefreshSVGGlyph>-->
-<!--                </FlexHBox>-->
+<!--                </FXHBox>-->
 <!--                <FXTableView flexWidth="100% - 28" fx:id="statTable" flexHeight="100%- 30">-->
 <!--                    <VBox.margin>-->
 <!--                        <Insets left="12" top="5"/>-->
@@ -103,17 +103,17 @@
 <!--                        <FlexTableColumn flexWidth="65% - 12" valueName="value" text="%base.value"/>-->
 <!--                    </columns>-->
 <!--                </FXTableView>-->
-<!--            </FlexVBox>-->
+<!--            </FXVBox>-->
 <!--        </FXTab>-->
 <!--        <FXTab text="Conf">-->
-<!--            <FlexVBox flexWidth="100%" flexHeight="100%">-->
-<!--                <FlexHBox realHeight="30" flexWidth="100% - 28">-->
+<!--            <FXVBox flexWidth="100%" flexHeight="100%">-->
+<!--                <FXHBox realHeight="30" flexWidth="100% - 28">-->
 <!--                    <RefreshSVGGlyph onMousePrimaryClicked="#refreshConf">-->
 <!--                        <HBox.margin>-->
 <!--                            <Insets left="12" top="10"/>-->
 <!--                        </HBox.margin>-->
 <!--                    </RefreshSVGGlyph>-->
-<!--                </FlexHBox>-->
+<!--                </FXHBox>-->
 <!--                <FXTableView flexWidth="100% - 28" fx:id="confTable" flexHeight="100%- 30">-->
 <!--                    <VBox.margin>-->
 <!--                        <Insets left="12" top="5"/>-->
@@ -123,17 +123,17 @@
 <!--                        <FlexTableColumn flexWidth="65% - 12" valueName="value" text="%base.value"/>-->
 <!--                    </columns>-->
 <!--                </FXTableView>-->
-<!--            </FlexVBox>-->
+<!--            </FXVBox>-->
 <!--        </FXTab>-->
 <!--        <FXTab text="%base.cluster">-->
-<!--            <FlexVBox flexWidth="100%" flexHeight="100%">-->
-<!--                <FlexHBox realHeight="30" flexWidth="100% - 28">-->
+<!--            <FXVBox flexWidth="100%" flexHeight="100%">-->
+<!--                <FXHBox realHeight="30" flexWidth="100% - 28">-->
 <!--                    <RefreshSVGGlyph onMousePrimaryClicked="#refreshCluster">-->
 <!--                        <HBox.margin>-->
 <!--                            <Insets left="12" top="10"/>-->
 <!--                        </HBox.margin>-->
 <!--                    </RefreshSVGGlyph>-->
-<!--                </FlexHBox>-->
+<!--                </FXHBox>-->
 <!--                <FXTableView flexWidth="100% - 28" fx:id="clusterTable" flexHeight="100%- 30">-->
 <!--                    <VBox.margin>-->
 <!--                        <Insets left="12" top="5"/>-->
@@ -150,7 +150,7 @@
 <!--                                         text="%zk.node.service.tableCol.electionAddr" sortable="false"/>-->
 <!--                    </columns>-->
 <!--                </FXTableView>-->
-<!--            </FlexVBox>-->
+<!--            </FXVBox>-->
 <!--        </FXTab>-->
 <!--    </FXTabPane>-->
 <!--</FXVBox>-->

@@ -11,8 +11,8 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
@@ -116,19 +116,19 @@ public class ZKNodeAddController extends StageController {
      * 权限组件
      */
     @FXML
-    private FlexHBox perms;
+    private FXHBox perms;
 
     /**
      * ip权限
      */
     @FXML
-    private FlexVBox ipACL;
+    private FXVBox ipACL;
 
     /**
      * 摘要权限
      */
     @FXML
-    private FlexVBox digestACL;
+    private FXVBox digestACL;
 
     /**
      * 摘要权限内容

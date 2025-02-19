@@ -13,7 +13,7 @@ import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
@@ -56,25 +56,25 @@ public class ZKDataImportController extends StageController {
      * 第一步
      */
     @FXML
-    private FlexVBox step1;
+    private FXVBox step1;
 
     /**
      * 第二步
      */
     @FXML
-    private FlexVBox step2;
+    private FXVBox step2;
 
     /**
      * 第三步
      */
     @FXML
-    private FlexVBox step3;
+    private FXVBox step3;
 
     // /**
     //  * 第四步
     //  */
     // @FXML
-    // private FlexVBox step4;
+    // private FXVBox step4;
 
     /**
      * 导入文件

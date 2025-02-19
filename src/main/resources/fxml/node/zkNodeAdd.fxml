@@ -10,8 +10,8 @@
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
@@ -20,12 +20,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeAddController" realWidth="750" realHeight="650">
     <FXTabPane flexWidth="100%" flexHeight="100% - 80">
         <FXTab text="%base.data" fx:id="dataTab">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexVBox fx:id="parentNodeBox">
+            <FXVBox flexWidth="100%" flexHeight="100%">
+                <FXVBox fx:id="parentNodeBox">
                     <InfoLabel text="%base.parentNode">
                         <VBox.margin>
                             <Insets left="30" top="10"/>
@@ -36,7 +36,7 @@
                             <Insets left="30" top="5"/>
                         </VBox.margin>
                     </DisabledTextField>
-                </FlexVBox>
+                </FXVBox>
                 <InfoLabel text="%base.type">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
@@ -58,13 +58,13 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
-                <FlexVBox flexWidth="100%" flexHeight="100% - 310">
+                <FXVBox flexWidth="100%" flexHeight="100% - 310">
                     <InfoLabel text="%base.data">
                         <VBox.margin>
                             <Insets left="30" top="10"/>
                         </VBox.margin>
                     </InfoLabel>
-                    <FlexHBox flexHeight="100% - 40">
+                    <FXHBox flexHeight="100% - 40">
                         <RichDataTextArea fx:id="nodeData" flexHeight="100% "
                                           tipText="%base.dataTip"
                                           flexWidth="100% - 140">
@@ -72,7 +72,7 @@
                                 <Insets left="30" top="5"/>
                             </HBox.margin>
                         </RichDataTextArea>
-                        <FlexVBox>
+                        <FXVBox>
                             <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                                 <VBox.margin>
                                     <Insets left="5" top="10"/>
@@ -88,10 +88,10 @@
                                     <Insets left="5" top="10"/>
                                 </VBox.margin>
                             </JSONSVGGlyph>
-                        </FlexVBox>
-                    </FlexHBox>
-                </FlexVBox>
-                <FlexVBox>
+                        </FXVBox>
+                    </FXHBox>
+                </FXVBox>
+                <FXVBox>
                     <InfoLabel text="%base.preview">
                         <VBox.margin>
                             <Insets left="30" top="10"/>
@@ -103,11 +103,11 @@
                             <Insets left="30" top="5"/>
                         </VBox.margin>
                     </DisabledTextField>
-                </FlexVBox>
-            </FlexVBox>
+                </FXVBox>
+            </FXVBox>
         </FXTab>
         <FXTab text="%base.acl" fx:id="aclTab">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FXVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%zk.aclType">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
@@ -119,13 +119,13 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ZKACLType2ComboBox>
-                <FlexVBox>
+                <FXVBox>
                     <InfoLabel text="%zk.aclScope">
                         <VBox.margin>
                             <Insets left="30" top="10"/>
                         </VBox.margin>
                     </InfoLabel>
-                    <FlexHBox fx:id="perms">
+                    <FXHBox fx:id="perms">
                         <padding>
                             <Insets left="30" top="10"/>
                         </padding>
@@ -150,15 +150,15 @@
                                 <Insets left="10"/>
                             </HBox.margin>
                         </FXCheckBox>
-                    </FlexHBox>
-                </FlexVBox>
-                <FlexVBox managedBindVisible="true" visible="false" fx:id="digestACL">
+                    </FXHBox>
+                </FXVBox>
+                <FXVBox managedBindVisible="true" visible="false" fx:id="digestACL">
                     <InfoLabel text="%base.authInfo">
                         <VBox.margin>
                             <Insets left="30" top="10"/>
                         </VBox.margin>
                     </InfoLabel>
-                    <FlexHBox>
+                    <FXHBox>
                         <ClearableTextField tipText="%base.userName" fx:id="digestUser" realHeight="30"
                                             flexWidth="50% - 115">
                             <HBox.margin>
@@ -171,15 +171,15 @@
                                 <Insets left="5" top="5"/>
                             </HBox.margin>
                         </ClearableTextField>
-                    </FlexHBox>
-                    <FlexHBox>
+                    </FXHBox>
+                    <FXHBox>
                         <VBox.margin>
                             <Insets left="30"/>
                         </VBox.margin>
                         <FXLabel fx:id="digestText"/>
-                    </FlexHBox>
-                </FlexVBox>
-                <FlexVBox managedBindVisible="true" visible="false" fx:id="ipACL">
+                    </FXHBox>
+                </FXVBox>
+                <FXVBox managedBindVisible="true" visible="false" fx:id="ipACL">
                     <InfoLabel text="%base.ipAddr">
                         <VBox.margin>
                             <Insets left="30" top="10"/>
@@ -191,11 +191,11 @@
                             <Insets left="30" top="5"/>
                         </VBox.margin>
                     </ClearableTextField>
-                </FlexVBox>
-            </FlexVBox>
+                </FXVBox>
+            </FXVBox>
         </FXTab>
     </FXTabPane>
-    <FlexHBox flexWidth="100%" realHeight="50">
+    <FXHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addNode">
             <HBox.margin>
                 <Insets left="30" top="20"/>
@@ -206,5 +206,5 @@
                 <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
-    </FlexHBox>
-</FlexVBox>
+    </FXHBox>
+</FXVBox>

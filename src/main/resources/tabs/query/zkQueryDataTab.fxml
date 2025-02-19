@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.fx.ZKDataTextAreaPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryDataTabController">
-    <FlexHBox realHeight="35" flexWidth="100%">
+    <FXHBox realHeight="35" flexWidth="100%">
         <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0">
             <HBox.margin>
                 <Insets left="5" top="7"/>
@@ -32,10 +32,10 @@
                 <Insets left="5" top="10"/>
             </HBox.margin>
         </RedoSVGGlyph>
-    </FlexHBox>
+    </FXHBox>
     <ZKDataTextAreaPane onKeyPressed="#onDataKeyPressed" fx:id="data" flexWidth="100% - 30" flexHeight="100% - 35">
         <VBox.margin>
             <Insets left="5"/>
         </VBox.margin>
     </ZKDataTextAreaPane>
-</FlexVBox>
+</FXVBox>

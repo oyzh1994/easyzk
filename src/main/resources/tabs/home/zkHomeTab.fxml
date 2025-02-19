@@ -3,8 +3,8 @@
 <?import cn.oyzh.fx.gui.button.AddGroupButton?>
 <?import cn.oyzh.fx.gui.button.ChangelogButton?>
 <?import cn.oyzh.fx.gui.button.OpenTerminalButton?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.pane.FXPane?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import javafx.geometry.Insets?>
@@ -18,7 +18,7 @@
     <ImageView fitWidth="190" fitHeight="190" layoutX="50" layoutY="100">
         <Image url="/image/zoo_no_bg.png"/>
     </ImageView>
-    <FlexVBox flexWidth="100% - 300" realHeight="210" layoutX="260" layoutY="100">
+    <FXVBox flexWidth="100% - 300" realHeight="210" layoutX="260" layoutY="100">
         <FXText text="%zk.home.welcome" fontSize="30" enableFont="false">
             <VBox.margin>
                 <Insets top="20"/>
@@ -34,8 +34,8 @@
                 <Insets top="20"/>
             </VBox.margin>
         </FXText>
-    </FlexVBox>
-    <FlexHBox flexWidth="100% - 300" realHeight="300" layoutX="260" layoutY="260">
+    </FXVBox>
+    <FXHBox flexWidth="100% - 300" realHeight="300" layoutX="260" layoutY="260">
         <AddConnectButton onMousePrimaryClicked="#addConnect"/>
         <AddGroupButton onMousePrimaryClicked="#addGroup">
             <HBox.margin>
@@ -52,5 +52,5 @@
                 <Insets left="20"/>
             </HBox.margin>
         </ChangelogButton>
-    </FlexHBox>
+    </FXHBox>
 </FXPane>

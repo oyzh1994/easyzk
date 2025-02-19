@@ -4,8 +4,8 @@
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.ReadOnlyTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
@@ -17,13 +17,13 @@
 <FXTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyzk.controller.tool.ZKToolController" realWidth="850" realHeight="600">
     <FXTab text="%base.digest">
-        <FlexVBox flexHeight="100%" flexWidth="100%">
+        <FXVBox flexHeight="100%" flexWidth="100%">
             <InfoLabel text="%base.userInfo">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexHBox>
+            <FXHBox>
                 <ClearableTextField fx:id="user" realHeight="30" flexWidth="50% - 115" tipText="%base.userNameTip">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
@@ -34,13 +34,13 @@
                         <Insets left="10" top="5"/>
                     </HBox.margin>
                 </ClearableTextField>
-            </FlexHBox>
+            </FXHBox>
             <InfoLabel text="%base.digestInfo">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexHBox>
+            <FXHBox>
                 <ReadOnlyTextField fx:id="digest" realHeight="30" flexWidth="100% - 220">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
@@ -51,18 +51,18 @@
                         <Insets left="10" top="5"/>
                     </HBox.margin>
                 </CopyButton>
-            </FlexHBox>
-            <FlexHBox flexWidth="100%" realHeight="50">
+            </FXHBox>
+            <FXHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#genDigest" text="%base.generate">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
                     </HBox.margin>
                 </SubmitButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
     <FXTab text="%base.cache">
-        <FlexVBox flexHeight="100%" flexWidth="100%">
+        <FXVBox flexHeight="100%" flexWidth="100%">
             <InfoLabel text="%base.info">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
@@ -73,7 +73,7 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </ReadOnlyTextArea>
-            <FlexHBox flexWidth="100%" realHeight="50">
+            <FXHBox flexWidth="100%" realHeight="50">
                 <CalcButton onAction="#calcCache" realHeight="30">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
@@ -84,7 +84,7 @@
                         <Insets left="10" top="20"/>
                     </HBox.margin>
                 </ClearButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
 </FXTabPane>

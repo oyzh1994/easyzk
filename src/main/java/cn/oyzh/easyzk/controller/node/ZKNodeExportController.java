@@ -18,7 +18,7 @@
 // import cn.oyzh.common.file.FileUtil;
 // import cn.oyzh.fx.plus.controller.StageController;
 // import cn.oyzh.fx.gui.text.area.MsgTextArea;
-// import cn.oyzh.fx.plus.controls.box.FlexHBox;
+// import cn.oyzh.fx.plus.controls.box.FXHBox;
 // import cn.oyzh.fx.plus.controls.button.FXButton;
 // import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 // import cn.oyzh.fx.plus.controls.label.FXLabel;
@@ -64,7 +64,7 @@
 //      * 节点路径组件
 //      */
 //     @FXML
-//     private FlexHBox nodePathBox;
+//     private FXHBox nodePathBox;
 //
 //     /**
 //      * 节点路径

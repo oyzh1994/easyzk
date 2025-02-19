@@ -7,10 +7,10 @@
 <!--<?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>-->
 <!--<?import cn.oyzh.fx.gui.svg.label.ToolsSVGLabel?>-->
 <!--<?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?>-->
-<!--<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>-->
+<!--<?import cn.oyzh.fx.plus.controls.box.FXHBox?>-->
 <!--<?import javafx.geometry.Insets?>-->
 <!--<?import javafx.scene.layout.HBox?>-->
-<!--<FlexHBox xmlns:fx="http://javafx.com/fxml/1"-->
+<!--<FXHBox xmlns:fx="http://javafx.com/fxml/1"-->
 <!--          fx:controller="cn.oyzh.easyzk.controller.HeaderController2" realHeight="30">-->
 <!--    <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">-->
 <!--        <HBox.margin>-->
@@ -52,4 +52,4 @@
 <!--            <Insets left="10" top="10"/>-->
 <!--        </HBox.margin>-->
 <!--    </Layout2SVGGlyph>-->
-<!--</FlexHBox>-->
+<!--</FXHBox>-->

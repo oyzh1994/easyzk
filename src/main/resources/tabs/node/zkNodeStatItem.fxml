@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.gui.label.SuccessLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.VBox?>
-<FlexHBox flexWidth="100%" realHeight="30" styleClass="statItem">
+<FXHBox flexWidth="100%" realHeight="30" styleClass="statItem">
     <VBox.margin>
         <Insets left="5"/>
     </VBox.margin>
     <SuccessLabel realWidth="135" realHeight="30"/>
     <SuccessLabel realHeight="30" flexWidth="100% - 180"/>
-</FlexHBox>
+</FXHBox>

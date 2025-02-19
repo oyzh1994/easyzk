@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXHyperlink?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.AboutController" realWidth="800" realHeight="600">
     <InfoLabel text="%base.appName">
         <VBox.margin>
@@ -103,4 +103,4 @@
             <Insets left="30" top="15"/>
         </VBox.margin>
     </FXText>
-</FlexVBox>
+</FXVBox>

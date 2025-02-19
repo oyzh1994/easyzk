@@ -4,13 +4,13 @@
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.acl.ZKACLUpdateController" realWidth="600" realHeight="400">
     <InfoLabel text="%base.path">
         <VBox.margin>
@@ -37,7 +37,7 @@
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <FlexHBox fx:id="perms">
+    <FXHBox fx:id="perms">
         <VBox.margin>
             <Insets left="30" top="5"/>
         </VBox.margin>
@@ -62,8 +62,8 @@
                 <Insets left="10"/>
             </HBox.margin>
         </FXCheckBox>
-    </FlexHBox>
-    <FlexVBox fx:id="digestACL" managedBindVisible="true" visible="false">
+    </FXHBox>
+    <FXVBox fx:id="digestACL" managedBindVisible="true" visible="false">
         <InfoLabel text="%base.authInfo">
             <VBox.margin>
                 <Insets left="30" top="10"/>
@@ -74,8 +74,8 @@
                 <Insets left="30" top="5"/>
             </VBox.margin>
         </DisabledTextField>
-    </FlexVBox>
-    <FlexVBox fx:id="ipACL" managedBindVisible="true" visible="false">
+    </FXVBox>
+    <FXVBox fx:id="ipACL" managedBindVisible="true" visible="false">
         <InfoLabel text="%base.ipAddr">
             <VBox.margin>
                 <Insets left="30" top="10"/>
@@ -86,8 +86,8 @@
                 <Insets left="30" top="5"/>
             </VBox.margin>
         </DisabledTextField>
-    </FlexVBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
+    </FXVBox>
+    <FXHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#updateACL">
             <HBox.margin>
                 <Insets left="30" top="20"/>
@@ -98,5 +98,5 @@
                 <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
-    </FlexHBox>
-</FlexVBox>
+    </FXHBox>
+</FXVBox>

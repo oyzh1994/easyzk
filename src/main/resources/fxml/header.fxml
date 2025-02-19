@@ -7,12 +7,12 @@
 <!-- <?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.label.ToolsSVGLabel?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXHBox?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?> -->
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.label.MigrationSVGLabel?> -->
-<!-- <FlexHBox xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXHBox xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyzk.controller.HeaderController" flexWidth="100%" realHeight="30"> -->
 <!--     <SVGLabel text="%base.auth" onMousePrimaryClicked="#auth" url="/font/audit.svg" -->
 <!--               size="12"> -->
@@ -77,4 +77,4 @@
 <!--             <Insets top="7" left="10"/> -->
 <!--         </HBox.margin> -->
 <!--     </Layout2SVGGlyph> -->
-<!-- </FlexHBox> -->
+<!-- </FXHBox> -->

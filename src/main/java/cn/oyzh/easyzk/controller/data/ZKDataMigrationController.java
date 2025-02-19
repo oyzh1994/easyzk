@@ -9,7 +9,7 @@ import cn.oyzh.easyzk.util.ZKProcessUtil;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
@@ -42,19 +42,19 @@ public class ZKDataMigrationController extends StageController {
      * 第一步
      */
     @FXML
-    private FlexVBox step1;
+    private FXVBox step1;
 
     /**
      * 第二步
      */
     @FXML
-    private FlexVBox step2;
+    private FXVBox step2;
 
     /**
      * 第三步
      */
     @FXML
-    private FlexVBox step3;
+    private FXVBox step3;
 
     /**
      * 迁移消息

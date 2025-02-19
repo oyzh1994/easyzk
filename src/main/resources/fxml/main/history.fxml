@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableView?>
@@ -16,8 +16,8 @@
     <graphic>
         <HistorySVGGlyph cursorType="DEFAULT" size="12"/>
     </graphic>
-    <FlexVBox flexWidth="100%" flexHeight="100%">
-        <FlexHBox realHeight="32">
+    <FXVBox flexWidth="100%" flexHeight="100%">
+        <FXHBox realHeight="32">
             <RefreshSVGGlyph size="16" onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="10" top="9"/>
@@ -38,7 +38,7 @@
                     <Insets left="5" top="7"/>
                 </HBox.margin>
             </FXToggleSwitch>
-        </FlexHBox>
+        </FXHBox>
         <FXTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
             <columns>
                 <FXTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
@@ -46,6 +46,6 @@
                 <FXTableColumn flexWidth="85% - 135" text="%base.size" valueName="dataSize"/>
             </columns>
         </FXTableView>
-    </FlexVBox>
+    </FXVBox>
 </FXTab>
 

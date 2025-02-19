@@ -12,10 +12,10 @@ import cn.oyzh.fx.gui.setting.SettingTreeItem;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.picker.FXColorPicker;
-import cn.oyzh.fx.plus.controls.text.FlexSlider;
+import cn.oyzh.fx.plus.controls.text.FXSlider;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.domain.AppSetting;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
@@ -180,19 +180,19 @@ public class SettingController2 extends StageController {
      * 背景色
      */
     @FXML
-    private FlexHBox bgColorBox;
+    private FXHBox bgColorBox;
 
     /**
      * 前景色
      */
     @FXML
-    private FlexHBox fgColorBox;
+    private FXHBox fgColorBox;
 
     /**
      * 强调色
      */
     @FXML
-    private FlexHBox accentColorBox;
+    private FXHBox accentColorBox;
 
     /**
      * 字体大小
@@ -276,13 +276,13 @@ public class SettingController2 extends StageController {
      * 窗口透明度
      */
     @FXML
-    private FlexSlider opacity;
+    private FXSlider opacity;
 
     /**
      * 标题栏透明度
      */
     @FXML
-    private FlexSlider titleBarOpacity;
+    private FXSlider titleBarOpacity;
 
     /**
      * 配置对象

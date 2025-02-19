@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
@@ -55,7 +55,7 @@ public class ZKACLUpdateController extends StageController {
      * 权限
      */
     @FXML
-    private FlexHBox perms;
+    private FXHBox perms;
 
     /**
      * 节点路径

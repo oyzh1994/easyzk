@@ -4,8 +4,8 @@
 <!-- <?import cn.oyzh.fx.gui.button.ExportButton?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?> -->
 <!-- <?import cn.oyzh.fx.gui.button.StopButton?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXVBox?> -->
 <!-- <?import cn.oyzh.fx.gui.label.AccentLabel?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.label.FXLabel?> -->
 <!-- <?import cn.oyzh.fx.gui.text.field.DisabledTextField?> -->
@@ -14,9 +14,9 @@
 <!-- <?import javafx.scene.layout.HBox?> -->
 <!-- <?import javafx.scene.layout.VBox?> -->
 <!-- <?import javafx.scene.text.Text?> -->
-<!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="680"> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox"> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox"> -->
 <!--         <AccentLabel text="%base.path" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -27,8 +27,8 @@
 <!--                 <Insets left="10" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </DisabledTextField> -->
-<!--     </FlexHBox> -->
-<!--     &lt;!&ndash; <FlexHBox flexWidth="100%" realHeight="50"> &ndash;&gt; -->
+<!--     </FXHBox> -->
+<!--     &lt;!&ndash; <FXHBox flexWidth="100%" realHeight="50"> &ndash;&gt; -->
 <!--     &lt;!&ndash;     <AccentLabel text="%base.format" realHeight="30" realWidth="80"> &ndash;&gt; -->
 <!--     &lt;!&ndash;         <HBox.margin> &ndash;&gt; -->
 <!--     &lt;!&ndash;             <Insets left="20" top="10"/> &ndash;&gt; -->
@@ -76,8 +76,8 @@
 <!--     &lt;!&ndash;             </FlowPane.margin> &ndash;&gt; -->
 <!--     &lt;!&ndash;         </FXComboBox> &ndash;&gt; -->
 <!--     &lt;!&ndash;     </FlexFlowPane> &ndash;&gt; -->
-<!--     &lt;!&ndash; </FlexHBox> &ndash;&gt; -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     &lt;!&ndash; </FXHBox> &ndash;&gt; -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.options" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -99,22 +99,22 @@
 <!--                 <Insets left="10" top="18"/> -->
 <!--             </HBox.margin> -->
 <!--         </FXToggleSwitch> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" flexHeight="100% - 270"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" flexHeight="100% - 270"> -->
 <!--         <AccentLabel text="%base.message" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </AccentLabel> -->
-<!--         <FlexVBox flexWidth="100% - 140" flexHeight="100%"> -->
+<!--         <FXVBox flexWidth="100% - 140" flexHeight="100%"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="10" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--             <MsgTextArea lineLimit="300" fx:id="exportMsg" flexWidth="100%" flexHeight="100% - 20"/> -->
 <!--             <FXLabel fx:id="exportStatus"/> -->
-<!--         </FlexVBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         </FXVBox> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <ExportButton groupId="exec" onAction="#doExport" -->
 <!--                       realHeight="30" iconSizePercent="0.75"> -->
 <!--             <HBox.margin> -->
@@ -132,8 +132,8 @@
 <!--                 <Insets left="15" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </CloseButton> -->
-<!--     </FlexHBox> -->
-<!--     <FlexVBox flexWidth="100%" fontSize="12"> -->
+<!--     </FXHBox> -->
+<!--     <FXVBox flexWidth="100%" fontSize="12"> -->
 <!--         <FXLabel text="%base.tip" textFill="#666"> -->
 <!--             <VBox.margin> -->
 <!--                 <Insets top="10"/> -->
@@ -152,5 +152,5 @@
 <!--         <VBox.margin> -->
 <!--             <Insets left="110"/> -->
 <!--         </VBox.margin> -->
-<!--     </FlexVBox> -->
-<!-- </FlexVBox> -->
+<!--     </FXVBox> -->
+<!-- </FXVBox> -->

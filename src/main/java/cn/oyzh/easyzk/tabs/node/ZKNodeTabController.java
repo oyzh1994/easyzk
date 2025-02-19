@@ -37,8 +37,8 @@ import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
@@ -90,13 +90,13 @@ public class ZKNodeTabController extends DynamicTabController {
      * 根节点
      */
     @FXML
-    private FlexHBox root;
+    private FXHBox root;
 
     /**
      * 左侧节点
      */
     @FXML
-    private FlexVBox leftBox;
+    private FXVBox leftBox;
 
     /**
      * tab节点
@@ -127,7 +127,7 @@ public class ZKNodeTabController extends DynamicTabController {
      * 右侧zk属性组件
      */
     @FXML
-    private FlexVBox statBox;
+    private FXVBox statBox;
 
     /**
      * zk属性视图切换按钮
@@ -850,7 +850,7 @@ public class ZKNodeTabController extends DynamicTabController {
             // 遍历节点
             int index = 0;
             for (Node statItem : statItems) {
-                FlexHBox box = (FlexHBox) statItem;
+                FXHBox box = (FXHBox) statItem;
                 FriendlyInfo<Stat> statInfo = statInfos.get(index++);
                 Label label = (Label) box.getChildren().get(0);
                 Label data = (Label) box.getChildren().get(1);

@@ -14,7 +14,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.button.CopyButton;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
-import cn.oyzh.fx.plus.SimpleStringConverter;
+import cn.oyzh.fx.plus.converter.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -177,7 +177,7 @@ public class ZKACLAddController extends StageController {
     /**
      * 节点互斥器
      */
-    private final NodeMutexes nodeMutexes = new NodeMutexes();
+    private final NodeMutexes mutexes = new NodeMutexes();
 
     /**
      * 认证信息储存
@@ -190,7 +190,7 @@ public class ZKACLAddController extends StageController {
     @FXML
     private void copyDigestText() {
         String data = this.digestText.getText();
-        ClipboardUtil.setStringAndTip(data, "摘要信息");
+        ClipboardUtil.setStringAndTip(data);
     }
 
     /**
@@ -437,30 +437,30 @@ public class ZKACLAddController extends StageController {
     protected void bindListeners() {
         super.bindListeners();
         // 节点互斥
-        this.nodeMutexes.addNodes(this.ip1ACL, this.ip2ACL, this.digest1ACL, this.digest2ACL, this.digest3ACL);
-        this.nodeMutexes.manageBindVisible();
+        this.mutexes.addNodes(this.ip1ACL, this.ip2ACL, this.digest1ACL, this.digest2ACL, this.digest3ACL);
+        this.mutexes.manageBindVisible();
 
         // 权限类型切换事件
         this.aclType.selectedIndexChanged((observableValue, number, t1) -> {
             // world权限
             if (t1.intValue() == 0) {
                 this.permsBox.display();
-                this.nodeMutexes.visible(null);
+                this.mutexes.visible(null);
             } else if (t1.intValue() == 1) {// digest权限1
                 this.permsBox.display();
-                this.nodeMutexes.visible(this.digest1ACL);
+                this.mutexes.visible(this.digest1ACL);
             } else if (t1.intValue() == 2) {// digest权限2
                 this.permsBox.display();
-                this.nodeMutexes.visible(this.digest2ACL);
+                this.mutexes.visible(this.digest2ACL);
             } else if (t1.intValue() == 3) {// digest权限3
                 this.permsBox.display();
-                this.nodeMutexes.visible(this.digest3ACL);
+                this.mutexes.visible(this.digest3ACL);
             } else if (t1.intValue() == 4) {// 单IP权限
                 this.permsBox.display();
-                this.nodeMutexes.visible(this.ip1ACL);
+                this.mutexes.visible(this.ip1ACL);
             } else if (t1.intValue() == 5) {// 多IP权限
                 this.permsBox.disappear();
-                this.nodeMutexes.visible(this.ip2ACL);
+                this.mutexes.visible(this.ip2ACL);
             }
         });
         // 文本监听器
@@ -507,6 +507,12 @@ public class ZKACLAddController extends StageController {
 
         this.nodePath.setText(this.zkItem.decodeNodePath());
         this.stage.hideOnEscape();
+    }
+
+    @Override
+    public void onWindowHidden(WindowEvent event) {
+        super.onWindowHidden(event);
+        this.mutexes.destroy();
     }
 
     /**

@@ -7,7 +7,7 @@ import cn.oyzh.fx.plus.controls.list.FlexListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.util.ControlUtil;
-import cn.oyzh.fx.plus.util.MouseUtil;
+import cn.oyzh.fx.plus.mouse.MouseUtil;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.paint.Color;

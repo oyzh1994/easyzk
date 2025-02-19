@@ -11,7 +11,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
-import cn.oyzh.fx.plus.SimpleStringConverter;
+import cn.oyzh.fx.plus.converter.SimpleStringConverter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
@@ -108,7 +108,7 @@ public class ZKAuthAuthController extends StageController {
     /**
      * 节点互斥器
      */
-    private final NodeMutexes nodeGroupManage = new NodeMutexes();
+    private final NodeMutexes mutexes = new NodeMutexes();
 
     /**
      * 认证
@@ -182,13 +182,13 @@ public class ZKAuthAuthController extends StageController {
         this.zkItem = this.getWindowProp("zkItem");
         this.zkNode = this.zkItem.value();
         this.nodePath.setText(this.zkNode.decodeNodePath());
-        this.nodeGroupManage.addNodes(this.authType1, this.authType2);
-        this.nodeGroupManage.manageBindVisible();
+        this.mutexes.addNodes(this.authType1, this.authType2);
+        this.mutexes.manageBindVisible();
         this.authType.selectedIndexChanged((o, toggle, t1) -> {
             if (t1.intValue() == 0) {
-                this.nodeGroupManage.visible(this.authType1);
+                this.mutexes.visible(this.authType1);
             } else if (t1.intValue() == 1) {
-                this.nodeGroupManage.visible(this.authType2);
+                this.mutexes.visible(this.authType2);
             }
         });
         this.authList.getItems().clear();
@@ -227,6 +227,12 @@ public class ZKAuthAuthController extends StageController {
                 this.password.setText(t1.split(":")[1]);
             }
         });
+    }
+
+    @Override
+    public void onWindowHidden(WindowEvent event) {
+        super.onWindowHidden(event);
+        this.mutexes.destroy();
     }
 
     @Override

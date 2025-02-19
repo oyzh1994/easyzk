@@ -50,7 +50,7 @@ import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.node.NodeResizeHelper;
+import cn.oyzh.fx.plus.node.NodeResizer;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -978,9 +978,9 @@ public class ZKNodeTabController extends DynamicTabController {
             }
         });
         // 拉伸辅助
-        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
-        resizeHelper.widthLimit(240f, 750f);
-        resizeHelper.initResizeEvent();
+        NodeResizer resizer = new NodeResizer(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        resizer.widthLimit(240f, 750f);
+        resizer.initResizeEvent();
         // 过滤
         KeyHandler searchKeyHandler = new KeyHandler();
         searchKeyHandler.handler(e -> this.filterKW.requestFocus());

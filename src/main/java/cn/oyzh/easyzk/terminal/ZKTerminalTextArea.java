@@ -12,7 +12,7 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.terminal.TerminalTextArea;
+import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
@@ -26,7 +26,7 @@ import org.apache.zookeeper.ZooKeeper;
  * @author oyzh
  * @since 2023/7/21
  */
-public class ZKTerminalTextArea extends TerminalTextArea {
+public class ZKTerminalTextArea extends TerminalTextAreaPane {
 
     {
         this.keyHandler(ZKTerminalKeyHandler.INSTANCE);

@@ -26,7 +26,7 @@ import org.apache.zookeeper.ZooKeeper;
  * @author oyzh
  * @since 2023/7/21
  */
-public class ZKTerminalTextArea extends TerminalTextAreaPane {
+public class ZKTerminalTextAreaPane extends TerminalTextAreaPane {
 
     {
         this.keyHandler(ZKTerminalKeyHandler.INSTANCE);

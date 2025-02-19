@@ -148,7 +148,7 @@
                         <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
-                <FXCheckBox fx:id="applyFilter" text="%base.acl">
+                <FXCheckBox fx:id="includeACL" text="%zk.aclTip4">
                     <HBox.margin>
                         <Insets left="10" top="5"/>
                     </HBox.margin>

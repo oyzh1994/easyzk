@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -450,17 +451,24 @@ public class ZKNodeUtil {
     /**
      * 递归获取zk节点
      *
-     * @param path    路径
-     * @param client  zk操作器
-     * @param filter  过滤器
-     * @param success 成功处理
-     * @param error   错误处理
+     * @param path       路径
+     * @param client     zk操作器
+     * @param filter     过滤器
+     * @param success    成功处理
+     * @param error      错误处理
+     * @param includeACL 是否包含acl
      */
-    public static void loopNode(@NonNull ZKClient client, @NonNull String path, Predicate<String> filter, @NonNull BiConsumer<String, byte[]> success, BiConsumer<String, Exception> error) throws Exception {
+    public static void loopNode(@NonNull ZKClient client, @NonNull String path, Predicate<String> filter, @NonNull Consumer<ZKNode> success, BiConsumer<String, Exception> error, boolean includeACL) throws Exception {
         // 获取节点
         try {
             if (filter == null || filter.test(path)) {
-                success.accept(path, client.getData(path));
+                ZKNode node = new ZKNode();
+                node.nodePath(path);
+                node.setNodeData(client.getData(path));
+                if (includeACL) {
+                    node.acl(client.getACL(node.nodePath()));
+                }
+                success.accept(node);
             }
         } catch (Exception ex) {
             if (error != null) {
@@ -472,7 +480,7 @@ public class ZKNodeUtil {
             List<String> children = client.getChildren(path);
             for (String child : children) {
                 String nPath = ZKNodeUtil.concatPath(path, child);
-                loopNode(client, nPath, filter, success, error);
+                loopNode(client, nPath, filter, success, error, includeACL);
             }
         } catch (Exception ex) {
             if (error != null) {

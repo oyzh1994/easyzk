@@ -129,6 +129,12 @@ public class ZKDataExportController extends StageController {
     private FXCheckBox includeTitle;
 
     /**
+     * 包含acl
+     */
+    @FXML
+    private FXCheckBox includeACL;
+
+    /**
      * 压缩
      */
     @FXML
@@ -233,6 +239,8 @@ public class ZKDataExportController extends StageController {
         } else {
             this.exportHandler.filters(null);
         }
+        // 包含acl
+        this.exportHandler.includeACL(this.includeACL.isSelected());
         // 包含标题
         this.exportHandler.includeTitle(this.includeTitle.isEnable() && this.includeTitle.isSelected());
         // 压缩

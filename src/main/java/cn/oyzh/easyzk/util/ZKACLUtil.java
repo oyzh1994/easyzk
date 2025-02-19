@@ -244,6 +244,9 @@ public class ZKACLUtil {
         while (i-- > 0) {
             permStr.insert(0, "0");
         }
+        if (joinStr == null) {
+            joinStr = "";
+        }
         StringBuilder builder = new StringBuilder();
         if (permStr.charAt(0) == '1') {
             builder.append(joinStr).append("a");

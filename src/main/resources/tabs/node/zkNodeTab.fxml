@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyzk.fx.ZKACLTableView?>
-<?import cn.oyzh.easyzk.fx.ZKDataTextArea?>
+<?import cn.oyzh.easyzk.fx.ZKDataTextAreaPane?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
@@ -161,8 +161,8 @@
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
-                <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 60"
-                                flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" groupId="dataToBig"/>
+                <ZKDataTextAreaPane fontSize="12" fx:id="nodeData" flexHeight="100% - 60"
+                                    flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" groupId="dataToBig"/>
                 <FlexHBox flexWidth="100%" flexHeight="30">
                     <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
                                      onMousePrimaryClicked="#showHistory">

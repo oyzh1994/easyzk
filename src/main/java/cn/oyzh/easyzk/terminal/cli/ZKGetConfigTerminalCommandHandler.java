@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.terminal.cli;
 
-import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.AccessLevel;
@@ -35,7 +35,7 @@ public class ZKGetConfigTerminalCommandHandler extends ZKCliTerminalCommandHandl
     }
 
     @Override
-    public String commandHelp(ZKTerminalTextArea terminal) {
+    public String commandHelp(ZKTerminalTextAreaPane terminal) {
         return super.commandHelp(terminal) + "\n" +
                 "-c client connection string\n" +
                 "-s stats";

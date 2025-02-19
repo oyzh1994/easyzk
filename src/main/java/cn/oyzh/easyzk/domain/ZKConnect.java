@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.object.ObjectComparator;
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;

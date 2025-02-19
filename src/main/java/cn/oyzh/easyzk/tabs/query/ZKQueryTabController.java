@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.query.ZKQueryParam;
 import cn.oyzh.easyzk.query.ZKQueryResult;
-import cn.oyzh.easyzk.query.ZKQueryTextArea;
+import cn.oyzh.easyzk.query.ZKQueryTextAreaPane;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
@@ -47,7 +47,7 @@ public class ZKQueryTabController extends DynamicTabController {
      * 当前内容
      */
     @FXML
-    private ZKQueryTextArea content;
+    private ZKQueryTextAreaPane content;
 
     /**
      * 结果面板

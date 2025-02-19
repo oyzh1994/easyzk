@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -32,7 +32,7 @@ public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<T
     }
 
     @Override
-    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
+    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextAreaPane terminal) {
         try {
             return super.execute(command, terminal);
         } finally {

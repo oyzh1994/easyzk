@@ -10,7 +10,7 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
  * @author oyzh
  * @since 2024/12/29
  */
-public class ZKDataTextArea extends RichDataTextAreaPane {
+public class ZKDataTextAreaPane extends RichDataTextAreaPane {
 
     @Override
     protected void initTextArea() {

@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.easyzk.fx.ZKDataTextArea;
+import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -31,7 +31,7 @@ public class ZKQueryDataTabController extends DynamicTabController {
     private SVGGlyph redo;
 
     @FXML
-    private ZKDataTextArea data;
+    private ZKDataTextAreaPane data;
 
     @FXML
     private RichDataTypeComboBox format;

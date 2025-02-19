@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryTextArea extends RichDataTextAreaPane {
+public class ZKQueryTextAreaPane extends RichDataTextAreaPane {
 
     /**
      * zk客户端

@@ -99,7 +99,7 @@ public class ZKServerInfo {
         int val;
         try {
             String commandInfo = this.getCommandInfo();
-            if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
+            if (StringUtil.isBlank(commandInfo) || StringUtil.equalsAnyIgnoreCase(commandInfo, "N/A", "N/N/N")) {
                 val = 0;
             } else {
                 val = Integer.parseInt(commandInfo.split("/")[0]);
@@ -115,7 +115,7 @@ public class ZKServerInfo {
         int val;
         try {
             String commandInfo = this.getCommandInfo();
-            if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
+            if (StringUtil.isBlank(commandInfo) || StringUtil.equalsAnyIgnoreCase(commandInfo, "N/A", "N/N/N")) {
                 val = 0;
             } else {
                 val = Integer.parseInt(commandInfo.split("/")[1]);
@@ -131,7 +131,7 @@ public class ZKServerInfo {
         int val;
         try {
             String commandInfo = this.getCommandInfo();
-            if (StringUtil.isBlank(commandInfo) || commandInfo.equals("N/A")) {
+            if (StringUtil.isBlank(commandInfo) || StringUtil.equalsAnyIgnoreCase(commandInfo, "N/A", "N/N/N")) {
                 val = 0;
             } else {
                 val = Integer.parseInt(commandInfo.split("/")[2]);

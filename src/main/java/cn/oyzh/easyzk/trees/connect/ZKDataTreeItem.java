@@ -1,11 +1,14 @@
 package cn.oyzh.easyzk.trees.connect;
 
+import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 
@@ -33,8 +36,20 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>(2);
         FXMenuItem openData = MenuItemHelper.openData("12", this::loadChild);
+        FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
         items.add(openData);
+        items.add(exportData);
         return items;
+    }
+
+    /**
+     * 导出zk节点
+     */
+    private void exportData() {
+        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
+        fxView.setProp("connect", this.zkConnect());
+        fxView.setProp("nodePath", "/");
+        fxView.display();
     }
 
     public ZKConnect connect() {

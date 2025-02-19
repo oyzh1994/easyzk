@@ -407,7 +407,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
     /**
      * 导出zk节点
      */
-    public void exportData() {
+    private void exportData() {
         StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
         fxView.setProp("connect", this.zkConnect());
         fxView.setProp("nodePath", this.nodePath());

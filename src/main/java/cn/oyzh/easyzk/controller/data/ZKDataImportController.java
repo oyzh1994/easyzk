@@ -82,6 +82,12 @@ public class ZKDataImportController extends StageController {
     private File importFile;
 
     /**
+     * 包含acl
+     */
+    @FXML
+    private FXCheckBox includeACL;
+
+    /**
      * 文件格式
      */
     @FXML
@@ -117,11 +123,11 @@ public class ZKDataImportController extends StageController {
     @FXML
     private NumberTextField dataRowStarts;
 
-    /**
-     * 选择文件
-     */
-    @FXML
-    private FXButton selectFile;
+//    /**
+//     * 选择文件
+//     */
+//    @FXML
+//    private FXButton selectFile;
 
     /**
      * 结束导入按钮
@@ -200,6 +206,8 @@ public class ZKDataImportController extends StageController {
         this.importHandler.fileType(fileType);
         // 客户端
         this.importHandler.client(this.client);
+        // 包含acl
+        this.importHandler.includeACL(this.includeACL.isSelected());
         // 存在时忽略
         this.importHandler.ignoreExist(this.ignoreExist.isSelected());
         // 导入文件

@@ -4,6 +4,7 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
+import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.store.file.FileColumns;
 import cn.oyzh.store.file.FileHelper;
@@ -14,6 +15,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.data.ACL;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -44,6 +46,11 @@ public class ZKDataImportHandler extends DataHandler {
     private int batchSize = 50;
 
     /**
+     * 包含acl
+     */
+    private boolean includeACL;
+
+    /**
      * 存在时忽略
      */
     private boolean ignoreExist;
@@ -63,6 +70,7 @@ public class ZKDataImportHandler extends DataHandler {
         FileColumns columns = new FileColumns();
         columns.addColumn("path", 0);
         columns.addColumn("data", 1);
+        columns.addColumn("acl", 2);
         // 获取写入器
         TypeFileReader reader = FileHelper.initReader(this.fileType, this.config, columns);
         if (reader != null) {
@@ -90,18 +98,26 @@ public class ZKDataImportHandler extends DataHandler {
                                 this.processedSkip();
                                 continue;
                             }
-                            String data = record.size() < 2 ? null : (String) record.get(1);
+                            String data = (String) record.get(1);
                             String dataStr = TextUtil.changeCharset(data, StandardCharsets.UTF_8.name(), this.config.charset());
                             // 更新
                             if (exists) {
                                 this.client.setData(path, dataStr);
                                 this.message("update node[" + path + "] success");
                             } else {// 创建
-                                this.client.create(path, dataStr, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT, true);
+                                List<ACL> aclList = ZooDefs.Ids.OPEN_ACL_UNSAFE;
+                                if (this.includeACL) {
+                                    String acl = (String) record.get(2);
+                                    if (StringUtil.isNotBlank(acl)) {
+                                        aclList = ZKACLUtil.parseAcl(acl);
+                                    }
+                                }
+                                this.client.create(path, dataStr, aclList, CreateMode.PERSISTENT, true);
                                 this.message("create node[" + path + "] success");
                             }
                             this.processedIncr();
                         } catch (Exception ex) {
+                            ex.printStackTrace();
                             this.processedDecr();
                             this.message("create node[" + path + "] failed");
                         }

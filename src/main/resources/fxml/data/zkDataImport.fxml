@@ -88,7 +88,7 @@
                 </VBox.margin>
             </InfoLabel>
             <FXHBox flexWidth="100%">
-                <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
+                <FXButton onAction="#selectFile" text="%base.select">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
                     </HBox.margin>
@@ -104,11 +104,18 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FXCheckBox fx:id="ignoreExist" text="%base.skipByExists">
-                <VBox.margin>
-                    <Insets left="30" top="5"/>
-                </VBox.margin>
-            </FXCheckBox>
+            <FXHBox>
+                <FXCheckBox fx:id="ignoreExist" text="%base.skipByExists">
+                    <HBox.margin>
+                        <Insets left="30" top="5"/>
+                    </HBox.margin>
+                </FXCheckBox>
+                <FXCheckBox fx:id="includeACL" text="%zk.aclTip4">
+                    <HBox.margin>
+                        <Insets left="10" top="5"/>
+                    </HBox.margin>
+                </FXCheckBox>
+            </FXHBox>
             <InfoLabel text="%base.charset">
                 <VBox.margin>
                     <Insets left="30" top="10"/>

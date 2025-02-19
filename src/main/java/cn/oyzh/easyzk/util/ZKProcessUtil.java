@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.util;
 
-import cn.oyzh.common.util.ProcessUtil;
+import cn.oyzh.common.system.ProcessUtil;
 import cn.oyzh.fx.plus.window.StageManager;
 import lombok.experimental.UtilityClass;
 

@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.controller.data;
 
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.SystemUtil;
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.fx.ZKConnectComboBox;
 import cn.oyzh.easyzk.handler.ZKDataTransportHandler;

@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeView;
 import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.common.util.ResourceUtil;
-import cn.oyzh.common.util.SystemUtil;
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.fx.gui.page.PagePane;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;

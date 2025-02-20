@@ -7,7 +7,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 <FXVBox xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.HeaderController3" flexHeight="100%" realHeight="30">
+          fx:controller="cn.oyzh.easyzk.controller.HeaderController3" flexHeight="100%" realWidth="30">
     <TransportSVGGlyph onMousePrimaryClicked="#transport" size="12">
         <VBox.margin>
             <Insets left="10" top="60"/>
@@ -38,7 +38,7 @@
             <Insets left="10" top="15"/>
         </VBox.margin>
     </Layout2SVGGlyph>
-    <FXPane flexWidth="100%" flexHeight="100% - 276">
+    <FXPane flexWidth="100%" flexHeight="100% - 280">
 
     </FXPane>
     <QuitSVGGlyph onMousePrimaryClicked="#quit" size="12">

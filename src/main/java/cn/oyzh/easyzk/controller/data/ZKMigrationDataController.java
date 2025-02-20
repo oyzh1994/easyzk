@@ -36,7 +36,7 @@ import javafx.stage.WindowEvent;
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/zkDataMigration.fxml"
 )
-public class ZKDataMigrationController extends StageController {
+public class ZKMigrationDataController extends StageController {
 
     /**
      * 第一步

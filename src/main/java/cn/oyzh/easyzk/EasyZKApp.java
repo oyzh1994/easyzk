@@ -115,7 +115,8 @@ public class EasyZKApp extends FXApplication {
             TerminalManager.setLoadHandlerAction(ZKTerminalManager::registerHandlers);
             // 显示迁移弹窗
             if (ZKStoreUtil.checkOlder()) {
-                FXUtil.runWait(() -> StageManager.showStage(ZKMigrationTipsController.class, primaryStage), 1000);
+//                FXUtil.runWait(() -> StageManager.showStage(ZKMigrationTipsController.class, primaryStage), 1000);
+                ZKEventUtil.showMigrationTips();
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -5,6 +5,8 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.connect.ZKUpdateConnectController;
+import cn.oyzh.easyzk.controller.data.ZKMigrationDataController;
+import cn.oyzh.easyzk.controller.data.ZKMigrationTipsController;
 import cn.oyzh.easyzk.controller.node.ZKAuthNodeController;
 import cn.oyzh.easyzk.controller.connect.ZKAddConnectController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
@@ -14,12 +16,14 @@ import cn.oyzh.easyzk.controller.node.ZKAddNodeController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.event.window.ZKShowAboutEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
+import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
@@ -356,4 +360,50 @@ public class MainController extends ParentStageController {
             }
         });
     }
+
+    /**
+     * 显示关于页面
+     */
+    @EventSubscribe
+    private void about(ZKShowAboutEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageManager.showStage(AboutController.class, StageManager.getPrimaryStage());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
+        });
+    }
+
+    /**
+     * 显示迁移数据页面
+     */
+    @EventSubscribe
+    private void migrationData(ZKShowMigrationDataEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageManager.showStage(ZKMigrationDataController.class, StageManager.getPrimaryStage());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
+        });
+    }
+
+    /**
+     * 显示迁移提示页面
+     */
+    @EventSubscribe
+    private void migrationTips(ZKShowMigrationDataEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageManager.showStage(ZKMigrationTipsController.class, StageManager.getPrimaryStage());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
+        });
+    }
+
 }

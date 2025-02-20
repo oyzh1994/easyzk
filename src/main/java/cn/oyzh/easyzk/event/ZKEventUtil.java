@@ -41,12 +41,15 @@ import cn.oyzh.easyzk.event.query.ZKQueryRenamedEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAboutEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
+import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
+import cn.oyzh.easyzk.event.window.ZKShowMigrationTipsEvent;
 import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
@@ -703,5 +706,26 @@ public class ZKEventUtil {
         event.data(item);
         event.client(client);
         EventUtil.post(event);
+    }
+
+    /**
+     * 显示关于页面
+     */
+    public static void showAbout() {
+        EventUtil.post(new ZKShowAboutEvent());
+    }
+
+    /**
+     * 显示迁移数据页面
+     */
+    public static void showMigrationData() {
+        EventUtil.post(new ZKShowMigrationDataEvent());
+    }
+
+    /**
+     * 显示迁移提示页面
+     */
+    public static void showMigrationTips() {
+        EventUtil.post(new ZKShowMigrationTipsEvent());
     }
 }

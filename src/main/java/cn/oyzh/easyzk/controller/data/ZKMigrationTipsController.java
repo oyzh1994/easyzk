@@ -56,6 +56,6 @@ public class ZKMigrationTipsController extends StageController {
     @FXML
     private void migration() {
         this.close();
-        StageManager.showStage(ZKDataMigrationController.class, StageManager.getPrimaryStage());
+        StageManager.showStage(ZKMigrationDataController.class, StageManager.getPrimaryStage());
     }
 }

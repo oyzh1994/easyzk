@@ -1,8 +1,6 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.SysConst;
-import cn.oyzh.easyzk.controller.data.ZKDataMigrationController;
-import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -37,7 +35,8 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void about() {
-        StageManager.showStage(AboutController.class, this.stage);
+//        StageManager.showStage(AboutController.class, this.stage);
+        ZKEventUtil.showAbout();
     }
 
     /**
@@ -94,6 +93,7 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void migration() {
-        StageManager.showStage(ZKDataMigrationController.class, this.stage);
+//        StageManager.showStage(ZKMigrationDataController.class, this.stage);
+        ZKEventUtil.showMigrationData();
     }
 }

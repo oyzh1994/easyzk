@@ -9,7 +9,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
-import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
+import cn.oyzh.easyzk.controller.node.ZKQRCodeNodeController;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
@@ -736,7 +736,7 @@ public class ZKNodeTabController extends DynamicTabController {
     @FXML
     private void node2QRCode() {
         try {
-            StageAdapter fxView = StageManager.parseStage(ZKNodeQRCodeController.class, this.window());
+            StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class, this.window());
             fxView.setProp("zkNode", this.activeItem.value());
             fxView.setProp("nodeData", this.nodeData.getTextTrim());
             fxView.display();

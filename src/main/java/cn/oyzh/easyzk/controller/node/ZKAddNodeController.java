@@ -46,7 +46,7 @@ import java.util.List;
         stageStyle = FXStageStyle.UNIFIED,
         value = FXConst.FXML_PATH + "node/zkNodeAdd.fxml"
 )
-public class ZKNodeAddController extends StageController {
+public class ZKAddNodeController extends StageController {
 
     /**
      * 权限tab

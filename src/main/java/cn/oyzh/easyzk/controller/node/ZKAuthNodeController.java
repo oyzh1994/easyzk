@@ -1,4 +1,4 @@
-package cn.oyzh.easyzk.controller.auth;
+package cn.oyzh.easyzk.controller.node;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
@@ -40,7 +40,7 @@ import java.util.List;
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "auth/zkAuthAuth.fxml"
 )
-public class ZKAuthAuthController extends StageController {
+public class ZKAuthNodeController extends StageController {
 
     /**
      * 用户名

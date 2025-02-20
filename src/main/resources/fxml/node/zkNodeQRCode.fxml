@@ -2,6 +2,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import cn.oyzh.fx.plus.controls.pane.FXPane?>
 <FXPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController" realWidth="450" realHeight="450">
+        fx:controller="cn.oyzh.easyzk.controller.node.ZKQRCodeNodeController" realWidth="450" realHeight="450">
     <ImageView fitWidth="450" fitHeight="450" fx:id="qrcode"/>
 </FXPane>

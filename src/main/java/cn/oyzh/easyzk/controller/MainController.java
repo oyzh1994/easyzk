@@ -2,13 +2,15 @@ package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
-import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
+import cn.oyzh.easyzk.controller.node.ZKAuthNodeController;
+import cn.oyzh.easyzk.controller.connect.ZKAddConnectController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
-import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
+import cn.oyzh.easyzk.controller.node.ZKAddNodeController;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
@@ -255,7 +257,7 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void addConnect(ZKShowAddConnectEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKConnectAddController.class);
+            StageAdapter adapter = StageManager.parseStage(ZKAddConnectController.class);
             adapter.setProp("group", event.data());
             adapter.display();
         });
@@ -267,10 +269,23 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void nodeAdd(ZKShowNodeAddEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
-            fxView.setProp("zkItem", event.data());
-            fxView.setProp("zkClient", event.client());
-            fxView.display();
+            StageAdapter adapter = StageManager.parseStage(ZKAddNodeController.class);
+            adapter.setProp("zkItem", event.data());
+            adapter.setProp("zkClient", event.client());
+            adapter.display();
+        });
+    }
+
+    /**
+     * 认证zk节点
+     */
+    @EventSubscribe
+    private void authNode(ZKShowAuthNodeEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter adapter = StageManager.parseStage(ZKAuthNodeController.class);
+            adapter.setProp("zkItem", event.data());
+            adapter.setProp("zkClient", event.client());
+            adapter.display();
         });
     }
 }

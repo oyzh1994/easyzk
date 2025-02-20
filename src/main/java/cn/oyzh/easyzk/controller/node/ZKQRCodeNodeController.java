@@ -34,7 +34,7 @@ import java.io.File;
         stageStyle = FXStageStyle.UTILITY,
         value = FXConst.FXML_PATH + "node/zkNodeQRCode.fxml"
 )
-public class ZKNodeQRCodeController extends StageController {
+public class ZKQRCodeNodeController extends StageController {
 
     /**
      * 二维码图片

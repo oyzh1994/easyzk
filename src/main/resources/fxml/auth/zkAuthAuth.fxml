@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthAuthController" realWidth="600" realHeight="320">
+        fx:controller="cn.oyzh.easyzk.controller.node.ZKAuthNodeController" realWidth="600" realHeight="320">
     <InfoLabel text="%base.path">
         <VBox.margin>
             <Insets left="30" top="10"/>

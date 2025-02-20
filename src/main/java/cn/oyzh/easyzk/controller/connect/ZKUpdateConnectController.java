@@ -1,18 +1,24 @@
 package cn.oyzh.easyzk.controller.connect;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKAuthTableView;
 import cn.oyzh.easyzk.fx.ZKFilterTableView;
 import cn.oyzh.easyzk.fx.ZKSASLTypeComboBox;
+import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.store.ZKConnectStore;
+import cn.oyzh.easyzk.store.ZKFilterStore;
+import cn.oyzh.easyzk.store.ZKSASLConfigStore;
+import cn.oyzh.easyzk.store.ZKSSHConfigStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
+import cn.oyzh.easyzk.zk.ZKSASLUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
@@ -32,11 +38,12 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
+import lombok.NonNull;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 添加zk信息业务
+ * zk信息修改业务
  *
  * @author oyzh
  * @since 2020/9/15
@@ -44,9 +51,9 @@ import java.util.ArrayList;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "connect/zkConnectAdd.fxml"
+        value = FXConst.FXML_PATH + "connect/zkConnectUpdate.fxml"
 )
-public class ZKConnectAddController extends StageController {
+public class ZKUpdateConnectController extends StageController {
 
     /**
      * 只读模式
@@ -71,6 +78,11 @@ public class ZKConnectAddController extends StageController {
      */
     @FXML
     private FXTabPane tabPane;
+
+    /**
+     * zk信息
+     */
+    private ZKConnect zkConnect;
 
     /**
      * 名称
@@ -181,11 +193,6 @@ public class ZKConnectAddController extends StageController {
     private ClearableTextField saslPassword;
 
     /**
-     * 分组
-     */
-    private ZKGroup group;
-
-    /**
      * zk连接储存对象
      */
     private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
@@ -209,10 +216,30 @@ public class ZKConnectAddController extends StageController {
     private ZKFilterTableView filterTable;
 
     /**
+     * zk认证配置储存
+     */
+    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+
+    /**
      * 过滤搜索
      */
     @FXML
     private ClearableTextField filterSearchKW;
+
+    /**
+     * zk过滤配置储存
+     */
+    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
+
+    /**
+     * ssh配置储存
+     */
+    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
+
+    /**
+     * sasl配置储存
+     */
+    private final ZKSASLConfigStore saslConfigStore = ZKSASLConfigStore.INSTANCE;
 
     /**
      * 获取连接地址
@@ -242,6 +269,7 @@ public class ZKConnectAddController extends StageController {
      */
     private ZKSSHConfig getSSHConfig() {
         ZKSSHConfig sshConfig = new ZKSSHConfig();
+        sshConfig.setIid(this.zkConnect.getId());
         sshConfig.setHost(this.sshHost.getText());
         sshConfig.setUser(this.sshUser.getText());
         sshConfig.setPort(this.sshPort.getIntValue());
@@ -257,6 +285,7 @@ public class ZKConnectAddController extends StageController {
      */
     private ZKSASLConfig getSASLConfig() {
         ZKSASLConfig saslConfig = new ZKSASLConfig();
+        saslConfig.setIid(this.zkConnect.getId());
         saslConfig.setUserName(this.saslUser.getText());
         saslConfig.setType(this.saslType.getSelectedItem());
         saslConfig.setPassword(this.saslPassword.getText());
@@ -273,10 +302,11 @@ public class ZKConnectAddController extends StageController {
         if (StringUtil.isBlank(host) || StringUtil.isBlank(host.split(":")[0])) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
-            // 创建zk连接
+            // 创建zk信息
             ZKConnect zkConnect = new ZKConnect();
             zkConnect.setHost(host);
             zkConnect.setConnectTimeOut(3);
+            zkConnect.setId(this.zkConnect.getId());
             zkConnect.setSaslAuth(this.saslAuth.isSelected());
             zkConnect.setSshForward(this.sshForward.isSelected());
             if (zkConnect.isSSHForward()) {
@@ -290,10 +320,10 @@ public class ZKConnectAddController extends StageController {
     }
 
     /**
-     * 添加zk信息
+     * 修改zk信息
      */
     @FXML
-    private void add() {
+    private void update() {
         String host = this.getHost();
         if (host == null) {
             return;
@@ -304,32 +334,32 @@ public class ZKConnectAddController extends StageController {
         }
         try {
             String name = this.name.getTextTrim();
-            ZKConnect zkConnect = new ZKConnect();
-            zkConnect.setName(name);
+            this.zkConnect.setName(name);
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number sessionTimeOut = this.sessionTimeOut.getValue();
 
-            zkConnect.setHost(host.trim());
+            this.zkConnect.setHost(host.trim());
             // ssh配置
-            zkConnect.setSshConfig(this.getSSHConfig());
-            zkConnect.setSshForward(this.sshForward.isSelected());
+            this.zkConnect.setSshConfig(this.getSSHConfig());
+            this.zkConnect.setSshForward(this.sshForward.isSelected());
             // sasl配置
-            zkConnect.setSaslConfig(this.getSASLConfig());
-            zkConnect.setSaslAuth(this.saslAuth.isSelected());
-            zkConnect.setListen(this.listen.isSelected());
-            zkConnect.setRemark(this.remark.getTextTrim());
-            zkConnect.setReadonly(this.readonly.isSelected());
-            zkConnect.setGroupId(this.group == null ? null : this.group.getGid());
-            zkConnect.setConnectTimeOut(connectTimeOut.intValue());
-            zkConnect.setSessionTimeOut(sessionTimeOut.intValue());
-            zkConnect.setCompatibility(this.compatibility.isSelected() ? 1 : null);
+            this.zkConnect.setSaslConfig(this.getSASLConfig());
+            this.zkConnect.setSaslAuth(this.saslAuth.isSelected());
+            // 移除sasl配置
+            ZKSASLUtil.removeSasl(this.zkConnect.getId());
+            this.zkConnect.setListen(this.listen.isSelected());
+            this.zkConnect.setRemark(this.remark.getTextTrim());
+            this.zkConnect.setReadonly(this.readonly.isSelected());
+            this.zkConnect.setConnectTimeOut(connectTimeOut.intValue());
+            this.zkConnect.setSessionTimeOut(sessionTimeOut.intValue());
+            this.zkConnect.setCompatibility(this.compatibility.isSelected() ? 1 : null);
             // 认证列表
-            zkConnect.setAuths(this.authTable.getAuths());
+            this.zkConnect.setAuths(this.authTable.getAuths());
             // 过滤列表
-            zkConnect.setFilters(this.filterTable.getFilters());
+            this.zkConnect.setFilters(this.filterTable.getFilters());
             // 保存数据
-            if (this.connectStore.replace(zkConnect)) {
-                ZKEventUtil.connectAdded(zkConnect);
+            if (this.connectStore.replace(this.zkConnect)) {
+                ZKEventUtil.connectUpdated(this.zkConnect);
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();
             } else {
@@ -378,9 +408,37 @@ public class ZKConnectAddController extends StageController {
     }
 
     @Override
-    public void onWindowShown(WindowEvent event) {
+    public void onWindowShown(@NonNull WindowEvent event) {
         super.onWindowShown(event);
-        this.group = this.getWindowProp("group");
+        this.zkConnect = this.getWindowProp("zkConnect");
+        this.name.setText(this.zkConnect.getName());
+        this.remark.setText(this.zkConnect.getRemark());
+        this.readonly.setSelected(this.zkConnect.isReadonly());
+        this.connectTimeOut.setValue(this.zkConnect.getConnectTimeOut());
+        this.sessionTimeOut.setValue(this.zkConnect.getSessionTimeOut());
+        this.compatibility.setSelected(this.zkConnect.compatibility34());
+        this.hostIp.setText(this.zkConnect.hostIp());
+        this.hostPort.setValue(this.zkConnect.hostPort());
+        this.listen.setSelected(this.zkConnect.getListen());
+        // ssh配置
+        this.sshForward.setSelected(this.zkConnect.isSSHForward());
+        ZKSSHConfig sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
+        if (sshConfig != null) {
+            this.sshHost.setText(sshConfig.getHost());
+            this.sshUser.setText(sshConfig.getUser());
+            this.sshPort.setValue(sshConfig.getPort());
+            this.sshTimeout.setValue(sshConfig.getTimeout());
+            this.sshPassword.setText(sshConfig.getPassword());
+        }
+        // sasl配置
+        this.saslAuth.setSelected(this.zkConnect.isSASLAuth());
+        ZKSASLConfig saslConfig = this.saslConfigStore.getByIid(this.zkConnect.getId());
+        if (saslConfig != null) {
+            this.saslType.select(saslConfig.getType());
+            this.saslUser.setText(saslConfig.getUserName());
+            this.saslPassword.setText(saslConfig.getPassword());
+        }
+        // 初始化数据
         this.initAuthDataList();
         this.initFilterDataList();
         this.stage.switchOnTab();
@@ -389,7 +447,7 @@ public class ZKConnectAddController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nHelper.connectAddTitle();
+        return I18nHelper.connectUpdateTitle();
     }
 
     /**
@@ -397,7 +455,8 @@ public class ZKConnectAddController extends StageController {
      */
     private void initFilterDataList() {
         if (!this.filterTable.hasData()) {
-            this.filterTable.setFilters(new ArrayList<>());
+            List<ZKFilter> list = this.filterStore.loadByIid(this.zkConnect.getId());
+            this.filterTable.setFilters(list);
         } else {
             this.filterTable.setKw(this.filterSearchKW.getText());
         }
@@ -434,7 +493,8 @@ public class ZKConnectAddController extends StageController {
      */
     private void initAuthDataList() {
         if (!this.authTable.hasData()) {
-            this.authTable.setAuths(new ArrayList<>());
+            List<ZKAuth> list = this.authStore.loadByIid(this.zkConnect.getId());
+            this.authTable.setAuths(list);
         } else {
             this.authTable.setKw(this.authSearchKW.getText());
         }

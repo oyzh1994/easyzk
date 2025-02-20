@@ -41,6 +41,7 @@ import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
@@ -641,6 +642,19 @@ public class ZKEventUtil {
      */
     public static void showNodeAdd(ZKNodeTreeItem item, ZKClient client) {
         ZKShowNodeAddEvent event = new ZKShowNodeAddEvent();
+        event.data(item);
+        event.client(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示认证节点页面
+     *
+     * @param item   节点
+     * @param client 客户端
+     */
+    public static void showAuthNode(ZKNodeTreeItem item, ZKClient client) {
+        ZKShowAuthNodeEvent event = new ZKShowAuthNodeEvent();
         event.data(item);
         event.client(client);
         EventUtil.post(event);

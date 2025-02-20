@@ -32,7 +32,7 @@ import java.util.List;
  */
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
-        value = FXConst.FXML_PATH + "acl/zkACLUpdate.fxml"
+        value = FXConst.FXML_PATH + "acl/zkUpdateACL.fxml"
 )
 public class ZKACLUpdateController extends StageController {
 

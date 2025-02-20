@@ -44,7 +44,7 @@ import java.util.List;
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
         stageStyle = FXStageStyle.UNIFIED,
-        value = FXConst.FXML_PATH + "node/zkNodeAdd.fxml"
+        value = FXConst.FXML_PATH + "node/zkAddNode.fxml"
 )
 public class ZKAddNodeController extends StageController {
 

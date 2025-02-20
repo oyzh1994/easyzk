@@ -416,16 +416,16 @@ public class ZKEventUtil {
         EventUtil.postAsync(event);
     }
 
-    /**
-     * 客户端操作
-     */
-    public static void clientAction(String connectName, String action, ZKClientActionArgument... arguments) {
-        ZKClientActionEvent event = new ZKClientActionEvent();
-        event.data(connectName);
-        event.action(action);
-        event.arguments(arguments);
-        EventUtil.postAsync(event);
-    }
+//    /**
+//     * 客户端操作
+//     */
+//    public static void clientAction(String connectName, String action, ZKClientActionArgument... arguments) {
+//        ZKClientActionEvent event = new ZKClientActionEvent();
+//        event.data(connectName);
+//        event.action(action);
+//        event.arguments(arguments);
+//        EventUtil.postAsync(event);
+//    }
 
     /**
      * 客户端操作

@@ -7,8 +7,6 @@ import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
-import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.node.ZKQRCodeNodeController;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -424,10 +422,11 @@ public class ZKNodeTabController extends DynamicTabController {
      */
     @FXML
     private void addACL() {
-        StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class, this.window());
-        fxView.setProp("zkItem", this.activeItem);
-        fxView.setProp("zkClient", this.activeItem.client());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class, this.window());
+//        fxView.setProp("zkItem", this.activeItem);
+//        fxView.setProp("zkClient", this.activeItem.client());
+//        fxView.display();
+        ZKEventUtil.showAddACL(this.activeItem, this.activeItem.client());
     }
 
     /**
@@ -491,16 +490,17 @@ public class ZKNodeTabController extends DynamicTabController {
         if (acl == null) {
             return;
         }
-        try {
-            StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class, this.window());
-            fxView.setProp("acl", acl);
-            fxView.setProp("zkItem", this.activeItem);
-            fxView.setProp("zkClient", this.treeItem.client());
-            fxView.display();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.operationException());
-        }
+//        try {
+//            StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class, this.window());
+//            fxView.setProp("acl", acl);
+//            fxView.setProp("zkItem", this.activeItem);
+//            fxView.setProp("zkClient", this.treeItem.client());
+//            fxView.display();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            MessageBox.exception(ex, I18nHelper.operationException());
+//        }
+        ZKEventUtil.showUpdateACL(this.activeItem, this.treeItem.client(), acl);
     }
 
     /**

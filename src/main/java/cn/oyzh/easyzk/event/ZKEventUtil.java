@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKQuery;
+import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.client.ZKClientActionEvent;
 import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
@@ -40,6 +41,7 @@ import cn.oyzh.easyzk.event.query.ZKQueryRenamedEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
@@ -47,7 +49,10 @@ import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
 import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
+import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
 import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
+import cn.oyzh.easyzk.event.window.ZKShowUpdateACLEvent;
+import cn.oyzh.easyzk.event.window.ZKShowUpdateConnectEvent;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -58,6 +63,7 @@ import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
@@ -624,6 +630,17 @@ public class ZKEventUtil {
     }
 
     /**
+     * 显示修改连接页面
+     *
+     * @param connect zk连接
+     */
+    public static void showUpdateConnect(ZKConnect connect) {
+        ZKShowUpdateConnectEvent event = new ZKShowUpdateConnectEvent();
+        event.data(connect);
+        EventUtil.post(event);
+    }
+
+    /**
      * 显示添加连接页面
      *
      * @param group 分组
@@ -655,6 +672,34 @@ public class ZKEventUtil {
      */
     public static void showAuthNode(ZKNodeTreeItem item, ZKClient client) {
         ZKShowAuthNodeEvent event = new ZKShowAuthNodeEvent();
+        event.data(item);
+        event.client(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示工具页面
+     */
+    public static void showTool() {
+        EventUtil.post(new ZKShowToolEvent());
+    }
+
+    /**
+     * 显示添加acl页面
+     */
+    public static void showAddACL(ZKNodeTreeItem item, ZKClient client) {
+        ZKShowAddACLEvent event = new ZKShowAddACLEvent();
+        event.data(item);
+        event.client(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示修改acl页面
+     */
+    public static void showUpdateACL(ZKNodeTreeItem item, ZKClient client, ZKACL acl) {
+        ZKShowUpdateACLEvent event = new ZKShowUpdateACLEvent();
+        event.acl(acl);
         event.data(item);
         event.client(client);
         EventUtil.post(event);

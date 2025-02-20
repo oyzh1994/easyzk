@@ -10,6 +10,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2025-02-20
  */
-public class ZKShowImportDataEvent extends Event<ZKConnect> {
+public class ZKShowUpdateConnectEvent extends Event<ZKConnect> {
 
 }

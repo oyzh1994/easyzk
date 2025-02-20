@@ -69,7 +69,8 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void tool() {
-        StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
+//        StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
+        ZKEventUtil.showTool();
     }
 
     /**

@@ -2,13 +2,19 @@ package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
+import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
+import cn.oyzh.easyzk.controller.connect.ZKUpdateConnectController;
 import cn.oyzh.easyzk.controller.node.ZKAuthNodeController;
 import cn.oyzh.easyzk.controller.connect.ZKAddConnectController;
 import cn.oyzh.easyzk.controller.data.ZKDataExportController;
 import cn.oyzh.easyzk.controller.data.ZKDataImportController;
 import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.node.ZKAddNodeController;
+import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.easyzk.dto.ZKACL;
+import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
@@ -16,7 +22,10 @@ import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
 import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
+import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
 import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
+import cn.oyzh.easyzk.event.window.ZKShowUpdateACLEvent;
+import cn.oyzh.easyzk.event.window.ZKShowUpdateConnectEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.FXConst;
@@ -264,10 +273,22 @@ public class MainController extends ParentStageController {
     }
 
     /**
+     * 显示修改连接
+     */
+    @EventSubscribe
+    private void updateConnect(ZKShowUpdateConnectEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter adapter = StageManager.parseStage(ZKUpdateConnectController.class);
+            adapter.setProp("zkConnect", event.data());
+            adapter.display();
+        });
+    }
+
+    /**
      * 添加zk子节点
      */
     @EventSubscribe
-    private void nodeAdd(ZKShowNodeAddEvent event) {
+    private void addNode(ZKShowNodeAddEvent event) {
         FXUtil.runLater(() -> {
             StageAdapter adapter = StageManager.parseStage(ZKAddNodeController.class);
             adapter.setProp("zkItem", event.data());
@@ -286,6 +307,53 @@ public class MainController extends ParentStageController {
             adapter.setProp("zkItem", event.data());
             adapter.setProp("zkClient", event.client());
             adapter.display();
+        });
+    }
+
+    /**
+     * 显示工具页面
+     */
+    @EventSubscribe
+    private void tool(ZKShowToolEvent event) {
+        FXUtil.runLater(() -> {
+            StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
+        });
+    }
+
+    /**
+     * 添加权限
+     */
+    @EventSubscribe
+    private void addACL(ZKShowAddACLEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class);
+                fxView.setProp("zkItem", event.data());
+                fxView.setProp("zkClient", event.client());
+                fxView.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
+        });
+    }
+
+    /**
+     * 显示修改权限页面
+     */
+    @EventSubscribe
+    private void updateACL(ZKShowUpdateACLEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class);
+                fxView.setProp("acl", event.acl());
+                fxView.setProp("zkItem", event.data());
+                fxView.setProp("zkClient", event.client());
+                fxView.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 }

@@ -237,9 +237,10 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
             }
             this.closeConnect();
         }
-        StageAdapter fxView = StageManager.parseStage(ZKUpdateConnectController.class, this.window());
-        fxView.setProp("zkConnect", this.value());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKUpdateConnectController.class, this.window());
+//        fxView.setProp("zkConnect", this.value());
+//        fxView.display();
+        ZKEventUtil.showUpdateConnect(this.value);
     }
 
     /**

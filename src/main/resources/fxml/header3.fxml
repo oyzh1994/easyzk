@@ -38,7 +38,7 @@
             <Insets left="10" top="15"/>
         </VBox.margin>
     </Layout2SVGGlyph>
-    <FXPane flexWidth="100%" flexHeight="100% - 280">
+    <FXPane flexWidth="100%" flexHeight="100% - 276">
 
     </FXPane>
     <QuitSVGGlyph onMousePrimaryClicked="#quit" size="12">

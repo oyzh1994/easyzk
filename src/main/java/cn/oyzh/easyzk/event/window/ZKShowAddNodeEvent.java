@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.event.window;
 
-import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
@@ -15,7 +14,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class ZKShowNodeAddEvent extends Event<ZKNodeTreeItem> {
+public class ZKShowAddNodeEvent extends Event<ZKNodeTreeItem> {
 
     private ZKClient client;
 }

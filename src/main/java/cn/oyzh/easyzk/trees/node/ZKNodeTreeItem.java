@@ -387,7 +387,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
 //        fxView.setProp("zkItem", this);
 //        fxView.setProp("zkClient", this.client());
 //        fxView.display();
-        ZKEventUtil.showNodeAdd(this, this.client());
+        ZKEventUtil.showAddNode(this, this.client());
     }
 
     /**

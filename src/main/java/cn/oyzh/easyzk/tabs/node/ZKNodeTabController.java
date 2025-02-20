@@ -1200,7 +1200,7 @@ public class ZKNodeTabController extends DynamicTabController {
 //        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
 //        fxView.setProp("dbItem", this.treeItem);
 //        fxView.display();
-        ZKEventUtil.showNodeAdd(null, this.client);
+        ZKEventUtil.showAddNode(null, this.client);
     }
 
     @FXML

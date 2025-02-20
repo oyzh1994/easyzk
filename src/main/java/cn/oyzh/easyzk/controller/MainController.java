@@ -24,7 +24,7 @@ import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
-import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowQRCodeNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
@@ -293,7 +293,7 @@ public class MainController extends ParentStageController {
      * 添加zk子节点
      */
     @EventSubscribe
-    private void addNode(ZKShowNodeAddEvent event) {
+    private void addNode(ZKShowAddNodeEvent event) {
         FXUtil.runLater(() -> {
             StageAdapter adapter = StageManager.parseStage(ZKAddNodeController.class);
             adapter.setProp("zkItem", event.data());

@@ -50,7 +50,7 @@ import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationTipsEvent;
-import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowQRCodeNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
@@ -68,7 +68,6 @@ import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
-import lombok.experimental.Accessors;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
@@ -662,8 +661,8 @@ public class ZKEventUtil {
      * @param item   节点
      * @param client 客户端
      */
-    public static void showNodeAdd(ZKNodeTreeItem item, ZKClient client) {
-        ZKShowNodeAddEvent event = new ZKShowNodeAddEvent();
+    public static void showAddNode(ZKNodeTreeItem item, ZKClient client) {
+        ZKShowAddNodeEvent event = new ZKShowAddNodeEvent();
         event.data(item);
         event.client(client);
         EventUtil.post(event);

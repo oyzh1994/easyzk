@@ -6,9 +6,6 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
-import cn.oyzh.easyzk.controller.data.ZKDataExportController;
-import cn.oyzh.easyzk.controller.data.ZKDataImportController;
-import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -116,10 +113,11 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      * 导出zk节点
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
-        fxView.setProp("connect", this.value);
-        fxView.setProp("nodePath", "/");
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
+//        fxView.setProp("connect", this.value);
+//        fxView.setProp("nodePath", "/");
+//        fxView.display();
+        ZKEventUtil.showExportData(this.value, "/");
     }
 
     /**
@@ -181,18 +179,20 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      * 导入数据
      */
     private void importData() {
-        StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class, this.window());
-        fxView.setProp("connect", this.value);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class, this.window());
+//        fxView.setProp("connect", this.value);
+//        fxView.display();
+        ZKEventUtil.showImportData(this.value);
     }
 
     /**
      * 传输数据
      */
     private void transportData() {
-        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class, this.window());
-        adapter.setProp("sourceInfo", this.value);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class, this.window());
+//        adapter.setProp("sourceInfo", this.value);
+//        adapter.display();
+        ZKEventUtil.showTransportData(this.value);
     }
 
     /**
@@ -367,6 +367,6 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
     }
 
     public ZKQueriesTreeItem queriesItem() {
-        return (ZKQueriesTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof ZKQueriesTreeItem).findAny().get();
+        return (ZKQueriesTreeItem) this.unfilteredChildren().stream().filter(i -> i instanceof ZKQueriesTreeItem).findAny().get();
     }
 }

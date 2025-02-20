@@ -1,8 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
-import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
@@ -13,7 +11,6 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.window.StageManager;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -124,13 +121,13 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
         this.getRoot().connectUpdated(event.data());
     }
 
-    /**
-     * 添加连接
-     */
-    @EventSubscribe
-    private void addConnect(ZKAddConnectEvent event) {
-        StageManager.showStage(ZKConnectAddController.class, this.window());
-    }
+//    /**
+//     * 添加连接
+//     */
+//    @EventSubscribe
+//    private void addConnect(ZKAddConnectEvent event) {
+//        StageManager.showStage(ZKConnectAddController.class, this.window());
+//    }
 
     /**
      * 查询已添加事件

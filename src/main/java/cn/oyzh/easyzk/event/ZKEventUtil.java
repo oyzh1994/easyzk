@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.event;
 import cn.oyzh.easyzk.action.ZKClientActionArgument;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
+import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.client.ZKClientActionEvent;
@@ -39,6 +40,13 @@ import cn.oyzh.easyzk.event.query.ZKQueryRenamedEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalCloseEvent;
 import cn.oyzh.easyzk.event.terminal.ZKTerminalOpenEvent;
 import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
+import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
+import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
+import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
+import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
+import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
+import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
@@ -549,6 +557,92 @@ public class ZKEventUtil {
     public static void queryDeleted(ZKQuery query) {
         ZKQueryDeletedEvent event = new ZKQueryDeletedEvent();
         event.data(query);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示主页面
+     */
+    public static void showMain() {
+        EventUtil.post(new ZKShowMainEvent());
+    }
+
+    /**
+     * 显示设置页面
+     */
+    public static void showSetting() {
+        EventUtil.post(new ZKShowSettingEvent());
+    }
+
+    /**
+     * 显示传输数据页面
+     */
+    public static void showTransportData() {
+        showTransportData(null);
+    }
+
+    /**
+     * 显示传输数据页面
+     *
+     * @param connect zk连接
+     */
+    public static void showTransportData(ZKConnect connect) {
+        ZKShowTransportDataEvent event = new ZKShowTransportDataEvent();
+        event.data(connect);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示导出数据页面
+     *
+     * @param connect zk连接
+     */
+    public static void showExportData(ZKConnect connect, String path) {
+        ZKShowExportDataEvent event = new ZKShowExportDataEvent();
+        event.data(connect);
+        event.path(path);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示导入数据页面
+     *
+     * @param connect zk连接
+     */
+    public static void showImportData(ZKConnect connect) {
+        ZKShowImportDataEvent event = new ZKShowImportDataEvent();
+        event.data(connect);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示添加连接页面
+     */
+    public static void showAddConnect() {
+        showAddConnect(null);
+    }
+
+    /**
+     * 显示添加连接页面
+     *
+     * @param group 分组
+     */
+    public static void showAddConnect(ZKGroup group) {
+        ZKShowAddConnectEvent event = new ZKShowAddConnectEvent();
+        event.data(group);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示添加节点页面
+     *
+     * @param item   节点
+     * @param client 客户端
+     */
+    public static void showNodeAdd(ZKNodeTreeItem item, ZKClient client) {
+        ZKShowNodeAddEvent event = new ZKShowNodeAddEvent();
+        event.data(item);
+        event.client(client);
         EventUtil.post(event);
     }
 }

@@ -2,12 +2,10 @@ package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.SysConst;
 import cn.oyzh.easyzk.controller.data.ZKDataMigrationController;
-import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -25,12 +23,13 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void setting() {
-        StageAdapter wrapper = StageManager.getStage(SettingController2.class);
-        if (wrapper != null) {
-            wrapper.toFront();
-        } else {
-            StageManager.showStage(SettingController2.class, this.stage);
-        }
+//        StageAdapter wrapper = StageManager.getStage(SettingController2.class);
+//        if (wrapper != null) {
+//            wrapper.toFront();
+//        } else {
+//            StageManager.showStage(SettingController2.class, this.stage);
+//        }
+        ZKEventUtil.showSetting();
     }
 
     /**
@@ -56,12 +55,13 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void transport() {
-        StageAdapter wrapper = StageManager.getStage(ZKDataTransportController.class);
-        if (wrapper != null) {
-            wrapper.toFront();
-        } else {
-            StageManager.showStage(ZKDataTransportController.class, this.stage);
-        }
+//        StageAdapter wrapper = StageManager.getStage(ZKDataTransportController.class);
+//        if (wrapper != null) {
+//            wrapper.toFront();
+//        } else {
+//            StageManager.showStage(ZKDataTransportController.class, this.stage);
+//        }
+        ZKEventUtil.showTransportData();
     }
 
     /**

@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.controller.SettingController2;
 import cn.oyzh.easyzk.controller.data.ZKMigrationTipsController;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
@@ -148,9 +149,11 @@ public class EasyZKApp extends FXApplication {
             // 设置标题
             TrayManager.setTitle(PROJECT.getName() + " v" + PROJECT.getVersion());
             // 打开主页
-            TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
+            TrayManager.addMenuItem(new DesktopTrayItem("12", ZKEventUtil::showMain));
+//            TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
             // 打开设置
-            TrayManager.addMenuItem(new SettingTrayItem("12", this::showSetting));
+//            TrayManager.addMenuItem(new SettingTrayItem("12", this::showSetting));
+            TrayManager.addMenuItem(new SettingTrayItem("12", ZKEventUtil::showSetting));
             // 退出程序
             TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
                 JulLog.warn("exit app by tray.");
@@ -160,7 +163,8 @@ public class EasyZKApp extends FXApplication {
             TrayManager.onMouseClicked(e -> {
                 // 单击鼠标主键，显示主页
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    this.showMain();
+//                    this.showMain();
+                    ZKEventUtil.showMain();
                 }
             });
             // 显示托盘
@@ -170,35 +174,35 @@ public class EasyZKApp extends FXApplication {
         }
     }
 
-    /**
-     * 显示主页
-     */
-    private void showMain() {
-        FXUtil.runLater(() -> {
-            StageAdapter wrapper = StageManager.getStage(MainController.class);
-            if (wrapper != null) {
-                JulLog.info("front main.");
-                wrapper.toFront();
-            } else {
-                JulLog.info("show main.");
-                StageManager.showStage(MainController.class);
-            }
-        });
-    }
-
-    /**
-     * 显示设置
-     */
-    private void showSetting() {
-        FXUtil.runLater(() -> {
-            StageAdapter wrapper = StageManager.getStage(SettingController2.class);
-            if (wrapper != null) {
-                JulLog.info("front setting.");
-                wrapper.toFront();
-            } else {
-                JulLog.info("show setting.");
-                StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
-            }
-        });
-    }
+//    /**
+//     * 显示主页
+//     */
+//    private void showMain() {
+//        FXUtil.runLater(() -> {
+//            StageAdapter wrapper = StageManager.getStage(MainController.class);
+//            if (wrapper != null) {
+//                JulLog.info("front main.");
+//                wrapper.toFront();
+//            } else {
+//                JulLog.info("show main.");
+//                StageManager.showStage(MainController.class);
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 显示设置
+//     */
+//    private void showSetting() {
+//        FXUtil.runLater(() -> {
+//            StageAdapter wrapper = StageManager.getStage(SettingController2.class);
+//            if (wrapper != null) {
+//                JulLog.info("front setting.");
+//                wrapper.toFront();
+//            } else {
+//                JulLog.info("show setting.");
+//                StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
+//            }
+//        });
+//    }
 }

@@ -9,7 +9,6 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
-import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -1197,9 +1196,10 @@ public class ZKNodeTabController extends DynamicTabController {
 
     @FXML
     private void addNode() {
-        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
-        fxView.setProp("dbItem", this.treeItem);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
+//        fxView.setProp("dbItem", this.treeItem);
+//        fxView.display();
+        ZKEventUtil.showNodeAdd(null, this.client);
     }
 
     @FXML

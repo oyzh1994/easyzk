@@ -2,8 +2,21 @@ package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.easyzk.controller.connect.ZKConnectAddController;
+import cn.oyzh.easyzk.controller.data.ZKDataExportController;
+import cn.oyzh.easyzk.controller.data.ZKDataImportController;
+import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
+import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.domain.ZKSetting;
+import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
+import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
+import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
+import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
+import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
+import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
+import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
 import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -11,6 +24,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.titlebar.TitleBar;
 import cn.oyzh.fx.plus.tray.TrayManager;
+import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -162,5 +176,101 @@ public class MainController extends ParentStageController {
     @Override
     public String getViewTitle() {
         return I18nResourceBundle.i18nString("zk.title.main");
+    }
+
+    /**
+     * 显示主页
+     */
+    @EventSubscribe
+    private void showMain(ZKShowMainEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter adapter = StageManager.getStage(MainController.class);
+            if (adapter != null) {
+                JulLog.info("front main.");
+                adapter.toFront();
+            } else {
+                JulLog.info("show main.");
+                StageManager.showStage(MainController.class);
+            }
+        });
+    }
+
+    /**
+     * 显示设置
+     */
+    @EventSubscribe
+    private void showSetting(ZKShowSettingEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter adapter = StageManager.getStage(SettingController2.class);
+            if (adapter != null) {
+                JulLog.info("front setting.");
+                adapter.toFront();
+            } else {
+                JulLog.info("show setting.");
+                StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
+            }
+        });
+    }
+
+    /**
+     * 显示传输数据
+     */
+    @EventSubscribe
+    private void transportData(ZKShowTransportDataEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class);
+            adapter.setProp("sourceInfo", event.data());
+            adapter.display();
+        });
+    }
+
+    /**
+     * 显示导出数据
+     */
+    @EventSubscribe
+    private void exportData(ZKShowExportDataEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter adapter = StageManager.parseStage(ZKDataExportController.class);
+            adapter.setProp("connect", event.data());
+            adapter.setProp("nodePath", event.path());
+            adapter.display();
+        });
+    }
+
+    /**
+     * 显示导入数据
+     */
+    @EventSubscribe
+    private void importData(ZKShowImportDataEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter adapter = StageManager.parseStage(ZKDataImportController.class);
+            adapter.setProp("connect", event.data());
+            adapter.display();
+        });
+    }
+
+    /**
+     * 显示添加连接
+     */
+    @EventSubscribe
+    private void addConnect(ZKShowAddConnectEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter adapter = StageManager.parseStage(ZKConnectAddController.class);
+            adapter.setProp("group", event.data());
+            adapter.display();
+        });
+    }
+
+    /**
+     * 添加zk子节点
+     */
+    @EventSubscribe
+    private void nodeAdd(ZKShowNodeAddEvent event) {
+        FXUtil.runLater(() -> {
+            StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
+            fxView.setProp("zkItem", event.data());
+            fxView.setProp("zkClient", event.client());
+            fxView.display();
+        });
     }
 }

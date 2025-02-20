@@ -46,7 +46,7 @@ import java.io.File;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "data/zkDataExport.fxml"
+        value = FXConst.FXML_PATH + "data/zkExportData.fxml"
 )
 public class ZKExportDataController extends StageController {
 

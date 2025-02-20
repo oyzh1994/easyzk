@@ -44,7 +44,7 @@ import java.util.ArrayList;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "connect/zkConnectAdd.fxml"
+        value = FXConst.FXML_PATH + "connect/zkAddConnect.fxml"
 )
 public class ZKAddConnectController extends StageController {
 

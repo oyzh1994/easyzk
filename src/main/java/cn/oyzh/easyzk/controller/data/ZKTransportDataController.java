@@ -40,7 +40,7 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "data/zkDataTransport.fxml"
+        value = FXConst.FXML_PATH + "data/zkTransportData.fxml"
 )
 public class ZKTransportDataController extends StageController {
 

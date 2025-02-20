@@ -32,7 +32,7 @@ import java.io.File;
         resizable = false,
         modality = Modality.WINDOW_MODAL,
         stageStyle = FXStageStyle.UTILITY,
-        value = FXConst.FXML_PATH + "node/zkNodeQRCode.fxml"
+        value = FXConst.FXML_PATH + "node/zkQRCodeNode.fxml"
 )
 public class ZKQRCodeNodeController extends StageController {
 

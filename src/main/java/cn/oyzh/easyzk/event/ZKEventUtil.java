@@ -51,6 +51,7 @@ import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationTipsEvent;
 import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
+import cn.oyzh.easyzk.event.window.ZKShowQRCodeNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
 import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
@@ -60,6 +61,7 @@ import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.event.EventUtil;
 import cn.oyzh.fx.gui.event.Layout1Event;
 import cn.oyzh.fx.gui.event.Layout2Event;
@@ -677,6 +679,16 @@ public class ZKEventUtil {
         ZKShowAuthNodeEvent event = new ZKShowAuthNodeEvent();
         event.data(item);
         event.client(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示节点二维码页面
+     */
+    public static void showQRCodeNode(ZKNode node, String text) {
+        ZKShowQRCodeNodeEvent event = new ZKShowQRCodeNodeEvent();
+        event.data(node);
+        event.text(text);
         EventUtil.post(event);
     }
 

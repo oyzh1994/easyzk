@@ -735,14 +735,15 @@ public class ZKNodeTabController extends DynamicTabController {
      */
     @FXML
     private void node2QRCode() {
-        try {
-            StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class, this.window());
-            fxView.setProp("zkNode", this.activeItem.value());
-            fxView.setProp("nodeData", this.nodeData.getTextTrim());
-            fxView.display();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+//        try {
+//            StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class, this.window());
+//            fxView.setProp("zkNode", this.activeItem.value());
+//            fxView.setProp("nodeData", this.nodeData.getTextTrim());
+//            fxView.display();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+        ZKEventUtil.showQRCodeNode(this.activeItem.value(), this.nodeData.getTextTrim());
     }
 
     /**

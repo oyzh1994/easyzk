@@ -9,13 +9,13 @@ import cn.oyzh.easyzk.controller.data.ZKMigrationDataController;
 import cn.oyzh.easyzk.controller.data.ZKMigrationTipsController;
 import cn.oyzh.easyzk.controller.node.ZKAuthNodeController;
 import cn.oyzh.easyzk.controller.connect.ZKAddConnectController;
-import cn.oyzh.easyzk.controller.data.ZKDataExportController;
-import cn.oyzh.easyzk.controller.data.ZKDataImportController;
-import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
+import cn.oyzh.easyzk.controller.data.ZKExportDataController;
+import cn.oyzh.easyzk.controller.data.ZKImportDataController;
+import cn.oyzh.easyzk.controller.data.ZKTransportDataController;
 import cn.oyzh.easyzk.controller.node.ZKAddNodeController;
+import cn.oyzh.easyzk.controller.node.ZKQRCodeNodeController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.window.ZKShowAboutEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
@@ -25,6 +25,7 @@ import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowNodeAddEvent;
+import cn.oyzh.easyzk.event.window.ZKShowQRCodeNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
 import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
@@ -233,7 +234,7 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void transportData(ZKShowTransportDataEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class);
+            StageAdapter adapter = StageManager.parseStage(ZKTransportDataController.class);
             adapter.setProp("sourceInfo", event.data());
             adapter.display();
         });
@@ -245,7 +246,7 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void exportData(ZKShowExportDataEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKDataExportController.class);
+            StageAdapter adapter = StageManager.parseStage(ZKExportDataController.class);
             adapter.setProp("connect", event.data());
             adapter.setProp("nodePath", event.path());
             adapter.display();
@@ -258,7 +259,7 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void importData(ZKShowImportDataEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKDataImportController.class);
+            StageAdapter adapter = StageManager.parseStage(ZKImportDataController.class);
             adapter.setProp("connect", event.data());
             adapter.display();
         });
@@ -302,7 +303,7 @@ public class MainController extends ParentStageController {
     }
 
     /**
-     * 认证zk节点
+     * 显示认证节点页面
      */
     @EventSubscribe
     private void authNode(ZKShowAuthNodeEvent event) {
@@ -315,12 +316,34 @@ public class MainController extends ParentStageController {
     }
 
     /**
+     * 显示节点二维码页面
+     */
+    @EventSubscribe
+    private void qrCodeNode(ZKShowQRCodeNodeEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class);
+                fxView.setProp("zkNode", event.data());
+                fxView.setProp("nodeData", event.text());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
+        });
+    }
+
+    /**
      * 显示工具页面
      */
     @EventSubscribe
     private void tool(ZKShowToolEvent event) {
         FXUtil.runLater(() -> {
-            StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
+            try {
+                StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 

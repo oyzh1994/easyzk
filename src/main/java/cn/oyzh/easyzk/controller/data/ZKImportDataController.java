@@ -16,7 +16,6 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
@@ -50,7 +49,7 @@ import java.io.File;
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/zkDataImport.fxml"
 )
-public class ZKDataImportController extends StageController {
+public class ZKImportDataController extends StageController {
 
     /**
      * 第一步

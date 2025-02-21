@@ -7,7 +7,6 @@ import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.easyzk.controller.node.ZKQRCodeNodeController;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
@@ -21,6 +20,8 @@ import cn.oyzh.easyzk.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
+import cn.oyzh.easyzk.popups.ZKFilterSettingPopupController;
+import cn.oyzh.easyzk.popups.ZKNodeQRCodePopupController;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
@@ -51,6 +52,8 @@ import cn.oyzh.fx.plus.node.NodeResizer;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.PopupAdapter;
+import cn.oyzh.fx.plus.window.PopupManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
@@ -64,6 +67,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 import lombok.Getter;
 import org.apache.zookeeper.StatsTrack;
@@ -734,16 +738,21 @@ public class ZKNodeTabController extends DynamicTabController {
      * zk节点转二维码
      */
     @FXML
-    private void node2QRCode() {
-//        try {
+    private void node2QRCode(MouseEvent event) {
+        try {
 //            StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class, this.window());
 //            fxView.setProp("zkNode", this.activeItem.value());
 //            fxView.setProp("nodeData", this.nodeData.getTextTrim());
 //            fxView.display();
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-        ZKEventUtil.showQRCodeNode(this.activeItem.value(), this.nodeData.getTextTrim());
+            PopupAdapter  adapter= PopupManager.parsePopup(ZKNodeQRCodePopupController.class);
+            adapter.setProp("zkNode", this.activeItem.value());
+            adapter.setProp("nodeData", this.nodeData.getTextTrim());
+            adapter.showPopup((Node) event.getSource());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+//        ZKEventUtil.showQRCodeNode(this.activeItem.value(), this.nodeData.getTextTrim());
     }
 
     /**

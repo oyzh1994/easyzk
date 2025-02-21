@@ -24,7 +24,7 @@
 <?import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox?>
 <?import cn.oyzh.easyzk.filter.ZKNodeFilterTextField?>
 <FXHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
+        fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
     <FXVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FXHBox realHeight="30" flexWidth="100%">
             <ZKNodeFilterTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">
@@ -32,7 +32,8 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeFilterTypeComboBox>
-            <ZKNodeFilterTextField tipText="CTRL/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
+            <ZKNodeFilterTextField tipText="CTRL/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter"
+                                   onSearch="#doFilter" fx:id="filterKW" realHeight="24"
                                    flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -42,11 +43,11 @@
         <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
         </ZKNodeTreeView>
         <FXHBox flexWidth="100%" flexHeight="30">
-<!--            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch" appendTipText="(CTRL/COMMAND+F)">-->
-<!--                <HBox.margin>-->
-<!--                    <Insets left="5" top="5"/>-->
-<!--                </HBox.margin>-->
-<!--            </SearchSVGGlyph>-->
+            <!--            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch" appendTipText="(CTRL/COMMAND+F)">-->
+            <!--                <HBox.margin>-->
+            <!--                    <Insets left="5" top="5"/>-->
+            <!--                </HBox.margin>-->
+            <!--            </SearchSVGGlyph>-->
             <AddSVGGlyph size="16" onMousePrimaryClicked="#addNode">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -80,8 +81,8 @@
         </FXHBox>
     </FXVBox>
     <FXTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
-                 flexHeight="100%"
-                 rotateGraphic="true" disable="true">
+               flexHeight="100%"
+               rotateGraphic="true" disable="true">
         <FXTab text="%base.data" fx:id="dataTab">
             <graphic>
                 <SVGGlyph cursorType="DEFAULT" url="/font/file-text.svg" size="13"/>
@@ -122,8 +123,7 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </ClearSVGGlyph>
-                    <QRCodeSVGGlyph size="16"
-                                    onMousePrimaryClicked="#node2QRCode" groupId="dataToBig">
+                    <QRCodeSVGGlyph size="16" onMousePrimaryClicked="#node2QRCode" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>

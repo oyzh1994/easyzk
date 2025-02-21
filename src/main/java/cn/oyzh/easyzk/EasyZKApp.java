@@ -17,10 +17,8 @@ import cn.oyzh.easyzk.controller.data.ZKMigrationTipsController;
 import cn.oyzh.easyzk.controller.data.ZKTransportDataController;
 import cn.oyzh.easyzk.controller.node.ZKAddNodeController;
 import cn.oyzh.easyzk.controller.node.ZKAuthNodeController;
-import cn.oyzh.easyzk.controller.node.ZKQRCodeNodeController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.window.ZKShowAboutEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
@@ -29,7 +27,6 @@ import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
-import cn.oyzh.easyzk.event.window.ZKShowQRCodeNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
 import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
@@ -380,22 +377,22 @@ public class EasyZKApp extends FXApplication implements EventListener {
         });
     }
 
-    /**
-     * 显示节点二维码页面
-     */
-    @EventSubscribe
-    private void qrCodeNode(ZKShowQRCodeNodeEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class);
-                fxView.setProp("zkNode", event.data());
-                fxView.setProp("nodeData", event.text());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
-            }
-        });
-    }
+//    /**
+//     * 显示节点二维码页面
+//     */
+//    @EventSubscribe
+//    private void qrCodeNode(ZKShowQRCodeNodeEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class);
+//                fxView.setProp("zkNode", event.data());
+//                fxView.setProp("nodeData", event.text());
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex, I18nHelper.operationException());
+//            }
+//        });
+//    }
 
     /**
      * 显示工具页面

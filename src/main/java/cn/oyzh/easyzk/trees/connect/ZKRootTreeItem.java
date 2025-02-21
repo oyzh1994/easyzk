@@ -1,25 +1,18 @@
 package cn.oyzh.easyzk.trees.connect;
 
-import cn.oyzh.common.file.FileNameUtil;
-import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKQuery;
-import cn.oyzh.easyzk.dto.ZKConnectExport;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.file.FileChooserHelper;
-import cn.oyzh.fx.plus.file.FileExtensionFilter;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -367,6 +360,11 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
 
     @Override
     public void loadChild() {
+        // 关闭连接
+        List<ZKConnectTreeItem> connectedItems = this.getConnectedItems();
+        for (ZKConnectTreeItem item : connectedItems) {
+            item.closeConnect();
+        }
         // 初始化分组
         List<ZKGroup> groups = this.groupStore.load();
 //         List<ZKGroupTreeItem> groupItems = this.getGroupItems();
@@ -387,7 +385,6 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
         List<ZKConnect> connects = this.connectStore.load();
 //        List<ZKGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(connects)) {
-//            List<ZKConnectTreeItem> connectItems = this.getConnectItems();
             // List<ZKConnect> list = new ArrayList<>();
             f1:
             for (ZKConnect connect : connects) {

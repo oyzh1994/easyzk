@@ -233,7 +233,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -256,7 +256,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -274,7 +274,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -293,7 +293,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -311,7 +311,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -328,7 +328,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -345,7 +345,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -363,7 +363,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -381,7 +381,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -398,7 +398,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
 //                fxView.setProp("nodeData", event.text());
 //            } catch (Exception ex) {
 //                ex.printStackTrace();
-//                MessageBox.exception(ex, I18nHelper.operationException());
+//                MessageBox.exception(ex);
 //            }
 //        });
 //    }
@@ -413,7 +413,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -431,7 +431,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 fxView.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -450,7 +450,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 fxView.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -465,7 +465,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 StageManager.showStage(AboutController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -480,7 +480,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 StageManager.showStage(ZKMigrationDataController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -494,7 +494,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 StageManager.showStage(ZKMigrationTipsController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -509,7 +509,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 StageManager.showStage(ZKExportConnectController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -521,10 +521,12 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void importConnect(ZKShowImportConnectEvent event) {
         FXUtil.runLater(() -> {
             try {
-                StageManager.showStage(ZKImportConnectController.class, StageManager.getPrimaryStage());
+                StageAdapter adapter = StageManager.parseStage(ZKImportConnectController.class, StageManager.getPrimaryStage());
+                adapter.setProp("file", event.data());
+                adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }

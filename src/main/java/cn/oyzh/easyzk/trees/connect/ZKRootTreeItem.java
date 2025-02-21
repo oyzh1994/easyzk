@@ -119,11 +119,11 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
      * 导入连接
      */
     private void importConnect() {
-        FileExtensionFilter filter1 = FileChooserHelper.jsonExtensionFilter();
-        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
+//        FileExtensionFilter filter1 = FileChooserHelper.jsonExtensionFilter();
+//        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
 //        // 解析文件
 //        this.parseConnect(file);
-        ZKEventUtil.showImportConnect(file);
+        ZKEventUtil.showImportConnect(null);
     }
 
 //    /**

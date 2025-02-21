@@ -1,12 +1,15 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.SysConst;
+import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controls.pane.FXPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
+import javafx.stage.WindowEvent;
 
 /**
  * 主页头部业务
@@ -95,5 +98,19 @@ public class HeaderController3 extends StageController {
     private void migration() {
 //        StageManager.showStage(ZKMigrationDataController.class, this.stage);
         ZKEventUtil.showMigrationData();
+    }
+
+    /**
+     * 分割面板
+     */
+    @FXML
+    private FXPane splitPane;
+
+    @Override
+    public void onWindowShowing(WindowEvent event) {
+        super.onWindowShowing(event);
+        if (OSUtil.isWindows()) {
+            this.splitPane.setFlexHeight("100% - 280");
+        }
     }
 }

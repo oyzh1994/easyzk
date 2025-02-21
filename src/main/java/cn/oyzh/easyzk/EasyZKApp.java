@@ -3,6 +3,7 @@ package cn.oyzh.easyzk;
 import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyzk.controller.AboutController;
 import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.controller.SettingController2;
@@ -182,7 +183,11 @@ public class EasyZKApp extends FXApplication implements EventListener {
                 return;
             }
             // 初始化
-            TrayManager.init(ZKConst.TRAY_ICON_PATH);
+            if (OSUtil.isWindows()) {
+                TrayManager.init(ZKConst.TRAY_ICON_PATH);
+            } else {
+                TrayManager.init(ZKConst.ICON_PATH);
+            }
             // 设置标题
             TrayManager.setTitle(PROJECT.getName() + " v" + PROJECT.getVersion());
             // 打开主页

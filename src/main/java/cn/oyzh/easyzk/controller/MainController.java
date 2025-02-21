@@ -22,8 +22,6 @@ import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
-import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
-import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowQRCodeNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;

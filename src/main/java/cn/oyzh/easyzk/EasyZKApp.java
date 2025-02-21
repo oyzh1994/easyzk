@@ -28,7 +28,6 @@ import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
-import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowQRCodeNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
@@ -149,7 +148,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             // 显示迁移弹窗
             if (ZKStoreUtil.checkOlder()) {
 //                FXUtil.runWait(() -> StageManager.showStage(ZKMigrationTipsController.class, primaryStage), 1000);
-                ZKEventUtil.showMigrationTips();
+                this.migrationTips();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -172,7 +171,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
 //            ex.printStackTrace();
 //            JulLog.warn("showMainView error", ex);
 //        }
-        this.showMain(null);
+        this.showMain();
     }
 
     @Override
@@ -190,7 +189,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             // 设置标题
             TrayManager.setTitle(PROJECT.getName() + " v" + PROJECT.getVersion());
             // 打开主页
-            TrayManager.addMenuItem(new DesktopTrayItem("12", () -> this.showMain(null)));
+            TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
             // 打开设置
             TrayManager.addMenuItem(new SettingTrayItem("12", () -> this.showSetting(null)));
             // 退出程序
@@ -202,7 +201,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             TrayManager.onMouseClicked(e -> {
                 // 单击鼠标主键，显示主页
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    this.showMain(null);
+                    this.showMain();
                 }
             });
             // 显示托盘
@@ -215,8 +214,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
     /**
      * 显示主页
      */
-    @EventSubscribe
-    private void showMain(ZKShowMainEvent event) {
+    private void showMain() {
         FXUtil.runLater(() -> {
             try {
                 StageAdapter adapter = StageManager.getStage(MainController.class);
@@ -484,8 +482,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
     /**
      * 显示迁移提示页面
      */
-    @EventSubscribe
-    private void migrationTips(ZKShowMigrationDataEvent event) {
+    private void migrationTips() {
         FXUtil.runLater(() -> {
             try {
                 StageManager.showStage(ZKMigrationTipsController.class, StageManager.getPrimaryStage());

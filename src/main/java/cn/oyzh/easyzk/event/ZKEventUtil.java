@@ -46,9 +46,7 @@ import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
-import cn.oyzh.easyzk.event.window.ZKShowMainEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
-import cn.oyzh.easyzk.event.window.ZKShowMigrationTipsEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowQRCodeNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
@@ -570,12 +568,12 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 显示主页面
-     */
-    public static void showMain() {
-        EventUtil.post(new ZKShowMainEvent());
-    }
+//    /**
+//     * 显示主页面
+//     */
+//    public static void showMain() {
+//        EventUtil.post(new ZKShowMainEvent());
+//    }
 
     /**
      * 显示设置页面
@@ -732,10 +730,10 @@ public class ZKEventUtil {
         EventUtil.post(new ZKShowMigrationDataEvent());
     }
 
-    /**
-     * 显示迁移提示页面
-     */
-    public static void showMigrationTips() {
-        EventUtil.post(new ZKShowMigrationTipsEvent());
-    }
+//    /**
+//     * 显示迁移提示页面
+//     */
+//    public static void showMigrationTips() {
+//        EventUtil.post(new ZKShowMigrationTipsEvent());
+//    }
 }

@@ -70,6 +70,8 @@ public class ZKConnectExport {
         ZKConnectExport export = new ZKConnectExport();
         export.connects = new ArrayList<>(12);
         export.version = object.getString("version");
+        export.platform = object.getString("platform");
+        export.groups = object.getBeanList("groups", ZKGroup.class);
         export.connects = object.getBeanList("connects", ZKConnect.class);
         return export;
     }

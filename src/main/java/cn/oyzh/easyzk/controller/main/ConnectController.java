@@ -85,11 +85,13 @@ public class ConnectController extends SubStageController {
 
     @FXML
     private void importConnect() {
-        this.tree.getRoot().importConnect();
+//        this.tree.getRoot().importConnect();
+        ZKEventUtil.showImportConnect(null);
     }
 
     @FXML
     private void exportConnect() {
-        this.tree.getRoot().exportConnect();
+//        this.tree.getRoot().exportConnect();
+        ZKEventUtil.showExportConnect();
     }
 }

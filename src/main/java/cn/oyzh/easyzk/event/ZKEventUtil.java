@@ -10,6 +10,7 @@ import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.client.ZKClientActionEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectDeletedEvent;
+import cn.oyzh.easyzk.event.connect.ZKConnectImportedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.connection.ZKConnectionClosedEvent;
@@ -46,6 +47,7 @@ import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
+import cn.oyzh.easyzk.event.window.ZKShowImportConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
@@ -66,6 +68,7 @@ import javafx.scene.control.TreeItem;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -575,6 +578,17 @@ public class ZKEventUtil {
     }
 
     /**
+     * 显示导入连接页面
+     *
+     * @param file 文件
+     */
+    public static void showImportConnect(File file) {
+        ZKShowImportConnectEvent event = new ZKShowImportConnectEvent();
+        event.data(file);
+        EventUtil.post(event);
+    }
+
+    /**
      * 显示设置页面
      */
     public static void showSetting() {
@@ -727,6 +741,13 @@ public class ZKEventUtil {
      */
     public static void showMigrationData() {
         EventUtil.post(new ZKShowMigrationDataEvent());
+    }
+
+    /**
+     * 连接已导入事件
+     */
+    public static void connectImported() {
+        EventUtil.post(new ZKConnectImportedEvent());
     }
 
 //    /**

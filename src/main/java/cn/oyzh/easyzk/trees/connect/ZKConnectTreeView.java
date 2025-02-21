@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
+import cn.oyzh.easyzk.event.connect.ZKConnectImportedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectUpdatedEvent;
 import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.query.ZKQueryAddedEvent;
@@ -135,5 +136,13 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
     @EventSubscribe
     private void queryAdded(ZKQueryAddedEvent event) {
         this.getRoot().queryAdded(event.data());
+    }
+
+    /**
+     * 连接已导入事件
+     */
+    @EventSubscribe
+    private void connectImported(ZKConnectImportedEvent event) {
+        this.getRoot().reloadChild();
     }
 }

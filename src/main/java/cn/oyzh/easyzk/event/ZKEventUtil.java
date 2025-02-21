@@ -44,6 +44,7 @@ import cn.oyzh.easyzk.event.window.ZKShowAboutEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
+import cn.oyzh.easyzk.event.window.ZKShowExportConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
@@ -566,12 +567,12 @@ public class ZKEventUtil {
         EventUtil.post(event);
     }
 
-//    /**
-//     * 显示主页面
-//     */
-//    public static void showMain() {
-//        EventUtil.post(new ZKShowMainEvent());
-//    }
+    /**
+     * 显示导出连接页面
+     */
+    public static void showExportConnect() {
+        EventUtil.post(new ZKShowExportConnectEvent());
+    }
 
     /**
      * 显示设置页面

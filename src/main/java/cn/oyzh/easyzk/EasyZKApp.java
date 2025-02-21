@@ -11,6 +11,7 @@ import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
 import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
 import cn.oyzh.easyzk.controller.connect.ZKAddConnectController;
 import cn.oyzh.easyzk.controller.connect.ZKUpdateConnectController;
+import cn.oyzh.easyzk.controller.connect.ZKExportConnectController;
 import cn.oyzh.easyzk.controller.data.ZKExportDataController;
 import cn.oyzh.easyzk.controller.data.ZKImportDataController;
 import cn.oyzh.easyzk.controller.data.ZKMigrationDataController;
@@ -25,6 +26,7 @@ import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
+import cn.oyzh.easyzk.event.window.ZKShowExportConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
@@ -488,6 +490,21 @@ public class EasyZKApp extends FXApplication implements EventListener {
         FXUtil.runLater(() -> {
             try {
                 StageManager.showStage(ZKMigrationTipsController.class, StageManager.getPrimaryStage());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
+        });
+    }
+
+    /**
+     * 显示导出连接页面
+     */
+    @EventSubscribe
+    private void exportConnect(ZKShowExportConnectEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageManager.showStage(ZKExportConnectController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex, I18nHelper.operationException());

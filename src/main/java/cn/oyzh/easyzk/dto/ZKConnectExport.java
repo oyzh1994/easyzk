@@ -5,8 +5,10 @@ import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKConnect;
+import cn.oyzh.easyzk.domain.ZKGroup;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,13 @@ public class ZKConnectExport {
     private String platform;
 
     /**
-     * 导出连接数据
+     * 连接
+     */
+    @Setter
+    private List<ZKGroup> groups;
+
+    /**
+     * 连接
      */
     private List<ZKConnect> connects;
 

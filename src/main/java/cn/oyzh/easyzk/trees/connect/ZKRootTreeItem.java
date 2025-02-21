@@ -77,22 +77,23 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
      * 导出连接
      */
     public void exportConnect() {
-        List<ZKConnect> infos = this.connectStore.load();
-        if (infos.isEmpty()) {
-            MessageBox.warn(I18nHelper.connectionIsEmpty());
-            return;
-        }
-        ZKConnectExport export = ZKConnectExport.fromConnects(infos);
-        FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
-        File file = FileChooserHelper.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.zk", "base.connect", "base._json"), extensionFilter);
-        if (file != null) {
-            try {
-                FileUtil.writeUtf8String(export.toJSONString(), file);
-                MessageBox.okToast(I18nHelper.exportConnectionSuccess());
-            } catch (Exception ex) {
-                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
-            }
-        }
+//        List<ZKConnect> infos = this.connectStore.load();
+//        if (infos.isEmpty()) {
+//            MessageBox.warn(I18nHelper.connectionIsEmpty());
+//            return;
+//        }
+//        ZKConnectExport export = ZKConnectExport.fromConnects(infos);
+//        FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
+//        File file = FileChooserHelper.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.zk", "base.connect", "base._json"), extensionFilter);
+//        if (file != null) {
+//            try {
+//                FileUtil.writeUtf8String(export.toJSONString(), file);
+//                MessageBox.okToast(I18nHelper.exportConnectionSuccess());
+//            } catch (Exception ex) {
+//                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
+//            }
+//        }
+        ZKEventUtil.showExportConnect();
     }
 
     /**
@@ -159,7 +160,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
                     }
                 }
                 // 重新加载节点
-                this.loadChild();
+                this.reloadChild();
                 // 提示成功
                 MessageBox.okToast(I18nHelper.importConnectionSuccess());
             }
@@ -356,47 +357,54 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
     }
 
     @Override
-    public void loadChild() {
+    public void reloadChild() {
+        super.reloadChild();
         this.clearChild();
+        this.loadChild();
+    }
+
+    @Override
+    public void loadChild() {
         // 初始化分组
         List<ZKGroup> groups = this.groupStore.load();
-        // List<ZKGroupTreeItem> groupItems = this.getGroupItems();
+//         List<ZKGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(groups)) {
             List<TreeItem<?>> list = new ArrayList<>();
-            // f1:
+//             f1:
             for (ZKGroup group : groups) {
-                // for (ZKGroupTreeItem groupItem : groupItems) {
-                //     if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
-                //         continue f1;
-                //     }
-                // }
+//                 for (ZKGroupTreeItem groupItem : groupItems) {
+//                     if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
+//                         continue f1;
+//                     }
+//                 }
                 list.add(new ZKGroupTreeItem(group, this.getTreeView()));
             }
             this.addChild(list);
         }
         // 初始化连接
         List<ZKConnect> connects = this.connectStore.load();
-        List<ZKGroupTreeItem> groupItems = this.getGroupItems();
+//        List<ZKGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(connects)) {
-            List<ZKConnectTreeItem> connectItems = this.getConnectItems();
+//            List<ZKConnectTreeItem> connectItems = this.getConnectItems();
             // List<ZKConnect> list = new ArrayList<>();
             f1:
             for (ZKConnect connect : connects) {
-                for (ZKConnectTreeItem connectItem : connectItems) {
-                    if (StringUtil.equals(connectItem.getId(), connect.getId())) {
-                        continue f1;
-                    }
-                }
-                Optional<ZKGroupTreeItem> optional = groupItems.parallelStream().filter(g -> StringUtil.equals(g.getGid(), connect.getGroupId())).findAny();
-                if (optional.isPresent()) {
-                    optional.get().addConnect(connect);
-                } else {
+//                for (ZKConnectTreeItem connectItem : connectItems) {
+//                    if (StringUtil.equals(connectItem.getId(), connect.getId())) {
+//                        continue f1;
+//                    }
+//                }
+//                Optional<ZKGroupTreeItem> optional = groupItems.parallelStream().filter(g -> StringUtil.equals(g.getGid(), connect.getGroupId())).findAny();
+//                if (optional.isPresent()) {
+//                    optional.get().addConnect(connect);
+//                } else {
                     this.addConnect(connect);
                     // list.add(connect);
-                }
+//                }
             }
             // this.addConnects(list);
         }
+        this.refresh();
     }
 
     public void queryAdded(ZKQuery query) {

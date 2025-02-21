@@ -18,7 +18,7 @@ public class ZKProcessUtil {
      */
     public static void restartApplication() {
         try {
-            ProcessUtil.restartApplication(100, StageManager::exit);
+            ProcessUtil.restartApplication2(100, StageManager::exit);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

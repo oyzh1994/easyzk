@@ -54,7 +54,8 @@ public class ZKHomeTabController extends DynamicTabController {
      */
     @FXML
     private void addConnect() {
-        ZKEventUtil.addConnect();
+//        ZKEventUtil.addConnect();
+        ZKEventUtil.showAddConnect();
     }
 
     /**

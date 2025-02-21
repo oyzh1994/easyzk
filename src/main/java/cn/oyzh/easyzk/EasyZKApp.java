@@ -53,12 +53,12 @@ public class EasyZKApp extends FXApplication {
             System.setProperty("prism.text", "t2k");
             System.setProperty("prism.lcdtext", "false");
             SysConst.projectName(PROJECT.getName());
+            SysConst.storeDir(ZKConst.STORE_PATH);
             JulLog.info("项目启动中...");
             // 储存初始化
             ZKStoreUtil.init();
             // 注册sasl处理器
             ZKSASLUtil.registerConfiguration();
-            SysConst.storeDir(ZKConst.STORE_PATH);
             SysConst.cacheDir(ZKConst.CACHE_PATH);
             FXConst.appIcon(ZKConst.ICON_PATH);
             // 事件总线

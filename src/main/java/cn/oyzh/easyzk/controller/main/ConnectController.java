@@ -68,7 +68,8 @@ public class ConnectController extends SubStageController {
 
     @FXML
     private void addConnect() {
-        ZKEventUtil.addConnect();
+//        ZKEventUtil.addConnect();
+        ZKEventUtil.showAddConnect();
     }
 
     @FXML

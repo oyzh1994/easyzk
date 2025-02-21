@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
 import cn.oyzh.easyzk.event.client.ZKClientActionEvent;
-import cn.oyzh.easyzk.event.connect.ZKAddConnectEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectAddedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectDeletedEvent;
 import cn.oyzh.easyzk.event.connect.ZKConnectOpenedEvent;
@@ -286,12 +285,12 @@ public class ZKEventUtil {
         EventUtil.post(new ZKAddGroupEvent());
     }
 
-    /**
-     * 添加连接
-     */
-    public static void addConnect() {
-        EventUtil.post(new ZKAddConnectEvent());
-    }
+//    /**
+//     * 添加连接
+//     */
+//    public static void addConnect() {
+//        EventUtil.post(new ZKAddConnectEvent());
+//    }
 
     /**
      * 更新日志事件

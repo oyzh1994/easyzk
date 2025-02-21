@@ -200,13 +200,18 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void showMain(ZKShowMainEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.getStage(MainController.class);
-            if (adapter != null) {
-                JulLog.info("front main.");
-                adapter.toFront();
-            } else {
-                JulLog.info("show main.");
-                StageManager.showStage(MainController.class);
+            try {
+                StageAdapter adapter = StageManager.getStage(MainController.class);
+                if (adapter != null) {
+                    JulLog.info("front main.");
+                    adapter.toFront();
+                } else {
+                    JulLog.info("show main.");
+                    StageManager.showStage(MainController.class);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
             }
         });
     }
@@ -217,13 +222,19 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void showSetting(ZKShowSettingEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.getStage(SettingController2.class);
-            if (adapter != null) {
-                JulLog.info("front setting.");
-                adapter.toFront();
-            } else {
-                JulLog.info("show setting.");
-                StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
+            try {
+
+                StageAdapter adapter = StageManager.getStage(SettingController2.class);
+                if (adapter != null) {
+                    JulLog.info("front setting.");
+                    adapter.toFront();
+                } else {
+                    JulLog.info("show setting.");
+                    StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
             }
         });
     }
@@ -234,9 +245,15 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void transportData(ZKShowTransportDataEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKTransportDataController.class);
-            adapter.setProp("sourceInfo", event.data());
-            adapter.display();
+            try {
+
+                StageAdapter adapter = StageManager.parseStage(ZKTransportDataController.class);
+                adapter.setProp("sourceInfo", event.data());
+                adapter.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 
@@ -246,10 +263,16 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void exportData(ZKShowExportDataEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKExportDataController.class);
-            adapter.setProp("connect", event.data());
-            adapter.setProp("nodePath", event.path());
-            adapter.display();
+            try {
+
+                StageAdapter adapter = StageManager.parseStage(ZKExportDataController.class);
+                adapter.setProp("connect", event.data());
+                adapter.setProp("nodePath", event.path());
+                adapter.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 
@@ -259,9 +282,15 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void importData(ZKShowImportDataEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKImportDataController.class);
-            adapter.setProp("connect", event.data());
-            adapter.display();
+            try {
+
+                StageAdapter adapter = StageManager.parseStage(ZKImportDataController.class);
+                adapter.setProp("connect", event.data());
+                adapter.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 
@@ -271,9 +300,14 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void addConnect(ZKShowAddConnectEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKAddConnectController.class);
-            adapter.setProp("group", event.data());
-            adapter.display();
+            try {
+                StageAdapter adapter = StageManager.parseStage(ZKAddConnectController.class);
+                adapter.setProp("group", event.data());
+                adapter.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 
@@ -283,9 +317,14 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void updateConnect(ZKShowUpdateConnectEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKUpdateConnectController.class);
-            adapter.setProp("zkConnect", event.data());
-            adapter.display();
+            try {
+                StageAdapter adapter = StageManager.parseStage(ZKUpdateConnectController.class);
+                adapter.setProp("zkConnect", event.data());
+                adapter.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 
@@ -295,10 +334,15 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void addNode(ZKShowAddNodeEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKAddNodeController.class);
-            adapter.setProp("zkItem", event.data());
-            adapter.setProp("zkClient", event.client());
-            adapter.display();
+            try {
+                StageAdapter adapter = StageManager.parseStage(ZKAddNodeController.class);
+                adapter.setProp("zkItem", event.data());
+                adapter.setProp("zkClient", event.client());
+                adapter.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 
@@ -308,10 +352,15 @@ public class MainController extends ParentStageController {
     @EventSubscribe
     private void authNode(ZKShowAuthNodeEvent event) {
         FXUtil.runLater(() -> {
-            StageAdapter adapter = StageManager.parseStage(ZKAuthNodeController.class);
-            adapter.setProp("zkItem", event.data());
-            adapter.setProp("zkClient", event.client());
-            adapter.display();
+            try {
+                StageAdapter adapter = StageManager.parseStage(ZKAuthNodeController.class);
+                adapter.setProp("zkItem", event.data());
+                adapter.setProp("zkClient", event.client());
+                adapter.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex, I18nHelper.operationException());
+            }
         });
     }
 

@@ -10,6 +10,7 @@ import cn.oyzh.fx.plus.controller.PopupController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.PopupAttribute;
@@ -67,8 +68,8 @@ public class ZKNodeQRCodePopupController extends PopupController {
                     .append(I18nHelper.nodeData()).append(": ")
                     .append(nodeData);
             JulLog.info("generate qrcode begin.");
-            int codeW = (int) this.qrcode.getFitWidth();
-            int codeH = (int) this.qrcode.getFitHeight();
+            int codeW = (int) NodeUtil.getWidth(this.qrcode);
+            int codeH = (int) NodeUtil.getHeight(this.qrcode);
             BufferedImage source = QRCodeUtil.createImage(builder.toString(), "utf-8", codeW, codeH);
             this.qrcode.setImage(FXUtil.toImage(source));
         } catch (Exception ex) {

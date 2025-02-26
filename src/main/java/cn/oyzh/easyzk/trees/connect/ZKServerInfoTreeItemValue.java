@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
-import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.ServerSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
@@ -16,7 +16,7 @@ public class ZKServerInfoTreeItemValue extends RichTreeItemValue {
     @Override
     public SVGGlyph graphic() {
         if (this.graphic == null) {
-            this.graphic = new InfoSVGGlyph("11");
+            this.graphic = new ServerSVGGlyph("10");
         }
         return super.graphic();
     }

@@ -43,7 +43,7 @@ import lombok.NonNull;
 import java.util.List;
 
 /**
- * zk信息修改业务
+ * zk连接修改业务
  *
  * @author oyzh
  * @since 2020/9/15

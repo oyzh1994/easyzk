@@ -25,7 +25,7 @@ import java.util.List;
 
 
 /**
- * zk节点修改业务
+ * zk权限修改业务
  *
  * @author oyzh
  * @since 2022/12/20
@@ -34,7 +34,7 @@ import java.util.List;
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "acl/zkUpdateACL.fxml"
 )
-public class ZKACLUpdateController extends StageController {
+public class ZKUpdateACLController extends StageController {
 
     /**
      * zk权限信息

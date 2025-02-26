@@ -7,8 +7,8 @@ import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyzk.controller.AboutController;
 import cn.oyzh.easyzk.controller.MainController;
 import cn.oyzh.easyzk.controller.SettingController2;
-import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
-import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
+import cn.oyzh.easyzk.controller.acl.ZKAddACLController;
+import cn.oyzh.easyzk.controller.acl.ZKUpdateACLController;
 import cn.oyzh.easyzk.controller.connect.ZKAddConnectController;
 import cn.oyzh.easyzk.controller.connect.ZKImportConnectController;
 import cn.oyzh.easyzk.controller.connect.ZKUpdateConnectController;
@@ -61,7 +61,6 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.util.TerminalManager;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.i18n.I18nManager;
 import javafx.stage.Stage;
 
@@ -425,7 +424,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void addACL(ZKShowAddACLEvent event) {
         FXUtil.runLater(() -> {
             try {
-                StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class);
+                StageAdapter fxView = StageManager.parseStage(ZKAddACLController.class);
                 fxView.setProp("zkItem", event.data());
                 fxView.setProp("zkClient", event.client());
                 fxView.display();
@@ -443,7 +442,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void updateACL(ZKShowUpdateACLEvent event) {
         FXUtil.runLater(() -> {
             try {
-                StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class);
+                StageAdapter fxView = StageManager.parseStage(ZKUpdateACLController.class);
                 fxView.setProp("acl", event.acl());
                 fxView.setProp("zkItem", event.data());
                 fxView.setProp("zkClient", event.client());

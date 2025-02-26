@@ -54,7 +54,7 @@ import java.util.List;
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "acl/zkAddACL.fxml"
 )
-public class ZKACLAddController extends StageController {
+public class ZKAddACLController extends StageController {
 
     /**
      * zk树节点

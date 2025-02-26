@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryDataTabController extends DynamicTabController {
+public class ZKQueryDataTabController extends RichTabController {
 
     private String path;
 

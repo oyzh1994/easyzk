@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.easyzk.util.ZKNodeUtil;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryNodeTabController extends DynamicTabController {
+public class ZKQueryNodeTabController extends RichTabController {
 
     @FXML
     private FXTableView<KeyValueProperty<String, String>> nodeTable;

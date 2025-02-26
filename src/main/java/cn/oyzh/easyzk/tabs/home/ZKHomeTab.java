@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.home;
 
 import cn.oyzh.fx.gui.svg.glyph.HomeSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Cursor;
 
@@ -11,7 +11,7 @@ import javafx.scene.Cursor;
  * @author oyzh
  * @since 2023/5/24
  */
-public class ZKHomeTab extends DynamicTab {
+public class ZKHomeTab extends RichTab {
 
     public ZKHomeTab() {
         super();

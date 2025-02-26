@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 import org.apache.zookeeper.StatsTrack;
 
@@ -8,7 +8,7 @@ import org.apache.zookeeper.StatsTrack;
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryQuotaTab extends DynamicTab {
+public class ZKQueryQuotaTab extends RichTab {
 
     public ZKQueryQuotaTab(StatsTrack track) {
         super();

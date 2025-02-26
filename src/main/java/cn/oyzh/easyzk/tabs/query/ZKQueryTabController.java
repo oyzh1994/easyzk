@@ -9,8 +9,8 @@ import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.query.ZKQueryTextAreaPane;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTab;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
@@ -24,7 +24,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryTabController extends DynamicTabController {
+public class ZKQueryTabController extends RichTabController {
 
     /**
      * 查询对象
@@ -195,7 +195,7 @@ public class ZKQueryTabController extends DynamicTabController {
     }
 
     @Override
-    public void onCloseRequest(DynamicTab tab, Event event) {
+    public void onCloseRequest(RichTab tab, Event event) {
         if (this.unsaved && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             event.consume();
         } else {

@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.tabs.home;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/5/24
  */
-public class ZKHomeTabController extends DynamicTabController {
+public class ZKHomeTabController extends RichTabController {
 
     /**
      * 软件信息

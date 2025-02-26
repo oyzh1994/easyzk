@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.i18n.I18nHelper;
@@ -17,7 +17,7 @@ import javafx.event.Event;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKNodeTab extends DynamicTab {
+public class ZKNodeTab extends RichTab {
 
     public ZKNodeTab(ZKConnectTreeItem treeItem) {
         // 初始化

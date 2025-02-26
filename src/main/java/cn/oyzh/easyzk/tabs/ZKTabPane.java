@@ -21,7 +21,7 @@ import cn.oyzh.easyzk.tabs.server.ZKServerTab;
 import cn.oyzh.easyzk.tabs.terminal.ZKTerminalTab;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.tabs.DynamicTabPane;
+import cn.oyzh.fx.gui.tabs.RichTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -38,7 +38,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKTabPane extends DynamicTabPane implements FXEventListener {
+public class ZKTabPane extends RichTabPane implements FXEventListener {
 
     @Override
     public void onNodeInitialize() {

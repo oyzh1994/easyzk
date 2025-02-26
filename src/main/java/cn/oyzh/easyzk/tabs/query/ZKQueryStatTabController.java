@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryStatTabController extends DynamicTabController {
+public class ZKQueryStatTabController extends RichTabController {
 
 
     @FXML

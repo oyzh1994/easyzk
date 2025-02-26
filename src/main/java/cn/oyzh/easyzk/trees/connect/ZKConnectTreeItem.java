@@ -94,7 +94,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
-            FXMenuItem cloneConnect = MenuItemHelper.repeatConnect("12", this::cloneConnect);
+            FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
 
             items.add(connect);
             items.add(editConnect);

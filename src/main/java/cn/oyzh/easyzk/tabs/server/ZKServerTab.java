@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.tabs.server;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.svg.glyph.ServerSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
@@ -15,7 +15,7 @@ import javafx.scene.Cursor;
  * @author oyzh
  * @since 2023/08/01
  */
-public class ZKServerTab extends DynamicTab {
+public class ZKServerTab extends RichTab {
 
     @Override
     public ZKServerTabController controller() {

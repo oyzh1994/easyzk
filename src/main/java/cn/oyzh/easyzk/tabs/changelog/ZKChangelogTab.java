@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.changelog;
 
 import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Cursor;
 
@@ -11,7 +11,7 @@ import javafx.scene.Cursor;
  * @author oyzh
  * @since 2024/04/07
  */
-public class ZKChangelogTab extends DynamicTab {
+public class ZKChangelogTab extends RichTab {
 
     public ZKChangelogTab() {
         super();

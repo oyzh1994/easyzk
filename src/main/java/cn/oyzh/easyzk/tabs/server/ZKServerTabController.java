@@ -5,8 +5,8 @@ import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.easyzk.vo.ZKServerInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTab;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.table.FXTableColumn;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
@@ -171,20 +171,20 @@ public class ZKServerTabController extends ParentTabController {
     }
 
     @Override
-    public void onTabInit(DynamicTab tab) {
+    public void onTabInit(RichTab tab) {
         super.onTabInit(tab);
         // 初始化刷新任务
         this.initRefreshTask();
     }
 
     @Override
-    public void onTabClose(DynamicTab tab, Event event) {
+    public void onTabClose(RichTab tab, Event event) {
         super.onTabClose(tab, event);
         this.closeRefreshTask();
     }
 
     @Override
-    public List<? extends DynamicTabController> getSubControllers() {
+    public List<? extends RichTabController> getSubControllers() {
         return List.of(this.aggregationController, this.localController, this.srvrController,
                 this.statController, this.clusterController, this.localController,
                 this.confController, this.enviController);

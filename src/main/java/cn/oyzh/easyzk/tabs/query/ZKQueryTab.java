@@ -4,14 +4,14 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import javafx.scene.Cursor;
 
 /**
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryTab extends DynamicTab {
+public class ZKQueryTab extends RichTab {
 
     public ZKQueryTab(ZKClient client, ZKQuery query) {
         super();

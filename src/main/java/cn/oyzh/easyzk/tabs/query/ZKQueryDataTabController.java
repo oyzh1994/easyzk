@@ -36,13 +36,13 @@ public class ZKQueryDataTabController extends RichTabController {
     @FXML
     private RichDataTypeComboBox format;
 
-    public void init(String path, byte[] data, ZKClient zkClient) {
+    public void init(String path, byte[] bytes, ZKClient zkClient) {
         this.path = path;
         this.zkClient = zkClient;
         // 处理数据
-        data = data == null ? new byte[]{} : data;
+        byte[] bytes1 = bytes == null ? new byte[]{} : bytes;
         // 显示检测后的数据
-        RichDataType dataType = this.data.showDetectData(new String(data));
+        RichDataType dataType = this.data.showDetectData(new String(bytes1));
         // 遗忘历史
         this.data.forgetHistory();
         // 选中格式
@@ -54,25 +54,25 @@ public class ZKQueryDataTabController extends RichTabController {
         // 格式监听
         this.format.selectedItemChanged((t1, t2, t3) -> {
             if (this.format.isStringFormat()) {
-                this.data.showStringData(this.data.getText());
+                this.data.showStringData(bytes1);
                 this.data.setEditable(true);
             } else if (this.format.isJsonFormat()) {
-                this.data.showJsonData(this.data.getText());
+                this.data.showJsonData(bytes1);
                 this.data.setEditable(true);
             } else if (this.format.isXmlFormat()) {
-                this.data.showXmlData(this.data.getText());
+                this.data.showXmlData(bytes1);
                 this.data.setEditable(true);
             } else if (this.format.isHtmlFormat()) {
-                this.data.showHtmlData(this.data.getText());
+                this.data.showHtmlData(bytes1);
                 this.data.setEditable(true);
             } else if (this.format.isBinaryFormat()) {
-                this.data.showBinaryData(this.data.getText());
+                this.data.showBinaryData(bytes1);
                 this.data.setEditable(false);
             } else if (this.format.isHexFormat()) {
-                this.data.showHexData(this.data.getText());
+                this.data.showHexData(bytes1);
                 this.data.setEditable(false);
             } else if (this.format.isRawFormat()) {
-                this.data.showRawData(this.data.getText());
+                this.data.showRawData(bytes1);
                 this.data.setEditable(this.data.getRealType() == RichDataType.STRING);
             }
         });

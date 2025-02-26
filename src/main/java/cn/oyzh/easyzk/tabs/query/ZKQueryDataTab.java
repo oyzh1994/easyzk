@@ -30,6 +30,4 @@ public class ZKQueryDataTab extends RichTab {
     public String getTabTitle() {
         return I18nHelper.data();
     }
-
-
 }

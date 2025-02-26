@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.query;
 
+import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
 import org.apache.zookeeper.StatsTrack;
@@ -57,6 +58,10 @@ public class ZKQueryResult {
 
     public List<ClientInfo> asClientInfo() {
         return (List<ClientInfo>) this.result;
+    }
+
+    public List<ZKEnvNode> asEnvInfo() {
+        return (List<ZKEnvNode>) this.result;
     }
 
     public StatsTrack asQuota() {

@@ -1221,6 +1221,21 @@ public class ZKClient {
     }
 
     /**
+     * 用户信息
+     *
+     * @return 结果
+     */
+    public List<ClientInfo> whoami() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "whoami");
+            return this.zooKeeper.whoAmI();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * 获取本地环境
      *
      * @return 结果
@@ -1277,21 +1292,6 @@ public class ZKClient {
     }
 
     /**
-     * 用户信息
-     *
-     * @return 结果
-     */
-    public List<ClientInfo> whoami() {
-        try {
-            ZKClientActionUtil.forAction(this.connectName(), "whoami");
-            return this.zooKeeper.whoAmI();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
      * 四字命令srvr
      *
      * @return 结果
@@ -1307,11 +1307,49 @@ public class ZKClient {
     }
 
     /**
-     * 执行四字命令stat
+     * 执行四字命令srvr
      *
      * @return 结果
      */
     public List<ZKEnvNode> srvrNodes() {
+        String srvr = this.srvr();
+        if (srvr != null) {
+            List<ZKEnvNode> list = new ArrayList<>();
+            srvr.lines().forEach(l -> {
+                int index = l.indexOf(":");
+                if (index != -1) {
+                    String name = l.substring(0, index);
+                    String value = l.substring(index + 1).trim();
+                    ZKEnvNode envNode = new ZKEnvNode(name, value);
+                    list.add(envNode);
+                }
+            });
+            return list;
+        }
+        return Collections.emptyList();
+    }
+
+    /**
+     * 四字命令mntr
+     *
+     * @return 结果
+     */
+    public String mntr() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "srvr");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "srvr");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 执行四字命令mntr
+     *
+     * @return 结果
+     */
+    public List<ZKEnvNode> mntrNodes() {
         String srvr = this.srvr();
         if (srvr != null) {
             List<ZKEnvNode> list = new ArrayList<>();
@@ -1549,6 +1587,12 @@ public class ZKClient {
                 this.setACL(nodePath, param.getACL(), param.getParamV());
             } else if (param.isWhoami()) {
                 result.setResult(this.whoami());
+            } else if (param.isSrvr()) {
+                result.setResult(this.srvrNodes());
+            } else if (param.isMntr()) {
+                result.setResult(this.mntrNodes());
+            } else if (param.isEnvi()) {
+                result.setResult(this.enviNodes());
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

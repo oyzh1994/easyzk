@@ -62,6 +62,9 @@ public class ZKQueryUtil {
         KEYWORDS.add("listquota");
         //  其他
         KEYWORDS.add("whoami");
+        KEYWORDS.add("srvr");
+        KEYWORDS.add("mntr");
+        KEYWORDS.add("envi");
 
         // 参数
         PARAMS.add("-s");

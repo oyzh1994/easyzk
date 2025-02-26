@@ -59,6 +59,18 @@ public class ZKQueryParam {
         return "whoami".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isSrvr() {
+        return "srvr".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isMntr() {
+        return "mntr".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isEnvi() {
+        return "envi".equalsIgnoreCase(this.getCommand());
+    }
+
     public boolean isLs2() {
         return "ls2".equalsIgnoreCase(this.getCommand());
     }

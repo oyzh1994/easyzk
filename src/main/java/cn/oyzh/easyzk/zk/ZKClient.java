@@ -1458,28 +1458,28 @@ public class ZKClient {
         return null;
     }
 
-    /**
-     * 执行四字命令cons
-     *
-     * @return 结果
-     */
-    public List<ZKEnvNode> consNodes() {
-        String cons = this.cons();
-        if (cons != null) {
-            List<ZKEnvNode> list = new ArrayList<>();
-            cons.lines().forEach(l -> {
-                int index = l.indexOf("(");
-                if (index != -1) {
-                    String name = l.substring(0, index).trim();
-                    String value = l.substring(index + 1, l.length() - 1).trim();
-                    ZKEnvNode envNode = new ZKEnvNode(name, value);
-                    list.add(envNode);
-                }
-            });
-            return list;
-        }
-        return Collections.emptyList();
-    }
+//    /**
+//     * 执行四字命令cons
+//     *
+//     * @return 结果
+//     */
+//    public List<ZKEnvNode> consNodes() {
+//        String cons = this.cons();
+//        if (cons != null) {
+//            List<ZKEnvNode> list = new ArrayList<>();
+//            cons.lines().forEach(l -> {
+//                int index = l.indexOf("(");
+//                if (index != -1) {
+//                    String name = l.substring(0, index).trim();
+//                    String value = l.substring(index + 1, l.length() - 1).trim();
+//                    ZKEnvNode envNode = new ZKEnvNode(name, value);
+//                    list.add(envNode);
+//                }
+//            });
+//            return list;
+//        }
+//        return Collections.emptyList();
+//    }
 
     /**
      * 四字命令ruok
@@ -1550,6 +1550,66 @@ public class ZKClient {
         try {
             ZKClientActionUtil.forAction(this.connectName(), "wchs");
             return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "wchs");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 四字命令wchp
+     *
+     * @return 结果
+     */
+    public String wchp() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "wchp");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "wchp");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 四字命令dump
+     *
+     * @return 结果
+     */
+    public String dump() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "dump");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "dump");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 四字命令reqs
+     *
+     * @return 结果
+     */
+    public String reqs() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "reqs");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "reqs");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 四字命令dirs
+     *
+     * @return 结果
+     */
+    public String dirs() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "dirs");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "dirs");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -1709,7 +1769,7 @@ public class ZKClient {
             } else if (param.isConf()) {
                 result.setResult(this.confNodes());
             } else if (param.isCons()) {
-                result.setResult(this.consNodes());
+                result.setResult(this.cons());
             } else if (param.isRuok()) {
                 result.setResult(this.ruok());
             } else if (param.isCrst()) {
@@ -1722,6 +1782,14 @@ public class ZKClient {
                 result.setResult(this.wchc());
             } else if (param.isWchs()) {
                 result.setResult(this.wchs());
+            } else if (param.isWchp()) {
+                result.setResult(this.wchp());
+            } else if (param.isDump()) {
+                result.setResult(this.dump());
+            } else if (param.isReqs()) {
+                result.setResult(this.reqs());
+            } else if (param.isDirs()) {
+                result.setResult(this.dirs());
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

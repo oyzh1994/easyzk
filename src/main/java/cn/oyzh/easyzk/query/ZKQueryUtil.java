@@ -73,6 +73,10 @@ public class ZKQueryUtil {
         KEYWORDS.add("stat4");
         KEYWORDS.add("wchc");
         KEYWORDS.add("wchs");
+        KEYWORDS.add("wchp");
+        KEYWORDS.add("dump");
+        KEYWORDS.add("reqs");
+        KEYWORDS.add("dirs");
 
         // 参数
         PARAMS.add("-s");

@@ -103,6 +103,22 @@ public class ZKQueryParam {
         return "wchs".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isWchp() {
+        return "wchp".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isDump() {
+        return "dump".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isReqs() {
+        return "reqs".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isDirs() {
+        return "dirs".equalsIgnoreCase(this.getCommand());
+    }
+
     public boolean isLs2() {
         return "ls2".equalsIgnoreCase(this.getCommand());
     }

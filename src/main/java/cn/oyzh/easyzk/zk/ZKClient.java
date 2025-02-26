@@ -58,6 +58,7 @@ import org.apache.zookeeper.cli.SetQuotaCommand;
 import org.apache.zookeeper.client.FourLetterWordMain;
 import org.apache.zookeeper.client.ZooKeeperSaslClient;
 import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.ClientInfo;
 import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.server.quorum.QuorumPeer;
 import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
@@ -1276,6 +1277,21 @@ public class ZKClient {
     }
 
     /**
+     * 用户信息
+     *
+     * @return 结果
+     */
+    public List<ClientInfo> whoami() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "whoami");
+            return this.zooKeeper.whoAmI();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * 四字命令srvr
      *
      * @return 结果
@@ -1520,7 +1536,7 @@ public class ZKClient {
                 }
             } else if (param.isGetAllChildrenNumber()) {
                 result.setResult(this.getAllChildrenNumber(nodePath));
-            } else if (param.isStat()) {
+//            } else if (param.isStat()) {
             } else if (param.isSetQuota()) {
                 this.createQuota(nodePath, param.getParamB(), param.getParamN());
             } else if (param.isListquota()) {
@@ -1531,6 +1547,8 @@ public class ZKClient {
                 this.delete(nodePath, null, false);
             } else if (param.isSetACL()) {
                 this.setACL(nodePath, param.getACL(), param.getParamV());
+            } else if (param.isWhoami()) {
+                result.setResult(this.whoami());
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

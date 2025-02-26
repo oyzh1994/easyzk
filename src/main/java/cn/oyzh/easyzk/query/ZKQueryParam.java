@@ -55,6 +55,10 @@ public class ZKQueryParam {
         return "getAllChildrenNumber".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isWhoami() {
+        return "whoami".equalsIgnoreCase(this.getCommand());
+    }
+
     public boolean isLs2() {
         return "ls2".equalsIgnoreCase(this.getCommand());
     }

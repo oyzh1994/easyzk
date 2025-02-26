@@ -20,8 +20,8 @@ public class ZKQueryMsgTabController extends RichTabController {
         this.msg.appendLine(param.getContent());
         this.msg.appendLine("> " + result.getMessage());
         this.msg.appendLine("> " + I18nHelper.cost() + ": " + result.costSeconds());
-        if (result.isSuccess() && param.isGetAllChildrenNumber()) {
-            this.msg.appendLine("> " + I18nHelper.nodeCount() + ": " + result.getResult());
-        }
+//        if (result.isSuccess() && param.isGetAllChildrenNumber()) {
+//            this.msg.appendLine("> " + I18nHelper.nodeCount() + ": " + result.getResult());
+//        }
     }
 }

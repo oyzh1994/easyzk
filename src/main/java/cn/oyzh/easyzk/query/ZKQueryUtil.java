@@ -60,6 +60,8 @@ public class ZKQueryUtil {
         KEYWORDS.add("setquota");
         KEYWORDS.add("delquota");
         KEYWORDS.add("listquota");
+        //  其他
+        KEYWORDS.add("whoami");
 
         // 参数
         PARAMS.add("-s");

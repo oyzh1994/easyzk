@@ -71,6 +71,38 @@ public class ZKQueryParam {
         return "envi".equalsIgnoreCase(this.getCommand());
     }
 
+    public boolean isConf() {
+        return "conf".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isCons() {
+        return "cons".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isRuok() {
+        return "ruok".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isCrst() {
+        return "crst".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isSrst() {
+        return "srst".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isStat4() {
+        return "stat4".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isWchc() {
+        return "wchc".equalsIgnoreCase(this.getCommand());
+    }
+
+    public boolean isWchs() {
+        return "wchs".equalsIgnoreCase(this.getCommand());
+    }
+
     public boolean isLs2() {
         return "ls2".equalsIgnoreCase(this.getCommand());
     }

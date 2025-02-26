@@ -65,6 +65,14 @@ public class ZKQueryUtil {
         KEYWORDS.add("srvr");
         KEYWORDS.add("mntr");
         KEYWORDS.add("envi");
+        KEYWORDS.add("conf");
+        KEYWORDS.add("cons");
+        KEYWORDS.add("ruok");
+        KEYWORDS.add("crst");
+        KEYWORDS.add("srst");
+        KEYWORDS.add("stat4");
+        KEYWORDS.add("wchc");
+        KEYWORDS.add("wchs");
 
         // 参数
         PARAMS.add("-s");

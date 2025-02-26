@@ -143,13 +143,13 @@ public class ZKQueryTabController extends RichTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
-            } else if (param.isGetAllChildrenNumber()) {
-                if (result.isSuccess()) {
-                    this.resultTabPane.addTab(new ZKQueryCountTab(result.asCount()));
-                    this.resultTabPane.select(1);
-                } else {
-                    this.resultTabPane.select(0);
-                }
+//            } else if (param.isGetAllChildrenNumber()) {
+//                if (result.isSuccess()) {
+//                    this.resultTabPane.addTab(new ZKQueryCountTab(result.asCount()));
+//                    this.resultTabPane.select(1);
+//                } else {
+//                    this.resultTabPane.select(0);
+//                }
             } else if (param.isWhoami()) {
                 if (result.isSuccess()) {
                     this.resultTabPane.addTab(new ZKQueryWhoamiTab(result.asClientInfo()));
@@ -157,7 +157,7 @@ public class ZKQueryTabController extends RichTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
-            } else if (param.isSrvr() || param.isEnvi() || param.isMntr()) {
+            } else if (param.isSrvr() || param.isEnvi() || param.isMntr() || param.isConf() || param.isCons()) {
                 if (result.isSuccess()) {
                     this.resultTabPane.addTab(new ZKQueryEnvTab(result.asEnvInfo()));
                     this.resultTabPane.select(1);

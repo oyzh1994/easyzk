@@ -45,7 +45,7 @@ public class ZKQueryResult {
     private boolean success;
 
     public String costSeconds() {
-        return String.format("%.2f" + I18nHelper.seconds(), this.cost / 1000.0);
+        return String.format("%.2f " + I18nHelper.seconds(), this.cost / 1000.0);
     }
 
     public byte[] asData() {

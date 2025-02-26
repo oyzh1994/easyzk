@@ -1336,8 +1336,8 @@ public class ZKClient {
      */
     public String mntr() {
         try {
-            ZKClientActionUtil.forAction(this.connectName(), "srvr");
-            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "srvr");
+            ZKClientActionUtil.forAction(this.connectName(), "mntr");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "mntr");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -1350,13 +1350,13 @@ public class ZKClient {
      * @return 结果
      */
     public List<ZKEnvNode> mntrNodes() {
-        String srvr = this.srvr();
-        if (srvr != null) {
+        String mntr = this.mntr();
+        if (mntr != null) {
             List<ZKEnvNode> list = new ArrayList<>();
-            srvr.lines().forEach(l -> {
-                int index = l.indexOf(":");
+            mntr.lines().forEach(l -> {
+                int index = l.indexOf("\t");
                 if (index != -1) {
-                    String name = l.substring(0, index);
+                    String name = l.substring(0, index).trim();
                     String value = l.substring(index + 1).trim();
                     ZKEnvNode envNode = new ZKEnvNode(name, value);
                     list.add(envNode);
@@ -1441,6 +1441,119 @@ public class ZKClient {
             return list;
         }
         return Collections.emptyList();
+    }
+
+    /**
+     * 四字命令cons
+     *
+     * @return 结果
+     */
+    public String cons() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "cons");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "cons");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 执行四字命令cons
+     *
+     * @return 结果
+     */
+    public List<ZKEnvNode> consNodes() {
+        String cons = this.cons();
+        if (cons != null) {
+            List<ZKEnvNode> list = new ArrayList<>();
+            cons.lines().forEach(l -> {
+                int index = l.indexOf("(");
+                if (index != -1) {
+                    String name = l.substring(0, index).trim();
+                    String value = l.substring(index + 1, l.length() - 1).trim();
+                    ZKEnvNode envNode = new ZKEnvNode(name, value);
+                    list.add(envNode);
+                }
+            });
+            return list;
+        }
+        return Collections.emptyList();
+    }
+
+    /**
+     * 四字命令ruok
+     *
+     * @return 结果
+     */
+    public String ruok() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "ruok");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "ruok");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 四字命令crst
+     *
+     * @return 结果
+     */
+    public String crst() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "crst");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "crst");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 四字命令srst
+     *
+     * @return 结果
+     */
+    public String srst() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "srst");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "srst");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 四字命令wchc
+     *
+     * @return 结果
+     */
+    public String wchc() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "wchc");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "wchc");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 四字命令wchs
+     *
+     * @return 结果
+     */
+    public String wchs() {
+        try {
+            ZKClientActionUtil.forAction(this.connectName(), "wchs");
+            return FourLetterWordMain.send4LetterWord(this.zkConnect.hostIp(), this.zkConnect.hostPort(), "wchs");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -1593,6 +1706,22 @@ public class ZKClient {
                 result.setResult(this.mntrNodes());
             } else if (param.isEnvi()) {
                 result.setResult(this.enviNodes());
+            } else if (param.isConf()) {
+                result.setResult(this.confNodes());
+            } else if (param.isCons()) {
+                result.setResult(this.consNodes());
+            } else if (param.isRuok()) {
+                result.setResult(this.ruok());
+            } else if (param.isCrst()) {
+                result.setResult(this.crst());
+            } else if (param.isSrst()) {
+                result.setResult(this.srst());
+            } else if (param.isStat4()) {
+                result.setResult(this.stat());
+            } else if (param.isWchc()) {
+                result.setResult(this.wchc());
+            } else if (param.isWchs()) {
+                result.setResult(this.wchs());
             } else {
                 throw new UnsupportedOperationException("unsupported command: " + param.getCommand());
             }

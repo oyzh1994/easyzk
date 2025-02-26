@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.tabs.query;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.tabs.RichTab;
 import javafx.scene.Cursor;
 
@@ -21,9 +21,9 @@ public class ZKQueryTab extends RichTab {
 
     @Override
     public void flushGraphic() {
-        ChangelogSVGGlyph glyph = (ChangelogSVGGlyph) this.getGraphic();
+        QuerySVGGlyph glyph = (QuerySVGGlyph) this.getGraphic();
         if (glyph == null) {
-            glyph = new ChangelogSVGGlyph("12");
+            glyph = new QuerySVGGlyph("12");
             glyph.setCursor(Cursor.DEFAULT);
             this.graphic(glyph);
         }

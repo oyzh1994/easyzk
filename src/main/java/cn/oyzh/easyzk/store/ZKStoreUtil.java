@@ -5,9 +5,11 @@ import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.json.JSONArray;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
@@ -116,7 +118,15 @@ public class ZKStoreUtil {
                         connect.setSshForward(obj.getBooleanValue("sshForward"));
                     }
                     if (obj.containsKey("collects")) {
-                        connect.setCollects(obj.getBeanList("collects", String.class));
+                        List<String> collects = obj.getBeanList("collects", String.class);
+                        if (CollectionUtil.isNotEmpty(collects)) {
+                            List<ZKCollect> collectList = new ArrayList<>();
+                            for (String collect : collects) {
+                                collectList.add(new ZKCollect(connect.getId(), collect));
+                            }
+                            connect.setCollects(collectList);
+                        }
+//                        connect.setCollects(obj.getBeanList("collects", String.class));
                     }
                     if (obj.containsKey("remark")) {
                         connect.setRemark(obj.getString("remark"));

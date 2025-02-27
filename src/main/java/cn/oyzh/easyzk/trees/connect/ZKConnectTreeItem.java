@@ -70,10 +70,10 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>(12);
         if (this.isConnecting()) {
-            FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("12", this::cancelConnect);
+            FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("10", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
-            FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
+            FXMenuItem closeConnect = MenuItemHelper.closeConnect("10", this::closeConnect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);

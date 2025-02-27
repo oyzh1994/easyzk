@@ -68,7 +68,7 @@ public class ZKExportConnectController extends StageController {
      */
     @FXML
     private void doExport() {
-        List<ZKConnect> connects = this.connectStore.load();
+        List<ZKConnect> connects = this.connectStore.loadFull();
         if (CollectionUtil.isEmpty(connects)) {
             MessageBox.warn(I18nHelper.connectionIsEmpty());
             return;

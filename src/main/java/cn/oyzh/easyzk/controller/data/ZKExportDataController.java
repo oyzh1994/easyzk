@@ -198,13 +198,12 @@ public class ZKExportDataController extends StageController {
     @FXML
     private void doExport() {
         // 重置参数
-        // 清理信息
         this.counter.reset();
         this.exportMsg.clear();
         this.exportStatus.clear();
         NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.exportProcessing() + "===");
-        // 生成迁移处理器
+        // 生成导出处理器
         if (this.exportHandler == null) {
             this.exportHandler = new ZKDataExportHandler();
             this.exportHandler.messageHandler(str -> this.exportMsg.appendLine(str))

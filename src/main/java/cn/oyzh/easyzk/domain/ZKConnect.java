@@ -96,7 +96,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
      * 收藏的节点
      */
     @Getter
-    private List<String> collects;
+    private List<ZKCollect> collects;
 
     /**
      * 过滤列表

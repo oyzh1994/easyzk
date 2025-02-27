@@ -741,7 +741,7 @@ public class ZKNodeTabController extends RichTabController {
 //            fxView.setProp("zkNode", this.activeItem.value());
 //            fxView.setProp("nodeData", this.nodeData.getTextTrim());
 //            fxView.display();
-            PopupAdapter  adapter= PopupManager.parsePopup(ZKNodeQRCodePopupController.class);
+            PopupAdapter adapter = PopupManager.parsePopup(ZKNodeQRCodePopupController.class);
             adapter.setProp("zkNode", this.activeItem.value());
             adapter.setProp("nodeData", this.nodeData.getTextTrim());
             adapter.showPopup((Node) event.getSource());
@@ -779,7 +779,9 @@ public class ZKNodeTabController extends RichTabController {
      */
     @FXML
     private void showHistory() {
-        ZKEventUtil.historyShow(this.activeItem);
+        if (this.activeItem != null) {
+            ZKEventUtil.historyShow(this.activeItem);
+        }
     }
 
     /**

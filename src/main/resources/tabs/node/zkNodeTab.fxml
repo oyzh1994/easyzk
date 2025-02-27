@@ -58,6 +58,12 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </DeleteSVGGlyph>
+            <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
+                             onMousePrimaryClicked="#showHistory">
+                <HBox.margin>
+                    <Insets left="5" top="5"/>
+                </HBox.margin>
+            </HistorySVGGlyph>
             <CollectSVGPane fx:id="collectPane" size="16" onMousePrimaryClicked="#collectNode">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -164,12 +170,6 @@
                 <ZKDataTextAreaPane fontSize="12" fx:id="nodeData" flexHeight="100% - 60"
                                     flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" groupId="dataToBig"/>
                 <FXHBox flexWidth="100%" flexHeight="30">
-                    <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
-                                     onMousePrimaryClicked="#showHistory">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </HistorySVGGlyph>
                     <CharsetComboBox prefHeight="22" initDefault="true" fx:id="charset" fontSize="11" prefWidth="120"
                                      style="-fx-padding: 0;">
                         <HBox.margin>

@@ -100,7 +100,7 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </RichDataTypeComboBox>
-                    <SaveSVGGlyph size="16" tipText="%base.saveTip1"
+                    <SaveSVGGlyph fx:id="dataSave" disable="true" size="16" tipText="%base.saveTip1"
                                   onMousePrimaryClicked="#saveNodeData" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
@@ -198,7 +198,7 @@
             </graphic>
             <FXVBox flexWidth="100%" flexHeight="100%" fx:id="statBox">
                 <FXHBox realHeight="30" flexWidth="100%">
-                    <FXToggleSwitch maxHeight="20" fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"
+                    <FXToggleSwitch realHeight="16" fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"
                                     selectedText="%zk.node.main.toggle.friendly"
                                     selected="true">
                         <HBox.margin>
@@ -235,7 +235,7 @@
             </graphic>
             <FXVBox flexWidth="100%" flexHeight="100%">
                 <FXHBox realHeight="30" flexWidth="100%">
-                    <FXToggleSwitch maxHeight="20" fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"
+                    <FXToggleSwitch realHeight="16" fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"
                                     selectedText="%zk.node.main.toggle.friendly"
                                     selected="true">
                         <HBox.margin>
@@ -274,7 +274,7 @@
                         </HBox.margin>
                     </PageBox>
                 </FXHBox>
-                <ZKACLTableView fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 30">
+                <ZKACLTableView copyCellDataOnDoubleClicked="true" fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 30">
                     <columns>
                         <FXTableColumn flexWidth="40%" text="%base.identify" sortable="false" valueName="idControl"/>
                         <FXTableColumn flexWidth="36%" text="%base.perms" sortable="false" valueName="permsControl"/>
@@ -302,7 +302,7 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </RefreshSVGGlyph>
-                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyACL">
+                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyQuota">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>

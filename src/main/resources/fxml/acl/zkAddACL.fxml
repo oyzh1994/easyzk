@@ -18,6 +18,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.controller.acl.ZKAddACLController" realWidth="600" realHeight="420">
     <InfoLabel text="%base.path">
@@ -103,11 +104,11 @@
                 <Insets left="30" top="5"/>
             </VBox.margin>
             <FXLabel fx:id="digestText" realHeight="25"/>
-            <CopyButton fx:id="copyDigestText" realHeight="25" visible="false" onMousePrimaryClicked="#copyDigestText">
+            <CopySVGGlyph fx:id="copyDigestText" sizeStr="16" visible="false" onMousePrimaryClicked="#copyDigestText">
                 <HBox.margin>
-                    <Insets left="10"/>
+                    <Insets left="10" top="5"/>
                 </HBox.margin>
-            </CopyButton>
+            </CopySVGGlyph>
         </FXHBox>
     </FXVBox>
     <FXVBox flexWidth="100%" managedBindVisible="true" visible="false" fx:id="digest2ACL">

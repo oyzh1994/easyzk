@@ -11,7 +11,7 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.button.CopyButton;
+import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -154,7 +154,7 @@ public class ZKAddACLController extends StageController {
      * 复制摘要信息
      */
     @FXML
-    private CopyButton copyDigestText;
+    private CopySVGGlyph copyDigestText;
 
     /**
      * 摘要保存

@@ -193,6 +193,12 @@ public class ZKNodeTabController extends RichTabController {
     private FXText loadTime;
 
     /**
+     * zk数据保存
+     */
+    @FXML
+    private SVGGlyph dataSave;
+
+    /**
      * zk数据撤销
      */
     @FXML
@@ -413,6 +419,7 @@ public class ZKNodeTabController extends RichTabController {
         try {
             this.activeItem.refreshACL();
             this.initACL();
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -438,6 +445,7 @@ public class ZKNodeTabController extends RichTabController {
         try {
             this.activeItem.refreshQuota();
             this.initQuota();
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -453,14 +461,17 @@ public class ZKNodeTabController extends RichTabController {
                 return;
             }
             StatsTrack quota = this.activeItem.quota();
+            String builder;
             if (quota == null) {
-                return;
+                builder = I18nHelper.count() + " -1" + System.lineSeparator() + I18nHelper.bytes() + " -1";
+            } else {
+                builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() + I18nHelper.bytes() + " " + quota.getBytes();
             }
-            String builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() + I18nHelper.bytes() + " " + quota.getBytes();
             ClipboardUtil.setStringAndTip(builder);
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.operationException());
+            MessageBox.exception(ex);
         }
     }
 
@@ -471,14 +482,16 @@ public class ZKNodeTabController extends RichTabController {
     private void copyACL() {
         ZKACL acl = this.aclTableView.getSelectedItem();
         if (acl == null) {
+            MessageBox.warn(I18nHelper.acl() + " " + I18nHelper.isEmpty());
             return;
         }
         try {
             String builder = acl.idFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.idFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() + acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() + acl.permsFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.permsFriend().getValue(this.aclViewSwitch.isSelected());
             ClipboardUtil.setStringAndTip(builder);
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.operationException());
+            MessageBox.exception(ex);
         }
     }
 
@@ -687,11 +700,14 @@ public class ZKNodeTabController extends RichTabController {
         // 保存数据
         RenderService.submit(() -> {
             // 保存数据
-            this.activeItem.saveData();
-            // 刷新数据大小
-            this.flushDataSize();
-            // 刷新tab颜色
-            this.flushTabGraphicColor();
+            if (this.activeItem.saveData()) {
+                // 禁用图标
+                this.dataSave.disable();
+                // 刷新数据大小
+                this.flushDataSize();
+                // 刷新tab颜色
+                this.flushTabGraphicColor();
+            }
         });
     }
 
@@ -832,6 +848,10 @@ public class ZKNodeTabController extends RichTabController {
         this.flushDataSize();
         // 遗忘历史
         this.nodeData.forgetHistory();
+        // 按钮处理
+        this.dataUndo.disable();
+        this.dataRedo.disable();
+        this.dataSave.setDisable(!this.activeItem.isDataUnsaved());
         // 加载耗时处理
         this.loadTime.text(I18nHelper.cost() + " : " + this.activeItem.loadTime() + "ms");
     }
@@ -961,6 +981,7 @@ public class ZKNodeTabController extends RichTabController {
         });
         // 节点内容变更
         this.nodeData.addTextChangeListener((observable, oldValue, newValue) -> {
+            this.dataSave.enable();
             if (this.activeItem != null) {
                 byte[] bytes = newValue == null ? new byte[]{} : newValue.getBytes(this.charset.getCharset());
                 this.activeItem.nodeData(bytes);
@@ -1033,6 +1054,7 @@ public class ZKNodeTabController extends RichTabController {
     private void saveQuota() {
         try {
             this.activeItem.saveQuota(this.quotaBytes.getLongValue(), this.quotaCount.getIntValue());
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }

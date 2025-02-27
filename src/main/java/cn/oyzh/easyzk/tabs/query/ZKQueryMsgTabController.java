@@ -22,8 +22,8 @@ public class ZKQueryMsgTabController extends RichTabController {
         this.msg.appendLine("> " + I18nHelper.cost() + " " + result.costSeconds());
         if (result.isSuccess()) {
             // 兜底指令
-            if (param.isGetAllChildrenNumber() || param.isRuok() || param.isCrst() || param.isCons()
-                    || param.isSrst() || param.isStat4() || param.isWchc() || param.isWchs()
+            if (param.isGetAllChildrenNumber() || param.isRuok() || param.isCrst()
+                    || param.isCons() || param.isSrst() || param.isWchc() || param.isWchs()
                     || param.isWchp() || param.isDump() || param.isReqs() || param.isDirs()) {
                 this.msg.appendLine("" + result.getResult());
             }

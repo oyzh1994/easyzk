@@ -11,7 +11,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FXTab xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
+<FXTab disable="true" xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
        fx:controller="cn.oyzh.easyzk.controller.main.HistoryController" text="%base.his">
     <graphic>
         <HistorySVGGlyph cursorType="DEFAULT" size="12"/>
@@ -33,17 +33,17 @@
                     <Insets left="5" top="9"/>
                 </HBox.margin>
             </UndoSVGGlyph>
-            <FXToggleSwitch prefHeight="24" fx:id="type" selectedText="%base.server" unselectedText="%base.local">
+            <FXToggleSwitch realHeight="16" fx:id="type" selectedText="%base.server" unselectedText="%base.local">
                 <HBox.margin>
-                    <Insets left="5" top="7"/>
+                    <Insets left="5" top="9"/>
                 </HBox.margin>
             </FXToggleSwitch>
         </FXHBox>
         <FXTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
             <columns>
                 <FXTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
-                <FXTableColumn realWidth="120" text="%base.saveTime" valueName="saveTimeFormated"/>
-                <FXTableColumn flexWidth="85% - 135" text="%base.size" valueName="dataSize"/>
+                <FXTableColumn realWidth="130" text="%base.saveTime" valueName="saveTimeFormated"/>
+                <FXTableColumn flexWidth="85% - 142" text="%base.size" valueName="dataSize"/>
             </columns>
         </FXTableView>
     </FXVBox>

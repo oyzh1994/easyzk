@@ -311,7 +311,7 @@
                 <FXHBox flexWidth="100%" realHeight="30">
                     <SuccessLabel realWidth="135" text="%base.childNumber" maxHeight="30">
                         <HBox.margin>
-                            <Insets top="5" left="5"/>
+                            <Insets top="10" left="5"/>
                         </HBox.margin>
                     </SuccessLabel>
                     <NumberTextField fx:id="quotaCount" realHeight="30" flexWidth="100% - 270" min="-1" value="-1"
@@ -332,7 +332,7 @@
                     </FXVBox.margin>
                     <SuccessLabel realWidth="135" text="%base.size" maxHeight="30">
                         <HBox.margin>
-                            <Insets top="5" left="5"/>
+                            <Insets top="10" left="5"/>
                         </HBox.margin>
                     </SuccessLabel>
                     <NumberTextField fx:id="quotaBytes" realHeight="30" flexWidth="100% - 270" min="-1"

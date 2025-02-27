@@ -75,6 +75,7 @@ public class HistoryController extends SubStageController implements Initializab
     private void onTabClosed(TabClosedEvent event) {
         ZKNodeTreeItem item = this.item();
         if (item == null) {
+            this.root.disable();
             return;
         }
         if (event.data() instanceof ZKNodeTab tab1 && tab1.zkConnect() == item.zkConnect()) {

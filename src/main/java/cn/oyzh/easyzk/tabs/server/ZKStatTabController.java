@@ -21,7 +21,6 @@ public class ZKStatTabController extends SubTabController {
     @FXML
     private FXTableView<ZKEnvNode> statTable;
 
-
     @Override
     public ZKServerTabController parent() {
         return (ZKServerTabController) super.parent();

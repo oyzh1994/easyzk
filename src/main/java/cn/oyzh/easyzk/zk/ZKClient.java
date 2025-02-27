@@ -1392,10 +1392,10 @@ public class ZKClient {
         if (stat != null) {
             List<ZKEnvNode> list = new ArrayList<>();
             stat.lines().forEach(l -> {
-                int index = l.indexOf("=");
+                int index = l.indexOf("(");
                 if (index != -1) {
-                    String name = l.substring(0, index);
-                    String value = l.substring(index + 1);
+                    String name = l.substring(0, index).trim();
+                    String value = l.substring(index + 1, l.length() - 1).trim();
                     ZKEnvNode envNode = new ZKEnvNode(name, value);
                     list.add(envNode);
                 }
@@ -1777,7 +1777,7 @@ public class ZKClient {
             } else if (param.isSrst()) {
                 result.setResult(this.srst());
             } else if (param.isStat4()) {
-                result.setResult(this.stat());
+                result.setResult(this.statNodes());
             } else if (param.isWchc()) {
                 result.setResult(this.wchc());
             } else if (param.isWchs()) {

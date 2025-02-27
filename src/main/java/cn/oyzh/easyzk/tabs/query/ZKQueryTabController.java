@@ -157,7 +157,7 @@ public class ZKQueryTabController extends RichTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
-            } else if (param.isSrvr() || param.isEnvi() || param.isMntr() || param.isConf()) {
+            } else if (param.isSrvr() || param.isEnvi() || param.isMntr() || param.isConf() || param.isStat4()) {
                 if (result.isSuccess()) {
                     this.resultTabPane.addTab(new ZKQueryEnvTab(result.asEnvInfo()));
                     this.resultTabPane.select(1);

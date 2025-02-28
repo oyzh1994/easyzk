@@ -352,7 +352,11 @@ public class ZKClient {
         // 初始化ssh端口转发
         if (this.zkConnect.isSSHForward()) {
             // 初始化ssh转发器
-            ZKSSHConfig sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
+            ZKSSHConfig sshConfig = this.zkConnect.getSshConfig();
+            // 从数据库获取
+            if (sshConfig == null) {
+                sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
+            }
             if (sshConfig != null) {
                 if (this.sshForwarder == null) {
                     this.sshForwarder = new SSHForwarder(sshConfig);

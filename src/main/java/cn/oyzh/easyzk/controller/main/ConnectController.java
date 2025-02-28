@@ -61,7 +61,7 @@ public class ConnectController extends SubStageController {
         // zk树变化事件
         this.tree.selectItemChanged(ZKEventUtil::treeItemChanged);
         // 文件拖拽初始化
-        this.stage.initDragFile(this.tree.getDragContent(), this.tree.getRoot()::dragFile);
+        this.stage.initDragFile(this.tree.getDragContent(), this.tree.root()::dragFile);
         // 刷新触发事件
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
     }

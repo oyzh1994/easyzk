@@ -36,7 +36,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
     @Override
     protected void initRoot() {
         super.setRoot(new ZKRootTreeItem(this));
-        this.getRoot().expend();
+        this.root().expend();
         super.initRoot();
     }
 
@@ -53,7 +53,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
     }
 
     @Override
-    public ZKRootTreeItem getRoot() {
+    public ZKRootTreeItem root() {
         return (ZKRootTreeItem) super.getRoot();
     }
 
@@ -61,7 +61,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      * 关闭连接
      */
     public void closeConnects() {
-        for (ZKConnectTreeItem treeItem : this.getRoot().getConnectedItems()) {
+        for (ZKConnectTreeItem treeItem : this.root().getConnectedItems()) {
             ThreadUtil.startVirtual(() -> treeItem.closeConnect(false));
         }
     }
@@ -99,7 +99,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      */
     @EventSubscribe
     public void addGroup(ZKAddGroupEvent event) {
-        this.getRoot().addGroup();
+        this.root().addGroup();
     }
 
     /**
@@ -109,7 +109,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      */
     @EventSubscribe
     private void connectAdded(ZKConnectAddedEvent event) {
-        this.getRoot().connectAdded(event.data());
+        this.root().connectAdded(event.data());
     }
 
     /**
@@ -119,7 +119,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      */
     @EventSubscribe
     private void connectUpdated(ZKConnectUpdatedEvent event) {
-        this.getRoot().connectUpdated(event.data());
+        this.root().connectUpdated(event.data());
     }
 
 //    /**
@@ -135,7 +135,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      */
     @EventSubscribe
     private void queryAdded(ZKQueryAddedEvent event) {
-        this.getRoot().queryAdded(event.data());
+        this.root().queryAdded(event.data());
     }
 
     /**
@@ -143,6 +143,6 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      */
     @EventSubscribe
     private void connectImported(ZKConnectImportedEvent event) {
-        this.getRoot().reloadChild();
+        this.root().reloadChild();
     }
 }

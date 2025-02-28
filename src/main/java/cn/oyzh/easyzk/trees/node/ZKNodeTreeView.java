@@ -62,9 +62,14 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
     }
 
     @Override
-    public ZKNodeTreeItem getRoot() {
-        return (ZKNodeTreeItem) super.getRoot();
+    public ZKNodeTreeItem root() {
+        return (ZKNodeTreeItem) super.root();
     }
+
+//    @Override
+//    public ZKNodeTreeItem getRoot() {
+//        return (ZKNodeTreeItem) super.getRoot();
+//    }
 
     /**
      * 寻找zk节点
@@ -73,7 +78,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
      * @return zk节点
      */
     public ZKNodeTreeItem findNodeItem(@NonNull String targetPath) {
-        return this.findNodeItem(this.getRoot(), targetPath);
+        return this.findNodeItem(this.root(), targetPath);
     }
 
     /**
@@ -271,7 +276,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
      */
     private List<ZKNodeTreeItem> getAllNodeItem() {
         List<ZKNodeTreeItem> list = new ArrayList<>(128);
-        this.getAllNodeItem(this.getRoot(), list);
+        this.getAllNodeItem(this.root(), list);
         return list;
     }
 
@@ -313,7 +318,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
         try {
             // 禁用树
             this.disable();
-            ZKNodeTreeItem rootItem = this.getRoot();
+            ZKNodeTreeItem rootItem = this.root();
             // 初始化根节点
             if (this.getRoot() == null) {
                 // 获取根节点

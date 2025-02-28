@@ -2,11 +2,11 @@
 ###### 项目说明
 这是一个使用javafx编写的zookeeper客户端，支持基本的连接管理，分组管理、键操作、操作命令查看、节点认证，权限管理、配额管理、节点二维码、节点搜索、节点过滤、节点历史、导入导出、数据传输、服务监控、认证管理、sasl认证、终端操作、ssh跳板等功能，还支持暗色主题、系统主题跟随等能力
 
-###### 启动入口
-cn.oyzh.easyzk.EasyZKBootstrap.main
-
 ###### 下载地址
 https://gitee.com/oyzh1994/easyzk/releases
+
+###### 启动入口
+cn.oyzh.easyzk.EasyZKBootstrap.main
 
 ###### 依赖说明
 1. base工程  

@@ -3,14 +3,10 @@ package cn.oyzh.easyzk.tabs.node;
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.file.FileUtil;
+import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.OSUtil;
 import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.easyzk.controller.acl.ZKACLAddController;
-import cn.oyzh.easyzk.controller.acl.ZKACLUpdateController;
-import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
-import cn.oyzh.easyzk.controller.node.ZKNodeQRCodeController;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
@@ -24,6 +20,7 @@ import cn.oyzh.easyzk.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
+import cn.oyzh.easyzk.popups.ZKNodeQRCodePopupController;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
@@ -34,14 +31,14 @@ import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
@@ -50,12 +47,12 @@ import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.node.NodeResizeHelper;
+import cn.oyzh.fx.plus.node.NodeResizer;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.PopupAdapter;
+import cn.oyzh.fx.plus.window.PopupManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
@@ -67,6 +64,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 import lombok.Getter;
 import org.apache.zookeeper.StatsTrack;
@@ -84,25 +82,25 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/05/21
  */
-public class ZKNodeTabController extends DynamicTabController {
+public class ZKNodeTabController extends RichTabController {
 
     /**
      * 根节点
      */
     @FXML
-    private FlexHBox root;
+    private FXHBox root;
 
     /**
      * 左侧节点
      */
     @FXML
-    private FlexVBox leftBox;
+    private FXVBox leftBox;
 
     /**
      * tab节点
      */
     @FXML
-    private FlexTabPane tabPane;
+    private FXTabPane tabPane;
 
     /**
      * 节点树
@@ -127,7 +125,7 @@ public class ZKNodeTabController extends DynamicTabController {
      * 右侧zk属性组件
      */
     @FXML
-    private FlexVBox statBox;
+    private FXVBox statBox;
 
     /**
      * zk属性视图切换按钮
@@ -193,6 +191,12 @@ public class ZKNodeTabController extends DynamicTabController {
      */
     @FXML
     private FXText loadTime;
+
+    /**
+     * zk数据保存
+     */
+    @FXML
+    private SVGGlyph dataSave;
 
     /**
      * zk数据撤销
@@ -415,6 +419,7 @@ public class ZKNodeTabController extends DynamicTabController {
         try {
             this.activeItem.refreshACL();
             this.initACL();
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -425,10 +430,11 @@ public class ZKNodeTabController extends DynamicTabController {
      */
     @FXML
     private void addACL() {
-        StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class, this.window());
-        fxView.setProp("zkItem", this.activeItem);
-        fxView.setProp("zkClient", this.activeItem.client());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class, this.window());
+//        fxView.setProp("zkItem", this.activeItem);
+//        fxView.setProp("zkClient", this.activeItem.client());
+//        fxView.display();
+        ZKEventUtil.showAddACL(this.activeItem, this.activeItem.client());
     }
 
     /**
@@ -439,6 +445,7 @@ public class ZKNodeTabController extends DynamicTabController {
         try {
             this.activeItem.refreshQuota();
             this.initQuota();
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -454,14 +461,17 @@ public class ZKNodeTabController extends DynamicTabController {
                 return;
             }
             StatsTrack quota = this.activeItem.quota();
+            String builder;
             if (quota == null) {
-                return;
+                builder = I18nHelper.count() + " -1" + System.lineSeparator() + I18nHelper.bytes() + " -1";
+            } else {
+                builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() + I18nHelper.bytes() + " " + quota.getBytes();
             }
-            String builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() + I18nHelper.bytes() + " " + quota.getBytes();
             ClipboardUtil.setStringAndTip(builder);
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.operationException());
+            MessageBox.exception(ex);
         }
     }
 
@@ -472,14 +482,16 @@ public class ZKNodeTabController extends DynamicTabController {
     private void copyACL() {
         ZKACL acl = this.aclTableView.getSelectedItem();
         if (acl == null) {
+            MessageBox.warn(I18nHelper.acl() + " " + I18nHelper.isEmpty());
             return;
         }
         try {
             String builder = acl.idFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.idFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() + acl.schemeFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.schemeFriend().getValue(this.aclViewSwitch.isSelected()) + System.lineSeparator() + acl.permsFriend().getName(this.aclViewSwitch.isSelected()) + " " + acl.permsFriend().getValue(this.aclViewSwitch.isSelected());
             ClipboardUtil.setStringAndTip(builder);
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.operationException());
+            MessageBox.exception(ex);
         }
     }
 
@@ -492,16 +504,17 @@ public class ZKNodeTabController extends DynamicTabController {
         if (acl == null) {
             return;
         }
-        try {
-            StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class, this.window());
-            fxView.setProp("acl", acl);
-            fxView.setProp("zkItem", this.activeItem);
-            fxView.setProp("zkClient", this.treeItem.client());
-            fxView.display();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.operationException());
-        }
+//        try {
+//            StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class, this.window());
+//            fxView.setProp("acl", acl);
+//            fxView.setProp("zkItem", this.activeItem);
+//            fxView.setProp("zkClient", this.treeItem.client());
+//            fxView.display();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            MessageBox.exception(ex, I18nHelper.operationException());
+//        }
+        ZKEventUtil.showUpdateACL(this.activeItem, this.treeItem.client(), acl);
     }
 
     /**
@@ -687,11 +700,14 @@ public class ZKNodeTabController extends DynamicTabController {
         // 保存数据
         RenderService.submit(() -> {
             // 保存数据
-            this.activeItem.saveData();
-            // 刷新数据大小
-            this.flushDataSize();
-            // 刷新tab颜色
-            this.flushTabGraphicColor();
+            if (this.activeItem.saveData()) {
+                // 禁用图标
+                this.dataSave.disable();
+                // 刷新数据大小
+                this.flushDataSize();
+                // 刷新tab颜色
+                this.flushTabGraphicColor();
+            }
         });
     }
 
@@ -735,15 +751,21 @@ public class ZKNodeTabController extends DynamicTabController {
      * zk节点转二维码
      */
     @FXML
-    private void node2QRCode() {
+    private void node2QRCode(MouseEvent event) {
         try {
-            StageAdapter fxView = StageManager.parseStage(ZKNodeQRCodeController.class, this.window());
-            fxView.setProp("zkNode", this.activeItem.value());
-            fxView.setProp("nodeData", this.nodeData.getTextTrim());
-            fxView.display();
+//            StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class, this.window());
+//            fxView.setProp("zkNode", this.activeItem.value());
+//            fxView.setProp("nodeData", this.nodeData.getTextTrim());
+//            fxView.display();
+            PopupAdapter adapter = PopupManager.parsePopup(ZKNodeQRCodePopupController.class);
+            adapter.setProp("zkNode", this.activeItem.value());
+            adapter.setProp("nodeData", this.nodeData.getTextTrim());
+            adapter.showPopup((Node) event.getSource());
         } catch (Exception ex) {
             ex.printStackTrace();
+            MessageBox.exception(ex);
         }
+//        ZKEventUtil.showQRCodeNode(this.activeItem.value(), this.nodeData.getTextTrim());
     }
 
     /**
@@ -773,7 +795,9 @@ public class ZKNodeTabController extends DynamicTabController {
      */
     @FXML
     private void showHistory() {
-        ZKEventUtil.historyShow(this.activeItem);
+        if (this.activeItem != null) {
+            ZKEventUtil.historyShow(this.activeItem);
+        }
     }
 
     /**
@@ -824,6 +848,10 @@ public class ZKNodeTabController extends DynamicTabController {
         this.flushDataSize();
         // 遗忘历史
         this.nodeData.forgetHistory();
+        // 按钮处理
+        this.dataUndo.disable();
+        this.dataRedo.disable();
+        this.dataSave.setDisable(!this.activeItem.isDataUnsaved());
         // 加载耗时处理
         this.loadTime.text(I18nHelper.cost() + " : " + this.activeItem.loadTime() + "ms");
     }
@@ -850,7 +878,7 @@ public class ZKNodeTabController extends DynamicTabController {
             // 遍历节点
             int index = 0;
             for (Node statItem : statItems) {
-                FlexHBox box = (FlexHBox) statItem;
+                FXHBox box = (FXHBox) statItem;
                 FriendlyInfo<Stat> statInfo = statInfos.get(index++);
                 Label label = (Label) box.getChildren().get(0);
                 Label data = (Label) box.getChildren().get(1);
@@ -953,6 +981,7 @@ public class ZKNodeTabController extends DynamicTabController {
         });
         // 节点内容变更
         this.nodeData.addTextChangeListener((observable, oldValue, newValue) -> {
+            this.dataSave.enable();
             if (this.activeItem != null) {
                 byte[] bytes = newValue == null ? new byte[]{} : newValue.getBytes(this.charset.getCharset());
                 this.activeItem.nodeData(bytes);
@@ -978,9 +1007,9 @@ public class ZKNodeTabController extends DynamicTabController {
             }
         });
         // 拉伸辅助
-        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
-        resizeHelper.widthLimit(240f, 750f);
-        resizeHelper.initResizeEvent();
+        NodeResizer resizer = new NodeResizer(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        resizer.widthLimit(240f, 750f);
+        resizer.initResizeEvent();
         // 过滤
         KeyHandler searchKeyHandler = new KeyHandler();
         searchKeyHandler.handler(e -> this.filterKW.requestFocus());
@@ -1025,6 +1054,7 @@ public class ZKNodeTabController extends DynamicTabController {
     private void saveQuota() {
         try {
             this.activeItem.saveQuota(this.quotaBytes.getLongValue(), this.quotaCount.getIntValue());
+            MessageBox.okToast(I18nHelper.operationSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -1197,9 +1227,10 @@ public class ZKNodeTabController extends DynamicTabController {
 
     @FXML
     private void addNode() {
-        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
-        fxView.setProp("dbItem", this.treeItem);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
+//        fxView.setProp("dbItem", this.treeItem);
+//        fxView.display();
+        ZKEventUtil.showAddNode(null, this.client);
     }
 
     @FXML

@@ -1,14 +1,14 @@
 package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 
 /**
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryDataTab extends DynamicTab {
+public class ZKQueryDataTab extends RichTab {
 
     public ZKQueryDataTab(String path, byte[] data, ZKClient zkClient) {
         super();
@@ -30,6 +30,4 @@ public class ZKQueryDataTab extends DynamicTab {
     public String getTabTitle() {
         return I18nHelper.data();
     }
-
-
 }

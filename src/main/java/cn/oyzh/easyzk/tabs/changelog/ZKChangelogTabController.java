@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.changelog;
 
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.changelog.Changelog;
 import cn.oyzh.fx.plus.changelog.ChangelogListView;
 import cn.oyzh.fx.plus.changelog.ChangelogManager;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2024/04/07
  */
-public class ZKChangelogTabController extends DynamicTabController {
+public class ZKChangelogTabController extends RichTabController {
 
     /**
      * 更新日志

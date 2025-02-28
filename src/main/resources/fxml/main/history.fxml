@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.HistorySVGGlyph?>
@@ -11,13 +11,13 @@
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FXTab xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
+<FXTab disable="true" xmlns:fx="http://javafx.com/fxml/1" fx:id="root"
        fx:controller="cn.oyzh.easyzk.controller.main.HistoryController" text="%base.his">
     <graphic>
         <HistorySVGGlyph cursorType="DEFAULT" size="12"/>
     </graphic>
-    <FlexVBox flexWidth="100%" flexHeight="100%">
-        <FlexHBox realHeight="32">
+    <FXVBox flexWidth="100%" flexHeight="100%">
+        <FXHBox realHeight="32">
             <RefreshSVGGlyph size="16" onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="10" top="9"/>
@@ -33,19 +33,19 @@
                     <Insets left="5" top="9"/>
                 </HBox.margin>
             </UndoSVGGlyph>
-            <FXToggleSwitch prefHeight="24" fx:id="type" selectedText="%base.server" unselectedText="%base.local">
+            <FXToggleSwitch realHeight="16" fx:id="type" selectedText="%base.server" unselectedText="%base.local">
                 <HBox.margin>
-                    <Insets left="5" top="7"/>
+                    <Insets left="5" top="9"/>
                 </HBox.margin>
             </FXToggleSwitch>
-        </FlexHBox>
-        <FlexTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
+        </FXHBox>
+        <FXTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
-                <FlexTableColumn realWidth="120" text="%base.saveTime" valueName="saveTimeFormated"/>
-                <FlexTableColumn flexWidth="85% - 135" text="%base.size" valueName="dataSize"/>
+                <FXTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
+                <FXTableColumn realWidth="130" text="%base.saveTime" valueName="saveTimeFormated"/>
+                <FXTableColumn flexWidth="85% - 142" text="%base.size" valueName="dataSize"/>
             </columns>
-        </FlexTableView>
-    </FlexVBox>
+        </FXTableView>
+    </FXVBox>
 </FXTab>
 

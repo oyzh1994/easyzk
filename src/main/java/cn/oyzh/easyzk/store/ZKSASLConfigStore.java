@@ -26,8 +26,7 @@ public class ZKSASLConfigStore extends JdbcStandardStore<ZKSASLConfig> {
      * @return 结果
      */
     public boolean replace(ZKSASLConfig model) {
-        String iid = model.getIid();
-        if (super.exist(iid)) {
+        if (super.exist(model.getId())) {
             return super.update(model);
         }
         return this.insert(model);

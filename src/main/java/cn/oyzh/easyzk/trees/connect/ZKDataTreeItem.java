@@ -33,8 +33,30 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>(2);
         FXMenuItem openData = MenuItemHelper.openData("12", this::loadChild);
+        FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
+        FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
         items.add(openData);
+        items.add(importData);
+        items.add(exportData);
         return items;
+    }
+
+    /**
+     * 导入zk节点
+     */
+    private void importData() {
+        ZKEventUtil.showImportData(this.zkConnect());
+    }
+
+    /**
+     * 导出zk节点
+     */
+    private void exportData() {
+//        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
+//        fxView.setProp("connect", this.zkConnect());
+//        fxView.setProp("nodePath", "/");
+//        fxView.display();
+        ZKEventUtil.showExportData(this.zkConnect(), "/");
     }
 
     public ZKConnect connect() {

@@ -18,8 +18,8 @@
 // import cn.oyzh.common.file.FileUtil;
 // import cn.oyzh.fx.plus.controller.StageController;
 // import cn.oyzh.fx.gui.text.area.MsgTextArea;
-// import cn.oyzh.fx.plus.controls.box.FlexHBox;
-// import cn.oyzh.fx.plus.controls.button.FlexButton;
+// import cn.oyzh.fx.plus.controls.box.FXHBox;
+// import cn.oyzh.fx.plus.controls.button.FXButton;
 // import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 // import cn.oyzh.fx.plus.controls.label.FXLabel;
 // import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -64,7 +64,7 @@
 //      * 节点路径组件
 //      */
 //     @FXML
-//     private FlexHBox nodePathBox;
+//     private FXHBox nodePathBox;
 //
 //     /**
 //      * 节点路径
@@ -88,19 +88,19 @@
 //     //  * 格式选项
 //     //  */
 //     // @FXML
-//     // private FlexComboBox<String> format;
+//     // private FXComboBox<String> format;
 //     //
 //     // /**
 //     //  * 前缀选项
 //     //  */
 //     // @FXML
-//     // private FlexComboBox<String> prefix;
+//     // private FXComboBox<String> prefix;
 //     //
 //     // /**
 //     //  * 美化选项
 //     //  */
 //     // @FXML
-//     // private FlexComboBox<String> pretty;
+//     // private FXComboBox<String> pretty;
 //     //
 //     // /**
 //     //  * 美化组件
@@ -124,7 +124,7 @@
 //      * 结束导出按钮
 //      */
 //     @FXML
-//     private FlexButton stopExportBtn;
+//     private FXButton stopExportBtn;
 //
 //     // /**
 //     //  * 状态管理器

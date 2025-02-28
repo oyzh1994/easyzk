@@ -6,9 +6,6 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyzk.controller.auth.ZKAuthAuthController;
-import cn.oyzh.easyzk.controller.data.ZKDataExportController;
-import cn.oyzh.easyzk.controller.node.ZKNodeAddController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import cn.oyzh.easyzk.domain.ZKSetting;
@@ -25,8 +22,6 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -388,30 +383,33 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      * 添加zk子节点
      */
     public void addNode() {
-        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class, this.window());
-        fxView.setProp("zkItem", this);
-        fxView.setProp("zkClient", this.client());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class, this.window());
+//        fxView.setProp("zkItem", this);
+//        fxView.setProp("zkClient", this.client());
+//        fxView.display();
+        ZKEventUtil.showAddNode(this, this.client());
     }
 
     /**
      * 认证zk节点
      */
     public void authNode() {
-        StageAdapter fxView = StageManager.parseStage(ZKAuthAuthController.class, this.window());
-        fxView.setProp("zkClient", this.client());
-        fxView.setProp("zkItem", this);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKAuthAuthController.class, this.window());
+//        fxView.setProp("zkClient", this.client());
+//        fxView.setProp("zkItem", this);
+//        fxView.display();
+        ZKEventUtil.showAuthNode(this, this.client());
     }
 
     /**
      * 导出zk节点
      */
-    public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
-        fxView.setProp("connect", this.zkConnect());
-        fxView.setProp("nodePath", this.nodePath());
-        fxView.display();
+    private void exportData() {
+//        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
+//        fxView.setProp("connect", this.zkConnect());
+//        fxView.setProp("nodePath", this.nodePath());
+//        fxView.display();
+        ZKEventUtil.showExportData(this.zkConnect(), this.nodePath());
     }
 
     @Override

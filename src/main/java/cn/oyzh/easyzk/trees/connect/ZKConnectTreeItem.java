@@ -1,14 +1,10 @@
 package cn.oyzh.easyzk.trees.connect;
 
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.common.util.SystemUtil;
-import cn.oyzh.easyzk.controller.connect.ZKConnectUpdateController;
-import cn.oyzh.easyzk.controller.data.ZKDataExportController;
-import cn.oyzh.easyzk.controller.data.ZKDataImportController;
-import cn.oyzh.easyzk.controller.data.ZKDataTransportController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -74,10 +70,10 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>(12);
         if (this.isConnecting()) {
-            FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("12", this::cancelConnect);
+            FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("10", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
-            FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
+            FXMenuItem closeConnect = MenuItemHelper.closeConnect("10", this::closeConnect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
@@ -98,7 +94,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
-            FXMenuItem cloneConnect = MenuItemHelper.repeatConnect("12", this::cloneConnect);
+            FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
 
             items.add(connect);
             items.add(editConnect);
@@ -116,10 +112,11 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      * 导出zk节点
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
-        fxView.setProp("connect", this.value);
-        fxView.setProp("nodePath", "/");
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
+//        fxView.setProp("connect", this.value);
+//        fxView.setProp("nodePath", "/");
+//        fxView.display();
+        ZKEventUtil.showExportData(this.value, "/");
     }
 
     /**
@@ -181,18 +178,20 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      * 导入数据
      */
     private void importData() {
-        StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class, this.window());
-        fxView.setProp("connect", this.value);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class, this.window());
+//        fxView.setProp("connect", this.value);
+//        fxView.display();
+        ZKEventUtil.showImportData(this.value);
     }
 
     /**
      * 传输数据
      */
     private void transportData() {
-        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class, this.window());
-        adapter.setProp("sourceInfo", this.value);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class, this.window());
+//        adapter.setProp("sourceInfo", this.value);
+//        adapter.display();
+        ZKEventUtil.showTransportData(this.value);
     }
 
     /**
@@ -237,9 +236,10 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
             }
             this.closeConnect();
         }
-        StageAdapter fxView = StageManager.parseStage(ZKConnectUpdateController.class, this.window());
-        fxView.setProp("zkConnect", this.value());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(ZKUpdateConnectController.class, this.window());
+//        fxView.setProp("zkConnect", this.value());
+//        fxView.display();
+        ZKEventUtil.showUpdateConnect(this.value);
     }
 
     /**
@@ -367,6 +367,6 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
     }
 
     public ZKQueriesTreeItem queriesItem() {
-        return (ZKQueriesTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof ZKQueriesTreeItem).findAny().get();
+        return (ZKQueriesTreeItem) this.unfilteredChildren().stream().filter(i -> i instanceof ZKQueriesTreeItem).findAny().get();
     }
 }

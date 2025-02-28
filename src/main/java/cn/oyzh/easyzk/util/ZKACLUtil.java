@@ -176,11 +176,20 @@ public class ZKACLUtil {
             if (strings.length > 0) {
                 id.setScheme(strings[0]);
             }
-            if (strings.length > 1) {
-                id.setId(strings[1]);
-            }
-            if (strings.length > 2) {
-                a.setPerms(toPermInt(strings[2]));
+            if (id.getScheme().equalsIgnoreCase("digest")) {
+                if (strings.length > 2) {
+                    id.setId(strings[1] + ":" + strings[2]);
+                }
+                if (strings.length > 3) {
+                    a.setPerms(toPermInt(strings[3]));
+                }
+            } else {
+                if (strings.length > 1) {
+                    id.setId(strings[1]);
+                }
+                if (strings.length > 2) {
+                    a.setPerms(toPermInt(strings[2]));
+                }
             }
             a.setId(id);
             aclList.add(a);
@@ -243,6 +252,9 @@ public class ZKACLUtil {
         }
         while (i-- > 0) {
             permStr.insert(0, "0");
+        }
+        if (joinStr == null) {
+            joinStr = "";
         }
         StringBuilder builder = new StringBuilder();
         if (permStr.charAt(0) == '1') {

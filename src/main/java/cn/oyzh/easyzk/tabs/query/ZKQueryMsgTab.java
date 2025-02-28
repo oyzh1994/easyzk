@@ -2,14 +2,14 @@ package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.easyzk.query.ZKQueryParam;
 import cn.oyzh.easyzk.query.ZKQueryResult;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 
 /**
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryMsgTab extends DynamicTab {
+public class ZKQueryMsgTab extends RichTab {
 
     public ZKQueryMsgTab(ZKQueryParam param, ZKQueryResult result) {
         super();

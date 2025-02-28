@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.util.BooleanUtil;
-import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
@@ -96,7 +96,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
      * 收藏的节点
      */
     @Getter
-    private List<String> collects;
+    private List<ZKCollect> collects;
 
     /**
      * 过滤列表

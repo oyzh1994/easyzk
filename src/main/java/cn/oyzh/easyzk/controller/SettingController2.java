@@ -12,12 +12,12 @@ import cn.oyzh.fx.gui.setting.SettingTreeItem;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
-import cn.oyzh.fx.plus.controls.text.FlexSlider;
+import cn.oyzh.fx.plus.controls.picker.FXColorPicker;
+import cn.oyzh.fx.plus.controls.text.FXSlider;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
-import cn.oyzh.fx.plus.domain.Setting;
+import cn.oyzh.fx.plus.domain.AppSetting;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
@@ -162,37 +162,37 @@ public class SettingController2 extends StageController {
      * 背景色
      */
     @FXML
-    private FlexColorPicker bgColor;
+    private FXColorPicker bgColor;
 
     /**
      * 前景色
      */
     @FXML
-    private FlexColorPicker fgColor;
+    private FXColorPicker fgColor;
 
     /**
      * 强调色
      */
     @FXML
-    private FlexColorPicker accentColor;
+    private FXColorPicker accentColor;
 
     /**
      * 背景色
      */
     @FXML
-    private FlexHBox bgColorBox;
+    private FXHBox bgColorBox;
 
     /**
      * 前景色
      */
     @FXML
-    private FlexHBox fgColorBox;
+    private FXHBox fgColorBox;
 
     /**
      * 强调色
      */
     @FXML
-    private FlexHBox accentColorBox;
+    private FXHBox accentColorBox;
 
     /**
      * 字体大小
@@ -276,13 +276,13 @@ public class SettingController2 extends StageController {
      * 窗口透明度
      */
     @FXML
-    private FlexSlider opacity;
+    private FXSlider opacity;
 
     /**
      * 标题栏透明度
      */
     @FXML
-    private FlexSlider titleBarOpacity;
+    private FXSlider titleBarOpacity;
 
     /**
      * 配置对象
@@ -556,7 +556,7 @@ public class SettingController2 extends StageController {
      */
     @FXML
     private void resetFontFamily() {
-        this.fontFamily.select(Setting.defaultFontFamily());
+        this.fontFamily.select(AppSetting.defaultFontFamily());
     }
 
     /**
@@ -564,7 +564,7 @@ public class SettingController2 extends StageController {
      */
     @FXML
     private void resetFontSize() {
-        this.fontSize.selectSize(Setting.defaultFontSize());
+        this.fontSize.selectSize(AppSetting.defaultFontSize());
     }
 
     /**
@@ -572,51 +572,51 @@ public class SettingController2 extends StageController {
      */
     @FXML
     private void resetFontWeight() {
-        this.fontWeight.selectWeight(Setting.defaultFontWeight());
+        this.fontWeight.selectWeight(AppSetting.defaultFontWeight());
     }
 
     @FXML
     private void resetEditorFontFamily() {
-        this.editorFontFamily.select(Setting.defaultEditorFontFamily());
+        this.editorFontFamily.select(AppSetting.defaultEditorFontFamily());
     }
 
     @FXML
     private void resetEditorFontSize() {
-        this.editorFontSize.selectSize(Setting.defaultEditorFontSize());
+        this.editorFontSize.selectSize(AppSetting.defaultEditorFontSize());
     }
 
     @FXML
     private void resetEditorFontWeight() {
-        this.editorFontWeight.selectWeight(Setting.defaultEditorFontWeight());
+        this.editorFontWeight.selectWeight(AppSetting.defaultEditorFontWeight());
     }
 
     @FXML
     private void resetTerminalFontFamily() {
-        this.terminalFontFamily.select(Setting.defaultTerminalFontFamily());
+        this.terminalFontFamily.select(AppSetting.defaultTerminalFontFamily());
     }
 
     @FXML
     private void resetTerminalFontSize() {
-        this.terminalFontSize.selectSize(Setting.defaultTerminalFontSize());
+        this.terminalFontSize.selectSize(AppSetting.defaultTerminalFontSize());
     }
 
     @FXML
     private void resetTerminalFontWeight() {
-        this.terminalFontWeight.selectWeight(Setting.defaultTerminalFontWeight());
+        this.terminalFontWeight.selectWeight(AppSetting.defaultTerminalFontWeight());
     }
 
     @FXML
     private void resetQueryFontFamily() {
-        this.queryFontFamily.select(Setting.defaultQueryFontFamily());
+        this.queryFontFamily.select(AppSetting.defaultQueryFontFamily());
     }
 
     @FXML
     private void resetQueryFontSize() {
-        this.queryFontSize.selectSize(Setting.defaultQueryFontSize());
+        this.queryFontSize.selectSize(AppSetting.defaultQueryFontSize());
     }
 
     @FXML
     private void resetQueryFontWeight() {
-        this.queryFontWeight.selectWeight(Setting.defaultQueryFontWeight());
+        this.queryFontWeight.selectWeight(AppSetting.defaultQueryFontWeight());
     }
 }

@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.fx;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024-12-19
  */
-public class ZKFilterTableView extends FlexTableView<ZKFilterVO> {
+public class ZKFilterTableView extends FXTableView<ZKFilterVO> {
 
     /**
      * 当前过滤列表

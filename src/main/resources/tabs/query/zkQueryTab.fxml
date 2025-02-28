@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyzk.query.ZKQueryTextArea?>
+<?import cn.oyzh.easyzk.query.ZKQueryTextAreaPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.RunSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryTabController">
-    <FlexHBox realHeight="30" flexWidth="100%">
+    <FXHBox realHeight="30" flexWidth="100%">
         <SaveSVGGlyph size="16" onMousePrimaryClicked="#save" appendTipText="(CTRL/COMMAND+S)">
             <HBox.margin>
                 <Insets left="5" top="10"/>
@@ -21,14 +21,14 @@
                 <Insets left="5" top="10"/>
             </HBox.margin>
         </RunSVGGlyph>
-    </FlexHBox>
-    <ZKQueryTextArea onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1"
-                     flexWidth="100% - 30" flexHeight="100% - 60">
+    </FXHBox>
+    <ZKQueryTextAreaPane onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1"
+                         flexWidth="100% - 30" flexHeight="100% - 60">
         <VBox.margin>
             <Insets left="5"/>
         </VBox.margin>
-    </ZKQueryTextArea>
-    <FlexTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="70%" managedBindVisible="true"
+    </ZKQueryTextAreaPane>
+    <FXTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="70%" managedBindVisible="true"
                  visible="false">
-    </FlexTabPane>
-</FlexVBox>
+    </FXTabPane>
+</FXVBox>

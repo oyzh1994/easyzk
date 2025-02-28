@@ -7,20 +7,20 @@
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.text.FlexText?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeImportController" realWidth="850" realHeight="630">
     <!-- <fx:define> -->
     <!--     <StateManager fx:id="stateManager" managedBindVisible="true"/> -->
     <!-- </fx:define> -->
-    <FlexHBox realHeight="50" flexWidth="100%">
+    <FXHBox realHeight="50" flexWidth="100%">
         <AccentLabel text="%base.file" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
@@ -32,13 +32,13 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </FileButton>
-    </FlexHBox>
-    <FlexText fx:id="scriptInfo" managedBindVisible="true" visible="false" fontSize="11">
+    </FXHBox>
+    <FXText fx:id="scriptInfo" managedBindVisible="true" visible="false" fontSize="11">
         <VBox.margin>
             <Insets left="110"/>
         </VBox.margin>
-    </FlexText>
-    <FlexHBox flexWidth="100%" realHeight="50">
+    </FXText>
+    <FXHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
@@ -59,22 +59,22 @@
                 <Insets left="5" top="15"/>
             </HBox.margin>
         </CharsetComboBox>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="360">
+    </FXHBox>
+    <FXHBox flexWidth="100%" realHeight="360">
         <AccentLabel text="%base.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexVBox flexWidth="100% - 140" flexHeight="100%">
+        <FXVBox flexWidth="100% - 140" flexHeight="100%">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
             <MsgTextArea lineLimit="300" fx:id="importMsg" flexWidth="100%" flexHeight="100% - 20"/>
             <FXLabel fx:id="importStatus"/>
-        </FlexVBox>
-    </FlexHBox>
-    <FlexHBox prefHeight="50" flexWidth="100%">
+        </FXVBox>
+    </FXHBox>
+    <FXHBox prefHeight="50" flexWidth="100%">
         <ImportButton onAction="#doImport" fx:id="importBtn" groupId="exec" disable="true" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
@@ -90,25 +90,25 @@
                 <Insets left="15" top="10"/>
             </HBox.margin>
         </CloseButton>
-    </FlexHBox>
-    <FlexVBox flexWidth="100%" fontSize="12">
+    </FXHBox>
+    <FXVBox flexWidth="100%" fontSize="12">
         <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <FlexText fill="#666" text="%zk.node.import.tip1">
+        <FXText fill="#666" text="%zk.node.import.tip1">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
-        </FlexText>
-        <FlexText fill="#666" text="%zk.node.import.tip2">
+        </FXText>
+        <FXText fill="#666" text="%zk.node.import.tip2">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
-        </FlexText>
+        </FXText>
         <VBox.margin>
             <Insets left="110"/>
         </VBox.margin>
-    </FlexVBox>
-</FlexVBox>
+    </FXVBox>
+</FXVBox>

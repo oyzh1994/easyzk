@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller.data;
 
+import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.fx.plus.FXConst;
@@ -7,7 +8,6 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -56,6 +56,7 @@ public class ZKMigrationTipsController extends StageController {
     @FXML
     private void migration() {
         this.close();
-        StageManager.showStage(ZKDataMigrationController.class, StageManager.getPrimaryStage());
+//        StageManager.showStage(ZKMigrationDataController.class, StageManager.getPrimaryStage());
+        ZKEventUtil.showMigrationData();
     }
 }

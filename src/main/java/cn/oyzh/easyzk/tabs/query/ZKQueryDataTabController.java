@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.easyzk.fx.ZKDataTextArea;
+import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryDataTabController extends DynamicTabController {
+public class ZKQueryDataTabController extends RichTabController {
 
     private String path;
 
@@ -31,18 +31,18 @@ public class ZKQueryDataTabController extends DynamicTabController {
     private SVGGlyph redo;
 
     @FXML
-    private ZKDataTextArea data;
+    private ZKDataTextAreaPane data;
 
     @FXML
     private RichDataTypeComboBox format;
 
-    public void init(String path, byte[] data, ZKClient zkClient) {
+    public void init(String path, byte[] bytes, ZKClient zkClient) {
         this.path = path;
         this.zkClient = zkClient;
         // 处理数据
-        data = data == null ? new byte[]{} : data;
+        byte[] bytes1 = bytes == null ? new byte[]{} : bytes;
         // 显示检测后的数据
-        RichDataType dataType = this.data.showDetectData(new String(data));
+        RichDataType dataType = this.data.showDetectData(new String(bytes1));
         // 遗忘历史
         this.data.forgetHistory();
         // 选中格式
@@ -54,25 +54,25 @@ public class ZKQueryDataTabController extends DynamicTabController {
         // 格式监听
         this.format.selectedItemChanged((t1, t2, t3) -> {
             if (this.format.isStringFormat()) {
-                this.data.showStringData(this.data.getText());
+                this.data.showStringData(bytes1);
                 this.data.setEditable(true);
             } else if (this.format.isJsonFormat()) {
-                this.data.showJsonData(this.data.getText());
+                this.data.showJsonData(bytes1);
                 this.data.setEditable(true);
             } else if (this.format.isXmlFormat()) {
-                this.data.showXmlData(this.data.getText());
+                this.data.showXmlData(bytes1);
                 this.data.setEditable(true);
             } else if (this.format.isHtmlFormat()) {
-                this.data.showHtmlData(this.data.getText());
+                this.data.showHtmlData(bytes1);
                 this.data.setEditable(true);
             } else if (this.format.isBinaryFormat()) {
-                this.data.showBinaryData(this.data.getText());
+                this.data.showBinaryData(bytes1);
                 this.data.setEditable(false);
             } else if (this.format.isHexFormat()) {
-                this.data.showHexData(this.data.getText());
+                this.data.showHexData(bytes1);
                 this.data.setEditable(false);
             } else if (this.format.isRawFormat()) {
-                this.data.showRawData(this.data.getText());
+                this.data.showRawData(bytes1);
                 this.data.setEditable(this.data.getRealType() == RichDataType.STRING);
             }
         });

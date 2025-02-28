@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTab;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.NonNull;
@@ -16,13 +16,13 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/07/21
  */
-public class ZKTerminalTabController extends DynamicTabController {
+public class ZKTerminalTabController extends RichTabController {
 
     /**
      * 命令行文本域
      */
     @FXML
-    private ZKTerminalTextArea terminal;
+    private ZKTerminalTextAreaPane terminal;
 
     /**
      * 设置客户端
@@ -52,10 +52,10 @@ public class ZKTerminalTabController extends DynamicTabController {
     }
 
     @Override
-    public void onTabClose(DynamicTab tab, Event event) {
+    public void onTabClosed(Event event) {
         if (this.terminal.isTemporary()) {
             ZKConnectUtil.close(this.client(), true, true);
         }
-        super.onTabClose(tab, event);
+        super.onTabClosed(event);
     }
 }

@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.test;
 
-import cn.oyzh.common.util.OSUtil;
+import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.fx.pkg.Packer;
 import org.junit.Test;
 

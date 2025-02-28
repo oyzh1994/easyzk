@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.common.util.ObjectComparator;
+import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.store.jdbc.Column;

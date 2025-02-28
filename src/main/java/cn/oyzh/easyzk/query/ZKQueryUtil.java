@@ -60,6 +60,23 @@ public class ZKQueryUtil {
         KEYWORDS.add("setquota");
         KEYWORDS.add("delquota");
         KEYWORDS.add("listquota");
+        //  其他
+        KEYWORDS.add("whoami");
+        KEYWORDS.add("srvr");
+        KEYWORDS.add("mntr");
+        KEYWORDS.add("envi");
+        KEYWORDS.add("conf");
+        KEYWORDS.add("cons");
+        KEYWORDS.add("ruok");
+        KEYWORDS.add("crst");
+        KEYWORDS.add("srst");
+        KEYWORDS.add("stat4");
+        KEYWORDS.add("wchc");
+        KEYWORDS.add("wchs");
+        KEYWORDS.add("wchp");
+        KEYWORDS.add("dump");
+        KEYWORDS.add("reqs");
+        KEYWORDS.add("dirs");
 
         // 参数
         PARAMS.add("-s");

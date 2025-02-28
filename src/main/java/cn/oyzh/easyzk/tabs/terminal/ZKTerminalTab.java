@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.tabs.terminal;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Cursor;
 
@@ -13,7 +13,7 @@ import javafx.scene.Cursor;
  * @author oyzh
  * @since 2023/7/21
  */
-public class ZKTerminalTab extends DynamicTab {
+public class ZKTerminalTab extends RichTab {
 
     public ZKTerminalTab(ZKClient client) {
         this.init(client);

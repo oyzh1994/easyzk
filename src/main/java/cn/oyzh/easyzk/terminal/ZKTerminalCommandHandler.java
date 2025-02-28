@@ -7,6 +7,6 @@ import cn.oyzh.fx.terminal.command.TerminalCommand;
  * @author oyzh
  * @since 2023/7/31
  */
-public abstract class ZKTerminalCommandHandler<C extends TerminalCommand> extends BaseTerminalCommandHandler<C, ZKTerminalTextArea> {
+public abstract class ZKTerminalCommandHandler<C extends TerminalCommand> extends BaseTerminalCommandHandler<C, ZKTerminalTextAreaPane> {
 
 }

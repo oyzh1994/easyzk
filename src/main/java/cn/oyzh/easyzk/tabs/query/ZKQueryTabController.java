@@ -6,12 +6,12 @@ import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.query.ZKQueryParam;
 import cn.oyzh.easyzk.query.ZKQueryResult;
-import cn.oyzh.easyzk.query.ZKQueryTextArea;
+import cn.oyzh.easyzk.query.ZKQueryTextAreaPane;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.gui.tabs.RichTab;
+import cn.oyzh.fx.gui.tabs.RichTabController;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.i18n.I18nHelper;
@@ -24,7 +24,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryTabController extends DynamicTabController {
+public class ZKQueryTabController extends RichTabController {
 
     /**
      * 查询对象
@@ -47,13 +47,13 @@ public class ZKQueryTabController extends DynamicTabController {
      * 当前内容
      */
     @FXML
-    private ZKQueryTextArea content;
+    private ZKQueryTextAreaPane content;
 
     /**
      * 结果面板
      */
     @FXML
-    private FlexTabPane resultTabPane;
+    private FXTabPane resultTabPane;
 
     /**
      * 查询存储
@@ -143,6 +143,27 @@ public class ZKQueryTabController extends DynamicTabController {
                 } else {
                     this.resultTabPane.select(0);
                 }
+//            } else if (param.isGetAllChildrenNumber()) {
+//                if (result.isSuccess()) {
+//                    this.resultTabPane.addTab(new ZKQueryCountTab(result.asCount()));
+//                    this.resultTabPane.select(1);
+//                } else {
+//                    this.resultTabPane.select(0);
+//                }
+            } else if (param.isWhoami()) {
+                if (result.isSuccess()) {
+                    this.resultTabPane.addTab(new ZKQueryWhoamiTab(result.asClientInfo()));
+                    this.resultTabPane.select(1);
+                } else {
+                    this.resultTabPane.select(0);
+                }
+            } else if (param.isSrvr() || param.isEnvi() || param.isMntr() || param.isConf() || param.isStat4()) {
+                if (result.isSuccess()) {
+                    this.resultTabPane.addTab(new ZKQueryEnvTab(result.asEnvInfo()));
+                    this.resultTabPane.select(1);
+                } else {
+                    this.resultTabPane.select(0);
+                }
             } else if (param.isSet() || param.isSetACL()) {
                 if (result.isSuccess() && param.hasParamStat()) {
                     this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
@@ -195,11 +216,11 @@ public class ZKQueryTabController extends DynamicTabController {
     }
 
     @Override
-    public void onCloseRequest(DynamicTab tab, Event event) {
+    public void onTabCloseRequest(Event event) {
         if (this.unsaved && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             event.consume();
         } else {
-            super.onCloseRequest(tab, event);
+            super.onTabCloseRequest(event);
         }
     }
 }

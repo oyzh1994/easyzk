@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.store.ZKConnectStore;
-import cn.oyzh.fx.plus.SimpleStringConverter;
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
+import cn.oyzh.fx.plus.converter.SimpleStringConverter;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/04/08
  */
-public class ZKConnectComboBox extends FlexComboBox<ZKConnect> {
+public class ZKConnectComboBox extends FXComboBox<ZKConnect> {
 
     {
         this.setConverter(new SimpleStringConverter<>() {

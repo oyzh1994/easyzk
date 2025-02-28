@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.store;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
+import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
@@ -60,6 +61,23 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
     }
 
     /**
+     * 加载列表，完整信息，给导出用
+     *
+     * @return zk连接列表
+     */
+    public List<ZKConnect> loadFull() {
+        List<ZKConnect> connects = super.selectList();
+        for (ZKConnect connect : connects) {
+            connect.setAuths(this.authStore.loadByIid(connect.getId()));
+            connect.setFilters(this.filterStore.loadByIid(connect.getId()));
+            connect.setCollects(this.collectStore.listByIid(connect.getId()));
+            connect.setSshConfig(this.sshConfigStore.getByIid(connect.getId()));
+            connect.setSaslConfig(this.saslConfigStore.getByIid(connect.getId()));
+        }
+        return connects;
+    }
+
+    /**
      * 替换
      *
      * @param model 模型
@@ -95,10 +113,11 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
             }
 
             // 收藏处理
-            List<String> collects = model.getCollects();
+            List<ZKCollect> collects = model.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
-                for (String collect : collects) {
-                    this.collectStore.replace(model.getId(), collect);
+                this.collectStore.deleteByIid(model.getId());
+                for (ZKCollect collect : collects) {
+                    this.collectStore.replace(collect);
                 }
             }
 

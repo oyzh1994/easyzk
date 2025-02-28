@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyzk.fx.ZKACLTableView?>
-<?import cn.oyzh.easyzk.fx.ZKDataTextArea?>
+<?import cn.oyzh.easyzk.fx.ZKDataTextAreaPane?>
 <?import cn.oyzh.easyzk.trees.node.ZKNodeTreeView?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
@@ -15,7 +15,7 @@
 <?import cn.oyzh.fx.plus.controls.box.*?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.*?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
@@ -23,30 +23,31 @@
 <?import javafx.scene.layout.*?>
 <?import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox?>
 <?import cn.oyzh.easyzk.filter.ZKNodeFilterTextField?>
-<FlexHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
-    <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
-        <FlexHBox realHeight="30" flexWidth="100%">
+<FXHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+        fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
+    <FXVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
+        <FXHBox realHeight="30" flexWidth="100%">
             <ZKNodeFilterTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeFilterTypeComboBox>
-            <ZKNodeFilterTextField tipText="CTRL/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
+            <ZKNodeFilterTextField tipText="CTRL/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter"
+                                   onSearch="#doFilter" fx:id="filterKW" realHeight="24"
                                    flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeFilterTextField>
-        </FlexHBox>
+        </FXHBox>
         <ZKNodeTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
         </ZKNodeTreeView>
-        <FlexHBox flexWidth="100%" flexHeight="30">
-<!--            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch" appendTipText="(CTRL/COMMAND+F)">-->
-<!--                <HBox.margin>-->
-<!--                    <Insets left="5" top="5"/>-->
-<!--                </HBox.margin>-->
-<!--            </SearchSVGGlyph>-->
+        <FXHBox flexWidth="100%" flexHeight="30">
+            <!--            <SearchSVGGlyph size="16" onMousePrimaryClicked="#doSearch" appendTipText="(CTRL/COMMAND+F)">-->
+            <!--                <HBox.margin>-->
+            <!--                    <Insets left="5" top="5"/>-->
+            <!--                </HBox.margin>-->
+            <!--            </SearchSVGGlyph>-->
             <AddSVGGlyph size="16" onMousePrimaryClicked="#addNode">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -57,6 +58,12 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </DeleteSVGGlyph>
+            <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
+                             onMousePrimaryClicked="#showHistory">
+                <HBox.margin>
+                    <Insets left="5" top="5"/>
+                </HBox.margin>
+            </HistorySVGGlyph>
             <CollectSVGPane fx:id="collectPane" size="16" onMousePrimaryClicked="#collectNode">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -77,23 +84,23 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </PositioningSVGGlyph>
-        </FlexHBox>
-    </FlexVBox>
-    <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
-                 flexHeight="100%"
-                 rotateGraphic="true" disable="true">
+        </FXHBox>
+    </FXVBox>
+    <FXTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
+               flexHeight="100%"
+               rotateGraphic="true" disable="true">
         <FXTab text="%base.data" fx:id="dataTab">
             <graphic>
                 <SVGGlyph cursorType="DEFAULT" url="/font/file-text.svg" size="13"/>
             </graphic>
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox realHeight="30" flexWidth="100%">
+            <FXVBox flexWidth="100%" flexHeight="100%">
+                <FXHBox realHeight="30" flexWidth="100%">
                     <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </RichDataTypeComboBox>
-                    <SaveSVGGlyph size="16" tipText="%base.saveTip1"
+                    <SaveSVGGlyph fx:id="dataSave" disable="true" size="16" tipText="%base.saveTip1"
                                   onMousePrimaryClicked="#saveNodeData" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
@@ -122,8 +129,7 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </ClearSVGGlyph>
-                    <QRCodeSVGGlyph size="16"
-                                    onMousePrimaryClicked="#node2QRCode" groupId="dataToBig">
+                    <QRCodeSVGGlyph size="16" onMousePrimaryClicked="#node2QRCode" groupId="dataToBig">
                         <HBox.margin>
                             <Insets left="5" top="7"/>
                         </HBox.margin>
@@ -160,16 +166,10 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </ClearableTextField>
-                </FlexHBox>
-                <ZKDataTextArea fontSize="12" fx:id="nodeData" flexHeight="100% - 60"
-                                flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" groupId="dataToBig"/>
-                <FlexHBox flexWidth="100%" flexHeight="30">
-                    <HistorySVGGlyph tipText="%zk.node.main.dataHisTip1" size="16"
-                                     onMousePrimaryClicked="#showHistory">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </HistorySVGGlyph>
+                </FXHBox>
+                <ZKDataTextAreaPane fontSize="12" fx:id="nodeData" flexHeight="100% - 60"
+                                    flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed" groupId="dataToBig"/>
+                <FXHBox flexWidth="100%" flexHeight="30">
                     <CharsetComboBox prefHeight="22" initDefault="true" fx:id="charset" fontSize="11" prefWidth="120"
                                      style="-fx-padding: 0;">
                         <HBox.margin>
@@ -189,16 +189,16 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FXText>
-                </FlexHBox>
-            </FlexVBox>
+                </FXHBox>
+            </FXVBox>
         </FXTab>
         <FXTab text="%base.stat" fx:id="statTab">
             <graphic>
                 <SVGGlyph cursorType="DEFAULT" url="/font/status.svg" size="13"/>
             </graphic>
-            <FlexVBox flexWidth="100%" flexHeight="100%" fx:id="statBox">
-                <FlexHBox realHeight="30" flexWidth="100%">
-                    <FXToggleSwitch maxHeight="20" fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"
+            <FXVBox flexWidth="100%" flexHeight="100%" fx:id="statBox">
+                <FXHBox realHeight="30" flexWidth="100%">
+                    <FXToggleSwitch realHeight="16" fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"
                                     selectedText="%zk.node.main.toggle.friendly"
                                     selected="true">
                         <HBox.margin>
@@ -215,7 +215,7 @@
                             <Insets left="5" top="7"/>
                         </HBox.margin>
                     </RefreshSVGGlyph>
-                </FlexHBox>
+                </FXHBox>
                 <fx:include source="zkNodeStatItem.fxml"/>
                 <fx:include source="zkNodeStatItem.fxml"/>
                 <fx:include source="zkNodeStatItem.fxml"/>
@@ -227,15 +227,15 @@
                 <fx:include source="zkNodeStatItem.fxml"/>
                 <fx:include source="zkNodeStatItem.fxml"/>
                 <fx:include source="zkNodeStatItem.fxml"/>
-            </FlexVBox>
+            </FXVBox>
         </FXTab>
         <FXTab text="%base.acl" fx:id="aclTab">
             <graphic>
                 <AccessControlSVGGlyph cursorType="DEFAULT" size="13"/>
             </graphic>
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox realHeight="30" flexWidth="100%">
-                    <FXToggleSwitch maxHeight="20" fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"
+            <FXVBox flexWidth="100%" flexHeight="100%">
+                <FXHBox realHeight="30" flexWidth="100%">
+                    <FXToggleSwitch realHeight="16" fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"
                                     selectedText="%zk.node.main.toggle.friendly"
                                     selected="true">
                         <HBox.margin>
@@ -273,25 +273,25 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </PageBox>
-                </FlexHBox>
-                <ZKACLTableView fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 30">
+                </FXHBox>
+                <ZKACLTableView copyCellDataOnDoubleClicked="true" fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 30">
                     <columns>
-                        <FlexTableColumn flexWidth="40%" text="%base.identify" sortable="false" valueName="idControl"/>
-                        <FlexTableColumn flexWidth="36%" text="%base.perms" sortable="false" valueName="permsControl"/>
-                        <FlexTableColumn flexWidth="12%" text="%base.schema" sortable="false"
-                                         valueName="schemaControl"/>
-                        <FlexTableColumn flexWidth="12% - 12" text="%base.status"
-                                         sortable="false" valueName="statusControl"/>
+                        <FXTableColumn flexWidth="40%" text="%base.identify" sortable="false" valueName="idControl"/>
+                        <FXTableColumn flexWidth="36%" text="%base.perms" sortable="false" valueName="permsControl"/>
+                        <FXTableColumn flexWidth="12%" text="%base.schema" sortable="false"
+                                       valueName="schemaControl"/>
+                        <FXTableColumn flexWidth="12% - 12" text="%base.status"
+                                       sortable="false" valueName="statusControl"/>
                     </columns>
                 </ZKACLTableView>
-            </FlexVBox>
+            </FXVBox>
         </FXTab>
         <FXTab text="%base.quota" fx:id="quotaTab">
             <graphic>
                 <SVGGlyph cursorType="DEFAULT" url="/font/quota.svg" size="13"/>
             </graphic>
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox realHeight="30" flexWidth="100%">
+            <FXVBox flexWidth="100%" flexHeight="100%">
+                <FXHBox realHeight="30" flexWidth="100%">
                     <SaveSVGGlyph size="16" onMousePrimaryClicked="#saveQuota">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
@@ -302,16 +302,16 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </RefreshSVGGlyph>
-                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyACL">
+                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyQuota">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </CopySVGGlyph>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="30">
+                </FXHBox>
+                <FXHBox flexWidth="100%" realHeight="30">
                     <SuccessLabel realWidth="135" text="%base.childNumber" maxHeight="30">
                         <HBox.margin>
-                            <Insets top="5" left="5"/>
+                            <Insets top="10" left="5"/>
                         </HBox.margin>
                     </SuccessLabel>
                     <NumberTextField fx:id="quotaCount" realHeight="30" flexWidth="100% - 270" min="-1" value="-1"
@@ -325,14 +325,14 @@
                             <Insets top="5" left="5"/>
                         </HBox.margin>
                     </ClearButton>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="30">
-                    <FlexVBox.margin>
+                </FXHBox>
+                <FXHBox flexWidth="100%" realHeight="30">
+                    <FXVBox.margin>
                         <Insets top="5"/>
-                    </FlexVBox.margin>
+                    </FXVBox.margin>
                     <SuccessLabel realWidth="135" text="%base.size" maxHeight="30">
                         <HBox.margin>
-                            <Insets top="5" left="5"/>
+                            <Insets top="10" left="5"/>
                         </HBox.margin>
                     </SuccessLabel>
                     <NumberTextField fx:id="quotaBytes" realHeight="30" flexWidth="100% - 270" min="-1"
@@ -347,8 +347,8 @@
                             <Insets top="5" left="5"/>
                         </HBox.margin>
                     </ClearButton>
-                </FlexHBox>
-            </FlexVBox>
+                </FXHBox>
+            </FXVBox>
         </FXTab>
-    </FlexTabPane>
-</FlexHBox>
+    </FXTabPane>
+</FXHBox>

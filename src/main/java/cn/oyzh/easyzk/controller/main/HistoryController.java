@@ -13,7 +13,7 @@ import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.TabClosedEvent;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.i18n.I18nHelper;
@@ -50,7 +50,7 @@ public class HistoryController extends SubStageController implements Initializab
      * 数据列表
      */
     @FXML
-    private FlexTableView<ZKDataHistory> listTable;
+    private FXTableView<ZKDataHistory> listTable;
 
     /**
      * zk树节点
@@ -75,6 +75,7 @@ public class HistoryController extends SubStageController implements Initializab
     private void onTabClosed(TabClosedEvent event) {
         ZKNodeTreeItem item = this.item();
         if (item == null) {
+            this.root.disable();
             return;
         }
         if (event.data() instanceof ZKNodeTab tab1 && tab1.zkConnect() == item.zkConnect()) {

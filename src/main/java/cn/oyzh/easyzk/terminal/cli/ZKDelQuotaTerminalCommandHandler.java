@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.terminal.cli;
 
 import cn.oyzh.easyzk.exception.ReadonlyOperationException;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextArea;
+import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -38,14 +38,14 @@ public class ZKDelQuotaTerminalCommandHandler extends ZKCliTerminalCommandHandle
     }
 
     @Override
-    public String commandHelp(ZKTerminalTextArea terminal) {
+    public String commandHelp(ZKTerminalTextAreaPane terminal) {
         return super.commandHelp(terminal)  + "\n" +
                 "-n num quota\n" +
                 "-b bytes quota";
     }
 
     @Override
-    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextArea terminal) {
+    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextAreaPane terminal) {
         if (terminal.client().isReadonly()) {
             return TerminalExecuteResult.fail(new ReadonlyOperationException());
         }

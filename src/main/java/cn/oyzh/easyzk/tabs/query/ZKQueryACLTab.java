@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 import org.apache.zookeeper.data.ACL;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryACLTab extends DynamicTab {
+public class ZKQueryACLTab extends RichTab {
 
     public ZKQueryACLTab(List<ACL> aclList) {
         super();

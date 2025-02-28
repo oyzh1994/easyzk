@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
        fx:controller="cn.oyzh.easyzk.tabs.server.ZKEnviTabController" text="Envi">
-    <FlexVBox flexWidth="100%" flexHeight="100%">
-        <FlexHBox realHeight="30" flexWidth="100% - 28">
+    <FXVBox flexWidth="100%" flexHeight="100%">
+        <FXHBox realHeight="30" flexWidth="100% - 28">
             <RefreshSVGGlyph onMousePrimaryClicked="#refreshEnvi">
                 <HBox.margin>
                     <Insets left="12" top="10"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
-        </FlexHBox>
-        <FlexTableView flexWidth="100% - 28" fx:id="enviTable" flexHeight="100% - 30">
+        </FXHBox>
+        <FXTableView flexWidth="100% - 28" fx:id="enviTable" flexHeight="100% - 30">
             <VBox.margin>
                 <Insets left="12" top="5"/>
             </VBox.margin>
             <columns>
-                <FlexTableColumn flexWidth="35%" valueName="name" text="%base.name"/>
-                <FlexTableColumn flexWidth="65% - 12" valueName="value" text="%base.value"/>
+                <FXTableColumn flexWidth="35%" valueName="name" text="%base.name"/>
+                <FXTableColumn flexWidth="65% - 12" valueName="value" text="%base.value"/>
             </columns>
-        </FlexTableView>
-    </FlexVBox>
+        </FXTableView>
+    </FXVBox>
 </FXTab>

@@ -3,8 +3,10 @@ package cn.oyzh.easyzk.handler;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.file.FileColumns;
 import cn.oyzh.store.file.FileHelper;
@@ -18,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -56,6 +59,11 @@ public class ZKDataExportHandler extends DataHandler {
     private int batchSize = 10;
 
     /**
+     * 包含acl
+     */
+    private boolean includeACL;
+
+    /**
      * 导出配置
      */
     private FileWriteConfig config = new FileWriteConfig();
@@ -70,6 +78,9 @@ public class ZKDataExportHandler extends DataHandler {
         FileColumns columns = new FileColumns();
         columns.addColumn("path", I18nHelper.path());
         columns.addColumn("data", I18nHelper.data());
+        if (this.includeACL) {
+            columns.addColumn("acl", I18nHelper.acl());
+        }
         // 获取写入器
         TypeFileWriter writer = FileHelper.initWriter(this.fileType, this.config, columns);
         if (writer != null) {
@@ -103,7 +114,7 @@ public class ZKDataExportHandler extends DataHandler {
                 };
 
                 // 获取节点成功
-                BiConsumer<String, byte[]> success = (path, bytes) -> {
+                Consumer<ZKNode> success = (node) -> {
                     try {
                         this.checkInterrupt();
                     } catch (InterruptedException e) {
@@ -111,8 +122,11 @@ public class ZKDataExportHandler extends DataHandler {
                     }
                     // 记录
                     FileRecord record = new FileRecord();
-                    record.put(0, path);
-                    record.put(1, new String(bytes, StandardCharsets.UTF_8));
+                    record.put(0, node.nodePath());
+                    record.put(1, new String(node.getNodeData(), StandardCharsets.UTF_8));
+                    if (this.includeACL) {
+                        record.put(2, ZKACLUtil.toAclStr(node.acl()));
+                    }
                     // 添加到集合
                     batchList.add(record);
 
@@ -136,7 +150,7 @@ public class ZKDataExportHandler extends DataHandler {
                     this.processedDecr();
                 };
                 // 递归获取节点
-                ZKNodeUtil.loopNode(this.client, this.nodePath, filter, success, error);
+                ZKNodeUtil.loopNode(this.client, this.nodePath, filter, success, error, this.includeACL);
             } finally {
                 // 写入尾
                 writeBatch.run();

@@ -26,8 +26,8 @@ public class ZKServerInfoTreeItem extends RichTreeItem<ZKServerInfoTreeItemValue
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem openServer = MenuItemHelper.openServer("12", this::loadChild);
-        items.add(openServer);
+        FXMenuItem openInfo = MenuItemHelper.openInfo("12", this::loadChild);
+        items.add(openInfo);
         return items;
     }
 

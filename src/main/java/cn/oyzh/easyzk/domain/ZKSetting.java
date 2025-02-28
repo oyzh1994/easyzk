@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.domain;
 
-import cn.oyzh.fx.plus.domain.Setting;
+import cn.oyzh.fx.plus.domain.AppSetting;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table("t_setting")
 @EqualsAndHashCode(callSuper = true)
-public class ZKSetting extends Setting {
+public class ZKSetting extends AppSetting {
 
     /**
      * 节点加载

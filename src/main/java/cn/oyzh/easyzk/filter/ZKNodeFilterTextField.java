@@ -85,6 +85,9 @@ public class ZKNodeFilterTextField extends LimitTextField {
         if (filterParam.isSearchData()) {
             return 1;
         }
-        return 0;
+        if (filterParam.isSearchPath()) {
+            return 0;
+        }
+        return -1;
     }
 }

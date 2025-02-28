@@ -1,9 +1,11 @@
 package cn.oyzh.easyzk.query;
 
+import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.ClientInfo;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.List;
@@ -43,11 +45,23 @@ public class ZKQueryResult {
     private boolean success;
 
     public String costSeconds() {
-        return String.format("%.2f" + I18nHelper.seconds(), this.cost / 1000.0);
+        return String.format("%.2f " + I18nHelper.seconds(), this.cost / 1000.0);
     }
 
     public byte[] asData() {
         return (byte[]) this.result;
+    }
+
+    public Integer asCount() {
+        return (Integer) this.result;
+    }
+
+    public List<ClientInfo> asClientInfo() {
+        return (List<ClientInfo>) this.result;
+    }
+
+    public List<ZKEnvNode> asEnvInfo() {
+        return (List<ZKEnvNode>) this.result;
     }
 
     public StatsTrack asQuota() {

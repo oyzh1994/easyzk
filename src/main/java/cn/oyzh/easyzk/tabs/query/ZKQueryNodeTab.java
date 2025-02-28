@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/20
  */
-public class ZKQueryNodeTab extends DynamicTab {
+public class ZKQueryNodeTab extends RichTab {
 
     public ZKQueryNodeTab(String path, List<String> nodes) {
         super();

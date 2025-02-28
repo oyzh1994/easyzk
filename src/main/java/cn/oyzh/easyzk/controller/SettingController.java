@@ -8,7 +8,7 @@
 // import cn.oyzh.fx.gui.text.field.NumberTextField;
 // import cn.oyzh.fx.plus.FXConst;
 // import cn.oyzh.fx.plus.controller.StageController;
-// import cn.oyzh.fx.plus.controls.box.FlexHBox;
+// import cn.oyzh.fx.plus.controls.box.FXHBox;
 // import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 // import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
 // import cn.oyzh.fx.plus.controls.text.FlexSlider;
@@ -152,19 +152,19 @@
 //      * 背景色
 //      */
 //     @FXML
-//     private FlexHBox bgColorBox;
+//     private FXHBox bgColorBox;
 //
 //     /**
 //      * 前景色
 //      */
 //     @FXML
-//     private FlexHBox fgColorBox;
+//     private FXHBox fgColorBox;
 //
 //     /**
 //      * 强调色
 //      */
 //     @FXML
-//     private FlexHBox accentColorBox;
+//     private FXHBox accentColorBox;
 //
 //     /**
 //      * 字体大小

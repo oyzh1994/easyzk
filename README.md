@@ -64,11 +64,28 @@ exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示
 ###### 注意事项
 dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 
+###### linux(以uos为例，debian系列通用)
+###### deb打包依赖
+sudo apt install fakeroot
+###### (推荐)deb打包
+配置 -> package -> linux -> linux_deb.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_linux_deb
+###### app-image打包
+配置 -> package -> linux -> linux_image.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_linux_image
+
 # Docker
 ###### docker启动zk(单个)
 docker run -itd -p 2181:2181 zookeeper
 ###### docker启动zk(集群)
 docker-compose -f .\zk-cluster-compose.yml up -d
+
+# Linux系统
+###### 执行deb安装提示安装失败
+如果错误详情发现这个错误
+xdg-desktop-menu: No writable system menu directory found.  
+执行以下操作，然后重新执行安装  
+sudo mkdir /usr/share/desktop-directories/  
 
 # Macos系统
 ###### mac执行dmg安装后，启动台不显示程序图标解决方案

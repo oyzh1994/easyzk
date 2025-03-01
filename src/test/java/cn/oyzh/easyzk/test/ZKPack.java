@@ -108,6 +108,19 @@ public class ZKPack {
 //        packer.registerProjectHandler();
 //        packer.pack(linux_pack_config, properties);
 //    }
+    
+        @Test
+    public void easyzk_linux_deb() throws Exception {
+        String packagePath = this.getPackagePath();
+        String linux_pack_config = packagePath + "/linux/linux_deb.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
+
+        Packer packer = new Packer();
+        packer.registerProjectHandler();
+        packer.pack(linux_pack_config, properties);
+    }
 
 //    @Test
 //    public void easyzk_macos_amd64_pack() throws Exception {

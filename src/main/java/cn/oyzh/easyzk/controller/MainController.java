@@ -88,7 +88,10 @@ public class MainController extends ParentStageController {
                 JulLog.info("show tray.");
                 TrayManager.show();
             } else {
-                JulLog.error("tray not support!");
+//                JulLog.error("tray not support!");
+                event.consume();
+                JulLog.error("tray not support, iconified window");
+                this.stage.setIconified(true);
                 // MessageBox.warn(I18nHelper.trayNotSupport());
             }
         }

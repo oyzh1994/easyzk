@@ -36,31 +36,31 @@ https://anyconv.com/png-to-icns-converter/
 ###### png转ico
 https://www.freeconvert.com/zh/png-to-ico
 
-###### windows x64
+###### windows
 ###### exe、msi打包依赖
 https://github.com/wixtoolset/wix3/releases  
 ###### (推荐)exe打包 
-配置 -> package -> win -> win_amd64_pack_config.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_amd64_exe  
+配置 -> package -> win -> win_pack_config.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_exe  
 ###### msi打包 
-配置 -> package -> win -> win_amd64_msi.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_amd64_msi  
+配置 -> package -> win -> win_msi.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_msi  
 ###### app-image打包
-配置 -> package -> win -> win_amd64_image.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_amd64_image  
+配置 -> package -> win -> win_image.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_image  
 ###### 注意事项
 exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示程序图标的问题
 
-###### macos arm64
+###### macos
 ###### (推荐)pkg打包
-配置 -> package -> macos -> macos_arm64_pkg.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_pkg
+配置 -> package -> macos -> macos_pkg.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_pkg
 ###### dmg打包 
-配置 -> package -> macos -> macos_arm64_dmg.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_dmg  
+配置 -> package -> macos -> macos_dmg.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_dmg  
 ###### app-image打包
-配置 -> package -> macos -> macos_arm64_image.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_image  
+配置 -> package -> macos -> macos_image.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_image  
 ###### 注意事项
 dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 

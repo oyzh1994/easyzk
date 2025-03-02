@@ -42,9 +42,9 @@ public class ZKPack {
 //    }
 
     @Test
-    public void easyzk_win_amd64_exe() throws Exception {
+    public void easyzk_win_exe() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_amd64_exe.json";
+        String win_pack_config = packagePath + "/win/win_exe.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -56,9 +56,9 @@ public class ZKPack {
     }
 
     @Test
-    public void easyzk_win_amd64_msi() throws Exception {
+    public void easyzk_win_msi() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_amd64_msi.json";
+        String win_pack_config = packagePath + "/win/win_msi.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -70,9 +70,9 @@ public class ZKPack {
     }
 
     @Test
-    public void easyzk_win_amd64_image() throws Exception {
+    public void easyzk_win_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_amd64_image.json";
+        String win_pack_config = packagePath + "/win/win_image.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -97,9 +97,9 @@ public class ZKPack {
 //    }
 //
     @Test
-    public void easyzk_linux_image() throws Exception {
+    public void easyzk_linux_deb() throws Exception {
         String packagePath = this.getPackagePath();
-        String linux_pack_config = packagePath + "/linux/linux_image.json";
+        String linux_pack_config = packagePath + "/linux/linux_deb.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -110,9 +110,9 @@ public class ZKPack {
     }
 
     @Test
-    public void easyzk_linux_deb() throws Exception {
+    public void easyzk_linux_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String linux_pack_config = packagePath + "/linux/linux_deb.json";
+        String linux_pack_config = packagePath + "/linux/linux_image.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -150,9 +150,9 @@ public class ZKPack {
 //    }
 
     @Test
-    public void easyzk_macos_arm64_dmg() throws Exception {
+    public void easyzk_macos_dmg() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_pack_config = packagePath + "/macos/macos_arm64_dmg.json";
+        String macos_pack_config = packagePath + "/macos/macos_dmg.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -163,9 +163,9 @@ public class ZKPack {
     }
 
     @Test
-    public void easyzk_macos_arm64_pkg() throws Exception {
+    public void easyzk_macos_pkg() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_pack_config = packagePath + "/macos/macos_arm64_pkg.json";
+        String macos_pack_config = packagePath + "/macos/macos_pkg.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -176,9 +176,9 @@ public class ZKPack {
     }
 
     @Test
-    public void easyzk_macos_arm64_image() throws Exception {
+    public void easyzk_macos_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_pack_config = packagePath + "/macos/macos_arm64_image.json";
+        String macos_pack_config = packagePath + "/macos/macos_image.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);

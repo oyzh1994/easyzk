@@ -1,6 +1,6 @@
 {
 	"packMode": "jpackage",
-	"platform": "linux_arm64",
+	"platform": "linux",
 	"dest": "/home/oyzh/Documents/Package/EasyZK/${appVersion}/",
 	"appIcon": "${projectPath}/resource/zoo.png",
 	"mainJar": "${projectPath}/target/easyzk-${appVersion}.jar",

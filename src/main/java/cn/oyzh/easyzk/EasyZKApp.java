@@ -267,7 +267,6 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void transportData(ZKShowTransportDataEvent event) {
         FXUtil.runLater(() -> {
             try {
-
                 StageAdapter adapter = StageManager.parseStage(ZKTransportDataController.class);
                 adapter.setProp("sourceInfo", event.data());
                 adapter.display();
@@ -285,7 +284,6 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void exportData(ZKShowExportDataEvent event) {
         FXUtil.runLater(() -> {
             try {
-
                 StageAdapter adapter = StageManager.parseStage(ZKExportDataController.class);
                 adapter.setProp("connect", event.data());
                 adapter.setProp("nodePath", event.path());
@@ -304,7 +302,6 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void importData(ZKShowImportDataEvent event) {
         FXUtil.runLater(() -> {
             try {
-
                 StageAdapter adapter = StageManager.parseStage(ZKImportDataController.class);
                 adapter.setProp("connect", event.data());
                 adapter.display();

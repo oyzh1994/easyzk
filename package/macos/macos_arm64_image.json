@@ -5,12 +5,6 @@
 	"appIcon": "${projectPath}/resource/zoo.icns",
 	"mainJar": "${projectPath}/target/easyzk-${appVersion}.jar",
 	"jdkPath": "$SYSTEM",
-	"packr": {
-		"verbose": true,
-		"bundleIdentifier": "cn.oyzh.EasyZK",
-		"mainClass": "org.springframework.boot.loader.JarLauncher",
-		"classpath": []
-	},
 	"jpackage": {
 		"verbose": true,
 		"vendor": "oyzh",
@@ -122,10 +116,7 @@
 			"data.zip",
 			"git.properties",
 			"native-image.properties",
-			"spring-boot-jarmode-layertools-.*.jar",
-			"javafx-graphics.*-win.jar",
-			"javafx-graphics.*-mac.jar",
-			"javafx-graphics.*-linux.*.jar"
+			"spring-boot-jarmode-layertools-.*.jar"
 		]
 	}
 }

@@ -1,16 +1,18 @@
 {
 	"packMode": "jpackage",
-	"platform": "macos_arm64",
-	"dest": "/Volumes/Files/Package/EasyZK/${appVersion}/",
-	"appIcon": "${projectPath}/resource/zoo.icns",
+	"platform": "linux_arm64",
+	"dest": "/home/oyzh/Documents/Package/EasyZK/${appVersion}/",
+	"appIcon": "${projectPath}/resource/zoo.png",
 	"mainJar": "${projectPath}/target/easyzk-${appVersion}.jar",
 	"jdkPath": "$SYSTEM",
 	"jpackage": {
 		"verbose": true,
 		"vendor": "oyzh",
-		"type": "dmg",
-		"mac-package-identifier": "cn.oyzh.easyzk",
+		"type": "app-image",
 		"description": "这是一个Zookeeper管理工具，提供导入、导出、传输、终端、可视化操作等功能."
+	},
+	"compress": {
+		"type": "zip"
 	},
 	"jdeps": {
 		"multi-release": 23,
@@ -26,22 +28,10 @@
 		"exclude-files": [
 			"**.md",
 			"**LICENSE",
-			"**jvm.lib",
-			"**jawt.lib",
-			"**jawt.dll",
 			"**COPYRIGHT",
-			"**prefs.dll",
-			"**j2gss.dll",
 			"**classlist",
-			"**jsound.dll",
 			"**README.txt",
-			"**javajpeg.dll",
-			"**mlib_image.dll",
-			"**jrunscript.exe",
-			"**sspi_bridge.dll",
 			"**sound.properties",
-			"**splashscreen.dll",
-			"**w2k_lsa_auth.dll",
 			"**ASSEMBLY_EXCEPTION",
 			"**ADDITIONAL_LICENSE_INFO"
 		],
@@ -111,7 +101,7 @@
 			".*.processors",
 			".*.kotlin_module",
 			".*.dll",
-			".*.so",
+			".*.dylib",
 			"data.zip",
 			"git.properties",
 			"native-image.properties",

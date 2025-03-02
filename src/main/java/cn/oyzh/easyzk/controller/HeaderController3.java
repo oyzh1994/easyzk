@@ -109,7 +109,7 @@ public class HeaderController3 extends StageController {
     @Override
     public void onWindowShowing(WindowEvent event) {
         super.onWindowShowing(event);
-        if (OSUtil.isWindows()) {
+        if (OSUtil.isWindows() || OSUtil.isLinux()) {
             this.splitPane.setFlexHeight("100% - 280");
         }
     }

@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.util.TableViewUtil;
+import cn.oyzh.fx.plus.tableview.TableViewUtil;
 import lombok.NonNull;
 
 import java.util.ArrayList;

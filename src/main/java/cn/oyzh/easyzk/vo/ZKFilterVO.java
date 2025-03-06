@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
-import cn.oyzh.fx.plus.util.TableViewUtil;
+import cn.oyzh.fx.plus.tableview.TableViewUtil;
 import lombok.NonNull;
 
 import java.util.ArrayList;

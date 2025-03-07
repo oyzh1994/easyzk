@@ -41,6 +41,7 @@ import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.file.FXChooser;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
@@ -652,7 +653,7 @@ public class ZKNodeTabController extends RichTabController {
     @FXML
     private void saveBinaryFile() {
         try {
-            File file = FileChooserHelper.save(I18nHelper.saveFile(), "", FileChooserHelper.allExtensionFilter());
+            File file = FileChooserHelper.save(I18nHelper.saveFile(), "", FXChooser.allExtensionFilter());
             if (file != null) {
                 FileUtil.writeBytes(this.activeItem.getNodeData(), file);
                 MessageBox.info(I18nHelper.operationSuccess());

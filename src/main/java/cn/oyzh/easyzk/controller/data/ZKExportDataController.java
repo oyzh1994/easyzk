@@ -20,6 +20,7 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.file.FXChooser;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -418,7 +419,7 @@ public class ZKExportDataController extends StageController {
     @FXML
     private void selectFile() {
         String fileType = this.format.selectedUserData();
-        FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
+        FileExtensionFilter filter = FXChooser.extensionFilter(fileType);
         String fileName = "Zookeeper-" + this.connect.getName() + "-" + I18nHelper.exportData() + "." + fileType;
         this.exportFile = FileChooserHelper.save(fileName, fileName, filter);
         if (this.exportFile != null) {

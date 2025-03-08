@@ -118,7 +118,7 @@ public class ZKEventUtil {
      *
      * @param client zk客户端
      */
-    public static void connectionSucceed(ZKClient client) {
+    public static void connectionConnected(ZKClient client) {
         ZKConnectionConnectedEvent event = new ZKConnectionConnectedEvent();
         event.data(client);
         EventUtil.post(event);

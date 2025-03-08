@@ -199,7 +199,7 @@ public class ZKClient {
                         }
                         this.closeQuietly = false;
                     }
-                    case CONNECTED -> ZKEventUtil.connectionSucceed(this);
+                    case CONNECTED -> ZKEventUtil.connectionConnected(this);
                 }
             }
         });

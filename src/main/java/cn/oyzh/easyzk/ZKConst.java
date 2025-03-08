@@ -34,7 +34,12 @@ public class ZKConst {
     public final static String ICON_PATH = "/image/zoo_no_bg.png";
 
     /**
-     * 托盘icon地址
+     * 托盘图标，windows专用
      */
-    public final static String TRAY_ICON_PATH = "/image/zoo_24.png";
+    public final static String ICON_24_PATH = "/image/zoo_24.png";
+
+    /**
+     * 任务栏图标，windows专用
+     */
+    public final static String ICON_32_PATH = "/image/zoo_32.png";
 }

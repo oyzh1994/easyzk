@@ -93,7 +93,11 @@ public class EasyZKApp extends FXApplication implements EventListener {
             // 注册sasl处理器
             ZKSASLUtil.registerConfiguration();
             SysConst.cacheDir(ZKConst.CACHE_PATH);
-            FXConst.appIcon(ZKConst.ICON_PATH);
+            if (OSUtil.isWindows()) {
+                FXConst.appIcon(ZKConst.ICON_32_PATH);
+            } else {
+                FXConst.appIcon(ZKConst.ICON_PATH);
+            }
             // 事件总线
             EventFactory.registerEventBus(FxEventBus.class);
             EventFactory.syncEventConfig(FxEventConfig.SYNC);
@@ -187,7 +191,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             }
             // 初始化
             if (OSUtil.isWindows()) {
-                TrayManager.init(ZKConst.TRAY_ICON_PATH);
+                TrayManager.init(ZKConst.ICON_24_PATH);
             } else {
                 TrayManager.init(ZKConst.ICON_PATH);
             }

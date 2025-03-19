@@ -155,12 +155,12 @@
             <artifactId>jsch</artifactId>
         </dependency>
 
-        <!--  lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!--        &lt;!&ndash;  lombok&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
 
         <!-- fx打包 -->
         <dependency>
@@ -213,10 +213,10 @@
                     <mainClass>cn.oyzh.easyzk.EasyZKBootstrap</mainClass>
                     <!-- <layout>jar</layout> -->
                     <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
+<!--                        <exclude>-->
+<!--                            <groupId>org.projectlombok</groupId>-->
+<!--                            <artifactId>lombok</artifactId>-->
+<!--                        </exclude>-->
                         <exclude>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-jarmode-layertools</artifactId>

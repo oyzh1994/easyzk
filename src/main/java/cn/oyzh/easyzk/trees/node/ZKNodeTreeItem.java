@@ -25,8 +25,6 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.StatsTrack;
@@ -46,9 +44,15 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
     /**
      * zk节点
      */
-    @Getter
-    @Accessors(fluent = true, chain = true)
     protected ZKNode value;
+
+    public ZKNode value() {
+        return value;
+    }
+
+    public void value(ZKNode value) {
+        this.value = value;
+    }
 
     /**
      * 设置节点变更
@@ -248,7 +252,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
         return this.value.hasUnsavedData();
     }
 
-    public ZKNodeTreeItem( ZKNode value, ZKNodeTreeView treeView) {
+    public ZKNodeTreeItem(ZKNode value, ZKNodeTreeView treeView) {
         super(treeView);
         this.value = value;
         this.setFilterable(true);

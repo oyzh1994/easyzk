@@ -159,7 +159,7 @@ public class ZKACLUtil {
      * @param acl 权限内容
      * @return 权限列表
      */
-    public List<ACL> parseAcl(String acl) {
+    public static List<ACL> parseAcl(String acl) {
         if (acl == null || acl.isEmpty()) {
             return ZooDefs.Ids.OPEN_ACL_UNSAFE;
         }

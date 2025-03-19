@@ -2,8 +2,6 @@ package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -15,37 +13,71 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/2/20
  */
-@Getter
 public class ZKNodeExport {
 
     /**
      * 脚本前缀，txt格式专用
      */
-    @Setter
     private String prefix;
 
     /**
      * 导出程序版本号
      */
-    @Setter
     private String version;
 
     /**
      * 平台
      */
-    @Setter
     private String platform;
 
     /**
      * 字符集
      */
-    @Setter
     private String charset;
+
+    public List<Map<String, String>> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Map<String, String>> nodes) {
+        this.nodes = nodes;
+    }
+
+    public String getCharset() {
+        return charset;
+    }
+
+    public void setCharset(String charset) {
+        this.charset = charset;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
     /**
      * 导出节点数据
      */
-    @Setter
     private List<Map<String, String>> nodes;
 
     /**

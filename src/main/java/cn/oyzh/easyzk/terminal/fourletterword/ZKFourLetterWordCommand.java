@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.terminal.fourletterword;
 
-import lombok.Getter;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.client.FourLetterWordMain;
 import org.apache.zookeeper.common.X509Exception;
@@ -13,11 +12,17 @@ import java.io.IOException;
  */
 public abstract class ZKFourLetterWordCommand {
 
-    @Getter
     private final String cmd;
 
-    @Getter
     private final String alias;
+
+    public String getCmd() {
+        return cmd;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
 
     public ZKFourLetterWordCommand(String cmd) {
         this(cmd, null);

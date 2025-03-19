@@ -67,7 +67,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
-import lombok.Getter;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.Stat;
 
@@ -107,8 +106,11 @@ public class ZKNodeTabController extends RichTabController {
      * 节点树
      */
     @FXML
-    @Getter
     private ZKNodeTreeView treeView;
+
+    public ZKNodeTreeView getTreeView() {
+        return treeView;
+    }
 
     /**
      * 过滤类型
@@ -148,14 +150,20 @@ public class ZKNodeTabController extends RichTabController {
     /**
      * zk连接节点
      */
-    @Getter
     private ZKConnectTreeItem treeItem;
 
     /**
      * 当前激活的节点
      */
-    @Getter
     private ZKNodeTreeItem activeItem;
+
+    public ZKConnectTreeItem getTreeItem() {
+        return treeItem;
+    }
+
+    public ZKNodeTreeItem getActiveItem() {
+        return activeItem;
+    }
 
     /**
      * 右侧acl分页组件
@@ -284,7 +292,7 @@ public class ZKNodeTabController extends RichTabController {
     public void init(ZKConnectTreeItem item) {
         try {
             this.treeItem = item;
-            this.client = item.client();
+            this.client = item.getClient();
             this.treeView.client(this.client);
             // 加载根节点
             this.treeView.loadRoot();
@@ -515,7 +523,7 @@ public class ZKNodeTabController extends RichTabController {
 //            ex.printStackTrace();
 //            MessageBox.exception(ex, I18nHelper.operationException());
 //        }
-        ZKEventUtil.showUpdateACL(this.activeItem, this.treeItem.client(), acl);
+        ZKEventUtil.showUpdateACL(this.activeItem, this.treeItem.getClient(), acl);
     }
 
     /**
@@ -1013,14 +1021,14 @@ public class ZKNodeTabController extends RichTabController {
         resizer.initResizeEvent();
         // 过滤
         KeyHandler searchKeyHandler = new KeyHandler();
-        searchKeyHandler.handler(e -> this.filterKW.requestFocus());
-        searchKeyHandler.keyCode(KeyCode.F);
+        searchKeyHandler.setHandler(e -> this.filterKW.requestFocus());
+        searchKeyHandler.setKeyCode(KeyCode.F);
         if (OSUtil.isMacOS()) {
-            searchKeyHandler.metaDown(true);
+            searchKeyHandler.setMetaDown(true);
         } else {
-            searchKeyHandler.controlDown(true);
+            searchKeyHandler.setControlDown(true);
         }
-        searchKeyHandler.keyType(KeyEvent.KEY_RELEASED);
+        searchKeyHandler.setKeyType(KeyEvent.KEY_RELEASED);
         KeyListener.addHandler(this.root, searchKeyHandler);
     }
 
@@ -1101,12 +1109,12 @@ public class ZKNodeTabController extends RichTabController {
         // 过滤类型
         int type = this.filterType.getSelectedIndex();
         // 设置高亮是否匹配大小写
-        this.treeView.highlightMatchCase(mode == 3 || mode == 1);
+        this.treeView.setHighlightMatchCase(mode == 3 || mode == 1);
         // 仅在过滤路径的情况下设置节点高亮
         if (scope == 2 || scope == 0) {
-            this.treeView.highlightText(kw);
+            this.treeView.setHighlightText(kw);
         } else {
-            this.treeView.highlightText(null);
+            this.treeView.setHighlightText(null);
         }
         // 仅在过滤数据的情况下设置内容高亮
         if (scope == 2 || scope == 1) {
@@ -1114,10 +1122,10 @@ public class ZKNodeTabController extends RichTabController {
         } else {
             this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
         }
-        this.treeView.itemFilter().setKw(kw);
-        this.treeView.itemFilter().setScope(scope);
-        this.treeView.itemFilter().setMatchMode(mode);
-        this.treeView.itemFilter().setType((byte) type);
+        this.treeView.getItemFilter().setKw(kw);
+        this.treeView.getItemFilter().setScope(scope);
+        this.treeView.getItemFilter().setMatchMode(mode);
+        this.treeView.getItemFilter().setType((byte) type);
         this.treeView.filter();
 
     }
@@ -1137,7 +1145,7 @@ public class ZKNodeTabController extends RichTabController {
      */
     @EventSubscribe
     public void onNodeAdded(ZKNodeAddedEvent event) {
-        if (event.zkConnect() == this.client.zkConnect()) {
+        if (event.getZkConnect() == this.client.zkConnect()) {
             this.treeView.onNodeAdded(event.data());
         }
     }
@@ -1217,7 +1225,7 @@ public class ZKNodeTabController extends RichTabController {
     @EventSubscribe
     private void authAuthed(ZKAuthAuthedEvent event) {
         try {
-            if (event.success() && event.client() == this.client) {
+            if (event.isSuccess() && event.client() == this.client) {
                 this.treeView.authChanged(event.auth());
                 this.flushTab();
             }

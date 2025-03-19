@@ -9,7 +9,6 @@ import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.titlebar.TitleBar;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
@@ -147,20 +146,20 @@ public class MainController extends ParentStageController {
         }
     }
 
-    @Override
-    public void onWindowShown(WindowEvent event) {
-        try {
-            super.onWindowShown(event);
-            TitleBar titleBar = this.stage.getTitleBar();
-            // 加载标题
-            if (titleBar != null && !titleBar.isHasContent()) {
-                titleBar.loadContent("/fxml/header2.fxml");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JulLog.warn("onStageInitialize error", ex);
-        }
-    }
+//    @Override
+//    public void onWindowShown(WindowEvent event) {
+//        try {
+//            super.onWindowShown(event);
+//            TitleBar titleBar = this.stage.getTitleBar();
+//            // 加载标题
+//            if (titleBar != null && !titleBar.isHasContent()) {
+//                titleBar.loadContent("/fxml/header2.fxml");
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            JulLog.warn("onStageInitialize error", ex);
+//        }
+//    }
 
     @Override
     public String getViewTitle() {

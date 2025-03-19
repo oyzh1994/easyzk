@@ -33,7 +33,7 @@ public abstract class ZKFourLetterWordCommandHandler<C extends TerminalCommand> 
     public C parseCommand(String line) {
         String[] args = TerminalUtil.split(line);
         TerminalCommand command = new TerminalCommand();
-        command.args(args);
+        command.setArgs(args);
         return (C) command;
     }
 

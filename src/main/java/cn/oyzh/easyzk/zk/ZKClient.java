@@ -31,9 +31,6 @@ import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.apache.curator.CuratorZookeeperClient;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.AuthInfo;
@@ -76,7 +73,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author oyzh
  * @since 2020/6/8
  */
-@Accessors(fluent = true, chain = true)
 public class ZKClient {
 
     /**
@@ -97,8 +93,11 @@ public class ZKClient {
     /**
      * zk信息
      */
-    @Getter
     private final ZKConnect zkConnect;
+
+    public ZKConnect zkConnect(){
+        return zkConnect;
+    }
 
     /**
      * 树监听对象
@@ -118,8 +117,6 @@ public class ZKClient {
     /**
      * 重试策略
      */
-    @Getter
-    @Setter
     private RetryPolicy retryPolicy;
 
     /**
@@ -231,7 +228,7 @@ public class ZKClient {
             this.closeTreeCache();
             // 创建zk树监听
             if (this.cacheListener != null) {
-                this.treeCache = ZKTreeCacheUtil.build(this.framework, this.cacheListener.path(), this.cacheSelector);
+                this.treeCache = ZKTreeCacheUtil.build(this.framework, this.cacheListener.getPath(), this.cacheSelector);
                 this.treeCache.getListenable().addListener(this.cacheListener);
                 // this.treeCache.getListenable().addListener(this.initializedListener);
                 this.treeCache.start();

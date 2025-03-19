@@ -57,7 +57,7 @@ public class ZKAuthUtil {
      * @param zkNode   zk节点
      * @return 结果 0 失败 1 成功 2 异常
      */
-    public int authNode( String user,  String password,  ZKClient client,  ZKNode zkNode) {
+    public static int authNode( String user,  String password,  ZKClient client,  ZKNode zkNode) {
         int result = 0;
         try {
             client.addAuth(user, password);

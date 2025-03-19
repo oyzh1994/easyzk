@@ -141,35 +141,34 @@ public class ZKMigrationDataController extends StageController {
         // 生成迁移处理器
         if (this.migrationHandler == null) {
             this.migrationHandler = new ZKDataMigrationHandler();
-            this.migrationHandler
-                    .messageHandler(str -> this.migrationMsg.appendLine(str))
-                    .processedHandler(count -> {
-                        if (count == 0) {
-                            this.counter.updateIgnore();
-                        } else if (count < 0) {
-                            this.counter.incrFail(count);
-                        } else {
-                            this.counter.incrSuccess(count);
-                        }
-                        this.updateStatus(I18nHelper.migrationInProgress());
-                    });
+            this.migrationHandler.setMessageHandler(str -> this.migrationMsg.appendLine(str));
+            this.migrationHandler.setProcessedHandler(count -> {
+                if (count == 0) {
+                    this.counter.updateIgnore();
+                } else if (count < 0) {
+                    this.counter.incrFail(count);
+                } else {
+                    this.counter.incrSuccess(count);
+                }
+                this.updateStatus(I18nHelper.migrationInProgress());
+            });
         } else {
             this.migrationHandler.interrupt(false);
         }
         // 分组
-        this.migrationHandler.groups(this.groups.isSelected());
+        this.migrationHandler.setGroups(this.groups.isSelected());
         // 过滤
-        this.migrationHandler.filters(this.filters.isSelected());
+        this.migrationHandler.setFilters(this.filters.isSelected());
         // 认证信息
-        this.migrationHandler.authInfos(this.authInfos.isSelected());
+        this.migrationHandler.setAuthInfos(this.authInfos.isSelected());
         // 连接
-        this.migrationHandler.connections(this.connections.isSelected());
+        this.migrationHandler.setConnections(this.connections.isSelected());
         // 终端历史
-        this.migrationHandler.terminalHistory(this.terminalHistory.isSelected());
+        this.migrationHandler.setTerminalHistory(this.terminalHistory.isSelected());
         // 应用配置
-        this.migrationHandler.applicationSetting(this.applicationSetting.isSelected());
+        this.migrationHandler.setApplicationSetting(this.applicationSetting.isSelected());
         // 数据处理策略
-        this.migrationHandler.dataPolicy(this.dataPolicy.selectedUserData());
+        this.migrationHandler.setDataPolicy(this.dataPolicy.selectedUserData());
         // 开始处理
         NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.migrationInProgress() + "===");

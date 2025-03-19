@@ -4,7 +4,6 @@ import cn.oyzh.easyzk.fx.svg.glyph.ZookeeperSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
-import lombok.experimental.Accessors;
 
 /**
  * zk树节点值
@@ -12,7 +11,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/4/7
  */
-@Accessors(chain = true, fluent = true)
 public class ZKConnectTreeItemValue extends RichTreeItemValue {
 
     public ZKConnectTreeItemValue( ZKConnectTreeItem item) {

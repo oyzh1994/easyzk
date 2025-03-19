@@ -13,8 +13,6 @@ import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 import java.util.concurrent.Future;
@@ -28,11 +26,17 @@ import java.util.concurrent.Future;
  */
 public class ZKServerTabController extends ParentTabController {
 
+    public ZKClient getClient() {
+        return client;
+    }
+
+    public void setClient(ZKClient client) {
+        this.client = client;
+    }
+
     /**
      * zk客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private ZKClient client;
 
     /**

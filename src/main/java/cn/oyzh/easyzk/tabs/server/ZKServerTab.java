@@ -68,7 +68,7 @@ public class ZKServerTab extends RichTab {
      * @return zk信息
      */
     public ZKConnect zkConnect() {
-        return this.controller().client().zkConnect();
+        return this.controller().getClient().zkConnect();
     }
 
     /**
@@ -77,7 +77,7 @@ public class ZKServerTab extends RichTab {
      * @return zk客户端
      */
     public ZKClient client() {
-        return this.controller().client();
+        return this.controller().getClient();
     }
 
     @Override

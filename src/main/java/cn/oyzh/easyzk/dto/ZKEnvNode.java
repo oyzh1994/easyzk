@@ -1,8 +1,5 @@
 package cn.oyzh.easyzk.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * zk环境节点
@@ -10,9 +7,6 @@ import lombok.NoArgsConstructor;
  * @author oyzh
  * @since 2024/1286
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ZKEnvNode {
 
     /**
@@ -24,4 +18,25 @@ public class ZKEnvNode {
      * 类型
      */
     private String value;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public ZKEnvNode(String name, String value) {
+        this.name = name;
+        this.value = value;
+    }
 }

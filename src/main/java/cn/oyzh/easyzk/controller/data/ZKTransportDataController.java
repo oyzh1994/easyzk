@@ -195,8 +195,8 @@ public class ZKTransportDataController extends StageController {
         // 生成传输处理器
         if (this.transportHandler == null) {
             this.transportHandler = new ZKDataTransportHandler();
-            this.transportHandler.messageHandler(str -> this.transportMsg.appendLine(str))
-                    .processedHandler(count -> {
+            this.transportHandler.setMessageHandler(str -> this.transportMsg.appendLine(str));
+            this.transportHandler.setProcessedHandler(count -> {
                         if (count == 0) {
                             this.counter.updateIgnore();
                         } else if (count < 0) {
@@ -210,20 +210,20 @@ public class ZKTransportDataController extends StageController {
             this.transportHandler.interrupt(false);
         }
         // 来源客户端
-        this.transportHandler.sourceClient(this.sourceClient);
+        this.transportHandler.setSourceClient(this.sourceClient);
         // 目标客户端
-        this.transportHandler.targetClient(this.targetClient);
+        this.transportHandler.setTargetClient(this.targetClient);
         // 来源字符集
-        this.transportHandler.sourceCharset(this.sourceCharset.getCharset());
+        this.transportHandler.setSourceCharset(this.sourceCharset.getCharset());
         // 目标字符集
-        this.transportHandler.targetCharset(this.targetCharset.getCharset());
+        this.transportHandler.setTargetCharset(this.targetCharset.getCharset());
         // 节点存在时处理策略
-        this.transportHandler.existsPolicy(this.existsPolicy.selectedUserData());
+        this.transportHandler.setExistsPolicy(this.existsPolicy.selectedUserData());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
-            this.transportHandler.filters(this.filterStore.loadEnable(this.sourceClient.iid()));
+            this.transportHandler.setFilters(this.filterStore.loadEnable(this.sourceClient.iid()));
         } else {
-            this.transportHandler.filters(null);
+            this.transportHandler.setFilters(null);
         }
         // 开始处理
         NodeGroupUtil.disable(this.stage, "exec");

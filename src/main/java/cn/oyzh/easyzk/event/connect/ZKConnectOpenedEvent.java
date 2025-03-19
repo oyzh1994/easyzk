@@ -12,10 +12,10 @@ import cn.oyzh.event.Event;
 public class ZKConnectOpenedEvent extends Event<ZKConnectTreeItem>  {
 
     public ZKClient client() {
-        return this.data().client();
+        return this.data().getClient();
     }
 
     public ZKConnect connect() {
-        return this.data().client().zkConnect();
+        return this.data().getClient().zkConnect();
     }
 }

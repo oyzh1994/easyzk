@@ -43,7 +43,7 @@ public class ZKServerInfoTreeItem extends RichTreeItem<ZKServerInfoTreeItemValue
 
     @Override
     public void loadChild() {
-        ZKEventUtil.server(this.parent().client());
+        ZKEventUtil.server(this.parent().getClient());
     }
 
     @Override

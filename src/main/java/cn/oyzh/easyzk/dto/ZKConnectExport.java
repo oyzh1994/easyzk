@@ -6,8 +6,6 @@ import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,6 @@ import java.util.List;
  * @author oyzh
  * @since 2023/2/22
  */
-@Getter
 public class ZKConnectExport {
 
     /**
@@ -31,10 +28,41 @@ public class ZKConnectExport {
      */
     private String platform;
 
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public List<ZKGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<ZKGroup> groups) {
+        this.groups = groups;
+    }
+
+    public List<ZKConnect> getConnects() {
+        return connects;
+    }
+
+    public void setConnects(List<ZKConnect> connects) {
+        this.connects = connects;
+    }
+
     /**
      * 连接
      */
-    @Setter
     private List<ZKGroup> groups;
 
     /**

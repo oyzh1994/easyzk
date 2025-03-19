@@ -15,7 +15,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import lombok.Getter;
 
 /**
  * zk节点过滤文本域皮肤
@@ -33,8 +32,11 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
     /**
      * 过滤设置弹窗
      */
-    @Getter
     protected PopupAdapter popup;
+
+    public PopupAdapter getPopup() {
+        return popup;
+    }
 
     /**
      * 过滤参数

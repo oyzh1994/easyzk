@@ -14,8 +14,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,9 +113,23 @@ public class ZKQueryPromptPopup extends FXPopup {
     /**
      * 选中事件
      */
-    @Getter
-    @Setter
     protected Consumer<ZKQueryPromptItem> onItemSelected;
+
+    public Consumer<ZKQueryPromptItem> getOnItemSelected() {
+        return onItemSelected;
+    }
+
+    public void setOnItemSelected(Consumer<ZKQueryPromptItem> onItemSelected) {
+        this.onItemSelected = onItemSelected;
+    }
+
+    public ZKQueryToken getToken() {
+        return token;
+    }
+
+    public void setToken(ZKQueryToken token) {
+        this.token = token;
+    }
 
     public ZKQueryPromptPopup() {
         this.setAutoFix(true);

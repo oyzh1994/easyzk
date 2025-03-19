@@ -15,8 +15,6 @@ import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistoryStore;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -26,51 +24,92 @@ import java.util.List;
  * @author oyzh
  * @since 2024/10/15
  */
-@Setter
 public class ZKDataMigrationHandler extends DataHandler {
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean groups;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean filters;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean authInfos;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean connections;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean terminalHistory;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean applicationSetting;
 
     /**
      * 1: 合并 2: 覆盖
      */
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private String dataPolicy;
 
-    private ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+    public boolean isGroups() {
+        return groups;
+    }
 
-    private ZKConnectStore infoStore = ZKConnectStore.INSTANCE;
+    public void setGroups(boolean groups) {
+        this.groups = groups;
+    }
 
-    private ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
+    public boolean isFilters() {
+        return filters;
+    }
 
-    private ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
+    public void setFilters(boolean filters) {
+        this.filters = filters;
+    }
 
-    private ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
+    public boolean isAuthInfos() {
+        return authInfos;
+    }
 
-    private ZKTerminalHistoryStore terminalHistoryStore = ZKTerminalHistoryStore.INSTANCE;
+    public void setAuthInfos(boolean authInfos) {
+        this.authInfos = authInfos;
+    }
+
+    public boolean isConnections() {
+        return connections;
+    }
+
+    public void setConnections(boolean connections) {
+        this.connections = connections;
+    }
+
+    public boolean isTerminalHistory() {
+        return terminalHistory;
+    }
+
+    public void setTerminalHistory(boolean terminalHistory) {
+        this.terminalHistory = terminalHistory;
+    }
+
+    public boolean isApplicationSetting() {
+        return applicationSetting;
+    }
+
+    public void setApplicationSetting(boolean applicationSetting) {
+        this.applicationSetting = applicationSetting;
+    }
+
+    public String getDataPolicy() {
+        return dataPolicy;
+    }
+
+    public void setDataPolicy(String dataPolicy) {
+        this.dataPolicy = dataPolicy;
+    }
+
+    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+
+    private final ZKConnectStore infoStore = ZKConnectStore.INSTANCE;
+
+    private final ZKGroupStore groupStore = ZKGroupStore.INSTANCE;
+
+    private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
+
+    private final ZKSettingStore settingStore = ZKSettingStore.INSTANCE;
+
+    private final ZKTerminalHistoryStore terminalHistoryStore = ZKTerminalHistoryStore.INSTANCE;
 
     /**
      * 执行传输

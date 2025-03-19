@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.i18n.I18nManager;
-import lombok.Data;
 import org.apache.zookeeper.server.quorum.QuorumPeer;
 
 import java.util.Locale;
@@ -12,7 +11,6 @@ import java.util.Locale;
  * @author oyzh
  * @since 2023/1/6
  */
-@Data
 public class ZKClusterNode {
 
     /**
@@ -74,5 +72,53 @@ public class ZKClusterNode {
         } else {
             this.type = serverTxt.toLowerCase().contains("participant") ? "Participant" : "Observer";
         }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    public Long getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Long weight) {
+        this.weight = weight;
+    }
+
+    public String getClientAddr() {
+        return clientAddr;
+    }
+
+    public void setClientAddr(String clientAddr) {
+        this.clientAddr = clientAddr;
+    }
+
+    public String getElectionAddr() {
+        return electionAddr;
+    }
+
+    public void setElectionAddr(String electionAddr) {
+        this.electionAddr = electionAddr;
     }
 }

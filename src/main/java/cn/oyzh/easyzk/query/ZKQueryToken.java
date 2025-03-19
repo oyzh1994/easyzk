@@ -2,15 +2,11 @@ package cn.oyzh.easyzk.query;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
-import lombok.Data;
-import lombok.ToString;
 
 /**
  * @author oyzh
  * @since 2025/01/21
  */
-@Data
-@ToString
 public class ZKQueryToken {
 
     /**
@@ -59,5 +55,37 @@ public class ZKQueryToken {
             return ZKNodeUtil.getParentPath(this.content);
         }
         return null;
+    }
+
+    public int getEndIndex() {
+        return endIndex;
+    }
+
+    public void setEndIndex(int endIndex) {
+        this.endIndex = endIndex;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Character getToken() {
+        return token;
+    }
+
+    public void setToken(Character token) {
+        this.token = token;
     }
 }

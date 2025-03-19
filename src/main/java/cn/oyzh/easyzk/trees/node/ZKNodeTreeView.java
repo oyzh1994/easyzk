@@ -15,9 +15,6 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.util.Callback;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +27,15 @@ import java.util.List;
  */
 public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
 
-    @Getter
-    @Setter
-    @Accessors(fluent = true, chain = false)
     private ZKClient client;
+
+    public void client(ZKClient client) {
+        this.client = client;
+    }
+
+    public ZKClient client() {
+        return this.client;
+    }
 
     public ZKConnect connect() {
         return this.client.zkConnect();
@@ -46,7 +48,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
     }
 
     @Override
-    public ZKNodeTreeItemFilter itemFilter() {
+    public ZKNodeTreeItemFilter getItemFilter() {
         try {
             // 初始化过滤器
             if (this.itemFilter == null) {
@@ -158,7 +160,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
                 JulLog.info("父节点未加载, 加载父节点.");
             }
             // 过滤节点
-            parent.doFilter(this.itemFilter());
+            parent.doFilter(this.getItemFilter());
             // 选中此节点
             if (item == null) {
                 item = parent.getNodeItem(nodePath);

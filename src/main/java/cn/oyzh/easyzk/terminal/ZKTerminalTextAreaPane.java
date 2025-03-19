@@ -15,8 +15,6 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import org.apache.zookeeper.ZooKeeper;
 
 /**
@@ -55,9 +53,11 @@ public class ZKTerminalTextAreaPane extends TerminalTextAreaPane {
     /**
      * zk客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private ZKClient client;
+
+    public ZKClient getClient() {
+        return client;
+    }
 
     /**
      * zk连接
@@ -271,7 +271,7 @@ public class ZKTerminalTextAreaPane extends TerminalTextAreaPane {
                 }
                 JulLog.info("connState={}", t1);
             };
-            this.client().addStateListener(this.stateChangeListener);
+            this.getClient().addStateListener(this.stateChangeListener);
         }
     }
 
@@ -286,6 +286,6 @@ public class ZKTerminalTextAreaPane extends TerminalTextAreaPane {
     }
 
     public ZKConnect zkConnect() {
-        return this.client().zkConnect();
+        return this.getClient().zkConnect();
     }
 }

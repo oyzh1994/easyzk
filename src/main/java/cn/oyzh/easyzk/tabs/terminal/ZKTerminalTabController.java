@@ -37,7 +37,7 @@ public class ZKTerminalTabController extends RichTabController {
      * @return zk客户端
      */
     public ZKClient client() {
-        return this.terminal.client();
+        return this.terminal.getClient();
     }
 
     /**

@@ -290,7 +290,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             try {
                 StageAdapter adapter = StageManager.parseStage(ZKExportDataController.class);
                 adapter.setProp("connect", event.data());
-                adapter.setProp("nodePath", event.path());
+                adapter.setProp("nodePath", event.getPath());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -359,7 +359,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             try {
                 StageAdapter adapter = StageManager.parseStage(ZKAddNodeController.class);
                 adapter.setProp("zkItem", event.data());
-                adapter.setProp("zkClient", event.client());
+                adapter.setProp("zkClient", event.getClient());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -377,7 +377,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             try {
                 StageAdapter adapter = StageManager.parseStage(ZKAuthNodeController.class);
                 adapter.setProp("zkItem", event.data());
-                adapter.setProp("zkClient", event.client());
+                adapter.setProp("zkClient", event.getClient());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -427,7 +427,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             try {
                 StageAdapter fxView = StageManager.parseStage(ZKAddACLController.class);
                 fxView.setProp("zkItem", event.data());
-                fxView.setProp("zkClient", event.client());
+                fxView.setProp("zkClient", event.getClient());
                 fxView.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -444,9 +444,9 @@ public class EasyZKApp extends FXApplication implements EventListener {
         FXUtil.runLater(() -> {
             try {
                 StageAdapter fxView = StageManager.parseStage(ZKUpdateACLController.class);
-                fxView.setProp("acl", event.acl());
+                fxView.setProp("acl", event.getAcl());
                 fxView.setProp("zkItem", event.data());
-                fxView.setProp("zkClient", event.client());
+                fxView.setProp("zkClient", event.getClient());
                 fxView.display();
             } catch (Exception ex) {
                 ex.printStackTrace();

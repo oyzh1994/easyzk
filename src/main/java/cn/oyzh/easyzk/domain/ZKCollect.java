@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
-import lombok.Data;
 
 import java.io.Serializable;
 
@@ -12,7 +11,6 @@ import java.io.Serializable;
  * @author oyzh
  * @since 2024-09-26
  */
-@Data
 @Table("t_collect")
 public class ZKCollect implements Serializable {
 
@@ -32,6 +30,22 @@ public class ZKCollect implements Serializable {
 
     public ZKCollect(String iid, String path) {
         this.iid = iid;
+        this.path = path;
+    }
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
         this.path = path;
     }
 }

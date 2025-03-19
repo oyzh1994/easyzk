@@ -3,9 +3,6 @@ package cn.oyzh.easyzk.vo;
 import cn.oyzh.common.Index;
 import cn.oyzh.common.date.DateUtil;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +13,22 @@ import java.util.List;
  * @author oyzh
  * @since 2024/04/24
  */
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public class ZKDataHistoryVO extends ZKDataHistory implements Index {
 
     /**
      * 索引
      */
     private int index;
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     /**
      * 复制

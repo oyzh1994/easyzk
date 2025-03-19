@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.query;
 
-import lombok.Data;
 
 /**
  * 查询提示内容
@@ -8,7 +7,6 @@ import lombok.Data;
  * @author oyzh
  * @since 2025/01/21
  */
-@Data
 public class ZKQueryPromptItem {
 
     /**
@@ -23,6 +21,38 @@ public class ZKQueryPromptItem {
      * 内容
      */
     private String content;
+
+    public byte getType() {
+        return type;
+    }
+
+    public void setType(byte type) {
+        this.type = type;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public double getCorrelation() {
+        return correlation;
+    }
+
+    public void setCorrelation(double correlation) {
+        this.correlation = correlation;
+    }
+
+    public String getExtContent() {
+        return extContent;
+    }
+
+    public void setExtContent(String extContent) {
+        this.extContent = extContent;
+    }
 
     /**
      * 相关度

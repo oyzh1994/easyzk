@@ -5,8 +5,6 @@ import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
 
@@ -19,19 +17,16 @@ import java.util.List;
  * @author oyzh
  * @since 2024/10/15
  */
-@Setter
 public class ZKDataTransportHandler extends DataHandler {
 
     /**
      * 来源客户端
      */
-    @Accessors(fluent = true, chain = true)
     protected ZKClient sourceClient;
 
     /**
      * 目标客户端
      */
-    @Accessors(fluent = true, chain = true)
     protected ZKClient targetClient;
 
     /**
@@ -39,25 +34,21 @@ public class ZKDataTransportHandler extends DataHandler {
      * 0 跳过
      * 1 更新
      */
-    @Accessors(fluent = true, chain = true)
     private String existsPolicy;
 
     /**
      * 过滤内容列表
      */
-    @Accessors(fluent = true, chain = true)
     private List<ZKFilter> filters;
 
     /**
      * 来源字符集
      */
-    @Accessors(fluent = true, chain = true)
     private Charset sourceCharset;
 
     /**
      * 目标字符集
      */
-    @Accessors(fluent = true, chain = true)
     private Charset targetCharset;
 
     /**
@@ -136,6 +127,54 @@ public class ZKDataTransportHandler extends DataHandler {
             this.message("node[" + decodePath + "] transport fail, error[" + ex.getMessage() + "]");
             this.processedDecr();
         }
+    }
+
+    public ZKClient getSourceClient() {
+        return sourceClient;
+    }
+
+    public void setSourceClient(ZKClient sourceClient) {
+        this.sourceClient = sourceClient;
+    }
+
+    public ZKClient getTargetClient() {
+        return targetClient;
+    }
+
+    public void setTargetClient(ZKClient targetClient) {
+        this.targetClient = targetClient;
+    }
+
+    public String getExistsPolicy() {
+        return existsPolicy;
+    }
+
+    public void setExistsPolicy(String existsPolicy) {
+        this.existsPolicy = existsPolicy;
+    }
+
+    public List<ZKFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<ZKFilter> filters) {
+        this.filters = filters;
+    }
+
+    public Charset getSourceCharset() {
+        return sourceCharset;
+    }
+
+    public void setSourceCharset(Charset sourceCharset) {
+        this.sourceCharset = sourceCharset;
+    }
+
+    public Charset getTargetCharset() {
+        return targetCharset;
+    }
+
+    public void setTargetCharset(Charset targetCharset) {
+        this.targetCharset = targetCharset;
     }
 }
 

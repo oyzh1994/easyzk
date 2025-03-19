@@ -17,6 +17,14 @@ import java.util.List;
  */
 public class ZKAuthVO extends ZKAuth {
 
+    public ZKAuthVO() {
+        super();
+    }
+
+    public ZKAuthVO(String iid, String user, String password) {
+        super(iid, user, password);
+    }
+
     /**
      * 复制
      *

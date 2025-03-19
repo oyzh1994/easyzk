@@ -5,9 +5,6 @@ import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
 import org.apache.zookeeper.cli.CloseCommand;
 
@@ -17,9 +14,12 @@ import org.apache.zookeeper.cli.CloseCommand;
  */
 public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<TerminalCommand> {
 
-    @Getter(AccessLevel.PROTECTED)
-    @Accessors(fluent = true)
     private final CliCommand cliCommand = new CloseCommand();
+
+    @Override
+    public CliCommand cliCommand() {
+        return this.cliCommand;
+    }
 
     @Override
     public String commandName() {
@@ -36,7 +36,7 @@ public class ZKCloseTerminalCommandHandler extends ZKCliTerminalCommandHandler<T
         try {
             return super.execute(command, terminal);
         } finally {
-            ZKEventUtil.terminalClose(terminal.client());
+            ZKEventUtil.terminalClose(terminal.getClient());
         }
     }
 }

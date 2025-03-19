@@ -6,9 +6,6 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,15 +17,12 @@ import java.util.Objects;
  * @author oyzh
  * @since 2020/3/6
  */
-@Setter
-@ToString
 @Table("t_connect")
 public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConnect>, Serializable {
 
     /**
      * 数据id
      */
-    @Getter
     @Column
     @PrimaryKey
     private String id;
@@ -36,35 +30,30 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     /**
      * 连接地址
      */
-    @Getter
     @Column
     private String host;
 
     /**
      * 名称
      */
-    @Getter
     @Column
     private String name;
 
     /**
      * 备注信息
      */
-    @Getter
     @Column
     private String remark;
 
     /**
      * 只读模式
      */
-    @Getter
     @Column
     private Boolean readonly;
 
     /**
      * 分组id
      */
-    @Getter
     @Column
     private String groupId;
 
@@ -73,7 +62,6 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
      * null: 无
      * 1: 兼容3.4.x版本
      */
-    @Getter
     @Column
     private Integer compatibility;
 
@@ -88,19 +76,16 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     /**
      * 认证列表
      */
-    @Getter
     private List<ZKAuth> auths;
 
     /**
      * 收藏的节点
      */
-    @Getter
     private List<ZKCollect> collects;
 
     /**
      * 过滤列表
      */
-    @Getter
     private List<ZKFilter> filters;
 
     /**
@@ -118,27 +103,23 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     /**
      * 是否开启ssh转发
      */
-    @Getter
     @Column
     private Boolean sshForward;
 
     /**
      * ssh信息
      */
-    @Getter
     private ZKSSHConfig sshConfig;
 
     /**
      * 是否开启ssh转发
      */
-    @Getter
     @Column
     private Boolean saslAuth;
 
     /**
      * ssh信息
      */
-    @Getter
     private ZKSASLConfig saslConfig;
 
     /**
@@ -332,5 +313,129 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
             return false;
         }
         return StringUtil.equals(this.name, t1.name);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Boolean getReadonly() {
+        return readonly;
+    }
+
+    public void setReadonly(Boolean readonly) {
+        this.readonly = readonly;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public Integer getCompatibility() {
+        return compatibility;
+    }
+
+    public void setCompatibility(Integer compatibility) {
+        this.compatibility = compatibility;
+    }
+
+    public void setListen(Boolean listen) {
+        this.listen = listen;
+    }
+
+    public List<ZKAuth> getAuths() {
+        return auths;
+    }
+
+    public void setAuths(List<ZKAuth> auths) {
+        this.auths = auths;
+    }
+
+    public List<ZKCollect> getCollects() {
+        return collects;
+    }
+
+    public void setCollects(List<ZKCollect> collects) {
+        this.collects = collects;
+    }
+
+    public List<ZKFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<ZKFilter> filters) {
+        this.filters = filters;
+    }
+
+    public void setSessionTimeOut(Integer sessionTimeOut) {
+        this.sessionTimeOut = sessionTimeOut;
+    }
+
+    public void setConnectTimeOut(Integer connectTimeOut) {
+        this.connectTimeOut = connectTimeOut;
+    }
+
+    public Boolean getSshForward() {
+        return sshForward;
+    }
+
+    public void setSshForward(Boolean sshForward) {
+        this.sshForward = sshForward;
+    }
+
+    public ZKSSHConfig getSshConfig() {
+        return sshConfig;
+    }
+
+    public void setSshConfig(ZKSSHConfig sshConfig) {
+        this.sshConfig = sshConfig;
+    }
+
+    public Boolean getSaslAuth() {
+        return saslAuth;
+    }
+
+    public void setSaslAuth(Boolean saslAuth) {
+        this.saslAuth = saslAuth;
+    }
+
+    public ZKSASLConfig getSaslConfig() {
+        return saslConfig;
+    }
+
+    public void setSaslConfig(ZKSASLConfig saslConfig) {
+        this.saslConfig = saslConfig;
     }
 }

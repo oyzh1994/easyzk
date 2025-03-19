@@ -19,7 +19,7 @@ public abstract class ZKCliTerminalCommandHandler<C extends TerminalCommand> ext
     public C parseCommand(String line) {
         String[] args = TerminalUtil.split(line);
         TerminalCommand command = new TerminalCommand();
-        command.args(args);
+        command.setArgs(args);
         return (C) command;
     }
 
@@ -29,7 +29,7 @@ public abstract class ZKCliTerminalCommandHandler<C extends TerminalCommand> ext
         try {
             terminal.disable();
             ZKCliCommandWrapper wrapper = new ZKCliCommandWrapper(this.cliCommand(), terminal.zooKeeper());
-            wrapper.parse(command.args());
+            wrapper.parse(command.getArgs());
             wrapper.setOnResponse(result::appendResult);
             wrapper.exec();
         } catch (Exception ex) {

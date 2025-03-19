@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.query;
 
 import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.ClientInfo;
@@ -16,7 +15,6 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/20
  */
-@Data
 public class ZKQueryResult {
 
     /**
@@ -74,5 +72,45 @@ public class ZKQueryResult {
 
     public List<String> asNode() {
         return (List<String>) this.result;
+    }
+
+    public long getCost() {
+        return cost;
+    }
+
+    public void setCost(long cost) {
+        this.cost = cost;
+    }
+
+    public Stat getStat() {
+        return stat;
+    }
+
+    public void setStat(Stat stat) {
+        this.stat = stat;
+    }
+
+    public Object getResult() {
+        return result;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

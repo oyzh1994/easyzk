@@ -4,8 +4,6 @@ import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Set;
 
@@ -18,9 +16,15 @@ public class ZKQueryTextAreaPane extends RichDataTextAreaPane {
     /**
      * zk客户端
      */
-    @Getter
-    @Setter
     private ZKClient client;
+
+    public ZKClient getClient() {
+        return client;
+    }
+
+    public void setClient(ZKClient client) {
+        this.client = client;
+    }
 
     /**
      * 提示词组件

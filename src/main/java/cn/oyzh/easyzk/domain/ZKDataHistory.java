@@ -3,8 +3,6 @@ package cn.oyzh.easyzk.domain;
 import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,7 +13,6 @@ import java.util.Objects;
  * @author oyzh
  * @since 2024/04/23
  */
-@Getter
 @Table("t_data_history")
 public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializable {
 
@@ -29,20 +26,17 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
      * 数据大小
      */
     @Column
-    @Setter
     private long dataLength;
 
     /**
      * 保存时间
      */
-    @Setter
     @Column
     private long saveTime = System.currentTimeMillis();
 
     /**
      * 路径
      */
-    @Setter
     @Column
     private String path;
 
@@ -51,7 +45,6 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
      *
      * @see ZKConnect
      */
-    @Setter
     @Column
     private String iid;
 
@@ -99,6 +92,42 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
             return this.dataLength / 1024 / 1024 + "Mb";
         }
         return this.dataLength / 1024 / 1024 / 1024 + "Gb";
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public long getDataLength() {
+        return dataLength;
+    }
+
+    public void setDataLength(long dataLength) {
+        this.dataLength = dataLength;
+    }
+
+    public long getSaveTime() {
+        return saveTime;
+    }
+
+    public void setSaveTime(long saveTime) {
+        this.saveTime = saveTime;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
     }
 
     public void setData(byte[] data) {

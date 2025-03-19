@@ -29,7 +29,7 @@ public class ZKSrvrTabController extends SubTabController {
     @FXML
     private void refreshSrvr() {
         // 服务信息
-        List<ZKEnvNode> srvrNodes = this.parent().client().srvrNodes();
+        List<ZKEnvNode> srvrNodes = this.parent().getClient().srvrNodes();
         this.srvrTable.setItem(srvrNodes);
     }
 

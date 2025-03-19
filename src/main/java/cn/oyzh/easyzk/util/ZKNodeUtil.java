@@ -129,7 +129,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshData( ZKClient client,  ZKNode node) throws Exception {
+    public static void refreshData( ZKClient client,  ZKNode node) throws Exception {
         long start = System.currentTimeMillis();
         node.setNodeData(client.getData(node.nodePath()));
         long end = System.currentTimeMillis();
@@ -143,7 +143,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshAcl( ZKClient client,  ZKNode node) throws Exception {
+    public static void refreshAcl( ZKClient client,  ZKNode node) throws Exception {
         node.acl(client.getACL(node.nodePath()));
     }
 
@@ -153,7 +153,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshQuota( ZKClient client,  ZKNode node) throws Exception {
+    public static void refreshQuota( ZKClient client,  ZKNode node) throws Exception {
         node.quota(client.listQuota(node.nodePath()));
     }
 
@@ -163,7 +163,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshStat( ZKClient client,  ZKNode node) throws Exception {
+    public static void refreshStat( ZKClient client,  ZKNode node) throws Exception {
         node.stat(client.checkExists(node.nodePath()));
     }
 
@@ -173,7 +173,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshNode( ZKClient client,  ZKNode node) throws Exception {
+    public static void refreshNode( ZKClient client,  ZKNode node) throws Exception {
         ZKNode n = ZKNodeUtil.getNode(client, node.nodePath());
         node.copy(n);
     }

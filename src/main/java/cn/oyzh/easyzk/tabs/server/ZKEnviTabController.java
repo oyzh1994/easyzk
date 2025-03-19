@@ -29,7 +29,7 @@ public class ZKEnviTabController extends SubTabController {
     @FXML
     private void refreshEnvi() {
         // 服务端环境信息
-        List<ZKEnvNode> serverEnviNodes = this.parent().client().enviNodes();
+        List<ZKEnvNode> serverEnviNodes = this.parent().getClient().enviNodes();
         this.enviTable.setItem(serverEnviNodes);
     }
 

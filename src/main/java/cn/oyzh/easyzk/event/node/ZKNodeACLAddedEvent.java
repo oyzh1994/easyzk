@@ -4,8 +4,6 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
@@ -13,8 +11,14 @@ import lombok.experimental.Accessors;
  */
 public class ZKNodeACLAddedEvent extends Event<ZKConnect> implements EventFormatter {
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
+    public String getNodePath() {
+        return nodePath;
+    }
+
+    public void setNodePath(String nodePath) {
+        this.nodePath = nodePath;
+    }
+
     private String nodePath;
 
     @Override

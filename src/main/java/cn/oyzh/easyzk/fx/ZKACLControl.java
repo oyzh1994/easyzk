@@ -4,8 +4,6 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.paint.Color;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * zk权限
@@ -19,16 +17,28 @@ public class ZKACLControl extends ZKACL {
     /**
      * 是否已认证
      */
-    @Getter
-    @Setter
     private boolean authed;
 
     /**
      * 是否友好
      */
-    @Setter
-    @Getter
     private boolean friendly;
+
+    public boolean isAuthed() {
+        return authed;
+    }
+
+    public void setAuthed(boolean authed) {
+        this.authed = authed;
+    }
+
+    public boolean isFriendly() {
+        return friendly;
+    }
+
+    public void setFriendly(boolean friendly) {
+        this.friendly = friendly;
+    }
 
     public String getIdControl() {
         return (String) super.idFriend().getValue(this.friendly);

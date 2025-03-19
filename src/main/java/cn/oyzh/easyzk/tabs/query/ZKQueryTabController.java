@@ -17,7 +17,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
-import lombok.Getter;
 
 /**
  * @author oyzh
@@ -28,14 +27,20 @@ public class ZKQueryTabController extends RichTabController {
     /**
      * 查询对象
      */
-    @Getter
     private ZKQuery query;
+
+    public ZKQuery getQuery() {
+        return query;
+    }
 
     /**
      * 未保存标志位
      */
-    @Getter
     private boolean unsaved;
+
+    public boolean isUnsaved() {
+        return unsaved;
+    }
 
     /**
      * zk客户端

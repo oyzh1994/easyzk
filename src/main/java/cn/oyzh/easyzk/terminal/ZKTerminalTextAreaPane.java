@@ -16,7 +16,6 @@ import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.apache.zookeeper.ZooKeeper;
 
@@ -110,7 +109,7 @@ public class ZKTerminalTextAreaPane extends TerminalTextAreaPane {
      *
      * @param client 客户端
      */
-    public void init(@NonNull ZKClient client) {
+    public void init( ZKClient client) {
         this.client = client;
         this.disableInput();
         this.outputLine(I18nResourceBundle.i18nString("zk.home.welcome"));

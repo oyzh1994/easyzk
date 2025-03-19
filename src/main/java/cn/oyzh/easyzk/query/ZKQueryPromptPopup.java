@@ -15,7 +15,6 @@ import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -206,7 +205,7 @@ public class ZKQueryPromptPopup extends FXPopup {
      * @param area  文本域
      * @param event 键盘按键事件
      */
-    public void prompt(@NonNull ZKQueryTextAreaPane area, @NonNull KeyEvent event) {
+    public void prompt( ZKQueryTextAreaPane area,  KeyEvent event) {
         // 常规按键不处理
         if (this.isGeneralKeyEvent(event)) {
             this.hide();

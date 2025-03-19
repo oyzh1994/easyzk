@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.dto;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.nio.charset.Charset;
@@ -78,7 +77,7 @@ public class ZKNodeExport {
      * @param charset 字符集
      * @return 数据字节数组
      */
-    public byte[] getDateBytes(String data, @NonNull Charset charset) {
+    public byte[] getDateBytes(String data,  Charset charset) {
         byte[] bytes;
         try {
             if (data == null) {

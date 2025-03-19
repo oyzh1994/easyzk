@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.zk;
 import cn.oyzh.common.Const;
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.i18n.I18nManager;
-import lombok.NonNull;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class ZKStatParser implements Function<Stat, List<FriendlyInfo<Stat>>> {
      * @return 包含Stat对象各个属性的FriendlyInfo列表
      */
     @Override
-    public List<FriendlyInfo<Stat>> apply(@NonNull Stat stat) {
+    public List<FriendlyInfo<Stat>> apply( Stat stat) {
         List<FriendlyInfo<Stat>> statInfos = new ArrayList<>();
 
         // 创建节点事务ID

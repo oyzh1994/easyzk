@@ -5,7 +5,6 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.tableview.TableViewUtil;
-import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ZKAuthVO extends ZKAuth {
      * @param list zk认证列表
      * @return zk认证vo列表
      */
-    public static List<ZKAuthVO> convert(@NonNull List<ZKAuth> list) {
+    public static List<ZKAuthVO> convert( List<ZKAuth> list) {
         List<ZKAuthVO> voList = new ArrayList<>(list.size());
         for (ZKAuth zkAuth : list) {
             voList.add(convert(zkAuth));

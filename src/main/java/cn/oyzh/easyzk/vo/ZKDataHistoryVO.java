@@ -5,7 +5,6 @@ import cn.oyzh.common.date.DateUtil;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
 import lombok.ToString;
 
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class ZKDataHistoryVO extends ZKDataHistory implements Index {
      * @param list zk数据历史
      * @return zk数据历史列表
      */
-    public static List<ZKDataHistoryVO> convert(@NonNull List<ZKDataHistory> list) {
+    public static List<ZKDataHistoryVO> convert( List<ZKDataHistory> list) {
         List<ZKDataHistoryVO> voList = new ArrayList<>(list.size());
         for (int i = 0; i < list.size(); i++) {
             voList.add(convert(list.get(i), i + 1));

@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.action;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.util.ZKACLUtil;
-import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.ACL;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025-01-02
  */
-@UtilityClass
+
 public class ZKClientActionUtil {
 
     // public static void forAction(Record record) {

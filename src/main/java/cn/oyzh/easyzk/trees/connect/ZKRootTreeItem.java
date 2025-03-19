@@ -16,7 +16,6 @@ import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import lombok.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
      */
     private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
 
-    public ZKRootTreeItem(@NonNull ZKConnectTreeView treeView) {
+    public ZKRootTreeItem( ZKConnectTreeView treeView) {
         super(treeView);
         this.setValue(new ZKRootTreeItemValue());
         // 加载子节点
@@ -265,7 +264,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
     }
 
     @Override
-    public void addConnect(@NonNull ZKConnect info) {
+    public void addConnect( ZKConnect info) {
         ZKGroupTreeItem groupItem = this.getGroupItem(info.getGroupId());
         if (groupItem == null) {
             super.addChild(new ZKConnectTreeItem(info, this.getTreeView()));
@@ -276,7 +275,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
     }
 
     @Override
-    public void addConnectItem(@NonNull ZKConnectTreeItem item) {
+    public void addConnectItem( ZKConnectTreeItem item) {
         if (!this.containsChild(item)) {
             if (item.value().getGroupId() != null) {
                 item.value().setGroupId(null);
@@ -288,7 +287,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
     }
 
     @Override
-    public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
+    public void addConnectItems( List<ZKConnectTreeItem> items) {
         if (CollectionUtil.isNotEmpty(items)) {
             this.addChild((List) items);
             this.expend();
@@ -296,7 +295,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
     }
 
     @Override
-    public boolean delConnectItem(@NonNull ZKConnectTreeItem item) {
+    public boolean delConnectItem( ZKConnectTreeItem item) {
         // 删除连接
         if (this.connectStore.delete(item.value())) {
             this.removeChild(item);

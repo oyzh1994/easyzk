@@ -7,7 +7,6 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.experimental.UtilityClass;
 
 /**
  * zk连接工具类
@@ -15,7 +14,7 @@ import lombok.experimental.UtilityClass;
  * @author oyzh
  * @since 2022/8/26
  */
-@UtilityClass
+
 public class ZKConnectUtil {
 
     /**

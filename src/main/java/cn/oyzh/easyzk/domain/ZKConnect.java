@@ -7,7 +7,6 @@ import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -148,7 +147,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
      * @param zkConnect zk信息
      * @return 当前对象
      */
-    public ZKConnect copy(@NonNull ZKConnect zkConnect) {
+    public ZKConnect copy( ZKConnect zkConnect) {
         this.name = zkConnect.name;
         this.host = zkConnect.host;
         this.remark = zkConnect.remark;
@@ -206,7 +205,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     //  * @param path 路径
     //  * @return 结果
     //  */
-    // public boolean isCollect(@NonNull String path) {
+    // public boolean isCollect( String path) {
     //     return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(path);
     // }
     //
@@ -215,7 +214,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     //  *
     //  * @param path 路径
     //  */
-    // public void addCollect(@NonNull String path) {
+    // public void addCollect( String path) {
     //     if (this.collects == null) {
     //         this.collects = new ArrayList<>();
     //     }
@@ -230,7 +229,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     //  * @param path 路径
     //  * @return 结果
     //  */
-    // public boolean removeCollect(@NonNull String path) {
+    // public boolean removeCollect( String path) {
     //     if (this.collects != null) {
     //         return this.collects.remove(path);
     //     }

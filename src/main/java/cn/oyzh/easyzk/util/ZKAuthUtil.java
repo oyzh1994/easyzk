@@ -8,8 +8,6 @@ import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 import org.apache.curator.framework.AuthInfo;
 import org.apache.zookeeper.server.auth.DigestAuthenticationProvider;
 
@@ -25,7 +23,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/3/6
  */
-@UtilityClass
+
 public class ZKAuthUtil {
 
     // /**
@@ -59,7 +57,7 @@ public class ZKAuthUtil {
      * @param zkNode   zk节点
      * @return 结果 0 失败 1 成功 2 异常
      */
-    public int authNode(@NonNull String user, @NonNull String password, @NonNull ZKClient client, @NonNull ZKNode zkNode) {
+    public int authNode( String user,  String password,  ZKClient client,  ZKNode zkNode) {
         int result = 0;
         try {
             client.addAuth(user, password);
@@ -128,7 +126,7 @@ public class ZKAuthUtil {
     //  * @param client zk客户端
     //  * @param auth   认证信息
     //  */
-    // public static void setAuthed(@NonNull ZKClient client, @NonNull ZKAuth auth) {
+    // public static void setAuthed( ZKClient client,  ZKAuth auth) {
     //     setAuthed(client, auth.getUser(), auth.getPassword());
     // }
 
@@ -138,7 +136,7 @@ public class ZKAuthUtil {
     //  * @param client zk客户端
     //  * @param auths  认证信息列表
     //  */
-    // public static void setAuthed(@NonNull ZKClient client, List<? extends ZKAuth> auths) {
+    // public static void setAuthed( ZKClient client, List<? extends ZKAuth> auths) {
     //     if (CollectionUtil.isNotEmpty(auths)) {
     //         auths.parallelStream().forEach(a -> setAuthed(client, a));
     //     }
@@ -151,7 +149,7 @@ public class ZKAuthUtil {
     //  * @param user     用户名
     //  * @param password 密码
     //  */
-    // public static void setAuthed(@NonNull ZKClient client, String user, String password) {
+    // public static void setAuthed( ZKClient client, String user, String password) {
     //     if (user != null && password != null) {
     //         Set<String> set = AUTHED_INFOS.computeIfAbsent(client, k -> new CopyOnWriteArraySet<>());
     //         set.add(user + ":" + password);
@@ -170,7 +168,7 @@ public class ZKAuthUtil {
     //  *
     //  * @param client zk客户端
     //  */
-    // public static void removeAuthed(@NonNull ZKClient client) {
+    // public static void removeAuthed( ZKClient client) {
     //     AUTHED_INFOS.remove(client);
     // }
 
@@ -191,7 +189,7 @@ public class ZKAuthUtil {
     //  * @param auth   认证信息
     //  * @return 结果
     //  */
-    // public static boolean isAuthed(@NonNull ZKClient client, ZKAuth auth) {
+    // public static boolean isAuthed( ZKClient client, ZKAuth auth) {
     //     if (auth != null) {
     //         Set<String> set = getAuthed(client);
     //         if (set != null) {
@@ -237,7 +235,7 @@ public class ZKAuthUtil {
     //  * @param aclList 权限列表
     //  * @return 结果
     //  */
-    // public static boolean isAnyAuthed(@NonNull ZKClient client, List<ZKACL> aclList) {
+    // public static boolean isAnyAuthed( ZKClient client, List<ZKACL> aclList) {
     //     if (CollectionUtil.isNotEmpty(aclList)) {
     //         Set<String> digestList = getAuthedDigest(client);
     //         for (ZKACL zkacl : aclList) {
@@ -256,7 +254,7 @@ public class ZKAuthUtil {
      * @param password 密码
      * @return 摘要信息
      */
-    public static String digest(@NonNull String user, @NonNull String password) {
+    public static String digest( String user,  String password) {
         try {
             return DigestAuthenticationProvider.generateDigest(user + ":" + password);
         } catch (NoSuchAlgorithmException ex) {
@@ -272,7 +270,7 @@ public class ZKAuthUtil {
     //  * @param client zk客户端
     //  * @return 结果
     //  */
-    // public boolean isNeedAuth(@NonNull ZKNode node, @NonNull ZKClient client) {
+    // public boolean isNeedAuth( ZKNode node,  ZKClient client) {
     //     if (node.aclEmpty() && node.lackPerm()) {
     //         return true;
     //     }

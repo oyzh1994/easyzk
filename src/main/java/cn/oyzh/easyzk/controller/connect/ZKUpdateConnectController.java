@@ -38,7 +38,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.NonNull;
 
 import java.util.List;
 
@@ -408,7 +407,7 @@ public class ZKUpdateConnectController extends StageController {
     }
 
     @Override
-    public void onWindowShown(@NonNull WindowEvent event) {
+    public void onWindowShown( WindowEvent event) {
         super.onWindowShown(event);
         this.zkConnect = this.getWindowProp("zkConnect");
         this.name.setText(this.zkConnect.getName());

@@ -329,7 +329,7 @@
 //      * @param properties 要获取的属性
 //      * @param allNodes   所有节点列表
 //      */
-//     private void getNodeAll(@NonNull String path, @NonNull String properties, @NonNull List<ZKNode> allNodes) {
+//     private void getNodeAll( String path,  String properties,  List<ZKNode> allNodes) {
 //         try {
 //             // 取消操作
 //             if (ThreadUtil.isInterrupted(this.execTask)) {

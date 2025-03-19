@@ -2,9 +2,6 @@ package cn.oyzh.easyzk.event.window;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.event.Event;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh

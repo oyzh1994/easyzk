@@ -16,7 +16,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.util.Callback;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -77,7 +76,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
      * @param targetPath 目标路径
      * @return zk节点
      */
-    public ZKNodeTreeItem findNodeItem(@NonNull String targetPath) {
+    public ZKNodeTreeItem findNodeItem( String targetPath) {
         return this.findNodeItem(this.root(), targetPath);
     }
 
@@ -88,7 +87,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
      * @param targetPath 目标路径
      * @return zk节点
      */
-    public ZKNodeTreeItem findNodeItem(@NonNull ZKNodeTreeItem root, @NonNull String targetPath) {
+    public ZKNodeTreeItem findNodeItem( ZKNodeTreeItem root,  String targetPath) {
         // 节点对应，返回数据
         if (targetPath.equals(root.nodePath())) {
             return root;

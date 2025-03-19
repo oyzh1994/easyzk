@@ -7,7 +7,6 @@ import cn.oyzh.store.jdbc.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -65,7 +64,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
      * @param filter 过滤信息
      * @return 当前对象
      */
-    public ZKFilter copy(@NonNull ZKFilter filter) {
+    public ZKFilter copy( ZKFilter filter) {
         this.kw = filter.kw;
         this.iid = filter.iid;
         this.uid = filter.uid;

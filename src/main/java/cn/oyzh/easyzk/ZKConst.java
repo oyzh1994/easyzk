@@ -1,7 +1,5 @@
 package cn.oyzh.easyzk;
 
-import lombok.experimental.UtilityClass;
-
 import java.io.File;
 
 /**
@@ -10,7 +8,7 @@ import java.io.File;
  * @author oyzh
  * @since 2022/8/26
  */
-@UtilityClass
+
 public class ZKConst {
 
     /**

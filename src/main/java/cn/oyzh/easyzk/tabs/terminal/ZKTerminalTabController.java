@@ -4,11 +4,9 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import lombok.NonNull;
 
 /**
  * zk终端tab内容组件
@@ -29,7 +27,7 @@ public class ZKTerminalTabController extends RichTabController {
      *
      * @param client 客户端
      */
-    public void client(@NonNull ZKClient client) {
+    public void client( ZKClient client) {
         this.terminal.init(client);
     }
 

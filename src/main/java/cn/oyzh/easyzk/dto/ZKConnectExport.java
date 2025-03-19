@@ -7,7 +7,6 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class ZKConnectExport {
      * @param zkConnects 连接列表
      * @return ZKConnectExport
      */
-    public static ZKConnectExport fromConnects(@NonNull List<ZKConnect> zkConnects) {
+    public static ZKConnectExport fromConnects( List<ZKConnect> zkConnects) {
         ZKConnectExport export = new ZKConnectExport();
         Project project = Project.load();
         export.version = project.getVersion();
@@ -64,7 +63,7 @@ public class ZKConnectExport {
      * @param json json字符串
      * @return ZKInfoExport
      */
-    public static ZKConnectExport fromJSON(@NonNull String json) {
+    public static ZKConnectExport fromJSON( String json) {
         JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObject(json);
         ZKConnectExport export = new ZKConnectExport();

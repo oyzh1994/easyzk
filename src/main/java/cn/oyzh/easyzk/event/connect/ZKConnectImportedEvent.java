@@ -2,8 +2,6 @@ package cn.oyzh.easyzk.event.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.event.Event;
-import cn.oyzh.event.EventFormatter;
-import cn.oyzh.i18n.I18nHelper;
 
 /**
  * @author oyzh

@@ -44,13 +44,12 @@ import cn.oyzh.easyzk.terminal.fourletterword.ZKWchsCommandHandler;
 import cn.oyzh.fx.terminal.standard.ClearTerminalCommandHandler;
 import cn.oyzh.fx.terminal.standard.HelpTerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
-import lombok.experimental.UtilityClass;
 
 /**
  * @author oyzh
  * @since 2024-12-30
  */
-@UtilityClass
+
 public class ZKTerminalManager {
 
     /**

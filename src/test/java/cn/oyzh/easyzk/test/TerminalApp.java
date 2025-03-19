@@ -1,14 +1,5 @@
 package cn.oyzh.easyzk.test;
 
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;

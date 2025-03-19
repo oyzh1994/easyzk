@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableView?>
-<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
 <FXVBox xmlns:fx="http://javafx.com/fxml/1" flexWidth="100% - 30" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryWhoamiTabController">
+        fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryWhoamiTabController">
     <FXTableView fx:id="whoamiTable" flexWidth="100%" flexHeight="100%">
         <columns>
             <FXTableColumn valueName="key" flexWidth="25%" text="%base.schema"/>

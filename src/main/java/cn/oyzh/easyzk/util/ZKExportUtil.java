@@ -9,8 +9,6 @@ import cn.oyzh.easyzk.dto.ZKNodeExport;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/3/18
  */
-@UtilityClass
+
 public class ZKExportUtil {
 
     /**
@@ -77,7 +75,7 @@ public class ZKExportUtil {
     //  * @param prefix  前缀
     //  * @return 数据文本字符串
     //  */
-    // public static String nodesToTxt(@NonNull List<ZKNode> zkNodes, String charset, String prefix) {
+    // public static String nodesToTxt( List<ZKNode> zkNodes, String charset, String prefix) {
     //     Project project = Project.load();
     //     String version = project.getVersion();
     //     String platform = OSUtil.getOSType();
@@ -115,7 +113,7 @@ public class ZKExportUtil {
     //  * @param prettyFormat 美化
     //  * @return 数据json字符串
     //  */
-    // public static String nodesToJSON(@NonNull List<ZKNode> zkNodes, String charset, boolean prettyFormat) {
+    // public static String nodesToJSON( List<ZKNode> zkNodes, String charset, boolean prettyFormat) {
     //     Project project = Project.load();
     //     String version = project.getVersion();
     //     String platform = OSUtil.getOSType();
@@ -145,7 +143,7 @@ public class ZKExportUtil {
      * @param file 文件
      * @return ZKNodeExport
      */
-    public static ZKNodeExport fromFile(@NonNull File file) {
+    public static ZKNodeExport fromFile( File file) {
         String text = FileUtil.readUtf8String(file);
         if (StringUtil.equalsIgnoreCase(FileNameUtil.extName(file), "json")) {
             return fromJSON(text);
@@ -159,7 +157,7 @@ public class ZKExportUtil {
      * @param json json字符串
      * @return ZKNodeExport
      */
-    public static ZKNodeExport fromJSON(@NonNull String json) {
+    public static ZKNodeExport fromJSON( String json) {
         JulLog.info("json: {}", json);
         JSONObject object = JSON.parseObject(json);
         ZKNodeExport export = new ZKNodeExport();
@@ -188,7 +186,7 @@ public class ZKExportUtil {
      * @param txt 文本
      * @return ZKNodeExport
      */
-    public static ZKNodeExport fromTxt(@NonNull String txt) {
+    public static ZKNodeExport fromTxt( String txt) {
         JulLog.info("txt: {}", txt);
         ZKNodeExport export = new ZKNodeExport();
         export.setNodes(new ArrayList<>());

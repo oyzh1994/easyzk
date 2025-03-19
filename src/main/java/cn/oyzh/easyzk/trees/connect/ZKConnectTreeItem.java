@@ -15,12 +15,9 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
@@ -60,7 +57,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      */
     private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
 
-    public ZKConnectTreeItem(@NonNull ZKConnect value, @NonNull RichTreeView treeView) {
+    public ZKConnectTreeItem( ZKConnect value,  RichTreeView treeView) {
         super(treeView);
         super.setSortable(false);
         this.value(value);
@@ -295,7 +292,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      *
      * @param value zk信息
      */
-    public void value(@NonNull ZKConnect value) {
+    public void value( ZKConnect value) {
         this.value = value;
         this.client = new ZKClient(value);
         this.client.stateProperty().addListener((observable, o, n) -> {

@@ -1,8 +1,6 @@
 package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.AuthInfo;
 import org.apache.curator.framework.CuratorFramework;
@@ -20,7 +18,7 @@ import java.util.function.Consumer;
  * @author oyzh
  * @since 2023/04/25
  */
-@UtilityClass
+
 public class ZKClientUtil {
 
     /**
@@ -32,7 +30,7 @@ public class ZKClientUtil {
      * @param sessionTimeoutMs    会话超时毫秒值
      * @return zk客户端
      */
-    public static CuratorFramework build(@NonNull String host, @NonNull RetryPolicy retryPolicy, int connectionTimeoutMs,
+    public static CuratorFramework build( String host,  RetryPolicy retryPolicy, int connectionTimeoutMs,
                                          int sessionTimeoutMs, List<AuthInfo> authInfos, boolean compatibility, String iid, Consumer<ZooKeeper> zooKeeperConsumer) {
         ExecutorService service = Executors.newCachedThreadPool();
         // 构建builder

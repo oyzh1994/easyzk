@@ -35,7 +35,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.NonNull;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.data.Stat;
@@ -408,7 +407,7 @@ public class ZKAddACLController extends StageController {
      * @param acl 权限
      * @return 结果
      */
-    private boolean addACL(@NonNull ACL acl) {
+    private boolean addACL( ACL acl) {
         return this.addACL(List.of(acl));
     }
 
@@ -418,7 +417,7 @@ public class ZKAddACLController extends StageController {
      * @param list 权限列表
      * @return 结果
      */
-    private boolean addACL(@NonNull List<ACL> list) {
+    private boolean addACL( List<ACL> list) {
         try {
             Stat stat = this.zkClient.addACL(this.zkItem.nodePath(), list);
             if (stat != null) {

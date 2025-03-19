@@ -9,7 +9,6 @@ import cn.oyzh.store.jdbc.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -97,7 +96,7 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
      * @param auth 认证信息
      * @return 当前认证信息
      */
-    public ZKAuth copy(@NonNull ZKAuth auth) {
+    public ZKAuth copy( ZKAuth auth) {
         this.iid = auth.iid;
         this.uid = auth.uid;
         this.user = auth.user;

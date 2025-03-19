@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.test;
 
-import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.system.RuntimeUtil;
+import cn.oyzh.common.thread.TaskManager;
 import org.junit.Test;
 
 import java.io.File;

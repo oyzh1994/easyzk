@@ -5,7 +5,6 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
 import cn.oyzh.fx.plus.tableview.TableViewUtil;
-import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class ZKFilterVO extends ZKFilter {
      * @param filter zk过滤对象
      * @return zk过滤vo对象
      */
-    public static ZKFilterVO convert(@NonNull ZKFilter filter) {
+    public static ZKFilterVO convert( ZKFilter filter) {
         ZKFilterVO filterVO = new ZKFilterVO();
         filterVO.copy(filter);
         return filterVO;
@@ -36,7 +35,7 @@ public class ZKFilterVO extends ZKFilter {
      * @param list zk过滤列表
      * @return zk过滤vo列表
      */
-    public static List<ZKFilterVO> convert(@NonNull List<ZKFilter> list) {
+    public static List<ZKFilterVO> convert( List<ZKFilter> list) {
         List<ZKFilterVO> voList = new ArrayList<>(list.size());
         for (ZKFilter filter : list) {
             voList.add(convert(filter));

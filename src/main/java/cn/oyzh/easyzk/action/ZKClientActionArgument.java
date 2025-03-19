@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.action;
 
-import lombok.Data;
 
 /**
  * @author oyzh

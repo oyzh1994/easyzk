@@ -16,7 +16,7 @@
 // * @author oyzh
 // * @since 2025-01-23
 // */
-//@UtilityClass
+//
 //public class ZKDataManager {
 //
 //    private static final Queue<ZKDataTask> QUEUE = new ConcurrentLinkedQueue<>();

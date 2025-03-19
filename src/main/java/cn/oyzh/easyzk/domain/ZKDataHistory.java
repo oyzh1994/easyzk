@@ -4,7 +4,6 @@ import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -79,7 +78,7 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
      * @param history 过滤信息
      * @return 当前对象
      */
-    public ZKDataHistory copy(@NonNull ZKDataHistory history) {
+    public ZKDataHistory copy( ZKDataHistory history) {
         this.iid = history.iid;
         this.data = history.data;
         this.path = history.path;

@@ -21,7 +21,6 @@ import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.jdbc.JdbcConst;
 import cn.oyzh.store.jdbc.JdbcDialect;
 import cn.oyzh.store.jdbc.JdbcManager;
-import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024-09-23
  */
-@UtilityClass
+
 public class ZKStoreUtil {
 
     /**

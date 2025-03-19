@@ -9,7 +9,6 @@ import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.query.ZKQueryTextAreaPane;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;

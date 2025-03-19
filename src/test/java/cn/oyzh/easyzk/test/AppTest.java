@@ -1,10 +1,6 @@
 package cn.oyzh.easyzk.test;
 
-import com.sun.tools.javac.Main;
-
-import java.io.File;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * @author oyzh

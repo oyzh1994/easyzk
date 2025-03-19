@@ -10,8 +10,6 @@ import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.i18n.I18nManager;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Id;
@@ -27,7 +25,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2022/6/2
  */
-@UtilityClass
+
 public class ZKACLUtil {
 
     /**
@@ -60,7 +58,7 @@ public class ZKACLUtil {
      * @param idVal id值
      * @return id信息
      */
-    public static FriendlyInfo<ACL> parseId(@NonNull Id idVal) {
+    public static FriendlyInfo<ACL> parseId( Id idVal) {
         FriendlyInfo<ACL> idInfo = new FriendlyInfo<>();
         idInfo.name("id");
         if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
@@ -91,7 +89,7 @@ public class ZKACLUtil {
      * @param schemeStr 认证方式字符
      * @return 认证方式信息
      */
-    public static FriendlyInfo<ACL> parseScheme(@NonNull String schemeStr) {
+    public static FriendlyInfo<ACL> parseScheme( String schemeStr) {
         FriendlyInfo<ACL> scheme = new FriendlyInfo<>();
         scheme.name("scheme");
         scheme.value(schemeStr);
@@ -203,7 +201,7 @@ public class ZKACLUtil {
      * @param perms 权限
      * @return int值
      */
-    public static int toPermInt(@NonNull String perms) {
+    public static int toPermInt( String perms) {
         perms = perms.trim().toLowerCase();
         if (perms.isEmpty() || perms.length() > 5) {
             throw new ZKException(I18nHelper.invalidPerms());
@@ -283,7 +281,7 @@ public class ZKACLUtil {
      *
      * @param ip ip数据
      */
-    public static void checkIP(@NonNull String ip) {
+    public static void checkIP( String ip) {
         String[] segments = ip.split("/");
         if (!RegexUtil.isIPV4(segments[0])) {
             throw new ZKException(segments[0] + I18nResourceBundle.i18nString("zk.aclTip2"));

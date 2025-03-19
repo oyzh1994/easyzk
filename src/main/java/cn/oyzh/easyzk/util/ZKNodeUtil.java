@@ -9,8 +9,6 @@ import cn.oyzh.easyzk.exception.ZKException;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
@@ -28,7 +26,7 @@ import java.util.function.Predicate;
  * @author oyzh
  * @since 2020/11/10
  */
-@UtilityClass
+
 public class ZKNodeUtil {
 
     /**
@@ -58,7 +56,7 @@ public class ZKNodeUtil {
      * @param client zk操作器
      * @return zk节点
      */
-    public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path) throws Exception {
+    public static ZKNode getNode( ZKClient client,  String path) throws Exception {
         return getNode(client, path, FULL_PROPERTIES);
     }
 
@@ -69,7 +67,7 @@ public class ZKNodeUtil {
      * @param client zk操作器
      * @return zk节点
      */
-    public static ZKNode getNode(@NonNull ZKClient client, @NonNull String path, @NonNull String properties) throws Exception {
+    public static ZKNode getNode( ZKClient client,  String path,  String properties) throws Exception {
         if (!path.contains("/")) {
             throw new ZKException("path:[" + path + "]" + I18nHelper.invalid());
         }
@@ -131,7 +129,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshData(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+    public void refreshData( ZKClient client,  ZKNode node) throws Exception {
         long start = System.currentTimeMillis();
         node.setNodeData(client.getData(node.nodePath()));
         long end = System.currentTimeMillis();
@@ -145,7 +143,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshAcl(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+    public void refreshAcl( ZKClient client,  ZKNode node) throws Exception {
         node.acl(client.getACL(node.nodePath()));
     }
 
@@ -155,7 +153,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshQuota(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+    public void refreshQuota( ZKClient client,  ZKNode node) throws Exception {
         node.quota(client.listQuota(node.nodePath()));
     }
 
@@ -165,7 +163,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshStat(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+    public void refreshStat( ZKClient client,  ZKNode node) throws Exception {
         node.stat(client.checkExists(node.nodePath()));
     }
 
@@ -175,7 +173,7 @@ public class ZKNodeUtil {
      * @param client zk客户端
      * @param node   zk节点
      */
-    public void refreshNode(@NonNull ZKClient client, @NonNull ZKNode node) throws Exception {
+    public void refreshNode( ZKClient client,  ZKNode node) throws Exception {
         ZKNode n = ZKNodeUtil.getNode(client, node.nodePath());
         node.copy(n);
     }
@@ -236,7 +234,7 @@ public class ZKNodeUtil {
      * @param childPath  子路径
      * @return 连接后的路径
      */
-    public static String concatPath(@NonNull String parentPath, @NonNull String childPath) {
+    public static String concatPath( String parentPath,  String childPath) {
         if (parentPath.endsWith("/") && childPath.startsWith("/")) {
             return parentPath + childPath.substring(1);
         }
@@ -265,7 +263,7 @@ public class ZKNodeUtil {
 //     * @param parentPath 父节点路径
 //     * @return 子节点列表
 //     */
-//    public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath) throws Exception {
+//    public static List<ZKNode> getChildNode( ZKClient client,  String parentPath) throws Exception {
 //        return getChildNode(client, parentPath, FULL_PROPERTIES, null);
 //    }
 
@@ -278,7 +276,7 @@ public class ZKNodeUtil {
 //     * @param filter     过滤器
 //     * @return 子节点列表
 //     */
-//    public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, @NonNull String properties, Predicate<String> filter) throws Exception {
+//    public static List<ZKNode> getChildNode( ZKClient client,  String parentPath,  String properties, Predicate<String> filter) throws Exception {
 //        List<ZKNode> list = new ArrayList<>();
 //        // 获取子节点
 //        List<String> children = client.getChildren(parentPath);
@@ -337,7 +335,7 @@ public class ZKNodeUtil {
      * @param limit         过滤器
      * @return 子节点列表
      */
-    public static List<ZKNode> getChildNode(@NonNull ZKClient client, @NonNull String parentPath, List<String> existingNodes, int limit) throws Exception {
+    public static List<ZKNode> getChildNode( ZKClient client,  String parentPath, List<String> existingNodes, int limit) throws Exception {
         // 获取子节点
         List<String> children = null;
         try {
@@ -458,7 +456,7 @@ public class ZKNodeUtil {
      * @param error      错误处理
      * @param includeACL 是否包含acl
      */
-    public static void loopNode(@NonNull ZKClient client, @NonNull String path, Predicate<String> filter, @NonNull Consumer<ZKNode> success, BiConsumer<String, Exception> error, boolean includeACL) throws Exception {
+    public static void loopNode( ZKClient client,  String path, Predicate<String> filter,  Consumer<ZKNode> success, BiConsumer<String, Exception> error, boolean includeACL) throws Exception {
         // 获取节点
         try {
             if (filter == null || filter.test(path)) {

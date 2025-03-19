@@ -13,14 +13,11 @@ import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
@@ -52,7 +49,7 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItemValue> implemen
      */
     private final ZKConnectStore connectStore = ZKConnectStore.INSTANCE;
 
-    public ZKGroupTreeItem(@NonNull ZKGroup group, @NonNull RichTreeView treeView) {
+    public ZKGroupTreeItem( ZKGroup group,  RichTreeView treeView) {
         super(treeView);
         this.value = group;
         this.setValue(new ZKGroupTreeItemValue(this));
@@ -158,12 +155,12 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItemValue> implemen
     }
 
     @Override
-    public void addConnect(@NonNull ZKConnect zkConnect) {
+    public void addConnect( ZKConnect zkConnect) {
         this.addConnectItem(new ZKConnectTreeItem(zkConnect, this.getTreeView()));
     }
 
     @Override
-    public void addConnectItem(@NonNull ZKConnectTreeItem item) {
+    public void addConnectItem( ZKConnectTreeItem item) {
         if (!this.containsChild(item)) {
             if (!Objects.equals(item.value().getGroupId(), this.value.getGid())) {
                 item.value().setGroupId(this.value.getGid());
@@ -174,14 +171,14 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItemValue> implemen
     }
 
     @Override
-    public void addConnectItems(@NonNull List<ZKConnectTreeItem> items) {
+    public void addConnectItems( List<ZKConnectTreeItem> items) {
         if (CollectionUtil.isNotEmpty(items)) {
             this.addChild((List) items);
         }
     }
 
     @Override
-    public boolean delConnectItem(@NonNull ZKConnectTreeItem item) {
+    public boolean delConnectItem( ZKConnectTreeItem item) {
         // 删除连接
         if (this.connectStore.delete(item.value())) {
             this.removeChild(item);

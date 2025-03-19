@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.zk;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.curator.framework.CuratorFramework;
@@ -40,11 +39,11 @@ public class ZKTreeListener implements TreeCacheListener {
     @Setter
     private Integer maxTimeEffect = 10 * 1000;
 
-    public ZKTreeListener(@NonNull ZKClient zkClient) {
+    public ZKTreeListener( ZKClient zkClient) {
         this("/", zkClient);
     }
 
-    public ZKTreeListener(@NonNull String path, @NonNull ZKClient zkClient) {
+    public ZKTreeListener( String path,  ZKClient zkClient) {
         this.path = path;
         this.zkClient = zkClient;
     }

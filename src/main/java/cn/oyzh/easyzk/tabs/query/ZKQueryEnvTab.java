@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.tabs.query;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
-import org.apache.zookeeper.data.ClientInfo;
 
 import java.util.List;
 

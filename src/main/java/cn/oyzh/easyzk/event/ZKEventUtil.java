@@ -44,13 +44,13 @@ import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAboutEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
-import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
 import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
@@ -65,8 +65,6 @@ import cn.oyzh.fx.gui.event.Layout1Event;
 import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import javafx.scene.control.TreeItem;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.util.List;
@@ -77,7 +75,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/9/18
  */
-@UtilityClass
+
 public class ZKEventUtil {
 
     /**
@@ -269,7 +267,7 @@ public class ZKEventUtil {
     /**
      * 触发认证添加事件
      */
-    public static void authAuthed(@NonNull ZKNodeTreeItem item, boolean success, String user, String password) {
+    public static void authAuthed( ZKNodeTreeItem item, boolean success, String user, String password) {
         ZKAuthAuthedEvent event = new ZKAuthAuthedEvent();
         event.data(item);
         event.user(user);

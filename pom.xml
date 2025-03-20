@@ -111,18 +111,6 @@
             <artifactId>ssh</artifactId>
         </dependency>
 
-        <!-- 事件模块 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>event</artifactId>
-        </dependency>
-
-        <!-- 存储模块 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>store</artifactId>
-        </dependency>
-
         <!-- fx-富文本模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
@@ -147,12 +135,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-        </dependency>
-
-        <!-- ssh类库 -->
-        <dependency>
-            <groupId>com.github.mwiede</groupId>
-            <artifactId>jsch</artifactId>
         </dependency>
 
 <!--        &lt;!&ndash;  lombok&ndash;&gt;-->

@@ -85,8 +85,8 @@ public class ZKExportConnectController extends StageController {
         }
         try {
             FileUtil.writeUtf8String(export.toJSONString(), this.exportFile);
-            MessageBox.okToast(I18nHelper.exportConnectionSuccess());
             this.closeWindow();
+            MessageBox.okToast(I18nHelper.exportConnectionSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex, I18nHelper.exportConnectionFail());
         }

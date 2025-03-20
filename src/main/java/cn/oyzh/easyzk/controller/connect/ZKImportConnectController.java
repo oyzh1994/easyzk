@@ -101,9 +101,9 @@ public class ZKImportConnectController extends StageController {
                 }
             }
             if (success) {
-                MessageBox.okToast(I18nHelper.importConnectionSuccess());
                 ZKEventUtil.connectImported();
                 this.closeWindow();
+                MessageBox.okToast(I18nHelper.importConnectionSuccess());
             } else {
                 MessageBox.warn(I18nHelper.importConnectionFail());
             }

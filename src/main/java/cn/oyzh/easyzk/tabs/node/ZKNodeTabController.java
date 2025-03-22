@@ -48,7 +48,7 @@ import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.node.NodeResizer;
+import cn.oyzh.fx.plus.node.NodeWidthResizer;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -1016,7 +1016,7 @@ public class ZKNodeTabController extends RichTabController {
             }
         });
         // 拉伸辅助
-        NodeResizer resizer = new NodeResizer(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        NodeWidthResizer resizer = new NodeWidthResizer(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
         resizer.widthLimit(240f, 750f);
         resizer.initResizeEvent();
         // 过滤

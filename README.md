@@ -8,14 +8,14 @@ https://gitee.com/oyzh1994/easyzk/releases
 ###### 启动入口
 cn.oyzh.easyzk.EasyZKBootstrap.main  
 注意，如果要运行项目，最好切换到最新分支，不然可能启动不了，主分支master代码是定期合并进去  
-ide建议idea社区版或者专业版，另外需要安装lombok插件(后续考虑去掉)
+ide建议idea社区版或者专业版
 
 ###### 依赖说明
 1. base工程  
  https://gitee.com/oyzh1994/base  
 2. fx-base工程  
  https://gitee.com/oyzh1994/fx-base  
-3. jdk版本要求23  
+3. jdk版本要求24  
 注意，如果是linux的arm平台，建议使用aws的jdk，其他jdk可能缺失hsdis类库，其他情况下优先使用openjdk
 awsjdk https://docs.aws.amazon.com/corretto/latest/corretto-23-ug/downloads-list.html
 openjdk https://jdk.java.net/archive/
@@ -32,7 +32,7 @@ src -> 项目相关代码
 mvn -X clean package -DskipTests
 
 ###### 注意
-检查cmd里面java -version的版本号和项目版本号是否一致，否则可能出现无效的目标版本号23之类的问题  
+检查cmd里面java -version的版本号和项目版本号是否一致，否则可能出现无效的目标版本号24之类的问题  
 另外建议国内使用阿里镜像加速地址  
 
 # 程序打包

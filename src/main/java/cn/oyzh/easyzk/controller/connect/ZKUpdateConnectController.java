@@ -19,10 +19,14 @@ import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.easyzk.zk.ZKSASLUtil;
+import cn.oyzh.fx.gui.combobox.SSHAuthMethodCombobox;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
+import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
 import cn.oyzh.fx.plus.FXConst;
+import cn.oyzh.fx.plus.chooser.FXChooser;
+import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
@@ -39,6 +43,7 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -162,7 +167,19 @@ public class ZKUpdateConnectController extends StageController {
     private ClearableTextField sshPassword;
 
     /**
-     * ssh面板
+     * ssh认证方式
+     */
+    @FXML
+    private SSHAuthMethodCombobox sshAuthMethod;
+
+    /**
+     * ssh证书
+     */
+    @FXML
+    private ReadOnlyTextField sshCertificate;
+
+    /**
+     * sasl面板
      */
     @FXML
     private FXTab saslTab;
@@ -273,7 +290,9 @@ public class ZKUpdateConnectController extends StageController {
         sshConfig.setUser(this.sshUser.getText());
         sshConfig.setPort(this.sshPort.getIntValue());
         sshConfig.setPassword(this.sshPassword.getText());
-        sshConfig.setTimeout(this.sshTimeout.getIntValue());
+        sshConfig.setAuthMethod(this.sshAuthMethod.getAuthType());
+        sshConfig.setTimeout(this.sshTimeout.getIntValue() * 1000);
+        sshConfig.setCertificatePath(this.sshCertificate.getText());
         return sshConfig;
     }
 
@@ -307,10 +326,12 @@ public class ZKUpdateConnectController extends StageController {
             zkConnect.setConnectTimeOut(3);
             zkConnect.setId(this.zkConnect.getId());
             zkConnect.setSaslAuth(this.saslAuth.isSelected());
+            // ssh转发
             zkConnect.setSshForward(this.sshForward.isSelected());
             if (zkConnect.isSSHForward()) {
                 zkConnect.setSshConfig(this.getSSHConfig());
             }
+            // sasl认证
             if (zkConnect.isSASLAuth()) {
                 zkConnect.setSaslConfig(this.getSASLConfig());
             }
@@ -404,10 +425,20 @@ public class ZKUpdateConnectController extends StageController {
         this.authSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initAuthDataList());
         // 过滤监听
         this.filterSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initFilterDataList());
+        // ssh认证方式
+        this.sshAuthMethod.selectedIndexChanged((observable, oldValue, newValue) -> {
+            if (this.sshAuthMethod.isPasswordAuth()) {
+                this.sshPassword.display();
+                NodeGroupUtil.disappear(this.tabPane, "sshCertificate");
+            } else {
+                this.sshPassword.disappear();
+                NodeGroupUtil.display(this.tabPane, "sshCertificate");
+            }
+        });
     }
 
     @Override
-    public void onWindowShown( WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
         this.zkConnect = this.getWindowProp("zkConnect");
         this.name.setText(this.zkConnect.getName());
@@ -426,8 +457,14 @@ public class ZKUpdateConnectController extends StageController {
             this.sshHost.setText(sshConfig.getHost());
             this.sshUser.setText(sshConfig.getUser());
             this.sshPort.setValue(sshConfig.getPort());
-            this.sshTimeout.setValue(sshConfig.getTimeout());
             this.sshPassword.setText(sshConfig.getPassword());
+            this.sshTimeout.setValue(sshConfig.getTimeoutSecond());
+            this.sshCertificate.setText(sshConfig.getCertificatePath());
+            if (sshConfig.isPasswordAuth()) {
+                this.sshAuthMethod.selectFirst();
+            } else {
+                this.sshAuthMethod.select(1);
+            }
         }
         // sasl配置
         this.saslAuth.setSelected(this.zkConnect.isSASLAuth());
@@ -536,5 +573,16 @@ public class ZKUpdateConnectController extends StageController {
         String data = I18nHelper.userName() + " " + auth.getUser() + System.lineSeparator()
                 + I18nHelper.password() + " " + auth.getPassword();
         ClipboardUtil.setStringAndTip(data);
+    }
+
+    /**
+     * 选择ssh证书
+     */
+    @FXML
+    private void chooseSSHCertificate() {
+        File file = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), FXChooser.allExtensionFilter());
+        if (file != null) {
+            this.sshCertificate.setText(file.getPath());
+        }
     }
 }

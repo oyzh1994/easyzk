@@ -3,7 +3,9 @@ package cn.oyzh.easyzk.query;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
+import javafx.scene.text.Font;
 
 import java.util.Set;
 
@@ -44,20 +46,22 @@ public class ZKQueryTextAreaPane extends RichDataTextAreaPane {
         this.setOnKeyReleased(event -> this.promptPopup.prompt(this, event));
     }
 
-    @Override
-    public void initNode() {
-        this.initFont();
-        this.initContentPrompts();
-    }
+//    @Override
+//    public void initNode() {
+//        this.initFont();
+//        this.initContentPrompts();
+//    }
 
-    protected void initFont() {
-        // 禁用字体管理
-        super.disableFont();
+    @Override
+    protected Font initFont() {
+//        // 禁用字体管理
+//        super.disableFont();
         // 初始化字体
         ZKSetting setting = ZKSettingStore.SETTING;
-        this.setFontSize(setting.getQueryFontSize());
-        this.setFontFamily(setting.getQueryFontFamily());
-        this.setFontWeight2(setting.getQueryFontWeight());
+//        this.setFontSize(setting.getQueryFontSize());
+//        this.setFontFamily(setting.getQueryFontFamily());
+//        this.setFontWeight2(setting.getQueryFontWeight());
+        return FontManager.toFont(setting.queryFontConfig());
     }
 
     @Override

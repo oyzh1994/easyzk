@@ -11,10 +11,12 @@ import cn.oyzh.easyzk.exception.ZKExceptionParser;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.text.Font;
 import org.apache.zookeeper.ZooKeeper;
 
 /**
@@ -34,20 +36,21 @@ public class ZKTerminalTextAreaPane extends TerminalTextAreaPane {
     }
 
     @Override
-    protected void initTextArea() {
-        super.initTextArea();
+    public void initNode() {
+        super.initNode();
         super.initContentPrompts();
     }
 
     @Override
-    protected void initFont() {
-        // 禁用字体管理
-        super.disableFont();
+    protected Font initFont() {
+//        // 禁用字体管理
+//        super.disableFont();
         // 初始化字体
         ZKSetting setting = ZKSettingStore.SETTING;
-        this.setFontSize(setting.getTerminalFontSize());
-        this.setFontFamily(setting.getTerminalFontFamily());
-        this.setFontWeight2(setting.getTerminalFontWeight());
+//        this.setFontSize(setting.getTerminalFontSize());
+//        this.setFontFamily(setting.getTerminalFontFamily());
+//        this.setFontWeight2(setting.getTerminalFontWeight());
+        return FontManager.toFont(setting.terminalFontConfig());
     }
 
     /**

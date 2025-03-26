@@ -38,7 +38,7 @@ import java.util.List;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "auth/zkAuthNode.fxml"
+        value = FXConst.FXML_PATH + "node/zkAuthNode.fxml"
 )
 public class ZKAuthNodeController extends StageController {
 

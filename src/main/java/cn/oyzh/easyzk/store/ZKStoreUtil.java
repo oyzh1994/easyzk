@@ -41,7 +41,7 @@ public class ZKStoreUtil {
     public static void init() {
         JdbcConst.dbCacheSize(1024);
         JdbcConst.dbDialect(JdbcDialect.H2);
-        JdbcConst.dbFile(ZKConst.STORE_PATH + "db");
+        JdbcConst.dbFile(ZKConst.getStorePath() + "db");
         try {
             JdbcManager.takeoff();
         } catch (Exception ex) {

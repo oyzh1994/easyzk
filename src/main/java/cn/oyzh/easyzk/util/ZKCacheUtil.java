@@ -21,7 +21,7 @@ public class ZKCacheUtil {
      * @return 基础路径
      */
     private static String baseDir(int hashCode) {
-        return ZKConst.NODE_CACHE_PATH + hashCode + "_";
+        return ZKConst.getNodeCachePath() + hashCode + "_";
     }
 
     /**

@@ -108,13 +108,13 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
         this.closePopup();
     }
 
-    @Override
-    protected Color getButtonColor() {
-        if (!ThemeManager.isDarkMode()) {
-            return Color.valueOf("#696969");
-        }
-        return super.getButtonColor();
-    }
+//    @Override
+//    protected Color getButtonColor() {
+//        if (!ThemeManager.isDarkMode()) {
+//            return Color.valueOf("#696969");
+//        }
+//        return super.getButtonColor();
+//    }
 
     @Override
     protected void layoutChildren(double x, double y, double w, double h) {

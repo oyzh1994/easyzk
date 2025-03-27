@@ -86,13 +86,13 @@ public class EasyZKApp extends FXApplication implements EventListener {
             System.setProperty("prism.text", "t2k");
             System.setProperty("prism.lcdtext", "false");
             SysConst.projectName(PROJECT.getName());
-            SysConst.storeDir(ZKConst.STORE_PATH);
+            SysConst.storeDir(ZKConst.getStorePath());
+            SysConst.cacheDir(ZKConst.getCachePath());
             JulLog.info("项目启动中...");
             // 储存初始化
             ZKStoreUtil.init();
             // 注册sasl处理器
             ZKSASLUtil.registerConfiguration();
-            SysConst.cacheDir(ZKConst.CACHE_PATH);
             if (OSUtil.isWindows()) {
                 FXConst.appIcon(ZKConst.ICON_32_PATH);
             } else {

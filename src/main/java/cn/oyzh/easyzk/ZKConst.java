@@ -50,9 +50,9 @@ public class ZKConst {
      */
     public static String getStorePath() {
         if (JarUtil.isInJar()) {
-            return System.getProperty("user.home") + File.separator + ".easyzk_dev" + File.separator;
+            return System.getProperty("user.home") + File.separator + ".easyzk" + File.separator;
         }
-        return System.getProperty("user.home") + File.separator + ".easyzk" + File.separator;
+        return System.getProperty("user.home") + File.separator + ".easyzk_dev" + File.separator;
     }
 
     /**

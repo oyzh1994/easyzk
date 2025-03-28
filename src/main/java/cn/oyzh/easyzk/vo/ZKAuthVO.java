@@ -4,8 +4,7 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.util.TableViewUtil;
-import lombok.NonNull;
+import cn.oyzh.fx.plus.tableview.TableViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +16,14 @@ import java.util.List;
  * @since 2022/6/6
  */
 public class ZKAuthVO extends ZKAuth {
+
+    public ZKAuthVO() {
+        super();
+    }
+
+    public ZKAuthVO(String iid, String user, String password) {
+        super(iid, user, password);
+    }
 
     /**
      * 复制
@@ -36,7 +43,7 @@ public class ZKAuthVO extends ZKAuth {
      * @param list zk认证列表
      * @return zk认证vo列表
      */
-    public static List<ZKAuthVO> convert(@NonNull List<ZKAuth> list) {
+    public static List<ZKAuthVO> convert( List<ZKAuth> list) {
         List<ZKAuthVO> voList = new ArrayList<>(list.size());
         for (ZKAuth zkAuth : list) {
             voList.add(convert(zkAuth));

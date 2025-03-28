@@ -2,32 +2,22 @@ package cn.oyzh.easyzk.popups;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.qrcode.QRCodeUtil;
-import cn.oyzh.common.util.ResourceUtil;
-import cn.oyzh.easyzk.ZKConst;
 import cn.oyzh.easyzk.zk.ZKNode;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.PopupController;
-import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.PopupAttribute;
-import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 
-import static atlantafx.base.controls.Popover.ArrowLocation.BOTTOM_LEFT;
 import static atlantafx.base.controls.Popover.ArrowLocation.TOP_CENTER;
 import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
-import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_TOP_LEFT;
 
 
 /**

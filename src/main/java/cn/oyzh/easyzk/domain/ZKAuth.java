@@ -6,10 +6,6 @@ import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,9 +16,6 @@ import java.util.Objects;
  * @author oyzh
  * @since 2022/6/9
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table("t_auth")
 public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
 
@@ -58,6 +51,9 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
      */
     @Column
     private Boolean enable;
+
+    public ZKAuth() {
+    }
 
     public ZKAuth(String iid, String user, String password) {
         this.iid = iid;
@@ -97,7 +93,7 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
      * @param auth 认证信息
      * @return 当前认证信息
      */
-    public ZKAuth copy(@NonNull ZKAuth auth) {
+    public ZKAuth copy( ZKAuth auth) {
         this.iid = auth.iid;
         this.uid = auth.uid;
         this.user = auth.user;
@@ -112,5 +108,41 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
 
     public boolean isEnable() {
         return this.enable == null || this.enable;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
     }
 }

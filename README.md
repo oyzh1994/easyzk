@@ -6,14 +6,19 @@
 https://gitee.com/oyzh1994/easyzk/releases
 
 ###### 启动入口
-cn.oyzh.easyzk.EasyZKBootstrap.main
+cn.oyzh.easyzk.EasyZKBootstrap.main  
+注意，如果要运行项目，最好切换到最新分支，不然可能启动不了，主分支master代码是定期合并进去  
+ide建议idea社区版或者专业版
 
 ###### 依赖说明
 1. base工程  
- https://gitee.com/oyzh1994/base
+ https://gitee.com/oyzh1994/base  
 2. fx-base工程  
- https://gitee.com/oyzh1994/fx-base
-3. jdk版本要求23
+ https://gitee.com/oyzh1994/fx-base  
+3. jdk版本要求24  
+注意，如果是linux的arm平台，建议使用aws的jdk，其他jdk可能缺失hsdis类库，其他情况下优先使用openjdk
+awsjdk https://docs.aws.amazon.com/corretto/latest/corretto-24-ug/downloads-list.html
+openjdk https://jdk.java.net/archive/
 
 ###### 结构说明 
 docker -> docker配置文件  
@@ -27,7 +32,8 @@ src -> 项目相关代码
 mvn -X clean package -DskipTests
 
 ###### 注意
-检查cmd里面java -version的版本号和项目版本号是否一致，否则可能出现无效的目标版本号21之类的问题
+检查cmd里面java -version的版本号和项目版本号是否一致，否则可能出现无效的目标版本号24之类的问题  
+另外建议国内使用阿里镜像加速地址  
 
 # 程序打包
 ###### 图标转换
@@ -36,39 +42,56 @@ https://anyconv.com/png-to-icns-converter/
 ###### png转ico
 https://www.freeconvert.com/zh/png-to-ico
 
-###### windows x64
+###### windows
 ###### exe、msi打包依赖
 https://github.com/wixtoolset/wix3/releases  
 ###### (推荐)exe打包 
-配置 -> package -> win -> win_amd64_pack_config.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_amd64_exe  
+配置 -> package -> win -> win_exe.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_exe  
 ###### msi打包 
-配置 -> package -> win -> win_amd64_msi.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_amd64_msi  
+配置 -> package -> win -> win_msi.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_msi  
 ###### app-image打包
-配置 -> package -> win -> win_amd64_image.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_amd64_image  
+配置 -> package -> win -> win_image.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_win_image  
 ###### 注意事项
 exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示程序图标的问题
 
-###### macos arm64
+###### macos
 ###### (推荐)pkg打包
-配置 -> package -> macos -> macos_arm64_pkg.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_pkg
+配置 -> package -> macos -> macos_pkg.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_pkg
 ###### dmg打包 
-配置 -> package -> macos -> macos_arm64_dmg.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_dmg  
+配置 -> package -> macos -> macos_dmg.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_dmg  
 ###### app-image打包
-配置 -> package -> macos -> macos_arm64_image.json  
-入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_arm64_image  
+配置 -> package -> macos -> macos_image.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_macos_image  
 ###### 注意事项
 dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
+
+###### linux(以uos为例，debian系列通用)
+###### deb打包依赖
+sudo apt install fakeroot
+###### (推荐)deb打包
+配置 -> package -> linux -> linux_deb.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_linux_deb
+###### app-image打包
+配置 -> package -> linux -> linux_image.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_linux_image
 
 # Docker
 ###### docker启动zk(单个)
 docker run -itd -p 2181:2181 zookeeper
 ###### docker启动zk(集群)
 docker-compose -f .\zk-cluster-compose.yml up -d
+
+# Linux系统
+###### 执行deb安装提示安装失败
+如果错误详情发现这个错误
+xdg-desktop-menu: No writable system menu directory found.  
+执行以下操作，然后重新执行安装  
+sudo mkdir /usr/share/desktop-directories/  
 
 # Macos系统
 ###### mac执行dmg安装后，启动台不显示程序图标解决方案
@@ -103,7 +126,7 @@ chmod -R 755 /路径/EasyZK.app(可拖入命令行窗口)
 ![img8.png](resource/md/img8.png)
 ###### 截图9
 ![img9.png](resource/md/img9.png)
-###### 截图8
+###### 截图10
 ![img10.png](resource/md/img10.png)
 ###### 截图11
 ![img11.png](resource/md/img11.png)

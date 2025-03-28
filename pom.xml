@@ -111,18 +111,6 @@
             <artifactId>ssh</artifactId>
         </dependency>
 
-        <!-- 事件模块 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>event</artifactId>
-        </dependency>
-
-        <!-- 存储模块 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>store</artifactId>
-        </dependency>
-
         <!-- fx-富文本模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
@@ -146,21 +134,15 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.3.232</version>
+            <version>${h2.version}</version>
         </dependency>
 
-        <!-- ssh类库 -->
-        <dependency>
-            <groupId>com.github.mwiede</groupId>
-            <artifactId>jsch</artifactId>
-        </dependency>
-
-        <!--  lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!--        &lt;!&ndash;  lombok&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
 
         <!-- fx打包 -->
         <dependency>
@@ -213,10 +195,10 @@
                     <mainClass>cn.oyzh.easyzk.EasyZKBootstrap</mainClass>
                     <!-- <layout>jar</layout> -->
                     <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
+<!--                        <exclude>-->
+<!--                            <groupId>org.projectlombok</groupId>-->
+<!--                            <artifactId>lombok</artifactId>-->
+<!--                        </exclude>-->
                         <exclude>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-jarmode-layertools</artifactId>

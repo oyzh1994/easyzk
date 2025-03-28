@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.fx.ZKDataTextAreaPane?>
+<?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FXVBox?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryDataTabController">
+        fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryDataTabController">
     <FXHBox realHeight="35" flexWidth="100%">
         <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0">
             <HBox.margin>

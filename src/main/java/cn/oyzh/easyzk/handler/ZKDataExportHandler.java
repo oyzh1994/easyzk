@@ -13,8 +13,6 @@ import cn.oyzh.store.file.FileHelper;
 import cn.oyzh.store.file.FileRecord;
 import cn.oyzh.store.file.FileWriteConfig;
 import cn.oyzh.store.file.TypeFileWriter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -29,8 +27,6 @@ import java.util.function.Predicate;
  * @author oyzh
  * @since 2024/11/26
  */
-@Setter
-@Accessors(fluent = true, chain = false)
 public class ZKDataExportHandler extends DataHandler {
 
     /**
@@ -195,6 +191,62 @@ public class ZKDataExportHandler extends DataHandler {
 
     public void compress(boolean compress) {
         this.config.compress(compress);
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public ZKClient getClient() {
+        return client;
+    }
+
+    public void setClient(ZKClient client) {
+        this.client = client;
+    }
+
+    public String getNodePath() {
+        return nodePath;
+    }
+
+    public void setNodePath(String nodePath) {
+        this.nodePath = nodePath;
+    }
+
+    public List<ZKFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<ZKFilter> filters) {
+        this.filters = filters;
+    }
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public void setBatchSize(int batchSize) {
+        this.batchSize = batchSize;
+    }
+
+    public boolean isIncludeACL() {
+        return includeACL;
+    }
+
+    public void setIncludeACL(boolean includeACL) {
+        this.includeACL = includeACL;
+    }
+
+    public FileWriteConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(FileWriteConfig config) {
+        this.config = config;
     }
 }
 

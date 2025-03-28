@@ -1,9 +1,7 @@
 package cn.oyzh.easyzk.terminal.fourletterword;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.Accessors;
+import org.apache.zookeeper.cli.CliCommand;
 
 /**
  * @author oyzh
@@ -11,8 +9,11 @@ import lombok.experimental.Accessors;
  */
 public class ZKConfCommandHandler extends ZKFourLetterWordCommandHandler<TerminalCommand> {
 
-    @Getter(AccessLevel.PROTECTED)
-    @Accessors(fluent = true)
     private final ZKFourLetterWordCommand furLetterWordCommand = new ZKConfCommand();
+
+    @Override
+    public ZKFourLetterWordCommand furLetterWordCommand() {
+        return this.furLetterWordCommand;
+    }
 
 }

@@ -6,9 +6,6 @@ import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,6 @@ import java.util.List;
  * @author oyzh
  * @since 2023/2/22
  */
-@Getter
 public class ZKConnectExport {
 
     /**
@@ -32,10 +28,41 @@ public class ZKConnectExport {
      */
     private String platform;
 
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public List<ZKGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<ZKGroup> groups) {
+        this.groups = groups;
+    }
+
+    public List<ZKConnect> getConnects() {
+        return connects;
+    }
+
+    public void setConnects(List<ZKConnect> connects) {
+        this.connects = connects;
+    }
+
     /**
      * 连接
      */
-    @Setter
     private List<ZKGroup> groups;
 
     /**
@@ -49,7 +76,7 @@ public class ZKConnectExport {
      * @param zkConnects 连接列表
      * @return ZKConnectExport
      */
-    public static ZKConnectExport fromConnects(@NonNull List<ZKConnect> zkConnects) {
+    public static ZKConnectExport fromConnects( List<ZKConnect> zkConnects) {
         ZKConnectExport export = new ZKConnectExport();
         Project project = Project.load();
         export.version = project.getVersion();
@@ -64,7 +91,7 @@ public class ZKConnectExport {
      * @param json json字符串
      * @return ZKInfoExport
      */
-    public static ZKConnectExport fromJSON(@NonNull String json) {
+    public static ZKConnectExport fromJSON( String json) {
         JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObject(json);
         ZKConnectExport export = new ZKConnectExport();

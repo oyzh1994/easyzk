@@ -4,8 +4,6 @@ import cn.oyzh.fx.gui.text.field.LimitTextField;
 import cn.oyzh.fx.plus.event.AnonymousEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Skin;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * zk节点过滤文本域
@@ -15,11 +13,17 @@ import lombok.Setter;
  */
 public class ZKNodeFilterTextField extends LimitTextField {
 
+    public EventHandler<AnonymousEvent<Object>> getOnSearch() {
+        return onSearch;
+    }
+
+    public void setOnSearch(EventHandler<AnonymousEvent<Object>> onSearch) {
+        this.onSearch = onSearch;
+    }
+
     /**
      * 搜索事件处理
      */
-    @Setter
-    @Getter
     private EventHandler<AnonymousEvent<Object>> onSearch;
 
     /**

@@ -2,7 +2,6 @@ package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.common.dto.FriendlyInfo;
 import cn.oyzh.easyzk.util.ZKACLUtil;
-import lombok.NonNull;
 import org.apache.zookeeper.data.ACL;
 
 /**
@@ -17,12 +16,12 @@ public class ZKACL extends ACL {
     public ZKACL() {
     }
 
-    public ZKACL(@NonNull ACL acl) {
+    public ZKACL( ACL acl) {
         this.setId(acl.getId());
         this.setPerms(acl.getPerms());
     }
 
-    public void setPerms(@NonNull String perms) {
+    public void setPerms( String perms) {
         super.setPerms(ZKACLUtil.toPermInt(perms));
     }
 
@@ -77,7 +76,7 @@ public class ZKACL extends ACL {
      * @param perm 权限类型
      * @return 结果
      */
-    public boolean hasPerm(@NonNull String perm) {
+    public boolean hasPerm( String perm) {
         String permStr = ZKACLUtil.toPermStr(this.getPerms());
         return permStr.contains(perm);
     }

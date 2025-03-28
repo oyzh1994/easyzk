@@ -4,10 +4,6 @@ import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -19,9 +15,6 @@ import java.util.Objects;
  * @author oyzh
  * @since 2022/12/20
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table("t_filter")
 public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
 
@@ -65,7 +58,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
      * @param filter 过滤信息
      * @return 当前对象
      */
-    public ZKFilter copy(@NonNull ZKFilter filter) {
+    public ZKFilter copy( ZKFilter filter) {
         this.kw = filter.kw;
         this.iid = filter.iid;
         this.uid = filter.uid;
@@ -90,5 +83,45 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
      */
     public boolean compare(String kw) {
         return Objects.equals(kw, this.kw);
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
+    }
+
+    public String getKw() {
+        return kw;
+    }
+
+    public void setKw(String kw) {
+        this.kw = kw;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    public boolean isPartMatch() {
+        return partMatch;
+    }
+
+    public void setPartMatch(boolean partMatch) {
+        this.partMatch = partMatch;
     }
 }

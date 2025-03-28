@@ -97,7 +97,7 @@ public class ZKNodeTab extends RichTab {
      * @return zk客户端
      */
     public ZKClient client() {
-        return this.treeItem() == null ? null : this.treeItem().client();
+        return this.treeItem() == null ? null : this.treeItem().getClient();
     }
 
     /**

@@ -5,11 +5,9 @@ import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
-import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ClientInfo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

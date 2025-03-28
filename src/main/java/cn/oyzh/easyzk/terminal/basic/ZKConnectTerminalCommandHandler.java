@@ -16,8 +16,8 @@ public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<Te
     @Override
     protected TerminalCommand parseCommand(String line, String[] args) {
         TerminalCommand terminalCommand = new TerminalCommand();
-        terminalCommand.args(args);
-        terminalCommand.command(line);
+        terminalCommand.setArgs(args);
+        terminalCommand.setCommand(line);
         return terminalCommand;
     }
 
@@ -41,9 +41,9 @@ public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<Te
     public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextAreaPane terminal) {
         if (terminal.isTemporary()) {
             if (terminal.isConnected()) {
-                terminal.client().closeQuiet();
+                terminal.getClient().closeQuiet();
             }
-            terminal.connect(command.command());
+            terminal.connect(command.getCommand());
         } else {
             terminal.outputByPrompt(I18nHelper.operationNotSupport());
         }

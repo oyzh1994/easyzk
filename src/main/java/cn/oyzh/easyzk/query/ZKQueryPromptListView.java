@@ -11,8 +11,6 @@ import cn.oyzh.fx.plus.util.ControlUtil;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.paint.Color;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +32,25 @@ public class ZKQueryPromptListView extends FXListView<FXHBox> {
      */
     private volatile int currentPickIndex = -1;
 
+    public int getCurrentPickIndex() {
+        return currentPickIndex;
+    }
+
+    public void setCurrentPickIndex(int currentPickIndex) {
+        this.currentPickIndex = currentPickIndex;
+    }
+
+    public Runnable getOnItemPicked() {
+        return onItemPicked;
+    }
+
+    public void setOnItemPicked(Runnable onItemPicked) {
+        this.onItemPicked = onItemPicked;
+    }
+
     /**
      * 节点选中事件
      */
-    @Getter
-    @Setter
     private Runnable onItemPicked;
 
     @Override

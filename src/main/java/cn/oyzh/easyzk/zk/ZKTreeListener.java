@@ -2,10 +2,6 @@ package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -18,33 +14,28 @@ import org.apache.zookeeper.data.Stat;
  * @author oyzh
  * @since 2020/4/17
  */
-@Accessors(fluent = true, chain = true)
 public class ZKTreeListener implements TreeCacheListener {
 
     /**
      * 监听路径
      */
-    @Getter
     private String path;
 
     /**
      * zk客户端
      */
-    @Getter
     private ZKClient zkClient;
 
     /**
      * 消息有效期
      */
-    @Getter
-    @Setter
     private Integer maxTimeEffect = 10 * 1000;
 
-    public ZKTreeListener(@NonNull ZKClient zkClient) {
+    public ZKTreeListener( ZKClient zkClient) {
         this("/", zkClient);
     }
 
-    public ZKTreeListener(@NonNull String path, @NonNull ZKClient zkClient) {
+    public ZKTreeListener( String path,  ZKClient zkClient) {
         this.path = path;
         this.zkClient = zkClient;
     }
@@ -99,5 +90,29 @@ public class ZKTreeListener implements TreeCacheListener {
         this.path = null;
         this.zkClient = null;
         this.maxTimeEffect = null;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public ZKClient getZkClient() {
+        return zkClient;
+    }
+
+    public void setZkClient(ZKClient zkClient) {
+        this.zkClient = zkClient;
+    }
+
+    public Integer getMaxTimeEffect() {
+        return maxTimeEffect;
+    }
+
+    public void setMaxTimeEffect(Integer maxTimeEffect) {
+        this.maxTimeEffect = maxTimeEffect;
     }
 }

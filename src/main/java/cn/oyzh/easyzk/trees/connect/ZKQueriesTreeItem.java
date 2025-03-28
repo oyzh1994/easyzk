@@ -35,7 +35,7 @@ public class ZKQueriesTreeItem extends RichTreeItem<ZKQueriesTreeItemValue> {
     }
 
     public ZKClient client() {
-        return this.parent().client();
+        return this.parent().getClient();
     }
 
     public ZKConnect zkConnect() {
@@ -51,7 +51,7 @@ public class ZKQueriesTreeItem extends RichTreeItem<ZKQueriesTreeItemValue> {
     }
 
     private void addQuery() {
-        ZKEventUtil.addQuery(this.parent().client());
+        ZKEventUtil.addQuery(this.parent().getClient());
     }
 
     @Override

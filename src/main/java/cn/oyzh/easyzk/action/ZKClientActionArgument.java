@@ -1,17 +1,31 @@
 package cn.oyzh.easyzk.action;
 
-import lombok.Data;
 
 /**
  * @author oyzh
  * @since 2025-01-02
  */
-@Data
 public class ZKClientActionArgument {
 
     private Object value;
 
     private String argument;
+
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
+    public String getArgument() {
+        return argument;
+    }
+
+    public void setArgument(String argument) {
+        this.argument = argument;
+    }
 
     public ZKClientActionArgument(String argument, Object value) {
         this.argument = argument;

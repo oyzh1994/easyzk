@@ -29,7 +29,7 @@ public class ZKClusterTabController extends SubTabController {
     @FXML
     private void refreshCluster() {
         // 集群信息
-        List<ZKClusterNode> clusterNodes = this.parent().client().clusterNodes();
+        List<ZKClusterNode> clusterNodes = this.parent().getClient().clusterNodes();
         this.clusterTable.setItem(clusterNodes);
     }
 

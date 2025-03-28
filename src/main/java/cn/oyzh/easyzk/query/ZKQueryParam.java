@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.query;
 
 import cn.oyzh.easyzk.util.ZKACLUtil;
-import lombok.Getter;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.ACL;
 
@@ -19,8 +18,11 @@ public class ZKQueryParam {
     /**
      * 内容
      */
-    @Getter
     private String content;
+
+    public String getContent() {
+        return content;
+    }
 
     /**
      * 参数

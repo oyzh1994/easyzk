@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyzk.popups.ZKFilterSettingPopupController" realHeight="80">
+        fx:controller="cn.oyzh.easyzk.popups.ZKFilterSettingPopupController" realHeight="80">
     <FXHBox>
         <FXCheckBox fx:id="searchPath" text="%base.path" selected="true">
             <HBox.margin>

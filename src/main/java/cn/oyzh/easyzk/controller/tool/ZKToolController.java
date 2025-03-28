@@ -122,7 +122,7 @@ public class ZKToolController extends StageController {
         this.cacheArea.setText("calc cache start.");
         ThreadUtil.start(() -> {
             try {
-                File dir = new File(ZKConst.CACHE_PATH);
+                File dir = new File(ZKConst.getCachePath());
                 this.doCalcCache(dir, new AtomicInteger(0), new LongAdder());
             } finally {
                 this.cacheArea.appendLine("calc cache finish.");
@@ -162,7 +162,7 @@ public class ZKToolController extends StageController {
         this.cacheArea.setText("clear cache start.");
         ThreadUtil.start(() -> {
             try {
-                File dir = new File(ZKConst.CACHE_PATH);
+                File dir = new File(ZKConst.getCachePath());
                 this.doClearCache(dir, new AtomicInteger(0), new LongAdder());
             } finally {
                 this.cacheArea.appendLine("clear cache finish.");

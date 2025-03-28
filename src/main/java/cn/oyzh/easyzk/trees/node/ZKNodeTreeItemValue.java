@@ -9,7 +9,6 @@ import cn.oyzh.fx.gui.svg.glyph.LockSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
-import lombok.NonNull;
 
 /**
  * zk树节点值
@@ -24,7 +23,7 @@ public class ZKNodeTreeItemValue extends RichTreeItemValue {
      */
     private final ZKSetting setting = ZKSettingStore.SETTING;
 
-    public ZKNodeTreeItemValue(@NonNull ZKNodeTreeItem item) {
+    public ZKNodeTreeItemValue( ZKNodeTreeItem item) {
         super(item);
         super.setRichMode(true);
     }

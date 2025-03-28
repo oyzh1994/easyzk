@@ -11,8 +11,6 @@ import cn.oyzh.store.file.FileHelper;
 import cn.oyzh.store.file.FileReadConfig;
 import cn.oyzh.store.file.FileRecord;
 import cn.oyzh.store.file.TypeFileReader;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
@@ -26,8 +24,6 @@ import java.util.List;
  * @author oyzh
  * @since 2024/11/26
  */
-@Setter
-@Accessors(fluent = true, chain = false)
 public class ZKDataImportHandler extends DataHandler {
 
     /**
@@ -59,6 +55,54 @@ public class ZKDataImportHandler extends DataHandler {
      * 导出配置
      */
     private FileReadConfig config = new FileReadConfig();
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public ZKClient getClient() {
+        return client;
+    }
+
+    public void setClient(ZKClient client) {
+        this.client = client;
+    }
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public void setBatchSize(int batchSize) {
+        this.batchSize = batchSize;
+    }
+
+    public boolean isIncludeACL() {
+        return includeACL;
+    }
+
+    public void setIncludeACL(boolean includeACL) {
+        this.includeACL = includeACL;
+    }
+
+    public boolean isIgnoreExist() {
+        return ignoreExist;
+    }
+
+    public void setIgnoreExist(boolean ignoreExist) {
+        this.ignoreExist = ignoreExist;
+    }
+
+    public FileReadConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(FileReadConfig config) {
+        this.config = config;
+    }
 
     /**
      * 执行导出

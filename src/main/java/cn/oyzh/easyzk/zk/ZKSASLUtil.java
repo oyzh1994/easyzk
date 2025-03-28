@@ -7,7 +7,6 @@ import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKSASLConfigStore;
 import cn.oyzh.store.jdbc.QueryParam;
 import cn.oyzh.store.jdbc.SelectParam;
-import lombok.experimental.UtilityClass;
 
 import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2024-12-20
  */
-@UtilityClass
+
 public class ZKSASLUtil {
 
     /**

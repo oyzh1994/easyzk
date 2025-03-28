@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.zk;
 
 import cn.oyzh.fx.plus.thread.BackgroundService;
-import lombok.NonNull;
 
 /**
  * zk任务线程
@@ -16,7 +15,7 @@ public class ZKThread extends Thread {
      */
     private final Runnable task;
 
-    public ZKThread(@NonNull Runnable task) {
+    public ZKThread( Runnable task) {
         this.task = task;
     }
 

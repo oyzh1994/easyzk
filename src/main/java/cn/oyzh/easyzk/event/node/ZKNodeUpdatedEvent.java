@@ -3,23 +3,25 @@ package cn.oyzh.easyzk.event.node;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/9/18
  */
-@Data
-@Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
 public class ZKNodeUpdatedEvent extends Event<String> implements EventFormatter {
 
-    private String infoName;
+    public String getConnectName() {
+        return connectName;
+    }
+
+    public void setConnectName(String connectName) {
+        this.connectName = connectName;
+    }
+
+    private String connectName;
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.nodeUpdated() + ":%s", this.infoName, this.data());
+        return String.format("[%s] " + I18nHelper.nodeUpdated() + ":%s", this.connectName, this.data());
     }
 }

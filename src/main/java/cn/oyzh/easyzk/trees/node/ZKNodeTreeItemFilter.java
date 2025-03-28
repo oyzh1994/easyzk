@@ -6,8 +6,6 @@ import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemFilter;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -25,8 +23,6 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
      * 2. 持久节点
      * 3. 临时节点
      */
-    @Setter
-    @Getter
     private byte type;
 
     /**
@@ -34,15 +30,11 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
      * 1: 数据
      * 2: 路径+数据
      */
-    @Setter
-    @Getter
     private byte scope;
 
     /**
      * 关键字
      */
-    @Getter
-    @Setter
     private String kw;
 
     /**
@@ -51,8 +43,6 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
      * 2. 全字匹配
      * 3. 全字匹配+大小写符合
      */
-    @Getter
-    @Setter
     private byte matchMode;
 
     /**
@@ -147,5 +137,45 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
             }
         }
         return true;
+    }
+
+    public byte getType() {
+        return type;
+    }
+
+    public void setType(byte type) {
+        this.type = type;
+    }
+
+    public byte getScope() {
+        return scope;
+    }
+
+    public void setScope(byte scope) {
+        this.scope = scope;
+    }
+
+    public String getKw() {
+        return kw;
+    }
+
+    public void setKw(String kw) {
+        this.kw = kw;
+    }
+
+    public byte getMatchMode() {
+        return matchMode;
+    }
+
+    public void setMatchMode(byte matchMode) {
+        this.matchMode = matchMode;
+    }
+
+    public List<ZKFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<ZKFilter> filters) {
+        this.filters = filters;
     }
 }

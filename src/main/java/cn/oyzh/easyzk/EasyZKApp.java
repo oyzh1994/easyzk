@@ -10,9 +10,9 @@ import cn.oyzh.easyzk.controller.SettingController2;
 import cn.oyzh.easyzk.controller.acl.ZKAddACLController;
 import cn.oyzh.easyzk.controller.acl.ZKUpdateACLController;
 import cn.oyzh.easyzk.controller.connect.ZKAddConnectController;
+import cn.oyzh.easyzk.controller.connect.ZKExportConnectController;
 import cn.oyzh.easyzk.controller.connect.ZKImportConnectController;
 import cn.oyzh.easyzk.controller.connect.ZKUpdateConnectController;
-import cn.oyzh.easyzk.controller.connect.ZKExportConnectController;
 import cn.oyzh.easyzk.controller.data.ZKExportDataController;
 import cn.oyzh.easyzk.controller.data.ZKImportDataController;
 import cn.oyzh.easyzk.controller.data.ZKMigrationDataController;
@@ -86,14 +86,18 @@ public class EasyZKApp extends FXApplication implements EventListener {
             System.setProperty("prism.text", "t2k");
             System.setProperty("prism.lcdtext", "false");
             SysConst.projectName(PROJECT.getName());
-            SysConst.storeDir(ZKConst.STORE_PATH);
+            SysConst.storeDir(ZKConst.getStorePath());
+            SysConst.cacheDir(ZKConst.getCachePath());
             JulLog.info("项目启动中...");
             // 储存初始化
             ZKStoreUtil.init();
             // 注册sasl处理器
             ZKSASLUtil.registerConfiguration();
-            SysConst.cacheDir(ZKConst.CACHE_PATH);
-            FXConst.appIcon(ZKConst.ICON_PATH);
+            if (OSUtil.isWindows()) {
+                FXConst.appIcon(ZKConst.ICON_32_PATH);
+            } else {
+                FXConst.appIcon(ZKConst.ICON_PATH);
+            }
             // 事件总线
             EventFactory.registerEventBus(FxEventBus.class);
             EventFactory.syncEventConfig(FxEventConfig.SYNC);
@@ -187,7 +191,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             }
             // 初始化
             if (OSUtil.isWindows()) {
-                TrayManager.init(ZKConst.TRAY_ICON_PATH);
+                TrayManager.init(ZKConst.ICON_24_PATH);
             } else {
                 TrayManager.init(ZKConst.ICON_PATH);
             }
@@ -267,7 +271,6 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void transportData(ZKShowTransportDataEvent event) {
         FXUtil.runLater(() -> {
             try {
-
                 StageAdapter adapter = StageManager.parseStage(ZKTransportDataController.class);
                 adapter.setProp("sourceInfo", event.data());
                 adapter.display();
@@ -285,10 +288,9 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void exportData(ZKShowExportDataEvent event) {
         FXUtil.runLater(() -> {
             try {
-
                 StageAdapter adapter = StageManager.parseStage(ZKExportDataController.class);
                 adapter.setProp("connect", event.data());
-                adapter.setProp("nodePath", event.path());
+                adapter.setProp("nodePath", event.getPath());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -304,7 +306,6 @@ public class EasyZKApp extends FXApplication implements EventListener {
     private void importData(ZKShowImportDataEvent event) {
         FXUtil.runLater(() -> {
             try {
-
                 StageAdapter adapter = StageManager.parseStage(ZKImportDataController.class);
                 adapter.setProp("connect", event.data());
                 adapter.display();
@@ -358,7 +359,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             try {
                 StageAdapter adapter = StageManager.parseStage(ZKAddNodeController.class);
                 adapter.setProp("zkItem", event.data());
-                adapter.setProp("zkClient", event.client());
+                adapter.setProp("zkClient", event.getClient());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -376,7 +377,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             try {
                 StageAdapter adapter = StageManager.parseStage(ZKAuthNodeController.class);
                 adapter.setProp("zkItem", event.data());
-                adapter.setProp("zkClient", event.client());
+                adapter.setProp("zkClient", event.getClient());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -426,7 +427,7 @@ public class EasyZKApp extends FXApplication implements EventListener {
             try {
                 StageAdapter fxView = StageManager.parseStage(ZKAddACLController.class);
                 fxView.setProp("zkItem", event.data());
-                fxView.setProp("zkClient", event.client());
+                fxView.setProp("zkClient", event.getClient());
                 fxView.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -443,9 +444,9 @@ public class EasyZKApp extends FXApplication implements EventListener {
         FXUtil.runLater(() -> {
             try {
                 StageAdapter fxView = StageManager.parseStage(ZKUpdateACLController.class);
-                fxView.setProp("acl", event.acl());
+                fxView.setProp("acl", event.getAcl());
                 fxView.setProp("zkItem", event.data());
-                fxView.setProp("zkClient", event.client());
+                fxView.setProp("zkClient", event.getClient());
                 fxView.display();
             } catch (Exception ex) {
                 ex.printStackTrace();

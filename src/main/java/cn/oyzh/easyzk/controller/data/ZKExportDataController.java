@@ -13,6 +13,9 @@ import cn.oyzh.easyzk.zk.ZKClientUtil;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.FXConst;
+import cn.oyzh.fx.plus.chooser.FXChooser;
+import cn.oyzh.fx.plus.chooser.FileChooserHelper;
+import cn.oyzh.fx.plus.chooser.FileExtensionFilter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
@@ -20,8 +23,6 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
-import cn.oyzh.fx.plus.file.FileChooserHelper;
-import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.tray.TrayManager;
@@ -206,39 +207,39 @@ public class ZKExportDataController extends StageController {
         // 生成导出处理器
         if (this.exportHandler == null) {
             this.exportHandler = new ZKDataExportHandler();
-            this.exportHandler.messageHandler(str -> this.exportMsg.appendLine(str))
-                    .processedHandler(count -> {
-                        if (count == 0) {
-                            this.counter.updateIgnore();
-                        } else if (count < 0) {
-                            this.counter.incrFail(count);
-                        } else {
-                            this.counter.incrSuccess(count);
-                        }
-                        this.updateStatus(I18nHelper.exportInProgress());
-                    });
+            this.exportHandler.setMessageHandler(str -> this.exportMsg.appendLine(str));
+            this.exportHandler.setProcessedHandler(count -> {
+                if (count == 0) {
+                    this.counter.updateIgnore();
+                } else if (count < 0) {
+                    this.counter.incrFail(count);
+                } else {
+                    this.counter.incrSuccess(count);
+                }
+                this.updateStatus(I18nHelper.exportInProgress());
+            });
         } else {
             this.exportHandler.interrupt(false);
         }
         String fileType = this.format.selectedUserData();
         // 文件类型
-        this.exportHandler.fileType(fileType);
+        this.exportHandler.setFileType(fileType);
         // 客户端
-        this.exportHandler.client(this.client);
+        this.exportHandler.setClient(this.client);
         // 节点路径
-        this.exportHandler.nodePath(this.exportPath);
+        this.exportHandler.setNodePath(this.exportPath);
         // 导出文件
         this.exportHandler.filePath(this.exportFile.getPath());
         // 字符集
         this.exportHandler.charset(this.charset.getCharsetName());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
-            this.exportHandler.filters(this.filterStore.loadEnable(this.client.iid()));
+            this.exportHandler.setFilters(this.filterStore.loadEnable(this.client.iid()));
         } else {
-            this.exportHandler.filters(null);
+            this.exportHandler.setFilters(null);
         }
         // 包含acl
-        this.exportHandler.includeACL(this.includeACL.isSelected());
+        this.exportHandler.setIncludeACL(this.includeACL.isSelected());
         // 包含标题
         this.exportHandler.includeTitle(this.includeTitle.isEnable() && this.includeTitle.isSelected());
         // 压缩
@@ -418,7 +419,7 @@ public class ZKExportDataController extends StageController {
     @FXML
     private void selectFile() {
         String fileType = this.format.selectedUserData();
-        FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
+        FileExtensionFilter filter = FXChooser.extensionFilter(fileType);
         String fileName = "Zookeeper-" + this.connect.getName() + "-" + I18nHelper.exportData() + "." + fileType;
         this.exportFile = FileChooserHelper.save(fileName, fileName, filter);
         if (this.exportFile != null) {

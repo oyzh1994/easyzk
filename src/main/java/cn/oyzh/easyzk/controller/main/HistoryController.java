@@ -111,7 +111,7 @@ public class HistoryController extends SubStageController implements Initializab
     @EventSubscribe
     private void historyAdded(ZKHistoryAddedEvent event) {
         ZKNodeTreeItem item = this.item();
-        if (event.item() == item) {
+        if (event.getItem() == item) {
             this.refresh();
         }
     }

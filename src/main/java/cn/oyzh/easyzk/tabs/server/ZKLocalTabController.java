@@ -28,7 +28,7 @@ public class ZKLocalTabController extends SubTabController {
     @FXML
     private void refreshLocal() {
         // 客户端环境信息
-        List<ZKEnvNode> localEnviNodes = this.parent().client().localNodes();
+        List<ZKEnvNode> localEnviNodes = this.parent().getClient().localNodes();
         this.localEnvTable.setItem(localEnviNodes);
     }
 

@@ -29,7 +29,7 @@ public class ZKConfTabController extends SubTabController {
     @FXML
     private void refreshConf() {
         // 配置信息
-        List<ZKEnvNode> confNodes = this.parent().client().confNodes();
+        List<ZKEnvNode> confNodes = this.parent().getClient().confNodes();
         this.confTable.setItem(confNodes);
     }
 

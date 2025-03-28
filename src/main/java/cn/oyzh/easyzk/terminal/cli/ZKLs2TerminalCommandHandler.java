@@ -3,9 +3,6 @@ package cn.oyzh.easyzk.terminal.cli;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.util.TerminalUtil;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import org.apache.zookeeper.cli.CliCommand;
 import org.apache.zookeeper.cli.LsCommand;
 
@@ -19,9 +16,12 @@ import java.util.List;
  */
 public class ZKLs2TerminalCommandHandler extends ZKPathTerminalCommandHandler<TerminalCommand> {
 
-    @Getter(AccessLevel.PROTECTED)
-    @Accessors(fluent = true)
     private final CliCommand cliCommand = new LsCommand();
+
+    @Override
+    public CliCommand cliCommand() {
+        return this.cliCommand;
+    }
 
     @Override
     public TerminalCommand parseCommand(String line) {
@@ -30,7 +30,7 @@ public class ZKLs2TerminalCommandHandler extends ZKPathTerminalCommandHandler<Te
         List<String> list = new ArrayList<>();
         Collections.addAll(list, args);
         list.add(1, "-s");
-        command.args(list.toArray(new String[]{}));
+        command.setArgs(list.toArray(new String[]{}));
         return command;
     }
 

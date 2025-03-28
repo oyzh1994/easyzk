@@ -43,7 +43,7 @@ public class ZKTerminalTreeItem extends RichTreeItem<ZKTerminalTreeItemValue> {
 
     @Override
     public void loadChild() {
-        ZKEventUtil.terminalOpen(this.parent().client());
+        ZKEventUtil.terminalOpen(this.parent().getClient());
     }
 
     @Override

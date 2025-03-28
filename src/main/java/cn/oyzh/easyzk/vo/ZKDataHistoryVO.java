@@ -3,10 +3,6 @@ package cn.oyzh.easyzk.vo;
 import cn.oyzh.common.Index;
 import cn.oyzh.common.date.DateUtil;
 import cn.oyzh.easyzk.domain.ZKDataHistory;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +13,22 @@ import java.util.List;
  * @author oyzh
  * @since 2024/04/24
  */
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public class ZKDataHistoryVO extends ZKDataHistory implements Index {
 
     /**
      * 索引
      */
     private int index;
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     /**
      * 复制
@@ -47,7 +50,7 @@ public class ZKDataHistoryVO extends ZKDataHistory implements Index {
      * @param list zk数据历史
      * @return zk数据历史列表
      */
-    public static List<ZKDataHistoryVO> convert(@NonNull List<ZKDataHistory> list) {
+    public static List<ZKDataHistoryVO> convert( List<ZKDataHistory> list) {
         List<ZKDataHistoryVO> voList = new ArrayList<>(list.size());
         for (int i = 0; i < list.size(); i++) {
             voList.add(convert(list.get(i), i + 1));

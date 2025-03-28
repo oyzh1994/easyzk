@@ -9,7 +9,6 @@ import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.query.ZKQueryTextAreaPane;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -18,7 +17,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
-import lombok.Getter;
 
 /**
  * @author oyzh
@@ -29,14 +27,20 @@ public class ZKQueryTabController extends RichTabController {
     /**
      * 查询对象
      */
-    @Getter
     private ZKQuery query;
+
+    public ZKQuery getQuery() {
+        return query;
+    }
 
     /**
      * 未保存标志位
      */
-    @Getter
     private boolean unsaved;
+
+    public boolean isUnsaved() {
+        return unsaved;
+    }
 
     /**
      * zk客户端

@@ -29,7 +29,7 @@ public class ZKStatTabController extends SubTabController {
     @FXML
     private void refreshStat() {
         // 状态信息
-        List<ZKEnvNode> statNodes = this.parent().client().statNodes();
+        List<ZKEnvNode> statNodes = this.parent().getClient().statNodes();
         this.statTable.setItem(statNodes);
     }
 

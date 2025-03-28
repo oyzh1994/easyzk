@@ -1,7 +1,5 @@
 package cn.oyzh.easyzk.terminal.cli;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.cli.ParseException;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
@@ -18,13 +16,19 @@ import java.util.function.Consumer;
  */
 public class ZKCliCommandWrapper {
 
-    @Getter
     private final CliCommand command;
 
     private boolean initialized;
 
-    @Setter
     private Consumer<String> onResponse;
+
+    public void setOnResponse(Consumer<String> onResponse) {
+        this.onResponse = onResponse;
+    }
+
+    public Consumer<String> getOnResponse() {
+        return onResponse;
+    }
 
     public ZKCliCommandWrapper(CliCommand command, ZooKeeper zooKeeper) {
         this.command = command;

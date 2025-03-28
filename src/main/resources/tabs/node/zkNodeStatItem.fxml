@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.gui.label.SuccessLabel?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.VBox?>
 <FXHBox flexWidth="100%" realHeight="30" styleClass="statItem">

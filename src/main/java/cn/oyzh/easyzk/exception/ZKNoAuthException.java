@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.exception;
 
-import lombok.Getter;
 import org.apache.zookeeper.KeeperException;
 
 /**
@@ -11,8 +10,12 @@ import org.apache.zookeeper.KeeperException;
  */
 public class ZKNoAuthException extends KeeperException.NoAuthException {
 
-    @Getter
     protected String path;
+
+    @Override
+    public String getPath() {
+        return path;
+    }
 
     public ZKNoAuthException(String path) {
         this.path = path;

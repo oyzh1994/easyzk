@@ -1,6 +1,5 @@
 package cn.oyzh.easyzk.filter;
 
-import lombok.Data;
 
 
 /**
@@ -9,13 +8,44 @@ import lombok.Data;
  * @author oyzh
  * @since 2025/01/22
  */
-@Data
 public class ZKNodeFilterParam {
 
     /**
      * 匹配大小写
      */
     private boolean matchCase;
+
+    public boolean isMatchCase() {
+        return matchCase;
+    }
+
+    public void setMatchCase(boolean matchCase) {
+        this.matchCase = matchCase;
+    }
+
+    public boolean isMatchFull() {
+        return matchFull;
+    }
+
+    public void setMatchFull(boolean matchFull) {
+        this.matchFull = matchFull;
+    }
+
+    public boolean isSearchPath() {
+        return searchPath;
+    }
+
+    public void setSearchPath(boolean searchPath) {
+        this.searchPath = searchPath;
+    }
+
+    public boolean isSearchData() {
+        return searchData;
+    }
+
+    public void setSearchData(boolean searchData) {
+        this.searchData = searchData;
+    }
 
     /**
      * 匹配全文

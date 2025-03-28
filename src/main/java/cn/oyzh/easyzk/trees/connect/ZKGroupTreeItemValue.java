@@ -4,7 +4,6 @@ import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
-import lombok.NonNull;
 
 /**
  * zk树group值
@@ -14,7 +13,7 @@ import lombok.NonNull;
  */
 public class ZKGroupTreeItemValue extends RichTreeItemValue {
 
-    public ZKGroupTreeItemValue(@NonNull ZKGroupTreeItem item) {
+    public ZKGroupTreeItemValue( ZKGroupTreeItem item) {
         super(item);
     }
 

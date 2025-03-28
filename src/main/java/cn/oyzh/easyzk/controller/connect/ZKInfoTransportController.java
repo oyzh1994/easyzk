@@ -328,7 +328,7 @@
 //      *
 //      * @param path 节点路径
 //      */
-//     private void transport(@NonNull String path) {
+//     private void transport( String path) {
 //         try {
 //             // 取消操作
 //             if (ThreadUtil.isInterrupted(this.execTask)) {

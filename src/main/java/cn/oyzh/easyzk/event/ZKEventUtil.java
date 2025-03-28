@@ -44,13 +44,13 @@ import cn.oyzh.easyzk.event.tree.ZKTreeItemChangedEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAboutEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddACLEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAddConnectEvent;
+import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowAuthNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowExportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportConnectEvent;
 import cn.oyzh.easyzk.event.window.ZKShowImportDataEvent;
 import cn.oyzh.easyzk.event.window.ZKShowMigrationDataEvent;
-import cn.oyzh.easyzk.event.window.ZKShowAddNodeEvent;
 import cn.oyzh.easyzk.event.window.ZKShowSettingEvent;
 import cn.oyzh.easyzk.event.window.ZKShowToolEvent;
 import cn.oyzh.easyzk.event.window.ZKShowTransportDataEvent;
@@ -65,8 +65,6 @@ import cn.oyzh.fx.gui.event.Layout1Event;
 import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import javafx.scene.control.TreeItem;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.util.List;
@@ -77,7 +75,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/9/18
  */
-@UtilityClass
+
 public class ZKEventUtil {
 
     /**
@@ -118,7 +116,7 @@ public class ZKEventUtil {
      *
      * @param client zk客户端
      */
-    public static void connectionSucceed(ZKClient client) {
+    public static void connectionConnected(ZKClient client) {
         ZKConnectionConnectedEvent event = new ZKConnectionConnectedEvent();
         event.data(client);
         EventUtil.post(event);
@@ -133,7 +131,7 @@ public class ZKEventUtil {
     public static void nodeAdded(ZKConnect zkConnect, String path) {
         ZKNodeAddedEvent event = new ZKNodeAddedEvent();
         event.data(path);
-        event.zkConnect(zkConnect);
+        event.setZkConnect(zkConnect);
         EventUtil.post(event);
     }
 
@@ -146,7 +144,7 @@ public class ZKEventUtil {
     public static void nodeCreated(ZKClient client, String nodePath) {
         ZKNodeCreatedEvent event = new ZKNodeCreatedEvent();
         event.data(ZKNodeUtil.decodePath(nodePath));
-        event.client(client);
+        event.setClient(client);
         EventUtil.post(event);
     }
 
@@ -159,7 +157,7 @@ public class ZKEventUtil {
     public static void nodeUpdated(ZKClient client, String path) {
         ZKNodeUpdatedEvent event = new ZKNodeUpdatedEvent();
         event.data(path);
-        event.infoName(client.connectName());
+        event.setConnectName(client.connectName());
         EventUtil.post(event);
     }
 
@@ -172,7 +170,7 @@ public class ZKEventUtil {
     public static void nodeChanged(ZKClient client, String nodePath) {
         ZKNodeChangedEvent event = new ZKNodeChangedEvent();
         event.data(ZKNodeUtil.decodePath(nodePath));
-        event.client(client);
+        event.setClient(client);
         EventUtil.post(event);
     }
 
@@ -186,8 +184,8 @@ public class ZKEventUtil {
     public static void nodeDeleted(ZKClient client, String path, boolean delChildren) {
         ZKNodeDeletedEvent event = new ZKNodeDeletedEvent();
         event.data(path);
-        event.delChildren(delChildren);
-        event.infoName(client.connectName());
+        event.setDelChildren(delChildren);
+        event.setConnectName(client.connectName());
         EventUtil.post(event);
     }
 
@@ -200,7 +198,7 @@ public class ZKEventUtil {
     public static void nodeRemoved(ZKClient client, String nodePath) {
         ZKNodeRemovedEvent event = new ZKNodeRemovedEvent();
         event.data(ZKNodeUtil.decodePath(nodePath));
-        event.client(client);
+        event.setClient(client);
         EventUtil.post(event);
     }
 
@@ -269,12 +267,12 @@ public class ZKEventUtil {
     /**
      * 触发认证添加事件
      */
-    public static void authAuthed(@NonNull ZKNodeTreeItem item, boolean success, String user, String password) {
+    public static void authAuthed( ZKNodeTreeItem item, boolean success, String user, String password) {
         ZKAuthAuthedEvent event = new ZKAuthAuthedEvent();
         event.data(item);
-        event.user(user);
-        event.success(success);
-        event.password(password);
+        event.setUser(user);
+        event.setSuccess(success);
+        event.setPassword(password);
         EventUtil.post(event);
     }
 
@@ -319,7 +317,7 @@ public class ZKEventUtil {
     public static void historyRestore(byte[] data, ZKNodeTreeItem item) {
         ZKHistoryRestoreEvent event = new ZKHistoryRestoreEvent();
         event.data(data);
-        event.item(item);
+        event.setItem(item);
         EventUtil.post(event);
     }
 
@@ -332,7 +330,7 @@ public class ZKEventUtil {
     public static void dataHistoryAdded(ZKDataHistory history, TreeItem<?> item) {
         ZKHistoryAddedEvent event = new ZKHistoryAddedEvent();
         event.data(history);
-        event.item(item);
+        event.setItem(item);
         EventUtil.post(event);
     }
 
@@ -355,7 +353,7 @@ public class ZKEventUtil {
     public static void nodeACLAdded(ZKConnect zkConnect, String nodePath) {
         ZKNodeACLAddedEvent event = new ZKNodeACLAddedEvent();
         event.data(zkConnect);
-        event.nodePath(nodePath);
+        event.setNodePath(nodePath);
         EventUtil.post(event);
     }
 
@@ -367,7 +365,7 @@ public class ZKEventUtil {
     public static void nodeACLUpdated(ZKConnect zkConnect, String nodePath) {
         ZKNodeACLUpdatedEvent event = new ZKNodeACLUpdatedEvent();
         event.data(zkConnect);
-        event.nodePath(nodePath);
+        event.setNodePath(nodePath);
         EventUtil.post(event);
     }
 
@@ -420,7 +418,7 @@ public class ZKEventUtil {
     public static void groupRenamed(String group, String oldName) {
         ZKGroupRenamedEvent event = new ZKGroupRenamedEvent();
         event.data(group);
-        event.oldName(oldName);
+        event.setOldName(oldName);
         EventUtil.post(event);
     }
 
@@ -430,7 +428,7 @@ public class ZKEventUtil {
     public static void clientAction(String connectName, String action) {
         ZKClientActionEvent event = new ZKClientActionEvent();
         event.data(connectName);
-        event.action(action);
+        event.setAction(action);
         EventUtil.postAsync(event);
     }
 
@@ -451,7 +449,7 @@ public class ZKEventUtil {
     public static void clientAction(String connectName, String action, List<ZKClientActionArgument> arguments) {
         ZKClientActionEvent event = new ZKClientActionEvent();
         event.data(connectName);
-        event.action(action);
+        event.setAction(action);
         event.arguments(arguments);
         EventUtil.postAsync(event);
     }
@@ -621,7 +619,7 @@ public class ZKEventUtil {
     public static void showExportData(ZKConnect connect, String path) {
         ZKShowExportDataEvent event = new ZKShowExportDataEvent();
         event.data(connect);
-        event.path(path);
+        event.setPath(path);
         EventUtil.post(event);
     }
 
@@ -674,7 +672,7 @@ public class ZKEventUtil {
     public static void showAddNode(ZKNodeTreeItem item, ZKClient client) {
         ZKShowAddNodeEvent event = new ZKShowAddNodeEvent();
         event.data(item);
-        event.client(client);
+        event.setClient(client);
         EventUtil.post(event);
     }
 
@@ -687,7 +685,7 @@ public class ZKEventUtil {
     public static void showAuthNode(ZKNodeTreeItem item, ZKClient client) {
         ZKShowAuthNodeEvent event = new ZKShowAuthNodeEvent();
         event.data(item);
-        event.client(client);
+        event.setClient(client);
         EventUtil.post(event);
     }
 
@@ -714,7 +712,7 @@ public class ZKEventUtil {
     public static void showAddACL(ZKNodeTreeItem item, ZKClient client) {
         ZKShowAddACLEvent event = new ZKShowAddACLEvent();
         event.data(item);
-        event.client(client);
+        event.setClient(client);
         EventUtil.post(event);
     }
 
@@ -723,9 +721,9 @@ public class ZKEventUtil {
      */
     public static void showUpdateACL(ZKNodeTreeItem item, ZKClient client, ZKACL acl) {
         ZKShowUpdateACLEvent event = new ZKShowUpdateACLEvent();
-        event.acl(acl);
+        event.setAcl(acl);
         event.data(item);
-        event.client(client);
+        event.setClient(client);
         EventUtil.post(event);
     }
 

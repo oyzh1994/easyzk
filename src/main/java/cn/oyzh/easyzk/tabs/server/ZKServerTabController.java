@@ -5,16 +5,14 @@ import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
 import cn.oyzh.easyzk.vo.ZKServerInfo;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.gui.tabs.RichTabController;
-import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.table.FXTableColumn;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 import java.util.concurrent.Future;
@@ -28,11 +26,17 @@ import java.util.concurrent.Future;
  */
 public class ZKServerTabController extends ParentTabController {
 
+    public ZKClient getClient() {
+        return client;
+    }
+
+    public void setClient(ZKClient client) {
+        this.client = client;
+    }
+
     /**
      * zk客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private ZKClient client;
 
     /**

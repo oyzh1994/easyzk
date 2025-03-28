@@ -7,11 +7,6 @@ import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKCacheUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
 import org.apache.zookeeper.StatsTrack;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
@@ -28,21 +23,16 @@ import java.util.Objects;
  * @author oyzh
  * @since 2020/3/6
  */
-@ToString(callSuper = true)
-@Accessors(fluent = true, chain = true)
 public class ZKNode implements Comparable<ZKNode> {
 
     /**
      * 配额属性
      */
-    @Getter
-    @Setter
     private StatsTrack quota;
 
     /**
      * acl权限属性
      */
-    @Getter
     private List<ZKACL> acl;
 
     /**
@@ -68,22 +58,16 @@ public class ZKNode implements Comparable<ZKNode> {
     /**
      * 状态属性
      */
-    @Getter
-    @Setter
     private Stat stat;
 
     /**
      * 加载耗时
      */
-    @Getter
-    @Setter
     private short loadTime;
 
     /**
      * 节点路径
      */
-    @Getter
-    @Setter
     private String nodePath;
 
     /**
@@ -178,7 +162,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @param node zk节点
      * @return 当前对象
      */
-    public ZKNode copy(@NonNull ZKNode node) {
+    public ZKNode copy(ZKNode node) {
         this.acl = node.acl;
         this.stat = node.stat;
         this.quota = node.quota;
@@ -291,7 +275,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @param perm 权限名称
      * @return 结果
      */
-    public boolean hasPerm(@NonNull String perm) {
+    public boolean hasPerm(String perm) {
         if (!this.aclEmpty()) {
             for (ZKACL zkacl : this.acl()) {
                 if (zkacl.isDigestACL() && zkacl.isReadOnly()) {
@@ -372,7 +356,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @param type 权限类型
      * @return 结果
      */
-    public boolean hasACL(@NonNull String type) {
+    public boolean hasACL(String type) {
         return this.acl().parallelStream().anyMatch(a -> a.schemeVal().equalsIgnoreCase(type));
     }
 
@@ -382,7 +366,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @param type 类型
      * @return 权限列表
      */
-    public List<ZKACL> getACLByType(@NonNull String type) {
+    public List<ZKACL> getACLByType(String type) {
         if (!this.aclEmpty()) {
             type = type.toLowerCase();
             List<ZKACL> aclList = new ArrayList<>(12);
@@ -420,7 +404,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @param ip ip内容
      * @return 结果
      */
-    public boolean existIPACL(@NonNull String ip) {
+    public boolean existIPACL(String ip) {
         if (this.hasIPACL()) {
             List<ZKACL> acLs = this.getACLByType("ip");
             for (ZKACL acL : acLs) {
@@ -447,7 +431,7 @@ public class ZKNode implements Comparable<ZKNode> {
      * @param digest 摘要
      * @return 结果
      */
-    public boolean existDigestACL(@NonNull String digest) {
+    public boolean existDigestACL(String digest) {
         if (this.hasDigestACL()) {
             for (ZKACL acl : this.getDigestACLs()) {
                 if (Objects.equals(acl.idVal(), digest)) {
@@ -493,5 +477,42 @@ public class ZKNode implements Comparable<ZKNode> {
      */
     public boolean nodeEquals(ZKNode node) {
         return node != null && StringUtil.equals(this.nodePath(), node.nodePath());
+    }
+
+    public String nodePath() {
+        return this.nodePath;
+    }
+
+    public void nodePath(String nodePath) {
+        this.nodePath = nodePath;
+    }
+
+
+    public Stat stat() {
+        return this.stat;
+    }
+
+    public void stat(Stat stat) {
+        this.stat = stat;
+    }
+
+    public List<ZKACL> acl() {
+        return this.acl;
+    }
+
+    public void loadTime(short loadTime) {
+        this.loadTime = loadTime;
+    }
+
+    public short loadTime() {
+        return loadTime;
+    }
+
+    public void quota(StatsTrack quota) {
+        this.quota = quota;
+    }
+
+    public StatsTrack quota() {
+        return quota;
     }
 }

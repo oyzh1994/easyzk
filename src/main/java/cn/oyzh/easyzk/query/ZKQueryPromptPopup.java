@@ -14,9 +14,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,9 +113,23 @@ public class ZKQueryPromptPopup extends FXPopup {
     /**
      * 选中事件
      */
-    @Getter
-    @Setter
     protected Consumer<ZKQueryPromptItem> onItemSelected;
+
+    public Consumer<ZKQueryPromptItem> getOnItemSelected() {
+        return onItemSelected;
+    }
+
+    public void setOnItemSelected(Consumer<ZKQueryPromptItem> onItemSelected) {
+        this.onItemSelected = onItemSelected;
+    }
+
+    public ZKQueryToken getToken() {
+        return token;
+    }
+
+    public void setToken(ZKQueryToken token) {
+        this.token = token;
+    }
 
     public ZKQueryPromptPopup() {
         this.setAutoFix(true);
@@ -206,7 +217,7 @@ public class ZKQueryPromptPopup extends FXPopup {
      * @param area  文本域
      * @param event 键盘按键事件
      */
-    public void prompt(@NonNull ZKQueryTextAreaPane area, @NonNull KeyEvent event) {
+    public void prompt( ZKQueryTextAreaPane area,  KeyEvent event) {
         // 常规按键不处理
         if (this.isGeneralKeyEvent(event)) {
             this.hide();

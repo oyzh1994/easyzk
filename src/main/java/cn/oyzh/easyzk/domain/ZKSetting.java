@@ -3,8 +3,6 @@ package cn.oyzh.easyzk.domain;
 import cn.oyzh.fx.plus.domain.AppSetting;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * zk设置
@@ -12,9 +10,7 @@ import lombok.EqualsAndHashCode;
  * @author oyzh
  * @since 2022/8/26
  */
-@Data
 @Table("t_setting")
-@EqualsAndHashCode(callSuper = true)
 public class ZKSetting extends AppSetting {
 
     /**
@@ -112,5 +108,37 @@ public class ZKSetting extends AppSetting {
             this.authMode = setting.authMode;
             this.nodeLoadLimit = setting.nodeLoadLimit;
         }
+    }
+
+    public Byte getLoadMode() {
+        return loadMode;
+    }
+
+    public void setLoadMode(Byte loadMode) {
+        this.loadMode = loadMode;
+    }
+
+    public Byte getViewport() {
+        return viewport;
+    }
+
+    public void setViewport(Byte viewport) {
+        this.viewport = viewport;
+    }
+
+    public Byte getAuthMode() {
+        return authMode;
+    }
+
+    public void setAuthMode(Byte authMode) {
+        this.authMode = authMode;
+    }
+
+    public Integer getNodeLoadLimit() {
+        return nodeLoadLimit;
+    }
+
+    public void setNodeLoadLimit(Integer nodeLoadLimit) {
+        this.nodeLoadLimit = nodeLoadLimit;
     }
 }

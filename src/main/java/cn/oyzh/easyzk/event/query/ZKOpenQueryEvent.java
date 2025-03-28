@@ -4,16 +4,19 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.Event;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * @author oyzh
  * @since 2024-11-18
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
 public class ZKOpenQueryEvent extends Event<ZKQuery> {
+    public ZKClient getClient() {
+        return client;
+    }
+
+    public void setClient(ZKClient client) {
+        this.client = client;
+    }
 
     private ZKClient client;
 

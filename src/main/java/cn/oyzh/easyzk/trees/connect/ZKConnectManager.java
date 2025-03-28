@@ -1,7 +1,6 @@
 package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import lombok.NonNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ public interface ZKConnectManager {
      *
      * @param zkConnect 连接信息
      */
-    void addConnect(@NonNull ZKConnect zkConnect);
+    void addConnect( ZKConnect zkConnect);
 
     // /**
     //  * 删除多个连接
@@ -39,14 +38,14 @@ public interface ZKConnectManager {
      *
      * @param item 连接节点
      */
-    void addConnectItem(@NonNull ZKConnectTreeItem item);
+    void addConnectItem( ZKConnectTreeItem item);
 
     /**
      * 添加多个连接节点
      *
      * @param items 连接节点列表
      */
-    void addConnectItems(@NonNull List<ZKConnectTreeItem> items);
+    void addConnectItems( List<ZKConnectTreeItem> items);
 
     /**
      * 删除连接节点
@@ -54,7 +53,7 @@ public interface ZKConnectManager {
      * @param item 连接节点
      * @return 结果
      */
-    boolean delConnectItem(@NonNull ZKConnectTreeItem item);
+    boolean delConnectItem( ZKConnectTreeItem item);
 
     /**
      * 获取连接节点

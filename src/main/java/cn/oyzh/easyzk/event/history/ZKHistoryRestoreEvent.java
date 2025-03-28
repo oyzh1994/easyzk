@@ -5,20 +5,22 @@ import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2024/4/23
  */
-@Setter
-@Getter
-@Accessors(fluent = true)
 public class ZKHistoryRestoreEvent extends Event<byte[]> implements EventFormatter {
 
     private ZKNodeTreeItem item;
+
+    public void setItem(ZKNodeTreeItem item) {
+        this.item = item;
+    }
+
+    public ZKNodeTreeItem getItem() {
+        return item;
+    }
 
     @Override
     public String eventFormat() {

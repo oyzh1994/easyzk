@@ -2,18 +2,20 @@ package cn.oyzh.easyzk.event.window;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.event.Event;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2025-02-20
  */
-@Data
-@Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
 public class ZKShowExportDataEvent extends Event<ZKConnect> {
 
     private String path;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

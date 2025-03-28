@@ -6,8 +6,6 @@ import cn.oyzh.easyzk.action.ZKClientActionArgument;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,11 +17,24 @@ import java.util.List;
  */
 public class ZKClientActionEvent extends Event<String> implements EventFormatter {
 
-    @Setter
-    @Accessors(fluent = true, chain = false)
     private String action;
 
-    @Setter
+    public List<ZKClientActionArgument> getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(List<ZKClientActionArgument> arguments) {
+        this.arguments = arguments;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
     private List<ZKClientActionArgument> arguments = new ArrayList<>(12);
 
     public void arguments(List<ZKClientActionArgument>  arguments) {

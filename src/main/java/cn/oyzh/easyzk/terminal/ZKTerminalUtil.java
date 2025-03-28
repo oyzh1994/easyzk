@@ -1,14 +1,12 @@
 package cn.oyzh.easyzk.terminal;
 
-import lombok.experimental.UtilityClass;
-
 /**
  * zk终端工具
  *
  * @author oyzh
  * @since 2023/09/20
  */
-@UtilityClass
+
 public class ZKTerminalUtil {
 
     /**

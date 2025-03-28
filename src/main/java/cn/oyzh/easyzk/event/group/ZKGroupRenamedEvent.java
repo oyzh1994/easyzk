@@ -3,8 +3,6 @@ package cn.oyzh.easyzk.event.group;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
@@ -12,9 +10,15 @@ import lombok.experimental.Accessors;
  */
 public class ZKGroupRenamedEvent extends Event<String> implements EventFormatter {
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private String oldName;
+
+    public String getOldName() {
+        return oldName;
+    }
+
+    public void setOldName(String oldName) {
+        this.oldName = oldName;
+    }
 
     @Override
     public String eventFormat() {

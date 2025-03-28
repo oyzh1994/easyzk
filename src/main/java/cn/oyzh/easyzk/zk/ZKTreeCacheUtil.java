@@ -1,7 +1,5 @@
 package cn.oyzh.easyzk.zk;
 
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.framework.recipes.cache.TreeCacheSelector;
@@ -12,7 +10,7 @@ import org.apache.curator.framework.recipes.cache.TreeCacheSelector;
  * @author oyzh
  * @since 202411/29
  */
-@UtilityClass
+
 public class ZKTreeCacheUtil {
 
     /**
@@ -22,7 +20,7 @@ public class ZKTreeCacheUtil {
      * @param selector  缓存选择器
      * @return zk监听器
      */
-    public static TreeCache build(@NonNull CuratorFramework framework, TreeCacheSelector selector) {
+    public static TreeCache build( CuratorFramework framework, TreeCacheSelector selector) {
         return build(framework, "/", selector);
     }
 
@@ -34,7 +32,7 @@ public class ZKTreeCacheUtil {
      * @param selector  缓存选择器
      * @return zk监听器
      */
-    public static TreeCache build(@NonNull CuratorFramework framework, @NonNull String path, TreeCacheSelector selector) {
+    public static TreeCache build( CuratorFramework framework,  String path, TreeCacheSelector selector) {
         // 构建builder
         TreeCache.Builder builder = TreeCache.newBuilder(framework, path)
                 .setCacheData(false)

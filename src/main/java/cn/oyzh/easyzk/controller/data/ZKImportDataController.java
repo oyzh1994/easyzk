@@ -12,6 +12,9 @@ import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.FXConst;
+import cn.oyzh.fx.plus.chooser.FXChooser;
+import cn.oyzh.fx.plus.chooser.FileChooserHelper;
+import cn.oyzh.fx.plus.chooser.FileExtensionFilter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
@@ -19,8 +22,6 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
-import cn.oyzh.fx.plus.file.FileChooserHelper;
-import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.tray.TrayManager;
@@ -185,30 +186,29 @@ public class ZKImportDataController extends StageController {
         // 生成迁移处理器
         if (this.importHandler == null) {
             this.importHandler = new ZKDataImportHandler();
-            this.importHandler
-                    .messageHandler(str -> this.importMsg.appendLine(str))
-                    .processedHandler(count -> {
-                        if (count == 0) {
-                            this.counter.updateIgnore();
-                        } else if (count < 0) {
-                            this.counter.incrFail(count);
-                        } else {
-                            this.counter.incrSuccess(count);
-                        }
-                        this.updateStatus(I18nHelper.importInProgress());
-                    });
+            this.importHandler.setMessageHandler(str -> this.importMsg.appendLine(str));
+            this.importHandler.setProcessedHandler(count -> {
+                if (count == 0) {
+                    this.counter.updateIgnore();
+                } else if (count < 0) {
+                    this.counter.incrFail(count);
+                } else {
+                    this.counter.incrSuccess(count);
+                }
+                this.updateStatus(I18nHelper.importInProgress());
+            });
         } else {
             this.importHandler.interrupt(false);
         }
         String fileType = this.format.selectedUserData();
         // 文件类型
-        this.importHandler.fileType(fileType);
+        this.importHandler.setFileType(fileType);
         // 客户端
-        this.importHandler.client(this.client);
+        this.importHandler.setClient(this.client);
         // 包含acl
-        this.importHandler.includeACL(this.includeACL.isSelected());
+        this.importHandler.setIncludeACL(this.includeACL.isSelected());
         // 存在时忽略
-        this.importHandler.ignoreExist(this.ignoreExist.isSelected());
+        this.importHandler.setIgnoreExist(this.ignoreExist.isSelected());
         // 导入文件
         this.importHandler.filePath(this.importFile.getPath());
         // 字符集
@@ -383,7 +383,7 @@ public class ZKImportDataController extends StageController {
     @FXML
     private void selectFile() {
         String fileType = this.format.selectedUserData();
-        FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
+        FileExtensionFilter filter = FXChooser.extensionFilter(fileType);
         this.importFile = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), filter);
         if (this.importFile != null) {
             this.fileName.setText(this.importFile.getPath());

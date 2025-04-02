@@ -341,7 +341,7 @@ public class ZKNodeUtil {
         try {
             // 获取子节点
             children = client.getChildren(parentPath);
-        } catch (Exception _) {
+        } catch (Exception ignore) {
 
         }
         // 为空，直接返回

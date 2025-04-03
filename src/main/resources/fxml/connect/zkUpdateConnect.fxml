@@ -24,7 +24,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.combobox.SSHAuthMethodCombobox?>
+<?import cn.oyzh.fx.gui.combobox.SSHAuthTypeCombobox?>
 <?import cn.oyzh.fx.gui.text.field.ReadOnlyTextField?>
 <?import cn.oyzh.fx.gui.svg.glyph.ChooseSVGGlyph?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
@@ -208,11 +208,11 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FXHBox disable="true" groupId="ssh">
-                    <SSHAuthMethodCombobox initIndex="0" fx:id="sshAuthMethod" prefWidth="150" realHeight="30">
+                    <SSHAuthTypeCombobox initIndex="0" fx:id="sshAuthMethod" prefWidth="150" realHeight="30">
                         <FXHBox.margin>
                             <Insets left="30" top="5"/>
                         </FXHBox.margin>
-                    </SSHAuthMethodCombobox>
+                    </SSHAuthTypeCombobox>
                     <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30"
                                         flexWidth="100% - 340">
                         <HBox.margin>

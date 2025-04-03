@@ -19,7 +19,7 @@ import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.easyzk.zk.ZKSASLUtil;
-import cn.oyzh.fx.gui.combobox.SSHAuthMethodCombobox;
+import cn.oyzh.fx.gui.combobox.SSHAuthTypeCombobox;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
@@ -170,7 +170,7 @@ public class ZKUpdateConnectController extends StageController {
      * ssh认证方式
      */
     @FXML
-    private SSHAuthMethodCombobox sshAuthMethod;
+    private SSHAuthTypeCombobox sshAuthMethod;
 
     /**
      * ssh证书

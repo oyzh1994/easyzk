@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.tabs.query;
 import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.RichTabController;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
@@ -12,27 +13,56 @@ import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 
 /**
+ * 查询数据
+ *
  * @author oyzh
  * @since 2025/01/20
  */
 public class ZKQueryDataTabController extends RichTabController {
 
+    /**
+     * zk路径
+     */
     private String path;
 
+    /**
+     * zk客户端
+     */
     private ZKClient zkClient;
 
+    /**
+     * 保存
+     */
     @FXML
     private SVGGlyph save;
 
+    /**
+     * 撤销
+     */
     @FXML
     private SVGGlyph undo;
 
+    /**
+     * 重做
+     */
     @FXML
     private SVGGlyph redo;
 
+    /**
+     * 过滤
+     */
+    @FXML
+    private ClearableTextField filter;
+
+    /**
+     * 数据
+     */
     @FXML
     private ZKDataTextAreaPane data;
 
+    /**
+     * 格式
+     */
     @FXML
     private RichDataTypeComboBox format;
 
@@ -75,6 +105,10 @@ public class ZKQueryDataTabController extends RichTabController {
                 this.data.showRawData(bytes1);
                 this.data.setEditable(this.data.getRealType() == RichDataType.STRING);
             }
+        });
+        // 过滤内容
+        this.filter.addTextChangeListener((observableValue, s, t1) -> {
+            this.data.setHighlightText(t1);
         });
     }
 

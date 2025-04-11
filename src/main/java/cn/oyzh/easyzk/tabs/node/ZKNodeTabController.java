@@ -125,17 +125,17 @@ public class ZKNodeTabController extends ParentTabController {
     @FXML
     private ZKNodeFilterTextField filterKW;
 
-    /**
-     * 右侧zk属性组件
-     */
-    @FXML
-    private FXVBox statBox;
-
-    /**
-     * zk属性视图切换按钮
-     */
-    @FXML
-    private FXToggleSwitch statViewSwitch;
+//    /**
+//     * 右侧zk属性组件
+//     */
+//    @FXML
+//    private FXVBox statBox;
+//
+//    /**
+//     * zk属性视图切换按钮
+//     */
+//    @FXML
+//    private FXToggleSwitch statViewSwitch;
 
     /**
      * 内容过滤组件
@@ -328,7 +328,8 @@ public class ZKNodeTabController extends ParentTabController {
                     this.initData();
                 } else if ("statTab".equals(id)) {
                     // 初始化状态
-                    this.initStat();
+//                    this.initStat();
+                    this.statTabController.initStat();
                 } else if ("aclTab".equals(id)) {
                     // 初始化acl
 //                    this.initACL();
@@ -373,7 +374,8 @@ public class ZKNodeTabController extends ParentTabController {
 //            this.initACL();
             this.aclTabController.initACL();
             // 初始化状态
-            this.initStat();
+//            this.initStat();
+            this.statTabController.initStat();
             // 初始化配额
 //            this.initQuota();
             this.quotaTabController.initQuota();
@@ -465,29 +467,29 @@ public class ZKNodeTabController extends ParentTabController {
 //        }
 //    }
 
-    /**
-     * 复制配额
-     */
-    @FXML
-    private void copyQuota() {
-        try {
-            if (this.activeItem == null) {
-                return;
-            }
-            StatsTrack quota = this.activeItem.quota();
-            String builder;
-            if (quota == null) {
-                builder = I18nHelper.count() + " -1" + System.lineSeparator() + I18nHelper.bytes() + " -1";
-            } else {
-                builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() + I18nHelper.bytes() + " " + quota.getBytes();
-            }
-            ClipboardUtil.setStringAndTip(builder);
-            MessageBox.okToast(I18nHelper.operationSuccess());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
-    }
+//    /**
+//     * 复制配额
+//     */
+//    @FXML
+//    private void copyQuota() {
+//        try {
+//            if (this.activeItem == null) {
+//                return;
+//            }
+//            StatsTrack quota = this.activeItem.quota();
+//            String builder;
+//            if (quota == null) {
+//                builder = I18nHelper.count() + " -1" + System.lineSeparator() + I18nHelper.bytes() + " -1";
+//            } else {
+//                builder = I18nHelper.count() + " " + quota.getCount() + System.lineSeparator() + I18nHelper.bytes() + " " + quota.getBytes();
+//            }
+//            ClipboardUtil.setStringAndTip(builder);
+//            MessageBox.okToast(I18nHelper.operationSuccess());
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            MessageBox.exception(ex);
+//        }
+//    }
 
 //    /**
 //     * 复制访问控制
@@ -607,36 +609,36 @@ public class ZKNodeTabController extends ParentTabController {
 //        this.aclTableView.setItem(list);
 //    }
 
-    /**
-     * 复制zk状态
-     */
-    @FXML
-    private void copyStat() {
-        List<FriendlyInfo<Stat>> statInfos = this.activeItem.statInfos();
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < statInfos.size(); i++) {
-            FriendlyInfo<Stat> statInfo = statInfos.get(i);
-            builder.append(statInfo.getName(this.statViewSwitch.isSelected())).append(" : ").append(statInfo.getValue(this.statViewSwitch.isSelected()));
-            if (statInfo != CollectionUtil.getLast(statInfos)) {
-                builder.append(System.lineSeparator());
-            }
-        }
-        ClipboardUtil.setStringAndTip(builder.toString());
-    }
+//    /**
+//     * 复制zk状态
+//     */
+//    @FXML
+//    private void copyStat() {
+//        List<FriendlyInfo<Stat>> statInfos = this.activeItem.statInfos();
+//        StringBuilder builder = new StringBuilder();
+//        for (int i = 0; i < statInfos.size(); i++) {
+//            FriendlyInfo<Stat> statInfo = statInfos.get(i);
+//            builder.append(statInfo.getName(this.statViewSwitch.isSelected())).append(" : ").append(statInfo.getValue(this.statViewSwitch.isSelected()));
+//            if (statInfo != CollectionUtil.getLast(statInfos)) {
+//                builder.append(System.lineSeparator());
+//            }
+//        }
+//        ClipboardUtil.setStringAndTip(builder.toString());
+//    }
 
-    /**
-     * 刷新zk状态
-     */
-    @FXML
-    private void reloadStat() {
-        try {
-            this.activeItem.refreshStat();
-            this.initStat();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
-    }
+//    /**
+//     * 刷新zk状态
+//     */
+//    @FXML
+//    private void reloadStat() {
+//        try {
+//            this.activeItem.refreshStat();
+//            this.initStat();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            MessageBox.exception(ex);
+//        }
+//    }
 
     /**
      * 复制节点路径及数据
@@ -878,33 +880,33 @@ public class ZKNodeTabController extends ParentTabController {
         this.dataSize.text(I18nHelper.size() + " : " + this.activeItem.dataSizeInfo());
     }
 
-    /**
-     * 初始化状态
-     */
-    public void initStat() {
-        if (this.activeItem == null) {
-            return;
-        }
-        List<FriendlyInfo<Stat>> statInfos = this.activeItem.statInfos();
-        // 有可能为空
-        if (CollectionUtil.isNotEmpty(statInfos)) {
-            Set<Node> statItems = this.statBox.lookupAll(".statItem");
-            // 遍历节点
-            int index = 0;
-            for (Node statItem : statItems) {
-                FXHBox box = (FXHBox) statItem;
-                FriendlyInfo<Stat> statInfo = statInfos.get(index++);
-                Label label = (Label) box.getChildren().get(0);
-                Label data = (Label) box.getChildren().get(1);
-                data.setFocusTraversable(true);
-                // 设置属性值及属性值
-                FXUtil.runLater(() -> {
-                    label.setText(statInfo.getName(this.statViewSwitch.isSelected()));
-                    data.setText(statInfo.getValue(this.statViewSwitch.isSelected()).toString());
-                });
-            }
-        }
-    }
+//    /**
+//     * 初始化状态
+//     */
+//    public void initStat() {
+//        if (this.activeItem == null) {
+//            return;
+//        }
+//        List<FriendlyInfo<Stat>> statInfos = this.activeItem.statInfos();
+//        // 有可能为空
+//        if (CollectionUtil.isNotEmpty(statInfos)) {
+//            Set<Node> statItems = this.statBox.lookupAll(".statItem");
+//            // 遍历节点
+//            int index = 0;
+//            for (Node statItem : statItems) {
+//                FXHBox box = (FXHBox) statItem;
+//                FriendlyInfo<Stat> statInfo = statInfos.get(index++);
+//                Label label = (Label) box.getChildren().get(0);
+//                Label data = (Label) box.getChildren().get(1);
+//                data.setFocusTraversable(true);
+//                // 设置属性值及属性值
+//                FXUtil.runLater(() -> {
+//                    label.setText(statInfo.getName(this.statViewSwitch.isSelected()));
+//                    data.setText(statInfo.getValue(this.statViewSwitch.isSelected()).toString());
+//                });
+//            }
+//        }
+//    }
 
 //    /**
 //     * 初始化权限
@@ -964,8 +966,8 @@ public class ZKNodeTabController extends ParentTabController {
         this.charset.selectedItemChanged((t3, t2, t1) -> this.showData());
 //        // 切换显示监听
 //        this.aclViewSwitch.selectedChanged((t3, t2, t1) -> this.initACL());
-        // 切换显示监听
-        this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
+//        // 切换显示监听
+//        this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
         // 节点内容过滤
         this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setHighlightText(newValue));
         // 格式监听
@@ -1009,7 +1011,8 @@ public class ZKNodeTabController extends ParentTabController {
                     if ("dataTab".equals(newValue.getId())) {
                         this.initData();
                     } else if ("statTab".equals(newValue.getId())) {
-                        this.initStat();
+//                        this.initStat();
+                        this.statTabController.initStat();
                     } else if ("aclTab".equals(newValue.getId())) {
 //                        this.initACL();
                         this.aclTabController.initACL();
@@ -1340,6 +1343,13 @@ public class ZKNodeTabController extends ParentTabController {
 //        }
 //    }
 
+
+    /**
+     * 状态
+     */
+    @FXML
+    private ZKNodeStatTabController statTabController;
+
     /**
      * 权限
      */
@@ -1354,6 +1364,6 @@ public class ZKNodeTabController extends ParentTabController {
 
     @Override
     public List<? extends RichTabController> getSubControllers() {
-        return List.of(this.aclTabController, this.quotaTabController);
+        return List.of(this.statTabController, this.aclTabController, this.quotaTabController);
     }
 }

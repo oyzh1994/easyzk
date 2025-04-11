@@ -210,43 +210,43 @@
                 </FXHBox>
             </FXVBox>
         </FXTab>
-        <FXTab text="%base.stat" fx:id="statTab">
-            <graphic>
-                <SVGGlyph cursorType="DEFAULT" url="/font/status.svg" size="13"/>
-            </graphic>
-            <FXVBox flexWidth="100%" flexHeight="100%" fx:id="statBox">
-                <FXHBox realHeight="30" flexWidth="100%">
-                    <FXToggleSwitch realHeight="16" fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"
-                                    selectedText="%zk.node.main.toggle.friendly"
-                                    selected="true">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </FXToggleSwitch>
-                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyStat">
-                        <HBox.margin>
-                            <Insets left="5" top="7"/>
-                        </HBox.margin>
-                    </CopySVGGlyph>
-                    <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadStat">
-                        <HBox.margin>
-                            <Insets left="5" top="7"/>
-                        </HBox.margin>
-                    </RefreshSVGGlyph>
-                </FXHBox>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-                <fx:include source="zkNodeStatItem.fxml"/>
-            </FXVBox>
-        </FXTab>
+<!--        <FXTab text="%base.stat" fx:id="statTab">-->
+<!--            <graphic>-->
+<!--                <SVGGlyph cursorType="DEFAULT" url="/font/status.svg" size="13"/>-->
+<!--            </graphic>-->
+<!--            <FXVBox flexWidth="100%" flexHeight="100%" fx:id="statBox">-->
+<!--                <FXHBox realHeight="30" flexWidth="100%">-->
+<!--                    <FXToggleSwitch realHeight="16" fx:id="statViewSwitch" unselectedText="%zk.node.main.toggle.normal"-->
+<!--                                    selectedText="%zk.node.main.toggle.friendly"-->
+<!--                                    selected="true">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </FXToggleSwitch>-->
+<!--                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyStat">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="7"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </CopySVGGlyph>-->
+<!--                    <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadStat">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="7"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </RefreshSVGGlyph>-->
+<!--                </FXHBox>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--                <fx:include source="zkNodeStatItem.fxml"/>-->
+<!--            </FXVBox>-->
+<!--        </FXTab>-->
 <!--        <FXTab text="%base.acl" fx:id="aclTab">-->
 <!--            <graphic>-->
 <!--                <AccessControlSVGGlyph cursorType="DEFAULT" size="13"/>-->
@@ -304,6 +304,7 @@
 <!--                </ZKACLTableView>-->
 <!--            </FXVBox>-->
 <!--        </FXTab>-->
+        <fx:include fx:id="statTab" source="zkNodeStatTab.fxml"/>
         <fx:include fx:id="aclTab" source="zkNodeACLTab.fxml"/>
         <fx:include fx:id="quotaTab" source="zkNodeQuotaTab.fxml"/>
 <!--        <FXTab text="%base.quota" fx:id="quotaTab">-->

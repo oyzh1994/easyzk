@@ -21,6 +21,7 @@ import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
@@ -328,11 +329,22 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
                 FXMenuItem export = MenuItemHelper.exportData("12", this::exportData);
                 items.add(export);
             }
+            // 复制节点路径
+            FXMenuItem copyNodePath = MenuItemHelper.copyNodePath("12", this::copyNodePath);
+            items.add(copyNodePath);
             // 认证
             FXMenuItem auth = MenuItemHelper.authNode("12", this::authNode);
             items.add(auth);
         }
         return items;
+    }
+
+    /**
+     * 复制节点路径
+     */
+    private void copyNodePath() {
+        ClipboardUtil.copy(this.decodeNodePath());
+        MessageBox.okToast(I18nHelper.operationSuccess());
     }
 
     /**

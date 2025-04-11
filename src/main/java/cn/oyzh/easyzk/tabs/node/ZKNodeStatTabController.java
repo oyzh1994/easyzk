@@ -106,10 +106,6 @@ public class ZKNodeStatTabController extends SubTabController {
         this.statViewSwitch.selectedChanged((t3, t2, t1) -> this.initStat());
     }
 
-    private ZKConnectTreeItem treeItem() {
-        return this.parent().getTreeItem();
-    }
-
     private ZKNodeTreeItem activeItem() {
         return this.parent().getActiveItem();
     }

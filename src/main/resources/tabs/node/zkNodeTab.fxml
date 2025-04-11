@@ -247,63 +247,64 @@
                 <fx:include source="zkNodeStatItem.fxml"/>
             </FXVBox>
         </FXTab>
-        <FXTab text="%base.acl" fx:id="aclTab">
-            <graphic>
-                <AccessControlSVGGlyph cursorType="DEFAULT" size="13"/>
-            </graphic>
-            <FXVBox flexWidth="100%" flexHeight="100%">
-                <FXHBox realHeight="30" flexWidth="100%">
-                    <FXToggleSwitch realHeight="16" fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"
-                                    selectedText="%zk.node.main.toggle.friendly"
-                                    selected="true">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </FXToggleSwitch>
-                    <AddSVGGlyph size="16" onMousePrimaryClicked="#addACL">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </AddSVGGlyph>
-                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyACL">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </CopySVGGlyph>
-                    <EditSVGGlyph size="16" onMousePrimaryClicked="#updateACL">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </EditSVGGlyph>
-                    <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteACL">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </DeleteSVGGlyph>
-                    <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadACL">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </RefreshSVGGlyph>
-                    <PageBox fx:id="aclPage" realHeight="24"
-                             realWidth="300" onPrevClicked="#aclPrevPage" onNextClicked="#aclNextPage">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </PageBox>
-                </FXHBox>
-                <ZKACLTableView copyCellDataOnDoubleClicked="true" fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 30">
-                    <columns>
-                        <FXTableColumn flexWidth="40%" text="%base.identify" sortable="false" valueName="idControl"/>
-                        <FXTableColumn flexWidth="36%" text="%base.perms" sortable="false" valueName="permsControl"/>
-                        <FXTableColumn flexWidth="12%" text="%base.schema" sortable="false"
-                                       valueName="schemaControl"/>
-                        <FXTableColumn flexWidth="12% - 12" text="%base.status"
-                                       sortable="false" valueName="statusControl"/>
-                    </columns>
-                </ZKACLTableView>
-            </FXVBox>
-        </FXTab>
+<!--        <FXTab text="%base.acl" fx:id="aclTab">-->
+<!--            <graphic>-->
+<!--                <AccessControlSVGGlyph cursorType="DEFAULT" size="13"/>-->
+<!--            </graphic>-->
+<!--            <FXVBox flexWidth="100%" flexHeight="100%">-->
+<!--                <FXHBox realHeight="30" flexWidth="100%">-->
+<!--                    <FXToggleSwitch realHeight="16" fx:id="aclViewSwitch" unselectedText="%zk.node.main.toggle.normal"-->
+<!--                                    selectedText="%zk.node.main.toggle.friendly"-->
+<!--                                    selected="true">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </FXToggleSwitch>-->
+<!--                    <AddSVGGlyph size="16" onMousePrimaryClicked="#addACL">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </AddSVGGlyph>-->
+<!--                    <CopySVGGlyph size="16" onMousePrimaryClicked="#copyACL">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </CopySVGGlyph>-->
+<!--                    <EditSVGGlyph size="16" onMousePrimaryClicked="#updateACL">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </EditSVGGlyph>-->
+<!--                    <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteACL">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </DeleteSVGGlyph>-->
+<!--                    <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadACL">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </RefreshSVGGlyph>-->
+<!--                    <PageBox fx:id="aclPage" realHeight="24"-->
+<!--                             realWidth="300" onPrevClicked="#aclPrevPage" onNextClicked="#aclNextPage">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </PageBox>-->
+<!--                </FXHBox>-->
+<!--                <ZKACLTableView copyCellDataOnDoubleClicked="true" fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 30">-->
+<!--                    <columns>-->
+<!--                        <FXTableColumn flexWidth="40%" text="%base.identify" sortable="false" valueName="idControl"/>-->
+<!--                        <FXTableColumn flexWidth="36%" text="%base.perms" sortable="false" valueName="permsControl"/>-->
+<!--                        <FXTableColumn flexWidth="12%" text="%base.schema" sortable="false"-->
+<!--                                       valueName="schemaControl"/>-->
+<!--                        <FXTableColumn flexWidth="12% - 12" text="%base.status"-->
+<!--                                       sortable="false" valueName="statusControl"/>-->
+<!--                    </columns>-->
+<!--                </ZKACLTableView>-->
+<!--            </FXVBox>-->
+<!--        </FXTab>-->
+        <fx:include fx:id="aclTab" source="zkNodeACLTab.fxml"/>
         <FXTab text="%base.quota" fx:id="quotaTab">
             <graphic>
                 <SVGGlyph cursorType="DEFAULT" url="/font/quota.svg" size="13"/>

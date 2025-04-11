@@ -244,29 +244,29 @@ public class ZKNodeTabController extends ParentTabController {
     @FXML
     private FXTab statTab;
 
-    /**
-     * 权限tab
-     */
-    @FXML
-    private FXTab aclTab;
+//    /**
+//     * 权限tab
+//     */
+//    @FXML
+//    private FXTab aclTab;
 
-    /**
-     * 配额tab
-     */
-    @FXML
-    protected FXTab quotaTab;
+//    /**
+//     * 配额tab
+//     */
+//    @FXML
+//    protected FXTab quotaTab;
 
-    /**
-     * 子节点数量配额
-     */
-    @FXML
-    protected NumberTextField quotaCount;
-
-    /**
-     * 节点数据大小配额
-     */
-    @FXML
-    protected NumberTextField quotaBytes;
+//    /**
+//     * 子节点数量配额
+//     */
+//    @FXML
+//    protected NumberTextField quotaCount;
+//
+//    /**
+//     * 节点数据大小配额
+//     */
+//    @FXML
+//    protected NumberTextField quotaBytes;
 
     /**
      * zk客户端
@@ -335,7 +335,8 @@ public class ZKNodeTabController extends ParentTabController {
                     this.aclTabController.initACL();
                 } else if ("quotaTab".equals(id)) {
                     // 初始化配额
-                    this.initQuota();
+//                    this.initQuota();
+                    this.quotaTabController.initQuota();
                 }
                 // 设置是否收藏
                 this.collectPane.setCollect(this.activeItem.isCollect());
@@ -374,7 +375,8 @@ public class ZKNodeTabController extends ParentTabController {
             // 初始化状态
             this.initStat();
             // 初始化配额
-            this.initQuota();
+//            this.initQuota();
+            this.quotaTabController.initQuota();
             // 刷新tab
             this.flushTab();
         } catch (Exception ex) {
@@ -449,19 +451,19 @@ public class ZKNodeTabController extends ParentTabController {
 //        ZKEventUtil.showAddACL(this.activeItem, this.activeItem.client());
 //    }
 
-    /**
-     * 重载配额
-     */
-    @FXML
-    private void reloadQuota() {
-        try {
-            this.activeItem.refreshQuota();
-            this.initQuota();
-            MessageBox.okToast(I18nHelper.operationSuccess());
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
-        }
-    }
+//    /**
+//     * 重载配额
+//     */
+//    @FXML
+//    private void reloadQuota() {
+//        try {
+//            this.activeItem.refreshQuota();
+//            this.initQuota();
+//            MessageBox.okToast(I18nHelper.operationSuccess());
+//        } catch (Exception ex) {
+//            MessageBox.exception(ex);
+//        }
+//    }
 
     /**
      * 复制配额
@@ -925,27 +927,27 @@ public class ZKNodeTabController extends ParentTabController {
 //        }
 //    }
 
-    /**
-     * 初始化配额
-     */
-    public void initQuota() throws Exception {
-        if (this.treeItem == null) {
-            return;
-        }
-        if (this.activeItem.isRootNode()) {
-            this.quotaTab.getContent().setDisable(true);
-        } else {
-            this.quotaTab.getContent().setDisable(false);
-            StatsTrack quota = this.activeItem.quota();
-            if (quota != null) {
-                this.quotaCount.setValue(quota.getCount());
-                this.quotaBytes.setValue(quota.getBytes());
-            } else {
-                this.quotaCount.setValue(-1);
-                this.quotaBytes.setValue(-1);
-            }
-        }
-    }
+//    /**
+//     * 初始化配额
+//     */
+//    public void initQuota() throws Exception {
+//        if (this.treeItem == null) {
+//            return;
+//        }
+//        if (this.activeItem.isRootNode()) {
+//            this.quotaTab.getContent().setDisable(true);
+//        } else {
+//            this.quotaTab.getContent().setDisable(false);
+//            StatsTrack quota = this.activeItem.quota();
+//            if (quota != null) {
+//                this.quotaCount.setValue(quota.getCount());
+//                this.quotaBytes.setValue(quota.getBytes());
+//            } else {
+//                this.quotaCount.setValue(-1);
+//                this.quotaBytes.setValue(-1);
+//            }
+//        }
+//    }
 
     @Override
     protected void bindListeners() {
@@ -1012,7 +1014,8 @@ public class ZKNodeTabController extends ParentTabController {
 //                        this.initACL();
                         this.aclTabController.initACL();
                     } else if ("quotaTab".equals(newValue.getId())) {
-                        this.initQuota();
+//                        this.initQuota();
+                        this.quotaTabController.initQuota();
                     }
                 }
             } catch (Exception ex) {
@@ -1060,34 +1063,34 @@ public class ZKNodeTabController extends ParentTabController {
         return this.treeItem == null ? null : this.treeItem.window();
     }
 
-    /**
-     * 保存配额
-     */
-    @FXML
-    private void saveQuota() {
-        try {
-            this.activeItem.saveQuota(this.quotaBytes.getLongValue(), this.quotaCount.getIntValue());
-            MessageBox.okToast(I18nHelper.operationSuccess());
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
-        }
-    }
+//    /**
+//     * 保存配额
+//     */
+//    @FXML
+//    private void saveQuota() {
+//        try {
+//            this.activeItem.saveQuota(this.quotaBytes.getLongValue(), this.quotaCount.getIntValue());
+//            MessageBox.okToast(I18nHelper.operationSuccess());
+//        } catch (Exception ex) {
+//            MessageBox.exception(ex);
+//        }
+//    }
 
-    /**
-     * 清除子节点数量配额
-     */
-    @FXML
-    private void clearQuotaCount() {
-        this.quotaCount.setValue(-1);
-    }
-
-    /**
-     * 清除数据大小配额
-     */
-    @FXML
-    private void clearQuotaBytes() {
-        this.quotaBytes.setValue(-1);
-    }
+//    /**
+//     * 清除子节点数量配额
+//     */
+//    @FXML
+//    private void clearQuotaCount() {
+//        this.quotaCount.setValue(-1);
+//    }
+//
+//    /**
+//     * 清除数据大小配额
+//     */
+//    @FXML
+//    private void clearQuotaBytes() {
+//        this.quotaBytes.setValue(-1);
+//    }
 
     /**
      * 恢复数据
@@ -1337,12 +1340,20 @@ public class ZKNodeTabController extends ParentTabController {
 //        }
 //    }
 
-
+    /**
+     * 权限
+     */
     @FXML
     private ZKNodeACLTabController aclTabController;
 
+    /**
+     * 配额
+     */
+    @FXML
+    private ZKNodeQuotaTabController quotaTabController;
+
     @Override
     public List<? extends RichTabController> getSubControllers() {
-        return List.of(this.aclTabController);
+        return List.of(this.aclTabController, this.quotaTabController);
     }
 }

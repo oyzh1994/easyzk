@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.tray.TrayManager;
+import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
@@ -378,8 +379,9 @@ public class ZKExportDataController extends StageController {
         try {
             // 检查文件
             if (this.exportFile == null) {
-                this.selectFile.requestFocus();
-                MessageBox.warn(I18nHelper.pleaseSelectFile());
+//                this.selectFile.requestFocus();
+//                MessageBox.warn(I18nHelper.pleaseSelectFile());
+                ControlUtil.validFail(this.selectFile);
                 return;
             }
             // 检查客户端

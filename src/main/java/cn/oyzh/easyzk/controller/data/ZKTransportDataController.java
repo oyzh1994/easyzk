@@ -21,6 +21,7 @@ import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.tray.TrayManager;
+import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
@@ -371,13 +372,15 @@ public class ZKTransportDataController extends StageController {
             ZKConnect sourceInfo = this.sourceInfo.getSelectedItem();
             ZKConnect targetInfo = this.targetInfo.getSelectedItem();
             if (sourceInfo == null) {
-                this.sourceInfo.requestFocus();
-                MessageBox.warn(I18nHelper.pleaseSelectSourceConnect());
+//                this.sourceInfo.requestFocus();
+//                MessageBox.warn(I18nHelper.pleaseSelectSourceConnect());
+                ControlUtil.validFail(this.sourceInfo);
                 return;
             }
             if (targetInfo == null) {
-                this.targetInfo.requestFocus();
-                MessageBox.warn(I18nHelper.pleaseSelectTargetConnect());
+//                this.targetInfo.requestFocus();
+//                MessageBox.warn(I18nHelper.pleaseSelectTargetConnect());
+                ControlUtil.validFail(this.targetInfo);
                 return;
             }
 

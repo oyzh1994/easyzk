@@ -15,9 +15,8 @@ import java.util.List;
  */
 public class ZKQueryStatTabController extends RichTabController {
 
-
     @FXML
-    private FXTableView<KeyValueProperty<String,Object>> statTable;
+    private FXTableView<KeyValueProperty<String, Object>> statTable;
 
     public void init(Stat stat) {
         List<KeyValueProperty<String, Object>> data = new ArrayList<>();

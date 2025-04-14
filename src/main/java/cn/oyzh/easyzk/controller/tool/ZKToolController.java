@@ -12,6 +12,7 @@ import cn.oyzh.fx.plus.controls.text.area.FXTextArea;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.validator.ValidatorUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
@@ -64,12 +65,12 @@ public class ZKToolController extends StageController {
         try {
             if (StringUtil.isBlank(this.user.getText())) {
 //                this.user.requestFocus();
-                ControlUtil.validFail(this.user);
+                ValidatorUtil.validFail(this.user);
                 return;
             }
             if (StringUtil.isBlank(this.pwd.getText())) {
 //                this.pwd.requestFocus();
-                ControlUtil.validFail(this.pwd);
+                ValidatorUtil.validFail(this.pwd);
                 return;
             }
             String digest1 = ZKAuthUtil.digest(this.user.getText(), this.pwd.getText());

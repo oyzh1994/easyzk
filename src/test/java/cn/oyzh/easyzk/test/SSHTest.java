@@ -4,7 +4,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.ssh.domain.SSHJumpConfig;
-import cn.oyzh.ssh.jump.SSHJumper;
+import cn.oyzh.ssh.jump.SSHJumpForwarder;
 import org.junit.Test;
 
 /**
@@ -24,7 +24,7 @@ public class SSHTest {
         forwardInfo.setRemotePort(2181);
         forwardInfo.setRemoteHost("192.168.189.134");
 
-        SSHJumper forwarder = new SSHJumper();
+        SSHJumpForwarder forwarder = new SSHJumpForwarder();
         int localPort = forwarder.forward(null, null);
 
         ZKConnect info = new ZKConnect();

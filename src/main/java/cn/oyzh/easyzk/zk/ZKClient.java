@@ -26,9 +26,7 @@ import cn.oyzh.easyzk.query.ZKQueryParam;
 import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.store.ZKSSHConfigStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
-import cn.oyzh.ssh.domain.SSHConnect;
-import cn.oyzh.ssh.domain.SSHJumpConfig;
-import cn.oyzh.ssh.jump.SSHJumper;
+import cn.oyzh.ssh.jump.SSHJumpForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -108,7 +106,7 @@ public class ZKClient {
     /**
      * ssh端口转发器
      */
-    private SSHJumper sshJumper;
+    private SSHJumpForwarder sshJumper;
 
     // /**
     //  * 是否已初始化
@@ -356,7 +354,7 @@ public class ZKClient {
             }
             if (sshConfig != null) {
                 if (this.sshJumper == null) {
-                    this.sshJumper = new SSHJumper();
+                    this.sshJumper = new SSHJumpForwarder();
                 }
                 // ssh配置
                 // 执行连接

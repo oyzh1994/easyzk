@@ -26,7 +26,8 @@ import cn.oyzh.easyzk.query.ZKQueryParam;
 import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.store.ZKSSHConfigStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
-import cn.oyzh.ssh.domain.SSHForwardConfig;
+import cn.oyzh.ssh.domain.SSHConnect;
+import cn.oyzh.ssh.domain.SSHJumpConfig;
 import cn.oyzh.ssh.jump.SSHJumper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -95,7 +96,7 @@ public class ZKClient {
      */
     private final ZKConnect zkConnect;
 
-    public ZKConnect zkConnect(){
+    public ZKConnect zkConnect() {
         return zkConnect;
     }
 
@@ -177,7 +178,7 @@ public class ZKClient {
         return this.state.getReadOnlyProperty();
     }
 
-    public ZKClient( ZKConnect zkConnect) {
+    public ZKClient(ZKConnect zkConnect) {
         this.zkConnect = zkConnect;
         // 监听连接状态
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
@@ -355,14 +356,11 @@ public class ZKClient {
             }
             if (sshConfig != null) {
                 if (this.sshJumper == null) {
-                    this.sshJumper = new SSHJumper(sshConfig);
+                    this.sshJumper = new SSHJumper();
                 }
                 // ssh配置
-                SSHForwardConfig forwardConfig = new SSHForwardConfig();
-                forwardConfig.setHost(this.zkConnect.hostIp());
-                forwardConfig.setPort(this.zkConnect.hostPort());
                 // 执行连接
-                int localPort = this.sshJumper.forward(forwardConfig);
+                int localPort = this.sshJumper.forward(null, null);
                 // 连接信息
                 host = "127.0.0.1:" + localPort;
             } else {
@@ -530,7 +528,7 @@ public class ZKClient {
      * @return Stat 节点状态
      * @throws Exception 异常
      */
-    public Stat setACL( String path,  List<ACL> aclList) throws Exception {
+    public Stat setACL(String path, List<ACL> aclList) throws Exception {
         return this.setACL(path, aclList, null);
     }
 
@@ -543,7 +541,7 @@ public class ZKClient {
      * @return Stat 节点状态
      * @throws Exception 异常
      */
-    public Stat setACL( String path,  List<ACL> aclList, Integer version) throws Exception {
+    public Stat setACL(String path, List<ACL> aclList, Integer version) throws Exception {
         this.throwReadonlyException();
         try {
             ZKClientActionUtil.forSetAclAction(this.connectName(), path, false, false, version, aclList);
@@ -564,7 +562,7 @@ public class ZKClient {
      * @param aclList 权限列表
      * @throws Exception 异常
      */
-    public void setACL( List<String> paths,  List<ACL> aclList) throws Exception {
+    public void setACL(List<String> paths, List<ACL> aclList) throws Exception {
         this.throwReadonlyException();
         String path = null;
         try {
@@ -591,7 +589,7 @@ public class ZKClient {
      * @return Stat
      * @throws Exception 异常
      */
-    public Stat addACL( String path,  ACL acl) throws Exception {
+    public Stat addACL(String path, ACL acl) throws Exception {
         List<ACL> aclList = this.getACL(path);
         aclList.add(acl);
         return this.setACL(path, aclList);
@@ -605,7 +603,7 @@ public class ZKClient {
      * @return Stat
      * @throws Exception 异常
      */
-    public Stat addACL( String path,  List<? extends ACL> list) throws Exception {
+    public Stat addACL(String path, List<? extends ACL> list) throws Exception {
         List<ACL> aclList = this.getACL(path);
         aclList.addAll(list);
         return this.setACL(path, aclList);
@@ -619,7 +617,7 @@ public class ZKClient {
      * @return Stat
      * @throws Exception 异常
      */
-    public Stat deleteACL( String path,  ACL acl) throws Exception {
+    public Stat deleteACL(String path, ACL acl) throws Exception {
         List<ACL> aclList = this.getACL(path);
         aclList.remove(acl);
         return this.setACL(path, aclList);
@@ -632,7 +630,7 @@ public class ZKClient {
      * @param password 密码
      * @throws Exception 异常
      */
-    public void addAuth( String user,  String password) throws Exception {
+    public void addAuth(String user, String password) throws Exception {
         ZooKeeper zooKeeper = this.getZooKeeper();
         if (zooKeeper != null) {
             String data = user + ":" + password;
@@ -652,7 +650,7 @@ public class ZKClient {
      * @param path 节点路径
      * @return 结果
      */
-    public boolean exists( String path) {
+    public boolean exists(String path) {
         try {
             return this.checkExists(path) != null;
         } catch (Exception ex) {
@@ -667,7 +665,7 @@ public class ZKClient {
      * @param path 节点路径
      * @param data 节点值
      */
-    public String createIncludeParents( String path, byte[] data) throws Exception {
+    public String createIncludeParents(String path, byte[] data) throws Exception {
         return this.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, null, CreateMode.PERSISTENT, true);
     }
 
@@ -678,7 +676,7 @@ public class ZKClient {
      * @param data       节点值
      * @param createMode 节点模式
      */
-    public String createIncludeParents( String path, byte[] data,  CreateMode createMode) throws Exception {
+    public String createIncludeParents(String path, byte[] data, CreateMode createMode) throws Exception {
         return this.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, null, createMode, true);
     }
 
@@ -689,7 +687,7 @@ public class ZKClient {
      * @param data       节点值
      * @param createMode 创建模式
      */
-    public String create( String path, byte[] data,  CreateMode createMode) throws Exception {
+    public String create(String path, byte[] data, CreateMode createMode) throws Exception {
         return this.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, null, createMode, false);
     }
 
@@ -703,7 +701,7 @@ public class ZKClient {
      * @param createMode 创建模式
      * @param cParents   在需要的时候是否创建父节点
      */
-    public String create( String path, byte[] data,  List<ACL> aclList, Long ttl,  CreateMode createMode, boolean cParents) throws Exception {
+    public String create(String path, byte[] data, List<ACL> aclList, Long ttl, CreateMode createMode, boolean cParents) throws Exception {
         this.throwReadonlyException();
         String old = this.lastCreate;
         try {
@@ -742,7 +740,7 @@ public class ZKClient {
      * @param aclList    权限集合
      * @param createMode 创建模式
      */
-    public String create( String path, String data,  List<ACL> aclList,  CreateMode createMode) throws Exception {
+    public String create(String path, String data, List<ACL> aclList, CreateMode createMode) throws Exception {
         return this.create(path, data, aclList, null, createMode, false);
     }
 
@@ -755,7 +753,7 @@ public class ZKClient {
      * @param createMode 创建模式
      * @param cParents   在需要的时候是否创建父节点
      */
-    public String create( String path, String data,  List<ACL> aclList,  CreateMode createMode, boolean cParents) throws Exception {
+    public String create(String path, String data, List<ACL> aclList, CreateMode createMode, boolean cParents) throws Exception {
         return this.create(path, data, aclList, null, createMode, cParents);
     }
 
@@ -769,7 +767,7 @@ public class ZKClient {
      * @param createMode 创建模式
      * @param cParents   在需要的时候是否创建父节点
      */
-    public String create( String path, String data,  List<ACL> aclList, Long ttl,  CreateMode createMode, boolean cParents) throws Exception {
+    public String create(String path, String data, List<ACL> aclList, Long ttl, CreateMode createMode, boolean cParents) throws Exception {
         byte[] bytes;
         if (data != null) {
             bytes = data.getBytes();
@@ -785,7 +783,7 @@ public class ZKClient {
      * @param path 路径
      * @return 子节点列表
      */
-    public List<String> getChildren( String path) throws Exception {
+    public List<String> getChildren(String path) throws Exception {
         try {
             ZKClientActionUtil.forGetAction(this.connectName(), path, false, false);
             return this.framework.getChildren().forPath(path);
@@ -824,7 +822,7 @@ public class ZKClient {
      * @param path 路径
      * @return 节点数据
      */
-    public byte[] getData( String path) throws Exception {
+    public byte[] getData(String path) throws Exception {
         if (this.framework == null) {
             return null;
         }
@@ -846,7 +844,7 @@ public class ZKClient {
      * @param path     路径
      * @param callback 回调函数
      */
-    public void getData( String path,  BackgroundCallback callback) throws Exception {
+    public void getData(String path, BackgroundCallback callback) throws Exception {
         try {
             ZKClientActionUtil.forGetAction(this.connectName(), path, false, false);
             this.framework.getData().inBackground(callback).forPath(path);
@@ -866,7 +864,7 @@ public class ZKClient {
      * @param path 路径
      * @return 节点数据
      */
-    public String getDataString( String path) throws Exception {
+    public String getDataString(String path) throws Exception {
         byte[] bytes = this.getData(path);
         if (bytes != null) {
             return new String(bytes);
@@ -880,7 +878,7 @@ public class ZKClient {
      * @param path 路径
      * @return 权限数据
      */
-    public List<ACL> getACL( String path) throws Exception {
+    public List<ACL> getACL(String path) throws Exception {
         try {
             ZKClientActionUtil.forGetAclAction(this.connectName(), path, false);
             return this.framework.getACL().forPath(path);
@@ -899,7 +897,7 @@ public class ZKClient {
      * @param path     路径
      * @param callback 回调函数
      */
-    public void getACL( String path,  BackgroundCallback callback) throws Exception {
+    public void getACL(String path, BackgroundCallback callback) throws Exception {
         try {
             ZKClientActionUtil.forGetAclAction(this.connectName(), path, false);
             this.framework.getACL().inBackground(callback).forPath(path);
@@ -920,7 +918,7 @@ public class ZKClient {
      * @param data 数据
      * @return Stat 状态
      */
-    public Stat setData( String path, String data) throws Exception {
+    public Stat setData(String path, String data) throws Exception {
         byte[] bytes = Objects.requireNonNullElse(data, "").getBytes();
         return this.setData(path, bytes, null);
     }
@@ -933,7 +931,7 @@ public class ZKClient {
      * @param version 版本
      * @return Stat 状态
      */
-    public Stat setData( String path, String data, Integer version) throws Exception {
+    public Stat setData(String path, String data, Integer version) throws Exception {
         byte[] bytes = Objects.requireNonNullElse(data, "").getBytes();
         return this.setData(path, bytes, version);
     }
@@ -945,7 +943,7 @@ public class ZKClient {
      * @param data 数据
      * @return Stat 状态
      */
-    public Stat setData( String path, byte  [] data) throws Exception {
+    public Stat setData(String path, byte[] data) throws Exception {
         return this.setData(path, data, null);
     }
 
@@ -957,7 +955,7 @@ public class ZKClient {
      * @param version 版本
      * @return Stat 状态
      */
-    public Stat setData( String path, byte  [] data, Integer version) throws Exception {
+    public Stat setData(String path, byte[] data, Integer version) throws Exception {
         this.throwReadonlyException();
         String old = this.lastUpdate;
         try {
@@ -983,7 +981,7 @@ public class ZKClient {
      *
      * @param path 路径
      */
-    public void sync( String path) throws Exception {
+    public void sync(String path) throws Exception {
         this.throwReadonlyException();
         ZKClientActionUtil.forSyncAction(this.connectName(), path);
         this.framework.sync().forPath(path);
@@ -994,7 +992,7 @@ public class ZKClient {
      *
      * @param path 路径
      */
-    public void delete( String path) throws Exception {
+    public void delete(String path) throws Exception {
         this.delete(path, null, false);
     }
 
@@ -1005,7 +1003,7 @@ public class ZKClient {
      * @param version     版本
      * @param delChildren 删除子节点
      */
-    public void delete( String path, Integer version, boolean delChildren) throws Exception {
+    public void delete(String path, Integer version, boolean delChildren) throws Exception {
         this.throwReadonlyException();
         String old = this.lastDelete;
         try {
@@ -1034,7 +1032,7 @@ public class ZKClient {
      * @param path 路径
      * @return 状态
      */
-    public Stat checkExists( String path) throws Exception {
+    public Stat checkExists(String path) throws Exception {
         if (this.framework == null) {
             return null;
         }
@@ -1063,7 +1061,7 @@ public class ZKClient {
      * @param bytes 限制数据大小
      * @param num   限制子节点数量
      */
-    public boolean createQuota( String path, long bytes, int num) throws Exception {
+    public boolean createQuota(String path, long bytes, int num) throws Exception {
         this.throwReadonlyException();
         if (path.equals("/")) {
             return false;
@@ -1079,7 +1077,7 @@ public class ZKClient {
      * @param bytes 删除数据大小配额
      * @param count 删除子节点数量配额
      */
-    public boolean delQuota( String path, boolean bytes, boolean count) throws Exception {
+    public boolean delQuota(String path, boolean bytes, boolean count) throws Exception {
         this.throwReadonlyException();
         if (path.equals("/")) {
             return false;
@@ -1093,7 +1091,7 @@ public class ZKClient {
      *
      * @param path 路径
      */
-    public StatsTrack listQuota( String path) throws Exception {
+    public StatsTrack listQuota(String path) throws Exception {
         if (path.equals("/")) {
             return null;
         }
@@ -1679,7 +1677,7 @@ public class ZKClient {
      * @param node zk节点
      * @return 结果
      */
-    public boolean isNeedAuth( ZKNode node) {
+    public boolean isNeedAuth(ZKNode node) {
         if (node.aclEmpty() && node.lackPerm()) {
             return true;
         }

@@ -27,7 +27,7 @@ import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.store.ZKSSHConfigStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.ssh.domain.SSHForwardConfig;
-import cn.oyzh.ssh.jump.SSHForwarder;
+import cn.oyzh.ssh.jump.SSHJumper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -107,7 +107,7 @@ public class ZKClient {
     /**
      * ssh端口转发器
      */
-    private SSHForwarder sshForwarder;
+    private SSHJumper sshJumper;
 
     // /**
     //  * 是否已初始化
@@ -354,15 +354,15 @@ public class ZKClient {
                 sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
             }
             if (sshConfig != null) {
-                if (this.sshForwarder == null) {
-                    this.sshForwarder = new SSHForwarder(sshConfig);
+                if (this.sshJumper == null) {
+                    this.sshJumper = new SSHJumper(sshConfig);
                 }
                 // ssh配置
                 SSHForwardConfig forwardConfig = new SSHForwardConfig();
                 forwardConfig.setHost(this.zkConnect.hostIp());
                 forwardConfig.setPort(this.zkConnect.hostPort());
                 // 执行连接
-                int localPort = this.sshForwarder.forward(forwardConfig);
+                int localPort = this.sshJumper.forward(forwardConfig);
                 // 连接信息
                 host = "127.0.0.1:" + localPort;
             } else {
@@ -414,7 +414,7 @@ public class ZKClient {
             this.auths = null;
             // 销毁端口转发
             if (this.zkConnect.isSSHForward()) {
-                this.sshForwarder.destroy();
+                this.sshJumper.destroy();
             }
             // 关闭连接
             if (this.framework != null) {

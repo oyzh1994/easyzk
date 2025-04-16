@@ -179,7 +179,7 @@ public class ZKAuthNodeController extends StageController {
 
     @Override
     public void onWindowShown(WindowEvent event) {
-        this.zkItem = this.getWindowProp("zkItem");
+        this.zkItem = this.getProp("zkItem");
         this.zkNode = this.zkItem.value();
         this.nodePath.setText(this.zkNode.decodeNodePath());
         this.mutexes.addNodes(this.authType1, this.authType2);

@@ -110,7 +110,7 @@
 //
 //    @Override
 //    public void onWindowShown(WindowEvent event) {
-//        this.zkClient = this.getWindowProp("zkClient");
+//        this.zkClient = this.getProp("zkClient");
 //        // 初始化基本信息
 //        this.refreshLocal();
 //        this.refreshEnvi();

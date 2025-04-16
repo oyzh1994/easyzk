@@ -411,7 +411,7 @@ public class ZKAddConnectController extends StageController {
     @Override
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
-        this.group = this.getWindowProp("group");
+        this.group = this.getProp("group");
         this.initAuthDataList();
         this.initFilterDataList();
         this.stage.switchOnTab();

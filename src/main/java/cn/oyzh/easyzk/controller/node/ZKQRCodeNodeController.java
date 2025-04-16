@@ -53,8 +53,8 @@
 //     */
 //    private void initQRCode() {
 //        try {
-//            ZKNode zkNode = this.getWindowProp("zkNode");
-//            String nodeData = this.getWindowProp("nodeData");
+//            ZKNode zkNode = this.getProp("zkNode");
+//            String nodeData = this.getProp("nodeData");
 //            StringBuilder builder = new StringBuilder();
 //            builder.append(I18nHelper.nodePath()).append(": ")
 //                    .append(zkNode.decodeNodePath()).append("\n")

@@ -79,7 +79,7 @@ public class ZKFilterSettingPopupController extends PopupController {
     public void onWindowShowing(WindowEvent event) {
         super.onWindowShowing(event);
         // 初始化
-        ZKNodeFilterParam filterParam = this.getWindowProp("filterParam");
+        ZKNodeFilterParam filterParam = this.getProp("filterParam");
         if (filterParam != null) {
             this.matchCase.setSelected(filterParam.isMatchCase());
             this.matchFull.setSelected(filterParam.isMatchFull());

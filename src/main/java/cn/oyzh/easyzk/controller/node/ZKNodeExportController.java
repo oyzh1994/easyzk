@@ -303,9 +303,9 @@
 //     @Override
 //     public void onWindowShown(WindowEvent event) {
 //         super.onWindowShown(event);
-//         TreeItem<?> item = this.getWindowProp("zkItem");
+//         TreeItem<?> item = this.getProp("zkItem");
 //         if (item instanceof ZKNodeTreeItem treeItem) {
-//             this.client = this.getWindowProp("zkClient");
+//             this.client = this.getProp("zkClient");
 //             this.exportPath = treeItem.nodePath();
 //             this.nodePath.setText(treeItem.decodeNodePath());
 //         } else if (item instanceof ZKConnectTreeItem treeItem) {

@@ -346,8 +346,8 @@ public class ZKAddNodeController extends StageController {
     @Override
     public void onWindowShown(WindowEvent event) {
         this.parentNodeBox.managedProperty().bind(this.parentNode.visibleProperty());
-        ZKNodeTreeItem zkItem = this.getWindowProp("zkItem");
-        this.zkClient = this.getWindowProp("zkClient");
+        ZKNodeTreeItem zkItem = this.getProp("zkItem");
+        this.zkClient = this.getProp("zkClient");
         if (zkItem != null) {
             this.parentNode.setVisible(true);
             this.parentNode.setText(zkItem.nodePath());

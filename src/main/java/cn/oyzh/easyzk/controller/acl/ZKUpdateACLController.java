@@ -127,10 +127,10 @@ public class ZKUpdateACLController extends StageController {
     @Override
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
-        this.acl = this.getWindowProp("acl");
+        this.acl = this.getProp("acl");
         // 获取初始化对象
-        this.zkItem = this.getWindowProp("zkItem");
-        this.zkClient = this.getWindowProp("zkClient");
+        this.zkItem = this.getProp("zkItem");
+        this.zkClient = this.getProp("zkClient");
 
         CheckBox a = (CheckBox) this.perms.getChildren().get(0);
         CheckBox w = (CheckBox) this.perms.getChildren().get(1);

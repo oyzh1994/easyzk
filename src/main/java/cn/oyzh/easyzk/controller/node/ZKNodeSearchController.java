@@ -59,7 +59,7 @@
 //
 //    @Override
 //    public void onWindowShown(WindowEvent event) {
-//        this.zkConnect = this.getWindowProp("zkConnect");
+//        this.zkConnect = this.getProp("zkConnect");
 //        this.stage.hideOnEscape();
 //        super.onWindowShown(event);
 //    }

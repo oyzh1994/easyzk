@@ -491,8 +491,8 @@ public class ZKAddACLController extends StageController {
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
         // 获取初始化对象
-        this.zkItem = this.getWindowProp("zkItem");
-        this.zkClient = this.getWindowProp("zkClient");
+        this.zkItem = this.getProp("zkItem");
+        this.zkClient = this.getProp("zkClient");
         // 初始化摘要数据
         this.initDigestData();
 

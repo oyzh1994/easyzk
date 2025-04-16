@@ -440,7 +440,7 @@ public class ZKUpdateConnectController extends StageController {
     @Override
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
-        this.zkConnect = this.getWindowProp("zkConnect");
+        this.zkConnect = this.getProp("zkConnect");
         this.name.setText(this.zkConnect.getName());
         this.remark.setText(this.zkConnect.getRemark());
         this.readonly.setSelected(this.zkConnect.isReadonly());

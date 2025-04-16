@@ -396,7 +396,7 @@ public class ZKImportDataController extends StageController {
     @Override
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
-        this.connect = this.getWindowProp("connect");
+        this.connect = this.getProp("connect");
         // this.connectionName.setText(this.connect.getName());
     }
 

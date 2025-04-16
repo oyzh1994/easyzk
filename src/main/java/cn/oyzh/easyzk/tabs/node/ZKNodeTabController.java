@@ -448,10 +448,10 @@ public class ZKNodeTabController extends ParentTabController {
 //     */
 //    @FXML
 //    private void addACL() {
-////        StageAdapter fxView = StageManager.parseStage(ZKACLAddController.class, this.window());
-////        fxView.setProp("zkItem", this.activeItem);
-////        fxView.setProp("zkClient", this.activeItem.client());
-////        fxView.display();
+////        StageAdapter adapter = StageManager.parseStage(ZKACLAddController.class, this.window());
+////        adapter.setProp("zkItem", this.activeItem);
+////        adapter.setProp("zkClient", this.activeItem.client());
+////        adapter.display();
 //        ZKEventUtil.showAddACL(this.activeItem, this.activeItem.client());
 //    }
 
@@ -523,11 +523,11 @@ public class ZKNodeTabController extends ParentTabController {
 //            return;
 //        }
 ////        try {
-////            StageAdapter fxView = StageManager.parseStage(ZKACLUpdateController.class, this.window());
-////            fxView.setProp("acl", acl);
-////            fxView.setProp("zkItem", this.activeItem);
-////            fxView.setProp("zkClient", this.treeItem.client());
-////            fxView.display();
+////            StageAdapter adapter = StageManager.parseStage(ZKACLUpdateController.class, this.window());
+////            adapter.setProp("acl", acl);
+////            adapter.setProp("zkItem", this.activeItem);
+////            adapter.setProp("zkClient", this.treeItem.client());
+////            adapter.display();
 ////        } catch (Exception ex) {
 ////            ex.printStackTrace();
 ////            MessageBox.exception(ex, I18nHelper.operationException());
@@ -771,10 +771,10 @@ public class ZKNodeTabController extends ParentTabController {
 //    @FXML
 //    private void node2QRCode(MouseEvent event) {
 //        try {
-////            StageAdapter fxView = StageManager.parseStage(ZKQRCodeNodeController.class, this.window());
-////            fxView.setProp("zkNode", this.activeItem.value());
-////            fxView.setProp("nodeData", this.nodeData.getTextTrim());
-////            fxView.display();
+////            StageAdapter adapter = StageManager.parseStage(ZKQRCodeNodeController.class, this.window());
+////            adapter.setProp("zkNode", this.activeItem.value());
+////            adapter.setProp("nodeData", this.nodeData.getTextTrim());
+////            adapter.display();
 //            PopupAdapter adapter = PopupManager.parsePopup(ZKNodeQRCodePopupController.class);
 //            adapter.setProp("zkNode", this.activeItem.value());
 //            adapter.setProp("nodeData", this.nodeData.getTextTrim());
@@ -1250,9 +1250,9 @@ public class ZKNodeTabController extends ParentTabController {
 
     @FXML
     private void addNode() {
-//        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class);
-//        fxView.setProp("dbItem", this.treeItem);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKNodeAddController.class);
+//        adapter.setProp("dbItem", this.treeItem);
+//        adapter.display();
         ZKEventUtil.showAddNode(null, this.client);
     }
 

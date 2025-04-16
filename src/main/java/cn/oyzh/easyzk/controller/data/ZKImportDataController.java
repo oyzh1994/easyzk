@@ -407,9 +407,9 @@ public class ZKImportDataController extends StageController {
     private void openOld() {
         if (this.doConnect()) {
             this.closeWindow();
-            StageAdapter fxView = StageManager.parseStage(ZKNodeImportController.class);
-            fxView.setProp("zkClient", this.client);
-            fxView.display();
+            StageAdapter adapter = StageManager.parseStage(ZKNodeImportController.class);
+            adapter.setProp("zkClient", this.client);
+            adapter.display();
         }
     }
 }

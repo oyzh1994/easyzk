@@ -123,10 +123,10 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      * 导出zk节点
      */
     public void exportData() {
-//        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
-//        fxView.setProp("connect", this.value);
-//        fxView.setProp("nodePath", "/");
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKDataExportController.class, this.window());
+//        adapter.setProp("connect", this.value);
+//        adapter.setProp("nodePath", "/");
+//        adapter.display();
         ZKEventUtil.showExportData(this.value, "/");
     }
 
@@ -189,9 +189,9 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      * 导入数据
      */
     private void importData() {
-//        StageAdapter fxView = StageManager.parseStage(ZKDataImportController.class, this.window());
-//        fxView.setProp("connect", this.value);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKDataImportController.class, this.window());
+//        adapter.setProp("connect", this.value);
+//        adapter.display();
         ZKEventUtil.showImportData(this.value);
     }
 
@@ -247,9 +247,9 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
             }
             this.closeConnect();
         }
-//        StageAdapter fxView = StageManager.parseStage(ZKUpdateConnectController.class, this.window());
-//        fxView.setProp("zkConnect", this.value());
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKUpdateConnectController.class, this.window());
+//        adapter.setProp("zkConnect", this.value());
+//        adapter.display();
         ZKEventUtil.showUpdateConnect(this.value);
     }
 

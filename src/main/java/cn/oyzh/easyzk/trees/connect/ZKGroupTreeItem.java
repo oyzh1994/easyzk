@@ -142,9 +142,9 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItemValue> implemen
      * 添加连接
      */
     private void addConnect() {
-//        StageAdapter fxView = StageManager.parseStage(ZKConnectAddController.class, this.window());
-//        fxView.setProp("group", this.value);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKConnectAddController.class, this.window());
+//        adapter.setProp("group", this.value);
+//        adapter.display();
         ZKEventUtil.showAddConnect(this.value);
     }
 

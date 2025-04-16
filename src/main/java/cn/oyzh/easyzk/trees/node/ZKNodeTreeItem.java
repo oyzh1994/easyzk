@@ -398,10 +398,10 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      * 添加zk子节点
      */
     public void addNode() {
-//        StageAdapter fxView = StageManager.parseStage(ZKNodeAddController.class, this.window());
-//        fxView.setProp("zkItem", this);
-//        fxView.setProp("zkClient", this.client());
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKNodeAddController.class, this.window());
+//        adapter.setProp("zkItem", this);
+//        adapter.setProp("zkClient", this.client());
+//        adapter.display();
         ZKEventUtil.showAddNode(this, this.client());
     }
 
@@ -409,10 +409,10 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      * 认证zk节点
      */
     public void authNode() {
-//        StageAdapter fxView = StageManager.parseStage(ZKAuthAuthController.class, this.window());
-//        fxView.setProp("zkClient", this.client());
-//        fxView.setProp("zkItem", this);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKAuthAuthController.class, this.window());
+//        adapter.setProp("zkClient", this.client());
+//        adapter.setProp("zkItem", this);
+//        adapter.display();
         ZKEventUtil.showAuthNode(this, this.client());
     }
 
@@ -420,10 +420,10 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
      * 导出zk节点
      */
     private void exportData() {
-//        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
-//        fxView.setProp("connect", this.zkConnect());
-//        fxView.setProp("nodePath", this.nodePath());
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKDataExportController.class, this.window());
+//        adapter.setProp("connect", this.zkConnect());
+//        adapter.setProp("nodePath", this.nodePath());
+//        adapter.display();
         ZKEventUtil.showExportData(this.zkConnect(), this.nodePath());
     }
 

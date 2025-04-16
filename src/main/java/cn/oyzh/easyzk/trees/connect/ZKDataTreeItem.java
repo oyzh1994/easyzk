@@ -52,10 +52,10 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItemValue> {
      * 导出zk节点
      */
     private void exportData() {
-//        StageAdapter fxView = StageManager.parseStage(ZKDataExportController.class, this.window());
-//        fxView.setProp("connect", this.zkConnect());
-//        fxView.setProp("nodePath", "/");
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(ZKDataExportController.class, this.window());
+//        adapter.setProp("connect", this.zkConnect());
+//        adapter.setProp("nodePath", "/");
+//        adapter.display();
         ZKEventUtil.showExportData(this.zkConnect(), "/");
     }
 

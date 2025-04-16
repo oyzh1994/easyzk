@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.test;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.ssh.domain.SSHJumpConfig;
 import cn.oyzh.ssh.jump.SSHJumpForwarder;
 import org.junit.Test;
 
@@ -19,10 +18,10 @@ public class SSHTest {
         connectInfo.setHost("192.168.189.130");
         connectInfo.setUser("root");
         connectInfo.setPassword("123456");
-
-        SSHJumpConfig forwardInfo = new SSHJumpConfig();
-        forwardInfo.setRemotePort(2181);
-        forwardInfo.setRemoteHost("192.168.189.134");
+//
+//        SSHJumpConfig forwardInfo = new SSHJumpConfig();
+//        forwardInfo.setRemotePort(2181);
+//        forwardInfo.setRemoteHost("192.168.189.134");
 
         SSHJumpForwarder forwarder = new SSHJumpForwarder();
         int localPort = forwarder.forward(null, null);

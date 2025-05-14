@@ -163,8 +163,8 @@ public class EasyZKApp extends FXApplication implements EventListener {
 
     @Override
     public void stop() {
-        super.stop();
         EventListener.super.unregister();
+        super.stop();
     }
 
     @Override

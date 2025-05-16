@@ -37,9 +37,13 @@ mvn -X clean package -DskipTests
 另外建议国内使用阿里镜像加速地址  
 
 # 程序打包
+###### png去背景
+https://www.iloveimg.com/zh-cn/remove-background
 ###### 图标转换
-###### png转icns
+###### png转icns(地址1)
 https://anyconv.com/png-to-icns-converter/
+###### png转icns(地址2)
+https://www.aconvert.com/cn/image/png-to-icns/
 ###### png转ico
 https://www.freeconvert.com/zh/png-to-ico
 
@@ -71,12 +75,17 @@ exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示
 ###### 注意事项
 dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 
-###### linux(以uos为例，debian系列通用)
+###### linux(以uos、ubuntu、centos为例)
 ###### deb打包依赖
 sudo apt install fakeroot
+###### rpm打包依赖
+yum install rpm-build
 ###### (推荐)deb打包
 配置 -> package -> linux -> linux_deb.json  
 入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_linux_deb
+###### rpm打包
+配置 -> package -> linux -> linux_rpm.json  
+入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_linux_rpm
 ###### app-image打包
 配置 -> package -> linux -> linux_image.json  
 入口 -> cn.oyzh.easyzk.test.ZKPack.easyzk_linux_image
@@ -93,6 +102,8 @@ docker-compose -f .\zk-cluster-compose.yml up -d
 xdg-desktop-menu: No writable system menu directory found.  
 执行以下操作，然后重新执行安装  
 sudo mkdir /usr/share/desktop-directories/  
+###### 双击安装rpm包提示出现问题
+rpm -ivh xx.rpm
 
 # Macos系统
 ###### mac执行dmg安装后，启动台不显示程序图标解决方案

@@ -6,7 +6,6 @@ import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
-import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
@@ -71,7 +70,7 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
             connect.setAuths(this.authStore.loadByIid(connect.getId()));
             connect.setFilters(this.filterStore.loadByIid(connect.getId()));
             connect.setCollects(this.collectStore.listByIid(connect.getId()));
-            connect.setSshConfig(this.sshConfigStore.getByIid(connect.getId()));
+//            connect.setSshConfig(this.sshConfigStore.getByIid(connect.getId()));
             connect.setSaslConfig(this.saslConfigStore.getByIid(connect.getId()));
         }
         return connects;
@@ -92,14 +91,14 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
                 result = this.insert(model);
             }
 
-            // ssh处理
-            ZKSSHConfig sshConfig = model.getSshConfig();
-            if (sshConfig != null) {
-                sshConfig.setIid(model.getId());
-                this.sshConfigStore.replace(sshConfig);
-            } else {
-                this.sshConfigStore.deleteByIid(model.getId());
-            }
+//            // ssh处理
+//            ZKSSHConfig sshConfig = model.getSshConfig();
+//            if (sshConfig != null) {
+//                sshConfig.setIid(model.getId());
+//                this.sshConfigStore.replace(sshConfig);
+//            } else {
+//                this.sshConfigStore.deleteByIid(model.getId());
+//            }
 
             // sasl处理
             ZKSASLConfig saslConfig = model.getSaslConfig();

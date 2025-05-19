@@ -297,11 +297,11 @@ public class ZKAddConnectController extends StageController {
             zkConnect.setHost(host);
             zkConnect.setConnectTimeOut(3);
             zkConnect.setSaslAuth(this.saslAuth.isSelected());
-            zkConnect.setSshForward(this.sshForward.isSelected());
-            // ssh转发
-            if (zkConnect.isSSHForward()) {
-                zkConnect.setSshConfig(this.getSSHConfig());
-            }
+//            zkConnect.setSshForward(this.sshForward.isSelected());
+//            // ssh转发
+//            if (zkConnect.isSSHForward()) {
+//                zkConnect.setSshConfig(this.getSSHConfig());
+//            }
             // sasl认证
             if (zkConnect.isSASLAuth()) {
                 zkConnect.setSaslConfig(this.getSASLConfig());
@@ -331,9 +331,9 @@ public class ZKAddConnectController extends StageController {
             Number sessionTimeOut = this.sessionTimeOut.getValue();
 
             zkConnect.setHost(host.trim());
-            // ssh配置
-            zkConnect.setSshConfig(this.getSSHConfig());
-            zkConnect.setSshForward(this.sshForward.isSelected());
+//            // ssh配置
+//            zkConnect.setSshConfig(this.getSSHConfig());
+//            zkConnect.setSshForward(this.sshForward.isSelected());
             // sasl配置
             zkConnect.setSaslConfig(this.getSASLConfig());
             zkConnect.setSaslAuth(this.saslAuth.isSelected());

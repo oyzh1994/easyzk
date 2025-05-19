@@ -113,9 +113,9 @@ public class ZKStoreUtil {
                     if (obj.containsKey("listen")) {
                         connect.setListen(obj.getBooleanValue("listen"));
                     }
-                    if (obj.containsKey("sshForward")) {
-                        connect.setSshForward(obj.getBooleanValue("sshForward"));
-                    }
+//                    if (obj.containsKey("sshForward")) {
+//                        connect.setSshForward(obj.getBooleanValue("sshForward"));
+//                    }
                     if (obj.containsKey("collects")) {
                         List<String> collects = obj.getBeanList("collects", String.class);
                         if (CollectionUtil.isNotEmpty(collects)) {
@@ -163,7 +163,7 @@ public class ZKStoreUtil {
                         if (object.containsKey("password")) {
                             sshConnect.setPassword(object.getString("password"));
                         }
-                        connect.setSshConfig(sshConnect);
+//                        connect.setSshConfig(sshConnect);
                     }
                     connects.add(connect);
                 }

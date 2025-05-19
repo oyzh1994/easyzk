@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
+import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
@@ -18,7 +19,7 @@ import java.util.Objects;
  * @since 2020/3/6
  */
 @Table("t_connect")
-public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConnect>, Serializable {
+public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConnect>, ObjectCopier<ZKConnect>, Serializable {
 
     /**
      * 数据id
@@ -100,16 +101,32 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     @Column
     private Integer connectTimeOut;
 
-    /**
-     * 是否开启ssh转发
-     */
-    @Column
-    private Boolean sshForward;
+//    /**
+//     * 是否开启代理转发
+//     */
+//    @Column
+//    private Boolean enableProxy;
+
+//    /**
+//     * 代理配置
+//     */
+//    private ZKProxyConfig proxyConfig;
 
     /**
-     * ssh信息
+     * 跳板信息
      */
-    private ZKSSHConfig sshConfig;
+    private List<ZKJumpConfig> jumpConfigs;
+
+//    /**
+//     * 是否开启ssh转发
+//     */
+//    @Column
+//    private Boolean sshForward;
+//
+//    /**
+//     * ssh信息
+//     */
+//    private ZKSSHConfig sshConfig;
 
     /**
      * 是否开启ssh转发
@@ -122,13 +139,8 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
      */
     private ZKSASLConfig saslConfig;
 
-    /**
-     * 复制对象
-     *
-     * @param zkConnect zk信息
-     * @return 当前对象
-     */
-    public ZKConnect copy( ZKConnect zkConnect) {
+    @Override
+    public void copy(ZKConnect zkConnect) {
         this.name = zkConnect.name;
         this.host = zkConnect.host;
         this.remark = zkConnect.remark;
@@ -144,23 +156,27 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.filters = zkConnect.filters;
         // 收藏
         this.collects = zkConnect.collects;
-        // ssh
-        this.sshConfig = zkConnect.sshConfig;
-        this.sshForward = zkConnect.sshForward;
+//        // ssh
+//        this.sshConfig = zkConnect.sshConfig;
+//        this.sshForward = zkConnect.sshForward;
         // sasl
         this.saslAuth = zkConnect.saslAuth;
         this.saslConfig = zkConnect.saslConfig;
-        return this;
+        // 跳板机
+        this.jumpConfigs = zkConnect.jumpConfigs;
+//        // 代理
+//        this.enableProxy = zkConnect.enableProxy;
+//        this.proxyConfig = zkConnect.proxyConfig;
     }
 
-    /**
-     * 是否开启ssh转发
-     *
-     * @return 结果
-     */
-    public boolean isSSHForward() {
-        return BooleanUtil.isTrue(this.sshForward);
-    }
+//    /**
+//     * 是否开启ssh转发
+//     *
+//     * @return 结果
+//     */
+//    public boolean isSSHForward() {
+//        return BooleanUtil.isTrue(this.sshForward);
+//    }
 
     /**
      * 是否开启sasl认证
@@ -407,21 +423,21 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.connectTimeOut = connectTimeOut;
     }
 
-    public Boolean getSshForward() {
-        return sshForward;
-    }
-
-    public void setSshForward(Boolean sshForward) {
-        this.sshForward = sshForward;
-    }
-
-    public ZKSSHConfig getSshConfig() {
-        return sshConfig;
-    }
-
-    public void setSshConfig(ZKSSHConfig sshConfig) {
-        this.sshConfig = sshConfig;
-    }
+//    public Boolean getSshForward() {
+//        return sshForward;
+//    }
+//
+//    public void setSshForward(Boolean sshForward) {
+//        this.sshForward = sshForward;
+//    }
+//
+//    public ZKSSHConfig getSshConfig() {
+//        return sshConfig;
+//    }
+//
+//    public void setSshConfig(ZKSSHConfig sshConfig) {
+//        this.sshConfig = sshConfig;
+//    }
 
     public Boolean getSaslAuth() {
         return saslAuth;
@@ -438,4 +454,25 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     public void setSaslConfig(ZKSASLConfig saslConfig) {
         this.saslConfig = saslConfig;
     }
+
+//    public Boolean isEnableProxy() {
+//        return enableProxy != null && enableProxy;
+//    }
+
+//    public ZKProxyConfig getProxyConfig() {
+//        return proxyConfig;
+//    }
+//
+//    public void setProxyConfig(ZKProxyConfig proxyConfig) {
+//        this.proxyConfig = proxyConfig;
+//    }
+
+    public List<ZKJumpConfig> getJumpConfigs() {
+        return jumpConfigs;
+    }
+
+    public void setJumpConfigs(List<ZKJumpConfig> jumpConfigs) {
+        this.jumpConfigs = jumpConfigs;
+    }
+
 }

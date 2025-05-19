@@ -326,11 +326,11 @@ public class ZKUpdateConnectController extends StageController {
             zkConnect.setConnectTimeOut(3);
             zkConnect.setId(this.zkConnect.getId());
             zkConnect.setSaslAuth(this.saslAuth.isSelected());
-            // ssh转发
-            zkConnect.setSshForward(this.sshForward.isSelected());
-            if (zkConnect.isSSHForward()) {
-                zkConnect.setSshConfig(this.getSSHConfig());
-            }
+//            // ssh转发
+//            zkConnect.setSshForward(this.sshForward.isSelected());
+//            if (zkConnect.isSSHForward()) {
+//                zkConnect.setSshConfig(this.getSSHConfig());
+//            }
             // sasl认证
             if (zkConnect.isSASLAuth()) {
                 zkConnect.setSaslConfig(this.getSASLConfig());
@@ -359,9 +359,9 @@ public class ZKUpdateConnectController extends StageController {
             Number sessionTimeOut = this.sessionTimeOut.getValue();
 
             this.zkConnect.setHost(host.trim());
-            // ssh配置
-            this.zkConnect.setSshConfig(this.getSSHConfig());
-            this.zkConnect.setSshForward(this.sshForward.isSelected());
+//            // ssh配置
+//            this.zkConnect.setSshConfig(this.getSSHConfig());
+//            this.zkConnect.setSshForward(this.sshForward.isSelected());
             // sasl配置
             this.zkConnect.setSaslConfig(this.getSASLConfig());
             this.zkConnect.setSaslAuth(this.saslAuth.isSelected());
@@ -450,8 +450,8 @@ public class ZKUpdateConnectController extends StageController {
         this.hostIp.setText(this.zkConnect.hostIp());
         this.hostPort.setValue(this.zkConnect.hostPort());
         this.listen.setSelected(this.zkConnect.getListen());
-        // ssh配置
-        this.sshForward.setSelected(this.zkConnect.isSSHForward());
+//        // ssh配置
+//        this.sshForward.setSelected(this.zkConnect.isSSHForward());
         ZKSSHConfig sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
         if (sshConfig != null) {
             this.sshHost.setText(sshConfig.getHost());

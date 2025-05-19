@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKGroupStore;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
@@ -85,7 +86,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
 //                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
 //            }
 //        }
-        ZKEventUtil.showExportConnect();
+        ZKViewFactory.exportConnect();
     }
 
     /**
@@ -104,7 +105,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
         File file = CollectionUtil.getFirst(files);
 //        // 解析文件
 //        this.parseConnect(file);
-        ZKEventUtil.showImportConnect(file);
+        ZKViewFactory.importConnect(file);
     }
 
     /**
@@ -115,7 +116,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
 //        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
 //        // 解析文件
 //        this.parseConnect(file);
-        ZKEventUtil.showImportConnect(null);
+        ZKViewFactory.importConnect(null);
     }
 
 //    /**

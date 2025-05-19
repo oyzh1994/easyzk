@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.trees.connect;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
@@ -45,7 +46,7 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItemValue> {
      * 导入zk节点
      */
     private void importData() {
-        ZKEventUtil.showImportData(this.zkConnect());
+        ZKViewFactory.importData(this.zkConnect());
     }
 
     /**
@@ -56,7 +57,7 @@ public class ZKDataTreeItem extends RichTreeItem<ZKDataTreeItemValue> {
 //        adapter.setProp("connect", this.zkConnect());
 //        adapter.setProp("nodePath", "/");
 //        adapter.display();
-        ZKEventUtil.showExportData(this.zkConnect(), "/");
+        ZKViewFactory.exportData(this.zkConnect(), "/");
     }
 
     public ZKConnect connect() {

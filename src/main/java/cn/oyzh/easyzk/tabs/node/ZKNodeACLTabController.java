@@ -2,13 +2,13 @@ package cn.oyzh.easyzk.tabs.node;
 
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.easyzk.dto.ZKACL;
-import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.node.ZKNodeACLAddedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeACLUpdatedEvent;
 import cn.oyzh.easyzk.fx.ZKACLControl;
 import cn.oyzh.easyzk.fx.ZKACLTableView;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.page.PageBox;
@@ -73,7 +73,8 @@ public class ZKNodeACLTabController extends SubTabController {
      */
     @FXML
     private void addACL() {
-        ZKEventUtil.showAddACL(this.activeItem(), this.client());
+//        ZKEventUtil.showAddACL(this.activeItem(), this.client());
+        ZKViewFactory.addACL(this.activeItem(), this.client());
     }
 
     /**
@@ -105,7 +106,7 @@ public class ZKNodeACLTabController extends SubTabController {
         if (acl == null) {
             return;
         }
-        ZKEventUtil.showUpdateACL(this.activeItem(), this.client(), acl);
+        ZKViewFactory.updateACL(this.activeItem(), this.client(), acl);
     }
 
     /**

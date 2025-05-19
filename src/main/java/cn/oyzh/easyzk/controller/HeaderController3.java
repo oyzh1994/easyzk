@@ -1,15 +1,13 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.SysConst;
-import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.pane.FXPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.stage.WindowEvent;
 
 /**
  * 主页头部业务
@@ -30,7 +28,7 @@ public class HeaderController3 extends StageController {
 //        } else {
 //            StageManager.showStage(SettingController2.class, this.stage);
 //        }
-        ZKEventUtil.showSetting();
+        ZKViewFactory.setting();
     }
 
     /**
@@ -39,7 +37,7 @@ public class HeaderController3 extends StageController {
     @FXML
     private void about() {
 //        StageManager.showStage(AboutController.class, this.stage);
-        ZKEventUtil.showAbout();
+        ZKViewFactory.about();
     }
 
     /**
@@ -63,7 +61,7 @@ public class HeaderController3 extends StageController {
 //        } else {
 //            StageManager.showStage(ZKDataTransportController.class, this.stage);
 //        }
-        ZKEventUtil.showTransportData();
+        ZKViewFactory.transportData(null);
     }
 
     /**
@@ -72,7 +70,7 @@ public class HeaderController3 extends StageController {
     @FXML
     private void tool() {
 //        StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
-        ZKEventUtil.showTool();
+        ZKViewFactory.tool();
     }
 
     /**
@@ -97,20 +95,20 @@ public class HeaderController3 extends StageController {
     @FXML
     private void migration() {
 //        StageManager.showStage(ZKMigrationDataController.class, this.stage);
-        ZKEventUtil.showMigrationData();
+        ZKViewFactory.migrationData();
     }
 
-    /**
-     * 分割面板
-     */
-    @FXML
-    private FXPane splitPane;
-
-    @Override
-    public void onWindowShowing(WindowEvent event) {
-        super.onWindowShowing(event);
-        if (OSUtil.isWindows() || OSUtil.isLinux()) {
-            this.splitPane.setFlexHeight("100% - 280");
-        }
-    }
+//    /**
+//     * 分割面板
+//     */
+//    @FXML
+//    private FXPane splitPane;
+//
+//    @Override
+//    public void onWindowShowing(WindowEvent event) {
+//        super.onWindowShowing(event);
+//        if (OSUtil.isWindows() || OSUtil.isLinux()) {
+//            this.splitPane.setFlexHeight("100% - 280");
+//        }
+//    }
 }

@@ -1,81 +1,42 @@
 package cn.oyzh.easyzk.tabs.node;
 
-import cn.oyzh.common.dto.FriendlyInfo;
-import cn.oyzh.common.dto.Paging;
-import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
-import cn.oyzh.easyzk.event.node.ZKNodeACLAddedEvent;
-import cn.oyzh.easyzk.event.node.ZKNodeACLUpdatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeAddedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeChangedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox;
-import cn.oyzh.easyzk.fx.ZKACLControl;
-import cn.oyzh.easyzk.fx.ZKACLTableView;
-import cn.oyzh.easyzk.popups.ZKNodeQRCodePopupController;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.combobox.CharsetComboBox;
-import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.gui.tabs.RichTabController;
-import cn.oyzh.fx.gui.text.field.ClearableTextField;
-import cn.oyzh.fx.gui.text.field.NumberTextField;
-import cn.oyzh.fx.plus.chooser.FXChooser;
-import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.box.FXVBox;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
-import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
-import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.node.NodeWidthResizer;
-import cn.oyzh.fx.plus.thread.RenderService;
-import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.PopupAdapter;
-import cn.oyzh.fx.plus.window.PopupManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
-import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
-import org.apache.zookeeper.StatsTrack;
-import org.apache.zookeeper.data.Stat;
 
-import java.io.File;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * zk节点tab内容组件
@@ -1253,7 +1214,7 @@ public class ZKNodeTabController extends ParentTabController {
 //        StageAdapter adapter = StageManager.parseStage(ZKNodeAddController.class);
 //        adapter.setProp("dbItem", this.treeItem);
 //        adapter.display();
-        ZKEventUtil.showAddNode(null, this.client);
+        ZKViewFactory.addNode(null, this.client);
     }
 
     @FXML

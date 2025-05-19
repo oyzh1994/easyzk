@@ -9,6 +9,7 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectStore;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -127,7 +128,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 //        adapter.setProp("connect", this.value);
 //        adapter.setProp("nodePath", "/");
 //        adapter.display();
-        ZKEventUtil.showExportData(this.value, "/");
+        ZKViewFactory.exportData(this.value, "/");
     }
 
     /**
@@ -192,7 +193,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 //        StageAdapter adapter = StageManager.parseStage(ZKDataImportController.class, this.window());
 //        adapter.setProp("connect", this.value);
 //        adapter.display();
-        ZKEventUtil.showImportData(this.value);
+        ZKViewFactory.importData(this.value);
     }
 
     /**
@@ -202,7 +203,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 //        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class, this.window());
 //        adapter.setProp("sourceInfo", this.value);
 //        adapter.display();
-        ZKEventUtil.showTransportData(this.value);
+        ZKViewFactory.transportData(this.value);
     }
 
     /**
@@ -250,7 +251,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 //        StageAdapter adapter = StageManager.parseStage(ZKUpdateConnectController.class, this.window());
 //        adapter.setProp("zkConnect", this.value());
 //        adapter.display();
-        ZKEventUtil.showUpdateConnect(this.value);
+        ZKViewFactory.updateConnect(this.value);
     }
 
     /**

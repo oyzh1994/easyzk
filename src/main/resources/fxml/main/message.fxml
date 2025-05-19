@@ -20,7 +20,7 @@
                 </HBox.margin>
             </ClearSVGGlyph>
         </FXHBox>
-        <MsgTextArea fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%" lineLimit="1000"/>
+        <MsgTextArea fx:id="msgArea" flexHeight="100% - 30" flexWidth="100%" lineLimit="1000"/>
     </FXVBox>
 </FXTab>
 

@@ -4,7 +4,6 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
-import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKAuthTableView;
 import cn.oyzh.easyzk.fx.ZKFilterTableView;
@@ -252,22 +251,22 @@ public class ZKAddConnectController extends StageController {
         return hostText;
     }
 
-    /**
-     * 获取ssh信息
-     *
-     * @return ssh连接信息
-     */
-    private ZKSSHConfig getSSHConfig() {
-        ZKSSHConfig sshConfig = new ZKSSHConfig();
-        sshConfig.setHost(this.sshHost.getText());
-        sshConfig.setUser(this.sshUser.getText());
-        sshConfig.setPort(this.sshPort.getIntValue());
-        sshConfig.setPassword(this.sshPassword.getText());
-        sshConfig.setAuthMethod(this.sshAuthMethod.getAuthType());
-        sshConfig.setTimeout(this.sshTimeout.getIntValue() * 1000);
-        sshConfig.setCertificatePath(this.sshCertificate.getText());
-        return sshConfig;
-    }
+//    /**
+//     * 获取ssh信息
+//     *
+//     * @return ssh连接信息
+//     */
+//    private ZKSSHConfig getSSHConfig() {
+//        ZKSSHConfig sshConfig = new ZKSSHConfig();
+//        sshConfig.setHost(this.sshHost.getText());
+//        sshConfig.setUser(this.sshUser.getText());
+//        sshConfig.setPort(this.sshPort.getIntValue());
+//        sshConfig.setPassword(this.sshPassword.getText());
+//        sshConfig.setAuthMethod(this.sshAuthMethod.getAuthType());
+//        sshConfig.setTimeout(this.sshTimeout.getIntValue() * 1000);
+//        sshConfig.setCertificatePath(this.sshCertificate.getText());
+//        return sshConfig;
+//    }
 
     /**
      * 获取ssh信息

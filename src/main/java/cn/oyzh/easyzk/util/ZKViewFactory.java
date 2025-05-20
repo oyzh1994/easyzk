@@ -14,11 +14,14 @@ import cn.oyzh.easyzk.controller.data.ZKExportDataController;
 import cn.oyzh.easyzk.controller.data.ZKImportDataController;
 import cn.oyzh.easyzk.controller.data.ZKMigrationDataController;
 import cn.oyzh.easyzk.controller.data.ZKTransportDataController;
+import cn.oyzh.easyzk.controller.jump.ZKAddJumpController;
+import cn.oyzh.easyzk.controller.jump.ZKUpdateJumpController;
 import cn.oyzh.easyzk.controller.node.ZKAddNodeController;
 import cn.oyzh.easyzk.controller.node.ZKAuthNodeController;
 import cn.oyzh.easyzk.controller.tool.ZKToolController;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
+import cn.oyzh.easyzk.domain.ZKJumpConfig;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.zk.ZKClient;
@@ -293,4 +296,38 @@ public class ZKViewFactory {
             MessageBox.exception(ex);
         }
     }
+
+    /**
+     * 添加跳板
+     */
+    public static StageAdapter addJump() {
+        try {
+            StageAdapter adapter = StageManager.parseStage(ZKAddJumpController.class, StageManager.getPrimaryStage());
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
+    /**
+     * 编辑跳板
+     *
+     * @param config 配置
+     */
+    public static StageAdapter updateJump(ZKJumpConfig config) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(ZKUpdateJumpController.class, StageManager.getPrimaryStage());
+            adapter.setProp("config", config);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
 }

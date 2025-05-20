@@ -25,7 +25,6 @@ import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import cn.oyzh.easyzk.query.ZKQueryParam;
 import cn.oyzh.easyzk.query.ZKQueryResult;
 import cn.oyzh.easyzk.store.ZKJumpConfigStore;
-import cn.oyzh.easyzk.store.ZKSSHConfigStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.ssh.domain.SSHConnect;
 import cn.oyzh.ssh.jump.SSHJumpForwarder;
@@ -156,10 +155,10 @@ public class ZKClient {
      */
     private final ReadOnlyObjectWrapper<ZKConnState> state = new ReadOnlyObjectWrapper<>();
 
-    /**
-     * ssh配置储存
-     */
-    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
+//    /**
+//     * ssh配置储存
+//     */
+//    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
 
     /**
      * 跳板配置存储

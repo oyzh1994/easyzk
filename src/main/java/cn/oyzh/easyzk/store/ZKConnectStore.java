@@ -5,6 +5,7 @@ import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
+import cn.oyzh.easyzk.domain.ZKJumpConfig;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
@@ -40,10 +41,15 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
      */
     private final ZKCollectStore collectStore = ZKCollectStore.INSTANCE;
 
+//    /**
+//     * ssh配置存储
+//     */
+//    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
+
     /**
-     * ssh配置存储
+     * 跳板配置存储
      */
-    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
+    private final ZKJumpConfigStore jumpConfigStore = ZKJumpConfigStore.INSTANCE;
 
     /**
      * sasl配置存储
@@ -71,6 +77,7 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
             connect.setFilters(this.filterStore.loadByIid(connect.getId()));
             connect.setCollects(this.collectStore.listByIid(connect.getId()));
 //            connect.setSshConfig(this.sshConfigStore.getByIid(connect.getId()));
+            connect.setJumpConfigs(this.jumpConfigStore.listByIid(connect.getId()));
             connect.setSaslConfig(this.saslConfigStore.getByIid(connect.getId()));
         }
         return connects;
@@ -99,6 +106,18 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
 //            } else {
 //                this.sshConfigStore.deleteByIid(model.getId());
 //            }
+
+            // 跳板机处理
+            List<ZKJumpConfig> jumpConfigs = model.getJumpConfigs();
+            if (CollectionUtil.isNotEmpty(jumpConfigs)) {
+                for (ZKJumpConfig jumpConfig : jumpConfigs) {
+                    jumpConfig.setIid(model.getId());
+                }
+                this.jumpConfigStore.deleteByIid(model.getId());
+                this.jumpConfigStore.replace(jumpConfigs);
+            } else if (jumpConfigs != null) {
+                this.jumpConfigStore.deleteByIid(model.getId());
+            }
 
             // sasl处理
             ZKSASLConfig saslConfig = model.getSaslConfig();
@@ -151,7 +170,7 @@ public class ZKConnectStore extends JdbcStandardStore<ZKConnect> {
             this.authStore.deleteByIid(model.getId());
             this.filterStore.deleteByIid(model.getId());
             this.collectStore.deleteByIid(model.getId());
-            this.sshConfigStore.deleteByIid(model.getId());
+            this.jumpConfigStore.deleteByIid(model.getId());
             this.saslConfigStore.deleteByIid(model.getId());
         }
         return result;

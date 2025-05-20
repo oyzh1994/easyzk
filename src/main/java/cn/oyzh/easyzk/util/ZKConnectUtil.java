@@ -55,9 +55,6 @@ public class ZKConnectUtil {
     public static void testConnect(StageAdapter adapter, ZKConnect zkConnect) {
         StageManager.showMask(adapter, () -> {
             try {
-//                view.disable();
-//                view.waitCursor();
-//                view.appendTitle("==" + I18nHelper.connectTesting());
                 if (zkConnect.getName() == null) {
                     zkConnect.setName(I18nHelper.testConnection());
                 }
@@ -73,10 +70,6 @@ public class ZKConnectUtil {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);
-//            } finally {
-//                view.enable();
-//                view.defaultCursor();
-//                view.restoreTitle();
             }
         });
     }

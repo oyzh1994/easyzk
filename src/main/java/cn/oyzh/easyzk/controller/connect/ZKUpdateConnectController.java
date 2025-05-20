@@ -335,6 +335,8 @@ public class ZKUpdateConnectController extends StageController {
 //            if (zkConnect.isSSHForward()) {
 //                zkConnect.setSshConfig(this.getSSHConfig());
 //            }
+            // 跳板机配置
+            zkConnect.setJumpConfigs(this.jumpTableView.getItems());
             // sasl认证
             if (zkConnect.isSASLAuth()) {
                 zkConnect.setSaslConfig(this.getSASLConfig());

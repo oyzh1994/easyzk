@@ -442,8 +442,6 @@ public class ZKClient {
 //        }
         // 连接信息
         String host = this.initHost();
-        String hostIp = host.split(":")[0];
-        int port = Integer.parseInt(host.split(":")[1]);
         // 加载认证
         this.auths = ZKAuthUtil.loadAuths(this.iid());
         // 认证信息列表

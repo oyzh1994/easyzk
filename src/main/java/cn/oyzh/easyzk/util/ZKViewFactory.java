@@ -111,7 +111,7 @@ public class ZKViewFactory {
     public static void transportData(ZKConnect connect) {
         try {
             StageAdapter adapter = StageManager.parseStage(ZKTransportDataController.class, StageManager.getPrimaryStage());
-            adapter.setProp("sourceInfo", connect);
+            adapter.setProp("sourceConnect", connect);
             adapter.display();
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -374,6 +374,7 @@ public class ZKClient {
             // 转换为目标连接
             SSHConnect target = new SSHConnect();
             target.setHost(this.zkConnect.hostIp());
+            target.setPort(this.zkConnect.hostPort());
             // 执行连接
             int localPort = this.jumpForwarder.forward(jumpConfigs, target);
             // 连接信息

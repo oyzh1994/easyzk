@@ -29,6 +29,7 @@ import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.NodeWidthResizer;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -252,16 +253,18 @@ public class ZKNodeTabController extends ParentTabController {
      * @param item 树节点
      */
     public void init(ZKConnectTreeItem item) {
-        try {
-            this.treeItem = item;
-            this.client = item.getClient();
-            this.treeView.client(this.client);
-            // 加载根节点
-            this.treeView.loadRoot();
-        } catch (Exception ex) {
-            this.closeTab();
-            MessageBox.exception(ex);
-        }
+        this.treeItem = item;
+        this.client = item.getClient();
+        this.treeView.client(this.client);
+        // 加载根节点
+        StageManager.showMask(() -> {
+            try {
+                this.treeView.loadRoot();
+            } catch (Exception ex) {
+                this.closeTab();
+                MessageBox.exception(ex);
+            }
+        });
         // 状态无效，则关闭，延迟3秒检查
         TaskManager.startDelay(() -> {
             if (this.client.isInvalid()) {
@@ -1239,12 +1242,15 @@ public class ZKNodeTabController extends ParentTabController {
 
     @FXML
     private void refreshNode() {
-        try {
-            this.treeView.loadRoot();
-        } catch (Exception ex) {
-            this.closeTab();
-            MessageBox.exception(ex);
-        }
+        // 加载根节点
+        StageManager.showMask(() -> {
+            try {
+                this.treeView.loadRoot();
+            } catch (Exception ex) {
+                this.closeTab();
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     @FXML

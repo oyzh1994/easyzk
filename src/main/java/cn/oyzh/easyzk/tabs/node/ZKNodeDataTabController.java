@@ -1,66 +1,39 @@
 package cn.oyzh.easyzk.tabs.node;
 
 import cn.oyzh.common.file.FileUtil;
-import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
-import cn.oyzh.easyzk.event.node.ZKNodeAddedEvent;
-import cn.oyzh.easyzk.event.node.ZKNodeChangedEvent;
-import cn.oyzh.easyzk.event.node.ZKNodeCreatedEvent;
-import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
-import cn.oyzh.easyzk.filter.ZKNodeFilterTextField;
-import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox;
 import cn.oyzh.easyzk.popups.ZKNodeQRCodePopupController;
-import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
-import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
-import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
-import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
-import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
-import cn.oyzh.fx.gui.tabs.ParentTabController;
-import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.chooser.FXChooser;
 import cn.oyzh.fx.plus.chooser.FileChooserHelper;
-import cn.oyzh.fx.plus.controls.box.FXHBox;
-import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.keyboard.KeyHandler;
-import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.node.NodeWidthResizer;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
-import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.TreeItem;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Window;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.util.List;
 
 /**
  * zk节点data组件
@@ -177,17 +150,19 @@ public class ZKNodeDataTabController extends SubTabController {
         if (this.activeItem().isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        // 刷新数据
-        try {
-            this.activeItem().refreshData();
-            // 数据变更
-            this.showData();
-            // 刷新tab颜色
-            this.flushTabGraphicColor();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
+        StageManager.showMask(() -> {
+            // 刷新数据
+            try {
+                this.activeItem().refreshData();
+                // 数据变更
+                this.showData();
+                // 刷新tab颜色
+                this.flushTabGraphicColor();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     /**
@@ -307,12 +282,12 @@ public class ZKNodeDataTabController extends SubTabController {
     protected void showData() {
         // 检测数据是否太大
         if (this.activeItem().isDataTooBig()) {
-            this.nodeData.clear();
             this.nodeData.disable();
+            this.nodeData.clear();
             NodeGroupUtil.disable(this.dataTab, "dataToBig");
             // 异步处理，避免阻塞主程序
             TaskManager.startDelay(() -> {
-                if (MessageBox.confirm(ZKI18nHelper.nodeTip7())) {
+                if (MessageBox.confirm(I18nHelper.tips(), ZKI18nHelper.nodeTip7(), null, StageManager.getPrimaryStage())) {
                     this.saveBinaryFile();
                 }
             }, 10);
@@ -403,6 +378,9 @@ public class ZKNodeDataTabController extends SubTabController {
         });
         // 节点内容变更
         this.nodeData.addTextChangeListener((observable, oldValue, newValue) -> {
+            if (this.nodeData.isDisable()) {
+                return;
+            }
             this.dataSave.enable();
             if (this.activeItem() != null) {
                 byte[] bytes = newValue == null ? new byte[]{} : newValue.getBytes(this.charset.getCharset());

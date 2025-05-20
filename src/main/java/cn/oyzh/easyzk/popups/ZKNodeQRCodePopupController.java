@@ -16,9 +16,6 @@ import javafx.stage.WindowEvent;
 
 import java.awt.image.BufferedImage;
 
-import static atlantafx.base.controls.Popover.ArrowLocation.TOP_CENTER;
-import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
-
 
 /**
  * zk数据二维码业务
@@ -27,9 +24,7 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
  * @since 2024/02/21
  */
 @PopupAttribute(
-        value = FXConst.POPUP_PATH + "zkNodeQRCodePopup.fxml",
-        arrowLocation = TOP_CENTER,
-        anchorLocation = CONTENT_BOTTOM_LEFT
+        value = FXConst.POPUP_PATH + "zkNodeQRCodePopup.fxml"
 )
 public class ZKNodeQRCodePopupController extends PopupController {
 

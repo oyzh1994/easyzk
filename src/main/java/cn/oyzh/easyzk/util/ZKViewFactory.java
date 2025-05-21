@@ -72,26 +72,6 @@ public class ZKViewFactory {
     }
 
     /**
-     * 修改权限
-     *
-     * @param nodeItem zk节点
-     * @param client   zk客户端
-     * @param acl      权限
-     */
-    public static void updateACL(ZKNodeTreeItem nodeItem, ZKClient client, ZKACL acl) {
-        try {
-            StageAdapter adapter = StageManager.parseStage(ZKUpdateACLController.class, StageManager.getPrimaryStage());
-            adapter.setProp("acl", acl);
-            adapter.setProp("zkItem", nodeItem);
-            adapter.setProp("zkClient", client);
-            adapter.display();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
-    }
-
-    /**
      * 关于
      */
     public static void about() {
@@ -211,17 +191,42 @@ public class ZKViewFactory {
      * @param nodeItem zk节点
      * @param client   zk客户端
      */
-    public static void addACL(ZKNodeTreeItem nodeItem, ZKClient client) {
+    public static StageAdapter addACL(ZKNodeTreeItem nodeItem, ZKClient client) {
         try {
             StageAdapter adapter = StageManager.parseStage(ZKAddACLController.class, StageManager.getPrimaryStage());
             adapter.setProp("zkItem", nodeItem);
             adapter.setProp("zkClient", client);
-            adapter.display();
+            adapter.showAndWait();
+            return adapter;
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
+        return null;
     }
+
+    /**
+     * 修改权限
+     *
+     * @param nodeItem zk节点
+     * @param client   zk客户端
+     * @param acl      权限
+     */
+    public static StageAdapter updateACL(ZKNodeTreeItem nodeItem, ZKClient client, ZKACL acl) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(ZKUpdateACLController.class, StageManager.getPrimaryStage());
+            adapter.setProp("acl", acl);
+            adapter.setProp("zkItem", nodeItem);
+            adapter.setProp("zkClient", client);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
 
     /**
      * 设置

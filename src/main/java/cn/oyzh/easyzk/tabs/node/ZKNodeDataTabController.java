@@ -283,8 +283,12 @@ public class ZKNodeDataTabController extends SubTabController {
      * 显示数据
      */
     protected void showData() {
+        ZKNodeTreeItem item = this.activeItem();
+        if (item == null) {
+            return;
+        }
         // 检测数据是否太大
-        if (this.activeItem().isDataTooBig()) {
+        if (item.isDataTooBig()) {
             this.nodeData.disable();
             this.nodeData.clear();
             NodeGroupUtil.disable(this.dataTab, "dataToBig");
@@ -297,7 +301,7 @@ public class ZKNodeDataTabController extends SubTabController {
             return;
         }
         NodeGroupUtil.enable(this.dataTab, "dataToBig");
-        byte[] bytes = this.activeItem().getData();
+        byte[] bytes = item.getData();
         // 转换编码
         bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
         // 显示检测后的数据
@@ -339,6 +343,9 @@ public class ZKNodeDataTabController extends SubTabController {
      * 刷新数据大小
      */
     private void flushDataSize() {
+        if (this.activeItem() == null) {
+            return;
+        }
         // 数据大小处理
         this.dataSize.text(I18nHelper.size() + " : " + this.activeItem().dataSizeInfo());
     }
@@ -351,33 +358,40 @@ public class ZKNodeDataTabController extends SubTabController {
         // redo监听
         this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         // 字符集选择事件
-        this.charset.selectedItemChanged((t3, t2, t1) -> this.showData());
+        this.charset.selectedItemChanged((t3, t2, t1) -> StageManager.showMask(this::showData));
         // 节点内容过滤
-        this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> this.nodeData.setHighlightText(newValue));
+        this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> StageManager.showMask(() -> this.nodeData.setHighlightText(newValue)));
         // 格式监听
         this.format.selectedItemChanged((t1, t2, t3) -> {
-            if (this.format.isStringFormat()) {
-                this.showData(RichDataType.STRING);
-                this.nodeData.setEditable(true);
-            } else if (this.format.isJsonFormat()) {
-                this.showData(RichDataType.JSON);
-                this.nodeData.setEditable(true);
-            } else if (this.format.isXmlFormat()) {
-                this.showData(RichDataType.XML);
-                this.nodeData.setEditable(true);
-            } else if (this.format.isHtmlFormat()) {
-                this.showData(RichDataType.HTML);
-                this.nodeData.setEditable(true);
-            } else if (this.format.isBinaryFormat()) {
-                this.showData(RichDataType.BINARY);
-                this.nodeData.setEditable(false);
-            } else if (this.format.isHexFormat()) {
-                this.showData(RichDataType.HEX);
-                this.nodeData.setEditable(false);
-            } else if (this.format.isRawFormat()) {
-                this.showData(RichDataType.RAW);
-                this.nodeData.setEditable(this.nodeData.getRealType() == RichDataType.STRING);
-            }
+            StageManager.showMask(() -> {
+                try {
+                    if (this.format.isStringFormat()) {
+                        this.showData(RichDataType.STRING);
+                        this.nodeData.setEditable(true);
+                    } else if (this.format.isJsonFormat()) {
+                        this.showData(RichDataType.JSON);
+                        this.nodeData.setEditable(true);
+                    } else if (this.format.isXmlFormat()) {
+                        this.showData(RichDataType.XML);
+                        this.nodeData.setEditable(true);
+                    } else if (this.format.isHtmlFormat()) {
+                        this.showData(RichDataType.HTML);
+                        this.nodeData.setEditable(true);
+                    } else if (this.format.isBinaryFormat()) {
+                        this.showData(RichDataType.BINARY);
+                        this.nodeData.setEditable(false);
+                    } else if (this.format.isHexFormat()) {
+                        this.showData(RichDataType.HEX);
+                        this.nodeData.setEditable(false);
+                    } else if (this.format.isRawFormat()) {
+                        this.showData(RichDataType.RAW);
+                        this.nodeData.setEditable(this.nodeData.getRealType() == RichDataType.STRING);
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    MessageBox.exception(ex);
+                }
+            });
         });
         // 节点内容变更
         this.nodeData.addTextChangeListener((observable, oldValue, newValue) -> {

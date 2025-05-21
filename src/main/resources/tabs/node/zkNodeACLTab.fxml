@@ -54,12 +54,12 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
-            <PageBox fx:id="aclPage" realHeight="24"
-                     realWidth="300" onPrevClicked="#aclPrevPage" onNextClicked="#aclNextPage">
-                <HBox.margin>
-                    <Insets left="5" top="5"/>
-                </HBox.margin>
-            </PageBox>
+<!--            <PageBox fx:id="aclPage" realHeight="24"-->
+<!--                     realWidth="300" onPrevClicked="#aclPrevPage" onNextClicked="#aclNextPage">-->
+<!--                <HBox.margin>-->
+<!--                    <Insets left="5" top="3"/>-->
+<!--                </HBox.margin>-->
+<!--            </PageBox>-->
         </FXHBox>
         <ZKACLTableView copyCellDataOnDoubleClicked="true" fx:id="aclTableView" flexWidth="100%" flexHeight="100% - 30">
             <columns>

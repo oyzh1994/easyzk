@@ -407,7 +407,7 @@ public class ZKAddACLController extends StageController {
      * @param acl 权限
      * @return 结果
      */
-    private boolean addACL( ACL acl) {
+    private boolean addACL(ACL acl) {
         return this.addACL(List.of(acl));
     }
 
@@ -417,10 +417,11 @@ public class ZKAddACLController extends StageController {
      * @param list 权限列表
      * @return 结果
      */
-    private boolean addACL( List<ACL> list) {
+    private boolean addACL(List<ACL> list) {
         try {
             Stat stat = this.zkClient.addACL(this.zkItem.nodePath(), list);
             if (stat != null) {
+                this.setProp("result", true);
                 ZKEventUtil.nodeACLAdded(this.zkItem.zkConnect(), this.zkItem.nodePath());
                 this.closeWindow();
                 return true;

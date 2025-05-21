@@ -319,6 +319,9 @@ public class ZKNodeTabController extends ParentTabController {
      * 初始化节点
      */
     private void initNode() throws Exception {
+        if (this.activeItem == null) {
+            return;
+        }
         String id = this.tabPane.getSelectTabId();
         if ("dataTab".equals(id)) {
             // 初始化数据
@@ -1254,6 +1257,14 @@ public class ZKNodeTabController extends ParentTabController {
             this.treeView.sortDesc();
             this.sortPane.asc();
         }
+    }
+
+    /**
+     * 导入数据
+     */
+    @FXML
+    private void importData() {
+        ZKViewFactory.importData(this.client.zkConnect());
     }
 
     public ZKClient getClient() {

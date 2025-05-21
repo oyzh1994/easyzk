@@ -360,10 +360,10 @@ public class ZKClient {
         String host;
         // 初始化跳板配置
         List<ZKJumpConfig> jumpConfigs = this.zkConnect.getJumpConfigs();
-        // 从数据库获取
-        if (jumpConfigs == null) {
-            jumpConfigs = this.jumpConfigStore.listByIid(this.zkConnect.getId());
-        }
+//        // 从数据库获取
+//        if (jumpConfigs == null) {
+//            jumpConfigs = this.jumpConfigStore.loadByIid(this.zkConnect.getId());
+//        }
         // 过滤配置
         jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(ZKJumpConfig::isEnabled).collect(Collectors.toList());
         // 初始化跳板转发

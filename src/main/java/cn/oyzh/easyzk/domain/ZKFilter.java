@@ -2,12 +2,14 @@ package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.object.ObjectCopier;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -122,6 +124,9 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilt
     }
 
     public static List<ZKFilter> copy(List<ZKFilter> filters) {
+        if (CollectionUtil.isEmpty(filters)) {
+            return Collections.emptyList();
+        }
         List<ZKFilter> list = new ArrayList<>();
         for (ZKFilter filter : filters) {
             ZKFilter zkFilter = new ZKFilter();

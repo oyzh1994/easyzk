@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.object.ObjectCopier;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.store.jdbc.Column;
@@ -10,6 +11,7 @@ import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -143,6 +145,9 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, ObjectCopier<ZKAuth>, S
     }
 
     public static List<ZKAuth> copy(List<ZKAuth> auths) {
+        if (CollectionUtil.isEmpty(auths)) {
+            return Collections.emptyList();
+        }
         List<ZKAuth> list = new ArrayList<>();
         for (ZKAuth auth : auths) {
             ZKAuth zkAuth = new ZKAuth();

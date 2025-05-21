@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.ssh.domain.SSHConnect;
 import cn.oyzh.store.jdbc.Column;
@@ -8,6 +9,7 @@ import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -75,6 +77,9 @@ public class ZKJumpConfig extends SSHConnect implements Serializable {
     }
 
     public static List<ZKJumpConfig> copy(List<ZKJumpConfig> configs) {
+        if (CollectionUtil.isEmpty(configs)) {
+            return Collections.emptyList();
+        }
         List<ZKJumpConfig> list = new ArrayList<>();
         for (ZKJumpConfig config : configs) {
             ZKJumpConfig jumpConfig = new ZKJumpConfig();

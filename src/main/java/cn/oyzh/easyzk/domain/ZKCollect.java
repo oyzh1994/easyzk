@@ -1,11 +1,13 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.common.object.ObjectCopier;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -61,6 +63,9 @@ public class ZKCollect implements Serializable, ObjectCopier<ZKCollect> {
     }
 
     public static List<ZKCollect> copy(List<ZKCollect> collects) {
+        if (CollectionUtil.isEmpty(collects)) {
+            return Collections.emptyList();
+        }
         List<ZKCollect> list = new ArrayList<>();
         for (ZKCollect collect : collects) {
             ZKCollect zkCollect = new ZKCollect();

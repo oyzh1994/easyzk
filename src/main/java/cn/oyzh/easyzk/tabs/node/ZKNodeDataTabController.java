@@ -158,6 +158,9 @@ public class ZKNodeDataTabController extends SubTabController {
                 this.showData();
                 // 刷新tab颜色
                 this.flushTabGraphicColor();
+                // 按钮处理
+                this.nodeData.forgetHistory();
+                this.dataSave.disable();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);

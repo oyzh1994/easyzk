@@ -286,31 +286,20 @@ public class ZKNodeTabController extends ParentTabController {
         }
         try {
             if (this.activeItem != null) {
-                String id = this.tabPane.getSelectTabId();
-                if ("dataTab".equals(id)) {
-                    // 初始化数据
-//                    this.initData();
-                    this.dataTabController.initData();
-                } else if ("statTab".equals(id)) {
-                    // 初始化状态
-//                    this.initStat();
-                    this.statTabController.initStat();
-                } else if ("aclTab".equals(id)) {
-                    // 初始化acl
-//                    this.initACL();
-                    this.aclTabController.initACL();
-                } else if ("quotaTab".equals(id)) {
-                    // 初始化配额
-//                    this.initQuota();
-                    this.quotaTabController.initQuota();
-                }
+                // 初始化节点
+                StageManager.showMask(() -> {
+                    try {
+                        this.initNode();
+                    } catch (Exception ex) {
+                        MessageBox.exception(ex);
+                    }
+                });
                 // 设置是否收藏
                 this.collectPane.setCollect(this.activeItem.isCollect());
                 // 启用组件
                 this.tabPane.enable();
                 // 检查状态
                 FXUtil.runLater(this::checkStatus, 100);
-//                JulLog.info("select node color:{}", this.activeItem.getValue().graphicColor());
             } else {
                 // 禁用组件
                 this.tabPane.disable();
@@ -327,29 +316,41 @@ public class ZKNodeTabController extends ParentTabController {
     }
 
     /**
+     * 初始化节点
+     */
+    private void initNode() throws Exception {
+        String id = this.tabPane.getSelectTabId();
+        if ("dataTab".equals(id)) {
+            // 初始化数据
+            this.dataTabController.initData();
+        } else if ("statTab".equals(id)) {
+            // 初始化状态
+            this.statTabController.initStat();
+        } else if ("aclTab".equals(id)) {
+            // 初始化acl
+            this.aclTabController.initACL();
+        } else if ("quotaTab".equals(id)) {
+            // 初始化配额
+            this.quotaTabController.initQuota();
+        }
+    }
+
+    /**
      * 刷新节点
      */
     private void refreshItem() {
-        try {
-            // 刷新节点
-            this.activeItem.refreshNode();
-            // 初始化数据
-//            this.initData();
-            this.dataTabController.initData();
-            // 初始化acl
-//            this.initACL();
-            this.aclTabController.initACL();
-            // 初始化状态
-//            this.initStat();
-            this.statTabController.initStat();
-            // 初始化配额
-//            this.initQuota();
-            this.quotaTabController.initQuota();
-            // 刷新tab
-            this.flushTab();
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
-        }
+        StageManager.showMask(() -> {
+            try {
+                // 刷新节点
+                this.activeItem.refreshNode();
+                // 初始化节点
+                this.initNode();
+                // 刷新tab
+                this.flushTab();
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     /**
@@ -972,24 +973,15 @@ public class ZKNodeTabController extends ParentTabController {
 //        });
         // tab组件切换事件
         this.tabPane.selectedTabChanged((observable, oldValue, newValue) -> {
-            try {
-                if (newValue != null) {
-                    if ("dataTab".equals(newValue.getId())) {
-//                        this.initData();
-                        this.dataTabController.initData();
-                    } else if ("statTab".equals(newValue.getId())) {
-//                        this.initStat();
-                        this.statTabController.initStat();
-                    } else if ("aclTab".equals(newValue.getId())) {
-//                        this.initACL();
-                        this.aclTabController.initACL();
-                    } else if ("quotaTab".equals(newValue.getId())) {
-//                        this.initQuota();
-                        this.quotaTabController.initQuota();
+            if (newValue != null) {
+                // 初始化节点
+                StageManager.showMask(() -> {
+                    try {
+                        this.initNode();
+                    } catch (Exception ex) {
+                        MessageBox.exception(ex);
                     }
-                }
-            } catch (Exception ex) {
-                MessageBox.exception(ex);
+                });
             }
         });
         // 拉伸辅助

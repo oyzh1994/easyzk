@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
+import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
 
@@ -14,7 +15,7 @@ import java.util.Objects;
  * @since 2024/04/23
  */
 @Table("t_data_history")
-public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializable {
+public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, ObjectCopier<ZKDataHistory>, Serializable {
 
     /**
      * 内容
@@ -65,19 +66,12 @@ public class ZKDataHistory implements ObjectComparator<ZKDataHistory>, Serializa
         return Objects.equals(this.iid, t1.iid);
     }
 
-    /**
-     * 复制对象
-     *
-     * @param history 过滤信息
-     * @return 当前对象
-     */
-    public ZKDataHistory copy( ZKDataHistory history) {
-        this.iid = history.iid;
+    @Override
+    public void copy(ZKDataHistory history) {
         this.data = history.data;
         this.path = history.path;
         this.saveTime = history.saveTime;
         this.dataLength = history.dataLength;
-        return this;
     }
 
     public String getDataSize() {

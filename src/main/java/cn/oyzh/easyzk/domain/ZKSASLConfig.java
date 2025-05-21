@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  * @since 2024-12-20
  */
 @Table("t_sasl_config")
-public class ZKSASLConfig implements Serializable {
+public class ZKSASLConfig implements Serializable, ObjectCopier<ZKSASLConfig> {
 
     /**
      * 数据id
@@ -21,6 +22,31 @@ public class ZKSASLConfig implements Serializable {
     @Column
     @PrimaryKey
     private String id;
+    /**
+     * zk连接id
+     *
+     * @see ZKConnect
+     */
+    @Column
+    private String iid;
+
+    /**
+     * sasl类型
+     */
+    @Column
+    private String type;
+
+    /**
+     * 用户名
+     */
+    @Column
+    private String userName;
+
+    /**
+     * 密码
+     */
+    @Column
+    private String password;
 
     public String getId() {
         return id;
@@ -62,32 +88,6 @@ public class ZKSASLConfig implements Serializable {
         this.password = password;
     }
 
-    /**
-     * zk连接id
-     *
-     * @see ZKConnect
-     */
-    @Column
-    private String iid;
-
-    /**
-     * sasl类型
-     */
-    @Column
-    private String type;
-
-    /**
-     * 用户名
-     */
-    @Column
-    private String userName;
-
-    /**
-     * 密码
-     */
-    @Column
-    private String password;
-
     public boolean checkInvalid() {
         if (this.iid == null) {
             return true;
@@ -96,5 +96,12 @@ public class ZKSASLConfig implements Serializable {
             return this.userName == null || this.password == null;
         }
         return false;
+    }
+
+    @Override
+    public void copy(ZKSASLConfig t1) {
+        this.type = t1.getType();
+        this.userName = t1.getUserName();
+        this.password = t1.getPassword();
     }
 }

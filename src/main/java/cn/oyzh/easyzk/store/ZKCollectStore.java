@@ -29,16 +29,11 @@ public class ZKCollectStore extends JdbcStandardStore<ZKCollect> {
      * @param iid zk连接id
      * @return 收藏列表
      */
-    public List<ZKCollect> listByIid(String iid) {
+    public List<ZKCollect> loadByIid(String iid) {
         QueryParam param = new QueryParam();
         param.setName("iid");
         param.setData(iid);
         return super.selectList(param);
-//        List<ZKCollect> collects = super.selectList(param);
-//        if (CollectionUtil.isNotEmpty(collects)) {
-//            return collects.parallelStream().map(ZKCollect::getPath).collect(Collectors.toList());
-//        }
-//        return Collections.emptyList();
     }
 
     /**

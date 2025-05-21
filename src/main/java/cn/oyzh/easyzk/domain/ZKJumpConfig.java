@@ -7,6 +7,8 @@ import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * zk跳板配置
@@ -70,5 +72,15 @@ public class ZKJumpConfig extends SSHConnect implements Serializable {
             this.setEnabled(newValue);
         });
         return toggleSwitch;
+    }
+
+    public static List<ZKJumpConfig> copy(List<ZKJumpConfig> configs) {
+        List<ZKJumpConfig> list = new ArrayList<>();
+        for (ZKJumpConfig config : configs) {
+            ZKJumpConfig jumpConfig = new ZKJumpConfig();
+            jumpConfig.copy(config);
+            list.add(jumpConfig);
+        }
+        return list;
     }
 }

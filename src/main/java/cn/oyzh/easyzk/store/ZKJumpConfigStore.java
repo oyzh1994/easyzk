@@ -69,7 +69,7 @@ public class ZKJumpConfigStore extends JdbcStandardStore<ZKJumpConfig> {
      * @param iid shell连接id
      * @return ssh跳板配置
      */
-    public List<ZKJumpConfig> listByIid(String iid) {
+    public List<ZKJumpConfig> loadByIid(String iid) {
         if (StringUtil.isEmpty(iid)) {
             return null;
         }

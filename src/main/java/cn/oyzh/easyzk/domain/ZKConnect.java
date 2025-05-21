@@ -151,22 +151,20 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.sessionTimeOut = zkConnect.sessionTimeOut;
         this.connectTimeOut = zkConnect.connectTimeOut;
         // 认证
-        this.auths = zkConnect.auths;
+        this.auths = ZKAuth.copy(zkConnect.auths);
         // 过滤
-        this.filters = zkConnect.filters;
+        this.filters = ZKFilter.copy(zkConnect.filters);
         // 收藏
-        this.collects = zkConnect.collects;
-//        // ssh
-//        this.sshConfig = zkConnect.sshConfig;
-//        this.sshForward = zkConnect.sshForward;
+        this.collects = ZKCollect.copy(zkConnect.collects);
         // sasl
         this.saslAuth = zkConnect.saslAuth;
-        this.saslConfig = zkConnect.saslConfig;
+        if (zkConnect.saslConfig != null) {
+            ZKSASLConfig saslConfig = new ZKSASLConfig();
+            saslConfig.copy(zkConnect.saslConfig);
+            this.saslConfig = saslConfig;
+        }
         // 跳板机
-        this.jumpConfigs = zkConnect.jumpConfigs;
-//        // 代理
-//        this.enableProxy = zkConnect.enableProxy;
-//        this.proxyConfig = zkConnect.proxyConfig;
+        this.jumpConfigs = ZKJumpConfig.copy(zkConnect.jumpConfigs);
     }
 
 //    /**

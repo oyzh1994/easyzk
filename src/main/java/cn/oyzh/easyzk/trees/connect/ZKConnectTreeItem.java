@@ -3,7 +3,6 @@ package cn.oyzh.easyzk.trees.connect;
 import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
@@ -21,7 +20,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -262,8 +260,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
         ZKConnect zkConnect = new ZKConnect();
         zkConnect.copy(this.value);
         zkConnect.setName(this.value.getName() + "-" + I18nHelper.clone1());
-        zkConnect.setCollects(Collections.emptyList());
-        if (this.connectStore.insert(zkConnect)) {
+        if (this.connectStore.replace(zkConnect)) {
             this.connectManager().addConnect(zkConnect);
         } else {
             MessageBox.warn(I18nHelper.operationFail());

@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
+import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.store.jdbc.Column;
@@ -8,6 +9,8 @@ import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,7 +20,7 @@ import java.util.Objects;
  * @since 2022/6/9
  */
 @Table("t_auth")
-public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
+public class ZKAuth implements ObjectComparator<ZKAuth>, ObjectCopier<ZKAuth>, Serializable {
 
     /**
      * 数据id
@@ -87,19 +90,12 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
         return Objects.equals(auth.password, this.password);
     }
 
-    /**
-     * 复制认证信息
-     *
-     * @param auth 认证信息
-     * @return 当前认证信息
-     */
-    public ZKAuth copy( ZKAuth auth) {
+    @Override
+    public void copy(ZKAuth auth) {
         this.iid = auth.iid;
-        this.uid = auth.uid;
         this.user = auth.user;
         this.enable = auth.enable;
         this.password = auth.password;
-        return this;
     }
 
     public boolean getEnable() {
@@ -144,5 +140,15 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, Serializable {
 
     public void setEnable(Boolean enable) {
         this.enable = enable;
+    }
+
+    public static List<ZKAuth> copy(List<ZKAuth> auths) {
+        List<ZKAuth> list = new ArrayList<>();
+        for (ZKAuth auth : auths) {
+            ZKAuth zkAuth = new ZKAuth();
+            zkAuth.copy(auth);
+            list.add(zkAuth);
+        }
+        return list;
     }
 }

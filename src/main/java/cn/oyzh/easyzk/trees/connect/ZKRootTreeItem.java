@@ -367,41 +367,19 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
         }
         // 初始化分组
         List<ZKGroup> groups = this.groupStore.load();
-//         List<ZKGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(groups)) {
             List<TreeItem<?>> list = new ArrayList<>();
-//             f1:
             for (ZKGroup group : groups) {
-//                 for (ZKGroupTreeItem groupItem : groupItems) {
-//                     if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
-//                         continue f1;
-//                     }
-//                 }
                 list.add(new ZKGroupTreeItem(group, this.getTreeView()));
             }
             this.addChild(list);
         }
         // 初始化连接
-        List<ZKConnect> connects = this.connectStore.load();
-//        List<ZKGroupTreeItem> groupItems = this.getGroupItems();
+        List<ZKConnect> connects = this.connectStore.loadFull();
         if (CollectionUtil.isNotEmpty(connects)) {
-            // List<ZKConnect> list = new ArrayList<>();
-            f1:
             for (ZKConnect connect : connects) {
-//                for (ZKConnectTreeItem connectItem : connectItems) {
-//                    if (StringUtil.equals(connectItem.getId(), connect.getId())) {
-//                        continue f1;
-//                    }
-//                }
-//                Optional<ZKGroupTreeItem> optional = groupItems.parallelStream().filter(g -> StringUtil.equals(g.getGid(), connect.getGroupId())).findAny();
-//                if (optional.isPresent()) {
-//                    optional.get().addConnect(connect);
-//                } else {
                 this.addConnect(connect);
-                // list.add(connect);
-//                }
             }
-            // this.addConnects(list);
         }
         this.refresh();
     }

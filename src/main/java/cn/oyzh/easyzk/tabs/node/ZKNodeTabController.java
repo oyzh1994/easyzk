@@ -118,7 +118,7 @@ public class ZKNodeTabController extends ParentTabController {
     /**
      * 当前激活的节点
      */
-    private ZKNodeTreeItem activeItem;
+    private transient ZKNodeTreeItem activeItem;
 
     public ZKConnectTreeItem getTreeItem() {
         return treeItem;

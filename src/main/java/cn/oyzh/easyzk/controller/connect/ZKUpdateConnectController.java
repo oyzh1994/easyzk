@@ -14,7 +14,7 @@ import cn.oyzh.easyzk.fx.ZKSASLTypeComboBox;
 import cn.oyzh.easyzk.store.ZKAuthStore;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKFilterStore;
-import cn.oyzh.easyzk.store.ZKSASLConfigStore;
+import cn.oyzh.easyzk.store.ZKJumpConfigStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.easyzk.vo.ZKAuthVO;
@@ -122,60 +122,6 @@ public class ZKUpdateConnectController extends StageController {
     @FXML
     private NumberTextField sessionTimeOut;
 
-//    /**
-//     * ssh面板
-//     */
-//    @FXML
-//    private FXTab sshTab;
-//
-//    /**
-//     * 开启ssh
-//     */
-//    @FXML
-//    private FXToggleSwitch sshForward;
-//
-//    /**
-//     * ssh主机地址
-//     */
-//    @FXML
-//    private ClearableTextField sshHost;
-//
-//    /**
-//     * ssh主机端口
-//     */
-//    @FXML
-//    private PortTextField sshPort;
-//
-//    /**
-//     * ssh主机端口
-//     */
-//    @FXML
-//    private NumberTextField sshTimeout;
-
-//    /**
-//     * ssh主机用户
-//     */
-//    @FXML
-//    private ClearableTextField sshUser;
-
-//    /**
-//     * ssh主机密码
-//     */
-//    @FXML
-//    private ClearableTextField sshPassword;
-//
-//    /**
-//     * ssh认证方式
-//     */
-//    @FXML
-//    private SSHAuthTypeCombobox sshAuthMethod;
-//
-//    /**
-//     * ssh证书
-//     */
-//    @FXML
-//    private ReadOnlyTextField sshCertificate;
-
     /**
      * sasl面板
      */
@@ -230,11 +176,6 @@ public class ZKUpdateConnectController extends StageController {
     private ZKFilterTableView filterTable;
 
     /**
-     * zk认证配置储存
-     */
-    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
-
-    /**
      * 过滤搜索
      */
     @FXML
@@ -247,19 +188,19 @@ public class ZKUpdateConnectController extends StageController {
     private ZKJumpTableView jumpTableView;
 
     /**
+     * zk认证配置储存
+     */
+    private final ZKAuthStore authStore = ZKAuthStore.INSTANCE;
+
+    /**
      * zk过滤配置储存
      */
     private final ZKFilterStore filterStore = ZKFilterStore.INSTANCE;
 
-//    /**
-//     * ssh配置储存
-//     */
-//    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
-
     /**
-     * sasl配置储存
+     * zk跳板配置储存
      */
-    private final ZKSASLConfigStore saslConfigStore = ZKSASLConfigStore.INSTANCE;
+    private final ZKJumpConfigStore jumpConfigStore = ZKJumpConfigStore.INSTANCE;
 
     /**
      * 获取连接地址
@@ -281,24 +222,6 @@ public class ZKUpdateConnectController extends StageController {
         hostText = hostIp + ":" + this.hostPort.getValue();
         return hostText;
     }
-
-//    /**
-//     * 获取ssh信息
-//     *
-//     * @return ssh连接信息
-//     */
-//    private ZKSSHConfig getSSHConfig() {
-//        ZKSSHConfig sshConfig = new ZKSSHConfig();
-//        sshConfig.setIid(this.zkConnect.getId());
-//        sshConfig.setHost(this.sshHost.getText());
-//        sshConfig.setUser(this.sshUser.getText());
-//        sshConfig.setPort(this.sshPort.getIntValue());
-//        sshConfig.setPassword(this.sshPassword.getText());
-//        sshConfig.setAuthMethod(this.sshAuthMethod.getAuthType());
-//        sshConfig.setTimeout(this.sshTimeout.getIntValue() * 1000);
-//        sshConfig.setCertificatePath(this.sshCertificate.getText());
-//        return sshConfig;
-//    }
 
     /**
      * 获取ssh信息
@@ -330,11 +253,6 @@ public class ZKUpdateConnectController extends StageController {
             zkConnect.setConnectTimeOut(3);
             zkConnect.setId(this.zkConnect.getId());
             zkConnect.setSaslAuth(this.saslAuth.isSelected());
-//            // ssh转发
-//            zkConnect.setSshForward(this.sshForward.isSelected());
-//            if (zkConnect.isSSHForward()) {
-//                zkConnect.setSshConfig(this.getSSHConfig());
-//            }
             // 跳板机配置
             zkConnect.setJumpConfigs(this.jumpTableView.getItems());
             // sasl认证
@@ -365,9 +283,6 @@ public class ZKUpdateConnectController extends StageController {
             Number sessionTimeOut = this.sessionTimeOut.getValue();
 
             this.zkConnect.setHost(host.trim());
-//            // ssh配置
-//            this.zkConnect.setSshConfig(this.getSSHConfig());
-//            this.zkConnect.setSshForward(this.sshForward.isSelected());
             // 跳板机配置
             this.zkConnect.setJumpConfigs(this.jumpTableView.getItems());
             // sasl配置
@@ -413,14 +328,6 @@ public class ZKUpdateConnectController extends StageController {
                 }
             }
         });
-//        // ssh配置
-//        this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
-//            if (newValue) {
-//                NodeGroupUtil.enable(this.sshTab, "ssh");
-//            } else {
-//                NodeGroupUtil.disable(this.sshTab, "ssh");
-//            }
-//        });
         // sasl配置
         this.saslAuth.selectedChanged((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -433,16 +340,6 @@ public class ZKUpdateConnectController extends StageController {
         this.authSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initAuthDataList());
         // 过滤监听
         this.filterSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initFilterDataList());
-//        // ssh认证方式
-//        this.sshAuthMethod.selectedIndexChanged((observable, oldValue, newValue) -> {
-//            if (this.sshAuthMethod.isPasswordAuth()) {
-//                this.sshPassword.display();
-//                NodeGroupUtil.disappear(this.tabPane, "sshCertificate");
-//            } else {
-//                this.sshPassword.disappear();
-//                NodeGroupUtil.display(this.tabPane, "sshCertificate");
-//            }
-//        });
     }
 
     @Override
@@ -458,27 +355,11 @@ public class ZKUpdateConnectController extends StageController {
         this.hostIp.setText(this.zkConnect.hostIp());
         this.hostPort.setValue(this.zkConnect.hostPort());
         this.listen.setSelected(this.zkConnect.getListen());
-//        // ssh配置
-//        this.sshForward.setSelected(this.zkConnect.isSSHForward());
-//        ZKSSHConfig sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
-//        if (sshConfig != null) {
-//            this.sshHost.setText(sshConfig.getHost());
-//            this.sshUser.setText(sshConfig.getUser());
-//            this.sshPort.setValue(sshConfig.getPort());
-//            this.sshPassword.setText(sshConfig.getPassword());
-//            this.sshTimeout.setValue(sshConfig.getTimeoutSecond());
-//            this.sshCertificate.setText(sshConfig.getCertificatePath());
-//            if (sshConfig.isPasswordAuth()) {
-//                this.sshAuthMethod.selectFirst();
-//            } else {
-//                this.sshAuthMethod.select(1);
-//            }
-//        }
         // 跳板机配置
-        this.jumpTableView.init(this.zkConnect.getId());
+        this.jumpTableView.setItem(this.zkConnect.getJumpConfigs());
         // sasl配置
         this.saslAuth.setSelected(this.zkConnect.isSASLAuth());
-        ZKSASLConfig saslConfig = this.saslConfigStore.getByIid(this.zkConnect.getId());
+        ZKSASLConfig saslConfig = this.zkConnect.getSaslConfig();
         if (saslConfig != null) {
             this.saslType.select(saslConfig.getType());
             this.saslUser.setText(saslConfig.getUserName());
@@ -531,6 +412,7 @@ public class ZKUpdateConnectController extends StageController {
         }
         if (MessageBox.confirm(I18nHelper.deleteData())) {
             this.filterTable.removeItem(filter);
+            this.filterStore.delete(filter.getUid());
         }
     }
 
@@ -568,6 +450,7 @@ public class ZKUpdateConnectController extends StageController {
         }
         if (MessageBox.confirm(I18nHelper.deleteData())) {
             this.authTable.removeItem(authVO);
+            this.authStore.delete(authVO.getUid());
         }
     }
 
@@ -585,23 +468,15 @@ public class ZKUpdateConnectController extends StageController {
         ClipboardUtil.setStringAndTip(data);
     }
 
-//    /**
-//     * 选择ssh证书
-//     */
-//    @FXML
-//    private void chooseSSHCertificate() {
-//        File file = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), FXChooser.allExtensionFilter());
-//        if (file != null) {
-//            this.sshCertificate.setText(file.getPath());
-//        }
-//    }
-
     /**
      * 添加跳板
      */
     @FXML
     private void addJump() {
-        StageAdapter adapter= ZKViewFactory.addJump();
+        StageAdapter adapter = ZKViewFactory.addJump();
+        if (adapter == null) {
+            return;
+        }
         ZKJumpConfig jumpConfig = adapter.getProp("jumpConfig");
         if (jumpConfig != null) {
             this.jumpTableView.addItem(jumpConfig);
@@ -618,7 +493,10 @@ public class ZKUpdateConnectController extends StageController {
         if (config == null) {
             return;
         }
-        StageAdapter adapter= ZKViewFactory.updateJump(config);
+        StageAdapter adapter = ZKViewFactory.updateJump(config);
+        if (adapter == null) {
+            return;
+        }
         ZKJumpConfig jumpConfig = adapter.getProp("jumpConfig");
         if (jumpConfig != null) {
             this.jumpTableView.refresh();
@@ -631,7 +509,8 @@ public class ZKUpdateConnectController extends StageController {
      */
     @FXML
     private void deleteJump() {
-        this.jumpTableView.removeSelectedItem();
+        ZKJumpConfig config = this.jumpTableView.removeSelectedItem();
+        this.jumpConfigStore.delete(config);
         this.jumpTableView.updateOrder();
     }
 

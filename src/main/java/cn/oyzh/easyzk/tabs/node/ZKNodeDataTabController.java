@@ -407,18 +407,18 @@ public class ZKNodeDataTabController extends SubTabController {
         });
     }
 
-    /**
-     * 设置数据高亮
-     *
-     * @param highlight 高亮内容
-     */
-    public void setDataHighlight(String highlight) {
-        if (highlight != null) {
-            this.nodeData.setHighlightText(highlight);
-        } else {
-            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
-        }
-    }
+//    /**
+//     * 设置数据高亮
+//     *
+//     * @param highlight 高亮内容
+//     */
+//    public void setDataHighlight(String highlight) {
+//        if (highlight != null) {
+//            this.nodeData.setHighlightText(highlight);
+//        } else {
+//            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
+//        }
+//    }
 
     private ZKNodeTreeItem activeItem() {
         return this.parent().getActiveItem();

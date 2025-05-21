@@ -9,19 +9,19 @@
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.popups.ZKFilterSettingPopupController" realHeight="80">
     <FXHBox>
-        <FXCheckBox fx:id="searchPath" text="%base.path" selected="true">
-            <HBox.margin>
-                <Insets left="15" top="15"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox fx:id="searchData" text="%base.data" selected="true">
-            <HBox.margin>
-                <Insets left="5" top="15"/>
-            </HBox.margin>
-        </FXCheckBox>
+<!--        <FXCheckBox fx:id="searchPath" text="%base.path" selected="true">-->
+<!--            <HBox.margin>-->
+<!--                <Insets left="15" top="15"/>-->
+<!--            </HBox.margin>-->
+<!--        </FXCheckBox>-->
+<!--        <FXCheckBox fx:id="searchData" text="%base.data" selected="true">-->
+<!--            <HBox.margin>-->
+<!--                <Insets left="5" top="15"/>-->
+<!--            </HBox.margin>-->
+<!--        </FXCheckBox>-->
         <FXCheckBox fx:id="matchCase" text="%base.matchCase">
             <HBox.margin>
-                <Insets left="5" top="15"/>
+                <Insets left="15" top="15"/>
             </HBox.margin>
         </FXCheckBox>
         <FXCheckBox fx:id="matchFull" text="%base.matchFull">

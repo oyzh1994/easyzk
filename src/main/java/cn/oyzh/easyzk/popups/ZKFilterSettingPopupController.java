@@ -20,17 +20,17 @@ import javafx.stage.WindowEvent;
 )
 public class ZKFilterSettingPopupController extends PopupController {
 
-    /**
-     * 搜索路径
-     */
-    @FXML
-    private FXCheckBox searchPath;
-
-    /**
-     * 搜索数据
-     */
-    @FXML
-    private FXCheckBox searchData;
+//    /**
+//     * 搜索路径
+//     */
+//    @FXML
+//    private FXCheckBox searchPath;
+//
+//    /**
+//     * 搜索数据
+//     */
+//    @FXML
+//    private FXCheckBox searchData;
 
     /**
      * 匹配大小写
@@ -53,8 +53,8 @@ public class ZKFilterSettingPopupController extends PopupController {
             ZKNodeFilterParam filterParam = new ZKNodeFilterParam();
             filterParam.setMatchCase(this.matchCase.isSelected());
             filterParam.setMatchFull(this.matchFull.isSelected());
-            filterParam.setSearchPath(this.searchPath.isSelected());
-            filterParam.setSearchData(this.searchData.isSelected());
+//            filterParam.setSearchPath(this.searchPath.isSelected());
+//            filterParam.setSearchData(this.searchData.isSelected());
             this.submit(filterParam);
             this.closeWindow();
         } catch (Exception ex) {
@@ -78,8 +78,8 @@ public class ZKFilterSettingPopupController extends PopupController {
         if (filterParam != null) {
             this.matchCase.setSelected(filterParam.isMatchCase());
             this.matchFull.setSelected(filterParam.isMatchFull());
-            this.searchPath.setSelected(filterParam.isSearchPath());
-            this.searchData.setSelected(filterParam.isSearchData());
+//            this.searchPath.setSelected(filterParam.isSearchPath());
+//            this.searchData.setSelected(filterParam.isSearchData());
         }
     }
 }

@@ -25,7 +25,7 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeFilterTypeComboBox>
-            <ZKNodeFilterTextField tipText="CTRL/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter"
+            <ZKNodeFilterTextField tipText="CTRL+F/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter"
                                    onSearch="#doFilter" fx:id="filterKW" realHeight="24"
                                    flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>

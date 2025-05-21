@@ -62,7 +62,7 @@ public class ZKCollect implements Serializable, ObjectCopier<ZKCollect> {
         this.path = t1.getPath();
     }
 
-    public static List<ZKCollect> copy(List<ZKCollect> collects) {
+    public static List<ZKCollect> clone(List<ZKCollect> collects) {
         if (CollectionUtil.isEmpty(collects)) {
             return Collections.emptyList();
         }

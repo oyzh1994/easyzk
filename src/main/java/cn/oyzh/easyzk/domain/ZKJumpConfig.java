@@ -76,7 +76,7 @@ public class ZKJumpConfig extends SSHConnect implements Serializable {
         return toggleSwitch;
     }
 
-    public static List<ZKJumpConfig> copy(List<ZKJumpConfig> configs) {
+    public static List<ZKJumpConfig> clone(List<ZKJumpConfig> configs) {
         if (CollectionUtil.isEmpty(configs)) {
             return Collections.emptyList();
         }

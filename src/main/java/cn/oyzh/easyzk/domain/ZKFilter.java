@@ -123,7 +123,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilt
         this.partMatch = partMatch;
     }
 
-    public static List<ZKFilter> copy(List<ZKFilter> filters) {
+    public static List<ZKFilter> clone(List<ZKFilter> filters) {
         if (CollectionUtil.isEmpty(filters)) {
             return Collections.emptyList();
         }

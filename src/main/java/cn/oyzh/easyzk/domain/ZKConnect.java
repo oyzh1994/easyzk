@@ -3,12 +3,14 @@ package cn.oyzh.easyzk.domain;
 import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.common.util.BooleanUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -151,30 +153,17 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.sessionTimeOut = zkConnect.sessionTimeOut;
         this.connectTimeOut = zkConnect.connectTimeOut;
         // 认证
-        this.auths = ZKAuth.copy(zkConnect.auths);
+        this.auths = ZKAuth.clone(zkConnect.auths);
         // 过滤
-        this.filters = ZKFilter.copy(zkConnect.filters);
+        this.filters = ZKFilter.clone(zkConnect.filters);
         // 收藏
-        this.collects = ZKCollect.copy(zkConnect.collects);
+        this.collects = ZKCollect.clone(zkConnect.collects);
         // sasl
         this.saslAuth = zkConnect.saslAuth;
-        if (zkConnect.saslConfig != null) {
-            ZKSASLConfig saslConfig = new ZKSASLConfig();
-            saslConfig.copy(zkConnect.saslConfig);
-            this.saslConfig = saslConfig;
-        }
+        this.saslConfig = ZKSASLConfig.clone(zkConnect.saslConfig);
         // 跳板机
-        this.jumpConfigs = ZKJumpConfig.copy(zkConnect.jumpConfigs);
+        this.jumpConfigs = ZKJumpConfig.clone(zkConnect.jumpConfigs);
     }
-
-//    /**
-//     * 是否开启ssh转发
-//     *
-//     * @return 结果
-//     */
-//    public boolean isSSHForward() {
-//        return BooleanUtil.isTrue(this.sshForward);
-//    }
 
     /**
      * 是否开启sasl认证
@@ -473,4 +462,16 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.jumpConfigs = jumpConfigs;
     }
 
+    /**
+     * 是否开启跳板
+     *
+     * @return 结果
+     */
+    public boolean isEnableJump() {
+        // 初始化跳板配置
+        List<ZKJumpConfig> jumpConfigs = this.getJumpConfigs();
+        // 过滤配置
+        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(ZKJumpConfig::isEnabled).toList();
+        return CollectionUtil.isNotEmpty(jumpConfigs);
+    }
 }

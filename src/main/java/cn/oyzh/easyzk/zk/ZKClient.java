@@ -66,7 +66,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 /**
  * zk客户端封装
@@ -358,19 +357,21 @@ public class ZKClient {
     private String initHost() {
         // 连接地址
         String host;
-        // 初始化跳板配置
-        List<ZKJumpConfig> jumpConfigs = this.zkConnect.getJumpConfigs();
+//        // 初始化跳板配置
+//        List<ZKJumpConfig> jumpConfigs = this.zkConnect.getJumpConfigs();
 //        // 从数据库获取
 //        if (jumpConfigs == null) {
 //            jumpConfigs = this.jumpConfigStore.loadByIid(this.zkConnect.getId());
 //        }
-        // 过滤配置
-        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(ZKJumpConfig::isEnabled).collect(Collectors.toList());
+//        // 过滤配置
+//        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(ZKJumpConfig::isEnabled).collect(Collectors.toList());
         // 初始化跳板转发
-        if (CollectionUtil.isNotEmpty(jumpConfigs)) {
+        if (this.zkConnect.isEnableJump()) {
             if (this.jumpForwarder == null) {
                 this.jumpForwarder = new SSHJumpForwarder();
             }
+            // 初始化跳板配置
+            List<ZKJumpConfig> jumpConfigs = this.zkConnect.getJumpConfigs();
             // 转换为目标连接
             SSHConnect target = new SSHConnect();
             target.setHost(this.zkConnect.hostIp());
@@ -380,6 +381,10 @@ public class ZKClient {
             // 连接信息
             host = "127.0.0.1:" + localPort;
         } else {// 直连
+            if (this.jumpForwarder != null) {
+                this.jumpForwarder.destroy();
+                this.jumpForwarder = null;
+            }
             // 连接信息
             host = this.zkConnect.hostIp() + ":" + this.zkConnect.hostPort();
         }

@@ -382,8 +382,7 @@ public class ZKUpdateConnectController extends StageController {
      */
     private void initFilterDataList() {
         if (!this.filterTable.hasData()) {
-            List<ZKFilter> list = this.filterStore.loadByIid(this.zkConnect.getId());
-            this.filterTable.setFilters(list);
+            this.filterTable.setFilters(this.zkConnect.getFilters());
         } else {
             this.filterTable.setKw(this.filterSearchKW.getText());
         }
@@ -421,8 +420,7 @@ public class ZKUpdateConnectController extends StageController {
      */
     private void initAuthDataList() {
         if (!this.authTable.hasData()) {
-            List<ZKAuth> list = this.authStore.loadByIid(this.zkConnect.getId());
-            this.authTable.setAuths(list);
+            this.authTable.setAuths(this.zkConnect.getAuths());
         } else {
             this.authTable.setKw(this.authSearchKW.getText());
         }

@@ -144,7 +144,7 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, ObjectCopier<ZKAuth>, S
         this.enable = enable;
     }
 
-    public static List<ZKAuth> copy(List<ZKAuth> auths) {
+    public static List<ZKAuth> clone(List<ZKAuth> auths) {
         if (CollectionUtil.isEmpty(auths)) {
             return Collections.emptyList();
         }

@@ -104,4 +104,13 @@ public class ZKSASLConfig implements Serializable, ObjectCopier<ZKSASLConfig> {
         this.userName = t1.getUserName();
         this.password = t1.getPassword();
     }
+
+    public static ZKSASLConfig clone(ZKSASLConfig config) {
+        if (config == null) {
+            return null;
+        }
+        ZKSASLConfig saslConfig = new ZKSASLConfig();
+        saslConfig.copy(config);
+        return saslConfig;
+    }
 }

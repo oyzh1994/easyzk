@@ -8,6 +8,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
+import com.alibaba.fastjson2.annotation.JSONField;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -183,43 +184,6 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     public boolean isReadonly() {
         return BooleanUtil.isTrue(this.readonly);
     }
-
-    // /**
-    //  * 是否被收藏
-    //  *
-    //  * @param path 路径
-    //  * @return 结果
-    //  */
-    // public boolean isCollect( String path) {
-    //     return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(path);
-    // }
-    //
-    // /**
-    //  * 添加收藏
-    //  *
-    //  * @param path 路径
-    //  */
-    // public void addCollect( String path) {
-    //     if (this.collects == null) {
-    //         this.collects = new ArrayList<>();
-    //     }
-    //     if (!this.collects.contains(path)) {
-    //         this.collects.add(path);
-    //     }
-    // }
-    //
-    // /**
-    //  * 取消收藏
-    //  *
-    //  * @param path 路径
-    //  * @return 结果
-    //  */
-    // public boolean removeCollect( String path) {
-    //     if (this.collects != null) {
-    //         return this.collects.remove(path);
-    //     }
-    //     return false;
-    // }
 
     /**
      * 获取会话超时
@@ -457,6 +421,7 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
      *
      * @return 结果
      */
+    @JSONField(serialize = false, deserialize = false)
     public boolean isEnableJump() {
         // 初始化跳板配置
         List<ZKJumpConfig> jumpConfigs = this.getJumpConfigs();

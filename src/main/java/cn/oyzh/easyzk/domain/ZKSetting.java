@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.domain;
 import cn.oyzh.fx.plus.domain.AppSetting;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
+import com.alibaba.fastjson2.annotation.JSONField;
 
 /**
  * zk设置
@@ -50,6 +51,7 @@ public class ZKSetting extends AppSetting {
      *
      * @return 结果
      */
+    @JSONField(serialize = false, deserialize = false)
     public boolean isAutoAuth() {
         return this.authMode == null || this.authMode == 0;
     }
@@ -59,6 +61,7 @@ public class ZKSetting extends AppSetting {
      *
      * @return 结果
      */
+    @JSONField(serialize = false, deserialize = false)
     public boolean isLoadAll() {
         return this.loadMode != null && this.loadMode == 1;
     }
@@ -68,6 +71,7 @@ public class ZKSetting extends AppSetting {
      *
      * @return 结果
      */
+    @JSONField(serialize = false, deserialize = false)
     public boolean isShowNodePath() {
         return this.viewport == null || this.viewport == 1;
     }
@@ -77,6 +81,7 @@ public class ZKSetting extends AppSetting {
      *
      * @return 结果
      */
+    @JSONField(serialize = false, deserialize = false)
     public boolean isLoadFirst() {
         return this.loadMode == null || this.loadMode == 0;
     }
@@ -86,6 +91,7 @@ public class ZKSetting extends AppSetting {
      *
      * @return 结果
      */
+    @JSONField(serialize = false, deserialize = false)
     public boolean isLoadRoot() {
         return this.loadMode != null && this.loadMode == 2;
     }
@@ -95,6 +101,7 @@ public class ZKSetting extends AppSetting {
      *
      * @return 节点加载限制
      */
+    @JSONField(serialize = false, deserialize = false)
     public int nodeLoadLimit() {
         return this.nodeLoadLimit == null ? 0 : this.nodeLoadLimit;
     }

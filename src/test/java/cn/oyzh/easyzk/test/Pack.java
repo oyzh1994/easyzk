@@ -30,7 +30,7 @@ public class Pack {
     @Test
     public void win_exe() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_exe.json";
+        String win_pack_config = packagePath + "/win_exe.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -44,7 +44,7 @@ public class Pack {
     @Test
     public void win_msi() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_msi.json";
+        String win_pack_config = packagePath + "/win_msi.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -58,7 +58,7 @@ public class Pack {
     @Test
     public void win_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_image.json";
+        String win_pack_config = packagePath + "/win_image.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -72,7 +72,7 @@ public class Pack {
     @Test
     public void linux_deb() throws Exception {
         String packagePath = this.getPackagePath();
-        String linux_pack_config = packagePath + "/linux/linux_deb.json";
+        String linux_pack_config = packagePath + "/linux_deb.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -85,7 +85,7 @@ public class Pack {
     @Test
     public void linux_rpm() throws Exception {
         String packagePath = this.getPackagePath();
-        String linux_pack_config = packagePath + "/linux/linux_deb.json";
+        String linux_pack_config = packagePath + "/linux_rpm.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -98,7 +98,7 @@ public class Pack {
     @Test
     public void linux_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String linux_pack_config = packagePath + "/linux/linux_image.json";
+        String linux_pack_config = packagePath + "/linux_image.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -112,7 +112,7 @@ public class Pack {
     @Test
     public void easyzk_macos_dmg() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_pack_config = packagePath + "/macos/macos_dmg.json";
+        String macos_pack_config = packagePath + "/macos_dmg.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -125,7 +125,7 @@ public class Pack {
     @Test
     public void easyzk_macos_pkg() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_pack_config = packagePath + "/macos/macos_pkg.yaml";
+        String macos_pack_config = packagePath + "/macos_pkg.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -138,7 +138,7 @@ public class Pack {
     @Test
     public void easyzk_macos_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_pack_config = packagePath + "/macos/macos_image.json";
+        String macos_pack_config = packagePath + "/macos_image.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -147,29 +147,4 @@ public class Pack {
         packer.registerProjectHandler();
         packer.pack(macos_pack_config, properties);
     }
-
-//    @Test
-//    public void easyzk_all_pack() throws Exception {
-//        String projectPath = this.getProjectPath();
-//        String packagePath = this.getPackagePath();
-//        String win_amd64_pack_config = packagePath + "win_amd64_pack_config.json";
-//        String linux_amd64_pack_config = packagePath + "linux_amd64_pack_config.json";
-//        String linux_arm64_pack_config = packagePath + "linux_arm64_pack_config.json";
-//        String macos_amd64_pack_config = packagePath + "macos_amd64_pack_config.json";
-//        String macos_arm64_pack_config = packagePath + "macos_arm64_pack_config.json";
-//
-//        Map<String, Object> properties = new HashMap<>();
-//        properties.put("projectPath", projectPath);
-//        Packer packer = new Packer();
-//        packer.registerProjectHandler();
-//        // String baseDir1 = projectPath.replace("easyzk", "base");
-//        // String baseDir2 = projectPath.replace("easyzk", "fx-base");
-//        // String projectDir = projectPath;
-//        // packer.registerMvnHandler(projectDir, List.of(baseDir1, baseDir2));
-//        packer.pack(win_amd64_pack_config, properties);
-//        packer.pack(linux_amd64_pack_config, properties);
-//        packer.pack(linux_arm64_pack_config, properties);
-//        packer.pack(macos_amd64_pack_config, properties);
-//        packer.pack(macos_arm64_pack_config, properties);
-//    }
 }

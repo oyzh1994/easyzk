@@ -29,7 +29,6 @@
 // */
 //@StageAttribute(
 //        resizable = false,
-//        stageStyle = FXStageStyle.UTILITY,
 //        value = FXConst.FXML_PATH + "node/zkNodeSearch.fxml"
 //)
 //public class ZKNodeSearchController extends StageController {

@@ -1,11 +1,11 @@
 package cn.oyzh.easyzk.dto;
 
 import cn.oyzh.common.dto.Project;
-import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKGroup;
+import com.alibaba.fastjson2.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,8 +98,8 @@ public class ZKConnectExport {
         export.connects = new ArrayList<>(12);
         export.version = object.getString("version");
         export.platform = object.getString("platform");
-        export.groups = object.getBeanList("groups", ZKGroup.class);
-        export.connects = object.getBeanList("connects", ZKConnect.class);
+        export.groups = object.getList("groups", ZKGroup.class);
+        export.connects = object.getList("connects", ZKConnect.class);
         return export;
     }
 

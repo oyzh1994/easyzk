@@ -12,6 +12,7 @@ import cn.oyzh.fx.plus.tableview.TableViewUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
+import com.alibaba.fastjson2.annotation.JSONField;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -148,22 +149,10 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, ObjectCopier<ZKAuth>, S
         this.enable = enable;
     }
 
-    public static List<ZKAuth> clone(List<ZKAuth> auths) {
-        if (CollectionUtil.isEmpty(auths)) {
-            return Collections.emptyList();
-        }
-        List<ZKAuth> list = new ArrayList<>();
-        for (ZKAuth auth : auths) {
-            ZKAuth zkAuth = new ZKAuth();
-            zkAuth.copy(auth);
-            list.add(zkAuth);
-        }
-        return list;
-    }
-
     /**
      * 用户名控件
      */
+    @JSONField(serialize = false, deserialize = false)
     public ClearableTextField getUserControl() {
         ClearableTextField textField = new ClearableTextField();
         textField.setFlexWidth("100% - 12");
@@ -176,6 +165,7 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, ObjectCopier<ZKAuth>, S
     /**
      * 密码控件
      */
+    @JSONField(serialize = false, deserialize = false)
     public ClearableTextField getPasswordControl() {
         ClearableTextField textField = new ClearableTextField();
         textField.setFlexWidth("100% - 12");
@@ -188,6 +178,7 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, ObjectCopier<ZKAuth>, S
     /**
      * 状态控件
      */
+    @JSONField(serialize = false, deserialize = false)
     public FXToggleSwitch getStatusControl() {
         EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
         toggleSwitch.setFontSize(11);
@@ -196,5 +187,18 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, ObjectCopier<ZKAuth>, S
             this.setEnable(n);
         });
         return toggleSwitch;
+    }
+
+    public static List<ZKAuth> clone(List<ZKAuth> auths) {
+        if (CollectionUtil.isEmpty(auths)) {
+            return Collections.emptyList();
+        }
+        List<ZKAuth> list = new ArrayList<>();
+        for (ZKAuth auth : auths) {
+            ZKAuth zkAuth = new ZKAuth();
+            zkAuth.copy(auth);
+            list.add(zkAuth);
+        }
+        return list;
     }
 }

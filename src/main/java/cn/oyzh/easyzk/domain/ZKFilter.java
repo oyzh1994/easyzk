@@ -10,6 +10,7 @@ import cn.oyzh.fx.plus.tableview.TableViewUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
+import com.alibaba.fastjson2.annotation.JSONField;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -127,22 +128,10 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilt
         this.partMatch = partMatch;
     }
 
-    public static List<ZKFilter> clone(List<ZKFilter> filters) {
-        if (CollectionUtil.isEmpty(filters)) {
-            return Collections.emptyList();
-        }
-        List<ZKFilter> list = new ArrayList<>();
-        for (ZKFilter filter : filters) {
-            ZKFilter zkFilter = new ZKFilter();
-            zkFilter.copy(filter);
-            list.add(zkFilter);
-        }
-        return list;
-    }
-
     /**
      * 关键字控件
      */
+    @JSONField(serialize = false, deserialize = false)
     public ClearableTextField getKwControl() {
         ClearableTextField textField = new ClearableTextField();
         textField.setFlexWidth("100% - 12");
@@ -155,6 +144,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilt
     /**
      * 匹配模式控件
      */
+    @JSONField(serialize = false, deserialize = false)
     public MatchToggleSwitch getMatchModeControl() {
         MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
         toggleSwitch.fontSize(11);
@@ -167,6 +157,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilt
     /**
      * 状态控件
      */
+    @JSONField(serialize = false, deserialize = false)
     public EnabledToggleSwitch getStatusControl() {
         EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
         toggleSwitch.setFontSize(11);
@@ -174,5 +165,18 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilt
         toggleSwitch.selectedChanged((abs, o, n) -> this.setEnable(n));
         TableViewUtil.selectRowOnMouseClicked(toggleSwitch);
         return toggleSwitch;
+    }
+
+    public static List<ZKFilter> clone(List<ZKFilter> filters) {
+        if (CollectionUtil.isEmpty(filters)) {
+            return Collections.emptyList();
+        }
+        List<ZKFilter> list = new ArrayList<>();
+        for (ZKFilter filter : filters) {
+            ZKFilter zkFilter = new ZKFilter();
+            zkFilter.copy(filter);
+            list.add(zkFilter);
+        }
+        return list;
     }
 }

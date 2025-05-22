@@ -275,7 +275,9 @@ public class ZKAddACLController extends StageController {
         // 新增权限
         if (this.addACL(acl) && this.digestSaveInfo.isSelected()) {
             // 保存认证信息
-            this.authStore.replace(new ZKAuth(this.zkClient.iid(), user, password));
+            ZKAuth auth = new ZKAuth(zkClient.iid(), user, password);
+            this.authStore.replace(auth);
+            this.zkItem.zkConnect().addAuth(auth);
         }
     }
 

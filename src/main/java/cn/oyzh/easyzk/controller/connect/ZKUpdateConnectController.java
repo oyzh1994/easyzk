@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.controller.connect;
 
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
@@ -17,8 +18,6 @@ import cn.oyzh.easyzk.store.ZKFilterStore;
 import cn.oyzh.easyzk.store.ZKJumpConfigStore;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.util.ZKViewFactory;
-import cn.oyzh.easyzk.vo.ZKAuthVO;
-import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.easyzk.zk.ZKSASLUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
@@ -393,7 +392,7 @@ public class ZKUpdateConnectController extends StageController {
      */
     @FXML
     private void addFilter() {
-        ZKFilterVO filter = new ZKFilterVO();
+        ZKFilter filter = new ZKFilter();
         filter.setEnable(true);
         filter.setPartMatch(true);
         this.filterTable.addFilter(filter);
@@ -405,13 +404,21 @@ public class ZKUpdateConnectController extends StageController {
      */
     @FXML
     private void deleteFilter() {
-        ZKFilterVO filter = this.filterTable.getSelectedItem();
-        if (filter == null) {
-            return;
-        }
-        if (MessageBox.confirm(I18nHelper.deleteData())) {
-            this.filterTable.removeItem(filter);
-            this.filterStore.delete(filter.getUid());
+        try {
+            List<ZKFilter> filters = this.filterTable.getSelectedItems();
+            if (CollectionUtil.isEmpty(filters)) {
+                return;
+            }
+            if (MessageBox.confirm(I18nHelper.deleteData())) {
+                for (ZKFilter filter : filters) {
+                    if (filter != null) {
+                        this.filterStore.delete(filter.getUid());
+                    }
+                }
+                this.filterTable.removeItem(filters);
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 
@@ -431,7 +438,7 @@ public class ZKUpdateConnectController extends StageController {
      */
     @FXML
     private void addAuth() {
-        ZKAuthVO authVO = new ZKAuthVO();
+        ZKAuth authVO = new ZKAuth();
         authVO.setEnable(true);
         this.authTable.addAuth(authVO);
         this.authTable.selectLast();
@@ -442,13 +449,21 @@ public class ZKUpdateConnectController extends StageController {
      */
     @FXML
     private void deleteAuth() {
-        ZKAuthVO authVO = this.authTable.getSelectedItem();
-        if (authVO == null) {
-            return;
-        }
-        if (MessageBox.confirm(I18nHelper.deleteData())) {
-            this.authTable.removeItem(authVO);
-            this.authStore.delete(authVO.getUid());
+        try {
+            List<ZKAuth> auths = this.authTable.getSelectedItems();
+            if (CollectionUtil.isEmpty(auths)) {
+                return;
+            }
+            if (MessageBox.confirm(I18nHelper.deleteData())) {
+                for (ZKAuth auth : auths) {
+                    if (auth != null) {
+                        this.authStore.delete(auth.getUid());
+                    }
+                }
+                this.authTable.removeItem(auths);
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 
@@ -457,7 +472,7 @@ public class ZKUpdateConnectController extends StageController {
      */
     @FXML
     private void copyAuth() {
-        ZKAuthVO auth = this.authTable.getSelectedItem();
+        ZKAuth auth = this.authTable.getSelectedItem();
         if (auth == null) {
             return;
         }

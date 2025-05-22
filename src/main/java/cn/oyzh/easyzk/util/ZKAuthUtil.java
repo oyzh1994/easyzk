@@ -57,7 +57,7 @@ public class ZKAuthUtil {
      * @param zkNode   zk节点
      * @return 结果 0 失败 1 成功 2 异常
      */
-    public static int authNode( String user,  String password,  ZKClient client,  ZKNode zkNode) {
+    public static int authNode(String user, String password, ZKClient client, ZKNode zkNode) {
         int result = 0;
         try {
             client.addAuth(user, password);
@@ -254,7 +254,7 @@ public class ZKAuthUtil {
      * @param password 密码
      * @return 摘要信息
      */
-    public static String digest( String user,  String password) {
+    public static String digest(String user, String password) {
         try {
             return DigestAuthenticationProvider.generateDigest(user + ":" + password);
         } catch (NoSuchAlgorithmException ex) {

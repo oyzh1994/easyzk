@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.vo.ZKFilterVO;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
+import javafx.scene.control.SelectionMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +12,12 @@ import java.util.List;
  * @author oyzh
  * @since 2024-12-19
  */
-public class ZKFilterTableView extends FXTableView<ZKFilterVO> {
+public class ZKFilterTableView extends FXTableView<ZKFilter> {
 
     /**
      * 当前过滤列表
      */
-    private List<ZKFilterVO> list;
+    private List<ZKFilter> list;
 
     /**
      * 关键字
@@ -29,7 +29,7 @@ public class ZKFilterTableView extends FXTableView<ZKFilterVO> {
     }
 
     public void setFilters(List<ZKFilter> filters) {
-        this.list = ZKFilterVO.convert(filters);
+        this.list = filters;
         this.initDataList();
     }
 
@@ -40,7 +40,7 @@ public class ZKFilterTableView extends FXTableView<ZKFilterVO> {
 
     public List<ZKFilter> getFilters() {
         List<ZKFilter> list = new ArrayList<>(this.list.size());
-        for (ZKFilterVO filterVO : this.list) {
+        for (ZKFilter filterVO : this.list) {
             if (filterVO != null && StringUtil.isNotBlank(filterVO.getKw())) {
                 list.add(filterVO);
             }
@@ -49,9 +49,9 @@ public class ZKFilterTableView extends FXTableView<ZKFilterVO> {
     }
 
     private void initDataList() {
-        List<ZKFilterVO> list = new ArrayList<>(12);
+        List<ZKFilter> list = new ArrayList<>(12);
         if (this.list != null) {
-            for (ZKFilterVO filter : this.list) {
+            for (ZKFilter filter : this.list) {
                 if (StringUtil.isBlank(this.kw) || StringUtil.containsIgnoreCase(filter.getKw(), this.kw)) {
                     list.add(filter);
                 }
@@ -60,7 +60,7 @@ public class ZKFilterTableView extends FXTableView<ZKFilterVO> {
         super.setItem(list);
     }
 
-    public void addFilter(ZKFilterVO filter) {
+    public void addFilter(ZKFilter filter) {
         if (this.list == null) {
             this.list = new ArrayList<>(12);
         }
@@ -70,10 +70,25 @@ public class ZKFilterTableView extends FXTableView<ZKFilterVO> {
 
     @Override
     public void removeItem(Object item) {
-        super.removeItem(item);
         if (this.list != null) {
             this.list.remove(item);
         }
+        super.removeItem(item);
         this.initDataList();
+    }
+
+    @Override
+    public void removeItem(List<?> item) {
+        if (this.list != null) {
+            this.list.removeAll(item);
+        }
+        super.removeItem(item);
+        this.initDataList();
+    }
+
+    @Override
+    public void initNode() {
+        super.initNode();
+        this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 }

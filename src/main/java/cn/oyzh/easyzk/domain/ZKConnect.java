@@ -10,6 +10,7 @@ import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -386,6 +387,23 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.auths = auths;
     }
 
+    public void addAuth(ZKAuth auth) {
+        if (auth == null) {
+            return;
+        }
+        if (this.auths == null) {
+            this.auths = new ArrayList<>();
+        } else {
+            for (ZKAuth zkAuth : auths) {
+                if (zkAuth.compare(auth)) {
+                    return;
+                }
+            }
+        }
+        this.auths.add(auth);
+
+    }
+
     public List<ZKCollect> getCollects() {
         return collects;
     }
@@ -410,22 +428,6 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
         this.connectTimeOut = connectTimeOut;
     }
 
-//    public Boolean getSshForward() {
-//        return sshForward;
-//    }
-//
-//    public void setSshForward(Boolean sshForward) {
-//        this.sshForward = sshForward;
-//    }
-//
-//    public ZKSSHConfig getSshConfig() {
-//        return sshConfig;
-//    }
-//
-//    public void setSshConfig(ZKSSHConfig sshConfig) {
-//        this.sshConfig = sshConfig;
-//    }
-
     public Boolean getSaslAuth() {
         return saslAuth;
     }
@@ -441,18 +443,6 @@ public class ZKConnect implements Comparable<ZKConnect>, ObjectComparator<ZKConn
     public void setSaslConfig(ZKSASLConfig saslConfig) {
         this.saslConfig = saslConfig;
     }
-
-//    public Boolean isEnableProxy() {
-//        return enableProxy != null && enableProxy;
-//    }
-
-//    public ZKProxyConfig getProxyConfig() {
-//        return proxyConfig;
-//    }
-//
-//    public void setProxyConfig(ZKProxyConfig proxyConfig) {
-//        this.proxyConfig = proxyConfig;
-//    }
 
     public List<ZKJumpConfig> getJumpConfigs() {
         return jumpConfigs;

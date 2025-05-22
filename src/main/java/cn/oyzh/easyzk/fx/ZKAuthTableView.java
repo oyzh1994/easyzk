@@ -2,8 +2,8 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.vo.ZKAuthVO;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
+import javafx.scene.control.SelectionMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,24 +12,24 @@ import java.util.List;
  * @author oyzh
  * @since 2024-12-19
  */
-public class ZKAuthTableView extends FXTableView<ZKAuthVO> {
+public class ZKAuthTableView extends FXTableView<ZKAuth> {
 
     /**
      * 当前过滤列表
      */
-    private List<ZKAuthVO> list;
+    private List<ZKAuth> list;
 
     /**
      * 关键字
      */
     private String kw;
 
-    public boolean hasData(){
+    public boolean hasData() {
         return list != null;
     }
 
     public void setAuths(List<ZKAuth> auths) {
-        this.list = ZKAuthVO.convert(auths);
+        this.list = auths;
         this.initDataList();
     }
 
@@ -40,7 +40,7 @@ public class ZKAuthTableView extends FXTableView<ZKAuthVO> {
 
     public List<ZKAuth> getAuths() {
         List<ZKAuth> list = new ArrayList<>(this.list.size());
-        for (ZKAuthVO authVO : this.list) {
+        for (ZKAuth authVO : this.list) {
             if (authVO != null && StringUtil.isNotBlank(authVO.getUser()) && StringUtil.isNotBlank(authVO.getPassword())) {
                 list.add(authVO);
             }
@@ -49,9 +49,9 @@ public class ZKAuthTableView extends FXTableView<ZKAuthVO> {
     }
 
     private void initDataList() {
-        List<ZKAuthVO> list = new ArrayList<>(12);
+        List<ZKAuth> list = new ArrayList<>(12);
         if (this.list != null) {
-            for (ZKAuthVO authVO : this.list) {
+            for (ZKAuth authVO : this.list) {
                 if (StringUtil.isBlank(this.kw) || StringUtil.containsIgnoreCase(authVO.getUser(), this.kw)
                         || StringUtil.containsIgnoreCase(authVO.getPassword(), this.kw)) {
                     list.add(authVO);
@@ -61,7 +61,7 @@ public class ZKAuthTableView extends FXTableView<ZKAuthVO> {
         super.setItem(list);
     }
 
-    public void addAuth(ZKAuthVO authVO) {
+    public void addAuth(ZKAuth authVO) {
         if (this.list == null) {
             this.list = new ArrayList<>(12);
         }
@@ -71,10 +71,25 @@ public class ZKAuthTableView extends FXTableView<ZKAuthVO> {
 
     @Override
     public void removeItem(Object item) {
-        super.removeItem(item);
         if (this.list != null) {
             this.list.remove(item);
         }
+        super.removeItem(item);
         this.initDataList();
+    }
+
+    @Override
+    public void removeItem(List<?> item) {
+        if (this.list != null) {
+            this.list.removeAll(item);
+        }
+        super.removeItem(item);
+        this.initDataList();
+    }
+
+    @Override
+    public void initNode() {
+        super.initNode();
+        this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 }

@@ -3,6 +3,10 @@ package cn.oyzh.easyzk.domain;
 import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
+import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
+import cn.oyzh.fx.plus.tableview.TableViewUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
@@ -134,5 +138,41 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilt
             list.add(zkFilter);
         }
         return list;
+    }
+
+    /**
+     * 关键字控件
+     */
+    public ClearableTextField getKwControl() {
+        ClearableTextField textField = new ClearableTextField();
+        textField.setFlexWidth("100% - 12");
+        textField.setValue(this.getKw());
+        textField.addTextChangeListener((obs, o, n) -> this.setKw(n));
+        TableViewUtil.selectRowOnMouseClicked(textField);
+        return textField;
+    }
+
+    /**
+     * 匹配模式控件
+     */
+    public MatchToggleSwitch getMatchModeControl() {
+        MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
+        toggleSwitch.fontSize(11);
+        toggleSwitch.setSelected(this.isPartMatch());
+        toggleSwitch.selectedChanged((obs, o, n) -> this.setPartMatch(n));
+        TableViewUtil.selectRowOnMouseClicked(toggleSwitch);
+        return toggleSwitch;
+    }
+
+    /**
+     * 状态控件
+     */
+    public EnabledToggleSwitch getStatusControl() {
+        EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
+        toggleSwitch.setFontSize(11);
+        toggleSwitch.setSelected(this.isEnable());
+        toggleSwitch.selectedChanged((abs, o, n) -> this.setEnable(n));
+        TableViewUtil.selectRowOnMouseClicked(toggleSwitch);
+        return toggleSwitch;
     }
 }

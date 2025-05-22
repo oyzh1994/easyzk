@@ -5,6 +5,10 @@ import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.tableview.TableViewUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
@@ -155,5 +159,42 @@ public class ZKAuth implements ObjectComparator<ZKAuth>, ObjectCopier<ZKAuth>, S
             list.add(zkAuth);
         }
         return list;
+    }
+
+    /**
+     * 用户名控件
+     */
+    public ClearableTextField getUserControl() {
+        ClearableTextField textField = new ClearableTextField();
+        textField.setFlexWidth("100% - 12");
+        textField.setValue(this.getUser());
+        textField.addTextChangeListener((obs, o, n) -> this.setUser(n));
+        TableViewUtil.selectRowOnMouseClicked(textField);
+        return textField;
+    }
+
+    /**
+     * 密码控件
+     */
+    public ClearableTextField getPasswordControl() {
+        ClearableTextField textField = new ClearableTextField();
+        textField.setFlexWidth("100% - 12");
+        textField.setValue(this.getPassword());
+        textField.addTextChangeListener((obs, o, n) -> this.setPassword(n));
+        TableViewUtil.selectRowOnMouseClicked(textField);
+        return textField;
+    }
+
+    /**
+     * 状态控件
+     */
+    public FXToggleSwitch getStatusControl() {
+        EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
+        toggleSwitch.setFontSize(11);
+        toggleSwitch.setSelected(this.getEnable());
+        toggleSwitch.selectedChanged((abs, o, n) -> {
+            this.setEnable(n);
+        });
+        return toggleSwitch;
     }
 }

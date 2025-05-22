@@ -159,7 +159,9 @@ public class ZKAuthNodeController extends StageController {
             int result = ZKAuthUtil.authNode(user, password, zkClient, this.zkNode);
             if (result == 1) {
                 if (this.saveInfo1.isSelected()) {
-                    this.authStore.replace(new ZKAuth(zkClient.iid(), user, password));
+                    ZKAuth auth = new ZKAuth(zkClient.iid(), user, password);
+                    this.authStore.replace(auth);
+                    this.zkItem.zkConnect().addAuth(auth);
                 }
                 ZKEventUtil.authAuthed(this.zkItem, true, user, password);
                 MessageBox.okToast(I18nHelper.operationSuccess());

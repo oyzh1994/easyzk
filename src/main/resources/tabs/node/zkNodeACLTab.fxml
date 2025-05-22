@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyzk.fx.ZKACLTableView?>
-<?import cn.oyzh.fx.gui.page.PageBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AccessControlSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>

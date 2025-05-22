@@ -137,6 +137,7 @@ public class ZKNodeACLTabController extends SubTabController {
             if (stat != null) {
                 // 删除权限
                 this.aclTableView.removeItem(acl);
+                this.activeItem().acl().remove(acl);
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }

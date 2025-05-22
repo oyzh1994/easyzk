@@ -165,7 +165,7 @@ public class ZKPack {
     @Test
     public void easyzk_macos_pkg() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_pack_config = packagePath + "/macos/macos_pkg.json";
+        String macos_pack_config = packagePath + "/macos/macos_pkg.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);

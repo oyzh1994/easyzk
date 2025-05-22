@@ -1,24 +1,50 @@
-# 如果觉得好用，请收藏或则分享本站
+# 变量说明
+# ${projectPath}代表项目根路径
+# ${appVersion}代表程序版本
+# $SYSTEM代表从系统变量获取jdk路径
+# 打包模式，目前仅支持jpackage
 packMode: jpackage
-platform: macos
-dest: '/Volumes/Files/Package/EasyZK/${appVersion}/'
-appIcon: '${projectPath}/resource/zoo.icns'
+# 平台，macos、windows、linux
+platform: windows
+# 打包文件的存放目录
+dest: 'C:/Package/EasyZK/${appVersion}'
+# 程序的图标，windows是ico、linux是png、macos是icns
+appIcon: '${projectPath}/resource/zoo.ico'
+# 程序主程序jar
 mainJar: '${projectPath}/target/easyzk-${appVersion}.jar'
+# jdk路径，可选物理路径或者$SYSTEM
 jdkPath: $SYSTEM
+# jpackage参数
 jpackage:
+	# 是否详细模式
 	verbose: true
+	# 程序作者
 	vendor: oyzh
-	type: dmg
-	mac-package-identifier: cn.oyzh.easyzk
+	# 程序描述
 	description: 这是一个Zookeeper管理工具，提供导入、导出、传输、终端、可视化操作等功能.
+	# 打包类型，支持app-image，pkg、dmg、exe、msi、rpm、deb
+	type: exe
+	# windows菜单栏
+	win-menu: true
+	# windows桌面
+	win-shortcut: true
+	# windows自定义安装目录
+	win-dir-chooser: true
+# jdeps参数
 jdeps:
+	# 程序多版本指定
 	multi-release: 24
+	# 显示摘要
 	summary: true
+	# 跳过的模块
 	skips:
 		- javafx-.*.jar
+	# 排除的模块
 	excludes:
 		- jdk.jfr
+# jlink参数
 jlink:
+	# 排除的文件
 	exclude-files:
 		- '**.md'
 		- '**LICENSE'
@@ -28,6 +54,7 @@ jlink:
 		- '**sound.properties'
 		- '**ASSEMBLY_EXCEPTION'
 		- '**ADDITIONAL_LICENSE_INFO'
+	# 添加的模块
 	add-modules:
 		- java.xml
 		- java.sql
@@ -40,7 +67,9 @@ jlink:
 		- java.datatransfer
 		- java.security.jgss
 		- jdk.unsupported
+# jre参数
 jre:
+	# 排除的文件
 	excludes:
 		- COPYRIGHT
 		- README.txt
@@ -58,8 +87,11 @@ jre:
 		- classlist.*
 		- jrunscript.*
 		- splashscreen.*
+# jar参数
 jar:
+	# 移除空jar
 	removeEmpty: true
+	# 排除的文件
 	excludes:
 		- pom.xml
 		- pom.properties
@@ -89,7 +121,7 @@ jar:
 		- lombok-.*.jar
 		- .*.processors
 		- .*.kotlin_module
-		- .*.dll
+		- .*.dylib
 		- .*.so
 		- data.zip
 		- git.properties

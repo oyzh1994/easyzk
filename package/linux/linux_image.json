@@ -2,7 +2,7 @@
   "packMode": "jpackage",
   "platform": "linux",
   "dest": "/home/oyzh/Documents/Package/EasyZK/${appVersion}/",
-  "appIcon": "${projectPath}/resource/zoo.png",
+  "appIcon": "${projectPath}/resource/app.png",
   "mainJar": "${projectPath}/target/easyzk-${appVersion}.jar",
   "jdkPath": "$SYSTEM",
   "jpackage": {

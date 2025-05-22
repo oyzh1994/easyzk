@@ -2,7 +2,7 @@
   "packMode": "jpackage",
   "platform": "macos",
   "dest": "/Volumes/Files/Package/EasyZK/${appVersion}/EasyZK_${appVersion}.app",
-  "appIcon": "${projectPath}/resource/zoo.icns",
+  "appIcon": "${projectPath}/resource/app.icns",
   "mainJar": "${projectPath}/target/easyzk-${appVersion}.jar",
   "jdkPath": "$SYSTEM",
   "jpackage": {

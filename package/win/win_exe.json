@@ -2,7 +2,7 @@
   "packMode": "jpackage",
   "platform": "windows",
   "dest": "C:/Package/EasyZK/${appVersion}/",
-  "appIcon": "${projectPath}/resource/zoo.ico",
+  "appIcon": "${projectPath}/resource/app.ico",
   "mainJar": "${projectPath}/target/easyzk-${appVersion}.jar",
   "jdkPath": "$SYSTEM",
   "packr": {

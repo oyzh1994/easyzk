@@ -13,6 +13,7 @@ import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -110,43 +111,44 @@ public class ZKQueryTabController extends RichTabController {
 
     @FXML
     private void run() {
-        try {
-            this.disableTab();
-            ZKQueryParam param = new ZKQueryParam();
-            param.setContent(this.content.getText());
-            ZKQueryResult result = this.zkClient.query(param);
-            this.content.flexHeight("30% - 60");
-            this.resultTabPane.setVisible(true);
-            this.resultTabPane.clearChild();
-            this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
-            if (param.isGet()) {
-                if (result.isSuccess()) {
-                    this.resultTabPane.addTab(new ZKQueryDataTab(param.getPath(), result.asData(), this.zkClient));
-                    if (param.hasParamStat()) {
-                        this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+        StageManager.showMask(() -> {
+            try {
+//                this.disableTab();
+                ZKQueryParam param = new ZKQueryParam();
+                param.setContent(this.content.getText());
+                ZKQueryResult result = this.zkClient.query(param);
+                this.content.flexHeight("30% - 60");
+                this.resultTabPane.setVisible(true);
+                this.resultTabPane.clearChild();
+                this.resultTabPane.addTab(new ZKQueryMsgTab(param, result));
+                if (param.isGet()) {
+                    if (result.isSuccess()) {
+                        this.resultTabPane.addTab(new ZKQueryDataTab(param.getPath(), result.asData(), this.zkClient));
+                        if (param.hasParamStat()) {
+                            this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                        }
+                        this.resultTabPane.select(1);
+                    } else {
+                        this.resultTabPane.select(0);
                     }
-                    this.resultTabPane.select(1);
-                } else {
-                    this.resultTabPane.select(0);
-                }
-            } else if (param.isLs() || param.isLs2()) {
-                if (result.isSuccess()) {
-                    this.resultTabPane.addTab(new ZKQueryNodeTab(param.getPath(), result.asNode()));
-                    if (param.hasParamStat()) {
-                        this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                } else if (param.isLs() || param.isLs2()) {
+                    if (result.isSuccess()) {
+                        this.resultTabPane.addTab(new ZKQueryNodeTab(param.getPath(), result.asNode()));
+                        if (param.hasParamStat()) {
+                            this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                        }
+                        this.resultTabPane.select(1);
+                    } else {
+                        this.resultTabPane.select(0);
                     }
-                    this.resultTabPane.select(1);
-                } else {
-                    this.resultTabPane.select(0);
-                }
-            } else if (param.isGetEphemerals()) {
-                if (result.isSuccess()) {
-                    String path = param.getPath() == null ? "/" : param.getPath();
-                    this.resultTabPane.addTab(new ZKQueryNodeTab(path, result.asNode()));
-                    this.resultTabPane.select(1);
-                } else {
-                    this.resultTabPane.select(0);
-                }
+                } else if (param.isGetEphemerals()) {
+                    if (result.isSuccess()) {
+                        String path = param.getPath() == null ? "/" : param.getPath();
+                        this.resultTabPane.addTab(new ZKQueryNodeTab(path, result.asNode()));
+                        this.resultTabPane.select(1);
+                    } else {
+                        this.resultTabPane.select(0);
+                    }
 //            } else if (param.isGetAllChildrenNumber()) {
 //                if (result.isSuccess()) {
 //                    this.resultTabPane.addTab(new ZKQueryCountTab(result.asCount()));
@@ -154,60 +156,61 @@ public class ZKQueryTabController extends RichTabController {
 //                } else {
 //                    this.resultTabPane.select(0);
 //                }
-            } else if (param.isWhoami()) {
-                if (result.isSuccess()) {
-                    this.resultTabPane.addTab(new ZKQueryWhoamiTab(result.asClientInfo()));
-                    this.resultTabPane.select(1);
-                } else {
-                    this.resultTabPane.select(0);
-                }
-            } else if (param.isSrvr() || param.isEnvi() || param.isMntr() || param.isConf() || param.isStat4()) {
-                if (result.isSuccess()) {
-                    this.resultTabPane.addTab(new ZKQueryEnvTab(result.asEnvInfo()));
-                    this.resultTabPane.select(1);
-                } else {
-                    this.resultTabPane.select(0);
-                }
-            } else if (param.isSet() || param.isSetACL()) {
-                if (result.isSuccess() && param.hasParamStat()) {
-                    this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
-                }
-                this.resultTabPane.select(0);
-            } else if (param.isGetACL()) {
-                if (result.isSuccess()) {
-                    this.resultTabPane.addTab(new ZKQueryACLTab(result.asACL()));
-                    if (param.hasParamStat()) {
+                } else if (param.isWhoami()) {
+                    if (result.isSuccess()) {
+                        this.resultTabPane.addTab(new ZKQueryWhoamiTab(result.asClientInfo()));
+                        this.resultTabPane.select(1);
+                    } else {
+                        this.resultTabPane.select(0);
+                    }
+                } else if (param.isSrvr() || param.isEnvi() || param.isMntr() || param.isConf() || param.isStat4()) {
+                    if (result.isSuccess()) {
+                        this.resultTabPane.addTab(new ZKQueryEnvTab(result.asEnvInfo()));
+                        this.resultTabPane.select(1);
+                    } else {
+                        this.resultTabPane.select(0);
+                    }
+                } else if (param.isSet() || param.isSetACL()) {
+                    if (result.isSuccess() && param.hasParamStat()) {
                         this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
                     }
-                    this.resultTabPane.select(1);
-                } else {
                     this.resultTabPane.select(0);
-                }
-            } else if (param.isCreate() || param.isSync() || param.isSetQuota() || param.isRmr() || param.isDeleteall()
-                    || param.isDelete()) {
-                this.resultTabPane.select(0);
-            } else if (param.isStat()) {
-                if (result.isSuccess()) {
-                    this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
-                    this.resultTabPane.select(1);
-                } else {
+                } else if (param.isGetACL()) {
+                    if (result.isSuccess()) {
+                        this.resultTabPane.addTab(new ZKQueryACLTab(result.asACL()));
+                        if (param.hasParamStat()) {
+                            this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                        }
+                        this.resultTabPane.select(1);
+                    } else {
+                        this.resultTabPane.select(0);
+                    }
+                } else if (param.isCreate() || param.isSync() || param.isSetQuota() || param.isRmr() || param.isDeleteall()
+                        || param.isDelete()) {
                     this.resultTabPane.select(0);
+                } else if (param.isStat()) {
+                    if (result.isSuccess()) {
+                        this.resultTabPane.addTab(new ZKQueryStatTab(result.getStat()));
+                        this.resultTabPane.select(1);
+                    } else {
+                        this.resultTabPane.select(0);
+                    }
+                } else if (param.isListquota()) {
+                    if (result.isSuccess()) {
+                        this.resultTabPane.addTab(new ZKQueryQuotaTab(result.asQuota()));
+                        this.resultTabPane.select(1);
+                    } else {
+                        this.resultTabPane.select(0);
+                    }
                 }
-            } else if (param.isListquota()) {
-                if (result.isSuccess()) {
-                    this.resultTabPane.addTab(new ZKQueryQuotaTab(result.asQuota()));
-                    this.resultTabPane.select(1);
-                } else {
-                    this.resultTabPane.select(0);
-                }
+                this.content.parentAutosize();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+//            } finally {
+//                this.enableTab();
             }
-            this.content.parentAutosize();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        } finally {
-            this.enableTab();
-        }
+        });
     }
 
     @FXML

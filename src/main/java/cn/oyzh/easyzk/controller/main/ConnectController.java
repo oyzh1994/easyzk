@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.controller.main;
 
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeView;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -86,12 +87,12 @@ public class ConnectController extends SubStageController {
     @FXML
     private void importConnect() {
 //        this.tree.getRoot().importConnect();
-        ZKEventUtil.showImportConnect(null);
+        ZKViewFactory.importConnect(null);
     }
 
     @FXML
     private void exportConnect() {
 //        this.tree.getRoot().exportConnect();
-        ZKEventUtil.showExportConnect();
+        ZKViewFactory.exportConnect();
     }
 }

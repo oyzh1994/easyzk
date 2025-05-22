@@ -8,7 +8,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.action.ZKClientActionUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKSSHConfig;
+import cn.oyzh.easyzk.domain.ZKJumpConfig;
 import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.dto.ZKClusterNode;
 import cn.oyzh.easyzk.dto.ZKEnvNode;
@@ -24,8 +24,9 @@ import cn.oyzh.easyzk.exception.ZKNoReadPermException;
 import cn.oyzh.easyzk.exception.ZKNoWritePermException;
 import cn.oyzh.easyzk.query.ZKQueryParam;
 import cn.oyzh.easyzk.query.ZKQueryResult;
-import cn.oyzh.easyzk.store.ZKSSHConfigStore;
+import cn.oyzh.easyzk.store.ZKJumpConfigStore;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
+import cn.oyzh.ssh.domain.SSHConnect;
 import cn.oyzh.ssh.jump.SSHJumpForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -106,7 +107,7 @@ public class ZKClient {
     /**
      * ssh端口转发器
      */
-    private SSHJumpForwarder sshJumper;
+    private SSHJumpForwarder jumpForwarder;
 
     // /**
     //  * 是否已初始化
@@ -153,10 +154,20 @@ public class ZKClient {
      */
     private final ReadOnlyObjectWrapper<ZKConnState> state = new ReadOnlyObjectWrapper<>();
 
+//    /**
+//     * ssh配置储存
+//     */
+//    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
+
     /**
-     * ssh配置储存
+     * 跳板配置存储
      */
-    private final ZKSSHConfigStore sshConfigStore = ZKSSHConfigStore.INSTANCE;
+    private final ZKJumpConfigStore jumpConfigStore = ZKJumpConfigStore.INSTANCE;
+
+//    /**
+//     * 代理配置存储
+//     */
+//    private final ZKProxyConfigStore proxyConfigStore = ZKProxyConfigStore.INSTANCE;
 
     /**
      * 获取连接状态
@@ -339,36 +350,103 @@ public class ZKClient {
     }
 
     /**
-     * 初始化客户端
+     * 初始化连接
+     *
+     * @return 连接
      */
-    private void initClient() {
+    private String initHost() {
         // 连接地址
         String host;
-        // 初始化ssh端口转发
-        if (this.zkConnect.isSSHForward()) {
-            // 初始化ssh转发器
-            ZKSSHConfig sshConfig = this.zkConnect.getSshConfig();
-            // 从数据库获取
-            if (sshConfig == null) {
-                sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
+//        // 初始化跳板配置
+//        List<ZKJumpConfig> jumpConfigs = this.zkConnect.getJumpConfigs();
+//        // 从数据库获取
+//        if (jumpConfigs == null) {
+//            jumpConfigs = this.jumpConfigStore.loadByIid(this.zkConnect.getId());
+//        }
+//        // 过滤配置
+//        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(ZKJumpConfig::isEnabled).collect(Collectors.toList());
+        // 初始化跳板转发
+        if (this.zkConnect.isEnableJump()) {
+            if (this.jumpForwarder == null) {
+                this.jumpForwarder = new SSHJumpForwarder();
             }
-            if (sshConfig != null) {
-                if (this.sshJumper == null) {
-                    this.sshJumper = new SSHJumpForwarder();
-                }
-                // ssh配置
-                // 执行连接
-                int localPort = this.sshJumper.forward(null, null);
-                // 连接信息
-                host = "127.0.0.1:" + localPort;
-            } else {
-                JulLog.warn("ssh forward is enable but ssh config is null");
-                throw new ZKException("ssh forward is enable but ssh config is null");
-            }
+            // 初始化跳板配置
+            List<ZKJumpConfig> jumpConfigs = this.zkConnect.getJumpConfigs();
+            // 转换为目标连接
+            SSHConnect target = new SSHConnect();
+            target.setHost(this.zkConnect.hostIp());
+            target.setPort(this.zkConnect.hostPort());
+            // 执行连接
+            int localPort = this.jumpForwarder.forward(jumpConfigs, target);
+            // 连接信息
+            host = "127.0.0.1:" + localPort;
         } else {// 直连
+            if (this.jumpForwarder != null) {
+                this.jumpForwarder.destroy();
+                this.jumpForwarder = null;
+            }
             // 连接信息
             host = this.zkConnect.hostIp() + ":" + this.zkConnect.hostPort();
         }
+        return host;
+    }
+
+//    /**
+//     * 初始化代理
+//     */
+//    private void initProxy() {
+//        // 开启了代理
+//        if (this.zkConnect.isEnableProxy()) {
+//            // 初始化ssh转发器
+//            ZKProxyConfig proxyConfig = this.zkConnect.getProxyConfig();
+//            // 从数据库获取
+//            if (proxyConfig == null) {
+//                proxyConfig = this.proxyConfigStore.getByIid(this.zkConnect.getId());
+//            }
+//            if (proxyConfig == null) {
+//                JulLog.warn("proxy is enable but proxy config is null");
+//                throw new SSHException("proxy is enable but proxy config is null");
+//            }
+//            // 初始化代理
+//            Proxy proxy = SSHUtil.newProxy(proxyConfig);
+//            // 设置代理
+//            this.session.setProxy(proxy);
+//        }
+//    }
+
+    /**
+     * 初始化客户端
+     */
+    private void initClient() {
+//        // 连接地址
+//        String host;
+//        // 初始化ssh端口转发
+//        if (this.zkConnect.isSSHForward()) {
+//            // 初始化ssh转发器
+//            ZKSSHConfig sshConfig = this.zkConnect.getSshConfig();
+//            // 从数据库获取
+//            if (sshConfig == null) {
+//                sshConfig = this.sshConfigStore.getByIid(this.zkConnect.getId());
+//            }
+//            if (sshConfig != null) {
+//                if (this.sshJumper == null) {
+//                    this.sshJumper = new SSHJumpForwarder();
+//                }
+//                // ssh配置
+//                // 执行连接
+//                int localPort = this.sshJumper.forward(null, null);
+//                // 连接信息
+//                host = "127.0.0.1:" + localPort;
+//            } else {
+//                JulLog.warn("ssh forward is enable but ssh config is null");
+//                throw new ZKException("ssh forward is enable but ssh config is null");
+//            }
+//        } else {// 直连
+//            // 连接信息
+//            host = this.zkConnect.hostIp() + ":" + this.zkConnect.hostPort();
+//        }
+        // 连接信息
+        String host = this.initHost();
         // 加载认证
         this.auths = ZKAuthUtil.loadAuths(this.iid());
         // 认证信息列表
@@ -409,8 +487,8 @@ public class ZKClient {
             // 清理变量
             this.auths = null;
             // 销毁端口转发
-            if (this.zkConnect.isSSHForward()) {
-                this.sshJumper.destroy();
+            if (this.jumpForwarder != null) {
+                this.jumpForwarder.destroy();
             }
             // 关闭连接
             if (this.framework != null) {

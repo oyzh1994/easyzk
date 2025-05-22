@@ -1,9 +1,14 @@
 package cn.oyzh.easyzk.domain;
 
+import cn.oyzh.common.object.ObjectCopier;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * zk收藏
@@ -12,7 +17,7 @@ import java.io.Serializable;
  * @since 2024-09-26
  */
 @Table("t_collect")
-public class ZKCollect implements Serializable {
+public class ZKCollect implements Serializable, ObjectCopier<ZKCollect> {
 
     /**
      * 连接id
@@ -27,6 +32,9 @@ public class ZKCollect implements Serializable {
      */
     @Column
     private String path;
+
+    public ZKCollect() {
+    }
 
     public ZKCollect(String iid, String path) {
         this.iid = iid;
@@ -47,5 +55,23 @@ public class ZKCollect implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Override
+    public void copy(ZKCollect t1) {
+        this.path = t1.getPath();
+    }
+
+    public static List<ZKCollect> clone(List<ZKCollect> collects) {
+        if (CollectionUtil.isEmpty(collects)) {
+            return Collections.emptyList();
+        }
+        List<ZKCollect> list = new ArrayList<>();
+        for (ZKCollect collect : collects) {
+            ZKCollect zkCollect = new ZKCollect();
+            zkCollect.copy(collect);
+            list.add(zkCollect);
+        }
+        return list;
     }
 }

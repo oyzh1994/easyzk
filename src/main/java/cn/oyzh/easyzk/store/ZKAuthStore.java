@@ -66,7 +66,7 @@ public class ZKAuthStore extends JdbcStandardStore<ZKAuth> {
     public boolean replace(ZKAuth model) {
         boolean result = false;
         if (model != null) {
-            if (this.exist(model.getUser(), model.getPassword(), model.getIid())) {
+            if (this.exist(model.getUser(), model.getPassword(), model.getUid())) {
                 result = this.update(model);
             } else {
                 result = this.insert(model);

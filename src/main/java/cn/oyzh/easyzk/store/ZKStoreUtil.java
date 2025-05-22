@@ -13,7 +13,6 @@ import cn.oyzh.easyzk.domain.ZKCollect;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKSSHConfig;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -113,9 +112,9 @@ public class ZKStoreUtil {
                     if (obj.containsKey("listen")) {
                         connect.setListen(obj.getBooleanValue("listen"));
                     }
-                    if (obj.containsKey("sshForward")) {
-                        connect.setSshForward(obj.getBooleanValue("sshForward"));
-                    }
+//                    if (obj.containsKey("sshForward")) {
+//                        connect.setSshForward(obj.getBooleanValue("sshForward"));
+//                    }
                     if (obj.containsKey("collects")) {
                         List<String> collects = obj.getBeanList("collects", String.class);
                         if (CollectionUtil.isNotEmpty(collects)) {
@@ -145,26 +144,26 @@ public class ZKStoreUtil {
                     if (obj.containsKey("connectTimeOut")) {
                         connect.setConnectTimeOut(obj.getIntValue("connectTimeOut"));
                     }
-                    if (obj.containsKey("sshInfo")) {
-                        JSONObject object = obj.getJSONObject("sshInfo");
-                        ZKSSHConfig sshConnect = new ZKSSHConfig();
-                        if (object.containsKey("port")) {
-                            sshConnect.setPort(object.getInt("port"));
-                        }
-                        if (object.containsKey("host")) {
-                            sshConnect.setHost(object.getString("host"));
-                        }
-                        if (object.containsKey("user")) {
-                            sshConnect.setUser(object.getString("user"));
-                        }
-                        if (object.containsKey("timeout")) {
-                            sshConnect.setTimeout(object.getInt("timeout"));
-                        }
-                        if (object.containsKey("password")) {
-                            sshConnect.setPassword(object.getString("password"));
-                        }
-                        connect.setSshConfig(sshConnect);
-                    }
+//                    if (obj.containsKey("sshInfo")) {
+//                        JSONObject object = obj.getJSONObject("sshInfo");
+//                        ZKSSHConfig sshConnect = new ZKSSHConfig();
+//                        if (object.containsKey("port")) {
+//                            sshConnect.setPort(object.getInt("port"));
+//                        }
+//                        if (object.containsKey("host")) {
+//                            sshConnect.setHost(object.getString("host"));
+//                        }
+//                        if (object.containsKey("user")) {
+//                            sshConnect.setUser(object.getString("user"));
+//                        }
+//                        if (object.containsKey("timeout")) {
+//                            sshConnect.setTimeout(object.getInt("timeout"));
+//                        }
+//                        if (object.containsKey("password")) {
+//                            sshConnect.setPassword(object.getString("password"));
+//                        }
+////                        connect.setSshConfig(sshConnect);
+//                    }
                     connects.add(connect);
                 }
             }

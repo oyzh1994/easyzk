@@ -4,11 +4,11 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <FXPane xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.controller.ZKMainController" flexWidth="100% - 30" flexHeight="100%">
-    <FXTabPane flexHeight="100%" realWidth="300" fx:id="tabPaneLeft" tabMaxHeight="25">
+    <FXTabPane flexHeight="100%" realWidth="300" fx:id="tabPaneLeft" tabRealHeight="20">
         <fx:include fx:id="connect" source="main/connect.fxml"/>
         <fx:include fx:id="message" source="main/message.fxml"/>
         <fx:include fx:id="history" source="main/history.fxml"/>
     </FXTabPane>
     <ZKTabPane fx:id="tabPane" layoutX="300" flexWidth="100% - 300" tabClosingPolicy="ALL_TABS"
-               flexHeight="100%"/>
+               flexHeight="100%" tabRealHeight="20"/>
 </FXPane>

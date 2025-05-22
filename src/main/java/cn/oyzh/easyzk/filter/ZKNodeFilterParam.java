@@ -31,36 +31,36 @@ public class ZKNodeFilterParam {
         this.matchFull = matchFull;
     }
 
-    public boolean isSearchPath() {
-        return searchPath;
-    }
-
-    public void setSearchPath(boolean searchPath) {
-        this.searchPath = searchPath;
-    }
-
-    public boolean isSearchData() {
-        return searchData;
-    }
-
-    public void setSearchData(boolean searchData) {
-        this.searchData = searchData;
-    }
+//    public boolean isSearchPath() {
+//        return searchPath;
+//    }
+//
+//    public void setSearchPath(boolean searchPath) {
+//        this.searchPath = searchPath;
+//    }
+//
+//    public boolean isSearchData() {
+//        return searchData;
+//    }
+//
+//    public void setSearchData(boolean searchData) {
+//        this.searchData = searchData;
+//    }
 
     /**
      * 匹配全文
      */
     private boolean matchFull;
 
-    /**
-     * 搜索路径
-     */
-    private boolean searchPath = true;
-
-    /**
-     * 搜索数据
-     */
-    private boolean searchData = true;
+//    /**
+//     * 搜索路径
+//     */
+//    private boolean searchPath = true;
+//
+//    /**
+//     * 搜索数据
+//     */
+//    private boolean searchData = true;
 
     @Override
     public boolean equals(Object param) {
@@ -71,13 +71,11 @@ public class ZKNodeFilterParam {
             if (searchParam.matchCase && !this.matchCase) {
                 return false;
             }
-            if (searchParam.matchFull && !this.matchFull) {
-                return false;
-            }
-            if (searchParam.searchData && !this.searchData) {
-                return false;
-            }
-            return !searchParam.searchPath || this.searchPath;
+            return !searchParam.matchFull || this.matchFull;
+//            if (searchParam.searchData && !this.searchData) {
+//                return false;
+//            }
+//            return !searchParam.searchPath || this.searchPath;
         }
         return false;
     }

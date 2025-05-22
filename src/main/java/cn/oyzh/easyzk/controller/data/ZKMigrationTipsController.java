@@ -1,8 +1,8 @@
 package cn.oyzh.easyzk.controller.data;
 
-import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKStoreUtil;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
@@ -57,6 +57,6 @@ public class ZKMigrationTipsController extends StageController {
     private void migration() {
         this.close();
 //        StageManager.showStage(ZKMigrationDataController.class, StageManager.getPrimaryStage());
-        ZKEventUtil.showMigrationData();
+        ZKViewFactory.migrationData();
     }
 }

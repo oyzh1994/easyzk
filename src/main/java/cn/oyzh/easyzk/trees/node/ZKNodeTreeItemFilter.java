@@ -147,13 +147,13 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
         this.type = type;
     }
 
-    public byte getScope() {
-        return scope;
-    }
-
-    public void setScope(byte scope) {
-        this.scope = scope;
-    }
+//    public byte getScope() {
+//        return scope;
+//    }
+//
+//    public void setScope(byte scope) {
+//        this.scope = scope;
+//    }
 
     public String getKw() {
         return kw;

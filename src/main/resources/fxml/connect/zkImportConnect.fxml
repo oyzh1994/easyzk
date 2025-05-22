@@ -10,15 +10,16 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.controller.connect.ZKImportConnectController" realWidth="600" realHeight="480">
     <FXHBox flexWidth="100%" realHeight="80">
         <FXHBox flexHeight="100%" flexWidth="100%">
-            <ExportSVGGlyph sizeStr="40,40" color="yellowgreen">
+            <ImportSVGGlyph sizeStr="40,40" color="yellowgreen">
                 <HBox.margin>
                     <Insets left="30" top="20"/>
                 </HBox.margin>
-            </ExportSVGGlyph>
+            </ImportSVGGlyph>
             <FXText realHeight="25" text="%zk.import.tip2" fontSize="15">
                 <HBox.margin>
                     <Insets left="15" top="30"/>
@@ -54,7 +55,7 @@
                 <Insets left="30" top="5"/>
             </HBox.margin>
         </FXCheckBox>
-        <FXCheckBox fx:id="includeGroup" text="%base.group">
+        <FXCheckBox selected="true" fx:id="includeGroup" text="%base.group">
             <HBox.margin>
                 <Insets left="10" top="5"/>
             </HBox.margin>

@@ -17,7 +17,7 @@
         <HistorySVGGlyph cursorType="DEFAULT" size="12"/>
     </graphic>
     <FXVBox flexWidth="100%" flexHeight="100%">
-        <FXHBox realHeight="32">
+        <FXHBox realHeight="30">
             <RefreshSVGGlyph size="16" onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="10" top="9"/>
@@ -33,13 +33,13 @@
                     <Insets left="5" top="9"/>
                 </HBox.margin>
             </UndoSVGGlyph>
-            <FXToggleSwitch realHeight="16" fx:id="type" selectedText="%base.server" unselectedText="%base.local">
+            <FXToggleSwitch realHeight="16" fx:id="type" selectedText="%base.remote" unselectedText="%base.local">
                 <HBox.margin>
                     <Insets left="5" top="9"/>
                 </HBox.margin>
             </FXToggleSwitch>
         </FXHBox>
-        <FXTableView flexHeight="100% - 32" flexWidth="100%" fx:id="listTable">
+        <FXTableView flexHeight="100% - 30" flexWidth="100%" fx:id="listTable">
             <columns>
                 <FXTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
                 <FXTableColumn realWidth="130" text="%base.saveTime" valueName="saveTimeFormated"/>

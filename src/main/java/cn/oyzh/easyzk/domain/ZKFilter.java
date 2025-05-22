@@ -1,11 +1,16 @@
 package cn.oyzh.easyzk.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
+import cn.oyzh.common.object.ObjectCopier;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -16,7 +21,7 @@ import java.util.Objects;
  * @since 2022/12/20
  */
 @Table("t_filter")
-public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
+public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilter>, Serializable {
 
     /**
      * id
@@ -27,6 +32,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
 
     /**
      * iid
+     *
      * @see ZKConnect
      */
     @Column
@@ -52,19 +58,11 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
     @Column
     private boolean partMatch;
 
-    /**
-     * 复制对象
-     *
-     * @param filter 过滤信息
-     * @return 当前对象
-     */
-    public ZKFilter copy( ZKFilter filter) {
+    @Override
+    public void copy(ZKFilter filter) {
         this.kw = filter.kw;
-        this.iid = filter.iid;
-        this.uid = filter.uid;
         this.enable = filter.enable;
         this.partMatch = filter.partMatch;
-        return this;
     }
 
     @Override
@@ -123,5 +121,18 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, Serializable {
 
     public void setPartMatch(boolean partMatch) {
         this.partMatch = partMatch;
+    }
+
+    public static List<ZKFilter> clone(List<ZKFilter> filters) {
+        if (CollectionUtil.isEmpty(filters)) {
+            return Collections.emptyList();
+        }
+        List<ZKFilter> list = new ArrayList<>();
+        for (ZKFilter filter : filters) {
+            ZKFilter zkFilter = new ZKFilter();
+            zkFilter.copy(filter);
+            list.add(zkFilter);
+        }
+        return list;
     }
 }

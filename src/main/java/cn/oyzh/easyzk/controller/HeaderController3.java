@@ -1,15 +1,17 @@
 package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.SysConst;
-import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.util.ZKViewFactory;
+import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.event.Layout1Event;
+import cn.oyzh.fx.gui.event.Layout2Event;
+import cn.oyzh.fx.gui.svg.pane.LayoutSVGPane;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.pane.FXPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.stage.WindowEvent;
 
 /**
  * 主页头部业务
@@ -18,6 +20,12 @@ import javafx.stage.WindowEvent;
  * @since 2022/1/26
  */
 public class HeaderController3 extends StageController {
+
+    /**
+     * 布局组件
+     */
+    @FXML
+    private LayoutSVGPane layoutPane;
 
     /**
      * 设置
@@ -30,7 +38,7 @@ public class HeaderController3 extends StageController {
 //        } else {
 //            StageManager.showStage(SettingController2.class, this.stage);
 //        }
-        ZKEventUtil.showSetting();
+        ZKViewFactory.setting();
     }
 
     /**
@@ -39,7 +47,7 @@ public class HeaderController3 extends StageController {
     @FXML
     private void about() {
 //        StageManager.showStage(AboutController.class, this.stage);
-        ZKEventUtil.showAbout();
+        ZKViewFactory.about();
     }
 
     /**
@@ -63,7 +71,7 @@ public class HeaderController3 extends StageController {
 //        } else {
 //            StageManager.showStage(ZKDataTransportController.class, this.stage);
 //        }
-        ZKEventUtil.showTransportData();
+        ZKViewFactory.transportData(null);
     }
 
     /**
@@ -72,23 +80,55 @@ public class HeaderController3 extends StageController {
     @FXML
     private void tool() {
 //        StageManager.showStage(ZKToolController.class, StageManager.getPrimaryStage());
-        ZKEventUtil.showTool();
+        ZKViewFactory.tool();
+    }
+
+//    /**
+//     * 布局1
+//     */
+//    @FXML
+//    private void layout1() {
+//        ZKEventUtil.layout1();
+//    }
+//
+//    /**
+//     * 布局2
+//     */
+//    @FXML
+//    private void layout2() {
+//        ZKEventUtil.layout2();
+//    }
+
+    /**
+     * 布局1事件
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    private void layout1(Layout1Event event) {
+        this.layoutPane.layout2();
     }
 
     /**
-     * 布局1
+     * 布局2事件
+     *
+     * @param event 事件
      */
-    @FXML
-    private void layout1() {
-        ZKEventUtil.layout1();
+    @EventSubscribe
+    private void layout2(Layout2Event event) {
+        this.layoutPane.layout1();
     }
 
     /**
-     * 布局2
+     * 布局
      */
     @FXML
-    private void layout2() {
-        ZKEventUtil.layout2();
+    private void layout() {
+        if (!this.layoutPane.isLayout1()) {
+            ZKEventUtil.layout2();
+        } else {
+            ZKEventUtil.layout1();
+        }
     }
 
     /**
@@ -97,20 +137,20 @@ public class HeaderController3 extends StageController {
     @FXML
     private void migration() {
 //        StageManager.showStage(ZKMigrationDataController.class, this.stage);
-        ZKEventUtil.showMigrationData();
+        ZKViewFactory.migrationData();
     }
 
-    /**
-     * 分割面板
-     */
-    @FXML
-    private FXPane splitPane;
-
-    @Override
-    public void onWindowShowing(WindowEvent event) {
-        super.onWindowShowing(event);
-        if (OSUtil.isWindows() || OSUtil.isLinux()) {
-            this.splitPane.setFlexHeight("100% - 280");
-        }
-    }
+//    /**
+//     * 分割面板
+//     */
+//    @FXML
+//    private FXPane splitPane;
+//
+//    @Override
+//    public void onWindowShowing(WindowEvent event) {
+//        super.onWindowShowing(event);
+//        if (OSUtil.isWindows() || OSUtil.isLinux()) {
+//            this.splitPane.setFlexHeight("100% - 280");
+//        }
+//    }
 }

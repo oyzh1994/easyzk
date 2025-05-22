@@ -1,29 +1,33 @@
 //package cn.oyzh.easyzk.domain;
 //
-//import cn.oyzh.ssh.domain.SSHConnect;
+//import cn.oyzh.ssh.domain.SSHProxyConfig;
 //import cn.oyzh.store.jdbc.Column;
 //import cn.oyzh.store.jdbc.PrimaryKey;
 //import cn.oyzh.store.jdbc.Table;
 //
-//import java.io.Serializable;
-//
 ///**
-// * zk连接ssh配置
+// * zk代理配置
 // *
 // * @author oyzh
-// * @since 2024-09-26
+// * @since 2025-04-14
 // */
-//@Table("t_ssh_config")
-//public class ZKSSHConfig extends SSHConnect implements Serializable {
+//@Table("t_proxy")
+//public class ZKProxyConfig extends SSHProxyConfig {
 //
 //    /**
-//     * 连接id
+//     * 所属连接id
 //     *
 //     * @see ZKConnect
 //     */
 //    @Column
-//    @PrimaryKey
 //    private String iid;
+//
+//    /**
+//     * 数据id
+//     */
+//    @Column
+//    @PrimaryKey
+//    private String id;
 //
 //    public String getIid() {
 //        return iid;
@@ -32,4 +36,13 @@
 //    public void setIid(String iid) {
 //        this.iid = iid;
 //    }
+//
+//    public String getId() {
+//        return id;
+//    }
+//
+//    public void setId(String id) {
+//        this.id = id;
+//    }
+//
 //}

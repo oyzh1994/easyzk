@@ -3,23 +3,23 @@ package cn.oyzh.easyzk.trees.connect;
 import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectStore;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -127,7 +127,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 //        adapter.setProp("connect", this.value);
 //        adapter.setProp("nodePath", "/");
 //        adapter.display();
-        ZKEventUtil.showExportData(this.value, "/");
+        ZKViewFactory.exportData(this.value, "/");
     }
 
     /**
@@ -135,7 +135,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      */
     public void cancelConnect() {
         this.canceled = true;
-        ThreadUtil.startVirtual(() -> this.client.close());
+        StageManager.showMask(() -> this.client.close());
     }
 
     /**
@@ -192,7 +192,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 //        StageAdapter adapter = StageManager.parseStage(ZKDataImportController.class, this.window());
 //        adapter.setProp("connect", this.value);
 //        adapter.display();
-        ZKEventUtil.showImportData(this.value);
+        ZKViewFactory.importData(this.value);
     }
 
     /**
@@ -202,7 +202,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 //        StageAdapter adapter = StageManager.parseStage(ZKDataTransportController.class, this.window());
 //        adapter.setProp("sourceInfo", this.value);
 //        adapter.display();
-        ZKEventUtil.showTransportData(this.value);
+        ZKViewFactory.transportData(this.value);
     }
 
     /**
@@ -250,7 +250,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
 //        StageAdapter adapter = StageManager.parseStage(ZKUpdateConnectController.class, this.window());
 //        adapter.setProp("zkConnect", this.value());
 //        adapter.display();
-        ZKEventUtil.showUpdateConnect(this.value);
+        ZKViewFactory.updateConnect(this.value);
     }
 
     /**
@@ -260,8 +260,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
         ZKConnect zkConnect = new ZKConnect();
         zkConnect.copy(this.value);
         zkConnect.setName(this.value.getName() + "-" + I18nHelper.clone1());
-        zkConnect.setCollects(Collections.emptyList());
-        if (this.connectStore.insert(zkConnect)) {
+        if (this.connectStore.replace(zkConnect)) {
             this.connectManager().addConnect(zkConnect);
         } else {
             MessageBox.warn(I18nHelper.operationFail());

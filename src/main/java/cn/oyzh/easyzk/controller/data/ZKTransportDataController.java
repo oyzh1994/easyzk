@@ -21,7 +21,6 @@ import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.tray.TrayManager;
-import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.validator.ValidatorUtil;
@@ -322,9 +321,9 @@ public class ZKTransportDataController extends StageController {
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
         // 来源连接不为null，则禁用来源选项
-        ZKConnect sourceInfo = this.stage.getProp("sourceInfo");
-        if (sourceInfo != null) {
-            this.sourceInfo.select(sourceInfo);
+        ZKConnect sourceConnect = this.stage.getProp("sourceConnect");
+        if (sourceConnect != null) {
+            this.sourceInfo.select(sourceConnect);
             this.sourceInfo.disable();
         }
         this.stage.hideOnEscape();

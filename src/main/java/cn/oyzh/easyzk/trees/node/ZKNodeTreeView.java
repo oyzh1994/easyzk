@@ -78,7 +78,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
      * @param targetPath 目标路径
      * @return zk节点
      */
-    public ZKNodeTreeItem findNodeItem( String targetPath) {
+    public ZKNodeTreeItem findNodeItem(String targetPath) {
         return this.findNodeItem(this.root(), targetPath);
     }
 
@@ -89,7 +89,7 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
      * @param targetPath 目标路径
      * @return zk节点
      */
-    public ZKNodeTreeItem findNodeItem( ZKNodeTreeItem root,  String targetPath) {
+    public ZKNodeTreeItem findNodeItem(ZKNodeTreeItem root, String targetPath) {
         // 节点对应，返回数据
         if (targetPath.equals(root.nodePath())) {
             return root;
@@ -316,25 +316,19 @@ public class ZKNodeTreeView extends RichTreeView implements NodeLifeCycle {
      * 加载根节点
      */
     public void loadRoot() throws Exception {
-        try {
-            // 禁用树
-            this.disable();
-            ZKNodeTreeItem rootItem = this.root();
-            // 初始化根节点
-            if (this.getRoot() == null) {
-                // 获取根节点
-                ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
-                // 生成根节点
-                rootItem = new ZKNodeTreeItem(rootNode, this);
-                // 设置根节点
-                this.setRoot(rootItem);
-            }
-            // 加载根节点
-            rootItem.loadRoot();
-        } finally {
-            // 启用树
-            this.enable();
+        ZKNodeTreeItem rootItem = this.root();
+        // 初始化根节点
+        if (this.getRoot() == null) {
+            // 获取根节点
+            ZKNode rootNode = ZKNodeUtil.getNode(this.client, "/");
+            // 生成根节点
+            rootItem = new ZKNodeTreeItem(rootNode, this);
+            // 设置根节点
+            ZKNodeTreeItem finalRootItem = rootItem;
+            FXUtil.runWait(() -> this.setRoot(finalRootItem));
         }
+        // 加载根节点
+        rootItem.loadRoot();
     }
 
     /**

@@ -9,9 +9,6 @@ import cn.oyzh.fx.plus.window.PopupAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
-import static atlantafx.base.controls.Popover.ArrowLocation.BOTTOM_LEFT;
-import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
-
 /**
  * 过滤设置弹窗
  *
@@ -19,23 +16,21 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
  * @since 2025/01/22
  */
 @PopupAttribute(
-        value = FXConst.POPUP_PATH + "zkFilterSettingPopup.fxml",
-        arrowLocation = BOTTOM_LEFT,
-        anchorLocation = CONTENT_BOTTOM_LEFT
+        value = FXConst.POPUP_PATH + "zkFilterSettingPopup.fxml"
 )
 public class ZKFilterSettingPopupController extends PopupController {
 
-    /**
-     * 搜索路径
-     */
-    @FXML
-    private FXCheckBox searchPath;
-
-    /**
-     * 搜索数据
-     */
-    @FXML
-    private FXCheckBox searchData;
+//    /**
+//     * 搜索路径
+//     */
+//    @FXML
+//    private FXCheckBox searchPath;
+//
+//    /**
+//     * 搜索数据
+//     */
+//    @FXML
+//    private FXCheckBox searchData;
 
     /**
      * 匹配大小写
@@ -58,8 +53,8 @@ public class ZKFilterSettingPopupController extends PopupController {
             ZKNodeFilterParam filterParam = new ZKNodeFilterParam();
             filterParam.setMatchCase(this.matchCase.isSelected());
             filterParam.setMatchFull(this.matchFull.isSelected());
-            filterParam.setSearchPath(this.searchPath.isSelected());
-            filterParam.setSearchData(this.searchData.isSelected());
+//            filterParam.setSearchPath(this.searchPath.isSelected());
+//            filterParam.setSearchData(this.searchData.isSelected());
             this.submit(filterParam);
             this.closeWindow();
         } catch (Exception ex) {
@@ -83,8 +78,8 @@ public class ZKFilterSettingPopupController extends PopupController {
         if (filterParam != null) {
             this.matchCase.setSelected(filterParam.isMatchCase());
             this.matchFull.setSelected(filterParam.isMatchFull());
-            this.searchPath.setSelected(filterParam.isSearchPath());
-            this.searchData.setSelected(filterParam.isSearchData());
+//            this.searchPath.setSelected(filterParam.isSearchPath());
+//            this.searchData.setSelected(filterParam.isSearchData());
         }
     }
 }

@@ -1,81 +1,43 @@
 package cn.oyzh.easyzk.tabs.node;
 
-import cn.oyzh.common.dto.FriendlyInfo;
-import cn.oyzh.common.dto.Paging;
-import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.easyzk.dto.ZKACL;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.event.auth.ZKAuthAuthedEvent;
-import cn.oyzh.easyzk.event.node.ZKNodeACLAddedEvent;
-import cn.oyzh.easyzk.event.node.ZKNodeACLUpdatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeAddedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeChangedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeCreatedEvent;
 import cn.oyzh.easyzk.event.node.ZKNodeRemovedEvent;
 import cn.oyzh.easyzk.filter.ZKNodeFilterTextField;
 import cn.oyzh.easyzk.filter.ZKNodeFilterTypeComboBox;
-import cn.oyzh.easyzk.fx.ZKACLControl;
-import cn.oyzh.easyzk.fx.ZKACLTableView;
-import cn.oyzh.easyzk.popups.ZKNodeQRCodePopupController;
 import cn.oyzh.easyzk.trees.connect.ZKConnectTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeView;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.combobox.CharsetComboBox;
-import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.gui.tabs.RichTabController;
-import cn.oyzh.fx.gui.text.field.ClearableTextField;
-import cn.oyzh.fx.gui.text.field.NumberTextField;
-import cn.oyzh.fx.plus.chooser.FXChooser;
-import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.box.FXVBox;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
-import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
-import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.node.NodeWidthResizer;
-import cn.oyzh.fx.plus.thread.RenderService;
-import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.PopupAdapter;
-import cn.oyzh.fx.plus.window.PopupManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
-import cn.oyzh.i18n.I18nHelper;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
-import org.apache.zookeeper.StatsTrack;
-import org.apache.zookeeper.data.Stat;
 
-import java.io.File;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * zk节点tab内容组件
@@ -156,7 +118,7 @@ public class ZKNodeTabController extends ParentTabController {
     /**
      * 当前激活的节点
      */
-    private ZKNodeTreeItem activeItem;
+    private transient ZKNodeTreeItem activeItem;
 
     public ZKConnectTreeItem getTreeItem() {
         return treeItem;
@@ -291,16 +253,18 @@ public class ZKNodeTabController extends ParentTabController {
      * @param item 树节点
      */
     public void init(ZKConnectTreeItem item) {
-        try {
-            this.treeItem = item;
-            this.client = item.getClient();
-            this.treeView.client(this.client);
-            // 加载根节点
-            this.treeView.loadRoot();
-        } catch (Exception ex) {
-            this.closeTab();
-            MessageBox.exception(ex);
-        }
+        this.treeItem = item;
+        this.client = item.getClient();
+        this.treeView.client(this.client);
+        // 加载根节点
+        StageManager.showMask(() -> {
+            try {
+                this.treeView.loadRoot();
+            } catch (Exception ex) {
+                this.closeTab();
+                MessageBox.exception(ex);
+            }
+        });
         // 状态无效，则关闭，延迟3秒检查
         TaskManager.startDelay(() -> {
             if (this.client.isInvalid()) {
@@ -322,31 +286,20 @@ public class ZKNodeTabController extends ParentTabController {
         }
         try {
             if (this.activeItem != null) {
-                String id = this.tabPane.getSelectTabId();
-                if ("dataTab".equals(id)) {
-                    // 初始化数据
-//                    this.initData();
-                    this.dataTabController.initData();
-                } else if ("statTab".equals(id)) {
-                    // 初始化状态
-//                    this.initStat();
-                    this.statTabController.initStat();
-                } else if ("aclTab".equals(id)) {
-                    // 初始化acl
-//                    this.initACL();
-                    this.aclTabController.initACL();
-                } else if ("quotaTab".equals(id)) {
-                    // 初始化配额
-//                    this.initQuota();
-                    this.quotaTabController.initQuota();
-                }
+                // 初始化节点
+                StageManager.showMask(() -> {
+                    try {
+                        this.initNode();
+                    } catch (Exception ex) {
+                        MessageBox.exception(ex);
+                    }
+                });
                 // 设置是否收藏
                 this.collectPane.setCollect(this.activeItem.isCollect());
                 // 启用组件
                 this.tabPane.enable();
                 // 检查状态
                 FXUtil.runLater(this::checkStatus, 100);
-//                JulLog.info("select node color:{}", this.activeItem.getValue().graphicColor());
             } else {
                 // 禁用组件
                 this.tabPane.disable();
@@ -363,29 +316,44 @@ public class ZKNodeTabController extends ParentTabController {
     }
 
     /**
+     * 初始化节点
+     */
+    private void initNode() throws Exception {
+        if (this.activeItem == null) {
+            return;
+        }
+        String id = this.tabPane.getSelectTabId();
+        if ("dataTab".equals(id)) {
+            // 初始化数据
+            this.dataTabController.initData();
+        } else if ("statTab".equals(id)) {
+            // 初始化状态
+            this.statTabController.initStat();
+        } else if ("aclTab".equals(id)) {
+            // 初始化acl
+            this.aclTabController.initACL();
+        } else if ("quotaTab".equals(id)) {
+            // 初始化配额
+            this.quotaTabController.initQuota();
+        }
+    }
+
+    /**
      * 刷新节点
      */
     private void refreshItem() {
-        try {
-            // 刷新节点
-            this.activeItem.refreshNode();
-            // 初始化数据
-//            this.initData();
-            this.dataTabController.initData();
-            // 初始化acl
-//            this.initACL();
-            this.aclTabController.initACL();
-            // 初始化状态
-//            this.initStat();
-            this.statTabController.initStat();
-            // 初始化配额
-//            this.initQuota();
-            this.quotaTabController.initQuota();
-            // 刷新tab
-            this.flushTab();
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
-        }
+        StageManager.showMask(() -> {
+            try {
+                // 刷新节点
+                this.activeItem.refreshNode();
+                // 初始化节点
+                this.initNode();
+                // 刷新tab
+                this.flushTab();
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     /**
@@ -1008,24 +976,15 @@ public class ZKNodeTabController extends ParentTabController {
 //        });
         // tab组件切换事件
         this.tabPane.selectedTabChanged((observable, oldValue, newValue) -> {
-            try {
-                if (newValue != null) {
-                    if ("dataTab".equals(newValue.getId())) {
-//                        this.initData();
-                        this.dataTabController.initData();
-                    } else if ("statTab".equals(newValue.getId())) {
-//                        this.initStat();
-                        this.statTabController.initStat();
-                    } else if ("aclTab".equals(newValue.getId())) {
-//                        this.initACL();
-                        this.aclTabController.initACL();
-                    } else if ("quotaTab".equals(newValue.getId())) {
-//                        this.initQuota();
-                        this.quotaTabController.initQuota();
+            if (newValue != null) {
+                // 初始化节点
+                StageManager.showMask(() -> {
+                    try {
+                        this.initNode();
+                    } catch (Exception ex) {
+                        MessageBox.exception(ex);
                     }
-                }
-            } catch (Exception ex) {
-                MessageBox.exception(ex);
+                });
             }
         });
         // 拉伸辅助
@@ -1114,34 +1073,35 @@ public class ZKNodeTabController extends ParentTabController {
      */
     @FXML
     private void doFilter() {
-        String kw = this.filterKW.getTextTrim();
-        // 过滤模式
-        byte mode = this.filterKW.filterMode();
-        // 过滤范围
-        byte scope = this.filterKW.filterScope();
-        // 过滤类型
-        int type = this.filterType.getSelectedIndex();
-        // 设置高亮是否匹配大小写
-        this.treeView.setHighlightMatchCase(mode == 3 || mode == 1);
-        // 仅在过滤路径的情况下设置节点高亮
-        if (scope == 2 || scope == 0) {
+        StageManager.showMask(() -> {
+            String kw = this.filterKW.getTextTrim();
+            // 过滤模式
+            byte mode = this.filterKW.filterMode();
+//        // 过滤范围
+//        byte scope = this.filterKW.filterScope();
+            // 过滤类型
+            int type = this.filterType.getSelectedIndex();
+            // 设置高亮是否匹配大小写
+            this.treeView.setHighlightMatchCase(mode == 3 || mode == 1);
+//        // 仅在过滤路径的情况下设置节点高亮
+//        if (scope == 2 || scope == 0) {
             this.treeView.setHighlightText(kw);
-        } else {
-            this.treeView.setHighlightText(null);
-        }
-        // 仅在过滤数据的情况下设置内容高亮
-        if (scope == 2 || scope == 1) {
-//            this.nodeData.setHighlightText(kw);
-            this.dataTabController.setDataHighlight(kw);
+//        } else {
+//            this.treeView.setHighlightText(null);
+//        }
+//        // 仅在过滤数据的情况下设置内容高亮
+//        if (scope == 2 || scope == 1) {
+////            this.nodeData.setHighlightText(kw);
+//            this.dataTabController.setDataHighlight(kw);
 //        } else {
 //            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
-        }
-        this.treeView.getItemFilter().setKw(kw);
-        this.treeView.getItemFilter().setScope(scope);
-        this.treeView.getItemFilter().setMatchMode(mode);
-        this.treeView.getItemFilter().setType((byte) type);
-        this.treeView.filter();
-
+//        }
+            this.treeView.getItemFilter().setKw(kw);
+//        this.treeView.getItemFilter().setScope(scope);
+            this.treeView.getItemFilter().setMatchMode(mode);
+            this.treeView.getItemFilter().setType((byte) type);
+            this.treeView.filter();
+        });
     }
 
     /**
@@ -1253,7 +1213,7 @@ public class ZKNodeTabController extends ParentTabController {
 //        StageAdapter adapter = StageManager.parseStage(ZKNodeAddController.class);
 //        adapter.setProp("dbItem", this.treeItem);
 //        adapter.display();
-        ZKEventUtil.showAddNode(null, this.client);
+        ZKViewFactory.addNode(null, this.client);
     }
 
     @FXML
@@ -1278,12 +1238,15 @@ public class ZKNodeTabController extends ParentTabController {
 
     @FXML
     private void refreshNode() {
-        try {
-            this.treeView.loadRoot();
-        } catch (Exception ex) {
-            this.closeTab();
-            MessageBox.exception(ex);
-        }
+        // 加载根节点
+        StageManager.showMask(() -> {
+            try {
+                this.treeView.loadRoot();
+            } catch (Exception ex) {
+                this.closeTab();
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     @FXML
@@ -1295,6 +1258,14 @@ public class ZKNodeTabController extends ParentTabController {
             this.treeView.sortDesc();
             this.sortPane.asc();
         }
+    }
+
+    /**
+     * 导入数据
+     */
+    @FXML
+    private void importData() {
+        ZKViewFactory.importData(this.client.zkConnect());
     }
 
     public ZKClient getClient() {

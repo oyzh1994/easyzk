@@ -7,6 +7,7 @@ import cn.oyzh.easyzk.domain.ZKGroup;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKGroupStore;
+import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
@@ -145,7 +146,7 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItemValue> implemen
 //        StageAdapter adapter = StageManager.parseStage(ZKConnectAddController.class, this.window());
 //        adapter.setProp("group", this.value);
 //        adapter.display();
-        ZKEventUtil.showAddConnect(this.value);
+        ZKViewFactory.addConnect(this.value);
     }
 
     @Override

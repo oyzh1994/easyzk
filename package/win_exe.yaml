@@ -25,9 +25,15 @@ jpackage:
   # vm参数
   java-options:
     - '-XX:+UnlockExperimentalVMOptions'
+    - '-Xss256k'
+    - '-Xms32m'
+    - '-Xmx2G'
+    - '-Xshare:off'
+    - '-XX:+UseZGC'
+    - '-XX:ConcGCThreads=2'
+    - '-XX:+TieredCompilation'
+    - '-XX:TieredStopAtLevel=1'
     - '-XX:+UseCompactObjectHeaders'
-    - '-Xmx1536m'
-    - '-Xms56m'
   # 程序描述
   description: 强大、跨平台的Zookeeper管理工具.
   # 打包类型，支持app-image，pkg、dmg、exe、msi、rpm、deb

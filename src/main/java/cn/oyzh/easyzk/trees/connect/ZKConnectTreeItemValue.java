@@ -15,6 +15,7 @@ public class ZKConnectTreeItemValue extends RichTreeItemValue {
 
     public ZKConnectTreeItemValue( ZKConnectTreeItem item) {
         super(item);
+        super.setRichMode(true);
     }
 
     @Override

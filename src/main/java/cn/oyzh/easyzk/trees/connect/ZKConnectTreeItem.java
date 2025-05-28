@@ -368,7 +368,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
         }
     }
 
-    public String infoName() {
+    public String connectName() {
         return this.value.getName();
     }
 

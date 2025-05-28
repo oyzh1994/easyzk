@@ -53,9 +53,9 @@ public class ZKNodeTab extends RichTab {
     @Override
     protected String getTabTitle() {
         if (this.activeItem() == null) {
-            return this.treeItem().infoName();
+            return this.treeItem().connectName();
         }
-        return this.treeItem().infoName() + "#" + this.activeItem().decodeNodePath();
+        return this.treeItem().connectName() + "#" + this.activeItem().decodeNodePath();
     }
 
     @Override

@@ -8,7 +8,6 @@ import cn.oyzh.easyzk.event.group.ZKAddGroupEvent;
 import cn.oyzh.easyzk.event.query.ZKQueryAddedEvent;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tree.view.RichTreeCell;
-import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -66,31 +65,31 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
         }
     }
 
-    @Override
-    public void expand() {
-        TreeItem<?> item = this.getSelectedItem();
-        if (item instanceof ZKConnectTreeItem treeItem) {
-            treeItem.expend();
-        } else if (item instanceof RichTreeItem<?> treeItem) {
-            treeItem.expend();
-        }
-        if (item != null) {
-            this.select(item);
-        }
-    }
-
-    @Override
-    public void collapse() {
-        TreeItem<?> item = this.getSelectedItem();
-        if (item instanceof ZKConnectTreeItem treeItem) {
-            treeItem.collapse();
-        } else if (item instanceof RichTreeItem<?> treeItem) {
-            treeItem.collapse();
-        }
-        if (item != null) {
-            this.select(item);
-        }
-    }
+//    @Override
+//    public void expand() {
+//        TreeItem<?> item = this.getSelectedItem();
+//        if (item instanceof ZKConnectTreeItem treeItem) {
+//            treeItem.expend();
+//        } else if (item instanceof RichTreeItem<?> treeItem) {
+//            treeItem.expend();
+//        }
+//        if (item != null) {
+//            this.select(item);
+//        }
+//    }
+//
+//    @Override
+//    public void collapse() {
+//        TreeItem<?> item = this.getSelectedItem();
+//        if (item instanceof ZKConnectTreeItem treeItem) {
+//            treeItem.collapse();
+//        } else if (item instanceof RichTreeItem<?> treeItem) {
+//            treeItem.collapse();
+//        }
+//        if (item != null) {
+//            this.select(item);
+//        }
+//    }
 
     /**
      * 添加分组
@@ -144,5 +143,20 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
     @EventSubscribe
     private void connectImported(ZKConnectImportedEvent event) {
         this.root().reloadChild();
+    }
+
+    @Override
+    public ZKConnectTreeItemFilter getItemFilter() {
+        // 初始化过滤器
+        if (this.itemFilter == null) {
+            this.itemFilter = new ZKConnectTreeItemFilter();
+        }
+        return (ZKConnectTreeItemFilter) this.itemFilter;
+    }
+
+    @Override
+    public void setHighlightText(String highlightText) {
+        super.setHighlightText(highlightText);
+        this.getItemFilter().setKw(highlightText);
     }
 }

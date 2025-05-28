@@ -4,6 +4,7 @@ import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.system.OSUtil;
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.easyzk.controller.data.ZKMigrationTipsController;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.exception.ZKExceptionParser;
@@ -123,6 +124,8 @@ public class EasyZKApp extends FXApplication implements EventListener {
 //                FXUtil.runWait(() -> StageManager.showStage(ZKMigrationTipsController.class, primaryStage), 1000);
                 this.migrationTips();
             }
+            // 开启定期gc
+            SystemUtil.gcInterval(60_000);
         } catch (Exception ex) {
             ex.printStackTrace();
             JulLog.warn("start error", ex);

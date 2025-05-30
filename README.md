@@ -11,13 +11,14 @@ cn.oyzh.easyzk.EasyZKBootstrap.main
 ide建议idea社区版或者专业版
 
 ###### 依赖说明
-1. base工程  
+1. base工程，可选手动安装，也可使用中心仓库稳定版本  
  https://gitee.com/oyzh1994/base  
-2. fx-base工程  
+2. fx-base工程，可选手动安装，也可使用中心仓库稳定版本    
  https://gitee.com/oyzh1994/fx-base  
-3. jdk版本要求24  
+3. jdk版本要求21，推荐24  
 注意，如果是linux的arm平台，建议使用aws的jdk，其他jdk可能缺失hsdis类库，其他情况下优先使用openjdk  
-awsjdk https://docs.aws.amazon.com/corretto/latest/corretto-24-ug/downloads-list.html  
+awsjdk21 https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/downloads-list.html  
+awsjdk24 https://docs.aws.amazon.com/corretto/latest/corretto-24-ug/downloads-list.html  
 openjdk https://jdk.java.net/archive/
 
 ###### 结构说明 
@@ -51,43 +52,45 @@ https://www.freeconvert.com/zh/png-to-ico
 ###### exe、msi打包依赖
 https://github.com/wixtoolset/wix3/releases  
 ###### (推荐)exe打包 
-配置 -> package -> win_exe.yaml 
+配置 -> package -> win_exe.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.win_exe  
 ###### msi打包 
-配置 -> package -> win_msi.yaml 
+配置 -> package -> win_msi.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.win_msi  
 ###### app-image打包
-配置 -> package -> win_image.yaml 
+配置 -> package -> win_image.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.win_image  
 ###### 注意事项
 exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示程序图标的问题
 
 ###### macos
 ###### (推荐)pkg打包
-配置 -> package -> macos_pkg.yaml 
+配置 -> package -> macos_pkg.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.macos_pkg
 ###### dmg打包 
-配置 -> package -> macos_dmg.yaml 
+配置 -> package -> macos_dmg.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.macos_dmg  
 ###### app-image打包
-配置 -> package -> macos_image.yaml 
+配置 -> package -> macos_image.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.macos_image  
 ###### 注意事项
 dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 
 ###### linux(以uos、ubuntu、centos为例)
-###### deb打包依赖
+###### deb打包依赖(deepin)
 sudo apt install fakeroot
-###### rpm打包依赖
-yum install rpm-build
+###### deb打包依赖(ubuntu)
+sudo apt install fakeroot binutils
+###### rpm打包依赖(centos)
+sudo yum install rpm-build
 ###### (推荐)deb打包
-配置 -> package -> linux_deb.yaml 
+配置 -> package -> linux_deb.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.linux_deb
 ###### rpm打包
-配置 -> package -> linux_rpm.yaml 
+配置 -> package -> linux_rpm.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.linux_rpm
 ###### app-image打包
-配置 -> package -> linux_image.yaml 
+配置 -> package -> linux_image.yaml  
 入口 -> cn.oyzh.easyzk.test.Pack.linux_image
 
 # Docker

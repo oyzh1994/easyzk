@@ -5,7 +5,7 @@ import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import cn.oyzh.fx.rich.RichDataType;
 import javafx.scene.text.Font;
 
 /**

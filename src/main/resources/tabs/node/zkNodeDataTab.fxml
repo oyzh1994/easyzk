@@ -18,7 +18,7 @@
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
+<?import cn.oyzh.fx.rich.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FXTab text="%base.data" fx:id="dataTab" xmlns:fx="http://javafx.com/fxml/1"

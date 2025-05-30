@@ -1,14 +1,14 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
+import cn.oyzh.easyzk.fx.ZKDataTextArea;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
+import cn.oyzh.fx.rich.RichDataType;
+import cn.oyzh.fx.rich.RichDataTypeComboBox;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 
@@ -58,7 +58,7 @@ public class ZKQueryDataTabController extends RichTabController {
      * 数据
      */
     @FXML
-    private ZKDataTextAreaPane data;
+    private ZKDataTextArea data;
 
     /**
      * 格式

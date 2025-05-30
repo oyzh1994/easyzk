@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.easyzk.fx.ZKDataTextArea;
+import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
@@ -58,7 +58,7 @@ public class ZKQueryDataTabController extends RichTabController {
      * 数据
      */
     @FXML
-    private ZKDataTextArea data;
+    private ZKDataTextAreaPane data;
 
     /**
      * 格式

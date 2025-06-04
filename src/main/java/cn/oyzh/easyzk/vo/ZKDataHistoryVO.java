@@ -40,6 +40,7 @@ public class ZKDataHistoryVO extends ZKDataHistory implements Index {
     public static ZKDataHistoryVO convert(ZKDataHistory filter, int index) {
         ZKDataHistoryVO vo = new ZKDataHistoryVO();
         vo.copy(filter);
+        vo.setIid(filter.getIid());
         vo.setIndex(index);
         return vo;
     }
@@ -50,7 +51,7 @@ public class ZKDataHistoryVO extends ZKDataHistory implements Index {
      * @param list zk数据历史
      * @return zk数据历史列表
      */
-    public static List<ZKDataHistoryVO> convert( List<ZKDataHistory> list) {
+    public static List<ZKDataHistoryVO> convert(List<ZKDataHistory> list) {
         List<ZKDataHistoryVO> voList = new ArrayList<>(list.size());
         for (int i = 0; i < list.size(); i++) {
             voList.add(convert(list.get(i), i + 1));

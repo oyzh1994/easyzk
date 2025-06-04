@@ -33,7 +33,7 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
     /**
      * 最大历史数量
      */
-    public static int His_Max_Size = 50;
+    public static int Max_Size = 50;
 
     /**
      * 当前实例
@@ -126,22 +126,22 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
      * @param model 模型
      */
     private void doLocalReplace(ZKDataHistory model) {
-        String iid = model.getIid();
-        String path = model.getPath();
         // 新增数据
-        super.insert(model);
-        // 查询总数
-        List<QueryParam> queryParams = new ArrayList<>(4);
-        queryParams.add(new QueryParam("path", path));
-        queryParams.add(new QueryParam("iid", iid));
-        long count = super.selectCount(queryParams);
-        // 删除超出限制的节点
-        if (count > His_Max_Size) {
-            DeleteParam deleteParam = new DeleteParam();
-            deleteParam.addQueryParams(queryParams);
-            deleteParam.addOrderByParam(new OrderByParam("saveTime", "desc"));
-            deleteParam.setLimit(1L);
-            super.delete(deleteParam);
+        boolean result = super.insert(model);
+        if (result) {
+            // 查询超出部分
+            SelectParam selectParam = new SelectParam();
+            selectParam.setLimit(1L);
+            selectParam.setOffset((long) Max_Size);
+            selectParam.addQueryColumn("iid,path,saveTime");
+            selectParam.addQueryParam(new QueryParam("iid", model.getIid()));
+            selectParam.addQueryParam(new QueryParam("path", model.getPath()));
+            selectParam.addOrderByParam(new OrderByParam("saveTime", "desc"));
+            ZKDataHistory data = super.selectOne(selectParam);
+            // 删除超出限制的数据
+            if (data != null) {
+                this.deleteLocalInner(data.getIid(), data.getPath(), data.getSaveTime());
+            }
         }
     }
 
@@ -170,7 +170,7 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
         }
         // 删除超出限制的节点
         Stat stat = client.checkExists(pPath);
-        if (stat != null && stat.getNumChildren() > His_Max_Size) {
+        if (stat != null && stat.getNumChildren() > Max_Size) {
             long minTime = -1;
             String beDelNodeNode = null;
             // 便利字节的
@@ -206,10 +206,23 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
      * @see cn.oyzh.easyzk.domain.ZKConnect
      */
     public boolean deleteLocal(String iid, String path, long saveTime) {
+        return this.deleteLocalInner(iid, MD5Util.md5Hex(path), saveTime);
+    }
+
+    /**
+     * 删除本地历史
+     *
+     * @param iid      zk连接id
+     * @param path     zk路径
+     * @param saveTime 保存时间
+     * @return 结果
+     * @see cn.oyzh.easyzk.domain.ZKConnect
+     */
+    private boolean deleteLocalInner(String iid, String path, long saveTime) {
         DeleteParam deleteParam = new DeleteParam();
         deleteParam.addQueryParam(new QueryParam("iid", iid));
         deleteParam.addQueryParam(new QueryParam("saveTime", saveTime));
-        deleteParam.addQueryParam(new QueryParam("path", MD5Util.md5Hex(path)));
+        deleteParam.addQueryParam(new QueryParam("path", path));
         deleteParam.setLimit(1L);
         return super.delete(deleteParam);
     }

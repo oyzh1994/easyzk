@@ -133,7 +133,7 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
             SelectParam selectParam = new SelectParam();
             selectParam.setLimit(1L);
             selectParam.setOffset((long) Max_Size);
-            selectParam.addQueryColumn("iid,path,saveTime");
+            selectParam.addQueryColumns("iid", "path", "saveTime");
             selectParam.addQueryParam(new QueryParam("iid", model.getIid()));
             selectParam.addQueryParam(new QueryParam("path", model.getPath()));
             selectParam.addOrderByParam(new OrderByParam("saveTime", "desc"));

@@ -132,11 +132,11 @@ public class ZKDataHistoryStore extends JdbcStandardStore<ZKDataHistory> {
             // 查询超出部分
             SelectParam selectParam = new SelectParam();
             selectParam.setLimit(1L);
-            selectParam.setOffset((long) Max_Size);
+            selectParam.setOffset((long) Max_Size - 1);
             selectParam.addQueryColumns("iid", "path", "saveTime");
             selectParam.addQueryParam(new QueryParam("iid", model.getIid()));
             selectParam.addQueryParam(new QueryParam("path", model.getPath()));
-            selectParam.addOrderByParam(new OrderByParam("saveTime", "desc"));
+            selectParam.addOrderByParam(new OrderByParam("saveTime", "asc"));
             ZKDataHistory data = super.selectOne(selectParam);
             // 删除超出限制的数据
             if (data != null) {

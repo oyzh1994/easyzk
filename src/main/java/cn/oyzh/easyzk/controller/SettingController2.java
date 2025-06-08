@@ -5,6 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.util.ZKProcessUtil;
+import cn.oyzh.fx.gui.font.FontFamilyTextField;
 import cn.oyzh.fx.gui.setting.SettingLeftItem;
 import cn.oyzh.fx.gui.setting.SettingLeftTreeView;
 import cn.oyzh.fx.gui.setting.SettingMainPane;
@@ -18,7 +19,6 @@ import cn.oyzh.fx.plus.controls.picker.FXColorPicker;
 import cn.oyzh.fx.plus.controls.text.FXSlider;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.domain.AppSetting;
-import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
@@ -210,7 +210,7 @@ public class SettingController2 extends StageController {
      * 字体名称
      */
     @FXML
-    private FontFamilyComboBox fontFamily;
+    private FontFamilyTextField fontFamily;
 
     /**
      * 编辑器字体大小
@@ -228,7 +228,7 @@ public class SettingController2 extends StageController {
      * 编辑器字体名称
      */
     @FXML
-    private FontFamilyComboBox editorFontFamily;
+    private FontFamilyTextField editorFontFamily;
 
     /**
      * 终端字体大小
@@ -246,7 +246,7 @@ public class SettingController2 extends StageController {
      * 终端字体名称
      */
     @FXML
-    private FontFamilyComboBox terminalFontFamily;
+    private FontFamilyTextField terminalFontFamily;
 
     /**
      * 查询字体大小
@@ -264,7 +264,7 @@ public class SettingController2 extends StageController {
      * 查询字体名称
      */
     @FXML
-    private FontFamilyComboBox queryFontFamily;
+    private FontFamilyTextField queryFontFamily;
 
     /**
      * 区域

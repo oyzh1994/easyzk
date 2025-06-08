@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SaveButton?>
+<?import cn.oyzh.fx.gui.font.FontFamilyTextField?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.setting.SettingLeftTreeView?>
 <?import cn.oyzh.fx.gui.setting.SettingMainPane?>
@@ -14,7 +15,6 @@
 <?import cn.oyzh.fx.plus.controls.picker.FXColorPicker?>
 <?import cn.oyzh.fx.plus.controls.text.FXSlider?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
-<?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
 <?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
 <?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
 <?import cn.oyzh.fx.plus.i18n.LocaleComboBox?>
@@ -199,11 +199,11 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FXHBox>
-                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontFamily">
+                    <FontFamilyTextField realHeight="30" flexWidth="100% - 225" fx:id="fontFamily">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
-                    </FontFamilyComboBox>
+                    </FontFamilyTextField>
                     <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetFontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -253,11 +253,11 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FXHBox>
-                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="editorFontFamily">
+                    <FontFamilyTextField realHeight="30" flexWidth="100% - 225" fx:id="editorFontFamily">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
-                    </FontFamilyComboBox>
+                    </FontFamilyTextField>
                     <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetEditorFontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -307,11 +307,11 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FXHBox>
-                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="terminalFontFamily">
+                    <FontFamilyTextField realHeight="30" flexWidth="100% - 225" fx:id="terminalFontFamily">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
-                    </FontFamilyComboBox>
+                    </FontFamilyTextField>
                     <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetTerminalFontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -361,11 +361,11 @@
                     </VBox.margin>
                 </InfoLabel>
                 <FXHBox>
-                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="queryFontFamily">
+                    <FontFamilyTextField realHeight="30" flexWidth="100% - 225" fx:id="queryFontFamily">
                         <HBox.margin>
                             <Insets left="30" top="5"/>
                         </HBox.margin>
-                    </FontFamilyComboBox>
+                    </FontFamilyTextField>
                     <UndoSVGGlyph size="16" onMousePrimaryClicked="#resetQueryFontFamily">
                         <HBox.margin>
                             <Insets left="10" top="10"/>

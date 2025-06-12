@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk;
 
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.util.JarUtil;
 
 import java.io.File;
@@ -50,9 +51,9 @@ public class ZKConst {
      */
     public static String getStorePath() {
         if (JarUtil.isInJar()) {
-            return System.getProperty("user.home") + File.separator + ".easyzk" + File.separator;
+            return SystemUtil.userHome() + File.separator + ".easyzk" + File.separator;
         }
-        return System.getProperty("user.home") + File.separator + ".easyzk_dev" + File.separator;
+        return SystemUtil.userHome() + File.separator + ".easyzk_dev" + File.separator;
     }
 
     /**

@@ -4,7 +4,6 @@ import cn.oyzh.easyzk.popups.ZKFilterSettingPopupController;
 import cn.oyzh.fx.gui.skin.ClearableTextFieldSkin;
 import cn.oyzh.fx.gui.svg.glyph.SettingSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
 import javafx.geometry.HPos;
@@ -14,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 /**
  * zk节点过滤文本域皮肤
@@ -135,6 +133,7 @@ public class ZKNodeFilterTextFieldSkin extends ClearableTextFieldSkin {
             this.getSkinnable().setPadding(padding);
         }
         // 设置组件位置
-        super.positionInArea(this.button, 3, y * 0.9, w, h, btnSize, HPos.LEFT, VPos.CENTER);
+        // super.positionInArea(this.button, 3, y * 0.9, w, h, btnSize, HPos.LEFT, VPos.CENTER);
+        super.positionInArea(this.button, 3, y * 0.9, 0, h, btnSize, HPos.LEFT, VPos.CENTER);
     }
 }

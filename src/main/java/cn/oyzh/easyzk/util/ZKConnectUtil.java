@@ -9,8 +9,8 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.ssh.domain.SSHConnect;
-import cn.oyzh.ssh.jump.SSHJumpForwarder;
-import com.jcraft.jsch.Session;
+import cn.oyzh.ssh.jump.SSHJumpForwarder2;
+import org.apache.sshd.client.session.ClientSession;
 
 /**
  * zk连接工具类
@@ -30,11 +30,11 @@ public class ZKConnectUtil {
     public static void testSSHConnect(StageAdapter adapter, SSHConnect sshConnect) {
         StageManager.showMask(adapter, () -> {
             try {
-                SSHJumpForwarder forwarder = new SSHJumpForwarder();
-                Session session = forwarder.initSession(sshConnect);
+                SSHJumpForwarder2 forwarder = new SSHJumpForwarder2();
+                ClientSession session = forwarder.initSession(sshConnect);
                 // 判断是否成功
-                if (session != null && session.isConnected()) {
-                    session.disconnect();
+                if (session != null && session.isOpen()) {
+                    session.close();
                     MessageBox.okToast(I18nHelper.connectSuccess());
                 } else {
                     MessageBox.warn(I18nHelper.connectFail());

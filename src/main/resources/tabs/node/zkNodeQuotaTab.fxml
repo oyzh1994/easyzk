@@ -25,12 +25,12 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </SaveSVGGlyph>
-            <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadQuota">
+            <RefreshSVGGlyph tipText="%base.refresh" size="15" onMousePrimaryClicked="#reloadQuota">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
-            <CopySVGGlyph size="16" onMousePrimaryClicked="#copyQuota">
+            <CopySVGGlyph tipText="%base.copy" size="16" onMousePrimaryClicked="#copyQuota">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>

@@ -14,7 +14,7 @@
        fx:controller="cn.oyzh.easyzk.tabs.server.ZKLocalTabController" text="%base.client">
     <FXVBox flexWidth="100%" flexHeight="100%">
         <FXHBox realHeight="30" flexWidth="100% - 28">
-            <RefreshSVGGlyph onMousePrimaryClicked="#refreshLocal">
+            <RefreshSVGGlyph tipText="%base.refresh" onMousePrimaryClicked="#refreshLocal">
                 <HBox.margin>
                     <Insets left="12" top="10"/>
                 </HBox.margin>

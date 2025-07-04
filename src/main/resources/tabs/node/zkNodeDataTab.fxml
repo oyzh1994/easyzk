@@ -62,7 +62,7 @@
                     <Insets left="5" top="7"/>
                 </HBox.margin>
             </ClearSVGGlyph>
-            <QRCodeSVGGlyph size="16" onMousePrimaryClicked="#node2QRCode" groupId="dataToBig">
+            <QRCodeSVGGlyph tipText="%base.qrCode" size="16" onMousePrimaryClicked="#node2QRCode" groupId="dataToBig">
                 <HBox.margin>
                     <Insets left="5" top="7"/>
                 </HBox.margin>

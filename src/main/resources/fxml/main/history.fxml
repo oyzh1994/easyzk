@@ -18,17 +18,17 @@
     </graphic>
     <FXVBox flexWidth="100%" flexHeight="100%">
         <FXHBox realHeight="30">
-            <RefreshSVGGlyph size="16" onMousePrimaryClicked="#refresh">
+            <RefreshSVGGlyph tipText="%base.refresh" size="16" onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="10" top="9"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
-            <DeleteSVGGlyph size="16" onMousePrimaryClicked="#delete">
+            <DeleteSVGGlyph tipText="%base.delete" size="16" onMousePrimaryClicked="#delete">
                 <HBox.margin>
                     <Insets left="5" top="9"/>
                 </HBox.margin>
             </DeleteSVGGlyph>
-            <UndoSVGGlyph size="16" onMousePrimaryClicked="#restore">
+            <UndoSVGGlyph tipText="%base.restore" size="16" onMousePrimaryClicked="#restore">
                 <HBox.margin>
                     <Insets left="5" top="9"/>
                 </HBox.margin>

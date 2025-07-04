@@ -14,7 +14,7 @@
        fx:controller="cn.oyzh.easyzk.tabs.server.ZKConfTabController" text="Conf">
     <FXVBox flexWidth="100%" flexHeight="100%">
         <FXHBox realHeight="30" flexWidth="100% - 28">
-            <RefreshSVGGlyph onMousePrimaryClicked="#refreshConf">
+            <RefreshSVGGlyph tipText="%base.refresh" onMousePrimaryClicked="#refreshConf">
                 <HBox.margin>
                     <Insets left="12" top="10"/>
                 </HBox.margin>

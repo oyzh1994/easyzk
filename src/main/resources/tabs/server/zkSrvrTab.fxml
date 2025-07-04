@@ -14,7 +14,7 @@
        fx:controller="cn.oyzh.easyzk.tabs.server.ZKSrvrTabController" text="Srvr">
     <FXVBox flexWidth="100%" flexHeight="100%">
         <FXHBox realHeight="30" flexWidth="100% - 28">
-            <RefreshSVGGlyph onMousePrimaryClicked="#refreshSrvr">
+            <RefreshSVGGlyph tipText="%base.refresh" onMousePrimaryClicked="#refreshSrvr">
                 <HBox.margin>
                     <Insets left="12" top="10"/>
                 </HBox.margin>

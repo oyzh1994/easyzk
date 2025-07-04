@@ -238,27 +238,27 @@
         <FXTab text="%base.jumpHosts">
             <FXVBox flexWidth="100%" flexHeight="100%">
                 <FXHBox realHeight="30">
-                    <AddSVGGlyph onMousePrimaryClicked="#addJump">
+                    <AddSVGGlyph tipText="%base.add" onMousePrimaryClicked="#addJump">
                         <FXHBox.margin>
                             <Insets left="30" top="7"/>
                         </FXHBox.margin>
                     </AddSVGGlyph>
-                    <EditSVGGlyph onMousePrimaryClicked="#updateJump">
+                    <EditSVGGlyph tipText="%base.update" onMousePrimaryClicked="#updateJump">
                         <FXHBox.margin>
                             <Insets left="5" top="7"/>
                         </FXHBox.margin>
                     </EditSVGGlyph>
-                    <DeleteSVGGlyph onMousePrimaryClicked="#deleteJump">
+                    <DeleteSVGGlyph tipText="%base.delete" onMousePrimaryClicked="#deleteJump">
                         <FXHBox.margin>
                             <Insets left="5" top="7"/>
                         </FXHBox.margin>
                     </DeleteSVGGlyph>
-                    <MoveUpSVGGlyph onMousePrimaryClicked="#moveJumpUp">
+                    <MoveUpSVGGlyph tipText="%base.moveUp" onMousePrimaryClicked="#moveJumpUp">
                         <FXHBox.margin>
                             <Insets left="5" top="7"/>
                         </FXHBox.margin>
                     </MoveUpSVGGlyph>
-                    <MoveDownSVGGlyph onMousePrimaryClicked="#moveJumpDown">
+                    <MoveDownSVGGlyph tipText="%base.moveDown" onMousePrimaryClicked="#moveJumpDown">
                         <FXHBox.margin>
                             <Insets left="5" top="7"/>
                         </FXHBox.margin>

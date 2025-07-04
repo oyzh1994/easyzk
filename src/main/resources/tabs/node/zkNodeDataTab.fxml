@@ -57,7 +57,7 @@
                     <Insets left="5" top="7"/>
                 </HBox.margin>
             </PasteSVGGlyph>
-            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData" groupId="dataToBig">
+            <ClearSVGGlyph tipText="%base.clear"  size="16" onMousePrimaryClicked="#clearData" groupId="dataToBig">
                 <HBox.margin>
                     <Insets left="5" top="7"/>
                 </HBox.margin>

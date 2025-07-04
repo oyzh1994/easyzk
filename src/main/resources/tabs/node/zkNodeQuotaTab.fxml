@@ -20,7 +20,7 @@
     </graphic>
     <FXVBox flexWidth="100%" flexHeight="100%">
         <FXHBox realHeight="30" flexWidth="100%">
-            <SaveSVGGlyph size="16" onMousePrimaryClicked="#saveQuota">
+            <SaveSVGGlyph tipText="%base.save" size="16" onMousePrimaryClicked="#saveQuota">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>

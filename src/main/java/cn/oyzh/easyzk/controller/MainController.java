@@ -2,6 +2,7 @@ package cn.oyzh.easyzk.controller;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.fx.plus.FXConst;
@@ -82,6 +83,12 @@ public class MainController extends ParentStageController {
                 JulLog.info("cancel by confirm.");
                 event.consume();
             }
+        } else if (OSUtil.isMacOS()) {// macos单独处理
+            // TODO: 注意macos除非退出应用，否则任务栏一直会保留图标，所以macos的托盘选项无效
+            if (JulLog.isInfoEnabled()) {
+                JulLog.info("exit by macos.");
+            }
+            StageManager.exit();
         } else if (this.setting.isExitTray()) {// 系统托盘
             if (TrayManager.exist()) {
                 JulLog.info("show tray.");

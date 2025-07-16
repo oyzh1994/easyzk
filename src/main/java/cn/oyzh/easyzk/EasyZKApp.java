@@ -134,6 +134,8 @@ public class EasyZKApp extends FXApplication implements EventListener {
 
     @Override
     public void stop() {
+        // 储存销毁
+        ZKStoreUtil.destroy();
         EventListener.super.unregister();
         super.stop();
     }

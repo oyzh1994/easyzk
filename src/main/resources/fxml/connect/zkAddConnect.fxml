@@ -404,20 +404,20 @@
             </FXVBox>
         </FXTab>
     </FXTabPane>
-    <FXHBox flexWidth="100%" realHeight="50">
+    <FXHBox flexWidth="100%">
         <TestButton onAction="#testConnect" iconSizePercent="0.8">
             <HBox.margin>
-                <Insets left="30" top="10"/>
+                <Insets left="30" top="20"/>
             </HBox.margin>
         </TestButton>
         <SubmitButton onAction="#add">
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
     </FXHBox>

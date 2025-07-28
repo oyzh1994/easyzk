@@ -51,13 +51,20 @@ public class EasyZKApp extends FXApplication implements EventListener {
 
     public static void main(String[] args) {
         try {
-            // 抗锯齿优化
-            System.setProperty("prism.text", "t2k");
-            System.setProperty("prism.lcdtext", "false");
+            // // 抗锯齿优化
+            // System.setProperty("prism.text", "t2k");
+            // System.setProperty("prism.lcdtext", "false");
+            // 设置默认异常捕捉器
+            Thread.setDefaultUncaughtExceptionHandler((t, ex) -> {
+                ex.printStackTrace();
+                JulLog.error("thread:{} caught error:{}", t.getName(), ex.getMessage());
+            });
             SysConst.projectName(PROJECT.getName());
             SysConst.storeDir(ZKConst.getStorePath());
             SysConst.cacheDir(ZKConst.getCachePath());
-            JulLog.info("项目启动中...");
+            if (JulLog.isInfoEnabled()) {
+                JulLog.info("项目启动中...");
+            }
             // 储存初始化
             ZKStoreUtil.init();
             // 注册sasl处理器
@@ -88,7 +95,9 @@ public class EasyZKApp extends FXApplication implements EventListener {
             // fx程序实例
             FXConst.INSTANCE = this;
             // 日志开始
-            JulLog.info("{} init start.", SysConst.projectName());
+            if (JulLog.isInfoEnabled()) {
+                JulLog.info("{} init start.", SysConst.projectName());
+            }
             // 禁用fx的css日志
             FXUtil.disableCSSLogger();
             // 配置对象

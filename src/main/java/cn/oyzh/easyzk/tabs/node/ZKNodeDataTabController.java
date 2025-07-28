@@ -1,6 +1,7 @@
 package cn.oyzh.easyzk.tabs.node;
 
 import cn.oyzh.common.file.FileUtil;
+import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.event.ZKEventUtil;
@@ -20,6 +21,7 @@ import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -150,22 +152,26 @@ public class ZKNodeDataTabController extends SubTabController {
         if (this.activeItem().isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
+        DownLatch latch = DownLatch.of();
+        // 刷新数据
         StageManager.showMask(() -> {
-            // 刷新数据
             try {
                 this.activeItem().refreshData();
-                // 数据变更
-                this.showData();
-                // 刷新tab颜色
-                this.flushTabGraphicColor();
-                // 按钮处理
-                this.nodeData.forgetHistory();
-                this.dataSave.disable();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);
+            } finally {
+                latch.countDown();
             }
         });
+        latch.await();
+        // 数据变更
+        this.showData();
+        // 刷新tab颜色
+        this.flushTabGraphicColor();
+        // 按钮处理
+        this.nodeData.forgetHistory();
+        this.dataSave.disable();
     }
 
     /**
@@ -318,7 +324,8 @@ public class ZKNodeDataTabController extends SubTabController {
     protected void showData(RichDataType dataType) {
         byte[] bytes = this.activeItem().getData();
         bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
-        this.nodeData.showData(dataType, bytes);
+        byte[] finalBytes = bytes;
+        StageManager.showMask(() -> FXUtil.runWait(() -> this.nodeData.showData(dataType, finalBytes)));
     }
 
     /**
@@ -358,40 +365,46 @@ public class ZKNodeDataTabController extends SubTabController {
         // redo监听
         this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         // 字符集选择事件
-        this.charset.selectedItemChanged((t3, t2, t1) -> StageManager.showMask(this::showData));
+        this.charset.selectedItemChanged((t3, t2, t1) -> {
+            // StageManager.showMask(this::showData)
+            this.showData();
+        });
         // 节点内容过滤
-        this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> StageManager.showMask(() -> this.nodeData.setHighlightText(newValue)));
+        this.dataSearch.addTextChangeListener((observable, oldValue, newValue) -> {
+            // StageManager.showMask(() -> this.nodeData.setHighlightText(newValue))
+            this.nodeData.setHighlightText(newValue);
+        });
         // 格式监听
         this.format.selectedItemChanged((t1, t2, t3) -> {
-            StageManager.showMask(() -> {
-                try {
-                    if (this.format.isStringFormat()) {
-                        this.showData(RichDataType.STRING);
-                        this.nodeData.setEditable(true);
-                    } else if (this.format.isJsonFormat()) {
-                        this.showData(RichDataType.JSON);
-                        this.nodeData.setEditable(true);
-                    } else if (this.format.isXmlFormat()) {
-                        this.showData(RichDataType.XML);
-                        this.nodeData.setEditable(true);
-                    } else if (this.format.isHtmlFormat()) {
-                        this.showData(RichDataType.HTML);
-                        this.nodeData.setEditable(true);
-                    } else if (this.format.isBinaryFormat()) {
-                        this.showData(RichDataType.BINARY);
-                        this.nodeData.setEditable(false);
-                    } else if (this.format.isHexFormat()) {
-                        this.showData(RichDataType.HEX);
-                        this.nodeData.setEditable(false);
-                    } else if (this.format.isRawFormat()) {
-                        this.showData(RichDataType.RAW);
-                        this.nodeData.setEditable(this.nodeData.getRealType() == RichDataType.STRING);
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    MessageBox.exception(ex);
+            // StageManager.showMask(() -> {
+            try {
+                if (this.format.isStringFormat()) {
+                    this.showData(RichDataType.STRING);
+                    this.nodeData.setEditable(true);
+                } else if (this.format.isJsonFormat()) {
+                    this.showData(RichDataType.JSON);
+                    this.nodeData.setEditable(true);
+                } else if (this.format.isXmlFormat()) {
+                    this.showData(RichDataType.XML);
+                    this.nodeData.setEditable(true);
+                } else if (this.format.isHtmlFormat()) {
+                    this.showData(RichDataType.HTML);
+                    this.nodeData.setEditable(true);
+                } else if (this.format.isBinaryFormat()) {
+                    this.showData(RichDataType.BINARY);
+                    this.nodeData.setEditable(false);
+                } else if (this.format.isHexFormat()) {
+                    this.showData(RichDataType.HEX);
+                    this.nodeData.setEditable(false);
+                } else if (this.format.isRawFormat()) {
+                    this.showData(RichDataType.RAW);
+                    this.nodeData.setEditable(this.nodeData.getRealType() == RichDataType.STRING);
                 }
-            });
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+            // });
         });
         // 节点内容变更
         this.nodeData.addTextChangeListener((observable, oldValue, newValue) -> {

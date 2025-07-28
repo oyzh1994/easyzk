@@ -135,6 +135,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
      */
     public void cancelConnect() {
         this.canceled = true;
+        this.stopWaiting();
         StageManager.showMask(() -> this.client.close());
     }
 

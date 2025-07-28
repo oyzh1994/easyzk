@@ -235,51 +235,6 @@
         <!--                </FXHBox>-->
         <!--            </FXVBox>-->
         <!--        </FXTab>-->
-        <FXTab text="%base.jumpHosts">
-            <FXVBox flexWidth="100%" flexHeight="100%">
-                <FXHBox realHeight="30">
-                    <AddSVGGlyph tipText="%base.add" onMousePrimaryClicked="#addJump">
-                        <FXHBox.margin>
-                            <Insets left="30" top="7"/>
-                        </FXHBox.margin>
-                    </AddSVGGlyph>
-                    <EditSVGGlyph tipText="%base.update" onMousePrimaryClicked="#updateJump">
-                        <FXHBox.margin>
-                            <Insets left="5" top="7"/>
-                        </FXHBox.margin>
-                    </EditSVGGlyph>
-                    <DeleteSVGGlyph tipText="%base.delete" onMousePrimaryClicked="#deleteJump">
-                        <FXHBox.margin>
-                            <Insets left="5" top="7"/>
-                        </FXHBox.margin>
-                    </DeleteSVGGlyph>
-                    <MoveUpSVGGlyph tipText="%base.moveUp" onMousePrimaryClicked="#moveJumpUp">
-                        <FXHBox.margin>
-                            <Insets left="5" top="7"/>
-                        </FXHBox.margin>
-                    </MoveUpSVGGlyph>
-                    <MoveDownSVGGlyph tipText="%base.moveDown" onMousePrimaryClicked="#moveJumpDown">
-                        <FXHBox.margin>
-                            <Insets left="5" top="7"/>
-                        </FXHBox.margin>
-                    </MoveDownSVGGlyph>
-                    <FXVBox.margin>
-                        <Insets top="10"/>
-                    </FXVBox.margin>
-                </FXHBox>
-                <ZKJumpTableView fx:id="jumpTableView" flexWidth="100% - 50" flexHeight="100% - 50">
-                    <columns>
-                        <FXTableColumn prefWidth="150" valueName="name" text="%base.name"/>
-                        <FXTableColumn flexWidth="100% - 365" valueName="host" text="%base.host"/>
-                        <FXTableColumn prefWidth="100" valueName="port" text="%base.port"/>
-                        <FXTableColumn prefWidth="100" valueName="enabledStatus" text="%base.status"/>
-                    </columns>
-                    <FXVBox.margin>
-                        <Insets left="30" top="7"/>
-                    </FXVBox.margin>
-                </ZKJumpTableView>
-            </FXVBox>
-        </FXTab>
         <FXTab text="SASL" fx:id="saslTab">
             <FXVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.enableSASLAuth">
@@ -326,6 +281,51 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
+            </FXVBox>
+        </FXTab>
+        <FXTab text="%base.jumpHosts">
+            <FXVBox flexWidth="100%" flexHeight="100%">
+                <FXHBox realHeight="30">
+                    <AddSVGGlyph tipText="%base.add" onMousePrimaryClicked="#addJump">
+                        <FXHBox.margin>
+                            <Insets left="30" top="7"/>
+                        </FXHBox.margin>
+                    </AddSVGGlyph>
+                    <EditSVGGlyph tipText="%base.update" onMousePrimaryClicked="#updateJump">
+                        <FXHBox.margin>
+                            <Insets left="5" top="7"/>
+                        </FXHBox.margin>
+                    </EditSVGGlyph>
+                    <DeleteSVGGlyph tipText="%base.delete" onMousePrimaryClicked="#deleteJump">
+                        <FXHBox.margin>
+                            <Insets left="5" top="7"/>
+                        </FXHBox.margin>
+                    </DeleteSVGGlyph>
+                    <MoveUpSVGGlyph tipText="%base.moveUp" onMousePrimaryClicked="#moveJumpUp">
+                        <FXHBox.margin>
+                            <Insets left="5" top="7"/>
+                        </FXHBox.margin>
+                    </MoveUpSVGGlyph>
+                    <MoveDownSVGGlyph tipText="%base.moveDown" onMousePrimaryClicked="#moveJumpDown">
+                        <FXHBox.margin>
+                            <Insets left="5" top="7"/>
+                        </FXHBox.margin>
+                    </MoveDownSVGGlyph>
+                    <FXVBox.margin>
+                        <Insets top="10"/>
+                    </FXVBox.margin>
+                </FXHBox>
+                <ZKJumpTableView fx:id="jumpTableView" flexWidth="100% - 50" flexHeight="100% - 50">
+                    <columns>
+                        <FXTableColumn prefWidth="150" valueName="name" text="%base.name"/>
+                        <FXTableColumn flexWidth="100% - 365" valueName="host" text="%base.host"/>
+                        <FXTableColumn prefWidth="100" valueName="port" text="%base.port"/>
+                        <FXTableColumn prefWidth="100" valueName="enabledStatus" text="%base.status"/>
+                    </columns>
+                    <FXVBox.margin>
+                        <Insets left="30" top="7"/>
+                    </FXVBox.margin>
+                </ZKJumpTableView>
             </FXVBox>
         </FXTab>
         <FXTab text="%base.auth">

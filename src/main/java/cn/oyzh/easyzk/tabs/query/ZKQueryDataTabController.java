@@ -2,13 +2,13 @@ package cn.oyzh.easyzk.tabs.query;
 
 import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.editor.EditorFormatType;
+import cn.oyzh.fx.editor.EditorFormatTypeComboBox;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
-import cn.oyzh.fx.rich.RichDataType;
-import cn.oyzh.fx.rich.RichDataTypeComboBox;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 
@@ -64,7 +64,7 @@ public class ZKQueryDataTabController extends RichTabController {
      * 格式
      */
     @FXML
-    private RichDataTypeComboBox format;
+    private EditorFormatTypeComboBox format;
 
     public void init(String path, byte[] bytes, ZKClient zkClient) {
         this.path = path;
@@ -72,40 +72,40 @@ public class ZKQueryDataTabController extends RichTabController {
         // 处理数据
         byte[] bytes1 = bytes == null ? new byte[]{} : bytes;
         // 显示检测后的数据
-        RichDataType dataType = this.data.showDetectData(new String(bytes1));
+        EditorFormatType formatType = this.data.showDetectData(new String(bytes1));
         // 遗忘历史
         this.data.forgetHistory();
         // 选中格式
-        this.format.selectObj(dataType);
+        this.format.selectObj(formatType);
         // 绑定监听器
         this.data.addTextChangeListener((observable, oldValue, newValue) -> this.save.enable());
         this.data.undoableProperty().addListener((observable, oldValue, newValue) -> this.undo.setDisable(!newValue));
         this.data.redoableProperty().addListener((observable, oldValue, newValue) -> this.redo.setDisable(!newValue));
-        // 格式监听
-        this.format.selectedItemChanged((t1, t2, t3) -> {
-            if (this.format.isStringFormat()) {
-                this.data.showStringData(bytes1);
-                this.data.setEditable(true);
-            } else if (this.format.isJsonFormat()) {
-                this.data.showJsonData(bytes1);
-                this.data.setEditable(true);
-            } else if (this.format.isXmlFormat()) {
-                this.data.showXmlData(bytes1);
-                this.data.setEditable(true);
-            } else if (this.format.isHtmlFormat()) {
-                this.data.showHtmlData(bytes1);
-                this.data.setEditable(true);
-            } else if (this.format.isBinaryFormat()) {
-                this.data.showBinaryData(bytes1);
-                this.data.setEditable(false);
-            } else if (this.format.isHexFormat()) {
-                this.data.showHexData(bytes1);
-                this.data.setEditable(false);
-            } else if (this.format.isRawFormat()) {
-                this.data.showRawData(bytes1);
-                this.data.setEditable(this.data.getRealType() == RichDataType.STRING);
-            }
-        });
+        // // 格式监听
+        // this.format.selectedItemChanged((t1, t2, t3) -> {
+        //     if (this.format.isRawFormat()) {
+        //         this.data.showStringData(bytes1);
+        //         this.data.setEditable(true);
+        //     } else if (this.format.isJsonFormat()) {
+        //         this.data.showJsonData(bytes1);
+        //         this.data.setEditable(true);
+        //     } else if (this.format.isXmlFormat()) {
+        //         this.data.showXmlData(bytes1);
+        //         this.data.setEditable(true);
+        //     } else if (this.format.isHtmlFormat()) {
+        //         this.data.showHtmlData(bytes1);
+        //         this.data.setEditable(true);
+        //     } else if (this.format.isBinaryFormat()) {
+        //         this.data.showBinaryData(bytes1);
+        //         this.data.setEditable(false);
+        //     } else if (this.format.isHexFormat()) {
+        //         this.data.showHexData(bytes1);
+        //         this.data.setEditable(false);
+        //     } else if (this.format.isRawFormat()) {
+        //         this.data.showRawData(bytes1);
+        //         this.data.setEditable(this.data.getRealType() == RichDataType.STRING);
+        //     }
+        // });
         // 过滤内容
         this.filter.addTextChangeListener((observableValue, s, t1) -> {
             this.data.setHighlightText(t1);

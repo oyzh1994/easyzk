@@ -3,8 +3,8 @@ package cn.oyzh.easyzk.query;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
+import cn.oyzh.fx.editor.EditorPane;
 import cn.oyzh.fx.plus.font.FontManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import javafx.scene.text.Font;
 
 import java.util.Set;
@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryTextAreaPane extends RichDataTextAreaPane {
+public class ZKQueryTextAreaPane extends EditorPane {
 
     /**
      * zk客户端
@@ -65,10 +65,10 @@ public class ZKQueryTextAreaPane extends RichDataTextAreaPane {
     }
 
     @Override
-    public void initContentPrompts() {
+    public void initPrompts() {
         // 设置内容提示符
         Set<String> set = ZKQueryUtil.getKeywords();
         set.addAll(ZKQueryUtil.getParams());
-        this.setContentPrompts(set);
+        this.setPrompts(set);
     }
 }

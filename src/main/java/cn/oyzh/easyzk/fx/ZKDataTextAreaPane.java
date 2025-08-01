@@ -2,29 +2,27 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
+import cn.oyzh.fx.editor.EditorPane;
 import cn.oyzh.fx.plus.font.FontManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.RichDataType;
 import javafx.scene.text.Font;
 
 /**
  * @author oyzh
  * @since 2024/12/29
  */
-public class ZKDataTextAreaPane extends RichDataTextAreaPane {
+public class ZKDataTextAreaPane extends EditorPane {
 
-    @Override
-    public void initNode() {
-        RichDataTextArea textArea = super.getContent();
-        // 200k
-        textArea.setStyleBound(RichDataType.HEX, 200 * 1024 * 1024);
-        // 500k
-        textArea.setStyleBound(RichDataType.JSON, 500 * 1024 * 1024);
-        // 100k
-        textArea.setStyleBound(RichDataType.BINARY, 100 * 1024 * 1024);
-        super.initNode();
-    }
+    // @Override
+    // public void initNode() {
+    //     Editor textArea = super.getContent();
+    //     // 200k
+    //     textArea.setStyleBound(RichDataType.HEX, 200 * 1024 * 1024);
+    //     // 500k
+    //     textArea.setStyleBound(RichDataType.JSON, 500 * 1024 * 1024);
+    //     // 100k
+    //     textArea.setStyleBound(RichDataType.BINARY, 100 * 1024 * 1024);
+    //     super.initNode();
+    // }
 
     @Override
     protected Font initFont() {

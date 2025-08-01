@@ -138,10 +138,10 @@
             <artifactId>base-ssh</artifactId>
         </dependency>
 
-        <!-- fx-富文本模块 -->
+        <!-- fx-编辑器模块 -->
         <dependency>
             <groupId>io.github.oyzh1994</groupId>
-            <artifactId>fx-rich</artifactId>
+            <artifactId>fx-editor</artifactId>
         </dependency>
 
         <!-- fx-gui模块 -->

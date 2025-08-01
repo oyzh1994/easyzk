@@ -5,9 +5,11 @@ import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.event.ZKEventUtil;
+import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
 import cn.oyzh.easyzk.popups.ZKNodeQRCodePopupController;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
+import cn.oyzh.fx.editor.EditorFormatTypeComboBox;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
@@ -21,13 +23,9 @@ import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
-import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.RichDataType;
-import cn.oyzh.fx.rich.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -91,13 +89,13 @@ public class ZKNodeDataTabController extends SubTabController {
      * 右侧zk数据
      */
     @FXML
-    private RichDataTextAreaPane nodeData;
+    private ZKDataTextAreaPane nodeData;
 
     /**
      * 格式
      */
     @FXML
-    protected RichDataTypeComboBox format;
+    protected EditorFormatTypeComboBox format;
 
     /**
      * 数据面板
@@ -311,22 +309,23 @@ public class ZKNodeDataTabController extends SubTabController {
         // 转换编码
         bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
         // 显示检测后的数据
-        RichDataType dataType = this.nodeData.showDetectData(new String(bytes, this.charset.getCharset()));
-        // 选中格式
-        this.format.selectObj(dataType);
+        // RichDataType dataType = this.nodeData.showDetectData(new String(bytes, this.charset.getCharset()));
+        // // 选中格式
+        // this.format.selectObj(dataType);
+        this.nodeData.showDetectData(new String(bytes, this.charset.getCharset()));
     }
 
-    /**
-     * 显示数据
-     *
-     * @param dataType 数据类型
-     */
-    protected void showData(RichDataType dataType) {
-        byte[] bytes = this.activeItem().getData();
-        bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
-        byte[] finalBytes = bytes;
-        StageManager.showMask(() -> FXUtil.runWait(() -> this.nodeData.showData(dataType, finalBytes)));
-    }
+    // /**
+    //  * 显示数据
+    //  *
+    //  * @param dataType 数据类型
+    //  */
+    // protected void showData(RichDataType dataType) {
+    //     byte[] bytes = this.activeItem().getData();
+    //     bytes = TextUtil.changeCharset(bytes, Charset.defaultCharset(), this.charset.getCharset());
+    //     byte[] finalBytes = bytes;
+    //     StageManager.showMask(() -> FXUtil.runWait(() -> this.nodeData.showData(dataType, finalBytes)));
+    // }
 
     /**
      * 初始化数据
@@ -374,38 +373,38 @@ public class ZKNodeDataTabController extends SubTabController {
             // StageManager.showMask(() -> this.nodeData.setHighlightText(newValue))
             this.nodeData.setHighlightText(newValue);
         });
-        // 格式监听
-        this.format.selectedItemChanged((t1, t2, t3) -> {
-            // StageManager.showMask(() -> {
-            try {
-                if (this.format.isStringFormat()) {
-                    this.showData(RichDataType.STRING);
-                    this.nodeData.setEditable(true);
-                } else if (this.format.isJsonFormat()) {
-                    this.showData(RichDataType.JSON);
-                    this.nodeData.setEditable(true);
-                } else if (this.format.isXmlFormat()) {
-                    this.showData(RichDataType.XML);
-                    this.nodeData.setEditable(true);
-                } else if (this.format.isHtmlFormat()) {
-                    this.showData(RichDataType.HTML);
-                    this.nodeData.setEditable(true);
-                } else if (this.format.isBinaryFormat()) {
-                    this.showData(RichDataType.BINARY);
-                    this.nodeData.setEditable(false);
-                } else if (this.format.isHexFormat()) {
-                    this.showData(RichDataType.HEX);
-                    this.nodeData.setEditable(false);
-                } else if (this.format.isRawFormat()) {
-                    this.showData(RichDataType.RAW);
-                    this.nodeData.setEditable(this.nodeData.getRealType() == RichDataType.STRING);
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-            // });
-        });
+        // // 格式监听
+        // this.format.selectedItemChanged((t1, t2, t3) -> {
+        //     // StageManager.showMask(() -> {
+        //     try {
+        //         if (this.format.isStringFormat()) {
+        //             this.showData(RichDataType.STRING);
+        //             this.nodeData.setEditable(true);
+        //         } else if (this.format.isJsonFormat()) {
+        //             this.showData(RichDataType.JSON);
+        //             this.nodeData.setEditable(true);
+        //         } else if (this.format.isXmlFormat()) {
+        //             this.showData(RichDataType.XML);
+        //             this.nodeData.setEditable(true);
+        //         } else if (this.format.isHtmlFormat()) {
+        //             this.showData(RichDataType.HTML);
+        //             this.nodeData.setEditable(true);
+        //         } else if (this.format.isBinaryFormat()) {
+        //             this.showData(RichDataType.BINARY);
+        //             this.nodeData.setEditable(false);
+        //         } else if (this.format.isHexFormat()) {
+        //             this.showData(RichDataType.HEX);
+        //             this.nodeData.setEditable(false);
+        //         } else if (this.format.isRawFormat()) {
+        //             this.showData(RichDataType.RAW);
+        //             this.nodeData.setEditable(this.nodeData.getRealType() == RichDataType.STRING);
+        //         }
+        //     } catch (Exception ex) {
+        //         ex.printStackTrace();
+        //         MessageBox.exception(ex);
+        //     }
+        //     // });
+        // });
         // 节点内容变更
         this.nodeData.addTextChangeListener((observable, oldValue, newValue) -> {
             if (this.nodeData.isDisable()) {

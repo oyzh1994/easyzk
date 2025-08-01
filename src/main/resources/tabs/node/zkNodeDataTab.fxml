@@ -18,9 +18,9 @@
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
-<?import cn.oyzh.fx.rich.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.editor.EditorFormatTypeComboBox?>
 <FXTab text="%base.data" fx:id="dataTab" xmlns:fx="http://javafx.com/fxml/1"
        fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeDataTabController">
     <graphic>
@@ -28,11 +28,11 @@
     </graphic>
     <FXVBox flexWidth="100%" flexHeight="100%">
         <FXHBox realHeight="30" flexWidth="100%">
-            <RichDataTypeComboBox prefHeight="22" fx:id="format" initIndex="0" groupId="dataToBig">
+            <EditorFormatTypeComboBox prefHeight="22" fx:id="format" initIndex="0" groupId="dataToBig">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
-            </RichDataTypeComboBox>
+            </EditorFormatTypeComboBox>
             <SaveSVGGlyph fx:id="dataSave" disable="true" size="16" tipText="%base.saveTip1"
                           onMousePrimaryClicked="#saveNodeData" groupId="dataToBig">
                 <HBox.margin>

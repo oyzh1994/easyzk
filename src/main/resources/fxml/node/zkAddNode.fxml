@@ -20,6 +20,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.editor.Editor?>
+<?import cn.oyzh.fx.editor.EditorPane?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.controller.node.ZKAddNodeController" realWidth="750" realHeight="650">
     <FXTabPane flexWidth="100%" flexHeight="100% - 80">
@@ -65,13 +66,13 @@
                         </VBox.margin>
                     </InfoLabel>
                     <FXHBox flexHeight="100% - 40">
-                        <Editor fx:id="nodeData" flexHeight="100%"
-                                          tipText="%base.dataTip"
-                                          flexWidth="100% - 140">
+                        <EditorPane fx:id="nodeData" flexHeight="100%"
+                                    tipText="%base.dataTip"
+                                    flexWidth="100% - 140">
                             <HBox.margin>
                                 <Insets left="30" top="5"/>
                             </HBox.margin>
-                        </Editor>
+                        </EditorPane>
                         <FXVBox>
                             <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                                 <VBox.margin>

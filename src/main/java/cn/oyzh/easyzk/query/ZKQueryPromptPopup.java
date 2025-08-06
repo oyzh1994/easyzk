@@ -217,7 +217,7 @@ public class ZKQueryPromptPopup extends FXPopup {
      * @param area  文本域
      * @param event 键盘按键事件
      */
-    public void prompt( ZKQueryTextAreaPane area,  KeyEvent event) {
+    public void prompt(ZKQueryTextAreaPane area, KeyEvent event) {
         // 常规按键不处理
         if (this.isGeneralKeyEvent(event)) {
             this.hide();
@@ -313,8 +313,7 @@ public class ZKQueryPromptPopup extends FXPopup {
     public void autoComplete(ZKQueryTextAreaPane area, ZKQueryPromptItem item) {
         try {
             if (this.token != null) {
-                IndexRange range = new IndexRange(this.token.getStartIndex(), this.token.getEndIndex());
-                area.replaceText(range, item.getContent());
+                area.replaceText(this.token.getStartIndex(), this.token.getEndIndex(), item.getContent());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

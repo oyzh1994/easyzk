@@ -147,7 +147,7 @@ public class ZKFilter implements ObjectComparator<ZKFilter>, ObjectCopier<ZKFilt
     @JSONField(serialize = false, deserialize = false)
     public MatchToggleSwitch getMatchModeControl() {
         MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
-        toggleSwitch.fontSize(11);
+        toggleSwitch.setFontSize(11);
         toggleSwitch.setSelected(this.isPartMatch());
         toggleSwitch.selectedChanged((obs, o, n) -> this.setPartMatch(n));
         TableViewUtil.selectRowOnMouseClicked(toggleSwitch);

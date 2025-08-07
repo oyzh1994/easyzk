@@ -35,22 +35,29 @@ public class ZKTerminalTextAreaPane extends TerminalTextAreaPane {
         this.completeHandler(ZKTerminalCompleteHandler.INSTANCE);
     }
 
-    @Override
-    public void initNode() {
-        super.initNode();
-        super.initPrompts();
-    }
+//     @Override
+//     public void initNode() {
+//         super.initNode();
+//         super.initPrompts();
+//     }
+//
+//     @Override
+//     protected Font initFont() {
+// //        // 禁用字体管理
+// //        super.disableFont();
+//         // 初始化字体
+//         ZKSetting setting = ZKSettingStore.SETTING;
+// //        this.setFontSize(setting.getTerminalFontSize());
+// //        this.setFontFamily(setting.getTerminalFontFamily());
+// //        this.setFontWeight2(setting.getTerminalFontWeight());
+//         return FontManager.toFont(setting.terminalFontConfig());
+//     }
 
     @Override
-    protected Font initFont() {
-//        // 禁用字体管理
-//        super.disableFont();
-        // 初始化字体
+    public void changeFont(Font font) {
         ZKSetting setting = ZKSettingStore.SETTING;
-//        this.setFontSize(setting.getTerminalFontSize());
-//        this.setFontFamily(setting.getTerminalFontFamily());
-//        this.setFontWeight2(setting.getTerminalFontWeight());
-        return FontManager.toFont(setting.terminalFontConfig());
+        Font font1= FontManager.toFont(setting.terminalFontConfig());
+        super.changeFont(font1);
     }
 
     /**

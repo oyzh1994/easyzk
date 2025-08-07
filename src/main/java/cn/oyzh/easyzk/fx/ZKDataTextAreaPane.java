@@ -23,16 +23,23 @@ public class ZKDataTextAreaPane extends EditorPane {
     //     textArea.setStyleBound(RichDataType.BINARY, 100 * 1024 * 1024);
     //     super.initNode();
     // }
+//
+//     @Override
+//     protected Font initFont() {
+// //        // 禁用字体管理
+// //        super.disableFont();
+//         // 初始化字体
+//         ZKSetting setting = ZKSettingStore.SETTING;
+// //        this.setFontSize(setting.getEditorFontSize());
+// //        this.setFontFamily(setting.getEditorFontFamily());
+// //        this.setFontWeight2(setting.getEditorFontWeight());
+//         return FontManager.toFont(setting.editorFontConfig());
+//     }
 
     @Override
-    protected Font initFont() {
-//        // 禁用字体管理
-//        super.disableFont();
-        // 初始化字体
+    public void changeFont(Font font) {
         ZKSetting setting = ZKSettingStore.SETTING;
-//        this.setFontSize(setting.getEditorFontSize());
-//        this.setFontFamily(setting.getEditorFontFamily());
-//        this.setFontWeight2(setting.getEditorFontWeight());
-        return FontManager.toFont(setting.editorFontConfig());
+        Font font1 = FontManager.toFont(setting.editorFontConfig());
+        super.changeFont(font1);
     }
 }

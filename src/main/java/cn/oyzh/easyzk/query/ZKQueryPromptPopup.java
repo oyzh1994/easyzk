@@ -292,7 +292,7 @@ public class ZKQueryPromptPopup extends FXPopup {
         RenderService.submitFXLater(() -> {
             Optional<Bounds> optional = area.getCaretBounds();
             // 显示提示词
-            optional.ifPresent(value -> this.show(area, value.getCenterX() - 20, value.getCenterY() + 20));
+            optional.ifPresent(value -> this.show(area, value.getCenterX() - 20, value.getCenterY() + 5));
         });
     }
 

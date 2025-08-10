@@ -91,9 +91,8 @@ public class ZKToolController extends StageController {
     }
 
     @Override
-    public void onWindowShown(WindowEvent event) {
-        this.stage.switchOnTab();
-        this.stage.hideOnEscape();
+    protected void bindListeners() {
+        super.bindListeners();
         this.user.addTextChangeListener((observableValue, s, t1) -> {
             // 内容包含“:”，则直接切割字符为用户名密码
             if (t1 != null && t1.contains(":")) {
@@ -104,6 +103,14 @@ public class ZKToolController extends StageController {
             }
         });
         this.pwd.addTextChangeListener((observableValue, s, t1) -> this.digest.clear());
+
+    }
+
+    @Override
+    public void onWindowShown(WindowEvent event) {
+        this.stage.switchOnTab();
+        this.stage.hideOnEscape();
+        super.onWindowShown(event);
     }
 
     @Override

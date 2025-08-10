@@ -289,11 +289,8 @@ public class ZKNodeImportController extends StageController {
     }
 
     @Override
-    public void onWindowShown(WindowEvent event) {
-        this.zkClient = this.getProp("zkClient");
-        this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
-        this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StringUtil.isNotBlank(t1)));
-        this.stage.hideOnEscape();
+    protected void bindListeners() {
+        super.bindListeners();
         // 文件拖拽相关
         this.stage.scene().setOnDragOver(event1 -> {
             this.stage.disable();
@@ -311,6 +308,15 @@ public class ZKNodeImportController extends StageController {
             event1.setDropCompleted(true);
             event1.consume();
         });
+    }
+
+    @Override
+    public void onWindowShown(WindowEvent event) {
+        this.zkClient = this.getProp("zkClient");
+        this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
+        this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StringUtil.isNotBlank(t1)));
+        super.onWindowShown(event);
+        this.stage.hideOnEscape();
     }
 
     @Override

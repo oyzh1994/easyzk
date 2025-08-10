@@ -180,12 +180,8 @@ public class ZKAuthNodeController extends StageController {
     }
 
     @Override
-    public void onWindowShown(WindowEvent event) {
-        this.zkItem = this.getProp("zkItem");
-        this.zkNode = this.zkItem.value();
-        this.nodePath.setText(this.zkNode.decodeNodePath());
-        this.mutexes.addNodes(this.authType1, this.authType2);
-        this.mutexes.manageBindVisible();
+    protected void bindListeners() {
+        super.bindListeners();
         this.authType.selectedIndexChanged((o, toggle, t1) -> {
             if (t1.intValue() == 0) {
                 this.mutexes.visible(this.authType1);
@@ -193,6 +189,23 @@ public class ZKAuthNodeController extends StageController {
                 this.mutexes.visible(this.authType2);
             }
         });
+        this.user.addTextChangeListener((observableValue, s, t1) -> {
+            // 内容包含“:”，则直接切割字符为用户名密码
+            if (t1 != null && t1.contains(":")) {
+                this.user.setText(t1.split(":")[0]);
+                this.password.setText(t1.split(":")[1]);
+            }
+        });
+    }
+
+    @Override
+    public void onWindowShown(WindowEvent event) {
+        this.zkItem = this.getProp("zkItem");
+        this.zkNode = this.zkItem.value();
+        this.nodePath.setText(this.zkNode.decodeNodePath());
+        this.mutexes.addNodes(this.authType1, this.authType2);
+        this.mutexes.manageBindVisible();
+
         this.authList.getItems().clear();
         ZKClient client = this.zkItem.client();
         List<ZKAuth> authList = this.authStore.load(client.iid());
@@ -219,16 +232,9 @@ public class ZKAuthNodeController extends StageController {
         } else if (this.zkNode.aclEmpty() && !authList.isEmpty()) {// 选中摘要列表认证
             this.authType.select(1);
         }
+        super.onWindowShown(event);
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
-
-        this.user.addTextChangeListener((observableValue, s, t1) -> {
-            // 内容包含“:”，则直接切割字符为用户名密码
-            if (t1 != null && t1.contains(":")) {
-                this.user.setText(t1.split(":")[0]);
-                this.password.setText(t1.split(":")[1]);
-            }
-        });
     }
 
     @Override

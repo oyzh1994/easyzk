@@ -60,6 +60,7 @@ public class AboutController extends StageController {
         // 设置标题
         this.stage.appendTitle(" " + this.project.getName());
         this.stage.hideOnEscape();
+        super.onWindowShown(event);
     }
 
     @Override

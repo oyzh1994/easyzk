@@ -306,13 +306,14 @@ public class ZKQueryPromptPopup extends FXPopup {
     /**
      * 执行自动完成
      *
-     * @param area 文本域
-     * @param item 提示内容
+     * @param editor 编辑器
+     * @param item   提示内容
      */
-    public void autoComplete(ZKQueryEditorPane area, ZKQueryPromptItem item) {
+    public void autoComplete(ZKQueryEditorPane editor, ZKQueryPromptItem item) {
         try {
             if (this.token != null) {
-                area.replaceText(this.token.getStartIndex(), this.token.getEndIndex(), item.getContent());
+                editor.replaceText(this.token.getStartIndex(), this.token.getEndIndex(), item.getContent());
+                editor.positionCaret(this.token.getEndIndex() + item.getContent().length() - 1);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

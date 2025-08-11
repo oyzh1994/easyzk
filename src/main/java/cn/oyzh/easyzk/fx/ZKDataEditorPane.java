@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
  * @author oyzh
  * @since 2024/12/29
  */
-public class ZKDataTextAreaPane extends EditorPane {
+public class ZKDataEditorPane extends EditorPane {
 
     // @Override
     // public void initNode() {

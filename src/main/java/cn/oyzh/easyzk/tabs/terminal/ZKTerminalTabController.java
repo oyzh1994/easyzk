@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.tabs.terminal;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
+import cn.oyzh.easyzk.terminal.ZKTerminalPane;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.RichTabController;
@@ -20,7 +20,7 @@ public class ZKTerminalTabController extends RichTabController {
      * 命令行文本域
      */
     @FXML
-    private ZKTerminalTextAreaPane terminal;
+    private ZKTerminalPane terminal;
 
     /**
      * 设置客户端

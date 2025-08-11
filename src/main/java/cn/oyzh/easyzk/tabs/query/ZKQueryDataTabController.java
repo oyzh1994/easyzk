@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
+import cn.oyzh.easyzk.fx.ZKDataEditorPane;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.editor.EditorFormatType;
 import cn.oyzh.fx.editor.EditorFormatTypeComboBox;
@@ -58,7 +58,7 @@ public class ZKQueryDataTabController extends RichTabController {
      * 数据
      */
     @FXML
-    private ZKDataTextAreaPane data;
+    private ZKDataEditorPane data;
 
     /**
      * 格式

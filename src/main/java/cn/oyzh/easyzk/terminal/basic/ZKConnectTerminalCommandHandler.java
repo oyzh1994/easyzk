@@ -1,7 +1,7 @@
 package cn.oyzh.easyzk.terminal.basic;
 
 import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
+import cn.oyzh.easyzk.terminal.ZKTerminalPane;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -38,7 +38,7 @@ public class ZKConnectTerminalCommandHandler extends ZKTerminalCommandHandler<Te
     }
 
     @Override
-    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalTextAreaPane terminal) {
+    public TerminalExecuteResult execute(TerminalCommand command, ZKTerminalPane terminal) {
         if (terminal.isTemporary()) {
             if (terminal.isConnected()) {
                 terminal.getClient().closeQuiet();

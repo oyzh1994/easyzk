@@ -5,7 +5,7 @@ import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.event.ZKEventUtil;
-import cn.oyzh.easyzk.fx.ZKDataTextAreaPane;
+import cn.oyzh.easyzk.fx.ZKDataEditorPane;
 import cn.oyzh.easyzk.popups.ZKNodeQRCodePopupController;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
@@ -89,7 +89,7 @@ public class ZKNodeDataTabController extends SubTabController {
      * 右侧zk数据
      */
     @FXML
-    private ZKDataTextAreaPane nodeData;
+    private ZKDataEditorPane nodeData;
 
     /**
      * 格式

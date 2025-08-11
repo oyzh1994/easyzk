@@ -11,7 +11,6 @@ import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
-import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -217,7 +216,7 @@ public class ZKQueryPromptPopup extends FXPopup {
      * @param area  文本域
      * @param event 键盘按键事件
      */
-    public void prompt(ZKQueryTextAreaPane area, KeyEvent event) {
+    public void prompt(ZKQueryEditorPane area, KeyEvent event) {
         // 常规按键不处理
         if (this.isGeneralKeyEvent(event)) {
             this.hide();
@@ -288,7 +287,7 @@ public class ZKQueryPromptPopup extends FXPopup {
      *
      * @param area 文本域
      */
-    private void showPrompt(ZKQueryTextAreaPane area) {
+    private void showPrompt(ZKQueryEditorPane area) {
         RenderService.submitFXLater(() -> {
             Optional<Bounds> optional = area.getCaretBounds();
             // 显示提示词
@@ -310,7 +309,7 @@ public class ZKQueryPromptPopup extends FXPopup {
      * @param area 文本域
      * @param item 提示内容
      */
-    public void autoComplete(ZKQueryTextAreaPane area, ZKQueryPromptItem item) {
+    public void autoComplete(ZKQueryEditorPane area, ZKQueryPromptItem item) {
         try {
             if (this.token != null) {
                 area.replaceText(this.token.getStartIndex(), this.token.getEndIndex(), item.getContent());

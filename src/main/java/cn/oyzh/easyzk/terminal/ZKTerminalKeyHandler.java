@@ -6,7 +6,7 @@ import cn.oyzh.fx.terminal.key.TerminalKeyHandler;
  * @author oyzh
  * @since 2023/8/28
  */
-public class ZKTerminalKeyHandler implements TerminalKeyHandler<ZKTerminalTextAreaPane> {
+public class ZKTerminalKeyHandler implements TerminalKeyHandler<ZKTerminalPane> {
 
     /**
      * 当前实例
@@ -14,7 +14,7 @@ public class ZKTerminalKeyHandler implements TerminalKeyHandler<ZKTerminalTextAr
     public static final ZKTerminalKeyHandler INSTANCE = new ZKTerminalKeyHandler();
 
 //    @Override
-//    public boolean onEnterKeyPressed(ZKTerminalTextAreaPane terminal) throws Exception {
+//    public boolean onEnterKeyPressed(ZKTerminalPane terminal) throws Exception {
 //        String input = terminal.getInput();
 //        if (terminal.isTemporary() && !terminal.isConnected()) {
 //            terminal.connect(input);

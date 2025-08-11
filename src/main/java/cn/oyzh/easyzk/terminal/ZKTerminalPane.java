@@ -14,7 +14,6 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalPane;
-import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.text.Font;
@@ -26,7 +25,7 @@ import org.apache.zookeeper.ZooKeeper;
  * @author oyzh
  * @since 2023/7/21
  */
-public class ZKTerminalTextAreaPane extends TerminalPane {
+public class ZKTerminalPane extends TerminalPane {
 
     {
         this.keyHandler(ZKTerminalKeyHandler.INSTANCE);

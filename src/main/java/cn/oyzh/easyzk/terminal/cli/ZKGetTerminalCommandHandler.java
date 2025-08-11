@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.terminal.cli;
 
-import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
+import cn.oyzh.easyzk.terminal.ZKTerminalPane;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.apache.zookeeper.cli.CliCommand;
@@ -35,7 +35,7 @@ public class ZKGetTerminalCommandHandler extends ZKPathTerminalCommandHandler<Te
     }
 
     @Override
-    public String commandHelp(ZKTerminalTextAreaPane terminal) {
+    public String commandHelp(ZKTerminalPane terminal) {
         return super.commandHelp(terminal)  + "\n" +
                 "-s stat";
     }

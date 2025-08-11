@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.terminal.fourletterword;
 
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.terminal.ZKTerminalCommandHandler;
-import cn.oyzh.easyzk.terminal.ZKTerminalTextAreaPane;
+import cn.oyzh.easyzk.terminal.ZKTerminalPane;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import cn.oyzh.fx.terminal.util.TerminalUtil;
@@ -38,7 +38,7 @@ public abstract class ZKFourLetterWordCommandHandler<C extends TerminalCommand> 
     }
 
     @Override
-    public TerminalExecuteResult execute(C command, ZKTerminalTextAreaPane terminal) {
+    public TerminalExecuteResult execute(C command, ZKTerminalPane terminal) {
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             terminal.disable();

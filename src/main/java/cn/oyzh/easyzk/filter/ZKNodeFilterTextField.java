@@ -76,22 +76,22 @@ public class ZKNodeFilterTextField extends LimitTextField {
         return 0;
     }
 
-//    /**
-//     * 获取过滤范围
-//     *
-//     * @return 过滤范围
-//     */
-//    public byte filterScope() {
-//        ZKNodeFilterParam filterParam = this.filterParam();
-//        if (filterParam.isSearchData() && filterParam.isSearchPath()) {
-//            return 2;
-//        }
-//        if (filterParam.isSearchData()) {
-//            return 1;
-//        }
-//        if (filterParam.isSearchPath()) {
-//            return 0;
-//        }
-//        return -1;
-//    }
+   /**
+    * 获取过滤范围
+    *
+    * @return 过滤范围
+    */
+   public byte filterScope() {
+       ZKNodeFilterParam filterParam = this.filterParam();
+       if (filterParam.isSearchData() && filterParam.isSearchPath()) {
+           return 2;
+       }
+       if (filterParam.isSearchData()) {
+           return 1;
+       }
+       if (filterParam.isSearchPath()) {
+           return 0;
+       }
+       return -1;
+   }
 }

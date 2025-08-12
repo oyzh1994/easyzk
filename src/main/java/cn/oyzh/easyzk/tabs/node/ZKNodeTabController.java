@@ -1076,30 +1076,31 @@ public class ZKNodeTabController extends ParentTabController {
         String kw = this.filterKW.getTextTrim();
         // 过滤模式
         byte mode = this.filterKW.filterMode();
-//        // 过滤范围
-//        byte scope = this.filterKW.filterScope();
+        // 过滤范围
+        byte scope = this.filterKW.filterScope();
         // 过滤类型
         int type = this.filterType.getSelectedIndex();
         // 设置高亮是否匹配大小写
         this.treeView.setHighlightMatchCase(mode == 3 || mode == 1);
-//        // 仅在过滤路径的情况下设置节点高亮
-//        if (scope == 2 || scope == 0) {
-        this.treeView.setHighlightText(kw);
-//        } else {
-//            this.treeView.setHighlightText(null);
-//        }
-//        // 仅在过滤数据的情况下设置内容高亮
-//        if (scope == 2 || scope == 1) {
-////            this.nodeData.setHighlightText(kw);
-//            this.dataTabController.setDataHighlight(kw);
-//        } else {
-//            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
-//        }
+        // 仅在过滤路径的情况下设置节点高亮
+        if (scope == 2 || scope == 0) {
+            this.treeView.setHighlightText(kw);
+        } else {
+            this.treeView.setHighlightText(null);
+        }
+        // 仅在过滤数据的情况下设置内容高亮
+        if (scope == 2 || scope == 1) {
+            // this.nodeData.setHighlightText(kw);
+            this.dataTabController.setDataHighlight(kw);
+        // } else {
+            // this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
+        }
         this.treeView.getItemFilter().setKw(kw);
-//        this.treeView.getItemFilter().setScope(scope);
+        this.treeView.getItemFilter().setScope(scope);
         this.treeView.getItemFilter().setMatchMode(mode);
         this.treeView.getItemFilter().setType((byte) type);
-        StageManager.showMask(this.treeView::filter);
+        this.treeView.filter();
+        // StageManager.showMask(this.treeView::filter);
     }
 
     /**

@@ -24,13 +24,13 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
      * 3. 临时节点
      */
     private byte type;
-//
-//    /**
-//     * 0: 路径
-//     * 1: 数据
-//     * 2: 路径+数据
-//     */
-//    private byte scope;
+
+   /**
+    * 0: 路径
+    * 1: 数据
+    * 2: 路径+数据
+    */
+   private byte scope;
 
     /**
      * 关键字
@@ -90,7 +90,7 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
             // 关键字
             if (StringUtil.isNotBlank(this.kw)) {
 //                // 路径
-//                if (this.scope == 0) {
+               if (this.scope == 0) {
                     if (this.matchMode == 0) {
                         return StringUtil.containsIgnoreCase(nodePath, this.kw);
                     }
@@ -103,37 +103,37 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
                     if (this.matchMode == 3) {
                         return StringUtil.equals(nodePath, this.kw);
                     }
-//                } else if (this.scope == 1) {// 数据
-//                    byte[] bytes = treeItem.getData();
-//                    String nodeData = new String(bytes);
-//                    if (this.matchMode == 0) {
-//                        return StringUtil.containsIgnoreCase(nodeData, this.kw);
-//                    }
-//                    if (this.matchMode == 1) {
-//                        return StringUtil.contains(nodeData, this.kw);
-//                    }
-//                    if (this.matchMode == 2) {
-//                        return StringUtil.equalsIgnoreCase(nodeData, this.kw);
-//                    }
-//                    if (this.matchMode == 3) {
-//                        return StringUtil.equals(nodeData, this.kw);
-//                    }
-//                } else if (this.scope == 2) {// 路径+数据
-//                    byte[] bytes = treeItem.getData();
-//                    String nodeData = new String(bytes);
-//                    if (this.matchMode == 0) {
-//                        return StringUtil.containsIgnoreCase(nodePath, this.kw) || StringUtil.containsIgnoreCase(nodeData, this.kw);
-//                    }
-//                    if (this.matchMode == 1) {
-//                        return StringUtil.contains(nodePath, this.kw) || StringUtil.contains(nodeData, this.kw);
-//                    }
-//                    if (this.matchMode == 2) {
-//                        return StringUtil.equalsIgnoreCase(nodePath, this.kw) || StringUtil.equalsIgnoreCase(nodeData, this.kw);
-//                    }
-//                    if (this.matchMode == 3) {
-//                        return StringUtil.equals(nodePath, this.kw) || StringUtil.equals(nodeData, this.kw);
-//                    }
-//                }
+               } else if (this.scope == 1) {// 数据
+                   byte[] bytes = treeItem.getData();
+                   String nodeData = new String(bytes);
+                   if (this.matchMode == 0) {
+                       return StringUtil.containsIgnoreCase(nodeData, this.kw);
+                   }
+                   if (this.matchMode == 1) {
+                       return StringUtil.contains(nodeData, this.kw);
+                   }
+                   if (this.matchMode == 2) {
+                       return StringUtil.equalsIgnoreCase(nodeData, this.kw);
+                   }
+                   if (this.matchMode == 3) {
+                       return StringUtil.equals(nodeData, this.kw);
+                   }
+               } else if (this.scope == 2) {// 路径+数据
+                   byte[] bytes = treeItem.getData();
+                   String nodeData = new String(bytes);
+                   if (this.matchMode == 0) {
+                       return StringUtil.containsIgnoreCase(nodePath, this.kw) || StringUtil.containsIgnoreCase(nodeData, this.kw);
+                   }
+                   if (this.matchMode == 1) {
+                       return StringUtil.contains(nodePath, this.kw) || StringUtil.contains(nodeData, this.kw);
+                   }
+                   if (this.matchMode == 2) {
+                       return StringUtil.equalsIgnoreCase(nodePath, this.kw) || StringUtil.equalsIgnoreCase(nodeData, this.kw);
+                   }
+                   if (this.matchMode == 3) {
+                       return StringUtil.equals(nodePath, this.kw) || StringUtil.equals(nodeData, this.kw);
+                   }
+               }
             }
         }
         return true;
@@ -147,13 +147,13 @@ public class ZKNodeTreeItemFilter implements RichTreeItemFilter {
         this.type = type;
     }
 
-//    public byte getScope() {
-//        return scope;
-//    }
-//
-//    public void setScope(byte scope) {
-//        this.scope = scope;
-//    }
+   public byte getScope() {
+       return scope;
+   }
+
+   public void setScope(byte scope) {
+       this.scope = scope;
+   }
 
     public String getKw() {
         return kw;

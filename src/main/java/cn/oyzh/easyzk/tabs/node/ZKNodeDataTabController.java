@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.tabs.node;
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.fx.ZKDataEditorPane;
@@ -419,18 +420,17 @@ public class ZKNodeDataTabController extends SubTabController {
         });
     }
 
-//    /**
-//     * 设置数据高亮
-//     *
-//     * @param highlight 高亮内容
-//     */
-//    public void setDataHighlight(String highlight) {
-//        if (highlight != null) {
-//            this.nodeData.setHighlightText(highlight);
-//        } else {
-//            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
-//        }
-//    }
+    /**
+     * 设置数据高亮
+     *
+     * @param highlight 高亮内容
+     */
+    public void setDataHighlight(String highlight) {
+        if (StringUtil.isNotBlank(highlight)) {
+            highlight = this.dataSearch.getTextTrim();
+        }
+        this.nodeData.setHighlightText(highlight);
+    }
 
     private ZKNodeTreeItem activeItem() {
         return this.parent().getActiveItem();

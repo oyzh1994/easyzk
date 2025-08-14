@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.query;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.editor.EditorPane;
+import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
 import cn.oyzh.fx.plus.font.FontManager;
 import javafx.scene.text.Font;
 

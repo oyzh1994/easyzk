@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyzk.fx.ZKDataEditorPane?>
-<?import cn.oyzh.fx.editor.EditorFormatTypeComboBox?>
+<?import cn.oyzh.fx.editor.rsyntaxtextarea.EditorFormatTypeComboBox?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
         fx:controller="cn.oyzh.easyzk.tabs.query.ZKQueryDataTabController">
     <FXHBox realHeight="35" flexWidth="100%">

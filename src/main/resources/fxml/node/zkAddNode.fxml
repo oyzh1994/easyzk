@@ -19,8 +19,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.editor.Editor?>
-<?import cn.oyzh.fx.editor.EditorPane?>
+<?import cn.oyzh.fx.editor.rsyntaxtextarea.Editor?>
+<?import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.controller.node.ZKAddNodeController" realWidth="750" realHeight="650">
     <FXTabPane flexWidth="100%" flexHeight="100% - 80">

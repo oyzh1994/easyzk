@@ -8,7 +8,7 @@ import cn.oyzh.easyzk.util.ZKACLUtil;
 import cn.oyzh.easyzk.util.ZKAuthUtil;
 import cn.oyzh.easyzk.util.ZKNodeUtil;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
+import cn.oyzh.fx.editor.tm4javafx.Editor;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -70,7 +70,7 @@ public class ZKAddNodeController extends StageController {
      * 节点数据
      */
     @FXML
-    private EditorPane nodeData;
+    private Editor nodeData;
 
     /**
      * 节点路径预览

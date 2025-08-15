@@ -1,5 +1,6 @@
 package cn.oyzh.easyzk.query;
 
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyzk.util.ZKACLUtil;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.ACL;
@@ -396,6 +397,6 @@ public class ZKQueryParam {
     }
 
     public String getCommand() {
-        return this.params.getFirst();
+        return CollectionUtil.getFirst(this.params);
     }
 }

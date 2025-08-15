@@ -256,7 +256,7 @@ public class ZKQueryPromptPopup extends FXPopup {
             return;
         }
         // 光标位置
-        int cartPos = area.getCaretPosition();
+        int cartPos = area.caretPosition();
         // 文本内容
         String content = area.getText();
         // 获取token

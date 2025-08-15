@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
-import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
+import cn.oyzh.fx.editor.tm4javafx.Editor;
 import cn.oyzh.fx.plus.font.FontManager;
 import javafx.scene.text.Font;
 
@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
  * @author oyzh
  * @since 2024/12/29
  */
-public class ZKDataEditorPane extends EditorPane {
+public class ZKDataEditorPane extends Editor {
 
     // @Override
     // public void initNode() {

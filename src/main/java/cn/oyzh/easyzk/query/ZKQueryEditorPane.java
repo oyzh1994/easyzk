@@ -3,7 +3,7 @@ package cn.oyzh.easyzk.query;
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
 import cn.oyzh.easyzk.zk.ZKClient;
-import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
+import cn.oyzh.fx.editor.tm4javafx.Editor;
 import cn.oyzh.fx.plus.font.FontManager;
 import javafx.scene.text.Font;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryEditorPane extends EditorPane {
+public class ZKQueryEditorPane extends Editor {
 
     /**
      * zk客户端

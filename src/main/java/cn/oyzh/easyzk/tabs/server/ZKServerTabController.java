@@ -8,6 +8,7 @@ import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.gui.tabs.RichTabController;
+import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.table.FXTableColumn;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.i18n.I18nHelper;
@@ -175,7 +176,7 @@ public class ZKServerTabController extends ParentTabController {
     }
 
     @Override
-    public void onTabInit(RichTab tab) {
+    public void onTabInit(FXTab tab) {
         super.onTabInit(tab);
         // 初始化刷新任务
         this.initRefreshTask();

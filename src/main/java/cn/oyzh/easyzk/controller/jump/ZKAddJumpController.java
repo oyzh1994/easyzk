@@ -1,9 +1,11 @@
 package cn.oyzh.easyzk.controller.jump;
 
+import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKJumpConfig;
 import cn.oyzh.easyzk.util.ZKConnectUtil;
 import cn.oyzh.fx.gui.combobox.SSHAuthTypeCombobox;
+import cn.oyzh.fx.gui.text.field.ChooseFileTextField;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PasswordTextField;
@@ -13,17 +15,21 @@ import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.chooser.FXChooser;
 import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.validator.ValidatorUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.ssh.domain.SSHConnect;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
+import org.eclipse.jgit.internal.transport.sshd.agent.connector.PageantConnector;
+import org.eclipse.jgit.internal.transport.sshd.agent.connector.UnixDomainSocketConnector;
 
 import java.io.File;
 
@@ -34,7 +40,6 @@ import java.io.File;
  * @since 2025/05/20
  */
 @StageAttribute(
-        stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "jump/zkAddJump.fxml"
 )
@@ -77,6 +82,12 @@ public class ZKAddJumpController extends StageController {
     private PasswordTextField sshPassword;
 
     /**
+     * ssh agent
+     */
+    @FXML
+    private ReadOnlyTextField sshAgent;
+
+    /**
      * ssh认证方式
      */
     @FXML
@@ -86,13 +97,25 @@ public class ZKAddJumpController extends StageController {
      * ssh证书
      */
     @FXML
-    private ReadOnlyTextField sshCertificate;
+    private ChooseFileTextField sshCertificate;
+
+    /**
+     * ssh证书密码
+     */
+    @FXML
+    private PasswordTextField sshCertificatePwd;
 
     /**
      * 是否启用
      */
     @FXML
     private FXToggleSwitch enable;
+
+    /**
+     * forwardAgent
+     */
+    @FXML
+    private FXCheckBox forwardAgent;
 
     /**
      * 获取连接地址
@@ -121,11 +144,13 @@ public class ZKAddJumpController extends StageController {
             SSHConnect shellConnect = new SSHConnect();
             shellConnect.setHost(this.sshHost.getTextTrim());
             shellConnect.setPort(this.sshPort.getIntValue());
+            shellConnect.setForwardAgent(this.forwardAgent.isSelected());
             // 认证信息
             shellConnect.setUser(this.sshUser.getTextTrim());
             shellConnect.setPassword(this.sshPassword.getPassword());
             shellConnect.setAuthMethod(this.sshAuthMethod.getAuthType());
             shellConnect.setCertificatePath(this.sshCertificate.getTextTrim());
+            shellConnect.setCertificatePwd(this.sshCertificatePwd.getPassword());
             ZKConnectUtil.testSSHConnect(this.stage, shellConnect);
         }
     }
@@ -158,6 +183,9 @@ public class ZKAddJumpController extends StageController {
             String host = this.sshHost.getTextTrim();
             int timeout = this.sshTimeout.getIntValue();
             String authType = this.sshAuthMethod.getAuthType();
+            boolean forwardAgent = this.forwardAgent.isSelected();
+            String certificatePwd = this.sshCertificatePwd.getPassword();
+
             ZKJumpConfig config = new ZKJumpConfig();
             config.setName(name);
             config.setPort(port);
@@ -166,7 +194,9 @@ public class ZKAddJumpController extends StageController {
             config.setPassword(password);
             config.setAuthMethod(authType);
             config.setTimeout(timeout * 1000);
+            config.setForwardAgent(forwardAgent);
             config.setCertificatePath(certificate);
+            config.setCertificatePwd(certificatePwd);
             config.setEnabled(this.enable.isSelected());
             // 设置数据
             this.setProp("jumpConfig", config);
@@ -179,14 +209,21 @@ public class ZKAddJumpController extends StageController {
 
     @Override
     protected void bindListeners() {
+        super.bindListeners();
         // ssh认证方式
         this.sshAuthMethod.selectedIndexChanged((observable, oldValue, newValue) -> {
             if (this.sshAuthMethod.isPasswordAuth()) {
-                this.sshPassword.display();
-                NodeGroupUtil.disappear(this.stage, "sshCertificate");
-            } else {
-                this.sshPassword.disappear();
-                NodeGroupUtil.display(this.stage, "sshCertificate");
+                NodeGroupUtil.display(this.stage, "password");
+                NodeGroupUtil.disappear(this.stage, "sshAgent");
+                NodeGroupUtil.disappear(this.stage, "certificate");
+            } else if (this.sshAuthMethod.isCertificateAuth()) {
+                NodeGroupUtil.display(this.stage, "certificate");
+                NodeGroupUtil.disappear(this.stage, "password");
+                NodeGroupUtil.disappear(this.stage, "sshAgent");
+            } else if (this.sshAuthMethod.isSSHAgentAuth()) {
+                NodeGroupUtil.display(this.stage, "sshAgent");
+                NodeGroupUtil.disappear(this.stage, "password");
+                NodeGroupUtil.disappear(this.stage, "certificate");
             }
         });
     }
@@ -203,14 +240,24 @@ public class ZKAddJumpController extends StageController {
         return I18nHelper.addJumpHost();
     }
 
-    /**
-     * 选择ssh证书
-     */
-    @FXML
-    private void chooseSSHCertificate() {
-        File file = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), FXChooser.allExtensionFilter());
-        if (file != null) {
-            this.sshCertificate.setText(file.getPath());
+    // /**
+    //  * 选择ssh证书
+    //  */
+    // @FXML
+    // private void chooseSSHCertificate() {
+    //     File file = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), FXChooser.allExtensionFilter());
+    //     if (file != null) {
+    //         this.sshCertificate.setText(file.getPath());
+    //     }
+    // }
+
+    @Override
+    public void onStageInitialize(StageAdapter stage) {
+        super.onStageInitialize(stage);
+        if (OSUtil.isWindows()) {
+            this.sshAgent.setText(PageantConnector.DESCRIPTOR.getIdentityAgent());
+        } else {
+            this.sshAgent.setText(UnixDomainSocketConnector.DESCRIPTOR.getIdentityAgent());
         }
     }
 }

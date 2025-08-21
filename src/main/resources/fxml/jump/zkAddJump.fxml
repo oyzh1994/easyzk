@@ -17,6 +17,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.gui.text.field.ChooseFileTextField?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.controller.jump.ZKAddJumpController" realWidth="750"
         realHeight="530">
@@ -92,34 +94,49 @@
             </FXHBox.margin>
         </SSHAuthTypeCombobox>
         <PasswordTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30"
-                           flexWidth="100% - 340">
+                           flexWidth="100% - 340" managedBindVisible="true" groupId="password">
             <HBox.margin>
                 <Insets left="10" top="5"/>
             </HBox.margin>
         </PasswordTextField>
-        <ReadOnlyTextField prefHeight="30" visible="false" managedBindVisible="true" groupId="sshCertificate"
-                           fx:id="sshCertificate" flexWidth="100% - 340">
+        <ReadOnlyTextField prefHeight="30" visible="false" managedBindVisible="true" groupId="sshAgent"
+                           fx:id="sshAgent" flexWidth="100% - 340">
             <HBox.margin>
                 <Insets left="10" top="5"/>
             </HBox.margin>
         </ReadOnlyTextField>
-        <ChooseSVGGlyph visible="false" managedBindVisible="true" groupId="sshCertificate"
-                        onMousePrimaryClicked="#chooseSSHCertificate">
+        <ChooseFileTextField prefHeight="30" visible="false" managedBindVisible="true" groupId="certificate"
+                             fx:id="sshCertificate" flexWidth="100% - 445">
             <HBox.margin>
-                <Insets left="5" top="12"/>
+                <Insets left="10" top="5"/>
             </HBox.margin>
-        </ChooseSVGGlyph>
+        </ChooseFileTextField>
+        <PasswordTextField promptText="%base.passwordOptional" realHeight="30" require="true" visible="false"
+                           managedBindVisible="true"
+                           groupId="certificate"
+                           fx:id="sshCertificatePwd" prefWidth="100">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </PasswordTextField>
     </FXHBox>
-    <InfoLabel text="%base.status">
+    <InfoLabel text="%base.options">
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <EnabledToggleSwitch fx:id="enable" selected="true">
-        <VBox.margin>
-            <Insets left="30" top="5"/>
-        </VBox.margin>
-    </EnabledToggleSwitch>
+    <FXHBox>
+        <EnabledToggleSwitch fx:id="enable" selected="true">
+            <HBox.margin>
+                <Insets left="30" top="5"/>
+            </HBox.margin>
+        </EnabledToggleSwitch>
+        <FXCheckBox fx:id="forwardAgent" text="Forward agent" fontSize="11">
+            <HBox.margin>
+                <Insets left="10" top="5"/>
+            </HBox.margin>
+        </FXCheckBox>
+    </FXHBox>
     <FXHBox>
         <TestButton onAction="#testConnect" iconSizePercent="0.8">
             <HBox.margin>

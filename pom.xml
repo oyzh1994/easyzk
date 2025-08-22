@@ -14,7 +14,9 @@
     <modelVersion>4.0.0</modelVersion>
     <version>2.0.2</version>
     <artifactId>easyzk</artifactId>
-    <description>zookeeper的可视化操作、导入导出、传输、命令行功能</description>
+    <description>
+        功能强大、现代化、跨平台的zookeeper客户端.
+    </description>
 
     <properties>
         <curator-version>4.3.0</curator-version>

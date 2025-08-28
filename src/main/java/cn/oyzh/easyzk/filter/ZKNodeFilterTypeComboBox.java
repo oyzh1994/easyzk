@@ -2,7 +2,9 @@ package cn.oyzh.easyzk.filter;
 
 import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
+import cn.oyzh.fx.plus.mouse.MouseUtil;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,5 +25,17 @@ public class ZKNodeFilterTypeComboBox extends FXComboBox<String> implements I18n
         this.addItem(I18nHelper.persistentNodes());
         this.addItem(I18nHelper.temporaryNodes());
         return this.getItems();
+    }
+
+    @Override
+    public void initNode() {
+        super.initNode();
+        this.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            if (MouseUtil.isPrimaryButton(event) && MouseUtil.isSingleClick(event)) {
+                this.show();
+            } else {
+                this.hide();
+            }
+        });
     }
 }

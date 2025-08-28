@@ -20,14 +20,14 @@
         fx:controller="cn.oyzh.easyzk.tabs.node.ZKNodeTabController">
     <FXVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FXHBox realHeight="30" flexWidth="100%">
-            <ZKNodeFilterTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">
+            <ZKNodeFilterTypeComboBox initIndex="0" realHeight="24" realWidth="120" fx:id="filterType">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </ZKNodeFilterTypeComboBox>
             <ZKNodeFilterTextField tipText="CTRL+F/COMMAND+F" promptText="%base.searchKWTip" onAction="#doFilter"
                                    onSearch="#doFilter" fx:id="filterKW" realHeight="24"
-                                   flexWidth="100% - 105" maxLen="30">
+                                   flexWidth="100% - 125" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>

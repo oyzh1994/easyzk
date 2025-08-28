@@ -220,8 +220,11 @@ public class ZKGroupTreeItem extends RichTreeItem<ZKGroupTreeItemValue> implemen
         }
     }
 
-    public String getGid() {
+    public String getGroupId() {
         return this.value.getGid();
     }
 
+    public String getGroupName() {
+        return this.value.getName();
+    }
 }

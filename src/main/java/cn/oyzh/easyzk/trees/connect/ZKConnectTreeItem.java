@@ -3,6 +3,7 @@ package cn.oyzh.easyzk.trees.connect;
 import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.enums.ZKConnState;
@@ -11,12 +12,15 @@ import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.util.ZKViewFactory;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.svg.glyph.MoveSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.menu.MenuItemManager;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 
 import java.util.ArrayList;
@@ -83,22 +87,30 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
         if (this.isConnecting()) {
             FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("10", this::cancelConnect);
             items.add(cancelConnect);
-        } else if (this.isConnected()) {
-            FXMenuItem closeConnect = MenuItemHelper.closeConnect("10", this::closeConnect);
-            FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
-            FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
-            FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
-            FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
-            FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
-
-            items.add(closeConnect);
-            items.add(editConnect);
-            items.add(cloneConnect);
-            items.add(exportData);
-            items.add(importData);
-            items.add(transportData);
         } else {
-            FXMenuItem connect = MenuItemHelper.startConnect("12", this::connect);
+            // } else if (this.isConnected()) {
+            //     FXMenuItem closeConnect = MenuItemHelper.closeConnect("10", this::closeConnect);
+            //     FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
+            //     FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
+            //     FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
+            //     FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
+            //     FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
+            //
+            //     items.add(closeConnect);
+            //     items.add(editConnect);
+            //     items.add(cloneConnect);
+            //     items.add(exportData);
+            //     items.add(importData);
+            //     items.add(transportData);
+            // } else {
+
+            if (this.isConnected()) {
+                FXMenuItem closeConnect = MenuItemHelper.closeConnect("10", this::closeConnect);
+                items.add(closeConnect);
+            } else {
+                FXMenuItem connect = MenuItemHelper.openConnect("12", this::connect);
+                items.add(connect);
+            }
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem renameConnect = MenuItemHelper.renameConnect("12", this::rename);
             FXMenuItem deleteConnect = MenuItemHelper.deleteConnect("12", this::delete);
@@ -106,17 +118,53 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
             FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
+            FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
 
-            items.add(connect);
+            // 处理分组移动
+            List<ZKGroupTreeItem> groupItems = this.getTreeView().getGroupItems();
+            Menu moveTo = MenuItemHelper.menu(I18nHelper.moveTo(), new MoveSVGGlyph("12"));
+            if (CollectionUtil.isNotEmpty(groupItems)) {
+                for (ZKGroupTreeItem item : groupItems) {
+                    MenuItem menuItem = MenuItemHelper.menuItem(item.getGroupName(), () -> this.moveTo(item));
+                    if (StringUtil.equals(this.getGroupId(), item.getGroupId())) {
+                        menuItem.setDisable(true);
+                    }
+                    moveTo.getItems().add(menuItem);
+                }
+            } else {
+                moveTo.setDisable(true);
+            }
+
             items.add(editConnect);
             items.add(renameConnect);
+            items.add(cloneConnect);
+            items.add(deleteConnect);
+            items.add(MenuItemManager.getSeparatorMenuItem());
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
-            items.add(cloneConnect);
-            items.add(deleteConnect);
+            items.add(MenuItemManager.getSeparatorMenuItem());
+            items.add(openTerminal);
+            items.add(moveTo);
         }
         return items;
+    }
+
+    /**
+     * 移动到分组
+     *
+     * @param groupItem 分组节点
+     */
+    private void moveTo(ZKGroupTreeItem groupItem) {
+        this.remove();
+        groupItem.addConnectItem(this);
+    }
+
+    /**
+     * 打开终端
+     */
+    private void openTerminal() {
+        ZKEventUtil.terminalOpen(this.client);
     }
 
     /**
@@ -377,7 +425,16 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
         return this.value.getId();
     }
 
+    public String getGroupId() {
+        return this.value.getGroupId();
+    }
+
     public ZKQueriesTreeItem queriesItem() {
         return (ZKQueriesTreeItem) this.unfilteredChildren().stream().filter(i -> i instanceof ZKQueriesTreeItem).findAny().get();
+    }
+
+    @Override
+    public ZKConnectTreeView getTreeView() {
+        return (ZKConnectTreeView) super.getTreeView();
     }
 }

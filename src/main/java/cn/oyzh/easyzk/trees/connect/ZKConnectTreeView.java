@@ -17,6 +17,8 @@ import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
 
+import java.util.List;
+
 /**
  * zk连接树
  *
@@ -158,5 +160,9 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
     public void setHighlightText(String highlightText) {
         super.setHighlightText(highlightText);
         this.getItemFilter().setKw(highlightText);
+    }
+
+    public List<ZKGroupTreeItem> getGroupItems() {
+        return this.root().getGroupItems();
     }
 }

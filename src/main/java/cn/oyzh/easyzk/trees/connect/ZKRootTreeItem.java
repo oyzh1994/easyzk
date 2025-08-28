@@ -221,7 +221,7 @@ public class ZKRootTreeItem extends RichTreeItem<ZKRootTreeItemValue> implements
      *
      * @return 分组树节点组件
      */
-    private List<ZKGroupTreeItem> getGroupItems() {
+    public List<ZKGroupTreeItem> getGroupItems() {
         List<ZKGroupTreeItem> items = new ArrayList<>(this.getChildrenSize());
         for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof ZKGroupTreeItem groupTreeItem) {

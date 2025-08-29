@@ -298,4 +298,23 @@ public class ZKTerminalPane extends TerminalPane {
     public ZKConnect zkConnect() {
         return this.getClient().zkConnect();
     }
+
+    @Override
+    public void fontSizeIncr() {
+        super.fontSizeIncr();
+        this.saveFontSize();
+    }
+
+    @Override
+    public void fontSizeDecr() {
+        super.fontSizeDecr();
+        this.saveFontSize();
+    }
+
+    private void saveFontSize() {
+        System.out.println(this.getFontSize());
+        ZKSetting setting = ZKSettingStore.SETTING;
+        setting.setTerminalFontSize((byte) this.getFontSize());
+        ZKSettingStore.INSTANCE.replace(setting);
+    }
 }

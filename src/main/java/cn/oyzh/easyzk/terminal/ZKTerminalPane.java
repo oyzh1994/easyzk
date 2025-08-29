@@ -56,7 +56,7 @@ public class ZKTerminalPane extends TerminalPane {
     @Override
     public void changeFont(Font font) {
         ZKSetting setting = ZKSettingStore.SETTING;
-        Font font1= FontManager.toFont(setting.terminalFontConfig());
+        Font font1 = FontManager.toFont(setting.terminalFontConfig());
         super.changeFont(font1);
     }
 
@@ -119,7 +119,7 @@ public class ZKTerminalPane extends TerminalPane {
      *
      * @param client 客户端
      */
-    public void init( ZKClient client) {
+    public void init(ZKClient client) {
         this.client = client;
         this.disableInput();
         this.outputLine(I18nResourceBundle.i18nString("zk.home.welcome"));

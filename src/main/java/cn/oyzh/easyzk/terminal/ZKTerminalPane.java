@@ -229,7 +229,7 @@ public class ZKTerminalPane extends TerminalPane {
      * 开始连接
      */
     private void start() {
-        TaskManager.start(() -> {
+        TaskManager.startSync(() -> {
             try {
                 this.initStatListener();
                 this.client.start();

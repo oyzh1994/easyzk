@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyzk.terminal.ZKTerminalPane?>
-<ZKTerminalPane styleClass="root" flexHeight="100%" fx:id="terminal" editable="false" flexWidth="100%"
+<ZKTerminalPane  flexHeight="100%" fx:id="terminal" editable="false" flexWidth="100%"
                 xmlns="http://javafx.com/javafx"
                 xmlns:fx="http://javafx.com/fxml"
                 fx:controller="cn.oyzh.easyzk.tabs.terminal.ZKTerminalTabController">

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
-<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox  xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.controller.connect.ZKImportConnectController" realWidth="600" realHeight="480">
     <FXHBox flexWidth="100%" realHeight="80">
         <FXHBox flexHeight="100%" flexWidth="100%">

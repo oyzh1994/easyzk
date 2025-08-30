@@ -10,7 +10,7 @@
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
 <!-- <?import javafx.scene.layout.VBox?> -->
-<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox  xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyzk.controller.filter.ZKFilterAddController" realWidth="750" realHeight="320"> -->
 <!--     <InfoLabel text="%base.kw"> -->
 <!--         <VBox.margin> -->

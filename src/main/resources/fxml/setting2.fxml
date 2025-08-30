@@ -22,7 +22,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<SettingMainPane fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<SettingMainPane fx:id="root"  xmlns:fx="http://javafx.com/fxml/1"
                  fx:controller="cn.oyzh.easyzk.controller.SettingController2" realWidth="700" realHeight="450">
     <left>
         <SettingLeftTreeView flexWidth="100%" flexHeight="100%">

@@ -10,7 +10,7 @@
 <!--<?import javafx.geometry.Insets?>-->
 <!--<?import javafx.scene.layout.HBox?>-->
 <!--<?import javafx.scene.layout.VBox?>-->
-<!--<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"-->
+<!--<FXVBox  xmlns:fx="http://javafx.com/fxml/1"-->
 <!--        fx:controller="cn.oyzh.easyzk.controller.server.ZKServerInfoController" realHeight="800" realWidth="950">-->
 <!--    <FXTableView flexWidth="100%" realHeight="80" fx:id="serverTable">-->
 <!--        <columns>-->

@@ -23,7 +23,7 @@
 <!-- <?import javafx.scene.layout.HBox?> -->
 <!-- <?import javafx.scene.layout.VBox?> -->
 <!-- <?import cn.oyzh.fx.gui.text.field.NumberTextField?> -->
-<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox  xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyzk.controller.SettingController" realWidth="550" realHeight="450"> -->
 <!--     <FXTabPane flexWidth="100%" flexHeight="100% - 60"> -->
 <!--         <FXTab text="%base.zk"> -->

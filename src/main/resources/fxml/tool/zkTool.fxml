@@ -14,7 +14,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FXTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXTabPane  xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="cn.oyzh.easyzk.controller.tool.ZKToolController" realWidth="850" realHeight="600">
     <FXTab text="%base.digest">
         <FXVBox flexHeight="100%" flexWidth="100%">

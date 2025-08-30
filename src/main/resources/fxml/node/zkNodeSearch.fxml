@@ -7,7 +7,7 @@
 <!--<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>-->
 <!--<?import javafx.geometry.Insets?>-->
 <!--<?import javafx.scene.layout.HBox?>-->
-<!--<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"-->
+<!--<FXVBox  xmlns:fx="http://javafx.com/fxml/1"-->
 <!--          fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeSearchController" realWidth="330" realHeight="95">-->
 <!--    <FXHBox>-->
 <!--        <ClearableTextField onKeyPressed="#keywordKeyPressed" fx:id="keyword" prefWidth="250" prefHeight="25" promptText="%base.searchKWTip">-->

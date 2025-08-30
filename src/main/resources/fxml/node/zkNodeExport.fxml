@@ -14,7 +14,7 @@
 <!-- <?import javafx.scene.layout.HBox?> -->
 <!-- <?import javafx.scene.layout.VBox?> -->
 <!-- <?import javafx.scene.text.Text?> -->
-<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox  xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyzk.controller.node.ZKNodeExportController" realWidth="850" realHeight="680"> -->
 <!--     <FXHBox flexWidth="100%" realHeight="50" fx:id="nodePathBox"> -->
 <!--         <AccentLabel text="%base.path" realHeight="30" realWidth="80"> -->

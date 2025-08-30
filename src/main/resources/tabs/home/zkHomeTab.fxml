@@ -12,7 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FXPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
+<FXPane  flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="cn.oyzh.easyzk.tabs.home.ZKHomeTabController">
     <ImageView fitWidth="190" fitHeight="190" layoutX="50" layoutY="100">

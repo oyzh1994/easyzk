@@ -9,7 +9,7 @@
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.VBox?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
-<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox  xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyzk.controller.auth.ZKAuthAddController" realWidth="750" realHeight="240"> -->
 <!--     <InfoLabel text="%base.userName" > -->
 <!--         <VBox.margin> -->

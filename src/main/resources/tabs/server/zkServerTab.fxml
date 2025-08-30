@@ -3,7 +3,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableView?>
-<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox  xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyzk.tabs.server.ZKServerTabController" realHeight="800" realWidth="950">
     <FXTableView flexWidth="100%" realHeight="80" fx:id="serverTable">
         <columns>

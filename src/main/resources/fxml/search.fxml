@@ -11,7 +11,7 @@
 <!-- <?import cn.oyzh.fx.plus.controls.search.SearchTextField?> -->
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
-<!-- <FXVBox styleClass="root" fx:id="searchMain" xmlns="http://javafx.com/javafx" -->
+<!-- <FXVBox  fx:id="searchMain" xmlns="http://javafx.com/javafx" -->
 <!--           xmlns:fx="http://javafx.com/fxml" -->
 <!--           fx:controller="cn.oyzh.easyzk.controller.SearchController"> -->
 <!--     <FXHBox realHeight="30" flexWidth="100%"> -->

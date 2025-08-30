@@ -37,9 +37,19 @@ public class ZKDataEditorPane extends Editor {
 //     }
 
     @Override
-    public void changeFont(Font font) {
-        ZKSetting setting = ZKSettingStore.SETTING;
-        Font font1 = FontManager.toFont(setting.editorFontConfig());
-        super.changeFont(font1);
+    protected Font getEditorFont() {
+        if (super.getEditorFont() == null) {
+            ZKSetting setting = ZKSettingStore.SETTING;
+            Font font = FontManager.toFont(setting.editorFontConfig());
+            super.setEditorFont(font);
+        }
+        return super.getEditorFont();
     }
+
+    //@Override
+    //public void changeFont(Font font) {
+    //    ZKSetting setting = ZKSettingStore.SETTING;
+    //    Font font1 = FontManager.toFont(setting.editorFontConfig());
+    //    super.changeFont(font1);
+    //}
 }

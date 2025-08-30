@@ -53,34 +53,24 @@ public class ZKTerminalPane extends TerminalPane {
 //         return FontManager.toFont(setting.terminalFontConfig());
 //     }
 
-    /**
-     * 编辑器字体
-     */
-    private Font editorFont;
-
     @Override
     protected Font getEditorFont() {
-        if (this.editorFont == null) {
+        if (super.getEditorFont() == null) {
             ZKSetting setting = ZKSettingStore.SETTING;
-            this.editorFont = FontManager.toFont(setting.terminalFontConfig());
+            Font font = FontManager.toFont(setting.terminalFontConfig());
+            super.setEditorFont(font);
         }
-        return this.editorFont;
+        return super.getEditorFont();
     }
 
-    @Override
-    protected void setEditorFont(Font editorFont) {
-        this.editorFont = editorFont;
-        super.setEditorFont(editorFont);
-    }
-
-    @Override
-    public void changeFont(Font font) {
-        //ZKSetting setting = ZKSettingStore.SETTING;
-        //Font font1 = FontManager.toFont(setting.terminalFontConfig());
-        //super.changeFont(font1);
-        //super.applyEditorFont();
-        super.changeFont(font);
-    }
+    //@Override
+    //public void changeFont(Font font) {
+    //    //ZKSetting setting = ZKSettingStore.SETTING;
+    //    //Font font1 = FontManager.toFont(setting.terminalFontConfig());
+    //    //super.changeFont(font1);
+    //    //super.applyEditorFont();
+    //    super.changeFont(font);
+    //}
 
     /**
      * zk客户端

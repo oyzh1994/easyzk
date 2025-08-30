@@ -65,12 +65,22 @@ public class ZKQueryEditorPane extends Editor {
 //     }
 
     @Override
-    public void changeFont(Font font) {
-        // 初始化字体
-        ZKSetting setting = ZKSettingStore.SETTING;
-        Font font1 = FontManager.toFont(setting.queryFontConfig());
-        super.changeFont(font1);
+    protected Font getEditorFont() {
+        if (super.getEditorFont() == null) {
+            ZKSetting setting = ZKSettingStore.SETTING;
+            Font font = FontManager.toFont(setting.queryFontConfig());
+            super.setEditorFont(font);
+        }
+        return super.getEditorFont();
     }
+
+    //@Override
+    //public void changeFont(Font font) {
+    //    // 初始化字体
+    //    ZKSetting setting = ZKSettingStore.SETTING;
+    //    Font font1 = FontManager.toFont(setting.queryFontConfig());
+    //    super.changeFont(font1);
+    //}
 
     @Override
     public Set<String> getPrompts() {

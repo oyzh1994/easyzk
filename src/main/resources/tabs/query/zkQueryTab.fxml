@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyzk.query.ZKQueryEditorPane?>
+<?import cn.oyzh.easyzk.query.ZKQueryEditor?>
 <?import cn.oyzh.fx.gui.svg.glyph.RunSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
@@ -22,12 +22,12 @@
             </HBox.margin>
         </RunSVGGlyph>
     </FXHBox>
-    <ZKQueryEditorPane onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1"
-                       flexWidth="100% - 30" flexHeight="100% - 60">
+    <ZKQueryEditor onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1"
+                   flexWidth="100% - 30" flexHeight="100% - 60">
         <VBox.margin>
             <Insets left="5"/>
         </VBox.margin>
-    </ZKQueryEditorPane>
+    </ZKQueryEditor>
     <FXTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="70%" managedBindVisible="true"
                  visible="false">
     </FXTabPane>

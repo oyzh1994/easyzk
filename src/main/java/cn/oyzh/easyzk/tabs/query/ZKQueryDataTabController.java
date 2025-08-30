@@ -1,6 +1,6 @@
 package cn.oyzh.easyzk.tabs.query;
 
-import cn.oyzh.easyzk.fx.ZKDataEditorPane;
+import cn.oyzh.easyzk.fx.ZKDataEditor;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.editor.tm4javafx.EditorFormatType;
 import cn.oyzh.fx.editor.tm4javafx.EditorFormatTypeComboBox;
@@ -58,7 +58,7 @@ public class ZKQueryDataTabController extends RichTabController {
      * 数据
      */
     @FXML
-    private ZKDataEditorPane data;
+    private ZKDataEditor data;
 
     /**
      * 格式

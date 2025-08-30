@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class ZKQueryEditorPane extends Editor {
+public class ZKQueryEditor extends Editor {
 
     /**
      * zk客户端

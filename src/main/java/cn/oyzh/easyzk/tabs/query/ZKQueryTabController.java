@@ -6,7 +6,7 @@ import cn.oyzh.easyzk.domain.ZKQuery;
 import cn.oyzh.easyzk.event.ZKEventUtil;
 import cn.oyzh.easyzk.query.ZKQueryParam;
 import cn.oyzh.easyzk.query.ZKQueryResult;
-import cn.oyzh.easyzk.query.ZKQueryEditorPane;
+import cn.oyzh.easyzk.query.ZKQueryEditor;
 import cn.oyzh.easyzk.store.ZKQueryStore;
 import cn.oyzh.easyzk.zk.ZKClient;
 import cn.oyzh.fx.gui.tabs.RichTabController;
@@ -52,7 +52,7 @@ public class ZKQueryTabController extends RichTabController {
      * 当前内容
      */
     @FXML
-    private ZKQueryEditorPane content;
+    private ZKQueryEditor content;
 
     /**
      * 结果面板

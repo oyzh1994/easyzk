@@ -15,11 +15,11 @@ import java.util.List;
 public class ZKTerminalCompleteHandler extends BaseTerminalCompleteHandler<ZKTerminalPane> {
 
     @Override
-    protected List<TerminalCommandHandler<?,?>> findCommandHandlers(String line) {
+    protected List<TerminalCommandHandler<?, ?>> findCommandHandlers(ZKTerminalPane terminal, String line) {
         if (line.contains(" /")) {
-            return TerminalManager.findHandlers(line.split(" ")[0], 2);
+            return TerminalManager.findHandlers(terminal.terminalName(), line.split(" ")[0], 2);
         }
-        return super.findCommandHandlers(line.split(" ")[0]);
+        return super.findCommandHandlers(terminal, line.split(" ")[0]);
     }
 
     /**

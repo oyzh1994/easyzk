@@ -43,7 +43,7 @@ import cn.oyzh.easyzk.terminal.fourletterword.ZKWchpCommandHandler;
 import cn.oyzh.easyzk.terminal.fourletterword.ZKWchsCommandHandler;
 import cn.oyzh.fx.terminal.standard.ClearTerminalCommandHandler;
 import cn.oyzh.fx.terminal.standard.HelpTerminalCommandHandler;
-import cn.oyzh.fx.terminal.util.TerminalManager;
+import cn.oyzh.fx.terminal.util.TerminalManager2;
 
 /**
  * @author oyzh
@@ -57,54 +57,54 @@ public class ZKTerminalManager {
      */
     public static void registerHandlers() {
         // 标准命令
-        TerminalManager.registerHandler(HelpTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ClearTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(HelpTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ClearTerminalCommandHandler.class);
 
         // 基础命令
-        TerminalManager.registerHandler(ZKConnectTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKVersionTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKConnectTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKVersionTerminalCommandHandler.class);
 
         // zk命令
-        TerminalManager.registerHandler(ZKAddAuthTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKCloseTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKCreateTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKDeleteallTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKDeleteTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKDelQuotaTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKGetAclTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKGetAllChildrenNumberCommandHandler.class);
-        TerminalManager.registerHandler(ZKGetConfigTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKGetEphemeralsCommandHandler.class);
-        TerminalManager.registerHandler(ZKGetTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKListQuotaTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKLs2TerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKLsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKReconfigTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKRemoveWatchesTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKRmrTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKSetAclTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKSetQuotaTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKSetTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKStatTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKSyncTerminalCommandHandler.class);
-        TerminalManager.registerHandler(ZKWhoAmITerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKAddAuthTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKCloseTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKCreateTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKDeleteallTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKDeleteTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKDelQuotaTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKGetAclTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKGetAllChildrenNumberCommandHandler.class);
+        TerminalManager2.registerHandler(ZKGetConfigTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKGetEphemeralsCommandHandler.class);
+        TerminalManager2.registerHandler(ZKGetTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKListQuotaTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKLs2TerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKLsTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKReconfigTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKRemoveWatchesTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKRmrTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKSetAclTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKSetQuotaTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKSetTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKStatTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKSyncTerminalCommandHandler.class);
+        TerminalManager2.registerHandler(ZKWhoAmITerminalCommandHandler.class);
 
         // 四字命令
-        TerminalManager.registerHandler(ZKConfCommandHandler.class);
-        TerminalManager.registerHandler(ZKConsCommandHandler.class);
-        TerminalManager.registerHandler(ZKCrstCommandHandler.class);
-        TerminalManager.registerHandler(ZKDirsCommandHandler.class);
-        TerminalManager.registerHandler(ZKDumpCommandHandler.class);
-        TerminalManager.registerHandler(ZKEnviCommandHandler.class);
-        TerminalManager.registerHandler(ZKKillCommandHandler.class);
-        TerminalManager.registerHandler(ZKMntrCommandHandler.class);
-        TerminalManager.registerHandler(ZKReqsCommandHandler.class);
-        TerminalManager.registerHandler(ZKRuokCommandHandler.class);
-        TerminalManager.registerHandler(ZKSrstCommandHandler.class);
-        TerminalManager.registerHandler(ZKSrvrCommandHandler.class);
-        TerminalManager.registerHandler(ZKStatCommandHandler.class);
-        TerminalManager.registerHandler(ZKWchcCommandHandler.class);
-        TerminalManager.registerHandler(ZKWchpCommandHandler.class);
-        TerminalManager.registerHandler(ZKWchsCommandHandler.class);
+        TerminalManager2.registerHandler(ZKConfCommandHandler.class);
+        TerminalManager2.registerHandler(ZKConsCommandHandler.class);
+        TerminalManager2.registerHandler(ZKCrstCommandHandler.class);
+        TerminalManager2.registerHandler(ZKDirsCommandHandler.class);
+        TerminalManager2.registerHandler(ZKDumpCommandHandler.class);
+        TerminalManager2.registerHandler(ZKEnviCommandHandler.class);
+        TerminalManager2.registerHandler(ZKKillCommandHandler.class);
+        TerminalManager2.registerHandler(ZKMntrCommandHandler.class);
+        TerminalManager2.registerHandler(ZKReqsCommandHandler.class);
+        TerminalManager2.registerHandler(ZKRuokCommandHandler.class);
+        TerminalManager2.registerHandler(ZKSrstCommandHandler.class);
+        TerminalManager2.registerHandler(ZKSrvrCommandHandler.class);
+        TerminalManager2.registerHandler(ZKStatCommandHandler.class);
+        TerminalManager2.registerHandler(ZKWchcCommandHandler.class);
+        TerminalManager2.registerHandler(ZKWchpCommandHandler.class);
+        TerminalManager2.registerHandler(ZKWchsCommandHandler.class);
     }
 }

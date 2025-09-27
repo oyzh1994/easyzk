@@ -2,10 +2,10 @@ package cn.oyzh.easyzk.store;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.store.jdbc.DeleteParam;
+import cn.oyzh.store.jdbc.sqlite.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
-import cn.oyzh.store.jdbc.QueryParam;
-import cn.oyzh.store.jdbc.SelectParam;
+import cn.oyzh.store.jdbc.param.QueryParam;
+import cn.oyzh.store.jdbc.param.SelectParam;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -2,9 +2,9 @@
 //
 //import cn.oyzh.common.util.StringUtil;
 //import cn.oyzh.easyzk.domain.ZKSSHConfig;
-//import cn.oyzh.store.jdbc.DeleteParam;
+//import cn.oyzh.store.jdbc.sqlite.DeleteParam;
 //import cn.oyzh.store.jdbc.JdbcStandardStore;
-//import cn.oyzh.store.jdbc.QueryParam;
+//import cn.oyzh.store.jdbc.param.QueryParam;
 //
 ///**
 // * zk ssh配置存储

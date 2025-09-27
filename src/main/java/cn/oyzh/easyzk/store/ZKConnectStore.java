@@ -7,9 +7,9 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKFilter;
 import cn.oyzh.easyzk.domain.ZKJumpConfig;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
-import cn.oyzh.store.jdbc.DeleteParam;
+import cn.oyzh.store.jdbc.sqlite.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
-import cn.oyzh.store.jdbc.QueryParam;
+import cn.oyzh.store.jdbc.param.QueryParam;
 
 import java.util.List;
 

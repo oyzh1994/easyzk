@@ -5,8 +5,8 @@ import cn.oyzh.easyzk.domain.ZKConnect;
 import cn.oyzh.easyzk.domain.ZKSASLConfig;
 import cn.oyzh.easyzk.store.ZKConnectStore;
 import cn.oyzh.easyzk.store.ZKSASLConfigStore;
-import cn.oyzh.store.jdbc.QueryParam;
-import cn.oyzh.store.jdbc.SelectParam;
+import cn.oyzh.store.jdbc.param.QueryParam;
+import cn.oyzh.store.jdbc.param.SelectParam;
 
 import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;

@@ -10,7 +10,7 @@ import cn.oyzh.easyzk.fx.ZKDataEditor;
 import cn.oyzh.easyzk.popups.ZKNodeQRCodePopupController;
 import cn.oyzh.easyzk.trees.node.ZKNodeTreeItem;
 import cn.oyzh.easyzk.util.ZKI18nHelper;
-import cn.oyzh.fx.editor.tm4javafx.EditorFormatTypeComboBox;
+import cn.oyzh.fx.editor.incubator.EditorFormatTypeComboBox;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;

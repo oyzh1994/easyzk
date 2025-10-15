@@ -2,7 +2,7 @@ package cn.oyzh.easyzk.fx;
 
 import cn.oyzh.easyzk.domain.ZKSetting;
 import cn.oyzh.easyzk.store.ZKSettingStore;
-import cn.oyzh.fx.editor.tm4javafx.Editor;
+import cn.oyzh.fx.editor.incubator.Editor;
 import cn.oyzh.fx.plus.font.FontManager;
 import javafx.scene.text.Font;
 

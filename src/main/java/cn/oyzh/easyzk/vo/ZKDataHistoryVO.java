@@ -65,6 +65,6 @@ public class ZKDataHistoryVO extends ZKDataHistory implements Index {
      * @return 结果
      */
     public String getSaveTimeFormated() {
-        return DateUtil.format("yy-MM-dd HH:mm:ss", this.getSaveTime());
+        return DateUtil.format(this.getSaveTime(), "yy-MM-dd HH:mm:ss");
     }
 }

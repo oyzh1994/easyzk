@@ -24,11 +24,11 @@
 
     <!-- 声明仓库 -->
     <repositories>
-        <!-- <repository> -->
-        <!--     <id>aliyun</id> -->
-        <!--     <name>aliyun</name> -->
-        <!--     <url>https://maven.aliyun.com/repository/public/</url> -->
-        <!-- </repository> -->
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public/</url>
+        </repository>
         <repository>
             <id>tencent</id>
             <name>tencent</name>

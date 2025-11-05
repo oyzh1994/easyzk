@@ -32,7 +32,6 @@ import javafx.stage.WindowEvent;
  * @since 2024/11/25
  */
 @StageAttribute(
-        stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/zkMigrationData.fxml"
 )

@@ -208,7 +208,7 @@ public class ZKConnectTreeItem extends RichTreeItem<ZKConnectTreeItemValue> {
                         this.expend();
                     }
                 })
-                .onSuccess(this::flushLocal)
+                // .onSuccess(this::flushLocal)
                 .onError(MessageBox::exception)
                 .build();
         // 执行连接

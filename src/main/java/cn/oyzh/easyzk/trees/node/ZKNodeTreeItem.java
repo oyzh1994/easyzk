@@ -1258,7 +1258,7 @@ public class ZKNodeTreeItem extends RichTreeItem<ZKNodeTreeItemValue> {
     }
 
     @Override
-    public void destroy() {
+    public synchronized void destroy() {
         this.value.clearNodeData();
         this.value.clearUnsavedData();
         if (!this.isRootNode()) {

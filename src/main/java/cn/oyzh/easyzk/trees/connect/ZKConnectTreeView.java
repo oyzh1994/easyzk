@@ -63,7 +63,7 @@ public class ZKConnectTreeView extends RichTreeView implements FXEventListener {
      */
     public void closeConnects() {
         for (ZKConnectTreeItem treeItem : this.root().getConnectedItems()) {
-            ThreadUtil.startVirtual(() -> treeItem.closeConnect(false));
+            ThreadUtil.start(() -> treeItem.closeConnect(false));
         }
     }
 

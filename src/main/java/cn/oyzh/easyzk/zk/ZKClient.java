@@ -194,7 +194,7 @@ public class ZKClient {
             if (newValue == null || !newValue.isConnected()) {
                 this.closeTreeCache();
             } else {
-                ThreadUtil.startVirtual(this::startTreeCache);
+                ThreadUtil.start(this::startTreeCache);
             }
             if (newValue != null) {
                 switch (newValue) {

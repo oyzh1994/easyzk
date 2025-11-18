@@ -178,7 +178,7 @@ public class ZKQueryUtil {
             }));
         }
         // 执行任务
-        ThreadUtil.submitVirtual(tasks);
+        ThreadUtil.submit(tasks);
         // 根据相关度排序
         return items.parallelStream()
                 .sorted(Comparator.comparingDouble(ZKQueryPromptItem::getCorrelation))

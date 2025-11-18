@@ -85,9 +85,9 @@ public class ZKConnectUtil {
         try {
             if (client != null && client.isConnected()) {
                 if (async && quiet) {
-                    ThreadUtil.startVirtual(client::closeQuiet);
+                    ThreadUtil.start(client::closeQuiet);
                 } else if (async) {
-                    ThreadUtil.startVirtual(client::close);
+                    ThreadUtil.start(client::close);
                 } else if (quiet) {
                     client.closeQuiet();
                 } else {
